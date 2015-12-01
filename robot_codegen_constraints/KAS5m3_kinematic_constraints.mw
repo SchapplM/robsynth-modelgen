@@ -154,9 +154,7 @@ KAS_modell := 2:</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">read proc_convert_s_t:
 read proc_convert_t_s: 
 read &quot;../codeexport/KAS5_m4_definitions&quot;:
-read &quot;../codeexport/KAS5_m2_kinematics_maple&quot;:
-read proc_Jacobi: 
-read proc_MatlabExport:</Text-field>
+read &quot;../codeexport/KAS5_m2_kinematics_maple&quot;:</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1569" drawlabel="true">
@@ -278,7 +276,12 @@ end do:</Text-field>
 </Group>
 <Group view="code" labelreference="L1588" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_q(5) := - wpar_q(12) + Pi + theta(5):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">gamma5_q := - wpar_q(12) + Pi + theta(5):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1698" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_q(5) := gamma5_q:</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -424,13 +427,13 @@ end do:</Text-field>
 </Group>
 <Group view="code" labelreference="L1645" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_3_G3_D := &lt;l6;0;0&gt;;
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_3_G3_D := &lt;l6;0;0&gt;:
 r_3_D_G3 := -r_3_G3_D:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1649" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_10_D_E := rotz(delta_q(9)) . &lt;l21;0;0&gt;;</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_10_D_E := rotz(delta_q(9)) . &lt;l21;0;0&gt;:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1648" drawlabel="true">
@@ -586,8 +589,8 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 <Group view="code" labelreference="L1676" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">t7 := theta(4) + delta_q(16):</Text-field>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta(3) := arctan((sin(t7) * l22 + r_4_D_B(2)), (cos(t7) * l22 - r_4_D_B(1))) - t7:</Text-field>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_q(8) := delta(3):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_q(3) := arctan((sin(t7) * l22 + r_4_D_B(2)), (cos(t7) * l22 - r_4_D_B(1))) - t7:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_q(8) := delta_q(3):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1677" drawlabel="true">
@@ -605,7 +608,7 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 </Group>
 <Group labelreference="L1680" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">theta3_q := gamma3_q + delta(8) - pi/2;</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">theta3_q := gamma3_q + delta_q(8) - Pi/2:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1681" drawlabel="true">
@@ -660,10 +663,10 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 </Group>
 <Group view="code" labelreference="L1688" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">t2 := cos(theta(6));</Text-field>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">t1 := sin(theta(6));</Text-field>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">beta1_q := arctan(-(t2 * l18 - sin(gamma5_q) * l14 + t1 * l17), (t2 * l17 + cos(gamma5_q) * l14 - t1 * l18 - l12)) - gamma5_q;</Text-field>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">t2 := cos(theta(6)):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">t1 := sin(theta(6)):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">beta1_q := arctan(-(t2 * l18 - sin(gamma5_q) * l14 + t1 * l17), (t2 * l17 + cos(gamma5_q) * l14 - t1 * l18 - l12)) - gamma5_q:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_q(2) := beta1_q:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1689" drawlabel="true">
@@ -672,6 +675,33 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 </Input>
 </Group>
 <Group view="code" labelreference="L1690" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group></Presentation-Block>
+</Section>
+<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
+<Text-field style="Heading 1" layout="Heading 1">Exportiere Code</Text-field></Title><Presentation-Block>
+<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L1694" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1695" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to 23 do
+  MatlabExport(convert_t_s(wpar_q(i)), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_%d_matlab_noopt.m&quot;, i), false):
+  # MatlabExport(convert_t_s(wpar_q(i)), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_%d_matlab_opt.m&quot;, i), true):
+end do:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1696" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(convert_t_s(wpar_q), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_matlab.m&quot;), true):
+</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1697" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
