@@ -399,12 +399,12 @@ end do:</Text-field>
 </Group>
 <Group view="code" labelreference="L1594" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_q(21) := arctan(-r_4_G5_C(2), r_4_G5_C(1)):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_q(16) := arctan(-r_3_D_C(2), r_3_D_C(1)):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1655" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_q(16) := wpar_q(21):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_q(21) := delta_q(16):</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -697,7 +697,8 @@ end do:</Text-field>
 </Group>
 <Group view="code" labelreference="L1696" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(convert_t_s(wpar_q), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_matlab.m&quot;), true):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(convert_t_s(wpar_q), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_matlab_noopt.m&quot;), false):
+MatlabExport(convert_t_s(wpar_q), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_matlab_opt.m&quot;), true):
 </Text-field>
 </Input>
 </Group>
