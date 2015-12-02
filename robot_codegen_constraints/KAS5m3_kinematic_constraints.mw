@@ -87,11 +87,6 @@
     <Task-category name="&lt;default&gt;"/>
 </Task-table>
 <Task/><Presentation-Block>
-<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L1" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
-</Input>
-</Group>
 <Group view="code" labelreference="L7" drawlabel="true">
 <Input>
 <Text-field style="Heading 1" layout="Heading 1">Kinematik-Berechnung 3. Arm KAS5</Text-field>
@@ -104,14 +99,14 @@
 </Font>Zu Geometrie und Winkeln, siehe Bild (Unterlagen)
 
 <Font encoding="UTF-8">Modell m3: Kurbel N7 ist starr mit K\303\266rper K2 gekoppelt (\303\274ber die Achse)
+</Font>
+<Font encoding="UTF-8">Vorher: Ausf\303\274hren von
+</Font>KAS5_m2_sym_codegen_floatbase_mdh_kinematics.mw
 
-Vorher: Ausf\303\274hren von
-KAS5_m2_sym_codegen_floatbase_mdh_kinematics.mw
-
-Berechne alle notwendigen Winkel in wpar in Abh\303\244ngigkeit konstanter Gr\303\266\303\237en und der Gelenkwinkel</Font></Text-field>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">
+<Font encoding="UTF-8">Berechne alle notwendigen Winkel in wpar in Abh\303\244ngigkeit konstanter Gr\303\266\303\237en und der Gelenkwinkel</Font></Text-field>
+<Text-field style="Text" layout="Normal">
 Hinweise:
-Der Befehl arctan hat die Funktionalit\303\244t von atan2</Font></Text-field>
+<Font encoding="UTF-8">Der Befehl arctan hat die Funktionalit\303\244t von atan2</Font></Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L17" drawlabel="true">
@@ -221,6 +216,38 @@ end do:</Text-field>
 <Group view="code" labelreference="L1621" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_q := wpar_q(6..22,1):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1707" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Annahmen \303\274ber Konstanten: L\303\244ngen sind alle Positiv.
+(Wird anscheinend f\303\274r arctan gebraucht). Ansonsten steht csgn in exportiertem Code.</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1710" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l1&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l2&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l3&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l4&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l5&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l6&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l7&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l8&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l9&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l10&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l11&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l12&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l13&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l14&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l15&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l16&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l17&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l18&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l19&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l20&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l21&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l22&gt;0):</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -404,7 +431,7 @@ end do:</Text-field>
 </Group>
 <Group view="code" labelreference="L1704" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_q(16) := simplify(delta_q(16)):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_q(16) := simplify(delta_q(16)) assuming delta_q::real:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1655" drawlabel="true">
@@ -484,7 +511,7 @@ r_3_D_G3 := -r_3_G3_D:</Text-field>
 <Group view="code" labelreference="L1653" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">gamma3_q := arctan(r_3_F_G3(2), -r_3_F_G3(1)):</Text-field>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">gamma3_q := simplify(gamma3_q):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">gamma3_q := simplify(gamma3_q) assuming gamma3_q::real:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1656" drawlabel="true">
@@ -512,7 +539,7 @@ r_3_D_G3 := -r_3_G3_D:</Text-field>
 </Group>
 <Group view="code" labelreference="L1661" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_q(4) := simplify(delta_q(4)):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_q(4) := simplify(delta_q(4)) assuming delta_q::real:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1660" drawlabel="true">
@@ -540,7 +567,7 @@ r_3_D_G3 := -r_3_G3_D:</Text-field>
 </Group>
 <Group view="code" labelreference="L1664" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_q(11) := simplify(delta_q(11)):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_q(11) := simplify(delta_q(11)) assuming delta_q::real:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1665" drawlabel="true">
@@ -569,7 +596,7 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 </Group>
 <Group view="code" labelreference="L1670" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">beta2_q := simplify(beta2_q):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">beta2_q := simplify(beta2_q) assuming beta2_q::real:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1703" drawlabel="true">
@@ -600,7 +627,7 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">t7 := theta(4) + delta_q(16):</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_q(3) := arctan((sin(t7) * l22 + r_4_D_B(2)), (cos(t7) * l22 - r_4_D_B(1))) - t7:</Text-field>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_q(3) := simplify(delta_q(3)):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_q(3) := simplify(delta_q(3)) assuming delta_q::real:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1677" drawlabel="true">
@@ -610,7 +637,7 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 </Group></Presentation-Block>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 1" layout="Heading 1">Berechne theta3</Text-field></Title>
+<Text-field style="Heading 1" layout="Heading 1">Berechne rho3</Text-field></Title>
 <Group labelreference="L1682" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal">Gl. (11)</Text-field>
@@ -618,17 +645,17 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 </Group>
 <Group labelreference="L1680" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">theta3_q := gamma3_q + delta_q(8) - Pi/2:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">rho3_q := gamma3_q + delta_q(8) - Pi/2:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1681" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">theta3_q := simplify(theta3_q):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">rho3_q := simplify(rho3_q):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1705" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_q(23) := theta3_q:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_q(23) := rho3_q:</Text-field>
 </Input>
 </Group><Presentation-Block>
 <Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L1679" drawlabel="true">
@@ -647,9 +674,9 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 </Group>
 <Group labelreference="L1685" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">t1 := theta3_q + delta_q(8):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">t1 := rho3_q + delta_q(8):</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_q(6) := arctan((sin(t1) * l4 + r_3_G3_E(1)), (cos(t1) * l4 + r_3_G3_E(2))) - t1:</Text-field>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_q(6) := simplify(delta_q(6)):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_q(6) := simplify(delta_q(6)) assuming delta_q::real:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1686" drawlabel="true">
@@ -681,7 +708,7 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">t2 := cos(theta(6)):</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">t1 := sin(theta(6)):</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">beta1_q := arctan(-(t2 * l18 - sin(gamma5_q) * l14 + t1 * l17), (t2 * l17 + cos(gamma5_q) * l14 - t1 * l18 - l12)) - gamma5_q:</Text-field>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">beta1_q := simplify(beta1_q):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">beta1_q := simplify(beta1_q) assuming beta1_q::real:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1689" drawlabel="true">
@@ -721,10 +748,20 @@ end do:</Text-field>
 MatlabExport(convert_t_s(wpar_q), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_matlab_opt.m&quot;), true):</Text-field>
 </Input>
 </Group></Presentation-Block>
-</Section><Presentation-Block></Presentation-Block><Presentation-Block>
+</Section><Presentation-Block>
+<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L1706" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
 <Group labelreference="L313" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal"></Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L2" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Worksheet>
