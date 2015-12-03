@@ -118,11 +118,6 @@ Hinweise:
 </Group></Presentation-Block>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
 <Text-field style="Heading 1" layout="Heading 1">Initialisierung</Text-field></Title><Presentation-Block>
-<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L1568" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
-</Input>
-</Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1574" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">restart:
@@ -253,29 +248,9 @@ end do:</Text-field>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
 <Text-field style="Heading 1" layout="Heading 1">Berechne delta7</Text-field></Title><Presentation-Block>
-<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L1565" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
-</Input>
-</Group>
 <Group view="code" labelreference="L1566" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal">Gl. (30)</Text-field>
-</Input>
-</Group>
-<Group view="code" labelreference="L1567" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"># delta</Text-field>
-</Input>
-</Group>
-<Group view="code" labelreference="L1580" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"># wpar_t(12)</Text-field>
-</Input>
-</Group>
-<Group view="code" labelreference="L1582" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"># delta7_q := delta17_q + theta(4);</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1579" drawlabel="true">
@@ -291,11 +266,6 @@ end do:</Text-field>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
 <Text-field style="Heading 1" layout="Heading 1">Berechne gamma5</Text-field></Title><Presentation-Block>
-<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L1586" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
-</Input>
-</Group>
 <Group view="code" labelreference="L1587" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal">Gl.(2)</Text-field>
@@ -314,11 +284,6 @@ end do:</Text-field>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
 <Text-field style="Heading 1" layout="Heading 1">Berechne delta16</Text-field></Title><Presentation-Block>
-<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L1589" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
-</Input>
-</Group>
 <Group view="code" labelreference="L1590" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal">Kreisschnittpunkt berechnen</Text-field>
@@ -431,7 +396,7 @@ end do:</Text-field>
 </Group>
 <Group view="code" labelreference="L1704" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_q(16) := simplify(delta_q(16)) assuming delta_q::real:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"># delta_q(16) := simplify(delta_q(16)) assuming delta_q::real:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1655" drawlabel="true">
@@ -442,11 +407,6 @@ end do:</Text-field>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
 <Text-field style="Heading 1" layout="Heading 1">Berechne gamma3</Text-field></Title><Presentation-Block>
-<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L1640" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
-</Input>
-</Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1647" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Berechnungen f\303\274r Hebel E-F-G3</Font></Text-field>
@@ -480,7 +440,7 @@ r_3_D_G3 := -r_3_G3_D:</Text-field>
 </Group>
 <Group labelreference="L1646" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_3_G3_E := r_3_G3_D + r_3_D_E:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1641" drawlabel="true">
@@ -490,7 +450,7 @@ r_3_D_G3 := -r_3_G3_D:</Text-field>
 </Group>
 <Group view="code" labelreference="L1642" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">ReturnValue := intersect_circle(r_3_D_E, r_3_G3_E, l20, l4):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">ReturnValue := intersect_circle(r_3_D_E, r_3_D_G3, l20, l4):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1643" drawlabel="true">
@@ -511,7 +471,7 @@ r_3_D_G3 := -r_3_G3_D:</Text-field>
 <Group view="code" labelreference="L1653" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">gamma3_q := arctan(r_3_F_G3(2), -r_3_F_G3(1)):</Text-field>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">gamma3_q := simplify(gamma3_q) assuming gamma3_q::real:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"># gamma3_q := simplify(gamma3_q) assuming gamma3_q::real:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1656" drawlabel="true">
@@ -522,11 +482,6 @@ r_3_D_G3 := -r_3_G3_D:</Text-field>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
 <Text-field style="Heading 1" layout="Heading 1">Berechne delta4</Text-field></Title><Presentation-Block>
-<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L1657" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
-</Input>
-</Group>
 <Group view="code" labelreference="L1659" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal">Gl. (22)</Text-field>
@@ -539,7 +494,7 @@ r_3_D_G3 := -r_3_G3_D:</Text-field>
 </Group>
 <Group view="code" labelreference="L1661" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_q(4) := simplify(delta_q(4)) assuming delta_q::real:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"># delta_q(4) := simplify(delta_q(4)) assuming delta_q::real:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1660" drawlabel="true">
@@ -550,11 +505,6 @@ r_3_D_G3 := -r_3_G3_D:</Text-field>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
 <Text-field style="Heading 1" layout="Heading 1">Berechne delta11</Text-field></Title><Presentation-Block>
-<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L1662" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
-</Input>
-</Group>
 <Group view="code" labelreference="L1668" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal">Gl. (3)</Text-field>
@@ -567,7 +517,7 @@ r_3_D_G3 := -r_3_G3_D:</Text-field>
 </Group>
 <Group view="code" labelreference="L1664" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_q(11) := simplify(delta_q(11)) assuming delta_q::real:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"># delta_q(11) := simplify(delta_q(11)) assuming delta_q::real:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1665" drawlabel="true">
@@ -578,11 +528,6 @@ r_3_D_G3 := -r_3_G3_D:</Text-field>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
 <Text-field style="Heading 1" layout="Heading 1">Berechne beta2</Text-field></Title><Presentation-Block>
-<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L1666" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
-</Input>
-</Group>
 <Group view="code" labelreference="L1667" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal">Gl. (m3.7)
@@ -596,7 +541,7 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 </Group>
 <Group view="code" labelreference="L1670" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">beta2_q := simplify(beta2_q) assuming beta2_q::real:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"># beta2_q := simplify(beta2_q) assuming beta2_q::real:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1703" drawlabel="true">
@@ -609,7 +554,7 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 <Text-field style="Heading 1" layout="Heading 1">Berechne delta3</Text-field></Title><Presentation-Block>
 <Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L1673" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
+<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1674" drawlabel="true">
@@ -627,7 +572,7 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">t7 := theta(4) + delta_q(16):</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_q(3) := arctan((sin(t7) * l22 + r_4_D_B(2)), (cos(t7) * l22 - r_4_D_B(1))) - t7:</Text-field>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_q(3) := simplify(delta_q(3)) assuming delta_q::real:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"># delta_q(3) := simplify(delta_q(3)) assuming delta_q::real:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1677" drawlabel="true">
@@ -650,7 +595,7 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 </Group>
 <Group labelreference="L1681" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">rho3_q := simplify(rho3_q):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"># rho3_q := simplify(rho3_q):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1705" drawlabel="true">
@@ -660,7 +605,7 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 </Group><Presentation-Block>
 <Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L1679" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
+<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -672,11 +617,16 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw</Text-field>
 </Input>
 </Group>
+<Group labelreference="L1717" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_3_G3_E := r_3_G3_D + r_3_D_E:</Text-field>
+</Input>
+</Group>
 <Group labelreference="L1685" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">t1 := rho3_q + delta_q(8):</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_q(6) := arctan((sin(t1) * l4 + r_3_G3_E(1)), (cos(t1) * l4 + r_3_G3_E(2))) - t1:</Text-field>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_q(6) := simplify(delta_q(6)) assuming delta_q::real:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"># delta_q(6) := simplify(delta_q(6)) assuming delta_q::real:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1686" drawlabel="true">
@@ -686,17 +636,12 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 </Group><Presentation-Block>
 <Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L1683" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
+<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
 <Text-field style="Heading 1" layout="Heading 1">Berechne beta1</Text-field></Title><Presentation-Block>
-<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L1687" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
-</Input>
-</Group>
 <Group view="code" labelreference="L1692" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal">Gl. (29)
@@ -708,7 +653,7 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">t2 := cos(theta(6)):</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">t1 := sin(theta(6)):</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">beta1_q := arctan(-(t2 * l18 - sin(gamma5_q) * l14 + t1 * l17), (t2 * l17 + cos(gamma5_q) * l14 - t1 * l18 - l12)) - gamma5_q:</Text-field>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">beta1_q := simplify(beta1_q) assuming beta1_q::real:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"># beta1_q := simplify(beta1_q) assuming beta1_q::real:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1689" drawlabel="true">
@@ -719,11 +664,6 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
 <Text-field style="Heading 1" layout="Heading 1">Exportiere Code</Text-field></Title><Presentation-Block>
-<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L1694" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
-</Input>
-</Group>
 <Group view="code" labelreference="L1714" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal">Speichere Maple-Ausdruck</Text-field>
@@ -736,7 +676,7 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 </Group>
 <Group view="code" labelreference="L1699" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Neu-Einlesen des Ausdrucks und r\303\274cksetzen, damit Annahmen nicht als Tilde auftauchen</Font></Text-field>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Neu-Einlesen des Ausdrucks und damit r\303\274cksetzen, damit Annahmen nicht als Tilde auftauchen</Font></Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1715" drawlabel="true">
@@ -761,7 +701,7 @@ MatlabExport(convert_t_s(wpar_q), sprintf(&quot;../codeexport/KAS5_kinematik_par
 </Section><Presentation-Block>
 <Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L1706" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
+<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group labelreference="L313" drawlabel="true">
@@ -771,7 +711,7 @@ MatlabExport(convert_t_s(wpar_q), sprintf(&quot;../codeexport/KAS5_kinematik_par
 </Group></Presentation-Block><Presentation-Block>
 <Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L2" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
+<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Worksheet>
