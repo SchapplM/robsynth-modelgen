@@ -700,7 +700,39 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 </Group>
 <Group view="code" labelreference="L1699" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Neu-Einlesen des Ausdrucks und damit r\303\274cksetzen, damit Annahmen nicht als Tilde auftauchen</Font></Text-field>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Neu-Einlesen des Ausdrucks und r\303\274cksetzen der Annahmen, damit Annahmen nicht als Tilde auftauchen (funktioniert noch nicht richtig?)</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1728" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1727" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l1 := 'l1':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l2 := 'l2':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l3 := 'l3':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l4 := 'l4':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l5 := 'l5':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l6 := 'l6':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l7 := 'l7':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l8 := 'l8':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l9 := 'l9':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l10 := 'l10':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l11 := 'l11':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l12 := 'l12':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l13 := 'l13':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l14 := 'l14':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l15 := 'l15':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l16 := 'l16':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l17 := 'l17':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l18 := 'l18':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l19 := 'l19':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l20 := 'l20':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l21 := 'l21':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l22 := 'l22':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l11;</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1715" drawlabel="true">
@@ -712,14 +744,25 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to 23 do
   MatlabExport(convert_t_s(wpar_q(i)), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_%d_matlab_noopt.m&quot;, i), false):
-  MatlabExport(convert_t_s(wpar_q(i)), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_%d_matlab_opt.m&quot;, i), true):
 end do:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1696" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(convert_t_s(wpar_q), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_matlab_noopt.m&quot;), false):
-MatlabExport(convert_t_s(wpar_q), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_matlab_opt.m&quot;), true):</Text-field>
+</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1725" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to 23 do
+  MatlabExport(convert_t_s(wpar_q(i)), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_%d_matlab_opt.m&quot;, i), true):
+end do:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1726" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(convert_t_s(wpar_q), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_matlab_opt.m&quot;), true):</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section><Presentation-Block>
