@@ -693,6 +693,15 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 <Text-field style="Text" layout="Normal">Speichere Maple-Ausdruck (Eingabe-Format und internes Format)</Text-field>
 </Input>
 </Group>
+<Group view="code" labelreference="L1735" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to 23 do
+  tmp := wpar_q(i):
+  save wpar_q, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple_wparq_%d&quot;, KAS_version, KAS_modell, i):
+  save wpar_q, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple_wparq_%d.m&quot;, KAS_version, KAS_modell, i):
+end do:</Text-field>
+</Input>
+</Group>
 <Group view="code" labelreference="L1700" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">save wpar_q, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple&quot;, KAS_version, KAS_modell):</Text-field>
@@ -705,7 +714,7 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 </Group>
 <Group view="code" labelreference="L1699" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Neu-Einlesen des Ausdrucks und r\303\274cksetzen der Annahmen, damit Annahmen nicht als Tilde auftauchen (funktioniert noch nicht richtig?)</Font></Text-field>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Neu-Einlesen des Ausdrucks und r\303\274cksetzen der Annahmen, damit Annahmen nicht als Tilde auftauchen (funktioniert noch nicht richtig...)</Font></Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1728" drawlabel="true">
@@ -719,6 +728,21 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 KAS_modell := 3:</Text-field>
 </Input>
 </Group>
+<Group view="code" labelreference="L1751" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read proc_convert_t_s: </Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1752" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read proc_MatlabExport:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1754" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../codeexport/KAS5_m3_definitions&quot;:</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1715" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple.m&quot;, KAS_version, KAS_modell):</Text-field>
@@ -759,19 +783,9 @@ end do:</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section><Presentation-Block>
-<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L1706" drawlabel="true">
+<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L1756" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
-</Input>
-</Group></Presentation-Block><Presentation-Block>
-<Group labelreference="L313" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"></Text-field>
-</Input>
-</Group></Presentation-Block><Presentation-Block>
-<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L2" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
+<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Worksheet>
