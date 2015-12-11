@@ -207,16 +207,6 @@ end do:</Text-field>
 end do:</Text-field>
 </Input>
 </Group>
-<Group view="code" labelreference="L1620" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
-</Input>
-</Group>
-<Group view="code" labelreference="L1619" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
-</Input>
-</Group>
 <Group view="code" labelreference="L1618" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_t := wpar_t(6..22,1):</Text-field>
@@ -230,32 +220,27 @@ end do:</Text-field>
 <Group view="code" labelreference="L1782" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ersetzungsausdr\303\274cke definieren.
-Speichere Sinus und Cosinus der Winkel direkt ab, da diese in den Rotationsmatrizen direkt auftreten.
+</Font>Speichere Sinus und Cosinus der Winkel direkt ab, da diese in den Rotationsmatrizen direkt auftreten.
 Spalte 1: Zu suchender Ausdruck (sin oder cos eines Winkels)
 Spalte 2: Einzusetzender Ausdruck.
-Dadurch werden arctan-Ausdr\303\274cke in der direkten Kinematik reduziert.
+<Font encoding="UTF-8">Dadurch werden arctan-Ausdr\303\274cke in der direkten Kinematik reduziert.
 \303\204hnliches Vorgehen wie in [1].</Font></Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1784" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">w_par_subsexp := Matrix(46,2):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_subsexp := Matrix(46,2):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1785" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to 23 do
-  w_par_subsexp(2*i-1, 1) := sin(wpar_t(i,1)):
-<Font encoding="UTF-8">  w_par_subsexp(2*i,   1) := cos(wpar_t(i,1)):
-  # Initialisierung der rechten Spalte mit gleichen Werten. Sp\303\244ter nur Ersetzung, wenn Vorteilhaft.
-</Font>  w_par_subsexp(2*i-1, 2) := w_par_subsexp(2*i-1, 1):
-  w_par_subsexp(2*i,   2) := w_par_subsexp(2*i,   1):
+  wpar_subsexp(2*i-1, 1) := sin(wpar_t(i,1)):
+  wpar_subsexp(2*i,   1) := cos(wpar_t(i,1)):
+<Font encoding="UTF-8">  # Initialisierung der rechten Spalte mit gleichen Werten. Sp\303\244ter nur Ersetzung, wenn Vorteilhaft.
+</Font>  wpar_subsexp(2*i-1, 2) := wpar_subsexp(2*i-1, 1):
+  wpar_subsexp(2*i,   2) := wpar_subsexp(2*i,   1):
 end do:</Text-field>
-</Input>
-</Group>
-<Group view="code" labelreference="L1783" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1707" drawlabel="true">
@@ -466,8 +451,8 @@ end do:</Text-field>
 </Group>
 <Group view="code" labelreference="L1788" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">w_par_subsexp(41,2) := sin_delta16_q:
-w_par_subsexp(42,2) := cos_delta16_q:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_subsexp(41,2) := sin_delta16_q:
+wpar_subsexp(42,2) := cos_delta16_q:</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -545,16 +530,6 @@ Ersetze sin(delta16), cos(delta16) mit Ausdr\303\274cken von oben. Bei arctan(si
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">save ReturnValue, r_3_D_F, r_3_F_G3, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_gamma3_q_debug_maple&quot;, KAS_version, KAS_modell):</Text-field>
 </Input>
 </Group>
-<Group view="code" labelreference="L1721" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_gamma3_q_debug_maple&quot;, KAS_version, KAS_modell):</Text-field>
-</Input>
-</Group>
-<Group view="code" labelreference="L1722" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"># simplify(r_3_F_G3(1,1));</Text-field>
-</Input>
-</Group>
 <Group view="code" labelreference="L1652" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal">Gl. (m3.6)</Text-field>
@@ -572,7 +547,7 @@ Ersetze sin(delta16), cos(delta16) mit Ausdr\303\274cken von oben. Bei arctan(si
 </Group>
 <Group view="code" labelreference="L1796" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">cos_gamma3_q := -r_3_F_G3(1,1)) / l4:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">cos_gamma3_q := (-r_3_F_G3(1,1)) / l4:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1797" drawlabel="true">
@@ -587,8 +562,8 @@ Ersetze sin(delta16), cos(delta16) mit Ausdr\303\274cken von oben. Bei arctan(si
 </Group>
 <Group view="code" labelreference="L1792" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">w_par_subsexp(7,2) := sin_gamma3_q:
-w_par_subsexp(8,2) := cos_gamma3_q:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_subsexp(7,2) := sin_gamma3_q:
+wpar_subsexp(8,2) := cos_gamma3_q:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1723" drawlabel="true">
@@ -703,12 +678,12 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1856" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">w_par_subsexp(5,2) := sin_beta2_q:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_subsexp(5,2) := sin_beta2_q:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1857" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">w_par_subsexp(6,2) := cos_beta2_q:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_subsexp(6,2) := cos_beta2_q:</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -789,12 +764,12 @@ Dadurch kann Sinus/Cosinus von delta16 direkt genutzt werden und es tritt kein a
 </Group>
 <Group view="code" labelreference="L1831" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">w_par_subsexp(15,2) := sin_delta3_q:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_subsexp(15,2) := sin_delta3_q:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1832" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">w_par_subsexp(16,2) := cos_delta3_q:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_subsexp(16,2) := cos_delta3_q:</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -838,8 +813,8 @@ Dadurch kann Sinus/Cosinus von gamma3 direkt genutzt werden und es tritt kein ar
 </Group>
 <Group labelreference="L1817" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">w_par_subsexp(45,2) := sin_rho3_q:
-w_par_subsexp(46,2) := cos_rho3_q:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_subsexp(45,2) := sin_rho3_q:
+wpar_subsexp(46,2) := cos_rho3_q:</Text-field>
 </Input>
 </Group>
 </Section>
@@ -918,14 +893,83 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 </Group>
 <Group labelreference="L1844" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">w_par_subsexp(21,2) := sin_delta6_q:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_subsexp(21,2) := sin_delta6_q:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1845" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">w_par_subsexp(22,2) := cos_delta6_q:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_subsexp(22,2) := cos_delta6_q:</Text-field>
 </Input>
 </Group>
+</Section>
+<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
+<Text-field style="Heading 1" layout="Heading 1">Kompensationsfeder</Text-field></Title><Presentation-Block>
+<Group view="code" labelreference="L1866" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">R_5_6:=rotz(theta(6)):</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L1868" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_6_A_H := &lt;l17; 0; 0&gt;:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1867" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_5_A_H:=R_5_6 . r_6_A_H:</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L1869" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_5_G5_G6:=&lt;l12;0;0&gt;:</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L1871" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_6_G6_H:=&lt;0; -l18; 0&gt;:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1872" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_5_G6_H:=R_5_6 . r_6_G6_H:</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L1865" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_5_G5_H:= r_5_G5_G6 + r_5_G6_H: # Weg G5-G6-H</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1873" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">R_12_5:=rotz(gamma5_q):
+R_5_12:=Transpose(R_12_5):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1874" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_12_B_G5:=&lt;-l14;0;0&gt;:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1864" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_5_G5_B:=R_5_12 . (-r_12_B_G5):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1862" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_5_AB_2 := r_5_A_H - r_5_G5_H + r_5_G5_B: # Weg AB aus A-H-G5-B</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1875" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">l16_c := sqrt(r_5_AB_2[1,1]^2 + r_5_AB_2[2,1]^2); # L\303\244nge AB entspricht Federl\303\244nge</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1890" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">lpar_q := l16_c:</Text-field>
+</Input>
+</Group></Presentation-Block>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
 <Text-field style="Heading 1" layout="Heading 1">Berechne beta1</Text-field></Title><Presentation-Block>
@@ -938,9 +982,36 @@ Siehe auch: KAS5_m4_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 <Group view="code" labelreference="L1688" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">t2 := cos(theta(6)):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1876" drawlabel="true">
+<Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">t1 := sin(theta(6)):</Text-field>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">beta1_q := arctan(-(t2 * l18 - sin(gamma5_q) * l14 + t1 * l17), (t2 * l17 + cos(gamma5_q) * l14 - t1 * l18 - l12)) - gamma5_q:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1880" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">t3 := arctan(-(t2 * l18 - sin(gamma5_q) * l14 + t1 * l17), (t2 * l17 + cos(gamma5_q) * l14 - t1 * l18 - l12)):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1877" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">beta1_q := t3 - gamma5_q:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1878" drawlabel="true">
+<Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"># beta1_q := simplify(beta1_q) assuming beta1_q::real:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1879" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">cos_t3 := (t2 * l17 + cos(gamma5_q) * l14 - t1 * l18 - l12) / l16_c:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1881" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">sin_t3 := (-(t2 * l18 - sin(gamma5_q) * l14 + t1 * l17)) / l16_c:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1689" drawlabel="true">
@@ -956,6 +1027,26 @@ Siehe auch: KAS5_m4_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 <Group view="code" labelreference="L1849" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Zu erledigen: In den Sinus/Cosinus-Ausdr\303\274cken kommt l16 vor. Muss noch generiert werden.</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1883" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">cos_beta1_q := cos_t3*cos(gamma5_q) + sin_t3*sin(gamma5_q):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1884" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">sin_beta1_q := sin_t3*cos(gamma5_q) - cos_t3*sin(gamma5_q):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1887" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_subsexp(3,2) := sin_beta1_q:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1886" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_subsexp(4,2) := cos_beta1_q:</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -1027,6 +1118,11 @@ Quelle: http://www.mapleprimes.com/questions/207601-Remove-Assumptions</Text-fie
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_q:=subs(S,wpar_q):</Text-field>
 </Input>
+</Group>
+<Group view="code" labelreference="L1858" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_subsexp:=subs(S,wpar_subsexp):</Text-field>
+</Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1714" drawlabel="true">
 <Input>
@@ -1044,12 +1140,12 @@ end do:</Text-field>
 </Group>
 <Group view="code" labelreference="L1700" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save wpar_q, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple&quot;, KAS_version, KAS_modell):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save wpar_q, lpar_q, wpar_subsexp, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple&quot;, KAS_version, KAS_modell):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1734" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save wpar_q, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple.m&quot;, KAS_version, KAS_modell):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save wpar_q, lpar_q, wpar_subsexp, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple.m&quot;, KAS_version, KAS_modell):</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1731" drawlabel="true">
@@ -1084,6 +1180,16 @@ end do:</Text-field>
 <Group view="code" labelreference="L1726" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(convert_t_s(wpar_q), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_matlab_opt.m&quot;), true):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1859" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Exportiere Ersetzungsausdr\303\274cke</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1860" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(convert_t_s(wpar_subsexp), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_subsexp_matlab_opt.m&quot;), true):</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section><Presentation-Block>
