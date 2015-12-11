@@ -118,10 +118,14 @@ Hinweise:
 </Group></Presentation-Block>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
 <Text-field style="Heading 1" layout="Heading 1">Initialisierung</Text-field></Title><Presentation-Block>
+<Group view="code" labelreference="L1770" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">restart:</Text-field>
+</Input>
+</Group>
 <Group view="code" labelreference="L1574" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">restart:
-with(LinearAlgebra):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(LinearAlgebra):
 read proc_rotx: 
 read proc_roty: 
 read proc_rotz: 
@@ -578,7 +582,7 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 <Text-field style="Heading 1" layout="Heading 1">Berechne delta3</Text-field></Title><Presentation-Block>
 <Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L1673" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
+<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1674" drawlabel="true">
@@ -629,7 +633,7 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 </Group><Presentation-Block>
 <Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L1679" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
+<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -660,7 +664,7 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 </Group><Presentation-Block>
 <Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L1683" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
+<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -688,6 +692,73 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
 <Text-field style="Heading 1" layout="Heading 1">Exportiere Code</Text-field></Title><Presentation-Block>
+<Group view="code" labelreference="L1774" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Entferne Annahmen aus Variablen</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1773" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l1 := 'l1':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l2 := 'l2':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l3 := 'l3':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l4 := 'l4':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l5 := 'l5':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l6 := 'l6':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l7 := 'l7':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l8 := 'l8':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l9 := 'l9':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l10 := 'l10':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l11 := 'l11':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l12 := 'l12':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l13 := 'l13':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l14 := 'l14':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l15 := 'l15':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l16 := 'l16':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l17 := 'l17':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l18 := 'l18':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l19 := 'l19':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l20 := 'l20':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l21 := 'l21':</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">l22 := 'l22':</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1775" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Die Annahmen sind im Ausdruck bereits in den Variablen gespeichert. Ersetze das &quot;~&quot;-Zeichen.
+Quelle: http://www.mapleprimes.com/questions/207601-Remove-Assumptions</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L1778" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">nms:=convert(indets(wpar_q,name),list):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1776" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">nmsS:=convert~(nms,string):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1777" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">L:=StringTools:-Substitute~(nmsS,&quot;~&quot;,&quot;&quot;): #Removing &quot;~&quot;</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1781" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">L1:=parse~(L):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1780" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">S:=nms=~L1:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1779" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_q:=subs(S,wpar_q):</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1714" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal">Speichere Maple-Ausdruck (Eingabe-Format und internes Format)</Text-field>
@@ -711,43 +782,7 @@ end do:</Text-field>
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">save wpar_q, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple.m&quot;, KAS_version, KAS_modell):</Text-field>
 </Input>
-</Group>
-<Group view="code" labelreference="L1699" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Neu-Einlesen des Ausdrucks und r\303\274cksetzen der Annahmen, damit Annahmen nicht als Tilde auftauchen (funktioniert noch nicht richtig...)</Font></Text-field>
-</Input>
-</Group>
-<Group view="code" labelreference="L1728" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">restart:</Text-field>
-</Input>
-</Group>
-<Group view="code" labelreference="L1727" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">KAS_version := 5:
-KAS_modell := 3:</Text-field>
-</Input>
-</Group>
-<Group view="code" labelreference="L1751" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read proc_convert_t_s: </Text-field>
-</Input>
-</Group>
-<Group view="code" labelreference="L1752" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read proc_MatlabExport:</Text-field>
-</Input>
-</Group>
-<Group view="code" labelreference="L1754" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../codeexport/KAS5_m3_definitions&quot;:</Text-field>
-</Input>
 </Group></Presentation-Block><Presentation-Block>
-<Group view="code" labelreference="L1715" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple.m&quot;, KAS_version, KAS_modell):</Text-field>
-</Input>
-</Group>
 <Group view="code" labelreference="L1731" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal">Exportieren ohne Optimierung</Text-field>
@@ -785,7 +820,7 @@ end do:</Text-field>
 </Section><Presentation-Block>
 <Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L1756" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
+<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Worksheet>
