@@ -285,12 +285,12 @@ end do:</Text-field>
 </Group>
 <Group view="code" labelreference="L1579" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_q(12) := wpar_q(22) + theta(4):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_q(7) := wpar_q(22) + theta(4):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1654" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_q(7) := wpar_q(12):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_q(12) := delta_q(7):</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -426,12 +426,12 @@ end do:</Text-field>
 </Group>
 <Group view="code" labelreference="L1791" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">sin_delta16_q := -r_3_D_C(2)/l12:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">sin_delta16_q := -r_3_D_C(2)/l22:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1790" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">cos_delta16_q := r_3_D_C(1)/l12:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">cos_delta16_q := r_3_D_C(1)/l22:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1787" drawlabel="true">
