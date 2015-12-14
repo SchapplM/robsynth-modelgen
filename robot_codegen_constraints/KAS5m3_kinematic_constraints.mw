@@ -704,7 +704,23 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">t7 := theta(4) + delta_q(16):</Text-field>
 </Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L1905" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Nutze Additionstheoreme zur Bestimmung von Sinus und Cosinus.
+Dadurch kann Sinus/Cosinus von delta16 direkt genutzt werden und es tritt kein arctan auf.</Text-field>
+</Input>
 </Group>
+<Group view="code" labelreference="L1904" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">cos_t7 := cos(theta(4))*cos_delta16_q - sin(theta(4))*sin_delta16_q:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1903" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">sin_t7 := sin(theta(4))*cos_delta16_q + cos(theta(4))*sin_delta16_q:</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1823" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal">Hilfswinkel t8</Text-field>
@@ -712,39 +728,23 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 </Group>
 <Group view="code" labelreference="L1822" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">t8 := arctan((sin(t7) * l22 + r_4_D_B(2)), (cos(t7) * l22 - r_4_D_B(1))):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">t8 := arctan((sin_t7 * l22 + r_4_D_B(2)), (cos_t7 * l22 - r_4_D_B(1))):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1824" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">sin_t8 := (sin(t7) * l22 + r_4_D_B(2))/l13:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">sin_t8 := (sin_t7 * l22 + r_4_D_B(2))/l13:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1825" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">cos_t8 := (cos(t7) * l22 - r_4_D_B(1))/l13:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">cos_t8 := (cos_t7 * l22 - r_4_D_B(1))/l13:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1676" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_q(3) := t8 - t7:</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"># delta_q(3) := simplify(delta_q(3)) assuming delta_q::real:</Text-field>
-</Input>
-</Group>
-<Group view="code" labelreference="L1826" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Nutze Additionstheoreme zur Bestimmung von Sinus und Cosinus.
-Dadurch kann Sinus/Cosinus von delta16 direkt genutzt werden und es tritt kein arctan auf.</Text-field>
-</Input>
-</Group>
-<Group view="code" labelreference="L1830" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">cos_t7 := cos(theta(4))*cos_delta16_q - sin(theta(4))*sin_delta16_q:</Text-field>
-</Input>
-</Group>
-<Group view="code" labelreference="L1829" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">sin_t7 := sin(theta(4))*cos_delta16_q + cos(theta(4))*sin_delta16_q:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1827" drawlabel="true">
