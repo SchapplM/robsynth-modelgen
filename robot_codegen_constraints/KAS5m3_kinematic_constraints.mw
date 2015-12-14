@@ -573,7 +573,7 @@ wpar_subsexp(8,2) := cos_gamma3_q:</Text-field>
 </Group>
 <Group view="code" labelreference="L1724" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(convert_t_s(gamma3_q), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_gamma3_q_matlab_noopt.m&quot;), false):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"># MatlabExport(convert_t_s(gamma3_q), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_gamma3_q_matlab_noopt.m&quot;), false):</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -962,7 +962,7 @@ R_5_12:=Transpose(R_12_5):</Text-field>
 </Group>
 <Group view="code" labelreference="L1875" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">l16_c := sqrt(r_5_AB_2[1,1]^2 + r_5_AB_2[2,1]^2); # L\303\244nge AB entspricht Federl\303\244nge</Font></Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">l16_c := sqrt(r_5_AB_2[1,1]^2 + r_5_AB_2[2,1]^2): # L\303\244nge AB entspricht Federl\303\244nge</Font></Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1890" drawlabel="true">
@@ -1193,9 +1193,9 @@ end do:</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section><Presentation-Block>
-<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L1756" drawlabel="true">
+<Group labelreference="L1896" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Worksheet>
