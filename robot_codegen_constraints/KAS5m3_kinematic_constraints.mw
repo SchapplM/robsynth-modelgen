@@ -841,9 +841,24 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">t1 := rho3_q + delta_q(8):</Text-field>
 </Input>
 </Group>
+<Group labelreference="L1912" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Nutze Additionstheoreme zur Bestimmung von Sinus und Cosinus.</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1910" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">cos_t1 := cos_rho3_q*cos(delta_q(8)) - sin_rho3_q*sin(delta_q(8)):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1911" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">sin_t1 := sin_rho3_q*cos(delta_q(8)) + cos_rho3_q*sin(delta_q(8)):</Text-field>
+</Input>
+</Group>
 <Group labelreference="L1836" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">t2 := arctan((sin(t1) * l4 + r_3_G3_E(1)), (cos(t1) * l4 + r_3_G3_E(2))):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">t2 := arctan((sin_t1 * l4 + r_3_G3_E(1)), (cos_t1 * l4 + r_3_G3_E(2))):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1834" drawlabel="true">
@@ -874,16 +889,6 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 <Group labelreference="L1839" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">sin_t2 := (sin(t1) * l4 + r_3_G3_E(1)) / l20:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1840" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">cos_t1 := cos_rho3_q*cos(delta_q(8)) - sin_rho3_q*sin(delta_q(8)):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1841" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">sin_t1 := sin_rho3_q*cos(delta_q(8)) + cos_rho3_q*sin(delta_q(8)):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1842" drawlabel="true">
@@ -1214,7 +1219,7 @@ end do:</Text-field>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L2" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbW9HRiQ2LVEhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYnLyUmZmVuY2VHUSZmYWxzZUYnLyUqc2VwYXJhdG9yR1EldHJ1ZUYnLyUpc3RyZXRjaHlHRjQvJSpzeW1tZXRyaWNHRjQvJShsYXJnZW9wR0Y0LyUubW92YWJsZWxpbWl0c0dGNC8lJ2FjY2VudEdGNC8lJ2xzcGFjZUdRJjAuMGVtRicvJSdyc3BhY2VHUSwwLjMzMzMzMzNlbUYnRi8=">JSFH</Equation></Text-field>
+<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbW9HRiQ2LVEhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYnLyUmZmVuY2VHUSZmYWxzZUYnLyUqc2VwYXJhdG9yR1EldHJ1ZUYnLyUpc3RyZXRjaHlHRjQvJSpzeW1tZXRyaWNHRjQvJShsYXJnZW9wR0Y0LyUubW92YWJsZWxpbWl0c0dGNC8lJ2FjY2VudEdGNC8lJ2xzcGFjZUdRJjAuMGVtRicvJSdyc3BhY2VHUSwwLjMzMzMzMzNlbUYnRi8=">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbW9HRiQ2LVEhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYnLyUmZmVuY2VHUSZmYWxzZUYnLyUqc2VwYXJhdG9yR1EldHJ1ZUYnLyUpc3RyZXRjaHlHRjQvJSpzeW1tZXRyaWNHRjQvJShsYXJnZW9wR0Y0LyUubW92YWJsZWxpbWl0c0dGNC8lJ2FjY2VudEdGNC8lJ2xzcGFjZUdRJjAuMGVtRicvJSdyc3BhY2VHUSwwLjMzMzMzMzNlbUYn</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Worksheet>
