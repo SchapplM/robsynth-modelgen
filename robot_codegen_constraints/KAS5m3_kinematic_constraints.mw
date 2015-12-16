@@ -798,7 +798,7 @@ Dadurch kann Sinus/Cosinus von gamma3 direkt genutzt werden und es tritt kein ar
 </Group>
 <Group labelreference="L1816" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">cos_rho3_q := (cos_gamma3_q)*(cos(delta_q(8) - Pi/2)) + (sin_gamma3_q)*(sin(delta_q(8) - Pi/2)):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">cos_rho3_q := (cos_gamma3_q)*(cos(delta_q(8) - Pi/2)) - (sin_gamma3_q)*(sin(delta_q(8) - Pi/2)):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1681" drawlabel="true">
@@ -1196,6 +1196,11 @@ end do:</Text-field>
 <Group labelreference="L1896" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L2" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbW9HRiQ2LVEhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYnLyUmZmVuY2VHUSZmYWxzZUYnLyUqc2VwYXJhdG9yR1EldHJ1ZUYnLyUpc3RyZXRjaHlHRjQvJSpzeW1tZXRyaWNHRjQvJShsYXJnZW9wR0Y0LyUubW92YWJsZWxpbWl0c0dGNC8lJ2FjY2VudEdGNC8lJ2xzcGFjZUdRJjAuMGVtRicvJSdyc3BhY2VHUSwwLjMzMzMzMzNlbUYnRi8=">JSFH</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Worksheet>
