@@ -207,6 +207,11 @@ end do:</Text-field>
 end do:</Text-field>
 </Input>
 </Group>
+<Group view="code" labelreference="L1906" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">gamma5_t := wpar_t(5,1):</Text-field>
+</Input>
+</Group>
 <Group view="code" labelreference="L1618" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_t := wpar_t(6..22,1):</Text-field>
@@ -941,8 +946,17 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 </Group>
 <Group view="code" labelreference="L1873" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">R_12_5:=rotz(gamma5_q):
-R_5_12:=Transpose(R_12_5):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">R_12_5_t:=rotz(gamma5_t<Font encoding="UTF-8">): # Rotationsmatrix mit allgemeinem zeitabh\303\244ngigem Ausdruck f\303\274r den Winkel gamma5</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1908" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">R_12_5 := subs_wpar_exp(R_12_5_t): # sinus und cosinus von gamma5 direkt ersetzen, ohne den Winkel einzusetzen.</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1907" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">R_5_12:=Transpose(R_12_5):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1874" drawlabel="true">
