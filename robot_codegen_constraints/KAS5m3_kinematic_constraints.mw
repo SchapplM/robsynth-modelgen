@@ -103,7 +103,12 @@
 <Font encoding="UTF-8">Vorher: Ausf\303\274hren von
 </Font>KAS5_m2_sym_codegen_floatbase_mdh_kinematics.mw
 
-<Font encoding="UTF-8">Berechne alle notwendigen Winkel in wpar in Abh\303\244ngigkeit konstanter Gr\303\266\303\237en und der Gelenkwinkel</Font></Text-field>
+<Font encoding="UTF-8">Berechne alle notwendigen Winkel in wpar in Abh\303\244ngigkeit konstanter Gr\303\266\303\237en und der Gelenkwinkel
+
+Berechne zuerst nur Sinus und Cosinus jedes Winkels. Diese werden f\303\274r die Rotationsmatrizen ben\303\266tigt.
+Die Berechnung der Winkel selbst (zur Kontrolle) ben\303\266tigt die arctan-Funktion, die l\303\244ngere Ausdr\303\274cke nur sehr langsam auswertet.</Font></Text-field>
+<Text-field style="Normal" layout="Normal"><Font encoding="UTF-8">Daher werden zun\303\244chst alle Winkel mit %arctan (inert-Funktion berechnet) und am Ende erst ausgewertet.
+Die Zeitableitung der Winkel (in sp\303\244teren Skripten) wird aus der inert-Funktion berechnet.</Font></Text-field>
 <Text-field style="Text" layout="Normal">
 Hinweise:
 <Font encoding="UTF-8">Der Befehl arctan hat die Funktionalit\303\244t von atan2</Font></Text-field>
@@ -431,7 +436,7 @@ end do:</Text-field>
 </Group>
 <Group view="code" labelreference="L1594" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_qs(16) := arctan(-r_3_D_C(2), r_3_D_C(1)):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_qs(16) := %arctan(-r_3_D_C(2), r_3_D_C(1)):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1791" drawlabel="true">
@@ -547,7 +552,7 @@ Ersetze sin(delta16), cos(delta16) mit Ausdr\303\274cken von oben. Bei arctan(si
 </Group>
 <Group view="code" labelreference="L1653" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">gamma3_qs := arctan(r_3_F_G3(2,1), -r_3_F_G3(1,1)):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">gamma3_qs := %arctan(r_3_F_G3(2,1), -r_3_F_G3(1,1)):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1795" drawlabel="true">
@@ -648,7 +653,7 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 </Group>
 <Group view="code" labelreference="L1847" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">d7b2 := arctan((sin(delta_qs(7)) * l14 + r_4_G5_C(2)), (cos(delta_qs(7)) * l14 + r_4_G5_C(1))):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">d7b2 := %arctan((sin(delta_qs(7)) * l14 + r_4_G5_C(2)), (cos(delta_qs(7)) * l14 + r_4_G5_C(1))):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1669" drawlabel="true">
@@ -748,7 +753,7 @@ Dadurch kann Sinus/Cosinus von delta16 direkt genutzt werden und es tritt kein a
 </Group>
 <Group view="code" labelreference="L1822" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">t8 := arctan((sin_t7 * l22 + r_4_D_B(2)), (cos_t7 * l22 - r_4_D_B(1))):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">t8 := %arctan((sin_t7 * l22 + r_4_D_B(2)), (cos_t7 * l22 - r_4_D_B(1))):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1824" drawlabel="true">
@@ -879,6 +884,11 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 <Group labelreference="L1911" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">sin_t1 := sin_rho3_qs*cos(delta_qs(8)) + cos_rho3_qs*sin(delta_qs(8)):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1967" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">t2 := %arctan((sin_t1 * l4 + r_3_G3_E(1)), (cos_t1 * l4 + r_3_G3_E(2))):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1834" drawlabel="true">
@@ -1035,7 +1045,7 @@ Siehe auch: KAS5_m4_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 </Group>
 <Group view="code" labelreference="L1880" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">t3 := arctan(-(t2 * l18 - sin(gamma5_qs) * l14 + t1 * l17), (t2 * l17 + cos(gamma5_qs) * l14 - t1 * l18 - l12)):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">t3 := %arctan(-(t2 * l18 - sin(gamma5_qs) * l14 + t1 * l17), (t2 * l17 + cos(gamma5_qs) * l14 - t1 * l18 - l12)):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1877" drawlabel="true">
@@ -1095,7 +1105,7 @@ Siehe auch: KAS5_m4_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 </Group></Presentation-Block>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 1" layout="Heading 1">Exportiere Code</Text-field></Title><Presentation-Block>
+<Text-field style="Heading 1" layout="Heading 1"><Font encoding="UTF-8">Exportiere Code f\303\274r folgende Skripte</Font></Text-field></Title><Presentation-Block>
 <Group view="code" labelreference="L1774" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal">Entferne Annahmen aus Variablen</Text-field>
@@ -1187,74 +1197,114 @@ Quelle: http://www.mapleprimes.com/questions/207601-Remove-Assumptions</Text-fie
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to 23 do
   tmp := wpar_qs(i):
-  save tmp, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple_wparq_%d&quot;, KAS_version, KAS_modell, i):
-  save tmp, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple_wparq_%d.m&quot;, KAS_version, KAS_modell, i):
+  save tmp, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple_inert_wparq_%d&quot;, KAS_version, KAS_modell, i):
+  save tmp, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple_inert_wparq_%d.m&quot;, KAS_version, KAS_modell, i):
 end do:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1700" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save wpar_qs, wpar_qt, lpar_qs, lpar_qt, wpar_subsexp, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple&quot;, KAS_version, KAS_modell):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save wpar_qs, wpar_qt, lpar_qs, lpar_qt, wpar_subsexp, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple_inert&quot;, KAS_version, KAS_modell):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1734" drawlabel="true">
 <Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save wpar_qs, wpar_qt, lpar_qs, lpar_qt, wpar_subsexp, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple_inert.m&quot;, KAS_version, KAS_modell):</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L1972" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Exportiere Ersetzungsausdr\303\274cke</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1971" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(wpar_subsexp, sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_subsexp_matlab_opt.m&quot;), true):</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block></Presentation-Block>
+</Section>
+<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
+<Text-field style="Heading 1" layout="Heading 1">Arcustangens-Funktionen auswerten</Text-field></Title><Presentation-Block>
+<Group view="code" labelreference="L1942" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_qs := value( wpar_qs ):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1963" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">lpar_qs := value( lpar_qs ):</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L1966" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_qt := convert_s_t(wpar_qs):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1965" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">lpar_qt := convert_s_t(lpar_qs):</Text-field>
+</Input>
+</Group></Presentation-Block>
+</Section>
+<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
+<Text-field style="Heading 1" layout="Heading 1"><Font encoding="UTF-8">Exportiere Code f\303\274r ausgewertete Ausdr\303\274cke</Font></Text-field></Title><Presentation-Block>
+<Group view="code" labelreference="L1961" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to 23 do
+  tmp := wpar_qs(i):
+  save tmp, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple_wparq_%d&quot;, KAS_version, KAS_modell, i):
+  save tmp, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple_wparq_%d.m&quot;, KAS_version, KAS_modell, i):
+end do:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1962" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save wpar_qs, wpar_qt, lpar_qs, lpar_qt, wpar_subsexp, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple&quot;, KAS_version, KAS_modell):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1960" drawlabel="true">
+<Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">save wpar_qs, wpar_qt, lpar_qs, lpar_qt, wpar_subsexp, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple.m&quot;, KAS_version, KAS_modell):</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
-<Group view="code" labelreference="L1731" drawlabel="true">
+<Group view="code" labelreference="L1953" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal">Exportieren ohne Optimierung</Text-field>
 </Input>
 </Group>
-<Group view="code" labelreference="L1695" drawlabel="true">
+<Group view="code" labelreference="L1956" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to 23 do
   MatlabExport(wpar_qs(i), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_%d_matlab_noopt.m&quot;, i), false):
 end do:</Text-field>
 </Input>
 </Group>
-<Group view="code" labelreference="L1696" drawlabel="true">
+<Group view="code" labelreference="L1955" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(wpar_qs, sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_matlab_noopt.m&quot;), false):</Text-field>
 </Input>
 </Group>
-<Group view="code" labelreference="L1732" drawlabel="true">
+<Group view="code" labelreference="L1954" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal">Exportieren mit Optimierung</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1725" drawlabel="true">
+<Group labelreference="L1957" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to 23 do
   MatlabExport(wpar_qs(i), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_%d_matlab_opt.m&quot;, i), true):
 end do:</Text-field>
 </Input>
 </Group>
-<Group view="code" labelreference="L1726" drawlabel="true">
+<Group view="code" labelreference="L1952" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(wpar_qs, sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_matlab_opt.m&quot;), true):</Text-field>
 </Input>
-</Group>
-<Group view="code" labelreference="L1859" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Exportiere Ersetzungsausdr\303\274cke</Font></Text-field>
-</Input>
-</Group>
-<Group view="code" labelreference="L1860" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(wpar_subsexp, sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_subsexp_matlab_opt.m&quot;), true):</Text-field>
-</Input>
 </Group></Presentation-Block>
 </Section><Presentation-Block>
-<Group labelreference="L1896" drawlabel="true">
+<Group labelreference="L1950" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
-</Input>
-</Group></Presentation-Block><Presentation-Block>
-<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L2" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Worksheet>
