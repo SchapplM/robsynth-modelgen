@@ -584,6 +584,9 @@ Ersetze sin(delta16), cos(delta16) mit Ausdr\303\274cken von oben. Bei arctan(si
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">ReturnValue := intersect_circle(r_3_D_E, r_3_D_G3, l20, l4):</Text-field>
 </Input>
+<Output>
+<Text-field style="HyperlinkWarning" layout="HyperlinkWarning"><Hyperlink linktarget="http://www.maplesoft.com/support/help/errors/view.aspx?path=Warning,%20%20computation%20interrupted" hyperlink="true"><Font style="HyperlinkWarning">Warning,  computation interrupted</Font></Hyperlink></Text-field>
+</Output>
 </Group>
 <Group view="code" labelreference="L1643" drawlabel="true">
 <Input>
@@ -988,12 +991,12 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 </Group>
 <Group labelreference="L1838" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">cos_t2 := (cos(t1) * l4 + r_3_G3_E(2)) / l20:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">cos_t2 := (cos_t1 * l4 + r_3_G3_E(2)) / l20:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1839" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">sin_t2 := (sin(t1) * l4 + r_3_G3_E(1)) / l20:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">sin_t2 := (sin_t1 * l4 + r_3_G3_E(1)) / l20:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1842" drawlabel="true">
