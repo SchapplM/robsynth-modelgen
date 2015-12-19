@@ -104,8 +104,8 @@
 </Font>KAS5_m2_sym_codegen_floatbase_mdh_kinematics.mw
 
 <Font encoding="UTF-8">Berechne alle notwendigen Winkel in wpar in Abh\303\244ngigkeit konstanter Gr\303\266\303\237en und der Gelenkwinkel
-
-Berechne zuerst nur Sinus und Cosinus jedes Winkels. Diese werden f\303\274r die Rotationsmatrizen ben\303\266tigt.
+</Font>
+<Font encoding="UTF-8">Berechne zuerst nur Sinus und Cosinus jedes Winkels. Diese werden f\303\274r die Rotationsmatrizen ben\303\266tigt.
 Die Berechnung der Winkel selbst (zur Kontrolle) ben\303\266tigt die arctan-Funktion, die l\303\244ngere Ausdr\303\274cke nur sehr langsam auswertet.</Font></Text-field>
 <Text-field style="Normal" layout="Normal"><Font encoding="UTF-8">Daher werden zun\303\244chst alle Winkel mit %arctan (inert-Funktion berechnet) und am Ende erst ausgewertet.
 Die Zeitableitung der Winkel (in sp\303\244teren Skripten) wird aus der inert-Funktion berechnet.</Font></Text-field>
@@ -394,6 +394,26 @@ end do:</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_4_G5_D := -r_4_G4_G5 + r_4_G4_D:</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
+<Group labelreference="L1985" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_4_G5_D := simplify(r_4_G5_D, trig):</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L1984" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_4_G5_D := simplify(r_4_G5_D):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1986" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_4_G5_D := combine(r_4_G5_D, trig):</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L1983" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1925" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">ReturnValue := intersect_circle(r_4_G5_B, r_4_G5_D, l13, l22):</Text-field>
@@ -402,6 +422,21 @@ end do:</Text-field>
 <Group view="code" labelreference="L1924" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_4_G5_C := &lt;ReturnValue(1..2, 2); 0&gt;: # Alternative 2</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group labelreference="L1977" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_4_G5_C := simplify(r_4_G5_C, trig):</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L1978" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_4_G5_C := simplify(r_4_G5_C):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1976" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_4_G5_C := combine(r_4_G5_C, trig):</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1623" drawlabel="true">
@@ -423,7 +458,22 @@ end do:</Text-field>
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_3_D_C := R_3_4 . r_4_D_C:</Text-field>
 </Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group labelreference="L1981" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_3_D_C := simplify(r_3_D_C, trig):</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L1982" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_3_D_C := simplify(r_3_D_C):</Text-field>
+</Input>
 </Group>
+<Group view="code" labelreference="L1980" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_3_D_C := combine(r_3_D_C, trig):</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1627" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
@@ -517,12 +567,17 @@ Ersetze sin(delta16), cos(delta16) mit Ausdr\303\274cken von oben. Bei arctan(si
 </Group>
 <Group labelreference="L1646" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_3_D_E := simplify(r_3_D_E, trig):</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1641" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_3_D_E := simplify(r_3_D_E):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1974" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_3_D_E := combine(r_3_D_E, trig):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1642" drawlabel="true">
@@ -533,6 +588,26 @@ Ersetze sin(delta16), cos(delta16) mit Ausdr\303\274cken von oben. Bei arctan(si
 <Group view="code" labelreference="L1643" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_3_D_F := &lt;ReturnValue(1..2, 2); 0&gt;: # Alternative 2</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group labelreference="L1989" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_3_D_F := simplify(r_3_D_F, trig):</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L1990" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_3_D_F := simplify(r_3_D_F):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1988" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_3_D_F := combine(r_3_D_F, trig):</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L1987" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1651" drawlabel="true">
@@ -1221,7 +1296,12 @@ end do:</Text-field>
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(wpar_subsexp, sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_subsexp_matlab_opt.m&quot;), true):</Text-field>
 </Input>
-</Group></Presentation-Block><Presentation-Block></Presentation-Block>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L1973" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
+</Input>
+</Group></Presentation-Block>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
 <Text-field style="Heading 1" layout="Heading 1">Arcustangens-Funktionen auswerten</Text-field></Title><Presentation-Block>
@@ -1305,6 +1385,11 @@ end do:</Text-field>
 <Group labelreference="L1950" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L2" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Worksheet>
