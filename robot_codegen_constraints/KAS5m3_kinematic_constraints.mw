@@ -584,9 +584,6 @@ Ersetze sin(delta16), cos(delta16) mit Ausdr\303\274cken von oben. Bei arctan(si
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">ReturnValue := intersect_circle(r_3_D_E, r_3_D_G3, l20, l4):</Text-field>
 </Input>
-<Output>
-<Text-field style="HyperlinkWarning" layout="HyperlinkWarning"><Hyperlink linktarget="http://www.maplesoft.com/support/help/errors/view.aspx?path=Warning,%20%20computation%20interrupted" hyperlink="true"><Font style="HyperlinkWarning">Warning,  computation interrupted</Font></Hyperlink></Text-field>
-</Output>
 </Group>
 <Group view="code" labelreference="L1643" drawlabel="true">
 <Input>
