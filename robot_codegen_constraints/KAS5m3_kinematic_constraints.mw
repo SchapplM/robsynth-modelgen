@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="18" minor="2"/>
+<Version major="18" minor="0"/>
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="true" autoexpanding_sections="true">
 </View-Properties>
@@ -139,6 +139,11 @@ Hinweise:
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(RealDomain):</Text-field>
 </Input>
 </Group>
+<Group view="code" labelreference="L1996" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">with(StringTools): # F\303\274r Zeitausgabe</Font></Text-field>
+</Input>
+</Group>
 <Group view="code" labelreference="L1574" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(LinearAlgebra):
@@ -271,6 +276,23 @@ end do:</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l20&gt;0):</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l21&gt;0):</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l22&gt;0):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1991" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Schalter mit Optionen f\303\274r die Code-Generierung.
+W\303\244hle, ob trigonometrische arctan-Ausdr\303\274cke ausgewertet werden, oder ob Sinus- und Cosinussatz angewendet werden sollen.
+Dies hat gro\303\237en Einfluss auf die Rechendauer.</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1993" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Schalter_Opt := &lt;1;1;0;0&gt;:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1994" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;Beginn der Berechnungen. %s&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -535,12 +557,12 @@ Ersetze sin(delta16), cos(delta16) mit Ausdr\303\274cken von oben. Bei arctan(si
 </Group>
 <Group view="code" labelreference="L1809" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">R_3_10_s := rotz(- delta_s(16)):</Text-field>
-</Input>
-</Group></Presentation-Block><Presentation-Block>
-<Group view="code" labelreference="L1804" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">R_3_10 := subs_wpar_exp(R_3_10_s):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if Schalter_Opt(1) = 1 then
+  R_3_10_s := rotz(- delta_s(16)):
+  R_3_10 := subs_wpar_exp(R_3_10_s):
+else
+  R_3_10 := rotz(- delta_qs(16)):
+end if:</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1650" drawlabel="true">
@@ -565,7 +587,8 @@ Ersetze sin(delta16), cos(delta16) mit Ausdr\303\274cken von oben. Bei arctan(si
 </Group>
 <Group view="code" labelreference="L1642" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">ReturnValue := intersect_circle(r_3_D_E, r_3_D_G3, l20, l4):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">ReturnValue := intersect_circle(r_3_D_E, r_3_D_G3, l20, l4):
+printf(&quot;Zweiter Kreisschnittpunkt berechnet. %s&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1643" drawlabel="true">
@@ -652,6 +675,11 @@ wpar_subsexp(8,2) := cos_gamma3_qs:</Text-field>
 <Group view="code" labelreference="L1724" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"># MatlabExport(convert_t_s(gamma3_qs), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_gamma3_qs_matlab_noopt.m&quot;), false):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1997" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;Winkel gamma3 berechnet. %s&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -910,6 +938,11 @@ wpar_subsexp(48,2) := cos_rho3_qs:</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">save wpar_qs, wpar_subsexp, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple_debug_nach_rho3.m&quot;, KAS_version, KAS_modell):</Text-field>
 </Input>
 </Group>
+<Group labelreference="L1998" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;Winkel rho3 berechnet. %s&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Text-field>
+</Input>
+</Group>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
 <Text-field style="Heading 1" layout="Heading 1">Berechne delta6</Text-field></Title>
@@ -1080,6 +1113,11 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 <Group view="code" labelreference="L1890" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">lpar_qs := l16_c:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1999" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Kompensationsfederl\303\244nge berechnet. %s&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Font></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -1279,10 +1317,15 @@ end do:</Text-field>
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(wpar_subsexp, sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_subsexp_matlab_opt.m&quot;), true):</Text-field>
 </Input>
+</Group>
+<Group view="code" labelreference="L2001" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Ausdr\303\274cke mit Inert-Arctan exportiert. %s&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Font></Text-field>
+</Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L1973" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
+<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -1306,6 +1349,11 @@ end do:</Text-field>
 <Group view="code" labelreference="L1965" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">lpar_qt := convert_s_t(lpar_qs):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2000" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;Arcustangens ausgewertet. %s&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -1367,12 +1415,17 @@ end do:</Text-field>
 </Section><Presentation-Block>
 <Group labelreference="L1950" drawlabel="true">
 <Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;Fertig. %s&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L2003" drawlabel="true">
+<Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
-<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L2" drawlabel="true">
+<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L2002" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
+<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Worksheet>
