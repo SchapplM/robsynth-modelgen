@@ -173,12 +173,12 @@ read &quot;../codeexport/KAS5_m3_definitions&quot;:</Text-field>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1569" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Variable mit Winkeln der Nebenstruktur nur in Abh\303\244ngigkeit der Gelenkwinkel</Font></Text-field>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Variable mit Winkeln der Nebenstruktur nur in Abh\303\244ngigkeit der verallgemeinerten Koordinaten</Font></Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1570" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_qs := Matrix(23,1):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_qs := Matrix(RowDimension(wpar_s),1):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1571" drawlabel="true">
@@ -200,23 +200,6 @@ end do:</Text-field>
 <Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Variablen definieren f\303\274r die Hilfswinkel</Font></Text-field>
 </Input>
 </Group>
-<Group view="code" labelreference="L1585" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_qs := Matrix(17,1):</Text-field>
-</Input>
-</Group>
-<Group view="code" labelreference="L1584" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to RowDimension(delta_qs) do
-  delta_qs(i,1) := 0:
-  # parse(sprintf(&quot;delta%d_qs := 0&quot;, i)):
-  if diff(delta_s(i,1), t) = 0 then
-<Font encoding="UTF-8">    # Ersetze durch zeitunabh\303\244ngige Form
-</Font>    # delta_qs(i,1) := parse(sprintf(&quot;delta%d&quot;, i)):
-  end if:
-end do:</Text-field>
-</Input>
-</Group>
 <Group view="code" labelreference="L1906" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">gamma5_s := wpar_s(5,1):</Text-field>
@@ -224,12 +207,12 @@ end do:</Text-field>
 </Group>
 <Group view="code" labelreference="L1618" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_s := wpar_s(6..22,1):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_s := wpar_s(6..23,1):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1621" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_qs := wpar_qs(6..22,1):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_qs := wpar_qs(6..23,1):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1782" drawlabel="true">
@@ -244,12 +227,12 @@ Spalte 2: Einzusetzender Ausdruck.
 </Group>
 <Group view="code" labelreference="L1784" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_subsexp := Matrix(46,2):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_subsexp := Matrix(2*RowDimension(wpar_s),2):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1785" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to 23 do
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to RowDimension(wpar_s) do
   wpar_subsexp(2*i-1, 1) := sin(wpar_s(i,1)):
   wpar_subsexp(2*i,   1) := cos(wpar_s(i,1)):
 <Font encoding="UTF-8">  # Initialisierung der rechten Spalte mit gleichen Werten. Sp\303\244ter nur Ersetzung, wenn Vorteilhaft.
@@ -913,13 +896,13 @@ Dadurch kann Sinus/Cosinus von gamma3 direkt genutzt werden und es tritt kein ar
 </Group>
 <Group labelreference="L1705" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_qs(23) := rho3_qs:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_qs(24) := rho3_qs:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1817" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_subsexp(45,2) := sin_rho3_qs:
-wpar_subsexp(46,2) := cos_rho3_qs:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_subsexp(47,2) := sin_rho3_qs:
+wpar_subsexp(48,2) := cos_rho3_qs:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1937" drawlabel="true">
@@ -1270,7 +1253,7 @@ Quelle: http://www.mapleprimes.com/questions/207601-Remove-Assumptions</Text-fie
 </Group>
 <Group view="code" labelreference="L1735" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to 23 do
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to RowDimension(wpar_s) do
   tmp := wpar_qs(i):
   save tmp, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple_inert_wparq_%d&quot;, KAS_version, KAS_modell, i):
   save tmp, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple_inert_wparq_%d.m&quot;, KAS_version, KAS_modell, i):
@@ -1299,7 +1282,7 @@ end do:</Text-field>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L1973" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
+<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -1330,7 +1313,7 @@ end do:</Text-field>
 <Text-field style="Heading 1" layout="Heading 1"><Font encoding="UTF-8">Exportiere Code f\303\274r ausgewertete Ausdr\303\274cke</Font></Text-field></Title><Presentation-Block>
 <Group view="code" labelreference="L1961" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to 23 do
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to RowDimension(wpar_s) do
   tmp := wpar_qs(i):
   save tmp, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple_wparq_%d&quot;, KAS_version, KAS_modell, i):
   save tmp, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple_wparq_%d.m&quot;, KAS_version, KAS_modell, i):
@@ -1354,7 +1337,7 @@ end do:</Text-field>
 </Group>
 <Group view="code" labelreference="L1956" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to 23 do
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to RowDimension(wpar_s) do
   MatlabExport(wpar_qs(i), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_%d_matlab_noopt.m&quot;, i), false):
 end do:</Text-field>
 </Input>
@@ -1371,7 +1354,7 @@ end do:</Text-field>
 </Group>
 <Group labelreference="L1957" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to 23 do
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to RowDimension(wpar_s) do
   MatlabExport(wpar_qs(i), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_%d_matlab_opt.m&quot;, i), true):
 end do:</Text-field>
 </Input>
@@ -1389,7 +1372,7 @@ end do:</Text-field>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L2" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
+<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Worksheet>
