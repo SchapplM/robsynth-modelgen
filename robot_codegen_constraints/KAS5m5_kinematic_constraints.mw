@@ -96,8 +96,8 @@
 <Input>
 <Text-field style="Heading 2" layout="Heading 2">Beschreibung</Text-field>
 <Text-field style="Normal" layout="Normal">
-<Font encoding="UTF-8">Modell m5: 
-* Kurbel N7 ist starr mit K\303\266rper K2 gekoppelt (\303\274ber die Achse) (wie m3), 
+Modell m5: 
+<Font encoding="UTF-8">* Kurbel N7 ist starr mit K\303\266rper K2 gekoppelt (\303\274ber die Achse) (wie m3), 
 * Zahnradkopplung zwischen K\303\266rpern Z2 und Z3 (Unterschied zu m3)</Font>
 
 <Font encoding="UTF-8">Setze die Zwangsbedingung (Zahnradkopplung) in die bereits berechneten Zwangsbedingungen f\303\274r das KAS5_m3 ein
@@ -185,11 +185,11 @@ wpar_subsexp_KAS5m3 := wpar_subsexp:</Text-field>
 <Group view="code" labelreference="L2018" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">subs_q_m3 := proc(A)
-  local A_s, i, j; 
+  local A_s, j; 
   A_s := A; 
-    for j from 1 to RowDimension(qJ_s) do
-      A_s := subs({qJ_s(j,1) = qJs_KAS5m3(j,1)}, A_s):
-    end do:
+  for j from 1 to RowDimension(qJ_s) do
+    A_s := subs({qJ_s(j,1) = qJs_KAS5m3(j,1)}, A_s):
+  end do:
   return A_s:
 end proc:</Text-field>
 </Input>
@@ -210,11 +210,11 @@ lpar_qs_KAS5m3 := subs_q_m3(lpar_qs_KAS5m3):</Text-field>
 <Group view="code" labelreference="L2024" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">subs_q_m3_m5 := proc(A)
-  local A_s, i, j; 
+  local A_s, j; 
   A_s := A; 
-    for j from 1 to RowDimension(qJ_s) do
-      A_s := subs({qJs_KAS5m3(j,1) = qJs_KAS5m3m5subs(j,1)}, A_s):
-    end do:
+  for j from 1 to RowDimension(qJ_s) do
+    A_s := subs({qJs_KAS5m3(j,1) = qJs_KAS5m3m5subs(j,1)}, A_s):
+  end do:
   return A_s:
 end proc:</Text-field>
 </Input>
@@ -250,9 +250,9 @@ TODO: Diesen Teil entfernen, wenn nicht mehr ben\303\266tigt.</Font></Text-field
   wpar_subsexp_KAS5m5(1..44,1..2) := wpar_subsexp_KAS5m5(1..44,1..2):
   <Font encoding="UTF-8"># Ersetzungsausdruck f\303\274r delta18 nicht notwendig.</Font>
   wpar_subsexp_KAS5m5_neu(47..48,1..2) := wpar_subsexp_KAS5m5(45..46,1..2):
-<Font encoding="UTF-8">  
-  # Ersetzung der urspr\303\274nglichen Ausdr\303\274cke
-  </Font>wpar_qs_KAS5m5 := wpar_qs_KAS5m5_neu:
+  
+<Font encoding="UTF-8">  # Ersetzung der urspr\303\274nglichen Ausdr\303\274cke
+</Font>  wpar_qs_KAS5m5 := wpar_qs_KAS5m5_neu:
   wpar_subsexp_KAS5m5 := wpar_subsexp_KAS5m5_neu:
 end if:</Text-field>
 </Input>
@@ -260,21 +260,34 @@ end if:</Text-field>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
 <Text-field style="Heading 1" layout="Heading 1">Konvertiere Ergebnisse</Text-field></Title><Presentation-Block>
-<Group view="code" labelreference="L2035" drawlabel="true">
+<Group view="code" labelreference="L2057" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_qs := wpar_qs_KAS5m5:
-lpar_qs := lpar_qs_KAS5m5:</Text-field>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">R\303\274ckersetzung der markierten Koordinaten gegen die normale Form (qJ_KAS5m5 -&gt; qJ)</Font></Text-field>
 </Input>
 </Group>
+<Group view="code" labelreference="L2056" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">subs_q_m5_J := proc(A)
+  local A_s, j; 
+  A_s := A; 
+  for j from 1 to RowDimension(qJ_s) do
+    A_s := subs({qJs_KAS5m5(j,1) = qJ_s(j,1)}, A_s):
+  end do:
+  return A_s:
+end proc:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2055" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_subsexp := subs_q_m5_J(wpar_subsexp_KAS5m5):
+wpar_qs := subs_q_m5_J(wpar_qs_KAS5m5):
+lpar_qs := subs_q_m5_J(lpar_qs_KAS5m5):</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L2036" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_qt := convert_s_t(wpar_qs):
 lpar_qt := convert_s_t(lpar_qs):</Text-field>
-</Input>
-</Group>
-<Group view="code" labelreference="L2038" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_subsexp := wpar_subsexp_KAS5m5:</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
