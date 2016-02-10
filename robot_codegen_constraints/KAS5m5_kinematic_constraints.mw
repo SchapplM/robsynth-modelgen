@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="18" minor="2"/>
+<Version major="18" minor="0"/>
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="true" autoexpanding_sections="true">
 </View-Properties>
@@ -95,10 +95,14 @@
 <Group view="code" labelreference="L18" drawlabel="true">
 <Input>
 <Text-field style="Heading 2" layout="Heading 2">Beschreibung</Text-field>
-<Text-field style="Normal" layout="Normal"><Font encoding="UTF-8">
-Bestimme Ab
+<Text-field style="Normal" layout="Normal">
+<Font encoding="UTF-8">Modell m5: 
+* Kurbel N7 ist starr mit K\303\266rper K2 gekoppelt (\303\274ber die Achse) (wie m3), 
+* Zahnradkopplung zwischen K\303\266rpern Z2 und Z3 (Unterschied zu m3)</Font>
 
-Berechnung der Kopplung der Zahnr\303\244der am Ellenbogen</Font></Text-field>
+<Font encoding="UTF-8">Setze die Zwangsbedingung (Zahnradkopplung) in die bereits berechneten Zwangsbedingungen f\303\274r das KAS5_m3 ein
+</Font>
+<Font encoding="UTF-8">Berechnung der Kopplung der Zahnr\303\244der am Ellenbogen</Font></Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L17" drawlabel="true">
@@ -237,12 +241,20 @@ TODO: Diesen Teil entfernen, wenn nicht mehr ben\303\266tigt.</Font></Text-field
 <Group view="code" labelreference="L2020" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if RowDimension(wpar_qs_KAS5m5) = 23 then
-  wpar_qs_KAS5m5 := &lt;wpar_qs_KAS5m5(1..22,1);delta18s;wpar_qs_KAS5m5(23)&gt;:
-  wpar_subsexp_KAS5m5 := Matrix(48,2):
+  wpar_qs_KAS5m5_neu := Matrix(24,1): # Einsetzen in neue Matrix wesentlich schneller als stapeln in einer Gleichung.
+  wpar_qs_KAS5m5_neu(1..22,1) := wpar_qs_KAS5m5(1..22,1):
+  wpar_qs_KAS5m5_neu(23,1) := delta18s:
+  wpar_qs_KAS5m5_neu(24,1) := wpar_qs_KAS5m5(23,1):
+
+  wpar_subsexp_KAS5m5_neu := Matrix(48,2):
   wpar_subsexp_KAS5m5(1..44,1..2) := wpar_subsexp_KAS5m5(1..44,1..2):
-  wpar_subsexp_KAS5m5(47..48,1..2) := wpar_qs_KAS5m5(45..46,1..2):<Font encoding="UTF-8">
-  # Ersetzungsausdruck f\303\274r delta18 nicht notwendig.
-</Font>end if:</Text-field>
+  <Font encoding="UTF-8"># Ersetzungsausdruck f\303\274r delta18 nicht notwendig.</Font>
+  wpar_subsexp_KAS5m5_neu(47..48,1..2) := wpar_subsexp_KAS5m5(45..46,1..2):
+<Font encoding="UTF-8">  
+  # Ersetzung der urspr\303\274nglichen Ausdr\303\274cke
+  </Font>wpar_qs_KAS5m5 := wpar_qs_KAS5m5_neu:
+  wpar_subsexp_KAS5m5 := wpar_subsexp_KAS5m5_neu:
+end if:</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
