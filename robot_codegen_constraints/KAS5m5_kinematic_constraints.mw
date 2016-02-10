@@ -184,7 +184,7 @@ wpar_subsexp_KAS5m3 := wpar_subsexp:</Text-field>
 </Group>
 <Group view="code" labelreference="L2018" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">subs_q_m3 := proc(A)
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">subs_q_J_m3 := proc(A)
   local A_s, j; 
   A_s := A; 
   for j from 1 to RowDimension(qJ_s) do
@@ -197,9 +197,9 @@ end proc:</Text-field>
 <Group view="code" labelreference="L2021" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">qJs_KAS5m3:=Matrix(7, 1, [qJs1_m3, qJs2_m3, qJs3_m3, qJs4_m3, qJs5_m3, qJs6_m3, qJs7_m3]):
-wpar_subsexp_KAS5m3 := subs_q_m3(wpar_subsexp_KAS5m3):
-wpar_qs_KAS5m3 := subs_q_m3(wpar_qs_KAS5m3):
-lpar_qs_KAS5m3 := subs_q_m3(lpar_qs_KAS5m3):</Text-field>
+wpar_subsexp_KAS5m3 := subs_q_J_m3(wpar_subsexp_KAS5m3):
+wpar_qs_KAS5m3 := subs_q_J_m3(wpar_qs_KAS5m3):
+lpar_qs_KAS5m3 := subs_q_J_m3(lpar_qs_KAS5m3):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L2023" drawlabel="true">
@@ -270,11 +270,16 @@ end if:</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">subs_q_m5_J := proc(A)
   local A_s, j; 
   A_s := A; 
-  for j from 1 to RowDimension(qJ_s) do
+  for j from 1 to RowDimension(qJs_KAS5m5) do
     A_s := subs({qJs_KAS5m5(j,1) = qJ_s(j,1)}, A_s):
   end do:
   return A_s:
 end proc:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2058" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">qJs_KAS5m5:=Matrix(5, 1, [qJs1_m5, qJs2_m5, qJs3_m5, qJs4_m5, qJs5_m5]):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L2055" drawlabel="true">
