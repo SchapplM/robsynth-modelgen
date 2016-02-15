@@ -287,7 +287,7 @@ Dies hat gro\303\237en Einfluss auf die Rechendauer.</Font></Text-field>
 </Group>
 <Group view="code" labelreference="L1993" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Schalter_Opt := &lt;1;1;0;0&gt;:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Schalter_Opt := &lt;1;1;1;0&gt;:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1994" drawlabel="true">
@@ -587,7 +587,19 @@ end if:</Text-field>
 </Group>
 <Group view="code" labelreference="L1642" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">ReturnValue := intersect_circle(r_3_D_E, r_3_D_G3, l20, l4):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if Schalter_Opt(3) = 1 then
+  # Rufe die Kreisschnittpunkt-Funktion mit allgemeinen Werten auf und ersetze das Ergebnis.
+<Font encoding="UTF-8">  # dies f\303\274hrt zu einer wesentlichen Verringerungen der Rechenzeit, da das Einsetzen und Weiterrechnen der komplizierten Ausdr\303\274cke in der Unterfunktion entf\303\244llt.
+</Font>  subs_ic := &lt;r_3_D_E_Allg_x; r_3_D_E_Allg_y; r_3_D_G3_Allg_x; r_3_D_G3_Allg_y&gt;:
+  subs_ic_KAS := &lt;r_3_D_E; r_3_D_G3&gt;:
+  ReturnValue_Allg := intersect_circle(&lt;r_3_D_E_Allg_x; r_3_D_E_Allg_y&gt;, &lt;r_3_D_G3_Allg_x; r_3_D_G3_Allg_y&gt;, l20, l4):
+  ReturnValue := ReturnValue_Allg:
+  for i from 1 to 4 do 
+    ReturnValue := subs({subs_ic(i) = subs_ic_KAS(i)}, ReturnValue):
+  end do:
+else
+  ReturnValue := intersect_circle(r_3_D_E, r_3_D_G3, l20, l4):
+end if:
 printf(&quot;Zweiter Kreisschnittpunkt berechnet. %s&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Text-field>
 </Input>
 </Group>
