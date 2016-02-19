@@ -134,33 +134,37 @@ Hinweise:
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">restart:</Text-field>
 </Input>
 </Group>
-<Group view="code" labelreference="L1913" drawlabel="true">
+<Group view="code" labelreference="L2004" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(RealDomain):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">with(StringTools): # F\303\274r Zeitausgabe</Font>
+with(LinearAlgebra):
+with(codegen):
+with(CodeGeneration):</Text-field>
 </Input>
 </Group>
-<Group view="code" labelreference="L1996" drawlabel="true">
+<Group view="code" labelreference="L2010" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">with(StringTools): # F\303\274r Zeitausgabe</Font></Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_active := false:
+codegen_opt := true:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2008" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read proc_MatlabExport:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2009" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">with(RealDomain): # Schr\303\244nkt alle Funktionen auf den reellen Bereich ein. Muss nach Definition von MatlabExport kommen. Sonst geht das nicht.</Font></Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1574" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(LinearAlgebra):
-read proc_rotx: 
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read proc_rotx: 
 read proc_roty: 
 read proc_rotz: 
-read proc_MatlabExport:</Text-field>
-</Input>
-</Group>
-<Group view="code" labelreference="L1800" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read proc_subs_wpar_exp:</Text-field>
-</Input>
-</Group>
-<Group view="code" labelreference="L1595" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read proc_intersect_circle:</Text-field>
+read proc_subs_wpar_exp:
+read proc_intersect_circle:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1573" drawlabel="true">
@@ -287,7 +291,7 @@ Dies hat gro\303\237en Einfluss auf die Rechendauer.</Font></Text-field>
 </Group>
 <Group view="code" labelreference="L1993" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Schalter_Opt := &lt;1;1;1;0&gt;:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Schalter_Opt := &lt;0;1;0;0&gt;:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1994" drawlabel="true">
@@ -587,7 +591,7 @@ end if:</Text-field>
 </Group>
 <Group view="code" labelreference="L1642" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if Schalter_Opt(3) = 1 then
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if Schalter_Opt(2) = 1 then
   # Rufe die Kreisschnittpunkt-Funktion mit allgemeinen Werten auf und ersetze das Ergebnis.
 <Font encoding="UTF-8">  # dies f\303\274hrt zu einer wesentlichen Verringerungen der Rechenzeit, da das Einsetzen und Weiterrechnen der komplizierten Ausdr\303\274cke in der Unterfunktion entf\303\244llt.
 </Font>  subs_ic := &lt;r_3_D_E_Allg_x; r_3_D_E_Allg_y; r_3_D_G3_Allg_x; r_3_D_G3_Allg_y&gt;:
@@ -610,24 +614,13 @@ printf(&quot;Zweiter Kreisschnittpunkt berechnet. %s&quot;, FormatTime(&quot;%Y-
 </Group></Presentation-Block><Presentation-Block>
 <Group labelreference="L1989" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_3_D_F := simplify(r_3_D_F, trig):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if Schalter_Opt(3) = 1 then
+  r_3_D_F := simplify(r_3_D_F, trig):
+  r_3_D_F := simplify(r_3_D_F):
+  r_3_D_F := combine(r_3_D_F, trig):
+end if:</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
-<Group view="code" labelreference="L1990" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_3_D_F := simplify(r_3_D_F):</Text-field>
-</Input>
-</Group>
-<Group view="code" labelreference="L1988" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_3_D_F := combine(r_3_D_F, trig):</Text-field>
-</Input>
-</Group></Presentation-Block><Presentation-Block>
-<Group view="code" labelreference="L1987" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
-</Input>
-</Group>
 <Group view="code" labelreference="L1651" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_3_F_G3 := -r_3_D_F + r_3_D_G3:</Text-field>
@@ -1327,17 +1320,14 @@ end do:</Text-field>
 </Group>
 <Group view="code" labelreference="L1971" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(wpar_subsexp, sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_subsexp_matlab_opt.m&quot;), true):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_active then
+  MatlabExport(wpar_subsexp, sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_subsexp_matlab_opt.m&quot;), true):
+end if:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L2001" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Ausdr\303\274cke mit Inert-Arctan exportiert. %s&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Font></Text-field>
-</Input>
-</Group></Presentation-Block><Presentation-Block>
-<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L1973" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -1435,7 +1425,7 @@ end do:</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
-<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L2002" drawlabel="true">
+<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L2" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
 </Input>
