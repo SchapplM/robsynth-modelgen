@@ -291,7 +291,7 @@ Dies hat gro\303\237en Einfluss auf die Rechendauer.</Font></Text-field>
 </Group>
 <Group view="code" labelreference="L1993" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Schalter_Opt := &lt;0;1;0;0&gt;:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Schalter_Opt := &lt;1;1;0;0;1&gt;:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1994" drawlabel="true">
@@ -459,26 +459,6 @@ end if:</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">save r_4_G5_C, &quot;../codeexport/KAS5_m3_kinematik_parallelstruktur_r_4_G5_C_debug_opt_maple&quot;:</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
-<Group labelreference="L1977" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_4_G5_C := simplify(r_4_G5_C, trig):</Text-field>
-</Input>
-</Group></Presentation-Block><Presentation-Block>
-<Group view="code" labelreference="L1978" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_4_G5_C := simplify(r_4_G5_C):</Text-field>
-</Input>
-</Group>
-<Group view="code" labelreference="L1976" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_4_G5_C := combine(r_4_G5_C, trig):</Text-field>
-</Input>
-</Group></Presentation-Block><Presentation-Block>
-<Group view="code" labelreference="L1623" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
-</Input>
-</Group>
 <Group view="code" labelreference="L1624" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
@@ -600,19 +580,23 @@ end if:</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_3_D_E := R_3_10 . r_10_D_E:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1646" drawlabel="true">
+<Group view="code" labelreference="L2029" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_3_D_E := simplify(r_3_D_E, trig):</Text-field>
-</Input>
-</Group></Presentation-Block><Presentation-Block>
-<Group view="code" labelreference="L1641" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_3_D_E := simplify(r_3_D_E):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save r_3_D_E, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_r_3_D_E_noopt_debug_maple&quot;, KAS_version, KAS_modell):</Text-field>
 </Input>
 </Group>
-<Group view="code" labelreference="L1974" drawlabel="true">
+<Group view="code" labelreference="L2031" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_3_D_E := combine(r_3_D_E, trig):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if Schalter_Opt(5) = 1 then
+  r_3_D_E := simplify(r_3_D_E, trig):
+  r_3_D_E := simplify(r_3_D_E):
+  r_3_D_E := combine(r_3_D_E, trig):
+end if:</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2030" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save r_3_D_E, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_r_3_D_E_opt_debug_maple&quot;, KAS_version, KAS_modell):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1642" drawlabel="true">
@@ -630,12 +614,17 @@ end if:</Text-field>
 else
   ReturnValue := intersect_circle(r_3_D_E, r_3_D_G3, l20, l4):
 end if:
-printf(&quot;Zweiter Kreisschnittpunkt berechnet. %s&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Text-field>
+printf(&quot;Zweiter Kreisschnittpunkt berechnet. %s. CPU-Zeit bis hier: %1.2fs.&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1643" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_3_D_F := &lt;ReturnValue(1..2, 2); 0&gt;: # Alternative 2</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2026" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save r_3_D_F, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_r_3_D_F_noopt_debug_maple&quot;, KAS_version, KAS_modell):</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group labelreference="L1989" drawlabel="true">
@@ -645,6 +634,11 @@ printf(&quot;Zweiter Kreisschnittpunkt berechnet. %s&quot;, FormatTime(&quot;%Y-
   r_3_D_F := simplify(r_3_D_F):
   r_3_D_F := combine(r_3_D_F, trig):
 end if:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2032" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save r_3_D_F, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_r_3_D_F_opt_debug_maple&quot;, KAS_version, KAS_modell):</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1651" drawlabel="true">
@@ -716,7 +710,7 @@ wpar_subsexp(8,2) := cos_gamma3_qs:</Text-field>
 </Group>
 <Group view="code" labelreference="L1997" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;Winkel gamma3 berechnet. %s&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;Winkel gamma3 berechnet. %s. CPU-Zeit bis hier: %1.2fs.&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -977,7 +971,7 @@ wpar_subsexp(48,2) := cos_rho3_qs:</Text-field>
 </Group>
 <Group labelreference="L1998" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;Winkel rho3 berechnet. %s&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;Winkel rho3 berechnet. %s. CPU-Zeit bis hier: %1.2fs.&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Text-field>
 </Input>
 </Group>
 </Section>
@@ -1154,7 +1148,7 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 </Group>
 <Group view="code" labelreference="L1999" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Kompensationsfederl\303\244nge berechnet. %s&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Font></Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Kompensationsfederl\303\244nge berechnet. %s. </Font> CPU-Zeit bis hier: %1.2fs.&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -1325,6 +1319,21 @@ Quelle: http://www.mapleprimes.com/questions/207601-Remove-Assumptions</Text-fie
 <Input>
 <Text-field style="Text" layout="Normal">Speichere Maple-Ausdruck (Eingabe-Format und internes Format)</Text-field>
 </Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2024" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save wpar_subsexp, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_wpar_subsexp_maple&quot;, KAS_version, KAS_modell):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2023" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save wpar_subsexp, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_wpar_subsexp_maple.m&quot;, KAS_version, KAS_modell):</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2021" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Ausdr\303\274cke f\303\274r wpar_subsexp gespeichert (Maple). %s. </Font>CPU-Zeit bis hier: %1.2fs.&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Text-field>
+</Input>
 </Group>
 <Group view="code" labelreference="L1735" drawlabel="true">
 <Input>
@@ -1344,6 +1353,11 @@ end do:</Text-field>
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">save wpar_qs, wpar_qt, lpar_qs, lpar_qt, wpar_subsexp, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple_inert.m&quot;, KAS_version, KAS_modell):</Text-field>
 </Input>
+</Group>
+<Group view="code" labelreference="L2025" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save wpar_qs, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_wpar_qs_maple_inert&quot;, KAS_version, KAS_modell):</Text-field>
+</Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1972" drawlabel="true">
 <Input>
@@ -1352,14 +1366,15 @@ end do:</Text-field>
 </Group>
 <Group view="code" labelreference="L1971" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_active then
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">#if codegen_active then
+  MatlabExport(wpar_subsexp, sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_subsexp_matlab_noopt.m&quot;), false):
   MatlabExport(wpar_subsexp, sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_subsexp_matlab_opt.m&quot;), true):
-end if:</Text-field>
+#end if:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L2001" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Ausdr\303\274cke mit Inert-Arctan exportiert. %s&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Font></Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Ausdr\303\274cke mit Inert-Arctan exportiert (Matlab). %s. </Font>CPU-Zeit bis hier: %1.2fs.&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -1387,7 +1402,7 @@ end if:</Text-field>
 </Group>
 <Group view="code" labelreference="L2000" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;Arcustangens ausgewertet. %s&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;Arcustangens ausgewertet. %s. CPU-Zeit bis hier: %1.2fs.&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -1449,17 +1464,12 @@ end do:</Text-field>
 </Section><Presentation-Block>
 <Group labelreference="L1950" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;Fertig. %s&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;Fertig. %s. CPU-Zeit bis hier: %1.2fs.&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2003" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
-</Input>
-</Group></Presentation-Block><Presentation-Block>
-<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L2" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Worksheet>
