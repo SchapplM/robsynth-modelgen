@@ -291,7 +291,7 @@ Dies hat gro\303\237en Einfluss auf die Rechendauer.</Font></Text-field>
 </Group>
 <Group view="code" labelreference="L1993" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Schalter_Opt := &lt;1;1;0;0;0;0&gt;:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Schalter_Opt := &lt;1;1;0;0;0;0;0&gt;:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1994" drawlabel="true">
@@ -363,6 +363,11 @@ st := time():</Text-field>
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_4_G5_B := R_4_12 . r_12_G5_B:</Text-field>
 </Input>
+</Group>
+<Group view="code" labelreference="L2035" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save r_4_G5_B, &quot;../codeexport/KAS5_m3_kinematik_parallelstruktur_r_4_G5_B_debug_maple&quot;:</Text-field>
+</Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1614" drawlabel="true">
 <Input>
@@ -403,26 +408,24 @@ st := time():</Text-field>
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_4_G5_D := -r_4_G4_G5 + r_4_G4_D:</Text-field>
 </Input>
-</Group></Presentation-Block><Presentation-Block>
-<Group labelreference="L1985" drawlabel="true">
+</Group>
+<Group view="code" labelreference="L2036" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_4_G5_D := simplify(r_4_G5_D, trig):</Text-field>
-</Input>
-</Group></Presentation-Block><Presentation-Block>
-<Group view="code" labelreference="L1984" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_4_G5_D := simplify(r_4_G5_D):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save r_4_G5_D, &quot;../codeexport/KAS5_m3_kinematik_parallelstruktur_r_4_G5_D_noopt_debug_maple&quot;:</Text-field>
 </Input>
 </Group>
-<Group view="code" labelreference="L1986" drawlabel="true">
+<Group view="code" labelreference="L2037" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_4_G5_D := combine(r_4_G5_D, trig):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if Schalter_Opt(7) = 1 then
+  r_4_G5_D := simplify(r_4_G5_D, trig):
+  r_4_G5_D := simplify(r_4_G5_D):
+  r_4_G5_D := combine(r_4_G5_D, trig):
+end if:</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1983" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save r_4_G5_B, &quot;../codeexport/KAS5_m3_kinematik_parallelstruktur_r_4_G5_B_debug_maple&quot;:
-save r_4_G5_D, &quot;../codeexport/KAS5_m3_kinematik_parallelstruktur_r_4_G5_D_debug_maple&quot;:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save r_4_G5_D, &quot;../codeexport/KAS5_m3_kinematik_parallelstruktur_r_4_G5_D_opt_debug_maple&quot;:</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1925" drawlabel="true">
