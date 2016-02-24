@@ -299,6 +299,16 @@ Dies hat gro\303\237en Einfluss auf die Rechendauer.</Font></Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;Beginn der Berechnungen. %s&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
 st := time():</Text-field>
 </Input>
+</Group>
+<Group view="code" labelreference="L2040" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Reihenfolge, in der die Winkel der Parallelstruktur berechnet werden. Hilft beim exportieren von Code, wenn beim Debuggen in der gleichen Reihenfolge ausgegeben wird.</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2039" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Reihenfolge_wpar := &lt;12; 5; 21; 4; 9; 16; 3; 8; 24; 11; 2; 1; 6; 7; 10; 13; 14; 15; 17; 18; 19; 20; 22; 23&gt;:</Text-field>
+</Input>
 </Group></Presentation-Block>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
@@ -432,9 +442,9 @@ end if:</Text-field>
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if Schalter_Opt(8) = 1 then
   # Rufe die Kreisschnittpunkt-Funktion mit allgemeinen Werten auf und ersetze das Ergebnis.
-  subs_ic := &lt;r_4_G5_B_x; r_4_G5_B_Allg_y; r_4_G5_D_Allg_x; r_4_G5_D_Allg_y&gt;:
-  subs_ic_KAS := &lt;r_4_G5_B; r_4_G5_D&gt;:
-  ReturnValue_Allg := intersect_circle(&lt;r_4_G5_B_x; r_4_G5_B_Allg_y&gt;, &lt;r_4_G5_D_Allg_x; r_4_G5_D_Allg_y&gt;, l13, l22):
+  subs_ic := &lt;r_4_G5_B_Allg_x; r_4_G5_B_Allg_y; r_4_G5_D_Allg_x; r_4_G5_D_Allg_y&gt;:
+  subs_ic_KAS := &lt;r_4_G5_B(1..2,1); r_4_G5_D(1..2,1)&gt;:
+  ReturnValue_Allg := intersect_circle(&lt;r_4_G5_B_Allg_x; r_4_G5_B_Allg_y&gt;, &lt;r_4_G5_D_Allg_x; r_4_G5_D_Allg_y&gt;, l13, l22):
   ReturnValue := ReturnValue_Allg:
   for i from 1 to 4 do 
     ReturnValue := subs({subs_ic(i) = subs_ic_KAS(i)}, ReturnValue):
@@ -619,7 +629,7 @@ end if:</Text-field>
   # Rufe die Kreisschnittpunkt-Funktion mit allgemeinen Werten auf und ersetze das Ergebnis.
 <Font encoding="UTF-8">  # dies f\303\274hrt zu einer wesentlichen Verringerungen der Rechenzeit, da das Einsetzen und Weiterrechnen der komplizierten Ausdr\303\274cke in der Unterfunktion entf\303\244llt.
 </Font>  subs_ic := &lt;r_3_D_E_Allg_x; r_3_D_E_Allg_y; r_3_D_G3_Allg_x; r_3_D_G3_Allg_y&gt;:
-  subs_ic_KAS := &lt;r_3_D_E; r_3_D_G3&gt;:
+  subs_ic_KAS := &lt;r_3_D_E(1..2,1); r_3_D_G3(1..2,1)&gt;:
   ReturnValue_Allg := intersect_circle(&lt;r_3_D_E_Allg_x; r_3_D_E_Allg_y&gt;, &lt;r_3_D_G3_Allg_x; r_3_D_G3_Allg_y&gt;, l20, l4):
   ReturnValue := ReturnValue_Allg:
   for i from 1 to 4 do 
@@ -1281,12 +1291,12 @@ Quelle: http://www.mapleprimes.com/questions/207601-Remove-Assumptions</Text-fie
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1778" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">nms:=convert(indets(wpar_qs,name),list):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">nms:=convert(indets(wpar_qs,name),list): # Liste der Symbole</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1776" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">nmsS:=convert~(nms,string):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">nmsS:=convert~(nms,string): # Liste der Symbole als String</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1777" drawlabel="true">
@@ -1372,13 +1382,42 @@ end do:</Text-field>
 <Input>
 <Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Exportiere Ersetzungsausdr\303\274cke</Font></Text-field>
 </Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2050" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Einzeln Exportieren ohne Optimierung</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2049" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to RowDimension(wpar_subsexp) do
+  MatlabExport(wpar_subsexp(i,2), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wparsubsexp_%d_matlab_noopt.m&quot;, i), false):
+end do:</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2052" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Einzeln Exportieren mit Optimierung</Text-field>
+</Input>
+</Group>
+<Group labelreference="L2051" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to RowDimension(wpar_subsexp) do
+  MatlabExport(wpar_subsexp(i,2), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wparsubsexp_%d_matlab_opt.m&quot;, i), true):
+end do:</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2053" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Exportieren des vollst\303\244ndigen Ausdruckes</Font></Text-field>
+</Input>
 </Group>
 <Group view="code" labelreference="L1971" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">#if codegen_active then
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_active then
   MatlabExport(wpar_subsexp, sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_subsexp_matlab_noopt.m&quot;), false):
   MatlabExport(wpar_subsexp, sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_subsexp_matlab_opt.m&quot;), true):
-#end if:</Text-field>
+end if:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L2001" drawlabel="true">
@@ -1388,7 +1427,7 @@ end do:</Text-field>
 </Group></Presentation-Block>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 1" layout="Heading 1">Arcustangens-Funktionen auswerten</Text-field></Title><Presentation-Block>
+<Text-field style="Heading 1" layout="Heading 1">Arcustangens-Funktionen auswerten</Text-field></Title><Presentation-Block></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1942" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_qs := value( wpar_qs ):</Text-field>
@@ -1443,8 +1482,9 @@ end do:</Text-field>
 </Group>
 <Group view="code" labelreference="L1956" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to RowDimension(wpar_s) do
-  MatlabExport(wpar_qs(i), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_%d_matlab_noopt.m&quot;, i), false):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for j from 1 to RowDimension(Reihenfolge_wpar) do
+  i := Reihenfolge_wpar(j):
+  MatlabExport(value(wpar_qs(i)), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_%d_matlab_noopt.m&quot;, i), false):
 end do:</Text-field>
 </Input>
 </Group>
@@ -1479,6 +1519,11 @@ end do:</Text-field>
 <Group labelreference="L2003" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L2" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Worksheet>
