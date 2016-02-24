@@ -291,7 +291,7 @@ Dies hat gro\303\237en Einfluss auf die Rechendauer.</Font></Text-field>
 </Group>
 <Group view="code" labelreference="L1993" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Schalter_Opt := &lt;1;1;0;0;0;0;0&gt;:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Schalter_Opt := &lt;1;1;0;0;0;0;0;1&gt;:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1994" drawlabel="true">
@@ -428,9 +428,21 @@ end if:</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">save r_4_G5_D, &quot;../codeexport/KAS5_m3_kinematik_parallelstruktur_r_4_G5_D_opt_debug_maple&quot;:</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
-<Group view="code" labelreference="L1925" drawlabel="true">
+<Group view="code" labelreference="L2038" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">ReturnValue := intersect_circle(r_4_G5_B, r_4_G5_D, l13, l22):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if Schalter_Opt(8) = 1 then
+  # Rufe die Kreisschnittpunkt-Funktion mit allgemeinen Werten auf und ersetze das Ergebnis.
+  subs_ic := &lt;r_4_G5_B_x; r_4_G5_B_Allg_y; r_4_G5_D_Allg_x; r_4_G5_D_Allg_y&gt;:
+  subs_ic_KAS := &lt;r_4_G5_B; r_4_G5_D&gt;:
+  ReturnValue_Allg := intersect_circle(&lt;r_4_G5_B_x; r_4_G5_B_Allg_y&gt;, &lt;r_4_G5_D_Allg_x; r_4_G5_D_Allg_y&gt;, l13, l22):
+  ReturnValue := ReturnValue_Allg:
+  for i from 1 to 4 do 
+    ReturnValue := subs({subs_ic(i) = subs_ic_KAS(i)}, ReturnValue):
+  end do:
+else
+  ReturnValue := intersect_circle(r_4_G5_B, r_4_G5_D, l13, l22):
+end if:
+printf(&quot;Erster Kreisschnittpunkt berechnet. %s. CPU-Zeit bis hier: %1.2fs.&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1924" drawlabel="true">
