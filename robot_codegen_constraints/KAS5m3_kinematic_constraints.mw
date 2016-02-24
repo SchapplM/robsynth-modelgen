@@ -296,7 +296,8 @@ Dies hat gro\303\237en Einfluss auf die Rechendauer.</Font></Text-field>
 </Group>
 <Group view="code" labelreference="L1994" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;Beginn der Berechnungen. %s&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;Beginn der Berechnungen. %s&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+st := time():</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -420,7 +421,8 @@ Dies hat gro\303\237en Einfluss auf die Rechendauer.</Font></Text-field>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1983" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save r_4_G5_B, &quot;../codeexport/KAS5_m3_kinematik_parallelstruktur_r_4_G5_B_debug_maple&quot;:
+save r_4_G5_D, &quot;../codeexport/KAS5_m3_kinematik_parallelstruktur_r_4_G5_D_debug_maple&quot;:</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1925" drawlabel="true">
@@ -431,6 +433,30 @@ Dies hat gro\303\237en Einfluss auf die Rechendauer.</Font></Text-field>
 <Group view="code" labelreference="L1924" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_4_G5_C := &lt;ReturnValue(1..2, 2); 0&gt;: # Alternative 2</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2011" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save r_4_G5_C, &quot;../codeexport/KAS5_m3_kinematik_parallelstruktur_r_4_G5_C_debug_noopt_maple&quot;:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2012" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if Schalter_Opt(4) = 1 then
+  r_4_G5_C := simplify(r_4_G5_C, trig):
+  r_4_G5_C := simplify(r_4_G5_C):
+  r_4_G5_C := combine(r_4_G5_C, trig):
+end if:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2018" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;CPU-Zeit bis hier: %1.2fs&quot;, time()-st):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2013" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save r_4_G5_C, &quot;../codeexport/KAS5_m3_kinematik_parallelstruktur_r_4_G5_C_debug_opt_maple&quot;:</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group labelreference="L1977" drawlabel="true">
@@ -626,9 +652,15 @@ end if:</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_3_F_G3 := -r_3_D_F + r_3_D_G3:</Text-field>
 </Input>
 </Group>
+<Group view="code" labelreference="L2019" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;CPU-Zeit bis hier: %1.2fs&quot;, time()-st):</Text-field>
+</Input>
+</Group>
 <Group view="code" labelreference="L1719" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save ReturnValue, r_3_D_F, r_3_F_G3, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_gamma3_qs_debug_maple&quot;, KAS_version, KAS_modell):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save r_3_D_F, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_r_3_D_F_debug_maple&quot;, KAS_version, KAS_modell):
+save ReturnValue, r_3_D_F, r_3_F_G3, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_gamma3_qs_debug_maple&quot;, KAS_version, KAS_modell):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1652" drawlabel="true">
@@ -1427,7 +1459,7 @@ end do:</Text-field>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L2" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
+<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Worksheet>
