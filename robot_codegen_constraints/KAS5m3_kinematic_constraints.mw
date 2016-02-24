@@ -291,7 +291,7 @@ Dies hat gro\303\237en Einfluss auf die Rechendauer.</Font></Text-field>
 </Group>
 <Group view="code" labelreference="L1993" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Schalter_Opt := &lt;1;1;0;0;1&gt;:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Schalter_Opt := &lt;1;1;0;0;1;0&gt;:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1994" drawlabel="true">
@@ -473,25 +473,24 @@ end if:</Text-field>
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_3_D_C := R_3_4 . r_4_D_C:</Text-field>
 </Input>
-</Group></Presentation-Block><Presentation-Block>
-<Group labelreference="L1981" drawlabel="true">
+</Group>
+<Group view="code" labelreference="L2033" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_3_D_C := simplify(r_3_D_C, trig):</Text-field>
-</Input>
-</Group></Presentation-Block><Presentation-Block>
-<Group view="code" labelreference="L1982" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_3_D_C := simplify(r_3_D_C):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save r_3_D_C, &quot;../codeexport/KAS5_m3_kinematik_parallelstruktur_r_3_D_C_debug_noopt_maple&quot;:</Text-field>
 </Input>
 </Group>
-<Group view="code" labelreference="L1980" drawlabel="true">
+<Group view="code" labelreference="L2034" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_3_D_C := combine(r_3_D_C, trig):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if Schalter_Opt(6) = 1 then
+  r_3_D_C := simplify(r_3_D_C, trig):
+  r_3_D_C := simplify(r_3_D_C):
+  r_3_D_C := combine(r_3_D_C, trig):
+end if:</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1627" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save r_3_D_C, &quot;../codeexport/KAS5_m3_kinematik_parallelstruktur_r_3_D_C_debug_opt_maple&quot;:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1593" drawlabel="true">
@@ -635,11 +634,6 @@ printf(&quot;Zweiter Kreisschnittpunkt berechnet. %s. CPU-Zeit bis hier: %1.2fs.
   r_3_D_F := combine(r_3_D_F, trig):
 end if:</Text-field>
 </Input>
-</Group>
-<Group view="code" labelreference="L2032" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save r_3_D_F, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_r_3_D_F_opt_debug_maple&quot;, KAS_version, KAS_modell):</Text-field>
-</Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1651" drawlabel="true">
 <Input>
@@ -653,7 +647,7 @@ end if:</Text-field>
 </Group>
 <Group view="code" labelreference="L1719" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save r_3_D_F, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_r_3_D_F_debug_maple&quot;, KAS_version, KAS_modell):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save r_3_D_F, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_r_3_D_F_opt_debug_maple&quot;, KAS_version, KAS_modell):
 save ReturnValue, r_3_D_F, r_3_F_G3, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_gamma3_qs_debug_maple&quot;, KAS_version, KAS_modell):</Text-field>
 </Input>
 </Group>
