@@ -121,16 +121,16 @@ Modell m5:
 </Group>
 <Group view="code" labelreference="L1913" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(RealDomain):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(RealDomain):
+with(LinearAlgebra):
+with(StringTools):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1574" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(LinearAlgebra):
-read proc_rotx: 
-read proc_roty: 
-read proc_rotz: 
-read proc_MatlabExport:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read proc_MatlabExport:
+read proc_convert_s_t:
+read proc_convert_t_s: </Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1800" drawlabel="true">
@@ -146,9 +146,7 @@ KAS_modell := 5:</Text-field>
 </Group>
 <Group labelreference="L1572" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read proc_convert_s_t:
-read proc_convert_t_s: 
-read &quot;../codeexport/KAS5_m5_definitions&quot;:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../codeexport/KAS5_m5_definitions&quot;:</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1993" drawlabel="true">
@@ -160,12 +158,11 @@ wpar_qs, wpar_qt, lpar_qs, lpar_qt, wpar_subsexp</Text-field>
 </Group>
 <Group view="code" labelreference="L1992" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read  sprintf(&quot;../codeexport/KAS5_m3_kinematik_parallelstruktur_maple.m&quot;, KAS_version, KAS_modell):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read  sprintf(&quot;../codeexport/KAS5_m3_kinematik_parallelstruktur_maple_inert.m&quot;, KAS_version, KAS_modell):
 wpar_qs_KAS5m3 := wpar_qs:
 wpar_qt_KAS5m3 := wpar_qt:
 lpar_qs_KAS5m3 := lpar_qs:
 lpar_qt_KAS5m3 := lpar_qt:
-wpar_subsexp_KAS5m3 := wpar_subsexp:
 wpar_subsexp_KAS5m3 := wpar_subsexp:</Text-field>
 </Input>
 </Group></Presentation-Block>
@@ -300,16 +297,21 @@ lpar_qt := convert_s_t(lpar_qs):</Text-field>
 <Text-field style="Heading 1" layout="Heading 1">Speichern der Ergebnisse</Text-field></Title><Presentation-Block>
 <Group view="code" labelreference="L2027" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save wpar_qs, wpar_qt, lpar_qs, lpar_qt, wpar_subsexp, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple&quot;, KAS_version, KAS_modell):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save wpar_qs, wpar_qt, lpar_qs, lpar_qt, wpar_subsexp, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple_inert&quot;, KAS_version, KAS_modell):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L2028" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save wpar_qs, wpar_qt, lpar_qs, lpar_qt, wpar_subsexp, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple.m&quot;, KAS_version, KAS_modell):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save wpar_qs, wpar_qt, lpar_qs, lpar_qt, wpar_subsexp, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple_inert.m&quot;, KAS_version, KAS_modell):</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section><Presentation-Block>
 <Group view="code" labelreference="L2031" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Zwangsbedingungen der Parallelstruktur von KAS5_m3 nach KAS5_m5 angepasst. %s\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L2059" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
