@@ -354,6 +354,12 @@ st := time():</Text-field>
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_qs(5) := gamma5_qs:</Text-field>
 </Input>
+</Group>
+<Group view="code" labelreference="L2062" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_subsexp(9,2) := sin(gamma5_qs):
+wpar_subsexp(10,2) := cos(gamma5_qs):</Text-field>
+</Input>
 </Group></Presentation-Block>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
@@ -1395,11 +1401,6 @@ Die Auswertung der Arctan-Ausdr\303\274cke bewirkt eigentlich nur, dass &quot;ar
 Die inert-Ausdr\303\274cke k\303\266nnen schnell nach der Zeit abgeleitet werden. Das &quot;%&quot; taucht dann nicht mehr auf.</Font></Text-field>
 </Input>
 </Group><Presentation-Block>
-<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L2058" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
-</Input>
-</Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1942" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_qs := value( wpar_qs ):</Text-field>
@@ -1491,11 +1492,6 @@ end do:</Text-field>
 <Group labelreference="L2003" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
-</Input>
-</Group></Presentation-Block><Presentation-Block>
-<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L2" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Worksheet>
