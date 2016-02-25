@@ -100,10 +100,7 @@
 
 <Font encoding="UTF-8">Modell m3: Kurbel N7 ist starr mit K\303\266rper K2 gekoppelt (\303\274ber die Achse)
 </Font>
-<Font encoding="UTF-8">Vorher: Ausf\303\274hren von
-</Font>KAS5_m2_sym_codegen_floatbase_mdh_kinematics.mw
-
-<Font encoding="UTF-8">Berechne alle notwendigen Winkel in wpar in Abh\303\244ngigkeit konstanter Gr\303\266\303\237en und der Gelenkwinkel
+<Font encoding="UTF-8">Berechne alle notwendigen Winkel in wpar in Abh\303\244ngigkeit konstanter Gr\303\266\303\237en und der verallgemeinerten Koordinaten
 </Font>
 <Font encoding="UTF-8">Berechne zuerst nur Sinus und Cosinus jedes Winkels. Diese werden f\303\274r die Rotationsmatrizen ben\303\266tigt.
 Die Berechnung der Winkel selbst (zur Kontrolle) ben\303\266tigt die arctan-Funktion, die l\303\244ngere Ausdr\303\274cke nur sehr langsam auswertet.</Font></Text-field>
@@ -111,7 +108,15 @@ Die Berechnung der Winkel selbst (zur Kontrolle) ben\303\266tigt die arctan-Funk
 Die Zeitableitung der Winkel (in sp\303\244teren Skripten) wird aus der inert-Funktion berechnet.</Font></Text-field>
 <Text-field style="Text" layout="Normal">
 Hinweise:
-<Font encoding="UTF-8">Der Befehl arctan hat die Funktionalit\303\244t von atan2</Font></Text-field>
+<Font encoding="UTF-8">Der Befehl arctan hat die Funktionalit\303\244t von atan2
+
+Eingabe:
+&quot;../codeexport/KAS5_m3_definitions&quot;
+* enth\303\244lt die Definitionen aller Konstanten und verallgemeinerter Koordinaten</Font>
+
+Ausgabe:
+&quot;<Font encoding="UTF-8">../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple_inert.m&quot;
+* Erzeugt die Ausdr\303\274cke f\303\274r Winkel der Parallelstruktur (wpar), Ersetzungsausdr\303\274cke f\303\274r sin,cos (wpar_subsexp) und die Federl\303\244nge (lpar) in Abh\303\244ngigkeit der verallgemeinerten Koordinaten.</Font></Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1819" drawlabel="true">
@@ -155,7 +160,7 @@ codegen_opt := true:</Text-field>
 </Group>
 <Group view="code" labelreference="L2009" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">with(RealDomain): # Schr\303\244nkt alle Funktionen auf den reellen Bereich ein. Muss nach Definition von MatlabExport kommen. Sonst geht das nicht.</Font></Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">with(RealDomain): # Schr\303\244nkt alle Funktionen auf den reellen Bereich ein. Muss nach Definition von MatlabExport kommen. Sonst geht dieses nicht.</Font></Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1574" drawlabel="true">
@@ -286,7 +291,11 @@ end do:</Text-field>
 <Input>
 <Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Schalter mit Optionen f\303\274r die Code-Generierung.
 W\303\244hle, ob trigonometrische arctan-Ausdr\303\274cke ausgewertet werden, oder ob Sinus- und Cosinussatz angewendet werden sollen.
-Dies hat gro\303\237en Einfluss auf die Rechendauer.</Font></Text-field>
+Dies hat gro\303\237en Einfluss auf die Rechendauer.
+Die Optimierungen sind so gew\303\244hlt, dass
+* Kreisschnittpunktsfunktionen nicht mit den komplizierten Eingabedaten aufgerufen, sondern mit allgemeinen Platzhaltern, die dann ersetzt werden,
+* Keine Zwischenoptimierungen durchgef\303\274hrt werden. Durch simplify und combine werden die symbolischen Ausdr\303\274cke gr\303\266\303\237er, was sp\303\244ter die Rechenzeit enorm erh\303\266ht
+* Sinus und Cosinus der Parallelwinkel ersetzt werden und kein sin(arctan(...)) ausgerechnet wird.</Font></Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1993" drawlabel="true">
@@ -484,11 +493,6 @@ end if:</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">save r_4_G5_C, &quot;../codeexport/KAS5_m3_kinematik_parallelstruktur_r_4_G5_C_debug_opt_maple&quot;:</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
-<Group view="code" labelreference="L1624" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
-</Input>
-</Group>
 <Group view="code" labelreference="L1625" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_4_D_C := - r_4_G5_D + r_4_G5_C:</Text-field>
@@ -536,16 +540,6 @@ end if:</Text-field>
 <Group view="code" labelreference="L1790" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">cos_delta16_qs := r_3_D_C(1)/l22:</Text-field>
-</Input>
-</Group>
-<Group view="code" labelreference="L1787" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
-</Input>
-</Group>
-<Group view="code" labelreference="L1704" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"># delta_qs(16) := simplify(delta_qs(16)) assuming delta_qs::real:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1655" drawlabel="true">
@@ -696,11 +690,6 @@ save ReturnValue, r_3_D_F, r_3_F_G3, sprintf(&quot;../codeexport/KAS%d_m%d_kinem
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">cos_gamma3_qs := (-r_3_F_G3(1,1)) / l4:</Text-field>
 </Input>
 </Group>
-<Group view="code" labelreference="L1797" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"># gamma3_qs := simplify(gamma3_qs) assuming gamma3_qs::real:</Text-field>
-</Input>
-</Group>
 <Group labelreference="L1656" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_qs(4) := gamma3_qs:</Text-field>
@@ -722,11 +711,6 @@ wpar_subsexp(8,2) := cos_gamma3_qs:</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">save wpar_qs, wpar_subsexp, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple_debug_nach_gamma3.m&quot;, KAS_version, KAS_modell):</Text-field>
 </Input>
 </Group>
-<Group view="code" labelreference="L1724" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"># MatlabExport(convert_t_s(gamma3_qs), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_gamma3_qs_matlab_noopt.m&quot;), false):</Text-field>
-</Input>
-</Group>
 <Group view="code" labelreference="L1997" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;Winkel gamma3 berechnet. %s. CPU-Zeit bis hier: %1.2fs.&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Text-field>
@@ -745,11 +729,6 @@ wpar_subsexp(8,2) := cos_gamma3_qs:</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_qs(4) := Pi/2 - delta_qs(16) - delta_qs(12):</Text-field>
 </Input>
 </Group>
-<Group view="code" labelreference="L1661" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"># delta_qs(4) := simplify(delta_qs(4)) assuming delta_qs::real:</Text-field>
-</Input>
-</Group>
 <Group view="code" labelreference="L1660" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_qs(9) := delta_qs(4):</Text-field>
@@ -766,11 +745,6 @@ wpar_subsexp(8,2) := cos_gamma3_qs:</Text-field>
 <Group view="code" labelreference="L1663" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_qs(11) := delta_qs(10) - delta_qs(4):</Text-field>
-</Input>
-</Group>
-<Group view="code" labelreference="L1664" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"># delta_qs(11) := simplify(delta_qs(11)) assuming delta_qs::real:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1665" drawlabel="true">
@@ -795,11 +769,6 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 <Group view="code" labelreference="L1669" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">beta2_qs := d7b2 - delta_qs(7):</Text-field>
-</Input>
-</Group>
-<Group view="code" labelreference="L1670" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"># beta2_qs := simplify(beta2_qs) assuming beta2_qs::real:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1703" drawlabel="true">
@@ -905,7 +874,6 @@ Dadurch kann Sinus/Cosinus von delta16 direkt genutzt werden und es tritt kein a
 <Group view="code" labelreference="L1676" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_qs(3) := t8 - t7:</Text-field>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"># delta_qs(3) := simplify(delta_qs(3)) assuming delta_qs::real:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1827" drawlabel="true">
@@ -965,11 +933,6 @@ Dadurch kann Sinus/Cosinus von gamma3 direkt genutzt werden und es tritt kein ar
 <Group labelreference="L1816" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">cos_rho3_qs := (cos_gamma3_qs)*(cos(delta_qs(8) - Pi/2)) - (sin_gamma3_qs)*(sin(delta_qs(8) - Pi/2)):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1681" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"># rho3_qs := simplify(rho3_qs):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1705" drawlabel="true">
@@ -1035,11 +998,6 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 <Group labelreference="L1834" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_qs(6) := t2 - t1:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1685" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"># delta_qs(6) := simplify(delta_qs(6)) assuming delta_qs::real:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1686" drawlabel="true">
@@ -1197,11 +1155,6 @@ Siehe auch: KAS5_m4_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 <Group view="code" labelreference="L1877" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">beta1_qs := t3 - gamma5_qs:</Text-field>
-</Input>
-</Group>
-<Group view="code" labelreference="L1878" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"># beta1_qs := simplify(beta1_qs) assuming beta1_qs::real:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1879" drawlabel="true">
@@ -1427,7 +1380,16 @@ end if:</Text-field>
 </Group></Presentation-Block>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 1" layout="Heading 1">Arcustangens-Funktionen auswerten</Text-field></Title><Presentation-Block></Presentation-Block><Presentation-Block>
+<Text-field style="Heading 1" layout="Heading 1">Arcustangens-Funktionen auswerten</Text-field></Title>
+<Group labelreference="L2057" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ab diesem Abschnitt sind die Ergebnisse nicht mehr f\303\274r nachfolgende Skripte wichtig.
+Die Auswertung der Arctan-Ausdr\303\274cke bewirkt eigentlich nur, dass &quot;arctan&quot; statt &quot;%arctan&quot; geschrieben wird.
+Trotzdem dauert der Vorgang sehr lange.
+In den nachfolgenden Skripten werden nur noch die Ersetzungsausdr\303\274cke f\303\274r sin/cos (wpar_subsexp) und die Inert-Arctan-Ausdr\303\274cke (&quot;%arctan&quot;) verwendet.
+Die inert-Ausdr\303\274cke k\303\266nnen schnell nach der Zeit abgeleitet werden. Das &quot;%&quot; taucht dann nicht mehr auf.</Font></Text-field>
+</Input>
+</Group><Presentation-Block></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1942" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_qs := value( wpar_qs ):</Text-field>
@@ -1519,11 +1481,6 @@ end do:</Text-field>
 <Group labelreference="L2003" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
-</Input>
-</Group></Presentation-Block><Presentation-Block>
-<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L2" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Worksheet>
