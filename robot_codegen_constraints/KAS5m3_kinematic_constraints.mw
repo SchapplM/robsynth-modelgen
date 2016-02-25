@@ -109,14 +109,14 @@ Die Zeitableitung der Winkel (in sp\303\244teren Skripten) wird aus der inert-Fu
 <Text-field style="Text" layout="Normal">
 Hinweise:
 <Font encoding="UTF-8">Der Befehl arctan hat die Funktionalit\303\244t von atan2
-
+</Font>
 Eingabe:
 &quot;../codeexport/KAS5_m3_definitions&quot;
-* enth\303\244lt die Definitionen aller Konstanten und verallgemeinerter Koordinaten</Font>
+<Font encoding="UTF-8">* enth\303\244lt die Definitionen aller Konstanten und verallgemeinerter Koordinaten</Font>
 
 Ausgabe:
-&quot;<Font encoding="UTF-8">../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple_inert.m&quot;
-* Erzeugt die Ausdr\303\274cke f\303\274r Winkel der Parallelstruktur (wpar), Ersetzungsausdr\303\274cke f\303\274r sin,cos (wpar_subsexp) und die Federl\303\244nge (lpar) in Abh\303\244ngigkeit der verallgemeinerten Koordinaten.</Font></Text-field>
+&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple_inert.m&quot;
+<Font encoding="UTF-8">* Erzeugt die Ausdr\303\274cke f\303\274r Winkel der Parallelstruktur (wpar), Ersetzungsausdr\303\274cke f\303\274r sin,cos (wpar_subsexp) und die Federl\303\244nge (lpar) in Abh\303\244ngigkeit der verallgemeinerten Koordinaten.</Font></Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1819" drawlabel="true">
@@ -293,9 +293,9 @@ end do:</Text-field>
 W\303\244hle, ob trigonometrische arctan-Ausdr\303\274cke ausgewertet werden, oder ob Sinus- und Cosinussatz angewendet werden sollen.
 Dies hat gro\303\237en Einfluss auf die Rechendauer.
 Die Optimierungen sind so gew\303\244hlt, dass
-* Kreisschnittpunktsfunktionen nicht mit den komplizierten Eingabedaten aufgerufen, sondern mit allgemeinen Platzhaltern, die dann ersetzt werden,
-* Keine Zwischenoptimierungen durchgef\303\274hrt werden. Durch simplify und combine werden die symbolischen Ausdr\303\274cke gr\303\266\303\237er, was sp\303\244ter die Rechenzeit enorm erh\303\266ht
-* Sinus und Cosinus der Parallelwinkel ersetzt werden und kein sin(arctan(...)) ausgerechnet wird.</Font></Text-field>
+</Font>* Kreisschnittpunktsfunktionen nicht mit den komplizierten Eingabedaten aufgerufen, sondern mit allgemeinen Platzhaltern, die dann ersetzt werden,
+<Font encoding="UTF-8">* Keine Zwischenoptimierungen durchgef\303\274hrt werden. Durch simplify und combine werden die symbolischen Ausdr\303\274cke gr\303\266\303\237er, was sp\303\244ter die Rechenzeit enorm erh\303\266ht
+</Font>* Sinus und Cosinus der Parallelwinkel ersetzt werden und kein sin(arctan(...)) ausgerechnet wird.</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1993" drawlabel="true">
@@ -1272,6 +1272,11 @@ Quelle: http://www.mapleprimes.com/questions/207601-Remove-Assumptions</Text-fie
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_qs:=subs(S,wpar_qs):</Text-field>
 </Input>
 </Group>
+<Group view="code" labelreference="L2059" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">lpar_qs:=subs(S,lpar_qs):</Text-field>
+</Input>
+</Group>
 <Group view="code" labelreference="L1858" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_subsexp:=subs(S,wpar_subsexp):</Text-field>
@@ -1385,11 +1390,16 @@ end if:</Text-field>
 <Input>
 <Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ab diesem Abschnitt sind die Ergebnisse nicht mehr f\303\274r nachfolgende Skripte wichtig.
 Die Auswertung der Arctan-Ausdr\303\274cke bewirkt eigentlich nur, dass &quot;arctan&quot; statt &quot;%arctan&quot; geschrieben wird.
-Trotzdem dauert der Vorgang sehr lange.
-In den nachfolgenden Skripten werden nur noch die Ersetzungsausdr\303\274cke f\303\274r sin/cos (wpar_subsexp) und die Inert-Arctan-Ausdr\303\274cke (&quot;%arctan&quot;) verwendet.
+</Font>Trotzdem dauert der Vorgang sehr lange.
+<Font encoding="UTF-8">In den nachfolgenden Skripten werden nur noch die Ersetzungsausdr\303\274cke f\303\274r sin/cos (wpar_subsexp) und die Inert-Arctan-Ausdr\303\274cke (&quot;%arctan&quot;) verwendet.
 Die inert-Ausdr\303\274cke k\303\266nnen schnell nach der Zeit abgeleitet werden. Das &quot;%&quot; taucht dann nicht mehr auf.</Font></Text-field>
 </Input>
-</Group><Presentation-Block></Presentation-Block><Presentation-Block>
+</Group><Presentation-Block>
+<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L2058" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1942" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_qs := value( wpar_qs ):</Text-field>
@@ -1481,6 +1491,11 @@ end do:</Text-field>
 <Group labelreference="L2003" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L2" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Worksheet>
