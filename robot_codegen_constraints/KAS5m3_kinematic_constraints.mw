@@ -993,12 +993,12 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 </Group>
 <Group labelreference="L2080" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">cos_t1 :=  cos(rho3_qs)*cos_delta8_qs + sin(rho3_qs)*sin_delta8_qs:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">cos_t1 :=  cos(rho3_qs)*cos(delta_qs(8)) + sin(rho3_qs)*sin(delta_qs(8)):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2077" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">sin_t1 := -sin(rho3_qs)*cos_delta8_qs + cos(rho3_qs)*sin_delta8_qs:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">sin_t1 := -sin(rho3_qs)*cos(delta_qs(8)) + cos(rho3_qs)*sin(delta_qs(8)):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2083" drawlabel="true">
