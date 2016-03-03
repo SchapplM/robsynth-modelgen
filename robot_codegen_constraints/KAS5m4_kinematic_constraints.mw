@@ -197,7 +197,8 @@ read &quot;../codeexport/KAS5_m4_definitions&quot;:</Text-field>
 </Group>
 <Group view="code" labelreference="L1571" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal">Konstante Winkel bereits hineinschreiben</Text-field>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Konstante Winkel bereits hineinschreiben
+TODO: Hier wom\303\266glich Fehler: Substituierte Ausdr\303\274cke werden nach der Zeit abgeleitet.</Font></Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1575" drawlabel="true">
@@ -927,9 +928,14 @@ Hier ist rho3 als verallgemeinerte Koordinate gegeben und das zeitabh\303\244ngi
 <Text-field style="Text" layout="Normal">Gl. (11)</Text-field>
 </Input>
 </Group>
+<Group labelreference="L2069" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">theta3_s := convert_t_s(theta(3)):</Text-field>
+</Input>
+</Group>
 <Group labelreference="L2064" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_qs(8) := theta(3) - gamma3_qs + Pi/2:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_qs(8) := theta3_s - gamma3_qs + Pi/2:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1815" drawlabel="true">
@@ -940,23 +946,23 @@ Dadurch kann Sinus/Cosinus von gamma3 direkt genutzt werden und es tritt kein ar
 </Group>
 <Group labelreference="L2066" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">sin_delta8_qs := cos(theta(3)+Pi/2)*cos_gamma3_qs + sin(theta(3)+Pi/2)*sin_gamma3_qs:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">sin_delta8_qs := cos(theta3_s+Pi/2)*cos_gamma3_qs + sin(theta3_s+Pi/2)*sin_gamma3_qs:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2065" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">cos_delta8_qs := sin(theta(3)+Pi/2)*cos_gamma3_qs + cos(theta(3)+Pi/2)*sin_gamma3_qs:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">cos_delta8_qs := sin(theta3_s+Pi/2)*cos_gamma3_qs + cos(theta3_s+Pi/2)*sin_gamma3_qs:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1705" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_qs(15) := rho3_qs:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_qs(13) := delta_qs(8):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1817" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_subsexp(29,2) := sin_delta8_qs:
-wpar_subsexp(30,2) := cos_delta8_qs:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_subsexp(25,2) := sin_delta8_qs:
+wpar_subsexp(26,2) := cos_delta8_qs:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1937" drawlabel="true">
@@ -985,7 +991,7 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 </Group>
 <Group labelreference="L1835" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">t1 := theta(3) + delta_qs(8):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">t1 := theta3_s + delta_qs(8):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1912" drawlabel="true">
@@ -995,12 +1001,12 @@ Siehe auch: KAS5_m3_sym_codegen_kinematik_parallelstruktur_hilfsberechnungen.mw<
 </Group>
 <Group labelreference="L1910" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">cos_t1 := cos(theta(3))*cos_delta8_qs - sin(theta(3))*sin_delta8_qs:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">cos_t1 := cos(theta3_s)*cos_delta8_qs - sin(theta3_s)*sin_delta8_qs:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1911" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">sin_t1 := sin(theta(3))*cos_delta8_qs + cos(theta(3))*sin_delta8_qs:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">sin_t1 := sin(theta3_s)*cos_delta8_qs + cos(theta3_s)*sin_delta8_qs:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1967" drawlabel="true">
