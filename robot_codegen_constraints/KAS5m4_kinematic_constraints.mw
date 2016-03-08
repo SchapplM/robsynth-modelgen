@@ -175,7 +175,7 @@ read proc_intersect_circle:</Text-field>
 <Group labelreference="L1573" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">KAS_version := 5:
-KAS_modell := 3:</Text-field>
+KAS_modell := 4:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1572" drawlabel="true">
@@ -1505,6 +1505,11 @@ end do:</Text-field>
 <Group labelreference="L2003" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L2" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Worksheet>
