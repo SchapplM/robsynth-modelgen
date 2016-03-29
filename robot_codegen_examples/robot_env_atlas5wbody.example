@@ -1,0 +1,66 @@
+# Beispiel für Codegenerierung:
+# Ganzkörperbeschreibung Atlas v5
+#
+# Quellen
+# [4] Khalil, W. and Kleinfinger, J.-F.: Minimum operations and minimum parameters of the dynamic models of tree structure robots (1987)
+
+robot_name := "atlas5_wbody":
+
+NJ:=30:
+# MDH alpha
+alpha := Matrix(30,1):
+a := Matrix(30,1): # entspricht r in [4].
+qoffset := Matrix(30,1):
+d := Matrix(30,1):
+v := Matrix(30,1): # Indizes der Vorgänger-KS. Entspricht a in [4].
+beta := Matrix(30,1): # entspricht gamma in [4].
+b := Matrix(30,1): # entspricht epsilon in [4].
+
+# Torso
+alpha[1..3,1]:=<0, -Pi/2, -Pi/2>:
+a[1..3,1]:=<a1, 0, a3>:
+qoffset[1..3,1]:=<0, -Pi/2, -Pi/2>:
+d[1..3,1]:=<d1, 0, d3>:
+v[1..3,1]:=<0, 1, 2>:
+
+# Neck
+alpha[4,1]:=Pi/2:
+a[4,1]:=a4:
+qoffset[4,1]:=0:
+d[4,1]:=0:
+v[4,1]:=3:
+beta[4,1]:=Pi/2:
+b[4,1]:=b4:
+
+# left leg
+alpha[5..10,1]:=<0, (1/2)*Pi, (1/2)*Pi, 0, 0, -(1/2)*Pi>:
+a[5..10,1]:=<a5, 0, a7, a8, a9, 0>: # anders als Einzel-Kette
+qoffset[5..10,1] := <0, (1/2)*Pi, qoffset7, qoffset8, 0, 0>:
+d[5..10,1]:=<0, d6, d7, 0, 0, 0>:
+v[5..10,1]:=<0, 5, 6, 7, 8, 9>:
+beta[5,1]:=Pi/2:
+
+# right leg
+alpha[11..16,1]:=alpha[5..10,1]:
+a[11..16,1]:=<a11, 0, a13, a14, a15, 0>: # anders als Einzel-Kette
+qoffset[11..16,1] := <0, (1/2)*Pi, qoffset13, qoffset14, 0, 0>:
+d[11..16,1]:=<0, d12, d13, 0, 0, 0>:
+v[11..16,1]:=<0, 11, 12, 13, 14, 15>:
+beta[11,1]:=Pi/2:
+
+# left arm
+alpha[17..23,1]:=<-Pi/2, -Pi/2, Pi/2, -Pi/2, Pi/2, -Pi/2, Pi/2>:
+a[17..23,1]:=<a17, a18, a19, a20, a21, 0, 0>:
+qoffset[17..23,1]:=<Pi, -Pi/2, 0, 0, 0, 0, 0>: # anders als Einzel-Kette
+d[17..23,1]:=<d17, 0, d19, 0, d21, 0, 0>:
+v[17..23,1]:=<3, 17, 18, 19, 20, 21, 22>:
+
+# right arm
+alpha[24..30,1]:=alpha[17..23,1]:
+a[24..30,1]:=<a24, a25, a26, a27, a28, 0, 0>:
+qoffset[24..30,1]:=<Pi, -Pi/2, 0, 0, 0, 0, 0>:
+d[24..30,1]:=<d24, 0, d26, 0, d28, 0, 0>:
+v[24..30,1]:=<3, 24, 25, 26, 27, 28, 29>:
+
+theta := qJ_t+qoffset:
+
