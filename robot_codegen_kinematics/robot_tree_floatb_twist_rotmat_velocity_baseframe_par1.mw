@@ -203,8 +203,8 @@ r_0_i_Si := r_0_i_Si:</Text-field>
 <Text-field style="Heading 1" layout="Heading 1">Zeitableitung der Drehwinkel berechnen</Text-field></Title>
 <Group labelreference="L1670" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ersetze die MDH-Winkel durch verallgemeinerte Koordinaten
-Falls die Gelenkwinkel nicht direkt mit verallgemeinerten Koordinaten \303\274berstimmen (bei Kopplungen, kinematischen Schleifen) steht hier eine l\303\244ngere Berechnung.</Font></Text-field>
+<Text-field style="Text" layout="Normal">Ersetze die MDH-Winkel durch verallgemeinerte Koordinaten
+<Font encoding="UTF-8">Falls die Gelenkwinkel nicht direkt mit verallgemeinerten Koordinaten \303\274berstimmen (bei Kopplungen, kinematischen Schleifen) steht hier eine l\303\244ngere Berechnung.</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1671" drawlabel="true">
@@ -226,7 +226,7 @@ Falls die Gelenkwinkel nicht direkt mit verallgemeinerten Koordinaten \303\274be
 </Input>
 </Group>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 2" layout="Heading 2">Velocities of Frames<Equation executable="false" style="Heading 2" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYmLUkjbWlHRiQ2I1EhRicvJSVzaXplR1EjMTJGJy8lJWJvbGRHUSZmYWxzZUYnLyUsbWF0aHZhcmlhbnRHUSdub3JtYWxGJw==">JSFH</Equation><Equation executable="false" style="Heading 2" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYmLUkjbWlHRiQ2I1EhRicvJSVzaXplR1EjMTJGJy8lJWJvbGRHUSZmYWxzZUYnLyUsbWF0aHZhcmlhbnRHUSdub3JtYWxGJw==">JSFH</Equation></Text-field></Title>
+<Text-field style="Heading 2" layout="Heading 2">Velocities of Frames</Text-field></Title>
 <Group labelreference="L1659" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal">Anfangsgeschwindigkeit der Basis
@@ -311,8 +311,8 @@ save omega_0_i, rD_0_i, rD_0_Si, sprintf(&quot;../codeexport/%s_velocity_basefra
 <Group labelreference="L1665" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(convert_t_s(omega_0_i), sprintf(&quot;../codeexport/%s_velocity_omegai0_floatb_baseframe_par1_matlab.m&quot;, robot_name), codegen_opt):
-  MatlabExport(convert_t_s(rD_0_i), sprintf(&quot;../codeexport/%s_velocity_rDi0_floatb_baseframe_par1_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(convert_t_s(omega_0_i), sprintf(&quot;../codeexport/%s_velocity_omegai0_floatb_baseframe_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(convert_t_s(rD_0_i), sprintf(&quot;../codeexport/%s_velocity_rDi0_floatb_baseframe_matlab.m&quot;, robot_name), codegen_opt):
   MatlabExport(convert_t_s(rD_0_Si), sprintf(&quot;../codeexport/%s_velocity_rDSi0_floatb_baseframe_par1_matlab.m&quot;, robot_name), codegen_opt):
   <Font encoding="UTF-8">printf(&quot;Geschwindigkeiten in Matlab exportiert. %s\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Font>
 end if:</Text-field>
