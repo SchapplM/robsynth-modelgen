@@ -1,0 +1,18 @@
+# Beispiel für Codegenerierung:
+# Atlas Arm v5
+#
+# Quellen
+# [4] Khalil, W. and Kleinfinger, J.-F.: Minimum operations and minimum parameters of the dynamic models of tree structure robots (1987)
+
+robot_name := "atlas5_arm":
+
+NJ := 7:
+qoffset := Matrix(7,1,[0, -(1/2)*Pi, 0, 0, 0, 0, 0]):
+alpha := Matrix(7,1,[0, -(1/2)*Pi, (1/2)*Pi, -(1/2)*Pi, (1/2)*Pi, -(1/2)*Pi, (1/2)*Pi]):
+d := Matrix(7,1,[d1, 0, d3, 0, d5, 0, 0]):
+a := Matrix(7,1,[0, a2, a3, a4, a5, 0, 0]):
+v := Matrix(7,1,[0, 1, 2, 3, 4, 5, 6]):
+b := Matrix(7,1,[0, 0, 0, 0, 0, 0]):
+beta := Matrix(7,1,[0, 0, 0, 0, 0, 0]):
+
+theta := qJ_t+qoffset:
