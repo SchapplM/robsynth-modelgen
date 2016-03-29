@@ -1,0 +1,24 @@
+trafo_mdh := proc (alpha, a, theta, d) 
+  local A; 
+  A := Matrix(4,4); 
+  A[1,1] := cos(theta); 
+  A[2,1] := sin(theta)*cos(alpha); 
+  A[3,1] := sin(theta)*sin(alpha);
+  A[4,1] := 0; A[1,2] := -sin(theta); 
+  A[2,2] := cos(theta)*cos(alpha); 
+  A[3,2] :=cos(theta)*sin(alpha); 
+  A[4,2] := 0; 
+  A[1,3] := 0; A[2,3] := -sin(alpha); 
+  A[3,3] := cos(alpha); 
+  A[4,3] := 0; 
+  A[1,4] := a; 
+  A[2,4] := -d*sin(alpha); 
+  A[3,4] := d*cos(alpha); 
+  A[4,4] := 1; return A 
+end proc;
+
+trafo_mdh_full := proc (alpha, a, theta, d, gamma, epsilon)
+  local A;
+  A := trotz(gamma) . transl(`<,>`(0,0,epsilon)) . trotx(alpha) . transl(`<,>`(a,0,0)) . trotz(theta) . transl(`<,>`(0,0,d)); 
+  return A 
+end proc;
