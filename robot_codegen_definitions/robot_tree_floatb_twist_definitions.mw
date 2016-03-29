@@ -246,7 +246,7 @@ qDD_s:= Matrix(N,1, &lt;VD_base_s, qJDD_s&gt;):</Text-field>
 </Group>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 2" layout="Heading 2">Dynamic Parameters<Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYlLUkjbWlHRiQ2I1EhRicvJTBmb250X3N0eWxlX25hbWVHUSpIZWFkaW5nfjJGJy8lLG1hdGh2YXJpYW50R1Enbm9ybWFsRic=">JSFH</Equation></Text-field></Title>
+<Text-field style="Heading 2" layout="Heading 2">Dynamic Parameters</Text-field></Title>
 <Group labelreference="L1630" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Anzahl der K\303\266rper (Number of Links)</Font></Text-field>
