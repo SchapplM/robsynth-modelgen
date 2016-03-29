@@ -105,7 +105,7 @@
 <Group labelreference="L1507" drawlabel="true">
 <Input>
 <Text-field style="Heading 2" layout="Heading 2">Introduction</Text-field>
-<Text-field style="Normal" layout="Normal"><Font encoding="UTF-8">Berechnung von potentieller und kinetischer Energie f\303\274r den Arm.
+<Text-field style="Normal" layout="Normal"><Font encoding="UTF-8">Berechnung von potentieller und kinetischer Energie f\303\274r den Roboter.
 </Font>
 Dateiname:
 <Font encoding="UTF-8">robot -&gt; Berechnung f\303\274r allgemeinen Roboter
