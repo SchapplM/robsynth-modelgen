@@ -1,0 +1,14 @@
+convert_s_t := proc (A_s) 
+  local A_t, i; 
+  A_t := A_s; 
+  for i to N do 
+    A_t := subs({qDD_s[i,1] = qDD_t[i,1]},A_t);
+    A_t := subs({qD_s[i,1] = qD_t[i,1]},A_t);
+    A_t:= subs({q_s[i,1] = q_t[i,1]},A_t) 
+  end do;
+  for i to 6 do 
+    A_t := subs({VD_base_s[i,1] = VD_base_t[i,1]},A_t);
+    A_t := subs({V_base_s[i,1] = V_base_t[i,1]},A_t) 
+  end do; 
+ return A_t 
+end proc;

@@ -1,0 +1,12 @@
+MatlabExport := proc (Term, filepath, optimierung) 
+  local Tmp, fd; 
+  if optimierung = true then 
+    Tmp := eval([codegen:-optimize](Term,tryhard),pow = `^`) 
+  else 
+    Tmp := Term 
+  end if; 
+  fd := fopen(filepath,WRITE); 
+  fclose(fd); 
+  CodeGeneration[Matlab](Tmp,optimize = false,resultname = "T",output = filepath); 
+  printf("Exported Matlab code to %s\n",filepath) 
+end proc;
