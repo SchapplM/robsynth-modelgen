@@ -165,8 +165,8 @@ qJDD_t := diff~(qJD_t, t):</Text-field>
 </Group>
 <Group labelreference="L1614" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">g_ref := Matrix(3, 1):
-g_ref(1 .. 3, 1) := &lt;g1, g2, g3&gt;:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">g_base := Matrix(3, 1):
+g_base(1 .. 3, 1) := &lt;g1, g2, g3&gt;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1604" drawlabel="true">
@@ -366,7 +366,7 @@ end do:</Text-field>
 <Text-field style="Heading 1" layout="Heading 1">Export</Text-field></Title>
 <Group labelreference="L1598" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save q_t, q_s, qD_t, qD_s, qDD_t, qDD_s, qJ_t, qJ_s, qJD_t, qJD_s, qJDD_t, qJDD_s, g_ref, X_base_t, X_base_s, V_base_t, V_base_s, VD_base_t, VD_base_s, qoffset, theta, alpha, d, a,v,b,beta, M, r_i_i_Si, mr_i_i_Si, I_i_i, I_i_Si, X, PV, robot_name, N,NB,NJ,NL, sprintf(&quot;../codeexport/%s_tree_floatb_twist_definitions&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save q_t, q_s, qD_t, qD_s, qDD_t, qDD_s, qJ_t, qJ_s, qJD_t, qJD_s, qJDD_t, qJDD_s, g_base, X_base_t, X_base_s, V_base_t, V_base_s, VD_base_t, VD_base_s, qoffset, theta, alpha, d, a,v,b,beta, M, r_i_i_Si, mr_i_i_Si, I_i_i, I_i_Si, X, PV, robot_name, N,NB,NJ,NL, sprintf(&quot;../codeexport/%s_tree_floatb_twist_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 </Section>
