@@ -112,7 +112,12 @@ do
 done
 
 # Basisgeschwindigkeit und Beschleunigung
-echo "" > $tmp_pfad/robot_matlabtmp_VB.m
+echo "" > $tmp_pfad/robot_matlabtmp_rB.m
+echo "rxs_base = r_base(1);" >> $tmp_pfad/robot_matlabtmp_rB.m
+echo "rys_base = r_base(2);" >> $tmp_pfad/robot_matlabtmp_rB.m
+echo "rzs_base = r_base(3);" >> $tmp_pfad/robot_matlabtmp_rB.m
+
+echo "" > $tmp_pfad/robot_matlabtmp_vB.m
 echo "vxs_base = V_base(1);" >> $tmp_pfad/robot_matlabtmp_vB.m
 echo "vys_base = V_base(2);" >> $tmp_pfad/robot_matlabtmp_vB.m
 echo "vzs_base = V_base(3);" >> $tmp_pfad/robot_matlabtmp_vB.m
@@ -120,7 +125,7 @@ echo "omegaxs_base = V_base(4);" >> $tmp_pfad/robot_matlabtmp_vB.m
 echo "omegays_base = V_base(5);" >> $tmp_pfad/robot_matlabtmp_vB.m
 echo "omegazs_base = V_base(6);" >> $tmp_pfad/robot_matlabtmp_vB.m
 
-echo "" > $tmp_pfad/robot_matlabtmp_VBD.m
+echo "" > $tmp_pfad/robot_matlabtmp_vBD.m
 echo "vDxs_base = VD_base(1);" >> $tmp_pfad/robot_matlabtmp_vBD.m
 echo "vDys_base = VD_base(2);" >> $tmp_pfad/robot_matlabtmp_vBD.m
 echo "vDzs_base = VD_base(3);" >> $tmp_pfad/robot_matlabtmp_vBD.m

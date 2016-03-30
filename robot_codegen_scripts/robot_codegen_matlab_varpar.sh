@@ -269,4 +269,153 @@ do
     echo "Code in ${quelldat##*/} nicht gefunden."
   fi
 
+  # Kinetische Energie (Floating Base)
+  if [ $dynpar == 1 ]; then
+    quelldat=$repo_pfad/codeexport/${robot_name}_energy_kinetic_floatb_baseframe_par${dynpar}_matlab.m
+  else
+    quelldat=$repo_pfad/codeexport/${robot_name}_energy_kinetic_floatb_linkframe_par${dynpar}_matlab.m
+  fi
+  zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_energykin_floatb_sym_lag_varpar_par${dynpar}.m
+  if [ -f $quelldat ]; then
+    cat $tmp_pfad/robot_matlabtmp_energykin_floatb_par${dynpar}.head.m > $zieldat
+    printf "%%%%Coder Information\n%%#codegen\n" >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_vB.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
+    if [ $dynpar == 1 ]; then
+      cat $tmp_pfad/robot_matlabtmp_assert_rcom.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_Ic.m >> $zieldat
+    else
+      cat $tmp_pfad/robot_matlabtmp_assert_mrcom.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_If.m >> $zieldat
+    fi
+    printf "\n%%%% Variable Initialization" >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_vB.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat
+    if [ $dynpar == 1 ]; then
+      cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_par_Ic.m >> $zieldat
+    else
+      cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_par_If.m >> $zieldat
+    fi
+    printf "\n%%%%Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+    cat $quelldat >> $zieldat
+    source robot_codegen_matlabfcn_postprocess.sh $zieldat
+  else
+    echo "Code in ${quelldat##*/} nicht gefunden."
+  fi
+
+  # Kinetische Energie (Floating Base)
+  if [ $dynpar == 1 ]; then
+    quelldat=$repo_pfad/codeexport/${robot_name}_energy_kinetic_fixb_baseframe_par${dynpar}_matlab.m
+  else
+    quelldat=$repo_pfad/codeexport/${robot_name}_energy_kinetic_fixb_linkframe_par${dynpar}_matlab.m
+  fi
+  zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_energykin_fixb_sym_lag_varpar_par${dynpar}.m
+  if [ -f $quelldat ]; then
+    cat $tmp_pfad/robot_matlabtmp_energykin_fixb_par${dynpar}.head.m > $zieldat
+    printf "%%%%Coder Information\n%%#codegen\n" >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
+    if [ $dynpar == 1 ]; then
+      cat $tmp_pfad/robot_matlabtmp_assert_rcom.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_Ic.m >> $zieldat
+    else
+      cat $tmp_pfad/robot_matlabtmp_assert_mrcom.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_If.m >> $zieldat
+    fi
+    printf "\n%%%% Variable Initialization" >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat
+    if [ $dynpar == 1 ]; then
+      cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_par_Ic.m >> $zieldat
+    else
+      cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_par_If.m >> $zieldat
+    fi
+    printf "\n%%%%Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+    cat $quelldat >> $zieldat
+    source robot_codegen_matlabfcn_postprocess.sh $zieldat
+  else
+    echo "Code in ${quelldat##*/} nicht gefunden."
+  fi
+
+  # Potentielle Energie (Floating base)
+  quelldat=$repo_pfad/codeexport/${robot_name}_energy_potential_baseframe_par${dynpar}_matlab.m
+  zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_energypot_floatb_sym_lag_varpar_par${dynpar}.m
+  if [ -f $quelldat ]; then
+    cat $tmp_pfad/robot_matlabtmp_energypot_floatb_par${dynpar}.head.m > $zieldat
+    printf "%%%%Coder Information\n%%#codegen\n" >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_rB.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
+    if [ $dynpar == 1 ]; then
+      cat $tmp_pfad/robot_matlabtmp_assert_rcom.m >> $zieldat
+    else
+      cat $tmp_pfad/robot_matlabtmp_assert_mrcom.m >> $zieldat
+    fi
+    printf "\n%%%% Variable Initialization" >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_rB.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_g.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat
+    if [ $dynpar == 1 ]; then
+      cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> $zieldat
+    else
+      cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> $zieldat
+    fi
+    printf "\n%%%%Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+    cat $quelldat >> $zieldat
+    source robot_codegen_matlabfcn_postprocess.sh $zieldat
+  else
+    echo "Code in ${quelldat##*/} nicht gefunden."
+  fi
+
+  # Potentielle Energie (Fixed base)
+  quelldat=$repo_pfad/codeexport/${robot_name}_energy_potential_baseframe_par${dynpar}_matlab.m
+  zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_energypot_fixb_sym_lag_varpar_par${dynpar}.m
+  if [ -f $quelldat ]; then
+    cat $tmp_pfad/robot_matlabtmp_energypot_fixb_par${dynpar}.head.m > $zieldat
+    printf "%%%%Coder Information\n%%#codegen\n" >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
+    if [ $dynpar == 1 ]; then
+      cat $tmp_pfad/robot_matlabtmp_assert_rcom.m >> $zieldat
+    else
+      cat $tmp_pfad/robot_matlabtmp_assert_mrcom.m >> $zieldat
+    fi
+    printf "\n%%%% Variable Initialization" >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
+    printf "rxs_base=0;\nrys_base=0;\nrzs_base=0;\n" >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_g.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat
+    if [ $dynpar == 1 ]; then
+      cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> $zieldat
+    else
+      cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> $zieldat
+    fi
+    printf "\n%%%%Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+    cat $quelldat >> $zieldat
+    source robot_codegen_matlabfcn_postprocess.sh $zieldat
+  else
+    echo "Code in ${quelldat##*/} nicht gefunden."
+  fi
+
 done
