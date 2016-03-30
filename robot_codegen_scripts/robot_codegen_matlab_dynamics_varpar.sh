@@ -1,6 +1,6 @@
 #!/bin/bash
 # Erstelle fertige Matlab-Funktionen aus exportiertem Code von Maple
-# Dieses Skript erledigt alle Schritte, nachdem der Code in Maple exportiert wurde
+# Dieses Skript erstellt die Funktionen zur Dynamik und wird von robot_codegen_matlab_varpar.sh aufgerufen.
 #
 # Dieses Skript im Ordner ausführen, in dem es im Repo liegt
 
@@ -13,11 +13,7 @@ tmp_pfad=$repo_pfad/robot_codegen_scripts/tmp/
 source robot_codegen_tmpvar_bash.sh
 source $repo_pfad/robot_codegen_definitions/robot_env.sh
 
-# Erstelle Matlab-Hilfsdateien
-source robot_codegen_tmpvar_matlab.sh
-source robot_codegen_assert_matlab.sh
-
-# Erstelle Matlab-Funktionen
+# Erstelle Matlab-Funktionen der explizit ausgerechneten Dynamik (nicht in Regressorform)
 for (( dynpar=1; dynpar<=2; dynpar++ ))
 do
   # Gravitationsmoment
