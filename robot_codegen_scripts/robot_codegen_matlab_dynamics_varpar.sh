@@ -464,7 +464,7 @@ do
     cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_qDD.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_vB.m >> $zieldat
-    cat $tmp_pfad/robot_matlabtmp_assert_vBD.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_aB.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
@@ -480,7 +480,7 @@ do
     cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_qDD.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_vB.m >> $zieldat
-    cat $tmp_pfad/robot_matlabtmp_vBD.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_aB.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_g.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat

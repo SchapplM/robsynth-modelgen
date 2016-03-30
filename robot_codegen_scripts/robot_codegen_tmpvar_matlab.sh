@@ -126,9 +126,9 @@ echo "omegays_base = V_base(5);" >> $tmp_pfad/robot_matlabtmp_vB.m
 echo "omegazs_base = V_base(6);" >> $tmp_pfad/robot_matlabtmp_vB.m
 
 echo "" > $tmp_pfad/robot_matlabtmp_vBD.m
-echo "vDxs_base = VD_base(1);" >> $tmp_pfad/robot_matlabtmp_vBD.m
-echo "vDys_base = VD_base(2);" >> $tmp_pfad/robot_matlabtmp_vBD.m
-echo "vDzs_base = VD_base(3);" >> $tmp_pfad/robot_matlabtmp_vBD.m
-echo "omegaDxs_base = VD_base(4);" >> $tmp_pfad/robot_matlabtmp_vBD.m
-echo "omegaDys_base = VD_base(5);" >> $tmp_pfad/robot_matlabtmp_vBD.m
-echo "omegaDzs_base = VD_base(6);" >> $tmp_pfad/robot_matlabtmp_vBD.m
+echo "vDxs_base = A_base(1);" >> $tmp_pfad/robot_matlabtmp_aB.m
+echo "vDys_base = A_base(2);" >> $tmp_pfad/robot_matlabtmp_aB.m
+echo "vDzs_base = A_base(3);" >> $tmp_pfad/robot_matlabtmp_aB.m
+echo "omegaDxs_base = A_base(4);" >> $tmp_pfad/robot_matlabtmp_aB.m
+echo "omegaDys_base = A_base(5);" >> $tmp_pfad/robot_matlabtmp_aB.m
+echo "omegaDzs_base = A_base(6);" >> $tmp_pfad/robot_matlabtmp_aB.m
