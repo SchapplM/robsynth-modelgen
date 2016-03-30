@@ -313,14 +313,14 @@ end if:</Text-field>
 <Group labelreference="L1693" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(MM_s(7..N,1..6), sprintf(&quot;../codeexport/%s_inertia_joint_base_floatb_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
+  MatlabExport(MM_s(7..N,1..6), sprintf(&quot;../codeexport/%s_inertia_joint_base_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1646" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(MM_s(7..N,7..N), sprintf(&quot;../codeexport/%s_inertia_joint_joint_floatb_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
+  MatlabExport(MM_s(7..N,7..N), sprintf(&quot;../codeexport/%s_inertia_joint_joint_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -399,14 +399,14 @@ end do:</Text-field>
 <Group labelreference="L1621" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(tauCC_s[1..6], sprintf(&quot;../codeexport/%s_base_coriolisvec_floatb_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
+  MatlabExport(tauCC_s[1..6], sprintf(&quot;../codeexport/%s_coriolisvec_base_floatb_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1620" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(tauCC_s[7..N], sprintf(&quot;../codeexport/%s_joint_coriolisvec_floatb_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
+  MatlabExport(tauCC_s[7..N], sprintf(&quot;../codeexport/%s_coriolisvec_joint_floatb_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -433,7 +433,7 @@ end do:</Text-field>
 <Group labelreference="L1605" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(tauCC_s_fixb[7..N], sprintf(&quot;../codeexport/%s_joint_coriolisvec_fixb_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
+  MatlabExport(tauCC_s_fixb[7..N], sprintf(&quot;../codeexport/%s_coriolisvec_joint_fixb_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -477,6 +477,13 @@ end do:</Text-field>
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
   MatlabExport(Cqs[1..N,1..N], sprintf(&quot;../codeexport/%s_coriolismat_floatb_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
+end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1699" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
+  MatlabExport(Cqs[7..N,1..N], sprintf(&quot;../codeexport/%s_coriolismat_joint_floatb_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
