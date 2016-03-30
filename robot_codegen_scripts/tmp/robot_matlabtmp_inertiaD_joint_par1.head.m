@@ -16,5 +16,5 @@
 % MqD [%NJ%x%NJ%]
 %   time derivative of inertia matrix
 
-function Mq = %RN%_inertia_joint_sym_lag_varpar_par1(q, qD, ...
+function Mq = %RN%_inertiaD_joint_sym_lag_varpar_par1(q, qD, ...
   alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, rSges_num_mdh, Icges_num_mdh)
