@@ -21,7 +21,7 @@ sed -i "s/%NL%/$robot_NL/g" $mfcndat
 
 # Ersetze Variablennamen des letzten Ergebnisses des generierten Codes
 # prüfe, welches die Ausgabevariable der Funktion ist
-varname_fcn=`grep "=" $mfcndat | head -1 | sed 's/\(.*\)=.*/\1/'`
+varname_fcn=`grep "=" $mfcndat | head -1 | sed 's/function \(.*\)=.*/\1/'`
 # prüfe, welches die Ausgabevariable des Maple-exportierten Codes ist
 varname_tmp=`grep "=" $mfcndat | tail -1 | sed 's/\(.*\)=.*/\1/'`
 # Ergänze die Zuweisung der Ausgabevariablen

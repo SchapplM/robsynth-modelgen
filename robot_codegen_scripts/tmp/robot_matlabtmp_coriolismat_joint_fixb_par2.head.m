@@ -16,5 +16,5 @@
 % Cq [%NJ%x%NJ%]
 %   matrix of coriolis and centrifugal joint torques
 
-Cq = %RN%_coriolisvec_joint_fixb_sym_lag_varpar_par2(q, qD, ...
+function Cq = %RN%_coriolisvec_joint_fixb_sym_lag_varpar_par2(q, qD, ...
   alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, mrSges_num_mdh, Ifges_num_mdh)

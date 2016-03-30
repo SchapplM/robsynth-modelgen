@@ -14,5 +14,5 @@
 % Mqb [%NJ%x6]
 %   joint-base inertia matrix (gives inertial forces on the joins from base acceleration)
 
-Mqb = %RN%_inertia_joint_base_sym_lag_varpar_par2(q, ...
+function Mqb = %RN%_inertia_joint_base_sym_lag_varpar_par2(q, ...
   alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, rSges_num_mdh, Icges_num_mdh)
