@@ -33,10 +33,7 @@ if [ -f $quelldat ]; then
   echo "%% Postprocessing: Reshape Output" >> $zieldat
   printf "%% Convert Maple format (2-dimensional tensor) to Matlab format (3-dimensional tensor)\n" >> $zieldat
   printf "T_c_mdh = NaN(4,4,%%NL%%);\nfor i = 1:%%NL%%\n  T_c_mdh(:,:,i) = T_ges((i-1)*4+1 : 4*i, :);\nend\n" >> $zieldat
-  source robot_codegen_matlabfcn_postprocess.sh $zieldat
-  # letzte Zeile wieder entfernen (fehlerhaft, da robot_codegen_matlabfcn_postprocess.sh hier nicht passend)
-  head -n -1 $zieldat > $tmp_pfad/temp.txt
-  mv $tmp_pfad/temp.txt $zieldat
+  source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
 else
   echo "Code in ${quelldat##*/} nicht gefunden."
 fi
