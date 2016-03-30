@@ -1,0 +1,279 @@
+% Test function for inverse dynamics from symbolic calculations
+% 
+% Quellen:
+% [KhalilDombre2002] Modeling, Identification and Control of Robots
+
+% Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
+% (c) Institut für Regelungstechnik, Universität Hannover
+
+clc
+clear
+
+NJ = %NJ%;
+robot_name = '%RN%';
+
+testfunctions_path_init
+%% Parameter definieren
+a = rand(NJ,1);
+alpha = zeros(NJ,1);
+d = rand(NJ,1);
+q_offset = zeros(NJ,1);
+b = zeros(NJ,1);
+beta = zeros(NJ,1);
+% Es werden fixed-base Funktionen getestet. Der Basis-Körper wird also mit
+% NaN belegt und darf keinen Einfluss haben.
+rSges = [NaN(1,3);rand(NJ,3)];
+m = [NaN;rand(NJ,1)];
+Icges = [NaN(1,6);rand(NJ,3), -rand(NJ,3)*0.01];
+
+mrSges = repmat(m,1,3).*rSges;
+
+% Trägheitstensor um das Körperkoordinatensystem
+Ifges = NaN(NJ,6);
+for i = 1:size(Icges,1)
+  % Trägheitstensor um den Schwerpunkt
+  I_iSi = inertiavector2matrix(Icges(i,:));
+  
+  % Steinerscher-Verschiebungssatz: Trägheitstensor um Koordinatensystem
+  I_ii = inertia_steiner(I_iSi, rSges(i,:)', m(i));
+  
+  % Ausgabe zusammenstellen
+  Ifges(i,:) = inertiamatrix2vector(I_ii);
+end
+
+n = 100;
+
+Q = (0.5-rand(n, NJ))*pi;
+QD = (0.5-rand(n, NJ))*pi;
+QD(1:NJ,:)=eye(NJ);
+QDD = (0.5-rand(n, NJ))*pi;
+G = (0.5-rand(n, 3))*10;
+
+%% Parameter prüfen
+if any(m) < 0
+  error('Massen sollten positiv sein');
+end
+for i = 2:NJ+1
+  Ic_i = inertiavector2matrix(Icges(i,:));
+  if any(eig(Ic_i) < 0) 
+    error('Trägheitstensor sollte positiv definit sein');
+  end
+end
+
+%% Test kinetic Energy
+for i = 1:n
+  q = Q(i,:)';
+  qD = QD(i,:)';
+  % calculate kinetic energy with optimized function
+  T_func = %RN%_energykin_fixb_sym_lag_varpar_par1(q, qD, ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+  % calculate kinetic energy with mass matrix
+  Mq = %RN%_inertia_joint_sym_lag_varpar_par1(q, ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+  T_M = 1/2 * qD' * Mq*qD;
+
+  % compare both
+  Delta = T_func-T_M;
+  if any(abs(Delta) > 1e-12)
+    error('Kinetic Energy from Mass Matrix does not match with directly calculated. %1.5e', ...
+      max(abs(Delta)));
+  end
+end
+fprintf('Tested kinetic energy/inertia for %d random joint angles for %s\n', ...
+  n, robot_name);
+
+
+%% Test coriolis vector and Matrix
+for i = 1:n
+  q = Q(i,:)';
+  qD = QD(i,:)';
+
+  % calculate coriolis vector directly from optimized function
+  cq = %RN%_coriolisvec_joint_fixb_sym_lag_varpar_par1(q, qD, ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+
+  % calculate with coriolis matrix
+  Cq = %RN%_coriolismat_joint_fixb_sym_lag_varpar_par1(q, qD, ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+  cq_mat = (Cq*qD);
+
+  % compare both
+  Delta = cq-cq_mat;
+  if any(abs(Delta) > 1e-12)
+    error('coriolis torques from vector and matrix do not match. %1.5e', ...
+      max(abs(Delta)));
+  end
+
+end
+fprintf('Tested coriolis vector/matrix for %d random joint angles for %s\n', ...
+  size(Q, 1), robot_name);
+
+%% Teste Massenmatrix-Zeitableitung gegen Coriolis-Matrix
+% [KhalilDombre2002] p. 198 9.3.3.3 e)
+for i = 1:n
+  q = Q(i,:)';
+  qD = QD(i,:)';
+
+  % Coriolis Matrix
+  Cq = %RN%_coriolismat_joint_fixb_sym_lag_varpar_par1(q, qD, ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+
+  % Inertia Matrix time derivative
+  MqD = %RN%_inertiaD_joint_sym_lag_varpar_par1(q, qD, ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+
+  % Calculate test expression
+  Test = MqD-2*Cq;
+
+  % Test skew symmetry of Test-Matrix
+  for ii = 1:NJ
+    for jj = 1:NJ
+      if abs(Test(ii,jj) + Test(jj,ii)) > 1e-13
+        error('Test-Matrix is not skew-symmetric');
+      end
+    end
+  end
+end
+fprintf('Tested Inertia time derivative/coriolis matrix for %d random joint angles for %s\n', ...
+  size(Q, 1), robot_name);
+
+%% Alle Funktionen mit Parametersatz 2 testen
+for i = 1:n
+  q = Q(i,:)';
+  qD = QD(i,:)';
+  qDD = QDD(i,:)';
+  g_base = G(i,:)';
+  % Gravitation
+  taug_par1 = %RN%_gravload_joint_sym_lag_varpar_par1(q, g_base, ...
+    alpha, a, d, q_offset, b, beta, m, rSges)';
+  taug_par2 = %RN%_gravload_joint_sym_lag_varpar_par2(q, g_base, ...
+    alpha, a, d, q_offset, b, beta, m, mrSges)';
+  if any(abs(taug_par1 - taug_par2) > 1e-12)
+    error('gravity torques do not match between par1/par2.');
+  end
+  % Coriolis
+  tauc_par1 = %RN%_coriolisvec_joint_fixb_sym_lag_varpar_par1(q, qD, ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+  tauc_par2 = %RN%_coriolisvec_joint_fixb_sym_lag_varpar_par2(q, qD, ...
+    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
+  if any(abs(tauc_par1-tauc_par2) > 1e-12)
+    error('coriolis vectors do not match between par1/par2.');
+  end
+  Cq_par1 = %RN%_coriolismat_joint_fixb_sym_lag_varpar_par1(q, qD, ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+  Cq_par2 = %RN%_coriolismat_joint_fixb_sym_lag_varpar_par2(q, qD, ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Ifges); 
+  if any(abs(Cq_par1(:)-Cq_par2(:)) > 1e-12)
+    error('coriolis matrices do not match between par1/par2.');
+  end 
+  % Inertia
+  Mq_par1 = %RN%_inertia_joint_sym_lag_varpar_par1(q, ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+  Mq_par2 = %RN%_inertia_joint_sym_lag_varpar_par2(q, ...
+    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
+  if any(abs(Mq_par1(:)-Mq_par2(:)) > 1e-12)
+    error('inertia matrices do not match between par1/par2.');
+  end
+  % Inverse Dynamics
+  tau_par1 = %RN%_invdyn_fixb_sym_lag_varpar_par1(q, qD, qDD, g_base, ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+  tau_par2 = %RN%_invdyn_fixb_sym_lag_varpar_par2(q, qD, qDD, g_base, ...
+    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
+  if any(abs(tau_par1-tau_par2) > 1e-12)
+    error('inverse dynamics joint torque vectors do not match between par1/par2.');
+  end
+end
+
+%% Komplettfunktion für inverse Dynamik prüfen
+for i = 1:n
+  q = Q(i,:)';
+  qD = QD(i,:)';
+  qDD = QDD(i,:)';
+  g_base = G(i,:)';
+  % Gravitation
+  taug_id = %RN%_invdyn_fixb_sym_lag_varpar_par1(q, zeros(NJ,1), zeros(NJ,1), g_base, ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+  taug_sp = %RN%_gravload_joint_sym_lag_varpar_par1(q, g_base, ...
+    alpha, a, d, q_offset, b, beta, m, rSges)';
+  Delta = taug_id - taug_sp;
+  if any(abs(Delta) > 1e-12)
+    error('gravity torques from inverse dynamics and own function do not match. %1.5e', ...
+      max(abs(Delta)));
+  end
+  
+  % Coriolis
+  tauc_id = %RN%_invdyn_fixb_sym_lag_varpar_par1(q, qD, zeros(NJ,1), zeros(3,1), ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+  tauc_sp = %RN%_coriolisvec_joint_fixb_sym_lag_varpar_par1(q, qD, ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+  Delta = tauc_id - tauc_sp;
+  if any(abs(Delta) > 1e-12)
+    error('Coriolis torques from inverse dynamics and own function do not match. %1.5e', ...
+      max(abs(Delta)));
+  end
+  
+  % Inertia
+  taua_id = %RN%_invdyn_fixb_sym_lag_varpar_par1(q, zeros(NJ,1), qDD, zeros(3,1), ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+  Mq = %RN%_inertia_joint_sym_lag_varpar_par1(q, ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+  taua_sp = Mq*qDD;
+  Delta = taua_id - taua_sp;
+  if any(abs(Delta) > 1e-12)
+    error('Inertial torques from inverse dynamics and own function do not match. %1.5e', ...
+      max(abs(Delta)));
+  end
+end
+fprintf('Tested inverse dynamics for %d random joint angles for %s\n', ...
+  size(Q, 1), robot_name);
+
+%% Energetische Konsistenz prüfen
+n = 5; % Unterschiedliche Anfangskonfigurationen
+t_End = 1;
+for ii = 1:n
+  q0 = Q(ii,:)';
+  qD0 = QD(ii,:)';
+  g_base = G(ii,:)';
+
+  % Zustand des Systems (Position und Geschwindigkeit)
+  x0 = [q0; qD0];
+  % Funktion zur Berechnung der Beschleunigung (Inverse Massenmatrix
+  % multipliziert mit Beschleunigungsmoment)
+  odefun = @(t, x) ([x(NJ+1:2*NJ); -%RN%_inertia_joint_sym_lag_varpar_par1(x(1:NJ), ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges) ...
+    \ ...
+    (%RN%_invdyn_fixb_sym_lag_varpar_par1(x(1:NJ), x(NJ+1:2*NJ), zeros(NJ,1), [0;0;-9.81], alpha, a, d, q_offset, b, beta, m, rSges, Icges))]);
+  odefun(0, x0); % Testen der Funktion
+  % Numerische Integration konfigurieren und durchführen
+  options = odeset('MaxStep',1e-3); % mit automatischer Schrittweite ist der Fehler zu groß
+  SolverOutput = ode45(odefun,[0 t_End],x0, options);
+  t = SolverOutput.x;
+  % Berechne Energie aus den Ausgaben
+  E = NaN(length(t), 3);
+  tau_Acc = NaN(length(t), NJ);
+  for i = 1:length(t)
+    q = SolverOutput.y(1:NJ,i);
+    qD = SolverOutput.y(NJ+1:2*NJ,i);
+    E(i,1) = %RN%_energykin_fixb_sym_lag_varpar_par1(q, qD, alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+    E(i,2) = %RN%_energypot_fixb_sym_lag_varpar_par1(q, [0;0;-9.81], alpha, a, d, q_offset, b, beta, m, rSges);
+    tau_Acc(i,:) = %RN%_invdyn_fixb_sym_lag_varpar_par1(q, qD, zeros(NJ,1), [0;0;-9.81], alpha, a, d, q_offset, b, beta, m, rSges, Icges)';
+  end
+  E(:,3) = sum(E(:,1:2),2); % Gesamtenergie
+  % Ergebnisse zeichnen
+  figure(1);clf;
+  subplot(2,2,1);
+  plot(t, E);ylabel('Energie [J]');legend({'T', 'U', 'Ges'});
+  title(sprintf('Energie: %s', robot_name), 'interpreter', 'none');
+  subplot(2,2,2);
+  plot(t, SolverOutput.y(1:NJ,:)'); ylabel('Gelenkwinkel [rad]');
+  subplot(2,2,3);
+  plot(t, SolverOutput.y(NJ+1:2*NJ,:)'); ylabel('Geschwindigkeit [rad/s]');
+  subplot(2,2,4);
+  plot(t, tau_Acc); ylabel('Beschleunigungsmoment [Nm]');
+
+  if abs(E(1,3) - E(end,3)) > 5e-4
+    error('Das System ist nicht energetisch konsistent');
+  end
+end
+fprintf('Tested energetic consistency for free movement with %d starting configurations for %s\n', ...
+  n, robot_name);
