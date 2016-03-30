@@ -63,7 +63,7 @@ done
 echo "" > $tmp_pfad/robot_matlabtmp_par_m.m
 for (( i=1; i<=$robot_NL; i++ ))
 do
-	echo "M${i} = m_num(${i});" >> $tmp_pfad/robot_matlabtmp_m.m
+	echo "M${i} = m_num(${i});" >> $tmp_pfad/robot_matlabtmp_par_m.m
 done
 
 echo "" > $tmp_pfad/robot_matlabtmp_par_rcom.m
@@ -113,17 +113,17 @@ done
 
 # Basisgeschwindigkeit und Beschleunigung
 echo "" > $tmp_pfad/robot_matlabtmp_VB.m
-echo "vxs_base = V_base(1);" >> $tmp_pfad/robot_matlabtmp_VB.m
-echo "vys_base = V_base(2);" >> $tmp_pfad/robot_matlabtmp_VB.m
-echo "vzs_base = V_base(3);" >> $tmp_pfad/robot_matlabtmp_VB.m
-echo "omegaxs_base = V_base(4);" >> $tmp_pfad/robot_matlabtmp_VB.m
-echo "omegays_base = V_base(5);" >> $tmp_pfad/robot_matlabtmp_VB.m
-echo "omegazs_base = V_base(6);" >> $tmp_pfad/robot_matlabtmp_VB.m
+echo "vxs_base = V_base(1);" >> $tmp_pfad/robot_matlabtmp_vB.m
+echo "vys_base = V_base(2);" >> $tmp_pfad/robot_matlabtmp_vB.m
+echo "vzs_base = V_base(3);" >> $tmp_pfad/robot_matlabtmp_vB.m
+echo "omegaxs_base = V_base(4);" >> $tmp_pfad/robot_matlabtmp_vB.m
+echo "omegays_base = V_base(5);" >> $tmp_pfad/robot_matlabtmp_vB.m
+echo "omegazs_base = V_base(6);" >> $tmp_pfad/robot_matlabtmp_vB.m
 
 echo "" > $tmp_pfad/robot_matlabtmp_VBD.m
-echo "vDxs_base = VD_base(1);" >> $tmp_pfad/robot_matlabtmp_VBD.m
-echo "vDys_base = VD_base(2);" >> $tmp_pfad/robot_matlabtmp_VBD.m
-echo "vDzs_base = VD_base(3);" >> $tmp_pfad/robot_matlabtmp_VBD.m
-echo "omegaDxs_base = VD_base(4);" >> $tmp_pfad/robot_matlabtmp_VBD.m
-echo "omegaDys_base = VD_base(5);" >> $tmp_pfad/robot_matlabtmp_VBD.m
-echo "omegaDzs_base = VD_base(6);" >> $tmp_pfad/robot_matlabtmp_VBD.m
+echo "vDxs_base = VD_base(1);" >> $tmp_pfad/robot_matlabtmp_vBD.m
+echo "vDys_base = VD_base(2);" >> $tmp_pfad/robot_matlabtmp_vBD.m
+echo "vDzs_base = VD_base(3);" >> $tmp_pfad/robot_matlabtmp_vBD.m
+echo "omegaDxs_base = VD_base(4);" >> $tmp_pfad/robot_matlabtmp_vBD.m
+echo "omegaDys_base = VD_base(5);" >> $tmp_pfad/robot_matlabtmp_vBD.m
+echo "omegaDzs_base = VD_base(6);" >> $tmp_pfad/robot_matlabtmp_vBD.m
