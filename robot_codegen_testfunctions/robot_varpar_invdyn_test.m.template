@@ -13,52 +13,9 @@ NJ = %NJ%;
 robot_name = '%RN%';
 
 testfunctions_path_init
-%% Parameter definieren
-a = rand(NJ,1);
-alpha = zeros(NJ,1);
-d = rand(NJ,1);
-q_offset = zeros(NJ,1);
-b = zeros(NJ,1);
-beta = zeros(NJ,1);
-% Es werden fixed-base Funktionen getestet. Der Basis-Körper wird also mit
-% NaN belegt und darf keinen Einfluss haben.
-rSges = [NaN(1,3);rand(NJ,3)];
-m = [NaN;rand(NJ,1)];
-Icges = [NaN(1,6);rand(NJ,3), -rand(NJ,3)*0.01];
 
-mrSges = repmat(m,1,3).*rSges;
-
-% Trägheitstensor um das Körperkoordinatensystem
-Ifges = NaN(NJ,6);
-for i = 1:size(Icges,1)
-  % Trägheitstensor um den Schwerpunkt
-  I_iSi = inertiavector2matrix(Icges(i,:));
-  
-  % Steinerscher-Verschiebungssatz: Trägheitstensor um Koordinatensystem
-  I_ii = inertia_steiner(I_iSi, rSges(i,:)', m(i));
-  
-  % Ausgabe zusammenstellen
-  Ifges(i,:) = inertiamatrix2vector(I_ii);
-end
-
-n = 100;
-
-Q = (0.5-rand(n, NJ))*pi;
-QD = (0.5-rand(n, NJ))*pi;
-QD(1:NJ,:)=eye(NJ);
-QDD = (0.5-rand(n, NJ))*pi;
-G = (0.5-rand(n, 3))*10;
-
-%% Parameter prüfen
-if any(m) < 0
-  error('Massen sollten positiv sein');
-end
-for i = 2:NJ+1
-  Ic_i = inertiavector2matrix(Icges(i,:));
-  if any(eig(Ic_i) < 0) 
-    error('Trägheitstensor sollte positiv definit sein');
-  end
-end
+%% Parameter
+robot_varpar_testfunctions_parameter
 
 %% Test kinetic Energy
 for i = 1:n
