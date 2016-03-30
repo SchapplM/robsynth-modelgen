@@ -1,4 +1,4 @@
-% Calculate vector of centrifugal and coriolis load on the joints for
+% Calculate matrix of centrifugal and coriolis load on the joints for
 % %RN%
 % Use Code from Maple symbolic Code Generation
 % 
@@ -13,8 +13,8 @@
 %   dynamic parameters (parameter set 2: first moment and inertia about link frame origin)
 % 
 % Output:
-% tauc [%NJ%x1]
-%   joint torques required to compensate coriolis and centrifugal load
+% Cq [%NJ%x%NJ%]
+%   matrix of coriolis and centrifugal joint torques
 
-tauc = %RN%_coriolisvec_joint_fixb_sym_lag_varpar_par2(q, qD, ...
+Cq = %RN%_coriolisvec_joint_fixb_sym_lag_varpar_par1(q, qD, ...
   alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, mrSges_num_mdh, Ifges_num_mdh)
