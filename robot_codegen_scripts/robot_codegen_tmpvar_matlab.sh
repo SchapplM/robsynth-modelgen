@@ -108,7 +108,7 @@ done
 echo "" > $tmp_pfad/robot_matlabtmp_g.m
 for (( i=1; i<=3; i++ ))
 do
-	echo "g${i} = g_base_mdh(${i});" >> $tmp_pfad/robot_matlabtmp_g.m
+	echo "g${i} = g_base(${i});" >> $tmp_pfad/robot_matlabtmp_g.m
 done
 
 # Basisgeschwindigkeit und Beschleunigung
