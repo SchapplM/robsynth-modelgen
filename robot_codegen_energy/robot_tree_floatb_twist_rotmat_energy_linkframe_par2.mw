@@ -274,8 +274,13 @@ end do:</Text-field>
 <Group labelreference="L1707" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(T_s_fixb, sprintf(&quot;../codeexport/%s_energy_kinetic_fixb_baseframe_par1_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(T_s_fixb, sprintf(&quot;../codeexport/%s_energy_kinetic_fixb_linkframe_par2_matlab.m&quot;, robot_name), codegen_opt):
 end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1712" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>
