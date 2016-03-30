@@ -17,5 +17,8 @@ source $repo_pfad/robot_codegen_definitions/robot_env.sh
 source robot_codegen_tmpvar_matlab.sh
 source robot_codegen_assert_matlab.sh
 
+# Erstelle Matlab-Funktionen der Kinematik
+source robot_codegen_matlab_kinematics_varpar.sh
+
 # Erstelle Matlab-Funktionen der explizit ausgerechneten Dynamik (nicht in Regressorform)
 source robot_codegen_matlab_dynamics_varpar.sh
