@@ -89,8 +89,8 @@
         <Metadata-attribute name="Subject" value="&lt;default&gt;"/>
         <Metadata-attribute name="Author" value="&lt;default&gt;"/>
         <Metadata-attribute name="Item List" value="true"/>
-        <Metadata-attribute name="Keywords" value="&lt;default&gt;"/>
         <Metadata-attribute name="Title" value="&lt;default&gt;"/>
+        <Metadata-attribute name="Keywords" value="&lt;default&gt;"/>
     </Metadata-tag>
 </Metadata-table>
 <Task-table>
@@ -114,12 +114,6 @@ fixb -&gt; fixed base. Kein Floating base Modell. Dort ist diese Form der Minima
 </Font>rotmat -&gt; Kinematik wird mit Rotationsmatrizen berechnet
 energy -&gt; Berechnung der Energie
 regressor -&gt; Regressorform (parameterlinear)</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1804" drawlabel="true">
-<Input>
-<Text-field style="Heading 2" layout="Heading 2">TODO</Text-field>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Die Formelnummerierungen beziehen sich auf das Skript [HRL_IDR], WS2015/16. Erg\303\244nze Formelnummern aus </Font>GautierKhalil.</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1515" drawlabel="true">
@@ -223,7 +217,7 @@ end do:</Text-field>
 <Text-field style="Heading 1" layout="Heading 1">Parameterlinearisierung</Text-field></Title>
 <Group labelreference="L1756" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal">Parameterlinearisierung auf Basis von (14) und (15)</Text-field>
+<Text-field style="Text" layout="Normal">Parameterlinearisierung auf Basis von [HRL_IDR] (14) und (15)</Text-field>
 </Input>
 </Group>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
@@ -269,7 +263,8 @@ m :=  Matrix(NJ, 1, PV2_mat[2 .. NL, 10]):</Text-field>
 <Text-field style="Heading 3" layout="Heading 3">Rekursive Berechnung der Minimalparameter</Text-field></Title>
 <Group labelreference="L1688" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal">Rekursive Berechnung der Minimalparameter mit (23), siehe Abbildung 1.</Text-field>
+<Text-field style="Text" layout="Normal">Rekursive Berechnung der Minimalparameter mit [HRL_IDR] (23), siehe Abbildung 1.
+[GautierKhalil1990] (eq. 15)</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1691" drawlabel="true">
@@ -294,7 +289,7 @@ end do: </Text-field>
 <Text-field style="Heading 3" layout="Heading 3">Parameter ohne Einfluss &quot;Markieren&quot;</Text-field></Title>
 <Group labelreference="L1692" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal">Markierung von Parametern ohne Einfluss an Hand von (18)</Text-field>
+<Text-field style="Text" layout="Normal">Markierung von Parametern ohne Einfluss an Hand von [HRL_IDR] (18)</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1690" drawlabel="true">
@@ -338,7 +333,8 @@ end do:</Text-field>
 <Text-field style="Heading 3" layout="Heading 3">Parametervektor in Richtiger Reihenfolge aufstellen und Entfernen von mZ, YY, m</Text-field></Title>
 <Group labelreference="L1695" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal">Anwendung von Regel 3 (S. 5) auf den Parametervektor</Text-field>
+<Text-field style="Text" layout="Normal">Anwendung von [HRL_IDR] Regel 3 (S. 5) auf den Parametervektor
+[GautierKhalil1990] (eq. 18)</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1699" drawlabel="true">
@@ -361,7 +357,7 @@ end do: </Text-field>
 <Text-field style="Heading 3" layout="Heading 3">Entfernung von Nullelementen</Text-field></Title>
 <Group labelreference="L1763" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal">Durch Entfernung der Nullelemente erfolgt 'beta_b' aus (22)</Text-field>
+<Text-field style="Text" layout="Normal">Durch Entfernung der Nullelemente erfolgt 'beta_b' aus [HRL_IDR] (22)</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1700" drawlabel="true">
@@ -389,8 +385,8 @@ for i to MPV_n_max do
     # Shift by number of currently found Zeroes
     Paramvec2[i-p, 1] := Paramvec[i, 1]:
   end if:
-<Font encoding="UTF-8">end do: 
-printf(&quot;Dimension des Minimalparametervektors: %dx1\134n&quot;, </Font>Paramvec_size):</Text-field>
+end do: 
+<Font encoding="UTF-8">printf(&quot;Dimension des Minimalparametervektors: %dx1\134n&quot;, </Font>Paramvec_size):</Text-field>
 </Input>
 </Group>
 </Section>
@@ -416,8 +412,9 @@ end if;</Text-field>
 <Text-field style="Heading 3" layout="Heading 3">Markieren von t_mZ, t_YY, t_m, u_mZ, u_YY, u_m_j</Text-field></Title>
 <Group labelreference="L1760" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal">Anwendung von Regel 3 (S. 5) auf die Geometrievektoren t und u der Energien T und U
-<Font encoding="UTF-8">Der Basis-K\303\266rper wird nicht gez\303\244hlt. Daher ignorieren der ersten zehn Eintr\303\244ge in </Font>t_ges</Text-field>
+<Text-field style="Text" layout="Normal">Anwendung von [HRL_IDR] Regel 3 (S. 5) auf die Geometrievektoren t und u der Energien T und U
+<Font encoding="UTF-8">Der Basis-K\303\266rper wird nicht gez\303\244hlt. Daher ignorieren der ersten zehn Eintr\303\244ge in </Font>t_ges
+[GautierKhalil1990], p.369</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1717" drawlabel="true">
