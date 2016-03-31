@@ -1,0 +1,18 @@
+# Beispiel für Codegenerierung:
+# Atlas Bein v4
+#
+# Quellen
+# [4] Khalil, W. and Kleinfinger, J.-F.: Minimum operations and minimum parameters of the dynamic models of tree structure robots (1987)
+
+robot_name := "atlas4_leg":
+
+NJ := 6:
+qoffset := Matrix(6,1,[(1/2)*Pi, (1/2)*Pi, qoffset3, qoffset4, 0, 0]):
+alpha := Matrix(6,1,[0, (1/2)*Pi, (1/2)*Pi, 0, 0, -(1/2)*Pi]):
+d := Matrix(6,1,[0, d2, d3, 0, 0, 0]):
+a := Matrix(6,1,[0, 0, a3, a4, a5, 0]):
+v := Matrix(6,1,[0, 1, 2, 3, 4, 5]):
+b := Matrix(6,1,[0, 0, 0, 0, 0]):
+beta := Matrix(6,1,[0, 0, 0, 0, 0]):
+
+theta := qJ_t+qoffset:
