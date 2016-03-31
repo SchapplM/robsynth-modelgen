@@ -14,7 +14,7 @@ testfunctions_path_init
 %% Parameter
 robot_varpar_testfunctions_parameter
 
-MPV = %RN%_convert_par1_MPV(alpha, a, d, q_offset, b, beta, ...
+MPV = %RN%_convert_par2_MPV(alpha, a, d, q_offset, b, beta, ...
   m, mrSges, Ifges);
 %% Test kinetic Energy
 for i = 1:n
