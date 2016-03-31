@@ -1,0 +1,60 @@
+% Teste parameterlineare Formen der Dynamik
+
+% Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
+% (c) Institut für Regelungstechnik, Universität Hannover
+
+clc
+clear
+
+NJ = %NJ%;
+robot_name = '%RN%';
+
+testfunctions_path_init
+
+%% Parameter
+robot_varpar_testfunctions_parameter
+
+MPV = %RN%_convert_par1_MPV(alpha, a, d, q_offset, b, beta, ...
+  m, mrSges, Ifges);
+%% Test kinetic Energy
+for i = 1:n
+  q = Q(i,:)';
+  qD = QD(i,:)';
+  % calculate kinetic energy with optimized function
+  T_func = %RN%_energykin_fixb_sym_lag_varpar_par1(q, qD, ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+  % calculate kinetic energy with regressor
+  t_reg = %RN%_energykin_fixb_regmin_sym_lag_varpar(q, qD, ...
+    alpha, a, d, q_offset, b, beta);
+  T_mpv = t_reg*MPV;
+  if abs(T_mpv-T_func) > 1e-12
+    error('Kinetic Energy from base parameter vector does not match with direct form.');
+  end
+end
+fprintf('Tested kinetic energy for %d random joint angles for %s\n', ...
+  n, robot_name);
+%% Test Potential Energy
+% Die potentielle Energie hat aufgrund des wegstreichens von Parametern
+% einen unterschiedlichen statischen Anteil bei der Minimalparameterform
+for i = 1:n
+  q = Q(i,:)';
+  g_base = G(i,:)';
+  % calculate kinetic energy with optimized function
+  U_func = %RN%_energypot_fixb_sym_lag_varpar_par1(q, g_base, ...
+    alpha, a, d, q_offset, b, beta, m, rSges);
+  U_func0 = %RN%_energypot_fixb_sym_lag_varpar_par1(zeros(NJ,1), g_base, ...
+    alpha, a, d, q_offset, b, beta, m, rSges);
+  % calculate kinetic energy with regressor
+  u_reg = %RN%_energypot_fixb_regmin_sym_lag_varpar(q, g_base, ...
+    alpha, a, d, q_offset, b, beta);
+  u_reg0 = %RN%_energypot_fixb_regmin_sym_lag_varpar(zeros(NJ,1), g_base, ...
+    alpha, a, d, q_offset, b, beta);
+  U_mpv = u_reg*MPV;
+  U_mpv0 = u_reg0*MPV;
+  if abs((U_mpv-U_mpv0)-(U_func-U_func0)) > 1e-12
+    error('Potential Energy from base parameter vector does not match with direct form.');
+  end
+end
+fprintf('Tested potential energy for %d random joint angles for %s\n', ...
+  n, robot_name);
+

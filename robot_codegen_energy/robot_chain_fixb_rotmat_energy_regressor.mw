@@ -83,296 +83,427 @@
 <Highlighter-style name="Highlighter 3" pen-color="[51,255,0]" pen-height="24.0" pen-width="24.0" pen-opacity="0.8"/>
 <Highlighter-style name="Highlighter 5" pen-color="[255,255,0]" pen-height="48.0" pen-width="48.0" pen-opacity="0.8"/>
 </Styles>
+<Metadata-table>
+    <Metadata-category name="&lt;default&gt;"/>
+    <Metadata-tag id="0" category="&lt;default&gt;" name="Document Properties">
+        <Metadata-attribute name="Subject" value="&lt;default&gt;"/>
+        <Metadata-attribute name="Author" value="&lt;default&gt;"/>
+        <Metadata-attribute name="Item List" value="true"/>
+        <Metadata-attribute name="Keywords" value="&lt;default&gt;"/>
+        <Metadata-attribute name="Title" value="&lt;default&gt;"/>
+    </Metadata-tag>
+</Metadata-table>
 <Task-table>
     <Task-category name="&lt;default&gt;"/>
 </Task-table>
 <Task/>
-<Group labelreference="L1506" drawlabel="true">
+<Group labelreference="L1517" drawlabel="true">
 <Input>
-<Text-field style="Title" layout="Title">Definitions for Robot Dynamics Code Generation</Text-field>
+<Text-field style="Title" layout="Title">Base Parameter Energy Regressor for Robot based on MDH frames</Text-field>
 </Input>
 </Group>
-<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 1" layout="Heading 1">Init</Text-field></Title>
-<Group labelreference="L1602" drawlabel="true">
+<Group labelreference="L1516" drawlabel="true">
 <Input>
-<Text-field style="Normal" layout="Normal"><Font encoding="UTF-8">Erstelle Definitionen f\303\274r die Maple-Skripte zur Berechnung von Kinematik und Dynamik des Roboters
-</Font>
-Quellen:
-[1] Sousa, C. D. and Cortesao, R.: Physical feasibility of robot base inertial parameter identification: A linear matrix inequality approach (2014)
-[2] Ayusawa, K. and Venture, G. and Nakamura, Y.: Identifiability and identification of inertial parameters using the underactuated base-link dynamics for legged multibody systems (2013)
-[3] Fujimoto, Y. and Obata, S. and Kawamura, A.: Robust biped walking with active interaction control between foot and ground (1998)
-[4] Khalil, W. and Kleinfinger, J.-F.: Minimum operations and minimum parameters of the dynamic models of tree structure robots (1987)
-
+<Text-field style="Heading 2" layout="Heading 2">Einleitung</Text-field>
+<Text-field style="Text" layout="Heading 2">Erstellung einer parameterlinearen und -minimalen Regressorform</Text-field>
+<Text-field style="Text" layout="Heading 2">
+Dateiname:
+<Font encoding="UTF-8">robot -&gt; Berechnung f\303\274r allgemeinen Roboter
+chain -&gt; Berechnung f\303\274r eine serielle Struktur (nicht: Baumstruktur)
+fixb -&gt; fixed base. Kein Floating base Modell. Dort ist diese Form der Minimalparameterform nicht m\303\266glich.
+</Font>rotmat -&gt; Kinematik wird mit Rotationsmatrizen berechnet
+energy -&gt; Berechnung der Energie
+regressor -&gt; Regressorform (parameterlinear)</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1804" drawlabel="true">
+<Input>
+<Text-field style="Heading 2" layout="Heading 2">TODO</Text-field>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Die Formelnummerierungen beziehen sich auf das Skript [HRL_IDR], WS2015/16. Erg\303\244nze Formelnummern aus </Font>GautierKhalil.</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1515" drawlabel="true">
+<Input>
+<Text-field style="Heading 2" layout="Heading 2">Authors</Text-field>
+<Text-field style="Normal" layout="Normal"><Font encoding="UTF-8">Alexander T\303\266dtheide, toedtheide@irt.uni-hannover.de</Font>
 Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03</Text-field>
+<Text-field style="Normal" layout="Normal"></Text-field>
 <Text-field style="Normal" layout="Normal">Institut fuer Regelungstechnik, Leibniz Universitaet Hannover</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1601" drawlabel="true">
+<Group labelreference="L1518" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">restart:</Text-field>
+<Text-field style="Heading 2" layout="Heading 2">Quellen</Text-field>
+<Text-field style="Normal" layout="Normal">[HRL_IDR] Skript Humanoid Robotics Lab - Serial Chain Robot Identification</Text-field>
+<Text-field style="Normal" layout="Normal">[GautierKhalil1988] A Direct Determination of Minimum Inertial Parameters of Robots</Text-field>
+<Text-field style="Normal" layout="Normal">[GautierKhalil1990] Direct Calculation of Minimum Set of Inertial Parameters of Serial Robots</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1595" drawlabel="true">
+<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
+<Text-field style="Heading 1" layout="Heading 1">Initialisierung</Text-field></Title>
+<Group labelreference="L1771" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Lese Umgebungsvariable f\303\274r Codegenerierung.</Font></Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">restart:
+with(LinearAlgebra):
+with(ArrayTools):
+with(codegen):
+with(CodeGeneration):
+with(StringTools):
+codegen_opt := true:
+codegen_act := true:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1594" drawlabel="true">
+<Group labelreference="L1773" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_convert_s_t&quot;:
+read &quot;../helper/proc_convert_t_s&quot;: 
+read &quot;../helper/proc_MatlabExport&quot;:
+read &quot;../helper/proc_LagrangeN&quot;:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1772" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../transformation/proc_rotx&quot;: 
+read &quot;../transformation/proc_roty&quot;: 
+read &quot;../transformation/proc_rotz&quot;: 
+read &quot;../transformation/proc_trotx&quot;: 
+read &quot;../transformation/proc_troty&quot;: 
+read &quot;../transformation/proc_trotz&quot;: 
+read &quot;../transformation/proc_transl&quot;: 
+read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
+</Input>
+</Group>
+<Group labelreference="L1769" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:
-<Font encoding="UTF-8">printf(&quot;Generiere Parameter f\303\274r %s\134n&quot;,robot_name):</Font></Text-field>
+<Font encoding="UTF-8">printf(&quot;Generiere Minimalparameterregressor der Energie f\303\274r %s\134n&quot;, robot_name, codegen_dynpar):</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1770" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_tree_floatb_twist_definitions&quot;, robot_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1775" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Ergebnisse der Energie laden</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1774" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_energy_potential_baseframe_par2_maple.m&quot;, robot_name):
+read sprintf(&quot;../codeexport/%s_energy_kinetic_floatb_linkframe_par2_maple.m&quot;, robot_name):
+T_floatb := T:
+U_floatb := U_grav:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1783" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Einfluss der Basis-Geschwindigkeit und -Position entfernen</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1784" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">T_fixb:=T_floatb:
+U_fixb:=U_floatb:
+for i from 1 to 6 do
+  T_fixb := subs({V_base_t[i,1]=0},T_fixb):
+  U_fixb := subs({X_base_t[i,1]=0},U_fixb):
+end do:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1752" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Die kinetischen und potentiellen Energien aus (2) und (3) stehen ab hier durch T_fixb und U_fixb<Font encoding="UTF-8"> zur Verf\303\274gung. 
+</Font>Der Parametervektor 'PV2_vec' aus (13) wurde in 'robot_tree_floatb_twist_definitions.mw' aufgestellt. </Text-field>
 </Input>
 </Group>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 1" layout="Heading 1">Robotics Definitions</Text-field></Title>
-<Group labelreference="L1600" drawlabel="true">
+<Text-field style="Heading 1" layout="Heading 1">Parameterlinearisierung</Text-field></Title>
+<Group labelreference="L1756" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal">Joint Angles, Velocities and Accelerations in time depending and substitution form.</Text-field>
-<Text-field style="Text" layout="Normal">Time Depending form is for time differentiation.</Text-field>
-<Text-field style="Text" layout="Normal">Substitution Form is for partial differentiation and code export.</Text-field>
+<Text-field style="Text" layout="Normal">Parameterlinearisierung auf Basis von (14) und (15)</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1625" drawlabel="true">
+<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
+<Text-field style="Heading 2" layout="Heading 2">Linearisierung</Text-field></Title>
+<Group labelreference="L1656" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">qJ_t := Matrix(NJ, 1):
-qJ_s := Matrix(NJ, 1):
-qJD_s := Matrix(NJ, 1):
-qJDD_s := Matrix(NJ, 1):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">t_ges := Matrix(1, 10*NL):
+u_ges := Matrix(1, 10*NL):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1610" drawlabel="true">
+<Group labelreference="L1742" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NJ do
-  qJ_t(i,1):=parse(sprintf(&quot;qJ%d(t)&quot;, i)):
-  qJ_s(i,1):=parse(sprintf(&quot;qJ%ds&quot;, i)):
-  qJD_s(i,1):=parse(sprintf(&quot;qJD%ds&quot;, i)):
-  qJDD_s(i,1):=parse(sprintf(&quot;qJDD%ds&quot;, i)):
-end do:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i to 10*NL do 
+  t_ges[1,i] := diff(T_fixb,PV2_vec[i,1]);
+  u_ges[1,i] := diff(U_fixb,PV2_vec[i,1]);
+end do: </Text-field>
 </Input>
 </Group>
-<Group labelreference="L1622" drawlabel="true">
+</Section>
+</Section>
+<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
+<Text-field style="Heading 1" layout="Heading 1">Parameterminimierung</Text-field></Title>
+<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
+<Text-field style="Heading 2" layout="Heading 2">Minimalparametervekor</Text-field></Title>
+<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
+<Text-field style="Heading 3" layout="Heading 3">Definiere Parametermatrix</Text-field></Title>
+<Group labelreference="L1689" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">qJD_t := diff~(qJ_t, t):
-qJDD_t := diff~(qJD_t, t):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1599" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Gravity vector in robot base frame</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1614" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">g_base := Matrix(3, 1):
-g_base(1 .. 3, 1) := &lt;g1, g2, g3&gt;:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1604" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Position und Orientierung der Basis (pelvis). Die Orientierung ist mit XYZ-Euler-Winkeln definiert.
-<Font encoding="UTF-8">Eine Invertierung der Orientierungsdarstellung sollte nicht notwendig werden, von daher kein Problem mit Orientierungsrepr\303\244sentationssingularit\303\244t.
-</Font>gem. [2], S. 4 X_base_t SE(3): Position und Orientierung.</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1629" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">NB := 6:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1603" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">X_base_t:=Matrix(6, 1, [rx_base(t),ry_base(t),rz_base(t),alphax_base(t), betay_base(t), gammaz_base(t)]):
-X_base_s:=Matrix(6, 1, [rxs_base,rys_base,rzs_base,alphaxs_base, betays_base, gammazs_base]):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1616" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Geschwindigkeit der Basis (pelvis)</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1620" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Twist: Verallgemeinerte Geschwindigkeit</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1618" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">V_base_t:=Matrix(6, 1, [diff~(rx_base(t),t),diff~(ry_base(t),t),diff~(rz_base(t),t),omegax_base(t), omegay_base(t), omegaz_base(t)]):
-V_base_s:=Matrix(6, 1, [vxs_base,vys_base,vzs_base,omegaxs_base, omegays_base, omegazs_base]):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1611" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Zeitableitung davon</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1593" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">VD_base_t:=diff~(V_base_t,t):
-VD_base_s:=Matrix(6, 1, [vDxs_base,vDys_base,vDzs_base,omegaDxs_base, omegaDys_base, omegaDzs_base]):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1624" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Verallgemeinerte Koordinaten, gem [2], S. 4, [3], S.1</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1592" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">N:=NJ+NB:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1628" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">q_t := Matrix(N,1, &lt;X_base_t, qJ_t&gt;):
-q_s := Matrix(N,1, &lt;X_base_s, qJ_s&gt;):
-qD_t:= Matrix(N,1, &lt;V_base_t, qJD_t&gt;):
-qD_s:= Matrix(N,1, &lt;V_base_s, qJD_s&gt;):
-qDD_t:= Matrix(N,1, &lt;VD_base_t, qJDD_t&gt;):
-qDD_s:= Matrix(N,1, &lt;VD_base_s, qJDD_s&gt;):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1605" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">MDH-Gelenkwinkel neu speichern (Definition der verallg. Koordinaten war dort noch nicht bekannt</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1606" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">theta := value(theta):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">XX := Matrix(NJ, 1, PV2_mat[2 .. NL, 1]):
+XY := Matrix(NJ, 1, PV2_mat[2 .. NL, 2]):
+XZ := Matrix(NJ, 1, PV2_mat[2 .. NL, 3]):
+YY := Matrix(NJ, 1, PV2_mat[2 .. NL, 4]):
+YZ := Matrix(NJ, 1, PV2_mat[2 .. NL, 5]):
+ZZ := Matrix(NJ, 1, PV2_mat[2 .. NL, 6]):
+mX := Matrix(NJ, 1, PV2_mat[2 .. NL, 7]):
+mY := Matrix(NJ, 1, PV2_mat[2 .. NL, 8]):
+mZ := Matrix(NJ, 1, PV2_mat[2 .. NL, 9]):
+m :=  Matrix(NJ, 1, PV2_mat[2 .. NL, 10]):</Text-field>
 </Input>
 </Group>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 2" layout="Heading 2">Dynamic Parameters</Text-field></Title>
-<Group labelreference="L1630" drawlabel="true">
+<Text-field style="Heading 3" layout="Heading 3">Rekursive Berechnung der Minimalparameter</Text-field></Title>
+<Group labelreference="L1688" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Anzahl der K\303\266rper (Number of Links)</Font></Text-field>
+<Text-field style="Text" layout="Normal">Rekursive Berechnung der Minimalparameter mit (23), siehe Abbildung 1.</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1631" drawlabel="true">
+<Group labelreference="L1691" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">NL := NJ + 1:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from NJ by -1 to 2 do 
+  XX[i,1] := XX[i,1]-YY[i,1]:
+  XX[i-1,1] := d[i,1]^2*m[i,1]+2*d[i,1]*mZ[i,1]+XX[i-1,1]+YY[i,1]: 
+  XY[i-1,1] := XY[i-1,1]+a[i,1]*sin(alpha[i,1])*mZ[i,1]+a[i,1]*d[i,1]*sin(alpha[i,1])*m[i,1]: 
+  XZ[i-1,1] := XZ[i-1,1]-a[i,1]*cos(alpha[i,1])*mZ[i,1]-a[i,1]*d[i,1]*cos(alpha[i,1])*m[i,1]: 
+  YY[i-1,1] := YY[i-1,1]+cos(alpha[i,1])^2*YY[i,1]+2*d[i,1]*cos(alpha[i,1])^2*mZ[i,1]+(a[i,1]^2+d[i,1]^2*cos(alpha[i,1])^2)*m[i,1]:
+  YZ[i-1,1] := YZ[i-1,1]+cos(alpha[i,1])*sin(alpha[i,1])*YY[i,1]+2*d[i,1]*cos(alpha[i,1])*sin(alpha[i,1])*mZ[i,1]+d[i,1]^2*cos(alpha[i,1])*sin(alpha[i,1])*m[i,1]:
+  ZZ[i-1,1] := ZZ[i-1,1]+sin(alpha[i,1])^2*YY[i,1]+2*d[i,1]*sin(alpha[i,1])^2*mZ[i,1]+(a[i,1]^2+d[i,1]^2*sin(alpha[i,1])^2)*m[i,1]:
+  mX[i-1,1] := a[i,1]*m[i,1]+mX[i-1,1]: 
+  mY[i-1,1] := mY[i-1,1]-sin(alpha[i,1])*mZ[i,1]-d[i,1]*sin(alpha[i,1])*m[i,1]:
+  mZ[i-1,1] := mZ[i-1,1]+cos(alpha[i,1])*mZ[i,1]+d[i,1]*cos(alpha[i,1])*m[i,1]:
+  m[i-1,1] := m[i-1,1]+m[i,1]:
+end do: </Text-field>
 </Input>
 </Group>
-<Group labelreference="L1597" drawlabel="true">
+</Section>
+<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
+<Text-field style="Heading 3" layout="Heading 3">Parameter ohne Einfluss &quot;Markieren&quot;</Text-field></Title>
+<Group labelreference="L1692" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal">Mass of each link</Text-field>
+<Text-field style="Text" layout="Normal">Markierung von Parametern ohne Einfluss an Hand von (18)</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1626" drawlabel="true">
+<Group labelreference="L1690" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">M := Matrix(NL, 1):
-for i from 1 to NL do
-  M[i,1]:=parse(sprintf(&quot;M%d&quot;, i)):
-end do:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1596" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Center of Mass of each link (in link frame)</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1613" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_i_i_Si := Matrix(3, NL):
-for i from 1 to NL do
-  r_i_i_Si[1,i]:=parse(sprintf(&quot;SX%d&quot;, i)):
-  r_i_i_Si[2,i]:=parse(sprintf(&quot;SY%d&quot;, i)):
-  r_i_i_Si[3,i]:=parse(sprintf(&quot;SZ%d&quot;, i)):
-end do:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1621" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">mr_i_i_Si := Matrix(3, NL):
-for i from 1 to NL do
-  mr_i_i_Si[1,i]:=parse(sprintf(&quot;MX%d&quot;, i)):
-  mr_i_i_Si[2,i]:=parse(sprintf(&quot;MY%d&quot;, i)):
-  mr_i_i_Si[3,i]:=parse(sprintf(&quot;MZ%d&quot;, i)):
-end do:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1608" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Inertia of each link (about the center of mass, in link frame)</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1609" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">I_i_Si := Matrix(6, NL):
-for i from 1 to NL do
-  I_i_Si[1,i]:=parse(sprintf(&quot;XXC%d&quot;, i)):
-  I_i_Si[2,i]:=parse(sprintf(&quot;XYC%d&quot;, i)):
-  I_i_Si[3,i]:=parse(sprintf(&quot;XZC%d&quot;, i)):
-  I_i_Si[4,i]:=parse(sprintf(&quot;YYC%d&quot;, i)):
-  I_i_Si[5,i]:=parse(sprintf(&quot;YZC%d&quot;, i)):
-  I_i_Si[6,i]:=parse(sprintf(&quot;ZZC%d&quot;, i)):
-end do:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1619" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Inertia of each link (about the origin of body frame, in link frame)</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1617" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">I_i_i := Matrix(6, NL):
-for i from 1 to NL do
-  I_i_i[1,i]:=parse(sprintf(&quot;XX%d&quot;, i)):
-  I_i_i[2,i]:=parse(sprintf(&quot;XY%d&quot;, i)):
-  I_i_i[3,i]:=parse(sprintf(&quot;XZ%d&quot;, i)):
-  I_i_i[4,i]:=parse(sprintf(&quot;YY%d&quot;, i)):
-  I_i_i[5,i]:=parse(sprintf(&quot;YZ%d&quot;, i)):
-  I_i_i[6,i]:=parse(sprintf(&quot;ZZ%d&quot;, i)):
-end do:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1615" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Matrix of link inertial parameters, stacked link parameter vectors</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1623" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">PV2_mat := Matrix(NL, 10):
-for i to NL do 
-  PV2_mat[i, 1 .. 6] := I_i_i[1 .. 6, i]:
-  PV2_mat[i, 7 .. 9] := mr_i_i_Si[1 .. 3, i]:
-  PV2_mat[i, 10] := M[i, 1]:
-end do:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1627" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Parameter-Vektor Erstellen: vector of link inertial parameters (delta in [1]).</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1612" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">PV2_vec := Matrix(10*(NL), 1):
-for i to NL do 
-  for j to 10 do 
-    PV2_vec[10*(i-1)+j] := PV2_mat[i, j]:
-  end do:
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;The following parameters don't have any effect:\134n&quot;):
+</Font>
+for i to 10*NJ do 
+  effect := 0:
+  if not (t_ges[1,10+i]=0) then
+    # printf(&quot;<Font encoding="UTF-8">t_ges[1,%d] not Null\134n&quot;, </Font>10+i):
+    effect := 1:
+  else
+    for j to NJ do
+      if has(u_ges[1,10+i],{qJ_t(j,1)}) then
+        # printf(&quot;<Font encoding="UTF-8">u_ges[1,%d] not constant\134n&quot;, </Font>10+i):
+        effect := 1:
+        break:
+      end if:
+    end do:
+  end if:
+  if effect = 0 then
+       t_ges[1,10+i] := REMOVE:
+       u_ges[1,10+i] := REMOVE:
+
+       <Font encoding="UTF-8">if `mod`(i, 10) = 1 then XX[trunc((1/10)*i)+1, 1] := 0; printf(&quot;XX%d \134n&quot;, trunc((1/10)*i)+1+1) end if:
+       if `mod`(i, 10) = 2 then XY[trunc((1/10)*i)+1, 1] := 0; printf(&quot;XY%d \134n&quot;, trunc((1/10)*i)+1</Font>+1) end if:
+<Font encoding="UTF-8">       if `mod`(i, 10) = 3 then XZ[trunc((1/10)*i)+1, 1] := 0; printf(&quot;XZ%d \134n&quot;, trunc((1/10)*i)+1</Font>+1) end if:
+<Font encoding="UTF-8">       if `mod`(i, 10) = 4 then YY[trunc((1/10)*i)+1, 1] := 0; printf(&quot;YY%d \134n&quot;, trunc((1/10)*i)+1</Font>+1) end if:
+<Font encoding="UTF-8">       if `mod`(i, 10) = 5 then YZ[trunc((1/10)*i)+1, 1] := 0; printf(&quot;YZ%d \134n&quot;, trunc((1/10)*i)+1</Font>+1) end if:
+<Font encoding="UTF-8">       if `mod`(i, 10) = 6 then ZZ[trunc((1/10)*i)+1, 1] := 0; printf(&quot;ZZ%d \134n&quot;, trunc((1/10)*i)+1</Font>+1) end if:
+<Font encoding="UTF-8">       if `mod`(i, 10) = 7 then mX[trunc((1/10)*i)+1, 1] := 0; printf(&quot;mX%d \134n&quot;, trunc((1/10)*i)+1</Font>+1) end if:
+<Font encoding="UTF-8">       if `mod`(i, 10) = 8 then mY[trunc((1/10)*i)+1, 1] := 0; printf(&quot;mY%d \134n&quot;, trunc((1/10)*i)+1</Font>+1) end if:
+<Font encoding="UTF-8">       if `mod`(i, 10) = 9 then mZ[trunc((1/10)*i)+1, 1] := 0; printf(&quot;mZ%d \134n&quot;, trunc((1/10)*i)+1</Font>+1) end if:
+<Font encoding="UTF-8">       if `mod`(i, 10) = 0 then m[trunc((1/10)*i), 1] := 0;    printf(&quot; m%d \134n&quot;, trunc((1/10)*i</Font>+1))   end if:
+  end if:
 end do:</Text-field>
 </Input>
 </Group>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 1" layout="Heading 1">Export</Text-field></Title>
-<Group labelreference="L1598" drawlabel="true">
+<Text-field style="Heading 3" layout="Heading 3">Parametervektor in Richtiger Reihenfolge aufstellen und Entfernen von mZ, YY, m</Text-field></Title>
+<Group labelreference="L1695" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save q_t, q_s, qD_t, qD_s, qDD_t, qDD_s, qJ_t, qJ_s, qJD_t, qJD_s, qJDD_t, qJDD_s, g_base, X_base_t, X_base_s, V_base_t, V_base_s, VD_base_t, VD_base_s, qoffset, theta, alpha, d, a,v,b,beta, M, r_i_i_Si, mr_i_i_Si, I_i_i, I_i_Si, PV2_vec, PV2_mat, robot_name, N,NB,NJ,NL, sprintf(&quot;../codeexport/%s_tree_floatb_twist_definitions&quot;, robot_name):</Text-field>
+<Text-field style="Text" layout="Normal">Anwendung von Regel 3 (S. 5) auf den Parametervektor</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1632" drawlabel="true">
+<Group labelreference="L1699" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">MPV_n_max := 7*NJ: # ignoriere Abz\303\274ge in der Formel
+</Font>Paramvec := Matrix(MPV_n_max, 1):
+for i to NJ do 
+  Paramvec[7*(i-1)+1, 1] := XX[i, 1]:
+  Paramvec[7*(i-1)+2, 1] := XY[i, 1]:
+  Paramvec[7*(i-1)+3, 1] := XZ[i, 1]:
+  Paramvec[7*(i-1)+4, 1] := YZ[i, 1]:
+  Paramvec[7*(i-1)+5, 1] := ZZ[i, 1]:
+  Paramvec[7*(i-1)+6, 1] := mX[i, 1]:
+  Paramvec[7*(i-1)+7, 1] := mY[i, 1]:
+end do: </Text-field>
+</Input>
+</Group>
+</Section>
+<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
+<Text-field style="Heading 3" layout="Heading 3">Entfernung von Nullelementen</Text-field></Title>
+<Group labelreference="L1763" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Durch Entfernung der Nullelemente erfolgt 'beta_b' aus (22)</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1700" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">p := 0:
+for i to MPV_n_max do 
+  if Paramvec[i, 1] = 0 then 
+    p := p+1 
+  end if:
+end do:
+</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1746" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"># Determine size of matrix dependent on number of Zeroes
+Paramvec_size := MPV_n_max-p:
+Paramvec2 := Matrix(Paramvec_size, 1):
+p := 0:
+for i to MPV_n_max do 
+  # count Zeroes
+  if Paramvec[i, 1] = 0 then  
+    p := p+1:
+  else 
+    # Shift by number of currently found Zeroes
+    Paramvec2[i-p, 1] := Paramvec[i, 1]:
+  end if:
+<Font encoding="UTF-8">end do: 
+printf(&quot;Dimension des Minimalparametervektors: %dx1\134n&quot;, </Font>Paramvec_size):</Text-field>
+</Input>
+</Group>
+</Section>
+<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
+<Text-field style="Heading 3" layout="Heading 3">Export - Minimalparametervektor</Text-field></Title>
+<Group labelreference="L1799" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save Paramvec2, sprintf(&quot;../codeexport/%s_minimal_parameter_vector_maple&quot;, robot_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1701" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
+   MatlabExport(Paramvec2, sprintf(&quot;../codeexport/%s_minimal_parameter_vector_matlab.m&quot;, robot_name), codegen_opt):
+end if;</Text-field>
+</Input>
+</Group>
+</Section>
+</Section>
+<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
+<Text-field style="Heading 2" layout="Heading 2">Minimal geometrievektor t_i und u_i</Text-field></Title>
+<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
+<Text-field style="Heading 3" layout="Heading 3">Markieren von t_mZ, t_YY, t_m, u_mZ, u_YY, u_m_j</Text-field></Title>
+<Group labelreference="L1760" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Anwendung von Regel 3 (S. 5) auf die Geometrievektoren t und u der Energien T und U
+<Font encoding="UTF-8">Der Basis-K\303\266rper wird nicht gez\303\244hlt. Daher ignorieren der ersten zehn Eintr\303\244ge in </Font>t_ges</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1717" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 0 to NJ-1 do 
+
+   t_ges[1,10+i*10+ 4]:=REMOVE;
+   t_ges[1,10+i*10+ 9]:=REMOVE;
+   t_ges[1,10+i*10+10]:=REMOVE;
+
+   u_ges[1,10+i*10+ 4]:=REMOVE;
+   u_ges[1,10+i*10+ 9]:=REMOVE;
+   u_ges[1,10+i*10+10]:=REMOVE;
+
+end do: </Text-field>
+</Input>
+</Group>
+</Section>
+<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
+<Text-field style="Heading 3" layout="Heading 3">Entfernungen von markierten Elementen</Text-field></Title>
+<Group labelreference="L1764" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Durch Entfernung der markierten Elemente, \303\244quivalent zum Minimalparametervektor beta_b, haben t und u die gleiche Spaltenanzahl wie 'C_b'.</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1716" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">p:=0:
+for i from 1 to 10*NJ do       <Font encoding="UTF-8">#Nullen Z\303\244hlen um die Matrixgr\303\266\303\237e von t_ges zu bestimmen</Font>   
+  if t_ges[1,10+i]=REMOVE and u_ges[1,10+i]=REMOVE then       
+    p:=p+1;
+  end if
+end do: </Text-field>
+</Input>
+</Group>
+<Group labelreference="L1719" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">size_Matrix:=10*NJ-p: 
+t_ges_minpar:=Matrix(1,size_Matrix):
+u_ges_minpar:=Matrix(1,size_Matrix):
+<Font encoding="UTF-8">printf(&quot;Dimension der Regressormatrix: 1x%d\134n&quot;, </Font>size_Matrix):
+</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1720" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">p:=0:
+for i from 1 to 10*NJ do       <Font encoding="UTF-8">#Nullen Z\303\244hlen</Font>     
+   if t_ges[1,10+i]=REMOVE and u_ges[1,10+i]=REMOVE then       
+      p:=p+1; 
+   else 
+      t_ges_minpar[1,i-p]:=t_ges[1,10+<Font encoding="UTF-8">i]; #Um die Anzahl der im Iterationsschritt gez\303\244hlten Nullen verschieben
+</Font>      u_ges_minpar[1,i-p]:=u_ges[1,10+<Font encoding="UTF-8">i]; #Um die Anzahl der im Iterationsschritt gez\303\244hlten Nullen verschieben</Font>
+   end if
+end do: </Text-field>
+</Input>
+</Group>
+<Group labelreference="L1789" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save t_ges_minpar, sprintf(&quot;../codeexport/%s_energy_kinetic_fixb_regressor_minpar_maple.m&quot;, robot_name):
+save u_ges_minpar, sprintf(&quot;../codeexport/%s_energy_potential_fixb_regressor_minpar_maple.m&quot;, robot_name):</Text-field>
+</Input>
+</Group>
+</Section>
+<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
+<Text-field style="Heading 3" layout="Heading 3">Export</Text-field></Title>
+<Group labelreference="L1798" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
+  MatlabExport(convert_t_s(t_ges_minpar), sprintf(&quot;../codeexport/%s_energy_kinetic_fixb_regressor_minpar_matlab.m&quot;, robot_name), codegen_opt):
+end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1800" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
+  MatlabExport(convert_t_s(u_ges_minpar), sprintf(&quot;../codeexport/%s_energy_potential_fixb_regressor_minpar_matlab.m&quot;, robot_name), codegen_opt):
+end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1801" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
+</Section>
+</Section>
 </Section>
 </Worksheet>

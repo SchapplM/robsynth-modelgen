@@ -18,5 +18,8 @@ source robot_codegen_matlabfcn_postprocess.sh $testfcn_pfad/robot_varpar_invdyn_
 cp $testfcn_pfad/robot_varpar_floatbase_test.m.template $testfcn_pfad/robot_varpar_floatbase_test.m
 source robot_codegen_matlabfcn_postprocess.sh $testfcn_pfad/robot_varpar_floatbase_test.m 0
 
+cp $testfcn_pfad/robot_varpar_paramlin_test.m.template $testfcn_pfad/robot_varpar_paramlin_test.m
+source robot_codegen_matlabfcn_postprocess.sh $testfcn_pfad/robot_varpar_paramlin_test.m 0
+
 cp $testfcn_pfad/robot_varpar_testfunctions_parameter.m.template $testfcn_pfad/robot_varpar_testfunctions_parameter.m
 source robot_codegen_matlabfcn_postprocess.sh $testfcn_pfad/robot_varpar_testfunctions_parameter.m 0

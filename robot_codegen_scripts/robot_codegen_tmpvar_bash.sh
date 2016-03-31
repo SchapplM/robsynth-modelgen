@@ -28,3 +28,13 @@ robot_NL=`grep "NL := " $robot_def_pfad | tail -1 | sed 's/.*= \(.*\);/\1/'`
 echo "robot_NL=$robot_NL" >> $robot_env_pfad.sh
 
 echo "robot_NL=$robot_NL"
+
+# Dimension des MPV (aus exportiertem Code)
+mpv_pfad=$repo_pfad/codeexport/${robot_name}_minimal_parameter_vector_maple
+# Ersetze Text links und rechts von der Dimension mit nichts.
+robot_NMPV=`grep "Matrix" $mpv_pfad | tail -1 | sed 's/.*Matrix[(]\(.*\)/\1/' | sed 's/, 1, .*//'`
+echo "robot_NMPV=$robot_NMPV" >> $robot_env_pfad.sh
+
+echo "robot_NMPV=$robot_NMPV"
+
+
