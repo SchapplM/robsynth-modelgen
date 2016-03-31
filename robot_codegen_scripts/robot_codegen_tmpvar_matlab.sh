@@ -48,7 +48,7 @@ do
 done
 for (( i=1; i<=$robot_NJ; i++ ))
 do
-	echo "q_offset${i} = q_offset_mdh(${i});" >> $tmp_pfad/robot_matlabtmp_par_mdh.m
+	echo "qoffset${i} = q_offset_mdh(${i});" >> $tmp_pfad/robot_matlabtmp_par_mdh.m
 done
 for (( i=1; i<=$robot_NJ; i++ ))
 do
