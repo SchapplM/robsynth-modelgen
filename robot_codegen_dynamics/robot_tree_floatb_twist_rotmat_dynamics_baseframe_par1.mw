@@ -278,9 +278,9 @@ end if:</Text-field>
 </Group>
 <Group labelreference="L1671" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(taug_s(1..N), sprintf(&quot;../codeexport/%s_gravload_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
-end if:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"># if codegen_act then
+#   MatlabExport(taug_s(1..N), sprintf(&quot;../codeexport/%s_gravload_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
+# end if:</Text-field>
 </Input>
 </Group>
 </Section>
