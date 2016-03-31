@@ -64,7 +64,7 @@ for i = 1:n
   g_base = G(i,:)';
   % calculate kinetic energy with optimized function
   taug_func = %RN%_gravload_joint_sym_lag_varpar_par1(q, g_base, ...
-    alpha, a, d, q_offset, b, beta, m, rSges)';
+    alpha, a, d, q_offset, b, beta, m, rSges);
   % calculate kinetic energy with regressor
   taug_reg = %RN%_gravload_joint_regmin_sym_lag_varpar(q, g_base, ...
     alpha, a, d, q_offset, b, beta);

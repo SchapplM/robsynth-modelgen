@@ -43,7 +43,7 @@ do
     fi
     printf "\n%%%%Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
     cat $quelldat >> $zieldat
-    source robot_codegen_matlabfcn_postprocess.sh $zieldat
+    source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 1
   else
     echo "Code in ${quelldat##*/} nicht gefunden."
   fi
@@ -81,7 +81,7 @@ do
     fi
     printf "\n%%%%Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
     cat $quelldat >> $zieldat
-    source robot_codegen_matlabfcn_postprocess.sh $zieldat
+    source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 1
   else
     echo "Code in ${quelldat##*/} nicht gefunden."
   fi
@@ -117,7 +117,7 @@ do
     fi
     printf "\n%%%%Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
     cat $quelldat >> $zieldat
-    source robot_codegen_matlabfcn_postprocess.sh $zieldat
+    source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 1
   else
     echo "Code in ${quelldat##*/} nicht gefunden."
   fi
@@ -493,7 +493,7 @@ do
     fi
     printf "\n%%%%Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
     cat $quelldat >> $zieldat
-    source robot_codegen_matlabfcn_postprocess.sh $zieldat
+    source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 1
   else
     echo "Code in ${quelldat##*/} nicht gefunden."
   fi
