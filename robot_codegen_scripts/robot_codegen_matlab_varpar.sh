@@ -22,3 +22,6 @@ source robot_codegen_matlab_kinematics_varpar.sh
 
 # Erstelle Matlab-Funktionen der explizit ausgerechneten Dynamik (nicht in Regressorform)
 source robot_codegen_matlab_dynamics_varpar.sh
+
+# Erstelle Matlab-Funktionen der parameterlinearen Dynamik
+source robot_codegen_matlab_paramlin_varpar.sh
