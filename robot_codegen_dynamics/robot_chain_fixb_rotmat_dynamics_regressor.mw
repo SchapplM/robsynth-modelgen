@@ -145,7 +145,7 @@ read &quot;../helper/proc_LagrangeN&quot;:</Text-field>
 </Group>
 <Group labelreference="L1729" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_index_symmetric2vector&quot;:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_index_symmat2vector&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1687" drawlabel="true">
@@ -411,7 +411,7 @@ end proc:</Text-field>
 </Font>      MM_jj_k := Matrix(NJ,NJ):
       for ii from 1 to NJ do
         for jj from 1 to NJ do
-          MM_jj_k := MMjj_regressor_s(index_symm2vec(NJ, ii, jj), k):
+          MM_jj_k := MMjj_regressor_s(index_symmat2vec(NJ, ii, jj), k):
         end do:
       end do:
       for l from 1 to NJ do # Siehe [KhalilDombre2002]

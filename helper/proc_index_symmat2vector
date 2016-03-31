@@ -1,4 +1,4 @@
-index_symm2vec := proc(N, i, j)
+index_symmat2vec := proc(N, i, j)
   local i_tmp, j_tmp, k:
   if j > i then
     j_tmp := i:
