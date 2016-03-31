@@ -1,0 +1,11 @@
+index_symm2vec := proc(N, i, j)
+  local i_tmp, j_tmp, k:
+  if j > i then
+    j_tmp := i:
+    i_tmp := j:    
+    k := i_tmp*(i_tmp-1)/2 + j_tmp;
+  else
+    k := i*(i-1)/2 + j;
+  end if:
+return k
+end proc:

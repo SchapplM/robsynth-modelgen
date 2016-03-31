@@ -58,3 +58,95 @@ end
 fprintf('Tested potential energy for %d random joint angles for %s\n', ...
   n, robot_name);
 
+%% Test Gravitational Load
+for i = 1:n
+  q = Q(i,:)';
+  g_base = G(i,:)';
+  % calculate kinetic energy with optimized function
+  taug_func = %RN%_gravload_joint_sym_lag_varpar_par1(q, g_base, ...
+    alpha, a, d, q_offset, b, beta, m, rSges)';
+  % calculate kinetic energy with regressor
+  taug_reg = %RN%_gravload_joint_regmin_sym_lag_varpar(q, g_base, ...
+    alpha, a, d, q_offset, b, beta);
+  taug_mpv = taug_reg*MPV;
+  if abs(taug_mpv-taug_func) > 1e-12
+    error('Gravitation joint torque from base parameter vector does not match with direct form.');
+  end
+end
+fprintf('Tested gravitation joint torque for %d random joint angles for %s\n', ...
+  n, robot_name);
+
+%% Teste Coriolis-Vektor
+for i = 1:n
+  q = Q(i,:)';
+  qD = QD(i,:)';
+  % calculate kinetic energy with optimized function
+  tauc_func = %RN%_coriolisvec_joint_fixb_sym_lag_varpar_par1(q, qD, ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+  % calculate kinetic energy with regressor
+  tauc_reg = %RN%_coriolisvec_joint_fixb_regmin_sym_lag_varpar(q, qD, ...
+    alpha, a, d, q_offset, b, beta);
+  tauc_mpv = tauc_reg*MPV;
+  if abs(tauc_mpv-tauc_func) > 1e-12
+    error('Coriolis joint torque from base parameter vector does not match with direct form.');
+  end
+end
+fprintf('Tested Coriolis joint torque for %d random joint angles for %s\n', ...
+  n, robot_name);
+
+%% Teste Coriolis-Matrix
+for i = 1:n
+  q = Q(i,:)';
+  qD = QD(i,:)';
+  % calculate kinetic energy with optimized function
+  Cq_func = %RN%_coriolismat_joint_fixb_sym_lag_varpar_par1(q, qD, ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges)';
+  % calculate kinetic energy with regressor
+  Cq_reg = %RN%_coriolismat_joint_fixb_regmin_sym_lag_varpar(q, qD, ...
+    alpha, a, d, q_offset, b, beta);
+  Cq_mpv_vec = Cq_reg*MPV;
+  Cq_mpv = vec2symmat(Cq_mpv_vec);
+  if abs(Cq_func(:)-Cq_mpv(:)) > 1e-12
+    error('Coriolis matrix from base parameter vector does not match with direct form.');
+  end
+end
+fprintf('Tested Coriolis matrix for %d random joint angles for %s\n', ...
+  n, robot_name);
+
+%% Teste Massenmatrix
+for i = 1:n
+  q = Q(i,:)';
+  % calculate kinetic energy with optimized function
+  Mq_func = %RN%_inertia_joint_sym_lag_varpar_par1(q, ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges)';
+  % calculate kinetic energy with regressor
+  Mq_reg = %RN%_inertia_joint_regmin_sym_lag_varpar(q, ...
+    alpha, a, d, q_offset, b, beta);
+  Mq_mpv_vec = Mq_reg*MPV;
+  Mq_mpv = vec2symmat(Mq_mpv_vec);
+  if abs(Mq_func(:)-Mq_mpv(:)) > 1e-12
+    error('Joint inertia matrix from base parameter vector does not match with direct form.');
+  end
+end
+fprintf('Tested Joint inertia matrix for %d random joint angles for %s\n', ...
+  n, robot_name);
+
+%% Teste Massenmatrix-Zeitableitung
+for i = 1:n
+  q = Q(i,:)';
+  qD = QD(i,:)';
+  % calculate kinetic energy with optimized function
+  MqD_func = %RN%_inertiaD_joint_sym_lag_varpar_par1(q, qD, ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges)';
+  % calculate kinetic energy with regressor
+  MqD_reg = %RN%_inertiaD_joint_regmin_sym_lag_varpar(q, qD, ...
+    alpha, a, d, q_offset, b, beta);
+  MqD_mpv_vec = MqD_reg*MPV;
+  MqD_mpv = vec2symmat(MqD_mpv_vec);
+  if abs(MqD_func(:)-MqD_mpv(:)) > 1e-12
+    error('Joint inertia matrix time derivative from base parameter vector does not match with direct form.');
+  end
+end
+fprintf('Tested Joint inertia matrix time derivative for %d random joint angles for %s\n', ...
+  n, robot_name);
+

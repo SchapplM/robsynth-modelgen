@@ -1,0 +1,43 @@
+LagrangeN := proc (Tv, Uv)
+  local ReturnValue, i, j, dTvdqD, dTvdqD_s, dTvdqDdt, dTvdqDdt_s, dTvdq_s, dUvdq_s, N_reg, NJ, Tvs, Uvs:
+  N_reg := ColumnDimension(Tv):
+  Tvs := convert_t_s(Tv):
+  Uvs := convert_t_s(Uv):
+
+  # Definitionen
+  NJ := RowDimension(q_s):
+  dTvdqD := Matrix(NJ, N_reg):
+  dTvdqD_s := Matrix(NJ, N_reg):
+  dTvdqDdt := Matrix(NJ, N_reg):
+  dTvdqDdt_s := Matrix(NJ, N_reg):
+  dTvdq_s := Matrix(NJ, N_reg):
+  dUvdq_s := Matrix(NJ, N_reg):
+
+  
+  for j to N_reg do 
+    # Differentiate T with respect to qD
+    for i to NJ do 
+      dTvdqD_s[i, j] := diff(Tvs[1, j], qD_s[i, 1]):
+      dTvdqD[i, j] := convert_s_t(dTvdqD_s[i, j]):
+    end do:
+    
+    # Differentiate dT/dqD with respect to time  
+    for i to NJ do
+      dTvdqDdt[i, j] := diff(dTvdqD[i, j], t):
+      dTvdqDdt_s[i, j] := convert_t_s(dTvdqDdt[i, j]):
+    end do:
+
+    # Differentiate T with respect to q
+    for i to NJ do
+      dTvdq_s[i, j] := diff(Tvs[1, j], q_s[i, 1]):
+    end do:
+
+    # Differentiate U with respect to q
+    for i to NJ do
+      dUvdq_s[i, j] := diff(Uvs[1, j], q_s[i, 1]):
+    end do:
+  end do:
+  ReturnValue := [dTvdqDdt_s, dTvdq_s, dUvdq_s]:
+  return ReturnValue:
+end proc:
+
