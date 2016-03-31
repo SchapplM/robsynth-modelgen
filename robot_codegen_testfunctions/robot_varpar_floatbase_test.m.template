@@ -1,0 +1,100 @@
+% Test function for inverse dynamics from symbolic calculations
+% with floating base model
+
+% Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
+% (c) Institut für Regelungstechnik, Universität Hannover
+
+clc
+clear
+
+NJ = %NJ%;
+robot_name = '%RN%';
+
+testfunctions_path_init
+
+%% Parameter
+robot_varpar_testfunctions_parameter
+
+%% Test coriolis vector and matrix without base velocity
+for i = 1:n
+  q = Q(i,:)';
+  qD = QD(i,:)';
+
+  % calculate coriolis vector directly from optimized function with
+  % base velocity set to zero
+  cq_fixb = %RN%_coriolisvec_joint_fixb_sym_lag_varpar_par1(q, qD, ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+  cq_floatb = %RN%_coriolisvec_joint_floatb_sym_lag_varpar_par1(q, qD, zeros(6,1), ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+  if any(abs(cq_fixb - cq_floatb) > 1e-12)
+    error('coriolis vector from floating base does not match with fixed base.');
+  end
+  
+  % calculate coriolis vector directly from optimized function with
+  % base velocity set to zero
+  Cq_fixb = %RN%_coriolismat_joint_fixb_sym_lag_varpar_par1(q, qD, ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+  Cq_floatb = %RN%_coriolismat_joint_floatb_sym_lag_varpar_par1(q, qD, zeros(6,1), ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+  Delta = Cq_fixb - Cq_floatb(:,7:end);
+  if any(abs(Delta(:)) > 1e-12)
+    error('coriolis matrix from floating base does not match with fixed base.');
+  end
+end
+fprintf('Tested coriolis vector and matrix floating and fixed base for %d random joint angles for %s\n', ...
+  n,robot_name);
+
+%% Vergleich der Basis-Beschleunigung mit der Gravitation
+for i = 1:n
+  q = Q(i,:)';
+  qD = QD(i,:)';
+  g_base = G(i,:)';
+
+  % Drehmoment aus Gravitation im Vergleich mit Drehmoment aus
+  % Basis-Beschleunigung
+  Mqb = %RN%_inertia_joint_base_sym_lag_varpar_par1(q, ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+  tau_acc_floatb = (Mqb*[-g_base; zeros(3,1);]);
+  tau_acc_grav = %RN%_gravload_joint_sym_lag_varpar_par1(q, g_base, ...
+    alpha, a, d, q_offset, b, beta, m, rSges)';
+  if any(abs(tau_acc_floatb - tau_acc_grav) > 1e-12)
+    error('acceleration torque floating base and gravload do not match. %1.5e');
+  end
+end
+fprintf('Tested acceleration torque based on floating base inertia and gravload for %d random joint angles for %s\n', ...
+  size(Q, 1), robot_name);
+
+%% Alle Funktionen mit Parametersatz 2 testen
+for i = 1:n
+  q = Q(i,:)';
+  qD = QD(i,:)';
+  qDD = QDD(i,:)';
+  g_base = G(i,:)';
+  vB = VB(i,:)';
+  aB = AB(i,:)';
+  % Coriolis
+  tauc_par1 = %RN%_coriolisvec_joint_floatb_sym_lag_varpar_par1(q, qD, vB,...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+  tauc_par2 = %RN%_coriolisvec_joint_floatb_sym_lag_varpar_par2(q, qD, vB, ...
+    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
+  if any(abs(tauc_par1-tauc_par2) > 1e-12)
+    error('coriolis vectors do not match between par1/par2.');
+  end
+  Cq_par1 = %RN%_coriolismat_joint_floatb_sym_lag_varpar_par1(q, qD, vB, ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+  Cq_par2 = %RN%_coriolismat_joint_floatb_sym_lag_varpar_par2(q, qD, vB, ...
+    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges); 
+  if any(abs(Cq_par1(:)-Cq_par2(:)) > 1e-12)
+    error('coriolis matrices do not match between par1/par2.');
+  end 
+  % Inverse Dynamics
+  tau_par1 = %RN%_invdyn_joint_floatb_sym_lag_varpar_par1(q, qD, qDD, vB, aB, g_base, ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+  tau_par2 = %RN%_invdyn_joint_floatb_sym_lag_varpar_par2(q, qD, qDD, vB, aB, g_base, ...
+    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
+  if any(abs(tau_par1-tau_par2) > 1e-12)
+    error('inverse dynamics joint torque vectors do not match between par1/par2.');
+  end
+end
+fprintf('Tested Functions with parameter sets 1 and 2 for %d random joint angles for %s\n', ...
+  size(Q, 1), robot_name);

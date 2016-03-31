@@ -26,13 +26,6 @@ for i = 1:size(Icges,1)
   Ifges(i,:) = inertiamatrix2vector(I_ii);
 end
 
-n = 100;
-
-Q = (0.5-rand(n, NJ))*pi;
-QD = (0.5-rand(n, NJ))*pi;
-QD(1:NJ,:)=eye(NJ);
-QDD = (0.5-rand(n, NJ))*pi;
-G = (0.5-rand(n, 3))*10;
 
 %% Parameter prüfen
 if any(m) < 0
@@ -44,3 +37,15 @@ for i = 2:NJ+1
     error('Trägheitstensor sollte positiv definit sein');
   end
 end
+
+%% Zufällige Roboterkonfigurationen
+
+n = 100;
+Q = (0.5-rand(n, NJ))*pi;
+QD = (0.5-rand(n, NJ))*pi;
+QD(1:NJ,:)=eye(NJ);
+QDD = (0.5-rand(n, NJ))*pi;
+G = (0.5-rand(n, 3))*10;
+
+VB = (0.5-rand(n, 6))*10;
+AB = (0.5-rand(n, 6))*10;
