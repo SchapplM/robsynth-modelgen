@@ -158,13 +158,12 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Group>
 <Group labelreference="L1684" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:
-<Font encoding="UTF-8">printf(&quot;Generiere Dynamik f\303\274r %s\134n&quot;, robot_name, codegen_dynpar):</Font></Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1686" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_tree_floatb_twist_definitions&quot;, robot_name, codegen_dynpar):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_tree_floatb_twist_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1697" drawlabel="true">
@@ -189,12 +188,17 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
   read sprintf(&quot;../codeexport/%s_energy_kinetic_floatb_baseframe_par1_maple.m&quot;, robot_name):
 elif codegen_dynpar = 2 then
   read sprintf(&quot;../codeexport/%s_energy_potential_baseframe_par2_maple.m&quot;, robot_name):
-  read sprintf(&quot;../codeexport/%s_energy_kinetic_floatb_linkframe_par2_maple.m&quot;, robot_name):<Font encoding="UTF-8">
+  read sprintf(&quot;../codeexport/%s_energy_kinetic_floatb_linkframe_par2_maple.m&quot;, robot_name):
 else
-  printf(&quot;Dynamikfunktionen nur f\303\274r Parametersatz 1 oder 2 definiert\134n&quot;):
-end:</Font>
+<Font encoding="UTF-8">  printf(&quot;Dynamikfunktionen nur f\303\274r Parametersatz 1 oder 2 definiert\134n&quot;):
+</Font>end:
 T := T:
 U_grav := U_grav:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1700" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Generiere Dynamik f\303\274r %s mit Parametersatz %d\134n&quot;, robot_name, codegen_dynpar):</Font></Text-field>
 </Input>
 </Group>
 </Section>
