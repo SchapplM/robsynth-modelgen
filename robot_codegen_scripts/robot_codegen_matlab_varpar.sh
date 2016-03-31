@@ -7,6 +7,8 @@
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
 # (c) Institut für Regelungstechnik, Leibniz Universität Hannover
 
+echo "Generiere Matlabfunktionen"
+
 repo_pfad=$(pwd)/..
 tmp_pfad=$repo_pfad/robot_codegen_scripts/tmp/
 # Initialisiere Variablen

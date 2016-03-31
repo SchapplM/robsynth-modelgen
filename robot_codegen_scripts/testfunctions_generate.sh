@@ -6,6 +6,8 @@
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
 # (c) Institut für Regelungstechnik, Leibniz Universität Hannover
 
+echo "Generiere Testskripte für Matlabfunktionen"
+
 repo_pfad=$(pwd)/..
 testfcn_pfad=$repo_pfad/robot_codegen_testfunctions
 # Initialisiere Variablen
