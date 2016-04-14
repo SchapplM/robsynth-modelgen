@@ -15,7 +15,7 @@ robot_name = '%RN%';
 testfunctions_path_init
 
 %% Parameter
-robot_varpar_testfunctions_parameter
+%RN%_varpar_testfunctions_parameter
 
 %% Test kinetic Energy
 for i = 1:n

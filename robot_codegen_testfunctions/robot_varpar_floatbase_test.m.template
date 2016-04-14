@@ -13,7 +13,7 @@ robot_name = '%RN%';
 testfunctions_path_init
 
 %% Parameter
-robot_varpar_testfunctions_parameter
+%RN%_varpar_testfunctions_parameter
 
 %% Test coriolis vector and matrix without base velocity
 for i = 1:n
