@@ -160,7 +160,7 @@ for i = 1:n
   % calculate inverse dynamics with optimized function
   tau_func = %RN%_invdyn_joint_floatb_sym_lag_varpar_par1(q, qD, qDD, zeros(6,1), zeros(6,1), g_base, ...
     alpha, a, d, q_offset, b, beta, m, rSges, Icges);
-  % calculate kinetic energy with regressor
+  % calculate inverse dynamics with regressor
   tau_reg = %RN%_invdyn_joint_fixb_regmin_sym_lag_varpar(q, qD, qDD, g_base, ...
     alpha, a, d, q_offset, b, beta);
   tau_mpv = tau_reg*MPV;
