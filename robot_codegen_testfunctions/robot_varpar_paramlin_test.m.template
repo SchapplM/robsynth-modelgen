@@ -12,7 +12,7 @@ robot_name = '%RN%';
 testfunctions_path_init
 
 %% Parameter
-robot_varpar_testfunctions_parameter
+%RN%_varpar_testfunctions_parameter
 
 MPV = %RN%_convert_par2_MPV(alpha, a, d, q_offset, b, beta, ...
   m, mrSges, Ifges);
