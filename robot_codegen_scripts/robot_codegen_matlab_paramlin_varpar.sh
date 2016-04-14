@@ -141,6 +141,30 @@ else
   echo "Code in ${quelldat##*/} nicht gefunden."
 fi
 
+# Inverse Dynamik
+quelldat=$repo_pfad/codeexport/${robot_name}_invdyn_joint_fixb_regressor_minpar_matlab.m
+zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_invdyn_joint_fixb_regmin_sym_lag_varpar.m
+if [ -f $quelldat ]; then
+  cat $tmp_pfad/robot_matlabtmp_invdyn_joint_fixb_regmin.head.m > $zieldat
+  printf "%%%%Coder Information\n%%#codegen\n" >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_qDD.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
+  printf "\n%%%% Variable Initialization" >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_qDD.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_g.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
+  printf "\n%%%%Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+  cat $quelldat >> $zieldat
+  source robot_codegen_matlabfcn_postprocess.sh $zieldat
+else
+  echo "Code in ${quelldat##*/} nicht gefunden."
+fi
+
 # Kinetische Energie (Fixed Base)
 quelldat=$repo_pfad/codeexport/${robot_name}_energy_kinetic_fixb_regressor_minpar_matlab.m
 zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_energykin_fixb_regmin_sym_lag_varpar.m

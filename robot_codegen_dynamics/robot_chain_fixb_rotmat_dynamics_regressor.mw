@@ -440,4 +440,44 @@ end if:</Text-field>
 </Input>
 </Group>
 </Section>
+<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
+<Text-field style="Heading 1" layout="Heading 1">Inverse Dynamics</Text-field></Title>
+<Group labelreference="L1754" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Generate</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1752" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">tau_regressor_s := dTdqDdt_s-dTdq_s+dUdq_s:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1755" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save tau_regressor_s, sprintf(&quot;../codeexport/%s_invdyn_joint_fixb_regressor_minpar_maple.m&quot;, robot_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1753" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Matlab Export</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1757" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Belastung der Gelenke</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1756" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
+  MatlabExport(tau_regressor_s(7..N,..), sprintf(&quot;../codeexport/%s_invdyn_joint_fixb_regressor_minpar_matlab.m&quot;, robot_name), codegen_opt):
+end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1758" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
+</Section>
 </Worksheet>
