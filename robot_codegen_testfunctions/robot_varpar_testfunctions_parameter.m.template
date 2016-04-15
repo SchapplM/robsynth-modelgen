@@ -11,21 +11,8 @@ rSges = [NaN(1,3);rand(NJ,3)];
 m = [NaN;rand(NJ,1)];
 Icges = [NaN(1,6);rand(NJ,3), -rand(NJ,3)*0.01];
 
-mrSges = repmat(m,1,3).*rSges;
-
-% Trägheitstensor um das Körperkoordinatensystem
-Ifges = NaN(NJ,6);
-for i = 1:size(Icges,1)
-  % Trägheitstensor um den Schwerpunkt
-  I_iSi = inertiavector2matrix(Icges(i,:));
-  
-  % Steinerscher-Verschiebungssatz: Trägheitstensor um Koordinatensystem
-  I_ii = inertia_steiner(I_iSi, rSges(i,:)', m(i));
-  
-  % Ausgabe zusammenstellen
-  Ifges(i,:) = inertiamatrix2vector(I_ii);
-end
-
+[mrSges_num, Ifges_num] = ...
+  inertial_parameters_convert_par1_par2(rSges, Icges, m);
 
 %% Parameter prüfen
 if any(m) < 0
