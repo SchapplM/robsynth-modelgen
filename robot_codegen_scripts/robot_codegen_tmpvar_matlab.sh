@@ -111,12 +111,19 @@ do
 	echo "g${i} = g_base(${i});" >> $tmp_pfad/robot_matlabtmp_g.m
 done
 
-# Basisgeschwindigkeit und Beschleunigung
+# Basisposition
 echo "" > $tmp_pfad/robot_matlabtmp_rB.m
 echo "rxs_base = r_base(1);" >> $tmp_pfad/robot_matlabtmp_rB.m
 echo "rys_base = r_base(2);" >> $tmp_pfad/robot_matlabtmp_rB.m
 echo "rzs_base = r_base(3);" >> $tmp_pfad/robot_matlabtmp_rB.m
 
+# Basisorientierung (EulerXYZ / RPY)
+echo "" > $tmp_pfad/robot_matlabtmp_phiB.m
+echo "alphaxs_base = phi_base(1);" >> $tmp_pfad/robot_matlabtmp_phiB.m
+echo "betays_base = phi_base(2);" >> $tmp_pfad/robot_matlabtmp_phiB.m
+echo "gammazs_base = phi_base(3);" >> $tmp_pfad/robot_matlabtmp_phiB.m
+
+# Basisgeschwindigkeit
 echo "" > $tmp_pfad/robot_matlabtmp_vB.m
 echo "vxs_base = V_base(1);" >> $tmp_pfad/robot_matlabtmp_vB.m
 echo "vys_base = V_base(2);" >> $tmp_pfad/robot_matlabtmp_vB.m
@@ -125,6 +132,7 @@ echo "omegaxs_base = V_base(4);" >> $tmp_pfad/robot_matlabtmp_vB.m
 echo "omegays_base = V_base(5);" >> $tmp_pfad/robot_matlabtmp_vB.m
 echo "omegazs_base = V_base(6);" >> $tmp_pfad/robot_matlabtmp_vB.m
 
+# Basisbeschleunigung
 echo "" > $tmp_pfad/robot_matlabtmp_vBD.m
 echo "vDxs_base = A_base(1);" >> $tmp_pfad/robot_matlabtmp_aB.m
 echo "vDys_base = A_base(2);" >> $tmp_pfad/robot_matlabtmp_aB.m
@@ -132,3 +140,21 @@ echo "vDzs_base = A_base(3);" >> $tmp_pfad/robot_matlabtmp_aB.m
 echo "omegaDxs_base = A_base(4);" >> $tmp_pfad/robot_matlabtmp_aB.m
 echo "omegaDys_base = A_base(5);" >> $tmp_pfad/robot_matlabtmp_aB.m
 echo "omegaDzs_base = A_base(6);" >> $tmp_pfad/robot_matlabtmp_aB.m
+
+# Basisgeschwindigkeit (Ableitung der Euler-Winkel)
+echo "" > $tmp_pfad/robot_matlabtmp_xDB.m
+echo "vxs_base = xD_base(1);" >> $tmp_pfad/robot_matlabtmp_xDB.m
+echo "vys_base = xD_base(2);" >> $tmp_pfad/robot_matlabtmp_xDB.m
+echo "vzs_base = xD_base(3);" >> $tmp_pfad/robot_matlabtmp_xDB.m
+echo "alphaDx_base = xD_base(4);" >> $tmp_pfad/robot_matlabtmp_xDB.m
+echo "betaDy_base = xD_base(5);" >> $tmp_pfad/robot_matlabtmp_xDB.m
+echo "gammaDz_base = xD_base(6);" >> $tmp_pfad/robot_matlabtmp_xDB.m
+
+# Basisbeschleunigung (Zweite Ableitung der Euler-Winkel)
+echo "" > $tmp_pfad/robot_matlabtmp_xDDB.m
+echo "vDxs_base = xDD_base(1);" >> $tmp_pfad/robot_matlabtmp_xDDB.m
+echo "vDys_base = xDD_base(2);" >> $tmp_pfad/robot_matlabtmp_xDDB.m
+echo "vDzs_base = xDD_base(3);" >> $tmp_pfad/robot_matlabtmp_xDDB.m
+echo "alphaDDx_base = xDD_base(4);" >> $tmp_pfad/robot_matlabtmp_xDDB.m
+echo "betaDDy_base = xDD_base(5);" >> $tmp_pfad/robot_matlabtmp_xDDB.m
+echo "gammaDDz_base = xDD_base(6);" >> $tmp_pfad/robot_matlabtmp_xDDB.m

@@ -113,6 +113,11 @@ Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">restart:</Text-field>
 </Input>
 </Group>
+<Group labelreference="L1637" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(LinearAlgebra):</Text-field>
+</Input>
+</Group>
 <Group labelreference="L1595" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Lese Umgebungsvariable f\303\274r Codegenerierung.</Font></Text-field>
@@ -160,18 +165,18 @@ qJDD_t := diff~(qJD_t, t):</Text-field>
 </Group>
 <Group labelreference="L1599" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal">Gravity vector in robot base frame</Text-field>
+<Text-field style="Text" layout="Normal">Gravity vector in world frame</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1614" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">g_base := Matrix(3, 1):
-g_base(1 .. 3, 1) := &lt;g1, g2, g3&gt;:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">g_world := Matrix(3, 1):
+g_world(1 .. 3, 1) := &lt;g1, g2, g3&gt;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1604" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal">Position und Orientierung der Basis (pelvis). Die Orientierung ist mit XYZ-Euler-Winkeln definiert.
+<Text-field style="Text" layout="Normal">Position und Orientierung der Basis. Die Orientierung ist mit XYZ-Euler-Winkeln definiert, die aber nicht im weiteren Algorithmus verwendet werden (nur Platzhalter).
 <Font encoding="UTF-8">Eine Invertierung der Orientierungsdarstellung sollte nicht notwendig werden, von daher kein Problem mit Orientierungsrepr\303\244sentationssingularit\303\244t.
 </Font>gem. [2], S. 4 X_base_t SE(3): Position und Orientierung.</Text-field>
 </Input>
@@ -194,7 +199,7 @@ X_base_s:=Matrix(6, 1, [rxs_base,rys_base,rzs_base,alphaxs_base, betays_base, ga
 </Group>
 <Group labelreference="L1620" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal">Twist: Verallgemeinerte Geschwindigkeit</Text-field>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Twist: Verallgemeinerte Geschwindigkeit. Diese Darstellung ist nicht konsistent (Ableitung der Position stimmt nicht mit Ausdruck der Geschwindigkeit \303\274berein)</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1618" drawlabel="true">
@@ -212,6 +217,28 @@ V_base_s:=Matrix(6, 1, [vxs_base,vys_base,vzs_base,omegaxs_base, omegays_base, o
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">VD_base_t:=diff~(V_base_t,t):
 VD_base_s:=Matrix(6, 1, [vDxs_base,vDys_base,vDzs_base,omegaDxs_base, omegaDys_base, omegaDzs_base]):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1634" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Name der Methode f\303\274r die Orientierungsdarstellung der Basis</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1633" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">base_method_name := &quot;twist&quot;:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1635" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Umrechnung von der Ableitung der Basis-Orientierung zu Winkelgeschwindigkeiten:
+<Font encoding="UTF-8">Wird hier nicht weiter beachtet (physikalisch falsch f\303\274r eine Betrachtung der Dynamik der Basis).
+Erm\303\266glicht eine einfachere Berechnung f\303\274r Mechanismen, wo die R\303\274ckwirkung auf die Basis nicht in der Vorw\303\244rtsdynamik simuliert werden muss.</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1636" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">T_basevel := IdentityMatrix(3, 3):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1624" drawlabel="true">
@@ -366,10 +393,15 @@ end do:</Text-field>
 <Text-field style="Heading 1" layout="Heading 1">Export</Text-field></Title>
 <Group labelreference="L1598" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save q_t, q_s, qD_t, qD_s, qDD_t, qDD_s, qJ_t, qJ_s, qJD_t, qJD_s, qJDD_t, qJDD_s, g_base, X_base_t, X_base_s, V_base_t, V_base_s, VD_base_t, VD_base_s, qoffset, theta, alpha, d, a,v,b,beta, M, r_i_i_Si, mr_i_i_Si, I_i_i, I_i_Si, PV2_vec, PV2_mat, robot_name, N,NB,NJ,NL, sprintf(&quot;../codeexport/%s_tree_floatb_twist_definitions&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save q_t, q_s, qD_t, qD_s, qDD_t, qDD_s, qJ_t, qJ_s, qJD_t, qJD_s, qJDD_t, qJDD_s, g_world, X_base_t, X_base_s, V_base_t, V_base_s, VD_base_t, VD_base_s, qoffset, theta, alpha, d, a,v,b,beta, M, r_i_i_Si, mr_i_i_Si, I_i_i, I_i_Si, PV2_vec, PV2_mat, robot_name, N,NB,NJ,NL, base_method_name, T_basevel, sprintf(&quot;../codeexport/%s_tree_floatb_twist_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1632" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save q_t, q_s, qD_t, qD_s, qDD_t, qDD_s, qJ_t, qJ_s, qJD_t, qJD_s, qJDD_t, qJDD_s, g_world, X_base_t, X_base_s, V_base_t, V_base_s, VD_base_t, VD_base_s, qoffset, theta, alpha, d, a,v,b,beta, M, r_i_i_Si, mr_i_i_Si, I_i_i, I_i_Si, PV2_vec, PV2_mat, robot_name, N,NB,NJ,NL, base_method_name, T_basevel, sprintf(&quot;../codeexport/%s_tree_floatb_definitions&quot;, robot_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1638" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>

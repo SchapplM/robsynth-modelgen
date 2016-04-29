@@ -89,8 +89,8 @@
         <Metadata-attribute name="Subject" value="&lt;default&gt;"/>
         <Metadata-attribute name="Author" value="&lt;default&gt;"/>
         <Metadata-attribute name="Item List" value="true"/>
-        <Metadata-attribute name="Title" value="&lt;default&gt;"/>
         <Metadata-attribute name="Keywords" value="&lt;default&gt;"/>
+        <Metadata-attribute name="Title" value="&lt;default&gt;"/>
     </Metadata-tag>
 </Metadata-table>
 <Task-table>
@@ -110,10 +110,10 @@
 Dateiname:
 <Font encoding="UTF-8">robot -&gt; Berechnung f\303\274r allgemeinen Roboter
 tree -&gt; Berechnung f\303\274r eine beliebige Baumstruktur (ohne Schleifen)
-floatb_twist -&gt; floating base wird durch base twist (Geschwindigkeit der Basis) ber\303\274cksichtigt
+floatb -&gt; floating base wird durch base twist (Geschwindigkeit der Basis) oder vollst\303\244ndige Orientierung (Euler-Winkel) ber\303\274cksichtigt
 </Font>rotmat -&gt; Kinematik wird mit Rotationsmatrizen berechnet
 velocity -&gt; Berechnung der Geschwindigkeit aller Segmente
-baseframe -&gt; Berechnung der Geschwindigkeit im Basis-KS (KS0)
+worldframe -&gt; Berechnung der Geschwindigkeit im Basis-KS (KS0)
 par1 -&gt; Parametersatz 1 (Schwerpunkt als Parameter: SX,SY,SZ)
 </Text-field>
 </Input>
@@ -176,7 +176,7 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Group>
 <Group labelreference="L1647" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_tree_floatb_twist_definitions&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_tree_floatb_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1431" drawlabel="true">
@@ -186,16 +186,16 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Group>
 <Group labelreference="L1527" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_kinematics_rotmat_maple.m&quot;, robot_name):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_kinematics_floatb_%s_rotmat_maple.m&quot;, robot_name, base_method_name):
 Trf := Trf:
 Trf_c := Trf_c:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1652" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_kinematics_com_baseframe_floatb_par1_maple.m&quot;, robot_name):
-r_0_0_Si := r_0_0_Si:
-r_0_i_Si := r_0_i_Si:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_kinematics_com_worldframe_floatb_%s_par1_maple.m&quot;, robot_name, base_method_name):
+r_W_W_Si := r_W_W_Si:
+r_W_i_Si := r_W_i_Si:</Text-field>
 </Input>
 </Group>
 </Section>
@@ -240,8 +240,8 @@ Analog zu [Ortmaier2014], Gl. (7.6)</Text-field>
 </Group>
 <Group labelreference="L1658" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">rD_0_i := Matrix(3, NL):
-rD_0_i(1..3,1) := V_base_t(1..3,1):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">rD_W_i := Matrix(3, NL):
+rD_W_i(1..3,1) := V_base_t(1..3,1):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1656" drawlabel="true">
@@ -251,8 +251,27 @@ rD_0_i(1..3,1) := V_base_t(1..3,1):</Text-field>
 </Group>
 <Group labelreference="L1655" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">omega_0_i := Matrix(3, NL):
-omega_0_i(1..3,1) := V_base_t(4..6,1):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">omega_W_i := Matrix(3, NL):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1689" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if base_method_name = &quot;twist&quot; then:
+  omega_W_i(1..3,1) := V_base_t(4..6,1):
+end:
+if base_method_name = &quot;eulangrpy&quot; then:
+  omega_W_i(1..3,1) := T_basevel . V_base_t(4..6,1):
+end:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1688" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Nutze die Methode %s f\303\274r die Basis-Drehgeschwindigkeit\134n&quot;, </Font>base_method_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1691" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1657" drawlabel="true">
@@ -269,11 +288,11 @@ Betrachte dazu nur die durch Gelenke angetriebenen K\303\266rper, nicht die Basi
 </Font>  j := v(i) + 1:
 <Font encoding="UTF-8">  # Geschwindigkeit des Vorg\303\244ngers; Trf_c(...,i+1) enth\303\244lt z-Achse des K\303\266rperkoordinatensystems, das von qi bewegt wird.</Font>
   # <Font encoding="UTF-8">[Ortmaier2014] (7.7) (S.115) (dort falsche Indizes f\303\274r MDH), </Font>[KhalilDombre2002] (9.14)
-  omega_0_i(1 .. 3, i+1) := omega_0_i(1 .. 3, j) + thetaD(i,1)*Trf_c(1 .. 3, 3, i+1):
+  omega_W_i(1 .. 3, i+1) := omega_W_i(1 .. 3, j) + thetaD(i,1)*Trf_c(1 .. 3, 3, i+1):
   # Vektor vom Ursprung des vorherigen Koordinatensystems zu diesem KS
-  r_0_im1_i := -Trf_c(1 .. 3, 4, j) + Trf_c(1 .. 3, 4, i+1):
+  r_W_im1_i := -Trf_c(1 .. 3, 4, j) + Trf_c(1 .. 3, 4, i+1):
   # [Ortmaier2014] (7.9) (S.115), [KhalilDombre2002] (9.15)
-  rD_0_i(1 .. 3, i+1) := rD_0_i(1 .. 3, j) + CrossProduct(omega_0_i(1 .. 3, j), r_0_im1_i):
+  rD_W_i(1 .. 3, i+1) := rD_W_i(1 .. 3, j) + CrossProduct(omega_W_i(1 .. 3, j), r_W_im1_i):
   <Font encoding="UTF-8">printf(&quot;Geschwindigkeit f\303\274r K\303\266rperkoordinatensystem %d aufgestellt. %s\134n&quot;, i</Font>, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
 end do:</Text-field>
 </Input>
@@ -283,10 +302,10 @@ end do:</Text-field>
 <Text-field style="Heading 2" layout="Heading 2">Velocities of Center of Mass</Text-field></Title>
 <Group labelreference="L1660" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">rD_0_Si := Matrix(3, NL):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">rD_W_Si := Matrix(3, NL):
 for i to NL do
   # [Ortmaier2014] (7.17) (S.118), [KhalilDombre2002] (9.15)
-  rD_0_Si(1 .. 3, i) := Matrix(rD_0_i(1 .. 3, i)) + Matrix(CrossProduct(omega_0_i(1 .. 3, i), r_0_i_Si(1 .. 3, i))):
+  rD_W_Si(1 .. 3, i) := Matrix(rD_W_i(1 .. 3, i)) + Matrix(CrossProduct(omega_W_i(1 .. 3, i), r_W_i_Si(1 .. 3, i))):
   <Font encoding="UTF-8">printf(&quot;Geschwindigkeit f\303\274r K\303\266rperschwerpunkt %d aufgestellt. %s\134n&quot;, i</Font>, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
 end do:</Text-field>
 </Input>
@@ -298,8 +317,8 @@ end do:</Text-field>
 </Group>
 <Group labelreference="L1664" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save omega_0_i, rD_0_i, rD_0_Si, sprintf(&quot;../codeexport/%s_velocity_baseframe_floatbase_twist_par1_maple&quot;, robot_name):
-save omega_0_i, rD_0_i, rD_0_Si, sprintf(&quot;../codeexport/%s_velocity_baseframe_floatbase_twist_par1_maple.m&quot;, robot_name):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save omega_W_i, rD_W_i, rD_W_Si, sprintf(&quot;../codeexport/%s_velocity_worldframe_floatbase_%s_par1_maple&quot;, robot_name, base_method_name):
+save omega_W_i, rD_W_i, rD_W_Si, sprintf(&quot;../codeexport/%s_velocity_worldframe_floatbase_%s_par1_maple.m&quot;, robot_name, base_method_name):
 <Font encoding="UTF-8">printf(&quot;Maple-Ausdr\303\274cke exportiert. %s\134n&quot;, </Font>FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Text-field>
 </Input>
 </Group>
@@ -311,9 +330,9 @@ save omega_0_i, rD_0_i, rD_0_Si, sprintf(&quot;../codeexport/%s_velocity_basefra
 <Group labelreference="L1665" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(convert_t_s(omega_0_i), sprintf(&quot;../codeexport/%s_velocity_omegai0_floatb_baseframe_matlab.m&quot;, robot_name), codegen_opt):
-  MatlabExport(convert_t_s(rD_0_i), sprintf(&quot;../codeexport/%s_velocity_rDi0_floatb_baseframe_matlab.m&quot;, robot_name), codegen_opt):
-  MatlabExport(convert_t_s(rD_0_Si), sprintf(&quot;../codeexport/%s_velocity_rDSi0_floatb_baseframe_par1_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(convert_t_s(omega_W_i), sprintf(&quot;../codeexport/%s_velocity_omegai0_floatb_%s_wworldframe_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
+  MatlabExport(convert_t_s(rD_W_i), sprintf(&quot;../codeexport/%s_velocity_rDi0_floatb_%s_worldframe_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
+  MatlabExport(convert_t_s(rD_W_Si), sprintf(&quot;../codeexport/%s_velocity_rDSi0_floatb_%s_wworldframe_par1_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
   <Font encoding="UTF-8">printf(&quot;Geschwindigkeiten in Matlab exportiert. %s\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Font>
 end if:</Text-field>
 </Input>

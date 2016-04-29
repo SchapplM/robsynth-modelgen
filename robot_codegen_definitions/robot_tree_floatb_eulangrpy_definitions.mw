@@ -87,176 +87,174 @@
     <Task-category name="&lt;default&gt;"/>
 </Task-table>
 <Task/>
-<Group labelreference="L1" drawlabel="true">
+<Group labelreference="L1506" drawlabel="true">
 <Input>
-<Text-field style="Title" layout="Title">Forward Kinematics for Robot based on MDH frames</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1503" drawlabel="true">
-<Input>
-<Text-field style="Heading 2" layout="Heading 2">Introduction</Text-field>
-<Text-field style="Normal" layout="Normal">Direkte Kinematik basierend auf MDH-Parametern berechnen
-
-Dateiname:
-<Font encoding="UTF-8">robot -&gt; Berechnung f\303\274r allgemeinen Roboter
-tree -&gt; Berechnung f\303\274r eine beliebige Baumstruktur (ohne Schleifen)
-floatb_twist -&gt; floating base wird durch base twist (Geschwindigkeit der Basis) ber\303\274cksichtigt
-rotmat -&gt; Kinematik wird mit Rotationsmatrizen berechnet
-mdh_kinematics -&gt; Berechnung der Vorw\303\244rtskinematik mit modifizierten DH-Parametern nach </Font>[KhalilKle1986]</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1501" drawlabel="true">
-<Input>
-<Text-field style="Heading 2" layout="Heading 2">Authors</Text-field>
-<Text-field style="Normal" layout="Normal">Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03</Text-field>
-<Text-field style="Normal" layout="Normal">Institut fuer Regelungstechnik, Leibniz Universitaet Hannover</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1502" drawlabel="true">
-<Input>
-<Text-field style="Heading 2" layout="Heading 2">Sources</Text-field>
-<Text-field style="Normal" layout="Normal">[KhalilKle1986] Khalil, W. &amp; Kleinfinger, J.: A new geometric notation for open and closed-loop robots (1986)
-[KhalilDombre2002] Modeling, Identification and Control of Robots</Text-field>
-<Text-field style="Text" layout="Normal">[Ortmaier2014] Vorlesungsskript Robotik I</Text-field>
+<Text-field style="Title" layout="Title">Definitions for Robot Dynamics Code Generation</Text-field>
 </Input>
 </Group>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 1" layout="Heading 1">Initialization</Text-field></Title>
-<Group labelreference="L1522" drawlabel="true">
+<Text-field style="Heading 1" layout="Heading 1">Init</Text-field></Title>
+<Group labelreference="L1602" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">restart:
-with(LinearAlgebra):
-with(ArrayTools):
-with(codegen):
-with(CodeGeneration):
-with(StringTools):
-codegen_opt := true:
-codegen_act := true:</Text-field>
+<Text-field style="Normal" layout="Normal"><Font encoding="UTF-8">Erstelle Definitionen f\303\274r die Maple-Skripte zur Berechnung von Kinematik und Dynamik des Roboters
+</Font>Nutze Euler-Winkel (RPY-Konvention) zur Darstellung der Basisorientierung
+
+Quellen:
+[1] Sousa, C. D. and Cortesao, R.: Physical feasibility of robot base inertial parameter identification: A linear matrix inequality approach (2014)
+[2] Ayusawa, K. and Venture, G. and Nakamura, Y.: Identifiability and identification of inertial parameters using the underactuated base-link dynamics for legged multibody systems (2013)
+[3] Fujimoto, Y. and Obata, S. and Kawamura, A.: Robust biped walking with active interaction control between foot and ground (1998)
+[4] Khalil, W. and Kleinfinger, J.-F.: Minimum operations and minimum parameters of the dynamic models of tree structure robots (1987)
+[5] Ortmaier: Robotik I Vorlesungsskript
+
+Moritz Schappler, schappler@irt.uni-hannover.de, 2016-04</Text-field>
+<Text-field style="Normal" layout="Normal">Institut fuer Regelungstechnik, Leibniz Universitaet Hannover</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1583" drawlabel="true">
+<Group labelreference="L1601" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_convert_s_t&quot;:
-read &quot;../helper/proc_convert_t_s&quot;: 
-read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">restart:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1523" drawlabel="true">
+<Group labelreference="L1680" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../transformation/proc_rotx&quot;: 
-read &quot;../transformation/proc_roty&quot;: 
-read &quot;../transformation/proc_rotz&quot;: 
-read &quot;../transformation/proc_trotx&quot;: 
-read &quot;../transformation/proc_troty&quot;: 
-read &quot;../transformation/proc_trotz&quot;: 
-read &quot;../transformation/proc_transl&quot;: 
-read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../transformation/proc_rpyjac&quot;: </Text-field>
 </Input>
 </Group>
-<Group labelreference="L1577" drawlabel="true">
+<Group labelreference="L1595" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Lese Umgebungsvariable f\303\274r Codegenerierung.</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1594" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:
-<Font encoding="UTF-8">printf(&quot;Generiere Kinematik f\303\274r %s\134n&quot;, robot_name):</Font></Text-field>
+<Font encoding="UTF-8">printf(&quot;Generiere Parameter f\303\274r %s\134n&quot;,robot_name):</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L1645" drawlabel="true">
+<Group labelreference="L1633" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Lese allgemeine Definitionen f\303\274r Floating-Base</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1634" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_tree_floatb_twist_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 1" layout="Heading 1">Calculate Forward Kinematics</Text-field></Title>
-<Group labelreference="L1124" drawlabel="true">
+<Text-field style="Heading 1" layout="Heading 1">Robotics Definitions</Text-field></Title>
+<Group labelreference="L1604" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal">Trf is the Matrix of Transformation from i-1 to i
-Trf_c is the cummulated Matrix of Transformation from 0 to i</Text-field>
+<Text-field style="Text" layout="Normal">Position und Orientierung der Basis (pelvis). Die Orientierung ist mit XYZ-Euler-Winkeln definiert.
+<Font encoding="UTF-8">Eine Invertierung der Orientierungsdarstellung sollte nicht notwendig werden, von daher kein Problem mit Orientierungsrepr\303\244sentationssingularit\303\244t.
+</Font>gem. [2], S. 4 X_base_t SE(3): Position und Orientierung.</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1524" drawlabel="true">
+<Group labelreference="L1629" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Trf_c := Matrix(4, 4, NJ+1+4):
-Trf := Matrix(4, 4, NJ+1):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">NB := 6:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1525" drawlabel="true">
+<Group labelreference="L1603" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal">Base transformation: Only translation from base, no rotation</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">X_base_t:=Matrix(6, 1, [rx_base(t),ry_base(t),rz_base(t),alphax_base(t), betay_base(t), gammaz_base(t)]):
+X_base_s:=Matrix(6, 1, [rxs_base,rys_base,rzs_base,alphaxs_base, betays_base, gammazs_base]):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1528" drawlabel="true">
+<Group labelreference="L1616" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Trf_c(1 .. 4, 1 .. 4, 1) := transl(X_base_t[1..3,1]):</Text-field>
+<Text-field style="Text" layout="Normal">Geschwindigkeit der Basis</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1580" drawlabel="true">
+<Group labelreference="L1620" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Kinematik aller K\303\266rper mit MDH-Ansatz Bestimmen. </Font>[KhalilKle1986].</Text-field>
+<Text-field style="Text" layout="Normal">Twist: Verallgemeinerte Geschwindigkeit</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1533" drawlabel="true">
+<Group labelreference="L1618" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NJ do 
-  Trf(1 .. 4, 1 .. 4, i) := trafo_mdh_full(alpha[i,1], a[i,1], theta[i,1], d[i,1], beta[i,1], b[i,1]):
-  # Index des vorherigen Koordinatensystems
-  j := v(i)+1:
-  Trf_c(1 .. 4, 1 .. 4, i+1) := Multiply(Trf_c(1 .. 4, 1 .. 4, j), Trf(1 .. 4, 1 .. 4, i)):
-end do:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">V_base_t:=diff~(X_base_t, t):
+V_base_s:=Matrix(6, 1, [vxs_base,vys_base,vzs_base,alphaDx_base, betaDy_base, gammaDz_base]):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1611" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Zeitableitung davon</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1593" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">VD_base_t:=diff~(V_base_t, t):
+VD_base_s:=Matrix(6, 1, [vDxs_base,vDys_base,vDzs_base,alphaDDx_base, betaDDy_base, gammaDDz_base]):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1641" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Name der Methode f\303\274r die Orientierungsdarstellung der Basis</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1639" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">base_method_name := &quot;eulangrpy&quot;:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1640" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Umrechnung von der Ableitung der Basis-Orientierung zu Winkelgeschwindigkeiten:
+Nutze die Euler-XYZ-Konvention (&quot;RPY&quot;).
+Siehe [5], Gl. (4.23)</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1638" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">T_basevel := rpyjac(X_base_t(4), X_base_t(5), X_base_t(6)):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1624" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Verallgemeinerte Koordinaten, gem [2], S. 4, [3], S.1</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1592" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">N:=NJ+NB:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1628" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">q_t := Matrix(N,1, &lt;X_base_t, qJ_t&gt;):
+q_s := Matrix(N,1, &lt;X_base_s, qJ_s&gt;):
+qD_t:= Matrix(N,1, &lt;V_base_t, qJD_t&gt;):
+qD_s:= Matrix(N,1, &lt;V_base_s, qJD_s&gt;):
+qDD_t:= Matrix(N,1, &lt;VD_base_t, qJDD_t&gt;):
+qDD_s:= Matrix(N,1, &lt;VD_base_s, qJDD_s&gt;):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1605" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">MDH-Gelenkwinkel neu speichern (Definition der verallg. Koordinaten war dort noch nicht bekannt</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1606" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">theta := value(theta):</Text-field>
 </Input>
 </Group>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
 <Text-field style="Heading 1" layout="Heading 1">Export</Text-field></Title>
-<Group labelreference="L1588" drawlabel="true">
+<Group labelreference="L1598" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal">Maple-Export</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save q_t, q_s, qD_t, qD_s, qDD_t, qDD_s, qJ_t, qJ_s, qJD_t, qJD_s, qJDD_t, qJDD_s, g_world, X_base_t, X_base_s, V_base_t, V_base_s, VD_base_t, VD_base_s, qoffset, theta, alpha, d, a,v,b,beta, M, r_i_i_Si, mr_i_i_Si, I_i_i, I_i_Si, PV2_vec, PV2_mat, robot_name, N,NB,NJ,NL, base_method_name, T_basevel, sprintf(&quot;../codeexport/%s_tree_floatb_eulangrpy_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1587" drawlabel="true">
+<Group labelreference="L1632" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save Trf, Trf_c, sprintf(&quot;../codeexport/%s_kinematics_rotmat_maple.m&quot;, robot_name):
-save Trf, Trf_c, sprintf(&quot;../codeexport/%s_kinematics_rotmat_maple&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save q_t, q_s, qD_t, qD_s, qDD_t, qDD_s, qJ_t, qJ_s, qJD_t, qJD_s, qJDD_t, qJDD_s, g_world, X_base_t, X_base_s, V_base_t, V_base_s, VD_base_t, VD_base_s, qoffset, theta, alpha, d, a,v,b,beta, M, r_i_i_Si, mr_i_i_Si, I_i_i, I_i_Si, PV2_vec, PV2_mat, robot_name, N,NB,NJ,NL, base_method_name, T_basevel, sprintf(&quot;../codeexport/%s_tree_floatb_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1592" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Export des symbolischen Ausdrucks f\303\274r alle Transformationsmatrizen auf einmal.</Font></Text-field>
-</Input>
-</Group>
-<Group labelreference="L1640" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Trf_c_Export := Matrix((NL)*4, 4):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1639" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NL do 
-  Trf_c_Export((i-1)*4+1 .. 4*i, 1..4) := Trf_c(1..4, 1..4, i):
-end do:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1643" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(convert_t_s(Trf_c_Export), sprintf(&quot;../codeexport/%s_fkine_rotmat_matlab.m&quot;, robot_name), codegen_opt):
-end if:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1642" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Export des symbolischen Ausdrucks f\303\274r jede Transformationsmatrix einzeln</Font></Text-field>
-</Input>
-</Group>
-<Group labelreference="L1641" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to Size(Trf_c)[3] do
-  if codegen_act then
-    MatlabExport(convert_t_s(Trf_c(1 .. 4, 1 .. 4, i)), sprintf(&quot;../codeexport/%s_fkine_%d_rotmat_matlab.m&quot;, robot_name, i), codegen_opt):
-  end if:
-end do:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1644" drawlabel="true">
+<Group labelreference="L1682" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
