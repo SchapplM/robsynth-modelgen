@@ -113,7 +113,7 @@ tree -&gt; Berechnung f\303\274r eine beliebige Baumstruktur (ohne Schleifen)
 floatb -&gt; floating base wird durch base twist (Geschwindigkeit der Basis) oder vollst\303\244ndige Orientierung (Euler-Winkel) ber\303\274cksichtigt
 </Font>rotmat -&gt; Kinematik wird mit Rotationsmatrizen berechnet
 energy -&gt; Berechnung der Energie
-worldframe -&gt; Berechnung der Geschwindigkeit im Basis-KS (KS0)
+worldframe -&gt; Berechnung der Positionen und Geschwindigkeiten im Welt-KS (KS W) anstatt im Basis-KS (KS 0)
 par1 -&gt; Parametersatz 1 (Schwerpunkt als Parameter: SX,SY,SZ)</Text-field>
 </Input>
 </Group>
@@ -230,7 +230,7 @@ U_grav := 0:</Text-field>
 </Group>
 <Group labelreference="L1683" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save U_grav, sprintf(&quot;../codeexport/%s_energy_potential_worldframe_par1_maple.m&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save U_grav, sprintf(&quot;../codeexport/%s_energy_potential_floatb_%s_worldframe_par1_maple.m&quot;, robot_name, base_method_name):</Text-field>
 </Input>
 </Group>
 </Section>
@@ -270,7 +270,7 @@ end do:</Text-field>
 </Group>
 <Group labelreference="L1680" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save T, sprintf(&quot;../codeexport/%s_energy_kinetic_floatb_worldframe_par1_maple.m&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save T, sprintf(&quot;../codeexport/%s_energy_kinetic_floatb_%s_worldframe_par1_maple.m&quot;, robot_name, base_method_name):</Text-field>
 </Input>
 </Group>
 </Section>

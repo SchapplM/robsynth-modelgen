@@ -100,8 +100,8 @@
 Dateiname:
 <Font encoding="UTF-8">robot -&gt; Berechnung f\303\274r allgemeinen Roboter
 tree -&gt; Berechnung f\303\274r eine beliebige Baumstruktur (ohne Schleifen)
-floatb_twist -&gt; floating base wird durch base twist (Geschwindigkeit der Basis) ber\303\274cksichtigt
-</Font>rotmat -&gt; Kinematik wird mit Rotationsmatrizen berechnet
+floatb -&gt; floating base wird durch base twist (Geschwindigkeit der Basis) oder vollst\303\244ndige Orientierung (Euler-Winkel) ber\303\274cksichtigt</Font>
+rotmat -&gt; Kinematik wird mit Rotationsmatrizen berechnet
 energy -&gt; Berechnung der Energie
 <Font encoding="UTF-8">linkframe -&gt; Berechnung der Geschwindigkeit im K\303\266rper-KS (KSi)</Font>
 par2 -&gt; Parametersatz 2 (erstes Moment anstelle von Schwerpunkt als Parameter)</Text-field>
@@ -165,7 +165,7 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Group>
 <Group labelreference="L1695" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_tree_floatb_twist_definitions&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_tree_floatb_definitions&quot;, robot_name, base_method_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1692" drawlabel="true">
@@ -175,13 +175,13 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Group>
 <Group labelreference="L1693" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_kinematics_rotmat_maple.m&quot;, robot_name):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_kinematics_floatb_%s_rotmat_maple.m&quot;, robot_name, base_method_name):
 Trf_c := Trf_c:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1697" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_velocity_linkframe_floatb_twist_maple.m&quot;, robot_name):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_velocity_linkframe_floatb_%s_maple.m&quot;, robot_name, base_method_name):
 omega_i_i := omega_i_i: 
 rD_i_i := rD_i_i:</Text-field>
 </Input>
@@ -222,8 +222,8 @@ end do:</Text-field>
 </Group>
 <Group labelreference="L1706" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save T, sprintf(&quot;../codeexport/%s_energy_kinetic_floatb_linkframe_par2_maple&quot;,   robot_name):
-save T, sprintf(&quot;../codeexport/%s_energy_kinetic_floatb_linkframe_par2_maple.m&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save T, sprintf(&quot;../codeexport/%s_energy_kinetic_floatb_%s_linkframe_par2_maple&quot;,   robot_name, base_method_name):
+save T, sprintf(&quot;../codeexport/%s_energy_kinetic_floatb_%s_linkframe_par2_maple.m&quot;, robot_name, base_method_name):</Text-field>
 </Input>
 </Group>
 </Section>
@@ -231,7 +231,7 @@ save T, sprintf(&quot;../codeexport/%s_energy_kinetic_floatb_linkframe_par2_mapl
 <Text-field style="Heading 2" layout="Heading 2">Potential Energy</Text-field></Title>
 <Group labelreference="L1518" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Berechnung in Basis-KS ist bereits erfolgreich. Wird hier nicht nochmal durchgef\303\274hrt.
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Berechnung in Welt-KS ist bereits erfolgreich. Wird hier nicht nochmal durchgef\303\274hrt.
 </Font>siehe robot_tree_floatb_twist_rotmat_energy_baseframe_par2.mw</Text-field>
 </Input>
 </Group>
@@ -254,7 +254,7 @@ save T, sprintf(&quot;../codeexport/%s_energy_kinetic_floatb_linkframe_par2_mapl
 <Group labelreference="L1699" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(T_s, sprintf(&quot;../codeexport/%s_energy_kinetic_floatb_linkframe_par2_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(T_s, sprintf(&quot;../codeexport/%s_energy_kinetic_floatb_%s_linkframe_par2_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -266,6 +266,9 @@ end if:</Text-field>
 <Group labelreference="L1711" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">T_s_fixb:=T_s:
+for i from 1 to NB do
+  T_s_fixb := subs({X_base_s[i,1]=0},T_s_fixb):
+end do:
 for i from 1 to 6 do
   T_s_fixb := subs({V_base_s[i,1]=0},T_s_fixb):
 end do:</Text-field>
