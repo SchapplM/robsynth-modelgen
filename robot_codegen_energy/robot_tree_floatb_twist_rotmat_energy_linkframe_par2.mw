@@ -241,14 +241,19 @@ save T, sprintf(&quot;../codeexport/%s_energy_kinetic_floatb_%s_linkframe_par2_m
 <Text-field style="Heading 1" layout="Heading 1">Export</Text-field></Title>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
 <Text-field style="Heading 3" layout="Heading 3">Matlab Export</Text-field></Title>
-<Group labelreference="L1709" drawlabel="true">
+<Group labelreference="L1713" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal">Floating base</Text-field>
+<Text-field style="Text" layout="Normal">Floating Base
+Eliminiere die Basis-Position (nicht: Orientierung).<Font encoding="UTF-8"> Die kinetische Energie kann nicht davon abh\303\244ngen.
+Falls die Ausdr\303\274cke doch vorkommen, liegt es daran, dass Maple diese nicht wegoptimieren konnte.</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L1703" drawlabel="true">
+<Group labelreference="L1714" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">T_s:=convert_t_s(T):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">T_s:=convert_t_s(T):
+for i from 1 to 3 do
+  T_s := subs({X_base_s[i,1]=0},T_s):
+end do:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1699" drawlabel="true">

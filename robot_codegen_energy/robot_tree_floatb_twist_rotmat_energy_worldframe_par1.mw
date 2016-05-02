@@ -89,8 +89,8 @@
         <Metadata-attribute name="Subject" value="&lt;default&gt;"/>
         <Metadata-attribute name="Author" value="&lt;default&gt;"/>
         <Metadata-attribute name="Item List" value="true"/>
-        <Metadata-attribute name="Keywords" value="&lt;default&gt;"/>
         <Metadata-attribute name="Title" value="&lt;default&gt;"/>
+        <Metadata-attribute name="Keywords" value="&lt;default&gt;"/>
     </Metadata-tag>
 </Metadata-table>
 <Task-table>
@@ -303,7 +303,7 @@ end if:</Text-field>
 <Group labelreference="L1686" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">U_s_fixb:=U_s:
-for i from 1 to 6 do
+for i from 1 to NB do
   U_s_fixb := subs({X_base_s[i,1]=0},U_s_fixb):
 end do:</Text-field>
 </Input>
@@ -311,7 +311,7 @@ end do:</Text-field>
 <Group labelreference="L1688" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(U_s, sprintf(&quot;../codeexport/%s_energy_potential_fixb_worldframe_par1_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
+  MatlabExport(U_s_fixb, sprintf(&quot;../codeexport/%s_energy_potential_fixb_worldframe_par1_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -320,13 +320,22 @@ end if:</Text-field>
 <Text-field style="Heading 3" layout="Heading 3">Kinetic Energy</Text-field></Title>
 <Group labelreference="L1672" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal">Floating Base</Text-field>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Floating Base
+Eliminiere die Basis-Position (nicht: Orientierung). Die kinetische Energie kann nicht davon abh\303\244ngen.
+Falls die Ausdr\303\274cke doch vorkommen, liegt es daran, dass Maple diese nicht wegoptimieren konnte.</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1689" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">T_s:=convert_t_s(T):
+for i from 1 to 3 do
+  T_s := subs({X_base_s[i,1]=0},T_s):
+end do:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1673" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">T_s:=convert_t_s(T):
-if codegen_act then
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
   MatlabExport(T_s, sprintf(&quot;../codeexport/%s_energy_kinetic_floatb_%s_worldframe_par1_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
 end if:</Text-field>
 </Input>
@@ -339,6 +348,9 @@ end if:</Text-field>
 <Group labelreference="L1677" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">T_s_fixb:=T_s:
+for i from 1 to NB do
+  T_s_fixb := subs({X_base_s[i,1]=0},T_s_fixb):
+end do:
 for i from 1 to 6 do
   T_s_fixb := subs({V_base_s[i,1]=0},T_s_fixb):
 end do:</Text-field>
