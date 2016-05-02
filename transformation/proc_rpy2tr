@@ -1,0 +1,5 @@
+rpy2tr := proc (alpha, beta, gamma) 
+  local T; 
+  T := Matrix(4,4,`<,>`(`<|>`(rpy2r(alpha, beta, gamma),`<,>`(0,0,0)),`<|>`(0,0,0,1)));
+  return T 
+end proc;
