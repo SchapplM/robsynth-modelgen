@@ -16,7 +16,8 @@ testfunctions_path_init
 
 %% Parameter
 %RN%_varpar_testfunctions_parameter
-
+% Es werden fixed-base Funktionen getestet. Der Basis-Körper wird also mit
+% NaN belegt und darf keinen Einfluss haben.
 %% Test kinetic Energy
 for i = 1:n
   q = Q(i,:)';
