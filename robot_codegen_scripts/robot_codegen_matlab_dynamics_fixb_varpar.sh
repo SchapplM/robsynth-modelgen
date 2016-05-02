@@ -22,38 +22,6 @@ for (( dynpar=1; dynpar<=2; dynpar++ ))
 do
   for basemeth in "${basemethodenames[@]}"
   do
-    # Gravitationsmoment
-    quelldat=$repo_pfad/codeexport/${robot_name}_joint_gravload_floatb_${basemeth}_par${dynpar}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_gravload_joint_sym_lag_varpar_par${dynpar}.m
-    if [ -f $quelldat ]; then
-      cat ${tmp_pfad}_head/robot_matlabtmp_gravload_joint_par${dynpar}.head.m > $zieldat
-      printf "%%%%Coder Information\n%%#codegen\n" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
-      if [ $dynpar == 1 ]; then
-        cat $tmp_pfad/robot_matlabtmp_assert_rcom.m >> $zieldat
-      else
-        cat $tmp_pfad/robot_matlabtmp_assert_mrcom.m >> $zieldat
-      fi
-      printf "\n%%%% Variable Initialization" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_g.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat
-      if [ $dynpar == 1 ]; then
-        cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> $zieldat
-      else
-        cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> $zieldat
-      fi
-      printf "\n%%%%Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
-      cat $quelldat >> $zieldat
-      source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 1
-    else
-      echo "Code in ${quelldat##*/} nicht gefunden."
-    fi
-
 
     # Coriolisvektor (Fixed Base)
     quelldat=$repo_pfad/codeexport/${robot_name}_coriolisvec_joint_fixb_par${dynpar}_matlab.m
@@ -205,7 +173,7 @@ do
 
     # Massenmatrix-Zeitableitung (Gelenke)
     quelldat=$repo_pfad/codeexport/${robot_name}_inertia_joint_joint_time_derivative_floatb_${basemeth}_par${dynpar}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_inertiaD_joint_floatb_${basemeth}_sym_lag_varpar_par${dynpar}.m
+    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_inertiaD_joint_sym_lag_varpar_par${dynpar}.m
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_inertiaD_joint_par${dynpar}.head.m > $zieldat
       printf "%%%%Coder Information\n%%#codegen\n" >> $zieldat
