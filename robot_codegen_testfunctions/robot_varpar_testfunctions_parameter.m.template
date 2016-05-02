@@ -27,13 +27,44 @@ end
 %% Zufällige Roboterkonfigurationen
 
 n = 100;
+% Gelenkwinkel und -zeitableitungen
 Q = (0.5-rand(n, NJ))*pi;
 QD = (0.5-rand(n, NJ))*pi;
 QD(1:NJ,:)=eye(NJ);
 QDD = (0.5-rand(n, NJ))*pi;
+
+% Gravitation
 G = (0.5-rand(n, 3))*10;
 
+% Basisposition
 RB = (0.5-rand(n, 3))*10;
+
+% Basisorientierung
+% Zufällige Zeitableitung der Orientierungsdarstellung und ihrer
+% Ableitungen
 OB = (0.5-rand(n, 3))*pi;
-VB = (0.5-rand(n, 6))*10;
-AB = (0.5-rand(n, 6))*10;
+OB(1,:) = 0;
+OBD = (0.5-rand(n, 3))*pi;
+OBDD = (0.5-rand(n, 3))*pi;
+
+% Winkelgeschwindigkeit und Beschleunigung aus der Orientierungsdarstellung
+% berechnen
+VB = NaN(n,6);
+AB = NaN(n,6);
+VB(:,1:3) = (0.5-rand(n, 3))*10;
+AB(:,1:3) = (0.5-rand(n, 3))*10;
+for i = 1:n
+  % Darstellung umwandeln.
+  % TODO: Mit Transformationsmatrizen
+  VB(i, 4:6) = rpyD2omega(OB(i,:), OBD(i,:));
+  AB(i, 4:6) = rpyDD2omegaD(OB(i,:), OBD(i,:), OBDD(i,:));
+  
+  % Probe:
+  T_basevel = rpy2jac(OB(i,1), OB(i,2), OB(i,3));
+  obd_test = T_basevel \ VB(i, 4:6)';
+  
+  if any(abs(obd_test-OBD(i,:)') > 1e-10)
+    error('Orientierung und Basisgeschwindigkeit stimmen nicht überein');
+  end
+end
+
