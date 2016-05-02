@@ -15,12 +15,13 @@
 %   time derivative of r_base and phi_base
 % a_mdh, d_mdh, q_offset_mdh [%NJ%x1]
 %   kinematic parameters
-% m_num_mdh, rSges_num_mdh, Icges_num_mdh [%NL%x1]
-%   dynamic parameters (parameter set 1: center of mass and inertia about center of mass)
+% m_num_mdh, mrSges_num_mdh, Ifges_num_mdh [%NL%x1]
+%   dynamic parameters (parameter set 2: first moment and inertia about link frame origin)
 % 
 % Output:
 % T [1x1]
 %   kinetic energy
 
-function T = %RN%_energykin_floatb_twist_sym_lag_varpar_par1(q, qD, r_base, phi_base, xD_base, ...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, rSges_num_mdh, Icges_num_mdh)
+
+function T = %RN%_energykin_floatb_sym_lag_varpar_par2(q, qD, phi_base, xD_base, ...
+  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, mrSges_num_mdh, Ifges_num_mdh)

@@ -1,4 +1,4 @@
-% Calculate kinetic energy for
+% Calculate matrix of centrifugal and coriolis load on the joints for
 % %RN%
 % Use Code from Maple symbolic Code Generation
 % 
@@ -19,8 +19,9 @@
 %   dynamic parameters (parameter set 1: center of mass and inertia about center of mass)
 % 
 % Output:
-% T [1x1]
-%   kinetic energy
+% Cq [%NJ%x(6+%NJ%)]
+%   matrix of coriolis and centrifugal joint torques
+%   Gives coriolis joint torques when multiplied with base and joint velocities
 
-function T = %RN%_energykin_floatb_twist_sym_lag_varpar_par1(q, qD, r_base, phi_base, xD_base, ...
+function Cq = %RN%_coriolisvec_joint_floatb_sym_lag_varpar_par1(q, qD, V_base, ...
   alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, rSges_num_mdh, Icges_num_mdh)

@@ -9,7 +9,7 @@
 %   Joint Velocities [rad/s]
 % qDD [%NJ%x1]
 %   Joint Acceleration [rad/s]
-% g_base [3x1]
+% g [3x1]
 %   gravitation vector in mdh base frame [m/s^2]
 % a_mdh, d_mdh, q_offset_mdh [%NJ%x1]
 %   kinematic parameters
@@ -20,5 +20,5 @@
 % tau [%NJ%x1]
 %   joint torques of inverse dynamics (contains inertial, gravitational coriolis and centrifugal forces)
 
-function tau = %RN%_invdyn_fixb_sym_lag_varpar_par1(q, qD, qDD, g_base, ...
+function tau = %RN%_invdyn_fixb_sym_lag_varpar_par1(q, qD, qDD, g, ...
   alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, rSges_num_mdh, Icges_num_mdh)
