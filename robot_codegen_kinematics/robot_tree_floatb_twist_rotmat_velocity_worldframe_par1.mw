@@ -113,7 +113,7 @@ tree -&gt; Berechnung f\303\274r eine beliebige Baumstruktur (ohne Schleifen)
 floatb -&gt; floating base wird durch base twist (Geschwindigkeit der Basis) oder vollst\303\244ndige Orientierung (Euler-Winkel) ber\303\274cksichtigt
 </Font>rotmat -&gt; Kinematik wird mit Rotationsmatrizen berechnet
 velocity -&gt; Berechnung der Geschwindigkeit aller Segmente
-worldframe -&gt; Berechnung der Geschwindigkeit im Basis-KS (KS0)
+worldframe -&gt; Berechnung der Geschwindigkeit im Welt-KS (KSW)
 par1 -&gt; Parametersatz 1 (Schwerpunkt als Parameter: SX,SY,SZ)
 </Text-field>
 </Input>
@@ -246,7 +246,7 @@ rD_W_i(1..3,1) := V_base_t(1..3,1):</Text-field>
 </Group>
 <Group labelreference="L1656" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Winkelgeschwindigkeit von K\303\266rper i ausgedr\303\274ckt im KS 0</Font></Text-field>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Winkelgeschwindigkeit von K\303\266rper i ausgedr\303\274ckt im KS W</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1655" drawlabel="true">

@@ -113,9 +113,8 @@ tree -&gt; Berechnung f\303\274r eine beliebige Baumstruktur (ohne Schleifen)
 floatb -&gt; floating base wird durch base twist (Geschwindigkeit der Basis) oder vollst\303\244ndige Orientierung (Euler-Winkel) ber\303\274cksichtigt
 </Font>rotmat -&gt; Kinematik wird mit Rotationsmatrizen berechnet
 <Font encoding="UTF-8">kinematics_com -&gt; Kinematik der K\303\266rperschwerpunkte
-</Font>baseframe -&gt; Berechnung der Geschwindigkeit im Basis-KS (KS0)
-par1 -&gt; Parametersatz 1 (Schwerpunkt als Parameter: SX,SY,SZ)
-</Text-field>
+</Font>worldframe -&gt; Berechnung der Geschwindigkeit im Welt-KS (KSW)
+par1 -&gt; Parametersatz 1 (Schwerpunkt als Parameter: SX,SY,SZ)</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1515" drawlabel="true">
@@ -302,7 +301,8 @@ end if:</Text-field>
 <Text-field style="Heading 1" layout="Heading 1">Calculate CoG Jacobian</Text-field></Title>
 <Group labelreference="L1618" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal">CoG Jacobian nach [SugiharaNakIno2002].</Text-field>
+<Text-field style="Text" layout="Normal">CoG Jacobian nach [SugiharaNakIno2002].
+<Font encoding="UTF-8">TODO: baseframe in worldframe \303\244ndern</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1617" drawlabel="true">
