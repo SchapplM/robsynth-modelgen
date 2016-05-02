@@ -7,12 +7,12 @@
 %   Joint Angles [rad]
 % qD [%NJ%x1]
 %   Joint Velocities [rad/s]
-% r_base [3x1]
-%   Base position in world frame
 % phi_base [3x1]
 %   Base orientation in world frame. Expressed with RPY Euler angles (xyz)
 % xD_base [6x1]
-%   time derivative of r_base and phi_base
+%   time derivative of 
+%   r_base (3x1 Base position in world frame) and 
+%   phi_base (3x1)
 % a_mdh, d_mdh, q_offset_mdh [%NJ%x1]
 %   kinematic parameters
 % m_num_mdh, mrSges_num_mdh, Ifges_num_mdh [%NL%x1]
