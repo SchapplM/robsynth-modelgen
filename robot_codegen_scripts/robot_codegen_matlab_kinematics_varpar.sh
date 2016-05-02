@@ -10,7 +10,7 @@
 echo "Generiere Matlabfunktionen: Kinematik"
 
 repo_pfad=$(pwd)/..
-tmp_pfad=$repo_pfad/robot_codegen_scripts/tmp/
+tmp_pfad=$repo_pfad/robot_codegen_scripts/tmp
 # Initialisiere Variablen
 source robot_codegen_tmpvar_bash.sh
 source $repo_pfad/robot_codegen_definitions/robot_env.sh
@@ -19,7 +19,7 @@ source $repo_pfad/robot_codegen_definitions/robot_env.sh
 quelldat=$repo_pfad/codeexport/${robot_name}_fkine_floatb_twist_rotmat_matlab.m
 zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_fkine_fixb_rotmat_mdh_sym_varpar.m
 if [ -f $quelldat ]; then
-  cat $tmp_pfad/robot_matlabtmp_fkine_fixb_rotmat.head.m > $zieldat
+  cat ${tmp_pfad}_head/robot_matlabtmp_fkine_fixb_rotmat.head.m > $zieldat
   printf "%%%%Coder Information\n%%#codegen\n" >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
@@ -44,7 +44,7 @@ fi
 quelldat=$repo_pfad/codeexport/${robot_name}_fkine_floatb_eulangrpy_rotmat_matlab.m
 zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_fkine_floatb_eulangrpy_rotmat_mdh_sym_varpar.m
 if [ -f $quelldat ]; then
-  cat $tmp_pfad/robot_matlabtmp_fkine_floatb_eulangrpy_rotmat.head.m > $zieldat
+  cat ${tmp_pfad}_head/robot_matlabtmp_fkine_floatb_eulangrpy_rotmat.head.m > $zieldat
   printf "%%%%Coder Information\n%%#codegen\n" >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_rB.m >> $zieldat

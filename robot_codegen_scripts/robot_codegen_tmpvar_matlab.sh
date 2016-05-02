@@ -7,7 +7,7 @@
 # (c) Institut für Regelungstechnik, Leibniz Universität Hannover
 
 repo_pfad=$(pwd)/../
-tmp_pfad=$repo_pfad/robot_codegen_scripts/tmp/
+tmp_pfad=$repo_pfad/robot_codegen_scripts/tmp
 source $repo_pfad/robot_codegen_definitions/robot_env.sh
 
 # Schnipsel für Matlab-varpar-Dateien vorbereiten

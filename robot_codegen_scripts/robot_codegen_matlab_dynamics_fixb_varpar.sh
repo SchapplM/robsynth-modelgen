@@ -10,7 +10,7 @@
 echo "Generiere Matlabfunktionen: Dynamik (explizit), fixed-base"
 
 repo_pfad=$(pwd)/..
-tmp_pfad=$repo_pfad/robot_codegen_scripts/tmp/
+tmp_pfad=$repo_pfad/robot_codegen_scripts/tmp
 # Initialisiere Variablen
 source robot_codegen_tmpvar_bash.sh
 source $repo_pfad/robot_codegen_definitions/robot_env.sh
@@ -26,7 +26,7 @@ do
     quelldat=$repo_pfad/codeexport/${robot_name}_joint_gravload_floatb_${basemeth}_par${dynpar}_matlab.m
     zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_gravload_joint_sym_lag_varpar_par${dynpar}.m
     if [ -f $quelldat ]; then
-      cat $tmp_pfad/robot_matlabtmp_gravload_joint_par${dynpar}.head.m > $zieldat
+      cat ${tmp_pfad}_head/robot_matlabtmp_gravload_joint_par${dynpar}.head.m > $zieldat
       printf "%%%%Coder Information\n%%#codegen\n" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
@@ -59,7 +59,7 @@ do
     quelldat=$repo_pfad/codeexport/${robot_name}_coriolisvec_joint_fixb_par${dynpar}_matlab.m
     zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_coriolisvec_joint_fixb_sym_lag_varpar_par${dynpar}.m
     if [ -f $quelldat ]; then
-      cat $tmp_pfad/robot_matlabtmp_coriolisvec_joint_fixb_par${dynpar}.head.m > $zieldat
+      cat ${tmp_pfad}_head/robot_matlabtmp_coriolisvec_joint_fixb_par${dynpar}.head.m > $zieldat
       printf "%%%%Coder Information\n%%#codegen\n" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
@@ -95,7 +95,7 @@ do
     quelldat=$repo_pfad/codeexport/${robot_name}_coriolismat_joint_fixb_par${dynpar}_matlab.m
     zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_coriolismat_joint_fixb_sym_lag_varpar_par${dynpar}.m
     if [ -f $quelldat ]; then
-      cat $tmp_pfad/robot_matlabtmp_coriolismat_joint_fixb_par${dynpar}.head.m > $zieldat
+      cat ${tmp_pfad}_head/robot_matlabtmp_coriolismat_joint_fixb_par${dynpar}.head.m > $zieldat
       printf "%%%%Coder Information\n%%#codegen\n" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
@@ -132,7 +132,7 @@ do
     quelldat=$repo_pfad/codeexport/${robot_name}_inertia_joint_joint_floatb_${basemeth}_par${dynpar}_matlab.m
     zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_inertia_joint_sym_lag_varpar_par${dynpar}.m
     if [ -f $quelldat ]; then
-      cat $tmp_pfad/robot_matlabtmp_inertia_joint_par${dynpar}.head.m > $zieldat
+      cat ${tmp_pfad}_head/robot_matlabtmp_inertia_joint_par${dynpar}.head.m > $zieldat
       printf "%%%%Coder Information\n%%#codegen\n" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
@@ -171,7 +171,7 @@ do
     fi
     zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_energykin_fixb_sym_lag_varpar_par${dynpar}.m
     if [ -f $quelldat ]; then
-      cat $tmp_pfad/robot_matlabtmp_energykin_fixb_par${dynpar}.head.m > $zieldat
+      cat ${tmp_pfad}_head/robot_matlabtmp_energykin_fixb_par${dynpar}.head.m > $zieldat
       printf "%%%%Coder Information\n%%#codegen\n" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
@@ -207,7 +207,7 @@ do
     quelldat=$repo_pfad/codeexport/${robot_name}_inertia_joint_joint_time_derivative_floatb_${basemeth}_par${dynpar}_matlab.m
     zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_inertiaD_joint_floatb_${basemeth}_sym_lag_varpar_par${dynpar}.m
     if [ -f $quelldat ]; then
-      cat $tmp_pfad/robot_matlabtmp_inertiaD_joint_par${dynpar}.head.m > $zieldat
+      cat ${tmp_pfad}_head/robot_matlabtmp_inertiaD_joint_par${dynpar}.head.m > $zieldat
       printf "%%%%Coder Information\n%%#codegen\n" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
@@ -243,7 +243,7 @@ do
     quelldat=$repo_pfad/codeexport/${robot_name}_energy_potential_fixb_worldframe_par${dynpar}_matlab.m
     zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_energypot_fixb_sym_lag_varpar_par${dynpar}.m
     if [ -f $quelldat ]; then
-      cat $tmp_pfad/robot_matlabtmp_energypot_fixb_par${dynpar}.head.m > $zieldat
+      cat ${tmp_pfad}_head/robot_matlabtmp_energypot_fixb_par${dynpar}.head.m > $zieldat
       printf "%%%%Coder Information\n%%#codegen\n" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
@@ -279,7 +279,7 @@ do
     quelldat=$repo_pfad/codeexport/${robot_name}_invdyn_fixb_par${dynpar}_matlab.m
     zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_invdyn_fixb_sym_lag_varpar_par${dynpar}.m
     if [ -f $quelldat ]; then
-      cat $tmp_pfad/robot_matlabtmp_invdyn_fixb_par${dynpar}.head.m > $zieldat
+      cat ${tmp_pfad}_head/robot_matlabtmp_invdyn_fixb_par${dynpar}.head.m > $zieldat
       printf "%%%%Coder Information\n%%#codegen\n" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat

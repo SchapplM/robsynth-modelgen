@@ -13,7 +13,6 @@
 
 
 repo_pfad=$(pwd)/..
-tmp_pfad=$repo_pfad/robot_codegen_scripts/tmp/
 source $repo_pfad/robot_codegen_definitions/robot_env.sh
 
 mfcndat=$1 # Dateipfad als Übergabeargument

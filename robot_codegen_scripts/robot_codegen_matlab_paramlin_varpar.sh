@@ -10,7 +10,7 @@
 echo "Generiere Matlabfunktionen: Dynamik-Regressor"
 
 repo_pfad=$(pwd)/..
-tmp_pfad=$repo_pfad/robot_codegen_scripts/tmp/
+tmp_pfad=$repo_pfad/robot_codegen_scripts/tmp
 # Initialisiere Variablen
 source robot_codegen_tmpvar_bash.sh
 source $repo_pfad/robot_codegen_definitions/robot_env.sh
@@ -21,7 +21,7 @@ source $repo_pfad/robot_codegen_definitions/robot_env.sh
 quelldat=$repo_pfad/codeexport/${robot_name}_minimal_parameter_vector_matlab.m
 zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_convert_par2_MPV.m
 if [ -f $quelldat ]; then
-  cat $tmp_pfad/robot_matlabtmp_convert_par2_MPV.head.m > $zieldat
+  cat ${tmp_pfad}_head/robot_matlabtmp_convert_par2_MPV.head.m > $zieldat
   printf "%%%%Coder Information\n%%#codegen\n" >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
@@ -47,7 +47,7 @@ fi
 quelldat=$repo_pfad/codeexport/${robot_name}_coriolisvec_joint_fixb_regressor_minpar_matlab.m
 zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_coriolisvec_joint_fixb_regmin_sym_lag_varpar.m
 if [ -f $quelldat ]; then
-  cat $tmp_pfad/robot_matlabtmp_coriolisvec_joint_fixb_regmin.head.m > $zieldat
+  cat ${tmp_pfad}_head/robot_matlabtmp_coriolisvec_joint_fixb_regmin.head.m > $zieldat
   printf "%%%%Coder Information\n%%#codegen\n" >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
@@ -67,7 +67,7 @@ fi
 quelldat=$repo_pfad/codeexport/${robot_name}_coriolismat_joint_fixb_regressor_minpar_matlab.m
 zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_coriolismat_joint_fixb_regmin_sym_lag_varpar.m
 if [ -f $quelldat ]; then
-  cat $tmp_pfad/robot_matlabtmp_coriolismat_joint_fixb_regmin.head.m > $zieldat
+  cat ${tmp_pfad}_head/robot_matlabtmp_coriolismat_joint_fixb_regmin.head.m > $zieldat
   printf "%%%%Coder Information\n%%#codegen\n" >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
@@ -87,7 +87,7 @@ fi
 quelldat=$repo_pfad/codeexport/${robot_name}_inertia_joint_joint_regressor_minpar_matlab.m
 zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_inertia_joint_regmin_sym_lag_varpar.m
 if [ -f $quelldat ]; then
-  cat $tmp_pfad/robot_matlabtmp_inertia_joint_regmin.head.m > $zieldat
+  cat ${tmp_pfad}_head/robot_matlabtmp_inertia_joint_regmin.head.m > $zieldat
   printf "%%%%Coder Information\n%%#codegen\n" >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
@@ -105,7 +105,7 @@ fi
 quelldat=$repo_pfad/codeexport/${robot_name}_inertiaD_joint_joint_regressor_minpar_matlab.m
 zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_inertiaD_joint_regmin_sym_lag_varpar.m
 if [ -f $quelldat ]; then
-  cat $tmp_pfad/robot_matlabtmp_inertiaD_joint_regmin.head.m > $zieldat
+  cat ${tmp_pfad}_head/robot_matlabtmp_inertiaD_joint_regmin.head.m > $zieldat
   printf "%%%%Coder Information\n%%#codegen\n" >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
@@ -125,7 +125,7 @@ fi
 quelldat=$repo_pfad/codeexport/${robot_name}_gravload_joint_regressor_minpar_matlab.m
 zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_gravload_joint_regmin_sym_lag_varpar.m
 if [ -f $quelldat ]; then
-  cat $tmp_pfad/robot_matlabtmp_gravload_joint_regmin.head.m > $zieldat
+  cat ${tmp_pfad}_head/robot_matlabtmp_gravload_joint_regmin.head.m > $zieldat
   printf "%%%%Coder Information\n%%#codegen\n" >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
@@ -145,7 +145,7 @@ fi
 quelldat=$repo_pfad/codeexport/${robot_name}_invdyn_joint_fixb_regressor_minpar_matlab.m
 zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_invdyn_joint_fixb_regmin_sym_lag_varpar.m
 if [ -f $quelldat ]; then
-  cat $tmp_pfad/robot_matlabtmp_invdyn_joint_fixb_regmin.head.m > $zieldat
+  cat ${tmp_pfad}_head/robot_matlabtmp_invdyn_joint_fixb_regmin.head.m > $zieldat
   printf "%%%%Coder Information\n%%#codegen\n" >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
@@ -169,7 +169,7 @@ fi
 quelldat=$repo_pfad/codeexport/${robot_name}_energy_kinetic_fixb_regressor_minpar_matlab.m
 zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_energykin_fixb_regmin_sym_lag_varpar.m
 if [ -f $quelldat ]; then
-  cat $tmp_pfad/robot_matlabtmp_energykin_fixb_regmin.head.m > $zieldat
+  cat ${tmp_pfad}_head/robot_matlabtmp_energykin_fixb_regmin.head.m > $zieldat
   printf "%%%%Coder Information\n%%#codegen\n" >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
@@ -190,7 +190,7 @@ fi
 quelldat=$repo_pfad/codeexport/${robot_name}_energy_potential_fixb_regressor_minpar_matlab.m
 zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_energypot_fixb_regmin_sym_lag_varpar.m
 if [ -f $quelldat ]; then
-  cat $tmp_pfad/robot_matlabtmp_energypot_fixb_regmin.head.m > $zieldat
+  cat ${tmp_pfad}_head/robot_matlabtmp_energypot_fixb_regmin.head.m > $zieldat
   printf "%%%%Coder Information\n%%#codegen\n" >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
