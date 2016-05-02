@@ -13,7 +13,7 @@
 %   Base Velocity (twist: stacked translational and angular velocity) in base frame
 % A_base [6x1]
 %   Base Acceleration (twist: stacked translational and angular velocity) in base frame
-% g_base [3x1]
+% g [3x1]
 %   gravitation vector in mdh base frame [m/s^2]
 % a_mdh, d_mdh, q_offset_mdh [%NJ%x1]
 %   kinematic parameters
@@ -24,5 +24,5 @@
 % tau [%NJ%x1]
 %   joint torques of inverse dynamics (contains inertial, gravitational coriolis and centrifugal forces)
 
-function tau = %RN%_invdyn_joint_floatb_sym_lag_varpar_par1(q, qD, qDD, V_base, A_base, g_base, ...
+function tau = %RN%_invdyn_joint_floatb_sym_lag_varpar_par1(q, qD, qDD, V_base, A_base, g, ...
   alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, rSges_num_mdh, Icges_num_mdh)
