@@ -14,5 +14,5 @@
 % Mq [%NJ%x%NJ%]
 %   inertia matrix
 
-function Mq = %RN%_inertia_joint_sym_lag_varpar_par2(q, ...
+function Mq = %FN%(q, ...
   alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, mrSges_num_mdh, Ifges_num_mdh)

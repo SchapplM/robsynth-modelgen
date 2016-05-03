@@ -16,5 +16,5 @@
 % M [(%NJ%+6)x(%NJ%+6)]
 %   full inertia matrix (for base and joint dynamics)
 
-function Mqb = %RN%_inertia_sym_lag_varpar_par2(q, phi_base, ...
+function Mqb = %FN%(q, phi_base, ...
   alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, mrSges_num_mdh, Ifges_num_mdh)

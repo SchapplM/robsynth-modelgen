@@ -16,5 +16,5 @@
 % taug [%NJ%x1]
 %   joint torques required to compensate gravitation load
 
-function taug = %RN%_gravload_joint_sym_lag_varpar_par2(q, g, ...
+function taug = %FN%(q, g, ...
   alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, mrSges_num_mdh)

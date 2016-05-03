@@ -23,5 +23,5 @@
 %   matrix of coriolis and centrifugal joint torques
 %   Gives coriolis joint torques when multiplied with base and joint velocities
 
-function Cq = %RN%_coriolisvec_joint_floatb_sym_lag_varpar_par2(q, qD, V_base, ...
+function Cq = %FN%(q, qD, phi_base, xD_base, ...
   alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, mrSges_num_mdh, Ifges_num_mdh)

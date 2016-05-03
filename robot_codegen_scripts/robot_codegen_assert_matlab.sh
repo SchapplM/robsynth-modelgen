@@ -14,50 +14,50 @@ source $repo_pfad/robot_codegen_definitions/robot_env.sh
 # Schnipsel für Matlab-varpar-Dateien vorbereiten
 # Gelenkwinkel
 echo "assert(isa(q,'double') && isreal(q) && all(size(q) == [$robot_NJ 1]), ...
-  'q has to be [${robot_NJ}x1] double');" > $tmp_pfad/robot_matlabtmp_assert_q.m
+  '%FN%: q has to be [${robot_NJ}x1] double');" > $tmp_pfad/robot_matlabtmp_assert_q.m
 echo "assert(isa(qD,'double') && isreal(qD) && all(size(qD) == [$robot_NJ 1]), ...
-  'qD has to be [${robot_NJ}x1] double');" > $tmp_pfad/robot_matlabtmp_assert_qD.m
+  '%FN%: qD has to be [${robot_NJ}x1] double');" > $tmp_pfad/robot_matlabtmp_assert_qD.m
 echo "assert(isa(qDD,'double') && isreal(qDD) && all(size(qDD) == [$robot_NJ 1]), ...
-  'qDD has to be [${robot_NJ}x1] double');" > $tmp_pfad/robot_matlabtmp_assert_qDD.m
+  '%FN%: qDD has to be [${robot_NJ}x1] double');" > $tmp_pfad/robot_matlabtmp_assert_qDD.m
 
 # Basis
 echo "assert(isa(g,'double') && isreal(g) && all(size(g) == [3 1]), ...
-  'g has to be [3x1] double');" > $tmp_pfad/robot_matlabtmp_assert_g.m
+  '%FN%: g has to be [3x1] double');" > $tmp_pfad/robot_matlabtmp_assert_g.m
 echo "assert(isa(r_base,'double') && isreal(r_base) && all(size(r_base) == [3 1]), ...
-  'r_base has to be [3x1] double');" > $tmp_pfad/robot_matlabtmp_assert_rB.m
+  '%FN%: r_base has to be [3x1] double');" > $tmp_pfad/robot_matlabtmp_assert_rB.m
 echo "assert(isa(phi_base,'double') && isreal(phi_base) && all(size(phi_base) == [3 1]), ...
-  'phi_base has to be [3x1] double');" > $tmp_pfad/robot_matlabtmp_assert_phiB.m
+  '%FN%: phi_base has to be [3x1] double');" > $tmp_pfad/robot_matlabtmp_assert_phiB.m
 echo "assert(isa(V_base,'double') && isreal(V_base) && all(size(V_base) == [6 1]), ...
-  'V_base has to be [6x1] double');" > $tmp_pfad/robot_matlabtmp_assert_vB.m
+  '%FN%: V_base has to be [6x1] double');" > $tmp_pfad/robot_matlabtmp_assert_vB.m
 echo "assert(isa(A_base,'double') && isreal(A_base) && all(size(A_base) == [6 1]), ...
-  'A_base has to be [6x1] double');" > $tmp_pfad/robot_matlabtmp_assert_aB.m
+  '%FN%: A_base has to be [6x1] double');" > $tmp_pfad/robot_matlabtmp_assert_aB.m
 echo "assert(isa(xD_base,'double') && isreal(xD_base) && all(size(xD_base) == [6 1]), ...
-  'xD_base has to be [6x1] double');" > $tmp_pfad/robot_matlabtmp_assert_xDB.m
+  '%FN%: xD_base has to be [6x1] double');" > $tmp_pfad/robot_matlabtmp_assert_xDB.m
 echo "assert(isa(xDD_base,'double') && isreal(xDD_base) && all(size(xDD_base) == [6 1]), ...
-  'xDD_base has to be [6x1] double');" > $tmp_pfad/robot_matlabtmp_assert_xDDB.m
+  '%FN%: xDD_base has to be [6x1] double');" > $tmp_pfad/robot_matlabtmp_assert_xDDB.m
 
 # Kinematikparameter
 echo "assert(isa(alpha_mdh,'double') && isreal(alpha_mdh) && all(size(alpha_mdh) == [$robot_NJ 1]), ...
-  'alpha_mdh has to be [${robot_NJ}x1] double');" > $tmp_pfad/robot_matlabtmp_assert_mdh.m
+  '%FN%: alpha_mdh has to be [${robot_NJ}x1] double');" > $tmp_pfad/robot_matlabtmp_assert_mdh.m
 echo "assert(isa(a_mdh,'double') && isreal(a_mdh) && all(size(a_mdh) == [$robot_NJ 1]), ...
-  'a_mdh has to be [${robot_NJ}x1] double');" >> $tmp_pfad/robot_matlabtmp_assert_mdh.m
+  '%FN%: a_mdh has to be [${robot_NJ}x1] double');" >> $tmp_pfad/robot_matlabtmp_assert_mdh.m
 echo "assert(isa(d_mdh,'double') && isreal(d_mdh) && all(size(d_mdh) == [$robot_NJ 1]), ...
-  'd_mdh has to be [${robot_NJ}x1] double');" >> $tmp_pfad/robot_matlabtmp_assert_mdh.m
+  '%FN%: d_mdh has to be [${robot_NJ}x1] double');" >> $tmp_pfad/robot_matlabtmp_assert_mdh.m
 echo "assert(isa(q_offset_mdh,'double') && isreal(q_offset_mdh) && all(size(q_offset_mdh) == [$robot_NJ 1]), ...
-  'q_offset_mdh has to be [${robot_NJ}x1] double');" >> $tmp_pfad/robot_matlabtmp_assert_mdh.m
+  '%FN%: q_offset_mdh has to be [${robot_NJ}x1] double');" >> $tmp_pfad/robot_matlabtmp_assert_mdh.m
 echo "assert(isa(b_mdh,'double') && isreal(b_mdh) && all(size(b_mdh) == [$robot_NJ 1]), ...
-  'b_mdh has to be [${robot_NJ}x1] double');" >> $tmp_pfad/robot_matlabtmp_assert_mdh.m
+  '%FN%: b_mdh has to be [${robot_NJ}x1] double');" >> $tmp_pfad/robot_matlabtmp_assert_mdh.m
 echo "assert(isa(beta_mdh,'double') && isreal(beta_mdh) && all(size(beta_mdh) == [$robot_NJ 1]), ...
-  'beta_mdh has to be [${robot_NJ}x1] double');" >> $tmp_pfad/robot_matlabtmp_assert_mdh.m
+  '%FN%: beta_mdh has to be [${robot_NJ}x1] double');" >> $tmp_pfad/robot_matlabtmp_assert_mdh.m
 
 # Dynamikparameter
 echo "assert(isa(rSges_num_mdh,'double') && isreal(rSges_num_mdh) && all(size(rSges_num_mdh) == [$robot_NL,3]), ...
-  'rSges_num_mdh has to be [${robot_NL}x3] double');" > $tmp_pfad/robot_matlabtmp_assert_rcom.m
+  '%FN%: rSges_num_mdh has to be [${robot_NL}x3] double');" > $tmp_pfad/robot_matlabtmp_assert_rcom.m
 echo "assert(isa(mrSges_num_mdh,'double') && isreal(mrSges_num_mdh) && all(size(mrSges_num_mdh) == [$robot_NL,3]), ...
-  'mrSges_num_mdh has to be [${robot_NL}x3] double');" > $tmp_pfad/robot_matlabtmp_assert_mrcom.m
+  '%FN%: mrSges_num_mdh has to be [${robot_NL}x3] double');" > $tmp_pfad/robot_matlabtmp_assert_mrcom.m
 echo "assert(isa(m_num,'double') && isreal(m_num) && all(size(m_num) == [$robot_NL 1]), ...
-  'm_num has to be [${robot_NL}x1] double'); " > $tmp_pfad/robot_matlabtmp_assert_m.m
+  '%FN%: m_num has to be [${robot_NL}x1] double'); " > $tmp_pfad/robot_matlabtmp_assert_m.m
 echo "assert(isa(Icges_num_mdh,'double') && isreal(Icges_num_mdh) && all(size(Icges_num_mdh) == [$robot_NL 6]), ...
-  'Icges_num_mdh has to be [${robot_NL}x6] double'); " > $tmp_pfad/robot_matlabtmp_assert_Ic.m
+  '%FN%: Icges_num_mdh has to be [${robot_NL}x6] double'); " > $tmp_pfad/robot_matlabtmp_assert_Ic.m
 echo "assert(isa(Ifges_num_mdh,'double') && isreal(Ifges_num_mdh) && all(size(Ifges_num_mdh) == [$robot_NL 6]), ...
-  'Ifges_num_mdh has to be [${robot_NL}x6] double'); " > $tmp_pfad/robot_matlabtmp_assert_If.m
+  '%FN%: Ifges_num_mdh has to be [${robot_NL}x6] double'); " > $tmp_pfad/robot_matlabtmp_assert_If.m

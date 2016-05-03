@@ -16,5 +16,5 @@
 % U [1x1]
 %   Potential energy
 
-function U = %RN%_energypot_sym_lag_varpar_par2(q, g, ...
+function U = %FN%(q, g, ...
   alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, mrSges_num_mdh)

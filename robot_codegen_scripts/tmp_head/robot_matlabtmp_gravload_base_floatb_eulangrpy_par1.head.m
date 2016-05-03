@@ -18,5 +18,5 @@
 % Fg [6x1]
 %   base forces required to compensate gravitation load
 
-function taug = %RN%_gravload_base_sym_lag_varpar_par1(q, phi_base, g, ...
+function taug = %FN%(q, phi_base, g, ...
   alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, rSges_num_mdh)

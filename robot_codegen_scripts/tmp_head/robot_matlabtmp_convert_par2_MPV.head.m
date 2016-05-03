@@ -12,5 +12,5 @@
 % MPV [%NMPV%x1]
 %   base parameter vector (minimal parameter vector)
 
-function MPV = %RN%_convert_par2_MPV(alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, mrSges_num_mdh, Ifges_num_mdh)
+function MPV = %FN%(alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, mrSges_num_mdh, Ifges_num_mdh)
 

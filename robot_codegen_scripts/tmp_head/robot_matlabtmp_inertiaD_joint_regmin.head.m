@@ -14,5 +14,5 @@
 % MMD_reg [%NJ%*%NJ%x%NMPV%]
 %   minimal parameter regressor of inerta matrix time derivative
 
-function MMD_reg = %RN%_inertiaD_joint_fixb_regmin_sym_lag_varpar(q, qD, ...
+function MMD_reg = %FN%(q, qD, ...
   alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh)

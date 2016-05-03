@@ -19,5 +19,5 @@
 % T [1x1]
 %   kinetic energy
 
-function T = %RN%_energykin_floatb_eulangrpy_sym_lag_varpar_par1(q, qD, V_base, ...
+function T = %FN%(q, qD, V_base, ...
   alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, rSges_num_mdh, Icges_num_mdh)

@@ -18,5 +18,5 @@
 % tauc [%NJ%x1]
 %   joint torques required to compensate coriolis and centrifugal load
 
-function tauc = %RN%_coriolisvec_joint_floatb_sym_lag_varpar_par1(q, qD, V_base, ...
+function tauc = %FN%(q, qD, V_base, ...
   alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, rSges_num_mdh, Icges_num_mdh)
