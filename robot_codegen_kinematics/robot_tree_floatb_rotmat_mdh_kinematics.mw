@@ -177,20 +177,20 @@ Trf_c is the cummulated Matrix of Transformation from 0 to i</Text-field>
 </Group>
 <Group labelreference="L1680" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Trf_c := Matrix(4, 4, NL+1): # Diese Initialisierung bringt nichts (initialisiert nur 4x4-Matrix)
-Trf := Matrix(4, 4, NL): # Diese Initialisierung bringt nichts (initialisiert nur 4x4-Matrix)</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Trf_c := Matrix(4, 4, NL): # Diese Initialisierung bringt nichts (initialisiert nur 4x4-Matrix)
+Trf := Matrix(4, 4, NJ): # Diese Initialisierung bringt nichts (initialisiert nur 4x4-Matrix)</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1682" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NL do 
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NJ do 
   Trf(1 .. 4, 1 .. 4, i) := Matrix(4,4):
 end do:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1681" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NL+1 do 
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NL do 
   Trf_c(1 .. 4, 1 .. 4, i) := Matrix(4,4):
 end do:</Text-field>
 </Input>
@@ -275,7 +275,7 @@ end if:</Text-field>
 </Group>
 <Group labelreference="L1641" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to Size(Trf_c)[3] do
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NL do
   if codegen_act then
     MatlabExport(convert_t_s(Trf_c(1 .. 4, 1 .. 4, i)), sprintf(&quot;../codeexport/%s_fkine_%d_floatb_%s_rotmat_matlab.m&quot;, robot_name, i, base_method_name), codegen_opt):
   end if:
