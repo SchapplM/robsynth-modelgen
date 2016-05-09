@@ -537,6 +537,9 @@ end if:</Text-field>
 <Group labelreference="L1609" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">Cqs_fixb:=Cqs:
+for i from 1 to NB do
+  Cqs_fixb := subs({X_base_s[i,1]=0},Cqs_fixb):
+end do:
 for i from 1 to 6 do
   Cqs_fixb := subs({V_base_s[i,1]=0},Cqs_fixb):
 end do:</Text-field>
