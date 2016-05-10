@@ -15,9 +15,10 @@
 % Output:
 % T_c_mdh [4x4x%NL%]
 %   homogenious transformation matrices for each body frame (MDH)
-%   1:  mdh base (link 0) -> mdh link 1
+%   1:  world -> mdh base (link 1)
+%   2:  world -> mdh link 2 (first articulated link)
 %   ...
-%   %NL%:  mdh base (link 0) -> mdh link %NL%
+%   %NL%:  world -> mdh link %NL% (last articulated link)
 
 function T_c_mdh = %FN%(q, r_base, phi_base, ...
   alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh)
