@@ -6,7 +6,7 @@
 
 robot_name := "atlas5_wbody":
 
-NJ:=30:
+NJ := 30:
 # MDH alpha
 alpha := Matrix(30,1):
 a := Matrix(30,1): # entspricht r in [4].
