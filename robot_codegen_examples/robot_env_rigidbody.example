@@ -1,0 +1,18 @@
+# Beispiel für Codegenerierung:
+# Starrkörper ohne Gelenke ("rigidbody")
+#
+# Quellen
+# [4] Khalil, W. and Kleinfinger, J.-F.: Minimum operations and minimum parameters of the dynamic models of tree structure robots (1987)
+
+robot_name := "rigidbody":
+
+NJ := 0:
+qoffset := Matrix(0, 1, []):
+alpha := Matrix(0, 1, []):
+d := Matrix(0, 1, []):
+a := Matrix(0, 1, []):
+v := Matrix(0, 1, []):
+b := Matrix(0, 1, []):
+beta := Matrix(0, 1, []):
+
+theta := qJ_t+qoffset:
