@@ -19,6 +19,9 @@ source $repo_pfad/robot_codegen_definitions/robot_env.sh
 source robot_codegen_tmpvar_matlab.sh
 source robot_codegen_assert_matlab.sh
 
+# Setze Teilausdrücke zu kompletten Ausdrücken zusammen
+source robot_codegen_matlab_assemble.sh
+
 # Erstelle Matlab-Funktionen der Kinematik
 source robot_codegen_matlab_kinematics_varpar.sh
 
