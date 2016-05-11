@@ -89,8 +89,8 @@
         <Metadata-attribute name="Subject" value="&lt;default&gt;"/>
         <Metadata-attribute name="Author" value="&lt;default&gt;"/>
         <Metadata-attribute name="Item List" value="true"/>
-        <Metadata-attribute name="Keywords" value="&lt;default&gt;"/>
         <Metadata-attribute name="Title" value="&lt;default&gt;"/>
+        <Metadata-attribute name="Keywords" value="&lt;default&gt;"/>
     </Metadata-tag>
 </Metadata-table>
 <Task-table>
@@ -144,9 +144,13 @@ with(LinearAlgebra):
 with(ArrayTools):
 with(codegen):
 with(CodeGeneration):
-with(StringTools):
-codegen_opt := true:
-codegen_act := true:</Text-field>
+with(StringTools):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1692" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_act := true:
+codegen_opt := 2:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1651" drawlabel="true">

@@ -89,8 +89,8 @@
         <Metadata-attribute name="Subject" value="&lt;default&gt;"/>
         <Metadata-attribute name="Author" value="&lt;default&gt;"/>
         <Metadata-attribute name="Item List" value="true"/>
-        <Metadata-attribute name="Title" value="&lt;default&gt;"/>
         <Metadata-attribute name="Keywords" value="&lt;default&gt;"/>
+        <Metadata-attribute name="Title" value="&lt;default&gt;"/>
     </Metadata-tag>
 </Metadata-table>
 <Task-table>
@@ -143,9 +143,13 @@ with(LinearAlgebra):
 with(ArrayTools):
 with(codegen):
 with(CodeGeneration):
-with(StringTools):
-codegen_opt := true:
-codegen_act := true:</Text-field>
+with(StringTools):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1690" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_act := true:
+codegen_opt := 2:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1660" drawlabel="true">
@@ -320,8 +324,8 @@ end if:</Text-field>
 <Text-field style="Heading 3" layout="Heading 3">Kinetic Energy</Text-field></Title>
 <Group labelreference="L1672" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Floating Base
-Eliminiere die Basis-Position (nicht: Orientierung). Die kinetische Energie kann nicht davon abh\303\244ngen.
+<Text-field style="Text" layout="Normal">Floating Base
+<Font encoding="UTF-8">Eliminiere die Basis-Position (nicht: Orientierung). Die kinetische Energie kann nicht davon abh\303\244ngen.
 Falls die Ausdr\303\274cke doch vorkommen, liegt es daran, dass Maple diese nicht wegoptimieren konnte.</Font></Text-field>
 </Input>
 </Group>

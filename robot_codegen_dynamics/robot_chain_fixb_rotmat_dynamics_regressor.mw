@@ -130,8 +130,12 @@ with(LinearAlgebra):
 with(ArrayTools):
 with(codegen):
 with(CodeGeneration):
-with(StringTools):
-codegen_opt := true:
+with(StringTools):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1759" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_opt := 2:
 codegen_act := true:</Text-field>
 </Input>
 </Group>

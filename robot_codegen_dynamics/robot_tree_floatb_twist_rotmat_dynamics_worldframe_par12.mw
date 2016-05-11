@@ -137,7 +137,7 @@ with(StringTools):</Text-field>
 <Group labelreference="L1701" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_act := true:
-codegen_opt := true:</Text-field>
+codegen_opt := 2:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1688" drawlabel="true">
