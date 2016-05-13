@@ -34,12 +34,12 @@ Für die Erstellung von Ausdrücken für die Dynamik in expliziter Form (nicht: 
 
         /robot_codegen_definitions/robot_tree_floatb_twist_definitions.mw
 
-        /robot_codegen_kinematics/robot_tree_floatb_twist_rotmat_mdh_kinematics.mw
-        /robot_codegen_kinematics/robot_tree_floatb_twist_rotmat_kinematics_com_baseframe_par1.mw
-        /robot_codegen_kinematics/robot_tree_floatb_twist_rotmat_velocity_baseframe_par1.mw
+        /robot_codegen_kinematics/robot_tree_floatb_rotmat_mdh_kinematics.mw
+        /robot_codegen_kinematics/robot_tree_floatb_rotmat_kinematics_com_baseframe_par1.mw
+        /robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_baseframe_par1.mw
         /robot_codegen_kinematics/robot_tree_floatb_twist_rotmat_velocity_linkframe.mw
 
-        /robot_codegen_energy/robot_tree_floatb_twist_rotmat_energy_baseframe_par1.mw
+        /robot_codegen_energy/robot_tree_floatb_rotmat_energy_baseframe_par1.mw
         /robot_codegen_energy/robot_tree_floatb_twist_rotmat_energy_baseframe_par2.mw
         /robot_codegen_energy/robot_tree_floatb_twist_rotmat_energy_linkframe_par2.mw
 
@@ -91,22 +91,29 @@ Art der kinematischen Kette
 
         tree/chain
 
-Berechnung der Kinematik
-
-        rotmat/quat
-
 Art der Berücksichtigung der Basis
 
-Valide bei Nichtbetrachtung der Rückwirkung der Dynamik auf die Basis:
-Zulässig: Exoskelette, Prothesen
-Nicht zulässig: Humanoide Roboter
+Die Basisgeschwindigkeit wird als Zeitableitung in den verallgemeinerten Koordinaten aufgenommen. Die Orientierung wird nicht berücksichtigt.
+Valide bei Nichtbetrachtung der Rückwirkung der Dynamik auf die Basis.  
+Zulässig: Exoskelette, Prothesen, fest montierte Roboter  
+Nicht zulässig: Humanoide Roboter  
+
 
         floatb_twist (Basis mit Geschwindigkeit im Basis-KS). 
+
+Die Basisorientierung wird mit Euler-Winkeln in der RPY-Konvention (aufeinanderfolgende Drehungen um die festgehaltene x-, y- und z-Achse.
+Die dabei auftretende Singularität der Orientierungsrepräsentation wird in der Vorwärtsdynamik problematisch.
+
+        floatb_eulangrpy
 
 Noch nicht implementiert:
 
         floatb_quat
 
+
+Berechnung der Kinematik
+
+        rotmat/quat
 
 ### Benennung der Matlab-Dateien
 
@@ -136,8 +143,9 @@ Teil 3: Kennung der Kette
 
 Teil 4: Modellkennung
 
-* fixb (Fixed Base Modell: Geschwindigkeit und Beschleunigung der Basis werden nicht berücksichtigt. Impliziert bei einigen Funktionen "joint")
-* floatb  (Floating Base Modell: Geschwindigkeit und Beschleunigung der Basis werden berücksichtigt)
+* fixb (Fixed Base Modell: Orientierung, Geschwindigkeit und Beschleunigung der Basis werden nicht berücksichtigt. Impliziert bei einigen Funktionen "joint")
+* floatb_twist  (Floating Base Modell: Geschwindigkeit und Beschleunigung der Basis werden berücksichtigt. Nicht aber die Orientierung)
+* floatb_eulangrpy  (Floating Base Modell: Orientierung (EulerXYZ), und die Zeitableitungen werden für die Basis-Geschwindigkeit und -Beschleunigung verwendet.)
 
 Teil 5: Regressorform. 
 Um die gewünschte Größe zu erhalten, muss der ausgegebene Regressorvektor bzw. -Matrix mit dem Parametervektor multipliziert werden.
@@ -260,16 +268,16 @@ Dateien:
 Positionen (Koordinatensysteme, Schwerpunkten), Geschwindigkeiten
 
         /robot_codegen_kinematics
-          robot_tree_floatb_twist_rotmat_mdh_kinematics.mw
+          robot_tree_floatb_rotmat_mdh_kinematics.mw
               <-- robot_env
               <-- robot_tree_floatb_definitions
               --> robot_kinematics_rotmat_maple.m
-          robot_tree_floatb_twist_rotmat_kinematics_com_par1.mw
+          robot_tree_floatb_rotmat_kinematics_com_par1.mw
               <-- robot_env
               <-- robot_tree_floatb_definitions
               <-- robot_kinematics_rotmat_maple.m
               --> robot_kinematics_com_baseframe_floatb_par1_maple.m
-          robot_tree_floatb_twist_rotmat_velocity_baseframe_par1.mw
+          robot_tree_floatb_rotmat_velocity_baseframe_par1.mw
               <-- robot_env
               <-- robot_tree_floatb_definitions
               <-- robot_kinematics_rotmat_maple.m
