@@ -12,11 +12,33 @@ mw_file=$1
 # http://stackoverflow.com/questions/965053/extract-filename-and-extension-in-bash
 fullpath=$1
 filename="${fullpath##*/}"                      # Strip longest match of */ from start
-dir="${fullpath:0:${#fullpath} - ${#filename}}" # Substring from 0 thru pos of filename
+dir="${fullpath:0:${#fullpath} - ${#filename} - 1}" # Substring from 0 thru pos of filename
 base="${filename%.[^.]*}"                       # Strip shortest match of . plus at least one non-dot char from end
 mpl_file=$dir/$base.mpl
 
 echo "Konvertiere $mw_file --> $mpl_file"
+
+# direktes einfügen des Dateipfades in Maple geht nicht.
+# Starte gedit und kopiere den Text in die Zwischenablage
+gedit &
+wmctrl -a gedit
+sleep 1
+xte "str $mpl_file"
+# markieren
+xte 'keydown Shift_L' 'keydown Control_L'
+sleep 1
+xte 'key Home'
+xte 'keyup Shift_L' 'keyup Control_L'
+sleep 1
+# kopieren
+xte 'keydown Control_L'
+sleep 1
+xte 'keydown C' 
+sleep 1
+xte 'keyup C' 
+sleep 1
+xte 'keyup Control_L'
+sleep 1
 
 # Alte mpl-Datei löschen
 rm -f $mpl_file
@@ -35,28 +57,29 @@ sleep 1
 xte 'keyup F' 'keyup Alt_L'
 # E    
 sleep 1             
-xte 'keydown E' 'keyup E'
+xte 'key E'
 sleep 1
 
-# Anhängen einer Endung
-# xte 'keydown End' 'keyup End'
-#sleep 1
-#xte 'keydown 0x05f' 'keyup 0x05f'
-#xte 'keydown m' 'keyup m'
-#xte 'keydown p' 'keyup p'
-#xte 'keydown l' 'keyup l'
+# Dateipfad vollständig eingeben.
+# Sonst wird immer in den Ordner gespeichert, in den zuletzt eine Datei gespeichert wurde.
+
+# Dateinamen einfügen
+xte 'keydown Control_L'
+sleep 1
+xte 'keydown V' 
+xte 'keyup V' 'keyup Control_L'
 
 # Endung auswählen
 sleep 1
-xte 'keydown Tab' 'keyup Tab'
-xte 'keydown Down' 'keyup Down'
-xte 'keydown Down' 'keyup Down'
-xte 'keydown Down' 'keyup Down'
-xte 'keydown Down' 'keyup Down'
-xte 'keydown Return' 'keyup Return'
+xte 'key Tab'
+xte 'key Down'
+xte 'key Down'
+xte 'key Down'
+xte 'key Down'
+xte 'key Return'
 sleep 1
-xte 'keydown Tab' 'keyup Tab'
-xte 'keydown Return' 'keyup Return'
+xte 'key Tab'
+xte 'key Return'
 
 #Beenden
 sleep 1
@@ -66,7 +89,7 @@ xte 'keydown F'
 sleep 1
 xte 'keyup F' 'keyup Alt_L'
 sleep 1             
-xte 'keydown X' 'keyup X'
+xte 'key X'
 sleep 1
 
 
