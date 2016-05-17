@@ -14,5 +14,5 @@
 % Mqb [%NJ%x6]
 %   joint-base inertia matrix (gives inertial forces on the joins from base acceleration)
 
-function Mqb = %FN%(q, ...
+function Mqb = %FN%(q, phi_base, ...
   alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, mrSges_num_mdh, Ifges_num_mdh)
