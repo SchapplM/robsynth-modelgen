@@ -28,24 +28,49 @@ Die MDH-Parameter (modifizierte Denavit-Hartenberg Parameter nach [KhalilKle1987
 
         robot_env
 
-### Erstellung von Symbolischen Ausdrücken
+### Alternative 1: Automatisches Generieren aller Dateien
 
-Für die Erstellung von Ausdrücken für die Dynamik in expliziter Form (nicht: Regressorform) müssen die Maple-Arbeitsblätter in folgender Reihenfolge gestartet werden:
+Mit folgendem Aufruf werden alle Maple-Ausdrücke erzeugt und Matlab-Funktionen exportiert (wie unter Alternative 2 beschrieben).
+
+        ./robot_codegen_start.sh
+
+### Alternative 2: Händisches Generieren aller Dateien
+
+Im Folgenden werden die Einzelbefehle gezeigt, die im Gesamt-Skript aus Alternative 1 ausgeführt werden.
+
+#### Erstellung von Symbolischen Ausdrücken
+
+Für die Initialisierung der Variablendefinitionen müssen je nach Berechnung der Basiskinematik die Definitionen für das Modell "twist" oder das Modell "eulangrpy" gestartet werden
+
+
+Twist: Die Basisgeschwindigkeit wird als Zeitableitung in den verallgemeinerten Koordinaten aufgenommen. Die Orientierung wird nicht berücksichtigt.
+Valide bei Nichtbetrachtung der Rückwirkung der Dynamik auf die Basis.  
+Zulässig: Exoskelette, Prothesen, fest montierte Roboter  
+Nicht zulässig: Humanoide Roboter  
 
         /robot_codegen_definitions/robot_tree_floatb_twist_definitions.mw
 
+Die Basisorientierung wird mit Euler-Winkeln in der RPY-Konvention beschrieben (aufeinanderfolgende Drehungen um die mitgedrehte x-, y- und z-Achse).
+
+        /robot_codegen_definitions/robot_tree_floatb_twist_definitions.mw
+        /robot_codegen_definitions/robot_tree_floatb_eulangrpy_definitions.mw
+
+Für die Erstellung von Ausdrücken für die Dynamik in expliziter Form (nicht: Regressorform) müssen die Maple-Arbeitsblätter in folgender Reihenfolge gestartet werden:
+
         /robot_codegen_kinematics/robot_tree_floatb_rotmat_mdh_kinematics.mw
-        /robot_codegen_kinematics/robot_tree_floatb_rotmat_kinematics_com_baseframe_par1.mw
-        /robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_baseframe_par1.mw
-        /robot_codegen_kinematics/robot_tree_floatb_twist_rotmat_velocity_linkframe.mw
+        /robot_codegen_kinematics/robot_tree_floatb_rotmat_kinematics_com_worldframe_par1.mw
+        /robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_worldframe_par1.mw
+        /robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_linkframe.mw
 
-        /robot_codegen_energy/robot_tree_floatb_rotmat_energy_baseframe_par1.mw
-        /robot_codegen_energy/robot_tree_floatb_twist_rotmat_energy_baseframe_par2.mw
-        /robot_codegen_energy/robot_tree_floatb_twist_rotmat_energy_linkframe_par2.mw
+        /robot_codegen_energy/robot_tree_floatb_rotmat_energy_worldframe_par1.mw
+        /robot_codegen_energy/robot_tree_floatb_rotmat_energy_worldframe_par2.mw
+        /robot_codegen_energy/robot_tree_floatb_rotmat_energy_linkframe_par2.mw
 
-        /robot_codegen_dynamics/robot_tree_floatb_twist_rotmat_dynamics_baseframe_par1.mw
+        /robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par12.mw
 
-Zur Erstellung der Dynamik mit Parametersatz par2 muss die entsprechende Variable im Kopfteil von robot_tree_floatb_twist_rotmat_dynamics_baseframe_par1.mw geändert werden. Ansonsten müssen keine Eingaben vorgenommen werden. 
+Zur Erstellung der Dynamik mit Parametersatz par2 muss die entsprechende Variable im Kopfteil von robot_tree_floatb_rotmat_dynamics_worldframe_par12.mw geändert werden. Ansonsten müssen keine Eingaben vorgenommen werden. 
+
+Falls der Matlab-Export zu lange dauert, kann der Optimierungsgrad des Code-Exports reduziert werden, indem die Variable codegen_opt auf 1 anstatt auf 2 gesetzt wird (sinnvoll ab Gelenkzahl 20).
 
 Für die Dynamik in Regressorform müssen zusätzlich folgende Maple-Arbeitsblätter ausgeführt werden.
 Dies funktioniert momentan nur für serielle Strukturen und feste Basis.
@@ -53,7 +78,7 @@ Dies funktioniert momentan nur für serielle Strukturen und feste Basis.
         /robot_codegen_energy/robot_chain_fixb_rotmat_energy_regressor.mw
         /robot_codegen_dynamics/robot_chain_fixb_rotmat_dynamics_regressor.mw
 
-### Generierung von Matlab-Funktionen
+#### Generierung von Matlab-Funktionen
 
 Folgendes Shell-Skript erstellt automatisch alle Funktionen. Vorher müssen die Maple-Arbeitsblätter durchgelaufen sein und der Matlab-Code somit exportiert worden sein.
 
@@ -61,11 +86,13 @@ Folgendes Shell-Skript erstellt automatisch alle Funktionen. Vorher müssen die 
 
 
 
-### Testen der Matlab-Funktionen
+#### Generieren der Testfunktionen
 
 Testfunktionen werden mit folgendem Skript erstellt (und dabei an den Roboter angepasst):
 
         robot_codegen_scripts/testfunctions_generate.sh
+
+### Testen der Matlab-Funktionen
 
 Die Tests werden durch Ausführen der erstellten Skripte mit Matlab gestartet:
 
@@ -83,9 +110,14 @@ Zum vereinfachten Aufruf empfiehlt es sich, Aufruffunktionen zu erstellen ("wrap
 
 ## Benennung  <a name="benennung"></a> 
 
+
+Die einzelnen Bestandteile des Dateinamens werden durch Unterstriche getrennt.
+
 ### Benennung der Maple-Dateien
 
-#### Kinematik
+Allgemeines Präfix: Code-Erstellung für beliebige Roboter
+
+        robot
 
 Art der kinematischen Kette
 
@@ -93,34 +125,21 @@ Art der kinematischen Kette
 
 Art der Berücksichtigung der Basis
 
-Die Basisgeschwindigkeit wird als Zeitableitung in den verallgemeinerten Koordinaten aufgenommen. Die Orientierung wird nicht berücksichtigt.
-Valide bei Nichtbetrachtung der Rückwirkung der Dynamik auf die Basis.  
-Zulässig: Exoskelette, Prothesen, fest montierte Roboter  
-Nicht zulässig: Humanoide Roboter  
-
-
-        floatb_twist (Basis mit Geschwindigkeit im Basis-KS). 
-
-Die Basisorientierung wird mit Euler-Winkeln in der RPY-Konvention (aufeinanderfolgende Drehungen um die festgehaltene x-, y- und z-Achse.
-Die dabei auftretende Singularität der Orientierungsrepräsentation wird in der Vorwärtsdynamik problematisch.
-
-        floatb_eulangrpy
-
-Noch nicht implementiert:
-
-        floatb_quat
-
+        floatb/fixb
 
 Berechnung der Kinematik
 
         rotmat/quat
 
+Ergebnis des Arbeitsblattes
+
+        mdh_kinematics, velocity_linkframe, dynamics_worldframe, ...
+
 ### Benennung der Matlab-Dateien
 
 Im Folgenden werden die kryptischen Dateinamen der generierten Matlabfunktionen erklärt.
 Die umständlichen Dateinamen sind notwendig, um Funktionen zu unterscheiden, die mit unterschiedlichen Berechnungsmethoden erstellt werden. Falls die Dateinamen zu umständlich werden ist eine Umbenennung der generierten Dateien zu empfehlen.
-
-Die einzelnen Bestandteile des Dateinamens werden durch Unterstriche getrennt.
+Die kryptischen Abkürzungen sind für die Beschränkung der Funktionsnamenslänge auf 63 Zeichen notwendig.
 
 Teil 1: Name des Roboters. Wird in Umgebungsvariablendatei robot_env festgelegt
 
@@ -155,22 +174,22 @@ Um die gewünschte Größe zu erhalten, muss der ausgegebene Regressorvektor bzw
 
 Teil 6: Berechnungskennung
 
-* sym (Funktion wurde aus symbolische generiertem Code (sym) aus Maple-Skripten erzeugt. Im Gegenssatz zu "num")
-* num (Funktion wurde numerisch z.B. nur in Matlab erzeugt. Z.B. rekursives Newton-Euler in Matlab).
+* s (Funktion wurde aus symbolisch generiertem Code (sym) aus Maple-Skripten erzeugt. Im Gegenssatz zu "num")
+* n (Funktion wurde numerisch z.B. nur in Matlab erzeugt. Z.B. rekursives Newton-Euler in Matlab).
 * lag (Es wurde das Lagrange-Verfahren benutzt)
 * new (Es wurde das Newton-Euler-Verfahren benutzt)
 
 Teil 7: Parameterkennung
 Kennzeichnung, welche Parameter als Eingabe für die Funktion verwendet werden.
-* par1
-* par2
+* vp1 (Parametersatz 1, variable Parameter)
+* vp2 (Parametersatz 2, variable Parameter)
 * minpar
 
 Teil 8:  Kennung für variable Parameter
 
-Alle Parameter müssen der Funktion übergeben werden (siehe Funktionsköpfe)
+Alle Parameter müssen der Funktion übergeben werden (siehe Funktionsköpfe). Ist in vp1/vp2 bereits enthalten.
 
-* varpar
+* vp
 
 Teil 9: Kompilierungskennung
 
@@ -225,9 +244,11 @@ Dynamik-Parameter
 ## Ordner- und Dateistruktur <a name="ordnerstruktur"></a> 
 
 Für Maple-Arbeitsblätter werden die eingehenden Ergebnisdateien mit "<--" und die gespeicherten Ergebnisse mit "-->" angezeigt.
+Bei beweglicher Basis werden je nach vorheriger Definition Dateien mit floatb_twist oder floatb_eulangrpy erstellt. Hier werden beispielhaft nur die Dateien mit "twist" genannt.
 
 Dateien:
 * .mw Maple-Arbeitsblätter
+* .mpl Maple-Text. Enthält die selben Befehle wie die Maple-Arbeitsblätter, aber ohne Formatierung. Wird bei Änderung der Arbeitsblätter angepasst.
 * maple.m Gespeicherte Maple-Ausdrücke (Maple-internes Format)
 * matlab.m Exportierter Matlab-Code
 * proc_... Maple-Prozedur (Reintext, Maple-Eingabeformat)
@@ -258,10 +279,15 @@ Dateien:
 
         /codegen_definitions
           robot_env
-          atlas_limb_floatbase_gen_definitions.mw
-          robot_tree_floatbase_gen_definitions.mw
+          robot_tree_floatbase_twist_definitions.mw
               <-- robot_env
               --> robot_tree_floatb_definitions
+              --> robot_tree_floatb_twist_definitions
+          robot_tree_floatbase_eulangrpy_definitions.mw
+              <-- robot_env
+              <-- robot_tree_floatb_twist_definitions
+              --> robot_tree_floatb_definitions
+              --> robot_tree_floatb_eulangrpy_definitions
 
 ### Kinematik
 
@@ -276,46 +302,46 @@ Positionen (Koordinatensysteme, Schwerpunkten), Geschwindigkeiten
               <-- robot_env
               <-- robot_tree_floatb_definitions
               <-- robot_kinematics_rotmat_maple.m
-              --> robot_kinematics_com_baseframe_floatb_par1_maple.m
-          robot_tree_floatb_rotmat_velocity_baseframe_par1.mw
+              --> robot_kinematics_com_worldframe_floatb_par1_maple.m
+          robot_tree_floatb_rotmat_velocity_worldframe_par1.mw
               <-- robot_env
               <-- robot_tree_floatb_definitions
               <-- robot_kinematics_rotmat_maple.m
-              <-- robot_kinematics_com_baseframe_floatb_par1_maple.m
-              --> robot_velocity_baseframe_floatbase_twist_par1_maple.m
+              <-- robot_kinematics_com_worldframe_floatb_par1_maple.m
+              --> robot_velocity_worldframe_floatbase_twist_par1_maple.m
           robot_tree_floatb_twist_rotmat_velocity_linkframe.mw
               <-- robot_env
               <-- robot_tree_floatb_definitions
               <-- robot_kinematics_rotmat_maple.m
-              --> robot_velocity_baseframe_floatb_twist_maple.m
+              --> robot_velocity_worldframe_floatb_twist_maple.m
 
 ### Energie
 
         /robot_codegen_energy
-          robot_tree_floatb_twist_rotmat_energy_baseframe_par1
+          robot_tree_floatb_rotmat_energy_worldframe_par1
               <-- robot_env
               <-- robot_tree_floatb_definitions
               <-- robot_kinematics_rotmat_maple.m
-              <-- robot_kinematics_com_baseframe_floatb_par1_maple.m
-              <-- robot_velocity_baseframe_floatbase_twist_par1_maple.m
-              --> robot_energy_potential_baseframe_par1_maple.m
-              --> robot_energy_kinetic_floatb_baseframe_par1_maple.m
-          robot_tree_floatb_twist_rotmat_energy_baseframe_par2.mw
+              <-- robot_kinematics_com_worldframe_floatb_par1_maple.m
+              <-- robot_velocity_worldframe_floatbase_twist_par1_maple.m
+              --> robot_energy_potential_floatb_worldframe_par1_maple.m
+              --> robot_energy_kinetic_floatb_worldframe_par1_maple.m
+          robot_tree_floatb_rotmat_energy_worldframe_par2.mw
               <-- robot_env
               <-- robot_tree_floatb_definitions
               <-- robot_kinematics_rotmat_maple.m
-              <-- robot_kinematics_com_baseframe_floatb_par1_maple.m
-              --> robot_energy_potential_baseframe_par2_maple.m
-          robot_tree_floatb_twist_rotmat_energy_linkframe_par2.mw
+              <-- robot_kinematics_com_worldframe_floatb_par1_maple.m
+              --> robot_energy_potential_floatb_worldframe_par2_maple.m
+          robot_tree_floatb_rotmat_energy_linkframe_par2.mw
               <-- robot_env
               <-- robot_tree_floatb_definitions
               <-- robot_kinematics_rotmat_maple.m
-              <-- robot_velocity_baseframe_floatb_twist_maple.m
+              <-- robot_velocity_worldframe_floatb_twist_maple.m
               --> robot_energy_kinetic_floatb_linkframe_par2_maple.m
           robot_chain_fixb_rotmat_energy_regressor.mw
               <-- robot_env
               <-- robot_tree_floatb_definitions
-              <-- robot_energy_potential_baseframe_par2_maple.m
+              <-- robot_energy_potential_floatb_worldframe_par2_maple.m
               <-- robot_energy_kinetic_floatb_linkframe_par2_maple.m
               --> energy_kinetic_fixb_regressor_minpar_maple.m
               --> energy_potential_fixb_regressor_minpar_maple.m
@@ -323,11 +349,11 @@ Positionen (Koordinatensysteme, Schwerpunkten), Geschwindigkeiten
 ### Dynamik
 
         /robot_codegen_dynamics
-          robot_tree_floatb_twist_rotmat_dynamics_baseframe_par1.mw
+          robot_tree_floatb_rotmat_dynamics_worldframe_par12.mw
               <-- robot_env
               <-- robot_tree_floatb_definitions
-              <-- robot_energy_potential_baseframe_par1_maple.m
-              <-- robot_energy_kinetic_floatb_baseframe_par1_maple.m
+              <-- robot_energy_potential_floatb_worldframe_par1_maple.m
+              <-- robot_energy_kinetic_floatb_worldframe_par1_maple.m
           robot_chain_fixb_rotmat_dynamics_regressor.mw
               <-- robot_env
               <-- robot_tree_floatb_definitions
@@ -339,6 +365,9 @@ Positionen (Koordinatensysteme, Schwerpunkten), Geschwindigkeiten
         /robot_codegen_examples
           robot_env_atlas5arm.example
           robot_env_atlas5wbody.example
+          robot_env_atlas4leg.example
+          robot_env_prothese2dof.example
+          robot_env_rigidbody.example
 
 ### Skripte zur Generierung von Matlabfunktionen
 
@@ -347,13 +376,13 @@ Hauptordner für Skripte
         /robot_codegen_scripts
         
 Temporäre Dateien zur Erzeugung von Matlabfunktionen.
-Enthält Variablendefinitionen und -deklarationen sowie Textbausteine für Funktionsköpfe
+Enthält Variablendefinitionen und -deklarationen
 
         /robot_codegen_scripts/tmp
 
-Funktionsköpfe:
+Textbausteine für Funktionsköpfe:
 
-        /robot_codegen_scripts/tmp
+        /robot_codegen_scripts/tmp_head
           robot_matlabtmp_convert_par2_MPV.head.m
           robot_matlabtmp_coriolisvec_joint_floatb_par1.head.m
           ...
