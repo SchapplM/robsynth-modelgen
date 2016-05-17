@@ -6,38 +6,38 @@
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-05
 # (c) Institut für Regelungstechnik, Leibniz Universität Hannover
 
-repo_pfad=$(pwd)/../
+repo_pfad=$(pwd)/..
 echo $repo_pfad
 
 # Dynamik-Skripte für Parametersätze 1 und 2 vorbereiten
-cp $repo_pfad/robot_codegen_dynamics/robot_tree_floatb_twist_rotmat_dynamics_worldframe_par12.mpl $repo_pfad/robot_codegen_dynamics/robot_tree_floatb_twist_rotmat_dynamics_worldframe_par1.mpl
-cp $repo_pfad/robot_codegen_dynamics/robot_tree_floatb_twist_rotmat_dynamics_worldframe_par12.mpl $repo_pfad/robot_codegen_dynamics/robot_tree_floatb_twist_rotmat_dynamics_worldframe_par2.mpl
-sed -i "s/codegen_dynpar := 1:/codegen_dynpar := 2:/g" $repo_pfad/robot_codegen_dynamics/robot_tree_floatb_twist_rotmat_dynamics_worldframe_par2.mpl
+cp $repo_pfad/robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par12.mpl $repo_pfad/robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1.mpl
+cp $repo_pfad/robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par12.mpl $repo_pfad/robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2.mpl
+sed -i "s/codegen_dynpar := 1:/codegen_dynpar := 2:/g" $repo_pfad/robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2.mpl
 
 # Liste mit Maple-Skripten in der richtigen Reihenfolge
 dateiliste_kindyn="
     /robot_codegen_definitions/robot_tree_floatb_twist_definitions.mpl
     /robot_codegen_kinematics/robot_tree_floatb_rotmat_mdh_kinematics.mpl
-    /robot_codegen_kinematics/robot_tree_floatb_twist_rotmat_kinematics_com_worldframe_par1.mpl
-    /robot_codegen_kinematics/robot_tree_floatb_twist_rotmat_velocity_worldframe_par1.mpl
-    /robot_codegen_kinematics/robot_tree_floatb_twist_rotmat_velocity_linkframe.mpl
+    /robot_codegen_kinematics/robot_tree_floatb_rotmat_kinematics_com_worldframe_par1.mpl
+    /robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_worldframe_par1.mpl
+    /robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_linkframe.mpl
     /robot_codegen_energy/robot_tree_floatb_rotmat_energy_worldframe_par1.mpl
-    /robot_codegen_energy/robot_tree_floatb_twist_rotmat_energy_worldframe_par2.mpl
-    /robot_codegen_energy/robot_tree_floatb_twist_rotmat_energy_linkframe_par2.mpl
-    /robot_codegen_dynamics/robot_tree_floatb_twist_rotmat_dynamics_worldframe_par1.mpl
-    /robot_codegen_dynamics/robot_tree_floatb_twist_rotmat_dynamics_worldframe_par2.mpl
+    /robot_codegen_energy/robot_tree_floatb_rotmat_energy_worldframe_par2.mpl
+    /robot_codegen_energy/robot_tree_floatb_rotmat_energy_linkframe_par2.mpl
+    /robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1.mpl
+    /robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2.mpl
     /robot_codegen_definitions/robot_tree_floatb_eulangrpy_definitions.mpl
     /robot_codegen_kinematics/robot_tree_floatb_rotmat_mdh_kinematics.mpl
-    /robot_codegen_kinematics/robot_tree_floatb_twist_rotmat_kinematics_com_worldframe_par1.mpl
-    /robot_codegen_kinematics/robot_tree_floatb_twist_rotmat_velocity_worldframe_par1.mpl
-    /robot_codegen_kinematics/robot_tree_floatb_twist_rotmat_velocity_linkframe.mpl
+    /robot_codegen_kinematics/robot_tree_floatb_rotmat_kinematics_com_worldframe_par1.mpl
+    /robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_worldframe_par1.mpl
+    /robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_linkframe.mpl
     /robot_codegen_energy/robot_tree_floatb_rotmat_energy_worldframe_par1.mpl
-    /robot_codegen_energy/robot_tree_floatb_twist_rotmat_energy_worldframe_par2.mpl
-    /robot_codegen_energy/robot_tree_floatb_twist_rotmat_energy_linkframe_par2.mpl
-    /robot_codegen_dynamics/robot_tree_floatb_twist_rotmat_dynamics_worldframe_par1.mpl
-    /robot_codegen_dynamics/robot_tree_floatb_twist_rotmat_dynamics_worldframe_par2.mpl
-    /robot_codegen_energy/robot_chain_fixb_rotmat_energy_regressor.mw
-    /robot_codegen_dynamics/robot_chain_fixb_rotmat_dynamics_regressor.mw
+    /robot_codegen_energy/robot_tree_floatb_rotmat_energy_worldframe_par2.mpl
+    /robot_codegen_energy/robot_tree_floatb_rotmat_energy_linkframe_par2.mpl
+    /robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1.mpl
+    /robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2.mpl
+    /robot_codegen_energy/robot_chain_fixb_rotmat_energy_regressor.mpl
+    /robot_codegen_dynamics/robot_chain_fixb_rotmat_dynamics_regressor.mpl
 "
 
 # Alle Maple-Dateien der Reihe nach ausführen
