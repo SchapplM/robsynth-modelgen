@@ -1,0 +1,55 @@
+% Start the forward dynamics model (fixed base)
+% * no initial velocity
+% * random starting pose
+% * no joint damping. Check for energy consistency
+
+% Moritz Schappler, schappler@irt.uni-hannover.de, 2016-04
+% (c) Institut für Regelungstechnik, Universität Hannover
+
+clear
+clc
+close all
+
+this_path = fileparts( mfilename('fullpath') );
+if ~isempty(this_path), cd(this_path); end
+
+%% Init
+% Standard-Einstellungen laden
+ParameterModus = 'mp';
+%RN%_fdyn_fixb_test_settings_default
+
+%% modify default settings
+
+%% Start Simulation
+t1 = tic;
+simOut = sim(sl_Modellname, 'StopTime', '5', ...
+  'SimulationMode', 'normal'); % normal
+sl = get_simulink_outputs(simOut, sl_Modellname);
+fprintf('Simulink-Modell berechnet. Rechenzeit: %1.1fs\n', toc(t1));
+
+%% Plot
+PlotSettings = struct('atlas_version', uint8(5));
+
+figure(1);clf;
+plot(sl.t, [sl.E, sum(sl.E,2)]);
+legend({'T', 'U', 'Ges'});
+ylabel('Energie');
+grid on;
+
+figure(2);clf;
+subplot(2,1,1);
+plot(sl.t, sl.q);
+ylabel('q');grid on;
+subplot(2,1,2);
+plot(sl.t, sl.qD);
+ylabel('qD');grid on;
+
+%% Teste Energiekonsistenz
+E_start = sum(sl.E(1,1:2));
+E_end = sum(sl.E(end,1:2));
+if abs(E_start-E_end) > 1e-6
+  error('Simulink-Modell ist nicht energetisch konsistent. Fehler: %1.1e', ...
+    E_start-E_end);
+else
+  fprintf('Modell %s energetisch konsistent\n', sl_Modellname);
+end

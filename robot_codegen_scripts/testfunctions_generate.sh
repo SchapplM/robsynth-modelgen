@@ -14,17 +14,38 @@ testfcn_pfad=$repo_pfad/robot_codegen_testfunctions
 source robot_codegen_tmpvar_bash.sh
 source $repo_pfad/robot_codegen_definitions/robot_env.sh
 
-cp $testfcn_pfad/robot_varpar_kinematics_test.m.template $testfcn_pfad/${robot_name}_varpar_kinematics_test.m
-source robot_codegen_matlabfcn_postprocess.sh $testfcn_pfad/${robot_name}_varpar_kinematics_test.m 0
+dateiliste_testfunction="
+  robot_varpar_kinematics_test.m.template
+  robot_varpar_invdyn_test.m.template
+  robot_varpar_floatbase_test.m.template
+  robot_varpar_paramlin_test.m.template
+  robot_varpar_simulink_test.m.template
+  robot_varpar_testfunctions_parameter.m.template
+  robot_varpar_test_everything.m.template
+  simulink/lib_robot_dynamics.mdl.template
+  simulink/robot_fdyn_fixb_test_mp_start.m.template
+  simulink/robot_fdyn_fixb_test_mp_vp.mdl.template
+  simulink/robot_fdyn_fixb_test_settings_default.m.template
+  simulink/robot_fdyn_fixb_test_vp1.mdl.template
+  simulink/robot_fdyn_fixb_test_vp1_start.m.template
+  simulink/robot_fdyn_floatb_eulangrpy_test.mdl.template
+  simulink/robot_fdyn_floatb_eulangrpy_test_settings_default.m.template
+  simulink/robot_fdyn_floatb_eulangrpy_test_start.m.template
+"
+for dat in $dateiliste_testfunction
+do
+  tmpdat_full=$testfcn_pfad/$dat
+  filename="${tmpdat_full##*/}"                      # Strip longest match of */ from start
+  dir="${tmpdat_full:0:${#tmpdat_full} - ${#filename} - 1}" # Substring from 0 thru pos of filename
 
-cp $testfcn_pfad/robot_varpar_invdyn_test.m.template $testfcn_pfad/${robot_name}_varpar_invdyn_test.m
-source robot_codegen_matlabfcn_postprocess.sh $testfcn_pfad/${robot_name}_varpar_invdyn_test.m 0
+  # Neuen Dateinamen generieren
+  tmp="${filename/robot/$robot_name}"
+  filename_new="${tmp/.template/}"
+  
+  # Datei kopieren
+  cp $dir/$filename $dir/$filename_new
 
-cp $testfcn_pfad/robot_varpar_floatbase_test.m.template $testfcn_pfad/${robot_name}_varpar_floatbase_test.m
-source robot_codegen_matlabfcn_postprocess.sh $testfcn_pfad/${robot_name}_varpar_floatbase_test.m 0
+  # Platzhalter in Datei ersetzen
+  source robot_codegen_matlabfcn_postprocess.sh $dir/$filename_new 0
+done
 
-cp $testfcn_pfad/robot_varpar_paramlin_test.m.template $testfcn_pfad/${robot_name}_varpar_paramlin_test.m
-source robot_codegen_matlabfcn_postprocess.sh $testfcn_pfad/${robot_name}_varpar_paramlin_test.m 0
-
-cp $testfcn_pfad/robot_varpar_testfunctions_parameter.m.template $testfcn_pfad/${robot_name}_varpar_testfunctions_parameter.m
-source robot_codegen_matlabfcn_postprocess.sh $testfcn_pfad/${robot_name}_varpar_testfunctions_parameter.m 0

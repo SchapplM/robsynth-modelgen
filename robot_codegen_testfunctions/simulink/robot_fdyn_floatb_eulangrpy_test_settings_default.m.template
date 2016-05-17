@@ -1,0 +1,45 @@
+% Settings to start the orward dynamics model (fixed base)
+% called by %RN%_fdyn_fixb_test_start.m
+
+% Moritz Schappler, schappler@irt.uni-hannover.de, 2016-04
+% (c) Institut für Regelungstechnik, Universität Hannover
+
+NJ = 2;
+robot_name = '%RN%';
+
+%% Init
+% Parameter
+
+%RN%_varpar_testfunctions_parameter
+MPV = %RN%_convert_par2_MPV(alpha, a, d, q_offset, b, beta, ...
+  m, mrSges, Ifges);
+KinPar_mdh = struct('a', a, 'd', d, 'alpha', alpha, ...
+  'q_offset', q_offset, 'b', b, 'beta', beta, 'v', NaN(NJ,1));
+DynPar1 = struct('m', m, 'r_S', rSges, 'I_S', Icges);
+
+%% Anfangswerte
+qJ_t0 = rand(2,1)*10;
+qJD_t0 = rand(2,1)*10;
+g_world = [0;0;-9.81];
+phi_base_t0 = rand(3,1)*pi/10;
+phiD_base_t0 = rand(3,1)*pi/10;
+r_base_t0 = zeros(3,1);
+rD_base_t0 = rand(3,1);
+%% Dämpfung
+d = zeros(2,1);
+
+%% Simulink-Eingangsdaten
+  
+simin_tau_ext = struct('time', 0, ...
+    'signals', struct('values', zeros(1,NJ), 'dimensions', NJ), ...
+    'name', 'tau_ext');
+  
+simin_tau_m = struct('time', 0, ...
+    'signals', struct('values', zeros(1,NJ), 'dimensions', NJ), ...
+    'name', 'tau_m');
+%% Configure Model
+sl_Modellname = '%RN%_fdyn_floatb_eulangrpy_test';
+load_system(sl_Modellname)
+configSet = getActiveConfigSet(sl_Modellname);
+set_param(configSet, 'Solver', 'ode4');
+set_param(configSet, 'FixedStep', '1e-4');

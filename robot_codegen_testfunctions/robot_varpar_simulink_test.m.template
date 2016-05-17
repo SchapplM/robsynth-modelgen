@@ -1,0 +1,14 @@
+% Test function for simulink models for 
+% %RN%
+
+% Moritz Schappler, schappler@irt.uni-hannover.de, 2016-05
+% (c) Institut für Regelungstechnik, Universität Hannover
+
+clc
+clear
+
+testfunctions_path_init
+
+%RN%_fdyn_fixb_test_mp_start
+%RN%_fdyn_fixb_test_vp1_start
+%RN%_fdyn_floatb_eulangrpy_test_start

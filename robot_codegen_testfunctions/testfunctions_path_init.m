@@ -14,3 +14,6 @@ addpath(this_path);
 % Verzeichnis mit generierten Matlab-Funktionen hinzufügen
 matlabfcn_path = fullfile(this_path, '../codeexport/matlabfcn');
 addpath(matlabfcn_path);
+
+simulink_path = fullfile(this_path, 'simulink');
+addpath(simulink_path);
