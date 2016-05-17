@@ -10,11 +10,11 @@ repo_pfad=$(pwd)
 
 # Maple-Skripte starten
 cd $repo_pfad/robot_codegen_scripts/
-#source $repo_pfad/robot_codegen_scripts/robot_codegen_maple_batch.sh
+source $repo_pfad/robot_codegen_scripts/robot_codegen_maple_batch.sh
 
 # Matlab-Funktionen generieren
 cd $repo_pfad/robot_codegen_scripts/
-#source $repo_pfad/robot_codegen_scripts/robot_codegen_matlab_varpar.sh
+source $repo_pfad/robot_codegen_scripts/robot_codegen_matlab_varpar.sh
 
 # Testfunktionen generieren
 cd $repo_pfad/robot_codegen_scripts/
