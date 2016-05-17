@@ -177,9 +177,9 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 <Font encoding="UTF-8">printf(&quot;Generiere Minimalparameterregressor der Energie f\303\274r %s\134n&quot;, robot_name, codegen_dynpar):</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L1770" drawlabel="true">
+<Group labelreference="L1803" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_tree_floatb_twist_definitions&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_tree_floatb_definitions&quot;, robot_name, base_method_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1775" drawlabel="true">
@@ -189,8 +189,8 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Group>
 <Group labelreference="L1774" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_energy_potential_baseframe_par2_maple.m&quot;, robot_name):
-read sprintf(&quot;../codeexport/%s_energy_kinetic_floatb_linkframe_par2_maple.m&quot;, robot_name):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_energy_potential_floatb_%s_worldframe_par2_maple.m&quot;, robot_name, base_method_name):
+read sprintf(&quot;../codeexport/%s_energy_kinetic_floatb_%s_linkframe_par2_maple.m&quot;, robot_name, base_method_name):
 T_floatb := T:
 U_floatb := U_grav:</Text-field>
 </Input>
