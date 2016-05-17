@@ -21,7 +21,7 @@ dateiliste_testfunction="
   robot_varpar_paramlin_test.m.template
   robot_varpar_simulink_test.m.template
   robot_varpar_testfunctions_parameter.m.template
-  robot_varpar_test_everything.m.template
+  robot_test_everything.m.template
   simulink/lib_robot_dynamics.mdl.template
   simulink/robot_fdyn_fixb_test_mp_start.m.template
   simulink/robot_fdyn_fixb_test_mp_vp.mdl.template

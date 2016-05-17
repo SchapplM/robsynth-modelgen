@@ -95,11 +95,14 @@ Testfunktionen werden mit folgendem Skript erstellt (und dabei an den Roboter an
 ### Testen der Matlab-Funktionen
 
 Die Tests werden durch Ausführen der erstellten Skripte mit Matlab gestartet:
-
+        
+        robot_codegen_testfunctions/robot_varpar_kinematics_test.m
         robot_codegen_testfunctions/robot_varpar_invdyn_test.m
         robot_codegen_testfunctions/robot_varpar_floatbase_test.m
+        robot_codegen_testfunctions/robot_varpar_simulink_test.m
         robot_codegen_testfunctions/robot_varpar_paramlin_test.m
         robot_codegen_testfunctions/robot_compile_test.m
+        robot_codegen_testfunctions/robot_test_everything.m
 
 Beim Durchlaufen der Tests sollten keine Fehler auftreten.
 
@@ -109,7 +112,6 @@ Der Aufruf der Funktionen in den Testskripten kann als Vorlage für weitere Arbe
 Zum vereinfachten Aufruf empfiehlt es sich, Aufruffunktionen zu erstellen ("wrapper"), in denen die Parameter (Kinematik und Dynamik) durch Aufruf von Parameterfunktionen vorliegen.
 
 ## Benennung  <a name="benennung"></a> 
-
 
 Die einzelnen Bestandteile des Dateinamens werden durch Unterstriche getrennt.
 

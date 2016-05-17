@@ -1,0 +1,17 @@
+% Test script for all Matlab/Simulink functions for 
+% %RN%
+
+% Moritz Schappler, schappler@irt.uni-hannover.de, 2016-05
+% (c) Institut für Regelungstechnik, Universität Hannover
+
+clc
+clear
+
+testfunctions_path_init
+
+%RN%_varpar_kinematics_test
+%RN%_varpar_invdyn_test
+%RN%_varpar_floatbase_test
+%RN%_varpar_paramlin_test
+%RN%_varpar_simulink_test
+robot_compile_test
