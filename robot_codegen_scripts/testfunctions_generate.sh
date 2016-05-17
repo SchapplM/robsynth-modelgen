@@ -14,6 +14,9 @@ testfcn_pfad=$repo_pfad/robot_codegen_testfunctions
 source robot_codegen_tmpvar_bash.sh
 source $repo_pfad/robot_codegen_definitions/robot_env.sh
 
+cp $testfcn_pfad/robot_varpar_kinematics_test.m.template $testfcn_pfad/${robot_name}_varpar_kinematics_test.m
+source robot_codegen_matlabfcn_postprocess.sh $testfcn_pfad/${robot_name}_varpar_kinematics_test.m 0
+
 cp $testfcn_pfad/robot_varpar_invdyn_test.m.template $testfcn_pfad/${robot_name}_varpar_invdyn_test.m
 source robot_codegen_matlabfcn_postprocess.sh $testfcn_pfad/${robot_name}_varpar_invdyn_test.m 0
 

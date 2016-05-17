@@ -1,0 +1,36 @@
+% Test function for kinematics from symbolic calculations
+% with floating base model
+
+% Moritz Schappler, schappler@irt.uni-hannover.de, 2016-04
+% (c) Institut für Regelungstechnik, Universität Hannover
+
+clc
+clear
+
+NJ = %NJ%;
+robot_name = '%RN%';
+
+testfunctions_path_init
+
+%% Parameter
+%RN%_varpar_testfunctions_parameter
+
+for i = 1:n
+  ob = OB(i,:);
+  q = Q(i,:)';
+
+  T_c_fixb = %RN%_fkine_fixb_rotmat_mdh_sym_varpar(q, ...
+    alpha, a, d, q_offset, b, beta);
+  T_c_floatb_xyz = %RN%_fkine_floatb_eulangrpy_rotmat_mdh_sym_varpar(q, zeros(3,1), zeros(3,1), ...
+    alpha, a, d, q_offset, b, beta);
+
+  for j = 1:size(T_c_fixb, 3)
+    T_Diff = T_c_fixb(:,:,j) / T_c_floatb_xyz(:,:,j);
+    Delta = T_Diff-eye(4);
+    if any(abs(Delta(:)) > 1e-6)
+      error('Forward Kinematics does not match between floating and fixed base');
+    end
+  end
+end
+
+fprintf('Tested %d configurations for fixed base forward kinematics.\n', n);
