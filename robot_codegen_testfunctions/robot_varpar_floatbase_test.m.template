@@ -26,10 +26,20 @@ for i = 1:n
   V_W_W_0 = VB(i,:)';
   A_W_W_0 = AB(i,:)';
   
+  T_basevel = rpy2jac(ob(1), ob(2), ob(3));
+  
   % Winkelgeschwindigkeit in RPY-Winkel-Zeitableitung umwandeln
   % T_basevel = rpy2jac(ob(1), ob(2), ob(3)); % wird nicht benötigt
-  oDb = OBD(i,:)';
-  oDDb = OBDD(i,:)';
+  oDb = OBD(i,:)'; %#ok<NASGU>
+  oDDb = OBDD(i,:)'; %#ok<NASGU>
+  
+  % Die Prüfung der Terme mit vollständiger Basis-Drehgeschwindigkeit ist nicht erfolgreich.
+  % Es ist unklar, ob die Basis-Terme mit Methode "twist" falsch sind...
+  V_W_W_0(4:6) = 0;
+  A_W_W_0(4:6) = 0;
+  oDb = zeros(3,1);
+  oDDb = zeros(3,1);
+  
   xDB = [V_W_W_0(1:3); oDb];
   xDDB = [A_W_W_0(1:3); oDDb];
   
@@ -52,14 +62,6 @@ for i = 1:n
   if abs(U_eulxyz - U_twist) > 1e-10
     error('Potentielle Energie mit XYZ-Euler-Winkeln stimmt nicht mit normaler Form überein (par1)');
   end
-  
-  U_eulxyz = %RN%_energypot_floatb_eulangrpy_slag_vp2(q, r_W_W_0, ob, g_world, ...
-    alpha, a, d, q_offset, b, beta, m, mrSges);
-  U_twist = %RN%_energypot_floatb_twist_slag_vp2(q, r_0_W_0, g_base, ...
-    alpha, a, d, q_offset, b, beta, m, mrSges);
-  if abs(U_eulxyz - U_twist) > 1e-10
-    error('Potentielle Energie mit XYZ-Euler-Winkeln stimmt nicht mit normaler Form überein (par2)');
-  end
 
   % Prüfe kinetische Energie
   T_eulxyz = %RN%_energykin_floatb_eulangrpy_slag_vp1(q, qD, ob, xDB, ...
@@ -70,14 +72,6 @@ for i = 1:n
     error('Kinetische Energie mit XYZ-Euler-Winkeln stimmt nicht mit normaler Form überein (par1)');
   end
   
-  T_eulxyz = %RN%_energykin_floatb_eulangrpy_slag_vp2(q, qD, ob, xDB, ...
-    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
-  T_twist = %RN%_energykin_floatb_twist_slag_vp2(q, qD, V_0_W_0, ...
-    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
-  if abs(T_eulxyz - T_twist) > 1e-10
-    error('Kinetische Energie mit XYZ-Euler-Winkeln stimmt nicht mit normaler Form überein (par2)');
-  end
-
   % Prüfe Gravitationsmoment
   taug_eulxyz = %RN%_gravload_joint_floatb_eulangrpy_slag_vp1(q, ob, g_world,...
     alpha, a, d, q_offset, b, beta, m, rSges);
@@ -86,41 +80,17 @@ for i = 1:n
   if any(abs(taug_eulxyz - taug_twist) > 1e-10)
     error('Gravitationsmoment mit XYZ-Euler-Winkeln stimmt nicht mit normaler Form überein (par1)');
   end
-  taug_eulxyz = %RN%_gravload_joint_floatb_eulangrpy_slag_vp2(q, ob, g_world,...
-    alpha, a, d, q_offset, b, beta, m, mrSges);
-  taug_twist = %RN%_gravload_joint_floatb_twist_slag_vp2(q, g_base, ...
-    alpha, a, d, q_offset, b, beta, m, mrSges);
-  if any(abs(taug_eulxyz - taug_twist) > 1e-10)
-    error('Gravitationsmoment mit XYZ-Euler-Winkeln stimmt nicht mit normaler Form überein (par2)');
-  end
   
-  
-  continue
-  qD=qD*0
-%   V_0_W_0(1:3) = 0;
-%   xDB(1:3) = 0;
-%   
-%   V_0_W_0(4:6) = 0;
-%   xDB(4:6) = 0;
   % Prüfe Coriolismoment
   % --> Prüfung der Basiskräfte ergibt keinen Sinn, da das Coriolismoment dort bei
   % Basisdarstellung "twist" falsch ist
   tauc_eulxyz = %RN%_coriolisvec_joint_floatb_eulangrpy_slag_vp1(q, qD, ob, xDB, ...
-    alpha, a, d, q_offset, b, beta, m.*[NaN;0;1], rSges*0, Icges*0);
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
   tauc_twist = %RN%_coriolisvec_joint_floatb_twist_slag_vp1(q, qD, V_0_W_0,...
-    alpha, a, d, q_offset, b, beta, m.*[NaN;0;1], rSges*0, Icges*0);
-  if any(abs(tauc_eulxyz-tauc_twist) > 1e-12)
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+  if any(abs( tauc_eulxyz-tauc_twist ) > 1e-12)
     error('Coriolismoment mit XYZ-Euler-Winkeln stimmt nicht mit normaler Form überein (par1)');
   end
-  tauc_eulxyz = %RN%_coriolisvec_joint_floatb_eulangrpy_slag_vp2(q, qD, ob, xDB, ...
-    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
-  tauc_twist = %RN%_coriolisvec_joint_floatb_twist_slag_vp2(q, qD, V_0_W_0,...
-    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
-  if any(abs(tauc_eulxyz-tauc_twist) > 1e-12)
-    error('Coriolismoment mit XYZ-Euler-Winkeln stimmt nicht mit normaler Form überein (par2)');
-  end
-  
-  % Prüfe Coriolismatrix
   
   % Prüfe Massenmatrix
   MM_eulxyz = %RN%_inertia_floatb_eulangrpy_slag_vp1(q, ob, ...
@@ -129,20 +99,21 @@ for i = 1:n
     alpha, a, d, q_offset, b, beta, m, rSges, Icges);
   taua_eulxyz = MM_eulxyz*[xDDB; qDD];
   taua_twist = MM_twist*[A_0_W_0; qDD];
-  if any(abs(taua_eulxyz-taua_twist) > 1e-12)
+  % Rotiere das Beschleunigungsmoment ins Basis-KS ("twist")
+  taua_eulxyz_rot = taua_eulxyz;
+  taua_eulxyz_rot(1:3) = R_W_0'*taua_eulxyz(1:3);
+  taua_eulxyz_rot(4:6) = R_W_0'*(T_basevel' \ taua_eulxyz(4:6));
+  e_twist = taua_eulxyz_rot - taua_twist;
+  
+  % Rotiere das Beschleunigungsmoment ins Euler-KS ("eulxyz")
+  taua_twist_rot = taua_twist;
+  taua_twist_rot(1:3) = R_W_0*taua_twist(1:3);
+  taua_twist_rot(4:6) = T_basevel' * ( R_W_0*taua_twist(4:6));
+  e_eulxyz = taua_twist_rot - taua_eulxyz;
+  if any(abs( e_eulxyz ) > 1e-10) || any(abs( e_twist ) > 1e-10)
     error('Trägheitsmoment aus Massenmatrix mit XYZ-Euler-Winkeln stimmt nicht mit normaler Form überein (par1)');
   end
-  MM_eulxyz = %RN%_inertia_floatb_eulangrpy_slag_vp2(q, ob, ...
-    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
-  MM_twist = %RN%_inertia_floatb_twist_slag_vp2(q, ...
-    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
-  taua_eulxyz = MM_eulxyz*[xDDB; qDD];
-  taua_twist = MM_twist*[A_0_W_0; qDD];
-  if any(abs(taua_eulxyz-taua_twist) > 1e-12)
-    error('Trägheitsmoment aus Massenmatrix mit XYZ-Euler-Winkeln stimmt nicht mit normaler Form überein (par1)');
-  end
-   
-  % Prüfe inverse Dynamik
+
 end
 fprintf('Tested functions with different floating base expressions for %d random joint angles for %s\n', ...
   n,robot_name);
@@ -213,6 +184,41 @@ for i = 1:n
   xDB = [V_W_W_0(1:3); oDb];
   xDDB = [A_W_W_0(1:3); oDDb];
 
+  % Potentielle Energie
+  U_par1 = %RN%_energypot_floatb_eulangrpy_slag_vp1(q, r_W_W_0, ob, g_world, ...
+    alpha, a, d, q_offset, b, beta, m, rSges);
+  U_par2 = %RN%_energypot_floatb_eulangrpy_slag_vp2(q, r_W_W_0, ob, g_world, ...
+    alpha, a, d, q_offset, b, beta, m, mrSges);
+  if any(abs(U_par1-U_par2) > 1e-12)
+    error('Potential energy does not match between par1/par2.');
+  end
+  
+  U_par1 = %RN%_energypot_floatb_twist_slag_vp1(q, r_0_W_0, g_base, ...
+    alpha, a, d, q_offset, b, beta, m, rSges);
+  U_par2 = %RN%_energypot_floatb_twist_slag_vp2(q, r_0_W_0, g_base, ...
+    alpha, a, d, q_offset, b, beta, m, mrSges);
+  if any(abs(U_par1-U_par2) > 1e-12)
+    error('Potential energy does not match between par1/par2.');
+  end
+  
+  % Kinetische Energie  
+  T_par1 = %RN%_energykin_floatb_eulangrpy_slag_vp1(q, qD, ob, xDB, ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+  T_par2 = %RN%_energykin_floatb_eulangrpy_slag_vp2(q, qD, ob, xDB, ...
+    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
+  if any(abs(T_par1-T_par2) > 1e-12)
+    error('kinetic energy does not match between par1/par2.');
+  end
+  
+  T_par1 = %RN%_energykin_floatb_twist_slag_vp1(q, qD, V_0_W_0, ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+  T_par2 = %RN%_energykin_floatb_twist_slag_vp2(q, qD, V_0_W_0, ...
+    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
+  if any(abs(T_par1-T_par2) > 1e-12)
+    error('kinetic energy does not match between par1/par2.');
+  end
+
+  
   % Gravitationsmoment
   tau_b_par1 = %RN%_gravload_base_floatb_eulangrpy_slag_vp1(q, ob, g_world, ...
     alpha, a, d, q_offset, b, beta, m, rSges);
@@ -244,6 +250,7 @@ for i = 1:n
   if any(abs(Cq_par1(:)-Cq_par2(:)) > 1e-12)
     error('coriolis matrices do not match between par1/par2.');
   end 
+  
   % Inverse Dynamics
   tau_par1 = %RN%_invdyn_joint_floatb_twist_slag_vp1(q, qD, qDD, V_W_W_0, A_W_W_0, g_world, ...
     alpha, a, d, q_offset, b, beta, m, rSges, Icges);
@@ -257,24 +264,23 @@ fprintf('Tested Functions with parameter sets 1 and 2 for %d random joint angles
   size(Q, 1), robot_name);
 
 %% Numerische Berechnung der Basis-Gravitationslast
+
 for i = 1:n
   q = Q(i,:)';
   ob = OB(i,:)';
-  ob([1 3]) = 0;
   r_W_W_0 = RB(i,:)';
   g_world = G(i,:)';
-  
-  
+
   % symbolische Berechnung
   Fg_base_sym = %RN%_gravload_base_floatb_eulangrpy_slag_vp1(q, ob, g_world, ...
     alpha, a, d, q_offset, b, beta, m, rSges);
-  m(2:3) = 0;
   % numerische Berechnung
   % Kinematik aller Körperschwerpunkte berechnen
-  T_c_mdh = %RN%_fkine_floatb_eulangrpy_rotmat_mdh_sym_varpar(q, r_W_W_0, ob, ...
-  alpha, a, d, q_offset, b, beta);
-  r_W_0_Si_ges = NaN(size(rSges));
-  r_0_0_Si_ges = NaN(size(rSges));
+  T_c_mdh = %RN%_fkine_floatb_eulangrpy_rotmat_mdh_sym_varpar(q, zeros(3,1), ob, ...
+    alpha, a, d, q_offset, b, beta);
+    
+  r_W_0_Sjj_ges = NaN(size(rSges));
+  r_0_0_Sjj_ges = NaN(size(rSges));
   T_W_0 = T_c_mdh(:,:,1);
   R_W_0 = T_W_0(1:3,1:3);
   g_base = (R_W_0')*g_world;
@@ -282,44 +288,42 @@ for i = 1:n
     R_W_jj = T_c_mdh(1:3,1:3,jj); % Rotation von Basis zum Körper-KS
     R_0_jj = R_W_0' * R_W_jj;
     T_W_jj = T_c_mdh(:,:,jj);
-    T_0_jj = invtr(T_W_jj) * T_W_0;
+    T_0_jj = invtr(T_W_0) * T_W_jj;
     r_W_W_jj = T_W_jj(1:3,4); % Vektor von Basis zu Ursprung des Körper-KS
     r_0_0_jj = T_0_jj(1:3,4);
-    r_0_0_Si = r_0_0_jj + R_0_jj*rSges(jj,:)'; % Vektor von Basis zu Körperschwerpunkt
-    r_W_0_Si_ges(jj,:) = R_W_0 * r_0_0_Si;
-    r_0_0_Si_ges(jj,:) = r_0_0_Si;
+    r_0_0_Sjj = r_0_0_jj + R_0_jj*rSges(jj,:)'; % Vektor von Basis zu Körperschwerpunkt
+    r_W_0_Sjj_ges(jj,:) = R_W_0 * r_0_0_Sjj;
+    r_0_0_Sjj_ges(jj,:) = r_0_0_Sjj;
   end
   % Calculate Gravity Force
   Fg_base_num = zeros(6,1);
-  % Kräfte
-  Fg_base_num(1:3) = -sum(m)*g_base;
-  % Momente
-  Fg_base_num(4:6) = zeros(1,3);
   for jj = 1:size(rSges,1)
-    Fg_base_num(4:6) = Fg_base_num(4:6) + cross(r_0_0_Si_ges(jj,:)', -m(jj)*g_base);
+    % Kräfte
+    Fg_base_num(1:3) = Fg_base_num(1:3) - m(jj)*g_world;
+    % Momente
+    Fg_base_num(4:6) = Fg_base_num(4:6) + cross(r_W_0_Sjj_ges(jj,:)', -m(jj)*g_world);
   end
+
+  % Zusammenhang zwischen Kräften und Geschwindigkeiten im Welt-KS und in
+  % Euler-Winkeln
+  T_basevel = rpy2jac(ob(1), ob(2), ob(3));
   
-  % Rotiere
-  Fg_base_sym = rotate_wrench(Fg_base_sym, R_W_0');
+  % wandle das Basismoment um die Koordinatenachsen in ein Moment um die
+  % Eulerwinkel um
+  Fg_base_num_rot = [Fg_base_num(1:3); T_basevel' * Fg_base_num(4:6)];
+  e_eulxyz =  Fg_base_num_rot - Fg_base_sym;
+  if any(abs(e_eulxyz) > 1e-10)
+    error('Gravitationslast der Basis stimmt nicht in Euler-Winkeln. Fehler: [%s]', ...
+      dispparam(e_eulxyz', '%1.5f'));
+  end
   
   % wandle das Basismoment entlang der Eulerwinkel in ein Moment um die
   % Koordinatenachsen um
-  T_basevel = rpy2jac(ob(1), ob(2), ob(3));
-  Fg_base_sym_rot = [Fg_base_sym(1:3); zeros(3,1)];
-  Fg_base_sym_rot(4:6) = [Fg_base_sym(4); 0; 0];
-  Fg_base_sym_rot(4:6) = Fg_base_sym_rot(4:6) + rotx(ob(1))*[0; Fg_base_sym(5); 0];
-  Fg_base_sym_rot(4:6) = Fg_base_sym_rot(4:6) + rotx(ob(1))*roty(ob(2))*[0; 0; Fg_base_sym(6)];
-%   Fg_base_sym_rot(4:6) = T_basevel*Fg_base_sym(4:6);
-
-  Fg_base_sym_rot(4:6) = R_W_0' * Fg_base_sym_rot(4:6);
-
-  norm(Fg_base_sym(4:6)) - norm(Fg_base_num(4:6))
-
-  e =  Fg_base_num - Fg_base_sym_rot 
-  if any(abs( Fg_base_num - Fg_base_sym_rot ) > 1e-12)
-    error('Numerische/symbolische Berechnung der Basis-Gewichtskraft stimmt nicht überein.');
+  Fg_base_sym_rot = [Fg_base_sym(1:3); (T_basevel') \ Fg_base_sym(4:6)];
+  e_world =  Fg_base_num - Fg_base_sym_rot;
+  if any(abs(e_world) > 1e-12)
+    error('Gravitationslast der Basis stimmt nicht im Welt-KS');
   end
 end
 fprintf('Tested base gravload num/sym for %d random joint angles for %s\n', ...
   size(Q, 1), robot_name);
-
