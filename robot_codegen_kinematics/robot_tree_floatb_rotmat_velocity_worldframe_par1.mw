@@ -89,8 +89,8 @@
         <Metadata-attribute name="Subject" value="&lt;default&gt;"/>
         <Metadata-attribute name="Author" value="&lt;default&gt;"/>
         <Metadata-attribute name="Item List" value="true"/>
-        <Metadata-attribute name="Title" value="&lt;default&gt;"/>
         <Metadata-attribute name="Keywords" value="&lt;default&gt;"/>
+        <Metadata-attribute name="Title" value="&lt;default&gt;"/>
     </Metadata-tag>
 </Metadata-table>
 <Task-table>
@@ -334,9 +334,9 @@ save omega_W_i, rD_W_i, rD_W_Si, sprintf(&quot;../codeexport/%s_velocity_worldfr
 <Group labelreference="L1665" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(convert_t_s(omega_W_i), sprintf(&quot;../codeexport/%s_velocity_omegai0_floatb_%s_wworldframe_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
+  MatlabExport(convert_t_s(omega_W_i), sprintf(&quot;../codeexport/%s_velocity_omegai0_floatb_%s_worldframe_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
   MatlabExport(convert_t_s(rD_W_i), sprintf(&quot;../codeexport/%s_velocity_rDi0_floatb_%s_worldframe_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
-  MatlabExport(convert_t_s(rD_W_Si), sprintf(&quot;../codeexport/%s_velocity_rDSi0_floatb_%s_wworldframe_par1_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
+  MatlabExport(convert_t_s(rD_W_Si), sprintf(&quot;../codeexport/%s_velocity_rDSi0_floatb_%s_worldframe_par1_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
   <Font encoding="UTF-8">printf(&quot;Geschwindigkeiten in Matlab exportiert. %s\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Font>
 end if:</Text-field>
 </Input>

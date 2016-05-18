@@ -101,9 +101,9 @@ save omega_W_i, rD_W_i, rD_W_Si, sprintf("../codeexport/%s_velocity_worldframe_f
 printf("Maple-Ausdrücke exportiert. %s\n", FormatTime("%Y-%m-%d %H:%M:%S")):
 # Matlab Export
 if codegen_act then
-  MatlabExport(convert_t_s(omega_W_i), sprintf("../codeexport/%s_velocity_omegai0_floatb_%s_wworldframe_matlab.m", robot_name, base_method_name), codegen_opt):
+  MatlabExport(convert_t_s(omega_W_i), sprintf("../codeexport/%s_velocity_omegai0_floatb_%s_worldframe_matlab.m", robot_name, base_method_name), codegen_opt):
   MatlabExport(convert_t_s(rD_W_i), sprintf("../codeexport/%s_velocity_rDi0_floatb_%s_worldframe_matlab.m", robot_name, base_method_name), codegen_opt):
-  MatlabExport(convert_t_s(rD_W_Si), sprintf("../codeexport/%s_velocity_rDSi0_floatb_%s_wworldframe_par1_matlab.m", robot_name, base_method_name), codegen_opt):
+  MatlabExport(convert_t_s(rD_W_Si), sprintf("../codeexport/%s_velocity_rDSi0_floatb_%s_worldframe_par1_matlab.m", robot_name, base_method_name), codegen_opt):
   printf("Geschwindigkeiten in Matlab exportiert. %s\n", FormatTime("%Y-%m-%d %H:%M:%S")):
 end if:
 
