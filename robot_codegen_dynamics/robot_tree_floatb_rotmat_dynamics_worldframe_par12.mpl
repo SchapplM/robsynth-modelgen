@@ -24,8 +24,14 @@ with(ArrayTools):
 with(codegen):
 with(CodeGeneration):
 with(StringTools):
-codegen_act := true:
+# Einstellungen für Code-Export: Optimierungsgrad (2=höchster) und Aktivierung jedes Terms.
 codegen_opt := 2:
+codeexport_grav := true: 
+codeexport_corvec := true:
+codeexport_cormat := true:
+codeexport_inertia := true:
+codeexport_inertiaD := true:
+codeexport_invdyn := true:
 read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s": 
 read "../helper/proc_MatlabExport":
@@ -71,15 +77,15 @@ save taug_s, sprintf("../codeexport/%s_gravload_par%d_maple.m", robot_name, code
 # Matlab Export
 # Belastung der Basis (ist falsch für floatb_twist, da das Moment durch diese Wahl der verallgemeinerten Koordinaten (floatb_twist) nicht berechnet werden kann!)
 # Ist korrekt für floatb_eulangrpy
-if codegen_act then
+if codeexport_grav then
   MatlabExport(taug_s(1..6), sprintf("../codeexport/%s_base_gravload_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
 # Belastung der Gelenke
-if codegen_act then
+if codeexport_grav then
   MatlabExport(taug_s(7..N), sprintf("../codeexport/%s_joint_gravload_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
 # Kompletter Vektor
-if codegen_act then
+if codeexport_grav then
   MatlabExport(taug_s(1..N), sprintf("../codeexport/%s_gravload_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
 # Mass Matrix
@@ -92,10 +98,10 @@ for i to N do
   end do:
 end do:
 # Matlab Export
-if codegen_act then
+if codeexport_inertia then
   MatlabExport(MM_s(1..N,1..N), sprintf("../codeexport/%s_inertia_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
-if codegen_act then
+if codeexport_inertia then
   MatlabExport(MM_s(7..N,1..6), sprintf("../codeexport/%s_inertia_joint_base_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
 # Gelenk-Massenmatrix.
@@ -104,7 +110,7 @@ MMjj_s := MM_s(7..N,7..N):
 for i from 1 to NB do
   MMjj_s := subs({X_base_s[i,1]=0},MMjj_s):
 end do:
-if codegen_act then
+if codeexport_inertia then
   MatlabExport(MMjj_s, sprintf("../codeexport/%s_inertia_joint_joint_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
 # Mass Matrix Time Derivative
@@ -113,10 +119,10 @@ MM_t := convert_s_t(MM_s):
 MMD_t := diff~(MM_t, t):
 MMD_s := convert_t_s(MMD_t):
 # Matlab Export
-if codegen_act then
+if codeexport_inertiaD then
   MatlabExport(MMD_s[1..N,1..N], sprintf("../codeexport/%s_inertia_time_derivative_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
-if codegen_act then
+if codeexport_inertiaD then
   MatlabExport(MMD_s[7..N,1..6], sprintf("../codeexport/%s_inertia_joint_base_time_derivative_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
 MMDjj_s := MMD_s(7..N,7..N):
@@ -126,7 +132,7 @@ end do:
 for i from 1 to 6 do
   MMDjj_s := subs({V_base_s[i,1]=0},MMDjj_s):
 end do:
-if codegen_act then
+if codeexport_inertiaD then
   MatlabExport(MMDjj_s, sprintf("../codeexport/%s_inertia_joint_joint_time_derivative_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
 # Coriolis Vector
@@ -135,17 +141,19 @@ tauCC_s := dTdqDdt_s-dTdq_s:
 for i to N do 
   tauCC_s := subs({qDD_s(i, 1) = 0}, tauCC_s):
 end do:
-for i to N do 
-  MatlabExport(tauCC_s(i), sprintf("../codeexport/%s_coriolisvec_floatb_%s_%d_par%d_matlab.m", robot_name, base_method_name, i, codegen_dynpar), codegen_opt):
-end do:
+if codeexport_corvec then
+  for i to N do 
+    MatlabExport(tauCC_s(i), sprintf("../codeexport/%s_coriolisvec_floatb_%s_%d_par%d_matlab.m", robot_name, base_method_name, i, codegen_dynpar), codegen_opt):
+  end do:
+end if:
 # Matlab Export: Floating base
-if codegen_act then
+if codeexport_corvec then
   MatlabExport(tauCC_s[1..6], sprintf("../codeexport/%s_coriolisvec_base_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
-if codegen_act then
+if codeexport_corvec then
   MatlabExport(tauCC_s[7..N], sprintf("../codeexport/%s_coriolisvec_joint_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
-if codegen_act then
+if codeexport_corvec then
   MatlabExport(tauCC_s[1..N], sprintf("../codeexport/%s_coriolisvec_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
 # Matlab Export: Fixed base
@@ -156,7 +164,7 @@ end do:
 for i from 1 to 6 do
   tauCC_s_fixb := subs({V_base_s[i,1]=0},tauCC_s_fixb):
 end do:
-if codegen_act then
+if codeexport_corvec then
   MatlabExport(tauCC_s_fixb[7..N], sprintf("../codeexport/%s_coriolisvec_joint_fixb_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt):
 end if:
 # Coriolis Matrix
@@ -177,10 +185,10 @@ for i  from 1 to N do
   end do:
 end do:
 # Matlab Export: Floating base
-if codegen_act then
+if codeexport_cormat then
   MatlabExport(Cqs[1..N,1..N], sprintf("../codeexport/%s_coriolismat_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
-if codegen_act then
+if codeexport_cormat then
   MatlabExport(Cqs[7..N,1..N], sprintf("../codeexport/%s_coriolismat_joint_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
 # Matlab Export: Fixed base
@@ -191,20 +199,20 @@ end do:
 for i from 1 to 6 do
   Cqs_fixb := subs({V_base_s[i,1]=0},Cqs_fixb):
 end do:
-if codegen_act then
+if codeexport_cormat then
   MatlabExport(Cqs_fixb[7..N,7..N], sprintf("../codeexport/%s_coriolismat_joint_fixb_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt):
 end if:
 # Joint Torques
 tau := dTdqDdt_s-dTdq_s+dUdq_s:
 # Matlab Export: Floating base
 # Berechnung der Basis-Belastung ist für manche Basis-Darstellungen falsch (siehe oben unter Gravitationslast).
-if codegen_act then
+if codeexport_invdyn then
   MatlabExport(tau, sprintf("../codeexport/%s_invdyn_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), true):
 end if:
-if codegen_act then
+if codeexport_invdyn then
   MatlabExport(tau[1..6], sprintf("../codeexport/%s_invdyn_base_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
-if codegen_act then
+if codeexport_invdyn then
   MatlabExport(tau[7..N], sprintf("../codeexport/%s_invdyn_joint_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
 # Matlab Export: Fixed base
@@ -216,7 +224,7 @@ for i from 1 to 6 do
   taus_fixb := subs({V_base_s[i,1]=0},taus_fixb):
   taus_fixb := subs({VD_base_s[i,1]=0},taus_fixb):
 end do:
-if codegen_act then
+if codeexport_invdyn then
   MatlabExport(taus_fixb[7..N], sprintf("../codeexport/%s_invdyn_fixb_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt):
 end if:
 
