@@ -105,7 +105,7 @@ ylabel('phiDD');grid on;
 
 E_minmax = minmax( sum(sl.E([1,end],:), 2) );
 E_diff = E_minmax(1) - E_minmax(2);
-if abs(E_diff) > 1e-8
+if abs(E_diff) > 1e-6
   error('Nicht energiekonsistent');
 else
   fprintf('Energiekonsistent\n');
