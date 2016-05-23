@@ -4,7 +4,7 @@
 % Moritz Schappler, schappler@irt.uni-hannover.de, 2016-04
 % (c) Institut für Regelungstechnik, Universität Hannover
 
-NJ = 2;
+NJ = %NJ%;
 robot_name = '%RN%';
 
 %% Init
@@ -18,15 +18,15 @@ KinPar_mdh = struct('a', a, 'd', d, 'alpha', alpha, ...
 DynPar1 = struct('m', m, 'r_S', rSges, 'I_S', Icges);
 
 %% Anfangswerte
-qJ_t0 = rand(2,1)*10;
-qJD_t0 = rand(2,1)*10;
+qJ_t0 = rand(NJ,1)*10;
+qJD_t0 = rand(NJ,1)*10;
 g_world = [0;0;-9.81];
 phi_base_t0 = rand(3,1)*pi/10;
 phiD_base_t0 = rand(3,1)*pi/10;
 r_base_t0 = zeros(3,1);
 rD_base_t0 = rand(3,1);
 %% Dämpfung
-d = zeros(2,1);
+d = zeros(NJ,1);
 
 %% Simulink-Eingangsdaten
   

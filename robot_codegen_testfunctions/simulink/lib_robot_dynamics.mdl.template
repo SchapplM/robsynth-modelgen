@@ -6109,7 +6109,7 @@ Library {
 	  Position		  [70, 233, 100, 247]
 	  ZOrder		  61
 	  IconDisplay		  "Port number"
-	  PortDimensions	  "2"
+	  PortDimensions	  "NJ"
 	}
 	Block {
 	  BlockType		  Constant
@@ -6371,7 +6371,7 @@ Library {
 	  Position		  [695, 93, 725, 107]
 	  ZOrder		  63
 	  IconDisplay		  "Port number"
-	  PortDimensions	  "2"
+	  PortDimensions	  "NJ"
 	}
 	Block {
 	  BlockType		  Outport
@@ -6381,7 +6381,7 @@ Library {
 	  ZOrder		  64
 	  Port			  "2"
 	  IconDisplay		  "Port number"
-	  PortDimensions	  "2"
+	  PortDimensions	  "NJ"
 	}
 	Block {
 	  BlockType		  Outport
@@ -6391,7 +6391,7 @@ Library {
 	  ZOrder		  65
 	  Port			  "3"
 	  IconDisplay		  "Port number"
-	  PortDimensions	  "2"
+	  PortDimensions	  "NJ"
 	}
 	Line {
 	  Name			  "tau_g"
@@ -6655,7 +6655,7 @@ Library {
 	  Position		  [70, 233, 100, 247]
 	  ZOrder		  61
 	  IconDisplay		  "Port number"
-	  PortDimensions	  "2"
+	  PortDimensions	  "NJ"
 	}
 	Block {
 	  BlockType		  Constant
@@ -6917,7 +6917,7 @@ Library {
 	  Position		  [695, 93, 725, 107]
 	  ZOrder		  63
 	  IconDisplay		  "Port number"
-	  PortDimensions	  "2"
+	  PortDimensions	  "NJ"
 	}
 	Block {
 	  BlockType		  Outport
@@ -6927,7 +6927,7 @@ Library {
 	  ZOrder		  64
 	  Port			  "2"
 	  IconDisplay		  "Port number"
-	  PortDimensions	  "2"
+	  PortDimensions	  "NJ"
 	}
 	Block {
 	  BlockType		  Outport
@@ -6937,7 +6937,7 @@ Library {
 	  ZOrder		  65
 	  Port			  "3"
 	  IconDisplay		  "Port number"
-	  PortDimensions	  "2"
+	  PortDimensions	  "NJ"
 	}
 	Line {
 	  Name			  "tau_g"
