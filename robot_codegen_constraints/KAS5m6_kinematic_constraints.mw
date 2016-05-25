@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="18" minor="0"/>
+<Version major="18" minor="2"/>
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="true" autoexpanding_sections="true">
 </View-Properties>
@@ -103,9 +103,9 @@ Modell m6:
 <Font encoding="UTF-8">Setze die Zwangsbedingung (Zahnradkopplung) in die bereits berechneten Zwangsbedingungen f\303\274r das KAS5_m4 ein
 </Font>
 <Font encoding="UTF-8">Berechnung der Kopplung der Zahnr\303\244der am Ellenbogen
-
-Vorlage f\303\274r dieses Skript:
-KAS5_m5_sym_codegen_kinematik_parallelstruktur.mw</Font></Text-field>
+</Font>
+<Font encoding="UTF-8">Vorlage f\303\274r dieses Skript:
+</Font>KAS5_m5_sym_codegen_kinematik_parallelstruktur.mw</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L17" drawlabel="true">
@@ -221,7 +221,7 @@ end proc:</Text-field>
 </Group>
 <Group view="code" labelreference="L2026" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">qJs_KAS5m4m6subs:=Matrix(7, 1, [qJs1_m6, qJs2_m6, qJs3_m6, qJs4_m6, qJs5_m6, qJs5_m6+delta18s, qJs6_m6]):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">qJs_KAS5m4m6subs:=Matrix(7, 1, [qJs1_m6, qJs2_m6, qJs3_m6, qJs4_m6, qJs5_m6, qJs5_m6+delta18s-qJs4_m6, qJs6_m6]):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L2019" drawlabel="true">

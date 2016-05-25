@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="18" minor="0"/>
+<Version major="18" minor="2"/>
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="true" autoexpanding_sections="true">
 </View-Properties>
@@ -218,7 +218,7 @@ end proc:</Text-field>
 </Group>
 <Group view="code" labelreference="L2026" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">qJs_KAS5m3m5subs:=Matrix(7, 1, [qJs1_m5, qJs2_m5, qJs3_m5, qJs4_m5, qJs4_m5+delta18s, qJs5_m5, 0]):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">qJs_KAS5m3m5subs:=Matrix(7, 1, [qJs1_m5, qJs2_m5, qJs3_m5, qJs4_m5, qJs4_m5-qJs3_m5+delta18s, qJs5_m5, 0]):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L2019" drawlabel="true">
@@ -226,32 +226,6 @@ end proc:</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_subsexp_KAS5m5 := subs_q_m3_m5(wpar_subsexp_KAS5m3):
 wpar_qs_KAS5m5 := subs_q_m3_m5(wpar_qs_KAS5m3):
 lpar_qs_KAS5m5 := subs_q_m3_m5(lpar_qs_KAS5m3):</Text-field>
-</Input>
-</Group>
-<Group view="code" labelreference="L2022" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">\303\204ndere die Anzahl der Vektoreintr\303\244ge, falls notwendig.
-F\303\274r KAS5_m5 wurde ein zus\303\244tzlicher Winkel delta18s definiert. In den gespeicherten Ausdr\303\274cken ist dieser nicht enthalten.
-TODO: Diesen Teil entfernen, wenn nicht mehr ben\303\266tigt.</Font></Text-field>
-</Input>
-</Group>
-<Group view="code" labelreference="L2020" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if RowDimension(wpar_qs_KAS5m5) = 23 then
-  wpar_qs_KAS5m5_neu := Matrix(24,1): # Einsetzen in neue Matrix wesentlich schneller als stapeln in einer Gleichung.
-  wpar_qs_KAS5m5_neu(1..22,1) := wpar_qs_KAS5m5(1..22,1):
-  wpar_qs_KAS5m5_neu(23,1) := delta18s:
-  wpar_qs_KAS5m5_neu(24,1) := wpar_qs_KAS5m5(23,1):
-
-  wpar_subsexp_KAS5m5_neu := Matrix(48,2):
-  wpar_subsexp_KAS5m5(1..44,1..2) := wpar_subsexp_KAS5m5(1..44,1..2):
-  <Font encoding="UTF-8"># Ersetzungsausdruck f\303\274r delta18 nicht notwendig.</Font>
-  wpar_subsexp_KAS5m5_neu(47..48,1..2) := wpar_subsexp_KAS5m5(45..46,1..2):
-  
-<Font encoding="UTF-8">  # Ersetzung der urspr\303\274nglichen Ausdr\303\274cke
-</Font>  wpar_qs_KAS5m5 := wpar_qs_KAS5m5_neu:
-  wpar_subsexp_KAS5m5 := wpar_subsexp_KAS5m5_neu:
-end if:</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
