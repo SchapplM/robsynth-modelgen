@@ -124,21 +124,40 @@ Modell m6:
 </Group>
 <Group view="code" labelreference="L1913" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(RealDomain):
-with(LinearAlgebra):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(LinearAlgebra):
 with(StringTools):</Text-field>
 </Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2076" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_act := true:
+codegen_opt := 1:</Text-field>
+</Input>
 </Group>
+<Group view="code" labelreference="L2078" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read irt_maple_repo_path:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2077" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;%s/helper/proc_MatlabExport&quot;, maple_repo_path):</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1574" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read proc_MatlabExport:
-read proc_convert_s_t:
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read proc_convert_s_t:
 read proc_convert_t_s: </Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1800" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">read proc_subs_wpar_exp:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2079" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(RealDomain):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1573" drawlabel="true">
@@ -230,6 +249,11 @@ end proc:</Text-field>
 wpar_qs_KAS5m6 := subs_q_m4_m6(wpar_qs_KAS5m4):
 lpar_qs_KAS5m6 := subs_q_m4_m6(lpar_qs_KAS5m4):</Text-field>
 </Input>
+</Group>
+<Group view="code" labelreference="L2060" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">qJs_KAS5m4m6subs</Text-field>
+</Input>
 </Group></Presentation-Block>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
@@ -281,14 +305,34 @@ lpar_qt := convert_s_t(lpar_qs):</Text-field>
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">save wpar_qs, wpar_qt, lpar_qs, lpar_qt, wpar_subsexp, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple_inert.m&quot;, KAS_version, KAS_modell):</Text-field>
 </Input>
-</Group></Presentation-Block>
-</Section><Presentation-Block>
-<Group view="code" labelreference="L2031" drawlabel="true">
+</Group>
+<Group view="code" labelreference="L2062" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Zwangsbedingungen der Parallelstruktur von KAS5_m4 nach KAS5_m6 angepasst. %s\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Font></Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Zwangsbedingungen der Parallelstruktur von KAS5_m4 nach KAS5_m6 angepasst und gespeichert. %s\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Font></Text-field>
+</Input>
+</Group></Presentation-Block>
+</Section>
+<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
+<Text-field style="Heading 1" layout="Heading 1"><Font encoding="UTF-8">Exportieren der Ersetzungsausdr\303\274cke</Font></Text-field></Title><Presentation-Block>
+<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L2061" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Zum Testen</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2064" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Exportieren des vollst\303\244ndigen Ausdruckes</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L2059" drawlabel="true">
+<Group view="code" labelreference="L2065" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
+  MatlabExport(wpar_subsexp(..,2), sprintf(&quot;../codeexport/KAS5_m6_kinematik_parallel_wpar_subsexp_matlab.m&quot;), codegen_opt):
+end if:</Text-field>
+</Input>
+</Group></Presentation-Block>
+</Section><Presentation-Block>
+<Group view="code" labelreference="L2083" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>

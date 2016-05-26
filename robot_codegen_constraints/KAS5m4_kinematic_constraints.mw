@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="18" minor="0"/>
+<Version major="18" minor="2"/>
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="true" autoexpanding_sections="true">
 </View-Properties>
@@ -149,13 +149,18 @@ with(CodeGeneration):</Text-field>
 </Group>
 <Group view="code" labelreference="L2010" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_active := false:
-codegen_opt := true:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_active := true:
+codegen_opt := 1: # Geringerer Optimierungsgrad. Sonst zu lange.</Text-field>
 </Input>
 </Group>
-<Group view="code" labelreference="L2008" drawlabel="true">
+<Group view="code" labelreference="L2073" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read proc_MatlabExport:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read irt_maple_repo_path:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2074" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;%s/helper/proc_MatlabExport&quot;, maple_repo_path):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L2009" drawlabel="true">
@@ -1380,7 +1385,7 @@ end do:</Text-field>
 <Group labelreference="L2051" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to RowDimension(wpar_subsexp) do
-  MatlabExport(wpar_subsexp(i,2), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wparsubsexp_%d_matlab_opt.m&quot;, i), true):
+  MatlabExport(wpar_subsexp(i,2), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wparsubsexp_%d_matlab_opt.m&quot;, i), 1):
 end do:</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
@@ -1392,8 +1397,7 @@ end do:</Text-field>
 <Group view="code" labelreference="L1971" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_active then
-  MatlabExport(wpar_subsexp, sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_subsexp_matlab_noopt.m&quot;), false):
-  MatlabExport(wpar_subsexp, sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_subsexp_matlab_opt.m&quot;), true):
+  MatlabExport(wpar_subsexp(..,2), sprintf(&quot;../codeexport/KAS5_m4_kinematik_parallel_wpar_subsexp_matlab.m&quot;), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -1460,6 +1464,11 @@ end do:</Text-field>
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">save wpar_qs, wpar_qt, lpar_qs, lpar_qt, wpar_subsexp, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple.m&quot;, KAS_version, KAS_modell):</Text-field>
 </Input>
+</Group>
+<Group view="code" labelreference="L2075" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple.m&quot;, KAS_version, KAS_modell):</Text-field>
+</Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1953" drawlabel="true">
 <Input>
@@ -1487,7 +1496,7 @@ end do:</Text-field>
 <Group labelreference="L1957" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to RowDimension(wpar_s) do
-  MatlabExport(wpar_qs(i), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_%d_matlab_opt.m&quot;, i), true):
+  MatlabExport(wpar_qs(i), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_%d_matlab_opt.m&quot;, i), codegen_opt):
 end do:</Text-field>
 </Input>
 </Group>
@@ -1505,11 +1514,6 @@ end do:</Text-field>
 <Group labelreference="L2003" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
-</Input>
-</Group></Presentation-Block><Presentation-Block>
-<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L2" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Worksheet>
