@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="18" minor="0"/>
+<Version major="18" minor="2"/>
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="true" autoexpanding_sections="true">
 </View-Properties>
@@ -146,32 +146,53 @@ with(LinearAlgebra):
 with(codegen):
 with(CodeGeneration):</Text-field>
 </Input>
-</Group>
-<Group view="code" labelreference="L2010" drawlabel="true">
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2105" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_active := false:
-codegen_opt := true:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_act := true:
+codegen_opt := 1: # Geringerer Optimierungsgrad. Sonst zu lange.</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2104" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read irt_maple_repo_path: # Pfad zum IRT-Maple-Repo</Text-field>
 </Input>
 </Group>
-<Group view="code" labelreference="L2008" drawlabel="true">
+<Group labelreference="L2107" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read proc_MatlabExport:</Text-field>
+<Text-field style="Text" layout="Normal">Funktionen aus IRT-Maple-Repo</Text-field>
 </Input>
 </Group>
-<Group view="code" labelreference="L2009" drawlabel="true">
+<Group labelreference="L2101" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">with(RealDomain): # Schr\303\244nkt alle Funktionen auf den reellen Bereich ein. Muss nach Definition von MatlabExport kommen. Sonst geht dieses nicht.</Font></Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;%s/helper/proc_MatlabExport&quot;, maple_repo_path):</Text-field>
 </Input>
 </Group>
-<Group view="code" labelreference="L1574" drawlabel="true">
+<Group view="code" labelreference="L2100" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read proc_rotx: 
-read proc_roty: 
-read proc_rotz: 
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;%s/transformation/proc_rotx&quot;, maple_repo_path):
+read sprintf(&quot;%s/transformation/proc_roty&quot;, maple_repo_path):
+read sprintf(&quot;%s/transformation/proc_rotz&quot;, maple_repo_path):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L2103" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Funktionen aus 3.Arm-Repo</Text-field>
+</Input>
+</Group>
+<Group labelreference="L2106" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read proc_convert_s_t:
+read proc_convert_t_s:
 read proc_subs_wpar_exp:
 read proc_intersect_circle:</Text-field>
 </Input>
-</Group>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2102" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">with(RealDomain): # Schr\303\244nkt alle Funktionen auf den reellen Bereich ein. Muss nach Definition von MatlabExport kommen. Sonst geht dieses nicht.</Font></Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
 <Group labelreference="L1573" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">KAS_version := 5:
@@ -180,9 +201,7 @@ KAS_modell := 3:</Text-field>
 </Group>
 <Group labelreference="L1572" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read proc_convert_s_t:
-read proc_convert_t_s: 
-read &quot;../codeexport/KAS5_m3_definitions&quot;:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../codeexport/KAS5_m3_definitions&quot;:</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1569" drawlabel="true">
@@ -1378,7 +1397,7 @@ end do:</Text-field>
 </Group>
 <Group view="code" labelreference="L1971" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_active then
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
   MatlabExport(wpar_subsexp, sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_subsexp_matlab_noopt.m&quot;), false):
   MatlabExport(wpar_subsexp, sprintf(&quot;../codeexport/KAS5_kinematik_parallel_wpar_subsexp_matlab_opt.m&quot;), true):
 end if:</Text-field>
@@ -1496,7 +1515,7 @@ end do:</Text-field>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L2" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
+<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Worksheet>

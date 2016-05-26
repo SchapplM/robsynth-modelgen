@@ -128,8 +128,7 @@ with(StringTools):</Text-field>
 </Group>
 <Group view="code" labelreference="L1574" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read proc_MatlabExport:
-read proc_convert_s_t:
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read proc_convert_s_t:
 read proc_convert_t_s: </Text-field>
 </Input>
 </Group>
@@ -288,6 +287,11 @@ lpar_qt := convert_s_t(lpar_qs):</Text-field>
 <Group labelreference="L2059" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L2" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Worksheet>

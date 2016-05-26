@@ -149,32 +149,48 @@ with(CodeGeneration):</Text-field>
 </Group>
 <Group view="code" labelreference="L2010" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_active := true:
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_act := true:
 codegen_opt := 1: # Geringerer Optimierungsgrad. Sonst zu lange.</Text-field>
 </Input>
-</Group>
-<Group view="code" labelreference="L2073" drawlabel="true">
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2095" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read irt_maple_repo_path:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read irt_maple_repo_path: # Pfad zum IRT-Maple-Repo</Text-field>
 </Input>
 </Group>
-<Group view="code" labelreference="L2074" drawlabel="true">
+<Group labelreference="L2093" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Funktionen aus IRT-Maple-Repo</Text-field>
+</Input>
+</Group>
+<Group labelreference="L2097" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;%s/helper/proc_MatlabExport&quot;, maple_repo_path):</Text-field>
 </Input>
 </Group>
+<Group view="code" labelreference="L2098" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;%s/transformation/proc_rotx&quot;, maple_repo_path):
+read sprintf(&quot;%s/transformation/proc_roty&quot;, maple_repo_path):
+read sprintf(&quot;%s/transformation/proc_rotz&quot;, maple_repo_path):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L2096" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Funktionen aus 3.Arm-Repo</Text-field>
+</Input>
+</Group>
+<Group labelreference="L2094" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read proc_convert_s_t:
+read proc_convert_t_s:
+read proc_subs_wpar_exp:
+read proc_intersect_circle:</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L2009" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">with(RealDomain): # Schr\303\244nkt alle Funktionen auf den reellen Bereich ein. Muss nach Definition von MatlabExport kommen. Sonst geht dieses nicht.</Font></Text-field>
-</Input>
-</Group>
-<Group view="code" labelreference="L1574" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read proc_rotx: 
-read proc_roty: 
-read proc_rotz: 
-read proc_subs_wpar_exp:
-read proc_intersect_circle:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1573" drawlabel="true">
@@ -185,9 +201,7 @@ KAS_modell := 4:</Text-field>
 </Group>
 <Group labelreference="L1572" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read proc_convert_s_t:
-read proc_convert_t_s: 
-read &quot;../codeexport/KAS5_m4_definitions&quot;:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../codeexport/KAS5_m4_definitions&quot;:</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1569" drawlabel="true">
@@ -1396,7 +1410,7 @@ end do:</Text-field>
 </Group>
 <Group view="code" labelreference="L1971" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_active then
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
   MatlabExport(wpar_subsexp(..,2), sprintf(&quot;../codeexport/KAS5_m4_kinematik_parallel_wpar_subsexp_matlab.m&quot;), codegen_opt):
 end if:</Text-field>
 </Input>
@@ -1514,6 +1528,11 @@ end do:</Text-field>
 <Group labelreference="L2003" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L2" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Worksheet>
