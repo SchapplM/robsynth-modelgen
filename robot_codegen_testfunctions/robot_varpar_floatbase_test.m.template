@@ -26,19 +26,13 @@ for i = 1:n
   V_W_W_0 = VB(i,:)';
   A_W_W_0 = AB(i,:)';
   
-  T_basevel = rpy2jac(ob(1), ob(2), ob(3));
-  
   % Winkelgeschwindigkeit in RPY-Winkel-Zeitableitung umwandeln
-  % T_basevel = rpy2jac(ob(1), ob(2), ob(3)); % wird nicht benötigt
-  oDb = OBD(i,:)'; %#ok<NASGU>
-  oDDb = OBDD(i,:)'; %#ok<NASGU>
+  T_basevel = rpy2jac(ob(1), ob(2), ob(3));
+  oDb = OBD(i,:)';
+  oDDb = OBDD(i,:)';
   
-  % Die Prüfung der Terme mit vollständiger Basis-Drehgeschwindigkeit ist nicht erfolgreich.
-  % Es ist unklar, ob die Basis-Terme mit Methode "twist" falsch sind...
-  V_W_W_0(4:6) = 0;
-  A_W_W_0(4:6) = 0;
-  oDb = zeros(3,1);
-  oDDb = zeros(3,1);
+  % Die Methode "twist" ist falsch für die Berechnung von Coriolis- und
+  % Trägheitskräften. Diese können hier daher nicht getestet werden.
   
   xDB = [V_W_W_0(1:3); oDb];
   xDDB = [A_W_W_0(1:3); oDDb];
@@ -81,39 +75,6 @@ for i = 1:n
     error('Gravitationsmoment mit XYZ-Euler-Winkeln stimmt nicht mit normaler Form überein (par1)');
   end
   
-  % Prüfe Coriolismoment
-  % --> Prüfung der Basiskräfte ergibt keinen Sinn, da das Coriolismoment dort bei
-  % Basisdarstellung "twist" falsch ist
-  tauc_eulxyz = %RN%_coriolisvec_joint_floatb_eulangrpy_slag_vp1(q, qD, ob, xDB, ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
-  tauc_twist = %RN%_coriolisvec_joint_floatb_twist_slag_vp1(q, qD, V_0_W_0,...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
-  if any(abs( tauc_eulxyz-tauc_twist ) > 1e-12)
-    error('Coriolismoment mit XYZ-Euler-Winkeln stimmt nicht mit normaler Form überein (par1)');
-  end
-  
-  % Prüfe Massenmatrix
-  MM_eulxyz = %RN%_inertia_floatb_eulangrpy_slag_vp1(q, ob, ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
-  MM_twist = %RN%_inertia_floatb_twist_slag_vp1(q, ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
-  taua_eulxyz = MM_eulxyz*[xDDB; qDD];
-  taua_twist = MM_twist*[A_0_W_0; qDD];
-  % Rotiere das Beschleunigungsmoment ins Basis-KS ("twist")
-  taua_eulxyz_rot = taua_eulxyz;
-  taua_eulxyz_rot(1:3) = R_W_0'*taua_eulxyz(1:3);
-  taua_eulxyz_rot(4:6) = R_W_0'*(T_basevel' \ taua_eulxyz(4:6));
-  e_twist = taua_eulxyz_rot - taua_twist;
-  
-  % Rotiere das Beschleunigungsmoment ins Euler-KS ("eulxyz")
-  taua_twist_rot = taua_twist;
-  taua_twist_rot(1:3) = R_W_0*taua_twist(1:3);
-  taua_twist_rot(4:6) = T_basevel' * ( R_W_0*taua_twist(4:6));
-  e_eulxyz = taua_twist_rot - taua_eulxyz;
-  if any(abs( e_eulxyz ) > 1e-10) || any(abs( e_twist ) > 1e-10)
-    error('Trägheitsmoment aus Massenmatrix mit XYZ-Euler-Winkeln stimmt nicht mit normaler Form überein (par1)');
-  end
-
 end
 fprintf('Tested functions with different floating base expressions for %d random joint angles for %s\n', ...
   n,robot_name);
@@ -127,7 +88,7 @@ for i = 1:n
   % base velocity set to zero
   cq_fixb = %RN%_coriolisvec_joint_fixb_slag_vp1(q, qD, ...
     alpha, a, d, q_offset, b, beta, m, rSges, Icges);
-  cq_floatb = %RN%_coriolisvec_joint_floatb_twist_slag_vp1(q, qD, zeros(6,1), ...
+  cq_floatb = %RN%_coriolisvec_joint_floatb_eulangrpy_slag_vp1(q, qD, zeros(3,1), zeros(6,1), ...
     alpha, a, d, q_offset, b, beta, m, rSges, Icges);
   if any(abs(cq_fixb - cq_floatb) > 1e-12)
     error('coriolis vector from floating base does not match with fixed base.');
@@ -137,7 +98,7 @@ for i = 1:n
   % base velocity set to zero
   Cq_fixb = %RN%_coriolismat_joint_fixb_slag_vp1(q, qD, ...
     alpha, a, d, q_offset, b, beta, m, rSges, Icges);
-  Cq_floatb = %RN%_coriolismat_joint_floatb_twist_slag_vp1(q, qD, zeros(6,1), ...
+  Cq_floatb = %RN%_coriolismat_joint_floatb_eulangrpy_slag_vp1(q, qD, zeros(3,1), zeros(6,1), ...
     alpha, a, d, q_offset, b, beta, m, rSges, Icges);
   Delta = Cq_fixb - Cq_floatb(:,7:end);
   if any(abs(Delta(:)) > 1e-12)
@@ -157,9 +118,9 @@ for i = 1:n
   g_base = (R_W_0')*g_world;
   % Drehmoment aus Gravitation im Vergleich mit Drehmoment aus
   % Basis-Beschleunigung
-  Mqb = %RN%_inertia_joint_base_floatb_twist_slag_vp1(q, ...
+  Mqb = %RN%_inertia_joint_base_floatb_eulangrpy_slag_vp1(q, ob, ...
     alpha, a, d, q_offset, b, beta, m, rSges, Icges);
-  tau_acc_floatb = (Mqb*[-g_base; zeros(3,1);]);
+  tau_acc_floatb = (Mqb*[-g_world; zeros(3,1);]);
   tau_acc_grav = %RN%_gravload_joint_floatb_twist_slag_vp1(q, g_base, ...
     alpha, a, d, q_offset, b, beta, m, rSges);
   if any(abs(tau_acc_floatb - tau_acc_grav) > 1e-12)
@@ -220,41 +181,48 @@ for i = 1:n
 
   
   % Gravitationsmoment
-  tau_b_par1 = %RN%_gravload_base_floatb_eulangrpy_slag_vp1(q, ob, g_world, ...
+  taug_b_par1 = %RN%_gravload_base_floatb_eulangrpy_slag_vp1(q, ob, g_world, ...
     alpha, a, d, q_offset, b, beta, m, rSges);
   taug_b_par2 = %RN%_gravload_base_floatb_eulangrpy_slag_vp2(q, ob, g_world, ...
     alpha, a, d, q_offset, b, beta, m, mrSges);
-  if any(abs(tau_b_par1-taug_b_par2) > 1e-12)
+  if any(abs(taug_b_par1-taug_b_par2) > 1e-12)
     error('base gravitation force vectors do not match between par1/par2.');
+  end
+  taug_j_par1 = %RN%_gravload_joint_floatb_eulangrpy_slag_vp1(q, ob, g_world, ...
+    alpha, a, d, q_offset, b, beta, m, rSges);
+  taug_j_par2 = %RN%_gravload_joint_floatb_eulangrpy_slag_vp2(q, ob, g_world, ...
+    alpha, a, d, q_offset, b, beta, m, mrSges);
+  if any(abs(taug_j_par1-taug_j_par2) > 1e-12)
+    error('joint gravitation force vectors do not match between par1/par2.');
   end
   
   % Coriolis
-  tauc_j_par1 = %RN%_coriolisvec_joint_floatb_twist_slag_vp1(q, qD, V_W_W_0,...
+  tauc_j_par1 = %RN%_coriolisvec_joint_floatb_eulangrpy_slag_vp1(q, qD, ob, xDB,...
     alpha, a, d, q_offset, b, beta, m, rSges, Icges);
-  tauc_j_par2 = %RN%_coriolisvec_joint_floatb_twist_slag_vp2(q, qD, V_W_W_0, ...
+  tauc_j_par2 = %RN%_coriolisvec_joint_floatb_eulangrpy_slag_vp2(q, qD, ob, xDB, ...
     alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
   if any(abs(tauc_j_par1-tauc_j_par2) > 1e-12)
-    error('coriolis vectors do not match between par1/par2.');
+    error('joint coriolis vectors do not match between par1/par2.');
   end
   tauc_g_par1 = %RN%_coriolisvec_floatb_eulangrpy_slag_vp1(q, qD, ob, xDB,...
     alpha, a, d, q_offset, b, beta, m, rSges, Icges);
   tauc_g_par2 = %RN%_coriolisvec_floatb_eulangrpy_slag_vp2(q, qD, ob, xDB, ...
     alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
   if any(abs(tauc_g_par1-tauc_g_par2) > 1e-12)
-    error('coriolis vectors do not match between par1/par2.');
+    error('base+joint coriolis vectors do not match between par1/par2.');
   end
-  Cq_par1 = %RN%_coriolismat_joint_floatb_twist_slag_vp1(q, qD, V_W_W_0, ...
+  Cq_par1 = %RN%_coriolismat_joint_floatb_eulangrpy_slag_vp1(q, qD, ob, xDB, ...
     alpha, a, d, q_offset, b, beta, m, rSges, Icges);
-  Cq_par2 = %RN%_coriolismat_joint_floatb_twist_slag_vp2(q, qD, V_W_W_0, ...
+  Cq_par2 = %RN%_coriolismat_joint_floatb_eulangrpy_slag_vp2(q, qD, ob, xDB, ...
     alpha, a, d, q_offset, b, beta, m, mrSges, Ifges); 
   if any(abs(Cq_par1(:)-Cq_par2(:)) > 1e-12)
     error('coriolis matrices do not match between par1/par2.');
   end 
   
   % Inverse Dynamics
-  tau_par1 = %RN%_invdyn_joint_floatb_twist_slag_vp1(q, qD, qDD, V_W_W_0, A_W_W_0, g_world, ...
+  tau_par1 = %RN%_invdyn_joint_floatb_eulangrpy_slag_vp1(q, qD, qDD, ob, xDB, xDDB, g_world, ...
     alpha, a, d, q_offset, b, beta, m, rSges, Icges);
-  tau_par2 = %RN%_invdyn_joint_floatb_twist_slag_vp2(q, qD, qDD, V_W_W_0, A_W_W_0, g_world, ...
+  tau_par2 = %RN%_invdyn_joint_floatb_eulangrpy_slag_vp2(q, qD, qDD, ob, xDB, xDDB, g_world, ...
     alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
   if any(abs(tau_par1-tau_par2) > 1e-12)
     error('inverse dynamics joint torque vectors do not match between par1/par2.');
@@ -327,3 +295,4 @@ for i = 1:n
 end
 fprintf('Tested base gravload num/sym for %d random joint angles for %s\n', ...
   size(Q, 1), robot_name);
+

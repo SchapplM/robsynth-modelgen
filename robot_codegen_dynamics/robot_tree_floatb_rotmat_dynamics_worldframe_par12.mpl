@@ -76,8 +76,9 @@ taug_s := dUdq_s:
 save taug_s, sprintf("../codeexport/%s_gravload_par%d_maple.m", robot_name, codegen_dynpar):
 # Matlab Export
 # Belastung der Basis (ist falsch für floatb_twist, da das Moment durch diese Wahl der verallgemeinerten Koordinaten (floatb_twist) nicht berechnet werden kann!)
-# Ist korrekt für floatb_eulangrpy
-if codeexport_grav then
+# Ist korrekt für floatb_eulangrpy.
+# Die Berechnungen werden deshalb nicht für floatb_twist durchgeführt.
+if codeexport_grav and not(base_method_name="twist") then
   MatlabExport(taug_s(1..6), sprintf("../codeexport/%s_base_gravload_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
 # Belastung der Gelenke
@@ -85,7 +86,7 @@ if codeexport_grav then
   MatlabExport(taug_s(7..N), sprintf("../codeexport/%s_joint_gravload_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
 # Kompletter Vektor
-if codeexport_grav then
+if codeexport_grav and not(base_method_name="twist") then
   MatlabExport(taug_s(1..N), sprintf("../codeexport/%s_gravload_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
 # Mass Matrix
@@ -98,10 +99,10 @@ for i to N do
   end do:
 end do:
 # Matlab Export
-if codeexport_inertia then
+if codeexport_inertia and not(base_method_name="twist") then
   MatlabExport(MM_s(1..N,1..N), sprintf("../codeexport/%s_inertia_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
-if codeexport_inertia then
+if codeexport_inertia and not(base_method_name="twist") then
   MatlabExport(MM_s(7..N,1..6), sprintf("../codeexport/%s_inertia_joint_base_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
 # Gelenk-Massenmatrix.
@@ -119,10 +120,10 @@ MM_t := convert_s_t(MM_s):
 MMD_t := diff~(MM_t, t):
 MMD_s := convert_t_s(MMD_t):
 # Matlab Export
-if codeexport_inertiaD then
+if codeexport_inertiaD and not(base_method_name="twist") then
   MatlabExport(MMD_s[1..N,1..N], sprintf("../codeexport/%s_inertia_time_derivative_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
-if codeexport_inertiaD then
+if codeexport_inertiaD and not(base_method_name="twist") then
   MatlabExport(MMD_s[7..N,1..6], sprintf("../codeexport/%s_inertia_joint_base_time_derivative_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
 MMDjj_s := MMD_s(7..N,7..N):
@@ -141,19 +142,19 @@ tauCC_s := dTdqDdt_s-dTdq_s:
 for i to N do 
   tauCC_s := subs({qDD_s(i, 1) = 0}, tauCC_s):
 end do:
-if codeexport_corvec then
+if codeexport_corvec and not(base_method_name="twist") then
   for i to N do 
     MatlabExport(tauCC_s(i), sprintf("../codeexport/%s_coriolisvec_floatb_%s_%d_par%d_matlab.m", robot_name, base_method_name, i, codegen_dynpar), codegen_opt):
   end do:
 end if:
 # Matlab Export: Floating base
-if codeexport_corvec then
+if codeexport_corvec and not(base_method_name="twist") then
   MatlabExport(tauCC_s[1..6], sprintf("../codeexport/%s_coriolisvec_base_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
-if codeexport_corvec then
+if codeexport_corvec and not(base_method_name="twist") then
   MatlabExport(tauCC_s[7..N], sprintf("../codeexport/%s_coriolisvec_joint_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
-if codeexport_corvec then
+if codeexport_corvec and not(base_method_name="twist") then
   MatlabExport(tauCC_s[1..N], sprintf("../codeexport/%s_coriolisvec_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
 # Matlab Export: Fixed base
@@ -185,10 +186,10 @@ for i  from 1 to N do
   end do:
 end do:
 # Matlab Export: Floating base
-if codeexport_cormat then
+if codeexport_cormat and not(base_method_name="twist") then
   MatlabExport(Cqs[1..N,1..N], sprintf("../codeexport/%s_coriolismat_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
-if codeexport_cormat then
+if codeexport_cormat and not(base_method_name="twist") then
   MatlabExport(Cqs[7..N,1..N], sprintf("../codeexport/%s_coriolismat_joint_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
 # Matlab Export: Fixed base
@@ -206,13 +207,13 @@ end if:
 tau := dTdqDdt_s-dTdq_s+dUdq_s:
 # Matlab Export: Floating base
 # Berechnung der Basis-Belastung ist für manche Basis-Darstellungen falsch (siehe oben unter Gravitationslast).
-if codeexport_invdyn then
+if codeexport_invdyn and not(base_method_name="twist") then
   MatlabExport(tau, sprintf("../codeexport/%s_invdyn_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), true):
 end if:
-if codeexport_invdyn then
+if codeexport_invdyn and not(base_method_name="twist") then
   MatlabExport(tau[1..6], sprintf("../codeexport/%s_invdyn_base_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
-if codeexport_invdyn then
+if codeexport_invdyn and not(base_method_name="twist") then
   MatlabExport(tau[7..N], sprintf("../codeexport/%s_invdyn_joint_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
 # Matlab Export: Fixed base
