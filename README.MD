@@ -16,7 +16,7 @@ Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
 
 ## Quellen
 
-* [KhalilKle1987] Khalil, W. and Kleinfinger, J.-F.: Minimum operations and minimum parameters of the dynamic models of tree structure robots (1987)
+* [KhalilKle1986] Khalil, W. and Kleinfinger, J.-F.: A new geometric notation for open and closed-loop robots (1986)
 
 ## Starten der Codeerstellung <a name="codeerstellung"></a> 
 
@@ -24,7 +24,7 @@ Der vollständige Ablauf zur Generierung von Matlab-Dynamikfunktionen wird in di
 
 ### Vorbereitung
 
-Die MDH-Parameter (modifizierte Denavit-Hartenberg Parameter nach [KhalilKle1987]) müssen in die Umgebungsvariablendatei eingetragen werden. Als Vorlage können die Dateien in robot_codegen_examples dienen.
+Die MDH-Parameter (modifizierte Denavit-Hartenberg Parameter nach [KhalilKle1986]) müssen in die Umgebungsvariablendatei eingetragen werden. Als Vorlage können die Dateien in robot_codegen_examples dienen.
 
         robot_env
 
