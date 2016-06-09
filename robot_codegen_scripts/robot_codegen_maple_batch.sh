@@ -1,6 +1,10 @@
 #!/bin/bash 
 # Starte alle Maple-Skripte nacheinander in der richtigen Reihenfolge
 #
+# Argumente:
+# --fixb_only
+#   Nur Berechnung der Fixed-Base Funktionen.
+#
 # Dieses Skript im Ordner ausführen, in dem es im Repo liegt
 
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-05
@@ -9,12 +13,34 @@
 repo_pfad=$(pwd)/..
 echo $repo_pfad
 
+# Standard-Einstellungen
+CG_FIXBONLY=0
+
+# Argumente verarbeiten
+# http://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
+while [[ $# > 0 ]]
+do
+key="$1"
+case $key in
+    --fixb_only)
+    CG_FIXBONLY=1
+    ;;
+    *)
+            # unknown option
+    ;;
+esac
+shift # past argument or value
+done
+
+
+
 # Dynamik-Skripte für Parametersätze 1 und 2 vorbereiten
 cp $repo_pfad/robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par12.mpl $repo_pfad/robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1.mpl
 cp $repo_pfad/robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par12.mpl $repo_pfad/robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2.mpl
 sed -i "s/codegen_dynpar := 1:/codegen_dynpar := 2:/g" $repo_pfad/robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2.mpl
 
 # Liste mit Maple-Skripten in der richtigen Reihenfolge
+# Skripte für Fixed-Base-Modellierung
 dateiliste_kindyn="
     /robot_codegen_definitions/robot_tree_floatb_twist_definitions.mpl
     /robot_codegen_kinematics/robot_tree_floatb_rotmat_mdh_kinematics.mpl
@@ -26,6 +52,18 @@ dateiliste_kindyn="
     /robot_codegen_energy/robot_tree_floatb_rotmat_energy_linkframe_par2.mpl
     /robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1.mpl
     /robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2.mpl
+"
+
+# Skripte für Regressorform
+dateiliste_kindyn="$dateiliste_kindyn
+    /robot_codegen_energy/robot_chain_fixb_rotmat_energy_regressor.mpl
+    /robot_codegen_dynamics/robot_chain_fixb_rotmat_dynamics_regressor.mpl
+"
+
+echo $CG_FIXBONLY
+if ! [ "$CG_FIXBONLY" == "1" ]; then
+# Skripte für Floating-Base-Modellierung
+dateiliste_kindyn="$dateiliste_kindyn
     /robot_codegen_definitions/robot_tree_floatb_eulangrpy_definitions.mpl
     /robot_codegen_kinematics/robot_tree_floatb_rotmat_mdh_kinematics.mpl
     /robot_codegen_kinematics/robot_tree_floatb_rotmat_kinematics_com_worldframe_par1.mpl
@@ -36,9 +74,10 @@ dateiliste_kindyn="
     /robot_codegen_energy/robot_tree_floatb_rotmat_energy_linkframe_par2.mpl
     /robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1.mpl
     /robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2.mpl
-    /robot_codegen_energy/robot_chain_fixb_rotmat_energy_regressor.mpl
-    /robot_codegen_dynamics/robot_chain_fixb_rotmat_dynamics_regressor.mpl
 "
+fi;
+
+
 
 # Alle Maple-Dateien der Reihe nach ausführen
 cd /opt/maple18/bin
@@ -52,4 +91,3 @@ do
   ./maple <<< "currentdir(\"$dir\"): read \"$filename\";"
 
 done
-

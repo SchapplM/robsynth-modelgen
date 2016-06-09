@@ -2,6 +2,10 @@
 # Starte alle Maple-Skripte in der richtigen Reihenfolge
 # Führe so viele Berechnungen wie möglich parallel aus
 #
+# Argumente:
+# --fixb_only
+#   Nur Berechnung der Fixed-Base Funktionen.
+#
 # Dieses Skript im Ordner ausführen, in dem es im Repo liegt
 
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-05
@@ -9,6 +13,27 @@
 
 repo_pfad=$(pwd)/..
 echo $repo_pfad
+
+
+# Standard-Einstellungen
+CG_FIXBONLY=0
+
+# Argumente verarbeiten
+# http://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
+while [[ $# > 0 ]]
+do
+key="$1"
+case $key in
+    --fixb_only)
+    CG_FIXBONLY=1
+    ;;
+    *)
+            # unknown option
+    ;;
+esac
+shift # past argument or value
+done
+
 
 # Dynamik-Skripte für Parametersätze 1 und 2 vorbereiten
 cp $repo_pfad/robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par12.mpl $repo_pfad/robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1.mpl
@@ -33,7 +58,14 @@ do
   done
 done
 
-basemethodenames=( twist eulangrpy )
+if [ "$CG_FIXBONLY" == "1" ]; then
+  # Berechne alles nur für fixed-base Modellierung (dafür reicht die Methode "twist")
+  basemethodenames=( twist )
+else
+  # Berechne auch die floating-base Modellierung
+  basemethodenames=( twist eulangrpy )
+fi;
+
 for basemeth in "${basemethodenames[@]}"
 do
 	dateiliste_kin="
@@ -43,39 +75,39 @@ do
 	"
 
 	dateiliste_vel="
- 			robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_worldframe_par1.mpl
-			robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_linkframe.mpl
+	    robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_worldframe_par1.mpl
+	    robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_linkframe.mpl
 	"
 	dateiliste_en="
-			robot_codegen_energy/robot_tree_floatb_rotmat_energy_worldframe_par1.mpl
-			robot_codegen_energy/robot_tree_floatb_rotmat_energy_worldframe_par2.mpl
-			robot_codegen_energy/robot_tree_floatb_rotmat_energy_linkframe_par2.mpl
+      robot_codegen_energy/robot_tree_floatb_rotmat_energy_worldframe_par1.mpl
+      robot_codegen_energy/robot_tree_floatb_rotmat_energy_worldframe_par2.mpl
+      robot_codegen_energy/robot_tree_floatb_rotmat_energy_linkframe_par2.mpl
 	"
 	dateiliste_dyn="
-		robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1_corvec.mpl
-		robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1_cormat.mpl
-		robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1_grav.mpl
-		robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1_inertia.mpl
-		robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1_inertiaD.mpl
-		robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1_invdyn.mpl
-		robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2_corvec.mpl
-		robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2_cormat.mpl
-		robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2_grav.mpl
-		robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2_inertia.mpl
-		robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2_inertiaD.mpl
-		robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2_invdyn.mpl
+		  robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1_corvec.mpl
+		  robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1_cormat.mpl
+		  robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1_grav.mpl
+		  robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1_inertia.mpl
+		  robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1_inertiaD.mpl
+		  robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1_invdyn.mpl
+		  robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2_corvec.mpl
+		  robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2_cormat.mpl
+		  robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2_grav.mpl
+		  robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2_inertia.mpl
+		  robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2_inertiaD.mpl
+		  robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2_invdyn.mpl
 	"
 
   # Alle Arbeitsblätter parallel ausführen, wo dies möglich ist
   cd /opt/maple18/bin
   for wskin in ${dateiliste_kin[@]}
   do
-    # echo $wskin
     mpldat_full=$repo_pfad/$wskin
     filename="${mpldat_full##*/}"
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
-		./maple -q <<< "currentdir(\"$dir\"): read \"$filename\";"
+    ./maple -q <<< "currentdir(\"$dir\"): read \"$filename\";"
   done
+  echo "FERTIG mit Kinematik für ${basemeth}"
   for wsvel in ${dateiliste_vel[@]}
   do
     mpldat_full=$repo_pfad/$wsvel
