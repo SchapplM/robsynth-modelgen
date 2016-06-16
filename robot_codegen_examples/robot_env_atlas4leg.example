@@ -2,7 +2,7 @@
 # Atlas Bein v4
 #
 # Quellen
-# [4] Khalil, W. and Kleinfinger, J.-F.: Minimum operations and minimum parameters of the dynamic models of tree structure robots (1987)
+# [KhalilKle1986] Khalil, W. and Kleinfinger, J.-F.: A new geometric notation for open and closed-loop robots (1986)
 
 robot_name := "atlas4_leg":
 
