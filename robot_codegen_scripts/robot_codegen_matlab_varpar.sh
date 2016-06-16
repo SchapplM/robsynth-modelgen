@@ -31,3 +31,6 @@ source robot_codegen_matlab_dynamics_floatb_varpar.sh
 
 # Erstelle Matlab-Funktionen der parameterlinearen Dynamik
 source robot_codegen_matlab_paramlin_varpar.sh
+
+# Erstelle Matlab-Funktionen aus numerischer Berechnung
+source robot_codegen_matlab_num_varpar.sh
