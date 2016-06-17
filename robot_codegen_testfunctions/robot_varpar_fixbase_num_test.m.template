@@ -1,0 +1,377 @@
+% Test function for numeric calculations of dynamics
+% * Symbolic calculations from maple (..._slag_...)
+% * numeric general robotics functions from irt-matlab-toolbox (robot_tree_ ... _nnew...)
+% * numeric robot-specific functions from template of this toolbox (%RN%__...nnew_...)
+% with fixed base model
+
+% Moritz Schappler, schappler@irt.uni-hannover.de, 2016-06
+% (c) Institut für Regelungstechnik, Universität Hannover
+
+clc
+clear
+
+NJ = %NJ%;
+robot_name = '%RN%';
+
+testfunctions_path_init
+
+%% Parameter
+%RN%_varpar_testfunctions_parameter
+MPV = %RN%_convert_par2_MPV(alpha, a, d, q_offset, b, beta, ...
+  m, mrSges, Ifges);
+%% Test gegen numerische Funktionen der fixed base Dynamik
+for i = 1:n
+  qJ = Q(i,:)';
+  qJD = QD(i,:)';
+  qJDD = QDD(i,:)';
+  g_base = G(i,:)';
+  
+  % Gravitation
+  taug_sym = %RN%_gravload_joint_floatb_twist_slag_vp1(qJ, g_base, ...
+    alpha, a, d, q_offset, b, beta, m, rSges);
+  taug_num1 = robot_tree_invdyn_floatb_eulangrpy_nnew_vp1(qJ, zeros(NJ,1), zeros(NJ,1), zeros(3,1), zeros(6,1), [-g_base;zeros(3,1)], ...
+    alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
+  if any( abs(taug_sym-taug_num1(7:end)) > 1e-10)
+    error('Fehler in numerisch berechneter Gravitationslast (Methode 1): Stimmt nicht mit symbolisch berechneter überein.');
+  end
+  taug_num2 = robot_tree_gravload_floatb_eulangrpy_nnew_vp1(qJ, zeros(3,1), g_base, ...
+    alpha, a, d, q_offset, b, beta, v, m, rSges);
+  if any( abs(taug_sym-taug_num2(7:end)) > 1e-10)
+    error('Fehler in numerisch berechneter Gravitationslast (Methode 2): Stimmt nicht mit symbolisch berechneter überein.');
+  end
+  taug_num3 = %RN%_invdyn_floatb_eulangrpy_nnew_vp1(qJ, zeros(NJ,1), zeros(NJ,1), zeros(3,1), zeros(6,1), [-g_base;zeros(3,1)], ...
+    alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
+  if any( abs(taug_sym-taug_num3(7:end)) > 1e-10)
+    error('Fehler in numerisch berechneter Gravitationslast (Methode 3): Stimmt nicht mit symbolisch berechneter überein.');
+  end
+  taug_num4 = %RN%_gravload_floatb_eulangrpy_nnew_vp1(qJ, zeros(3,1), g_base, ...
+    alpha, a, d, q_offset, b, beta, v, m, rSges);
+  if any( abs(taug_sym-taug_num4(7:end)) > 1e-10)
+    error('Fehler in numerisch berechneter Gravitationslast (Methode 4): Stimmt nicht mit symbolisch berechneter überein.');
+  end
+
+  % Coriolis
+  tauc_sym = %RN%_coriolisvec_joint_fixb_slag_vp1(qJ, qJD, ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+  tauc_num1 = robot_tree_invdyn_floatb_eulangrpy_nnew_vp1(qJ, qJD, zeros(NJ,1), zeros(3,1), zeros(6,1), zeros(6,1), ...
+    alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
+  if any( abs(tauc_sym-tauc_num1(7:end)) > 1e-10)
+    error('Fehler in numerisch berechneter Corioliskraft (Methode 1): Stimmt nicht mit symbolisch berechneter überein.');
+  end
+  tauc_num2 = %RN%_invdyn_floatb_eulangrpy_nnew_vp1(qJ, qJD, zeros(NJ,1), zeros(3,1), zeros(6,1), zeros(6,1), ...
+    alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
+  if any( abs(tauc_sym-tauc_num2(7:end)) > 1e-10)
+    error('Fehler in numerisch berechneter Corioliskraft (Methode 2): Stimmt nicht mit symbolisch berechneter überein.');
+  end
+  tauc_num3 = robot_tree_coriolisvec_floatb_eulangrpy_nnew_vp1(qJ, qJD, zeros(3,1), zeros(6,1), ...
+    alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
+  if any( abs(tauc_sym-tauc_num3(7:end)) > 1e-10)
+    error('Fehler in numerisch berechneter Corioliskraft (Methode 3): Stimmt nicht mit symbolisch berechneter überein.');
+  end
+
+  % Massenmatrix
+  Mq_sym = %RN%_inertia_joint_slag_vp1(qJ, ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+  Mq_num1 = NaN(NJ,NJ);
+  Mq_num2 = NaN(NJ,NJ);
+  INJ = eye(NJ);
+  for jj = 1:NJ
+    Mq_num1(:,jj) = [zeros(2,6), eye(2)]*robot_tree_invdyn_floatb_eulangrpy_nnew_vp1  (qJ, zeros(NJ,1), INJ(:,jj), zeros(3,1), zeros(6,1), zeros(6,1) , ...
+      alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
+    Mq_num2(:,jj) = [zeros(2,6), eye(2)]*%RN%_invdyn_floatb_eulangrpy_nnew_vp1(qJ, zeros(NJ,1), INJ(:,jj), zeros(3,1), zeros(6,1), zeros(6,1) , ...
+      alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
+  end
+  if any( abs(Mq_num1(:)-Mq_sym(:)) > 1e-10)
+    error('Fehler in numerisch berechneter Massenmatrix (Methode 1): Stimmt nicht mit symbolisch berechneter überein.');
+  end
+  if any( abs(Mq_num2(:)-Mq_sym(:)) > 1e-10)
+    error('Fehler in numerisch berechneter Massenmatrix (Methode 2): Stimmt nicht mit symbolisch berechneter überein.');
+  end
+end
+fprintf('Numerische Dynamikfunktionen (Fixed Base) gegen symbolische erfolgreich getestet\n');
+%% Zeitmessung gegen numerische Funktionen: Gravitation (Fixed Base)
+% Berechne Gravitationslast mit unterschiedlichen Methoden:
+% Symbolisch, numerisch, mit inverser Dynamik und mit Spezialfunktione,
+% kompiliert (mex) und normaler Aufruf
+Mex_Erstellen({'%RN%_gravload_joint_floatb_twist_slag_vp1', ...
+  '%RN%_gravload_joint_floatb_twist_slag_vp2', ...
+  '%RN%_gravload_joint_regmin_slag_vp', ...
+  '%RN%_invdyn_floatb_eulangrpy_nnew_vp1', ...
+  '%RN%_gravload_floatb_eulangrpy_nnew_vp1'});
+n = 2000;
+% Berechne Rechenzeiten. Zeile 1: Normale Funktionen. Zeile 2: Kompilierte Fkt (mex)
+t_ber_g = NaN(2,6);
+tic;
+for i = 1:n
+  taug_sym = %RN%_gravload_joint_floatb_twist_slag_vp1(qJ+i*1e-3, g_base, ...
+    alpha, a, d, q_offset, b, beta, m, rSges);
+end
+t_ber_g(1,1) = toc/n;
+tic;
+for i = 1:n
+  taug_sym = %RN%_gravload_joint_floatb_twist_slag_vp1_mex(qJ+i*1e-3, g_base, ...
+    alpha, a, d, q_offset, b, beta, m, rSges);
+end
+t_ber_g(2,1) = toc/n;
+tic;
+for i = 1:n
+  taug_sym = %RN%_gravload_joint_floatb_twist_slag_vp2(qJ+i*1e-3, g_base, ...
+    alpha, a, d, q_offset, b, beta, m, mrSges);
+end
+t_ber_g(1,2) = toc/n;
+tic;
+for i = 1:n
+  taug_sym = %RN%_gravload_joint_floatb_twist_slag_vp2_mex(qJ+i*1e-3, g_base, ...
+    alpha, a, d, q_offset, b, beta, m, mrSges);
+end
+t_ber_g(2,2) = toc/n;
+tic;
+for i = 1:n
+  t_ber_g(2,2) = toc/n;
+    taug_reg = %RN%_gravload_joint_regmin_slag_vp(qJ+i*1e-3, g_base, ...
+      alpha, a, d, q_offset, b, beta);
+    taug_mpv = taug_reg*MPV;
+end
+t_ber_g(1,3) = toc/n;
+tic;
+for i = 1:n
+  t_ber_g(2,2) = toc/n;
+    taug_reg = %RN%_gravload_joint_regmin_slag_vp_mex(qJ+i*1e-3, g_base, ...
+      alpha, a, d, q_offset, b, beta);
+    taug_mpv = taug_reg*MPV;
+end
+t_ber_g(2,3) = toc/n;
+
+tic;
+for i = 1:n
+  taug_num1 = robot_tree_invdyn_floatb_eulangrpy_nnew_vp1(qJ+i*1e-3, zeros(NJ,1), zeros(NJ,1), zeros(3,1), zeros(6,1), [-g_base;zeros(3,1)], ...
+    alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
+end
+t_ber_g(1,4) = toc/n;
+tic;
+for i = 1:n
+  taug_num2 = robot_tree_gravload_floatb_eulangrpy_nnew_vp1(qJ+i*1e-3, zeros(3,1), g_base, ...
+    alpha, a, d, q_offset, b, beta, v, m, rSges);
+end
+t_ber_g(1,5) = toc/n;
+tic;
+for i = 1:n
+  taug_num3 = %RN%_invdyn_floatb_eulangrpy_nnew_vp1(qJ+i*1e-3, zeros(NJ,1), zeros(NJ,1), zeros(3,1), zeros(6,1), [-g_base;zeros(3,1)], ...
+    alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
+end
+t_ber_g(1,6) = toc/n;
+tic;
+for i = 1:n
+  taug_num3 = %RN%_invdyn_floatb_eulangrpy_nnew_vp1_mex(qJ+i*1e-3, zeros(NJ,1), zeros(NJ,1), zeros(3,1), zeros(6,1), [-g_base;zeros(3,1)], ...
+    alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
+end
+t_ber_g(2,6) = toc/n;
+tic;
+for i = 1:n
+  taug_num4 = %RN%_gravload_floatb_eulangrpy_nnew_vp1(qJ+i*1e-3, zeros(3,1), g_base, ...
+    alpha, a, d, q_offset, b, beta, v, m, rSges);
+end
+t_ber_g(1,7) = toc/n;
+tic;
+for i = 1:n
+  taug_num4 = %RN%_gravload_floatb_eulangrpy_nnew_vp1_mex(qJ+i*1e-3, zeros(3,1), g_base, ...
+    alpha, a, d, q_offset, b, beta, v, m, rSges);
+end
+t_ber_g(2,7) = toc/n;
+
+figure(2);clf;
+set(2, 'Name', 'Fixb_ComputationTime_Comparison');
+subplot(2,4,sprc2no(2,4,1,1));
+bar(t_ber_g(1,:)*1e3); 
+set(gca, 'xticklabel', {'s1/gl','s2/gl','sm/gl','n/id/allg','n/gl/allg','n/id','n/gl'});
+ylabel('t [ms]'); title('gravload');
+subplot(2,4,sprc2no(2,4,2,1));
+bar(t_ber_g(2,:)*1e3); 
+set(gca, 'xticklabel', {'s1/gl','s2/gl','sm/gl','n/id/allg','n/gl/allg','n/id','n/gl'});
+ylabel('t [ms]'); title('gravload (mex)');
+
+%% Zeitmessung gegen numerische Funktionen: Coriolisvektor (Fixed Base)
+% Berechne Gravitationslast mit unterschiedlichen Methoden:
+% Symbolisch, numerisch, mit inverser Dynamik und mit Spezialfunktione,
+% kompiliert (mex) und normaler Aufruf
+Mex_Erstellen({'%RN%_coriolisvec_joint_fixb_slag_vp1', ...
+  '%RN%_coriolisvec_joint_fixb_slag_vp2', ...
+  '%RN%_coriolisvec_joint_fixb_regmin_slag_vp', ...
+  '%RN%_invdyn_floatb_eulangrpy_nnew_vp1'});
+n = 2000;
+
+t_ber_c = NaN(2,4);
+tic;
+for i = 1:n
+  tauc_sym = %RN%_coriolisvec_joint_fixb_slag_vp1(qJ+i*1e-3, qJD,...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+end
+t_ber_c(1,1) = toc/n;
+tic;
+for i = 1:n
+  tauc_sym = %RN%_coriolisvec_joint_fixb_slag_vp1_mex(qJ+i*1e-3, qJD,...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+end
+t_ber_c(2,1) = toc/n;
+tic;
+for i = 1:n
+  tauc_sym = %RN%_coriolisvec_joint_fixb_slag_vp2(qJ+i*1e-3, qJD,...
+    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
+end
+t_ber_c(1,2) = toc/n;
+tic;
+for i = 1:n
+  tauc_sym = %RN%_coriolisvec_joint_fixb_slag_vp2_mex(qJ+i*1e-3, qJD,...
+    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
+end
+t_ber_c(2,2) = toc/n;
+tic;
+for i = 1:n
+  tauc_reg = %RN%_coriolisvec_joint_fixb_regmin_slag_vp(qJ+i*1e-3, qJD, ...
+    alpha, a, d, q_offset, b, beta);
+  tauc_mpv = tauc_reg*MPV;
+end
+t_ber_c(1,3) = toc/n;
+tic;
+for i = 1:n
+  tauc_reg = %RN%_coriolisvec_joint_fixb_regmin_slag_vp_mex(qJ+i*1e-3, qJD, ...
+    alpha, a, d, q_offset, b, beta);
+  tauc_mpv = tauc_reg*MPV;
+end
+t_ber_c(2,3) = toc/n;
+tic;
+for i = 1:n
+  tauc_num1 = robot_tree_invdyn_floatb_eulangrpy_nnew_vp1(qJ+i*1e-3, qJD, zeros(NJ,1), zeros(3,1), zeros(6,1),zeros(6,1), ...
+    alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
+end
+t_ber_c(1,4) = toc/n;
+tic;
+for i = 1:n
+  tauc_num2 = %RN%_invdyn_floatb_eulangrpy_nnew_vp1(qJ+i*1e-3, qJD, zeros(NJ,1), zeros(3,1), zeros(6,1), zeros(6,1), ...
+    alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
+end
+t_ber_c(1,5) = toc/n;
+tic;
+for i = 1:n
+  tauc_num3 = %RN%_invdyn_floatb_eulangrpy_nnew_vp1_mex(qJ+i*1e-3, qJD, zeros(NJ,1), zeros(3,1), zeros(6,1), zeros(6,1), ...
+    alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
+end
+t_ber_c(2,5) = toc/n;
+
+subplot(2,4,sprc2no(2,4,1,2));
+bar(t_ber_c(1,:)*1e3); 
+set(gca, 'xticklabel', {'s1/cv','s2/cv','sm/cv', 'n/id/allg','n/id'});
+ylabel('t [ms]'); title('coriolisvec');
+subplot(2,4,sprc2no(2,4,2,2));
+bar(t_ber_c(2,:)*1e3); 
+set(gca, 'xticklabel', {'s1/cv','s2/cv','sm/cv', 'n/id/allg','n/id'});
+ylabel('t [ms]'); title('coriolisvec (mex)');
+
+%% Zeitmessung gegen numerische Funktionen: Massenmatrix (Fixed Base)
+% Berechne Gravitationslast mit unterschiedlichen Methoden:
+% Symbolisch, numerisch, mit inverser Dynamik und mit Spezialfunktione,
+% kompiliert (mex) und normaler Aufruf
+Mex_Erstellen({'%RN%_inertia_floatb_eulangrpy_slag_vp1', ...
+  '%RN%_inertia_floatb_eulangrpy_slag_vp2', ...
+  '%RN%_invdyn_floatb_eulangrpy_nnew_vp1'});
+n = 200;
+t_ber_M = NaN(2,4);
+tic;
+for i = 1:n
+  Mq_sym = %RN%_inertia_joint_slag_vp1(qJ+1e-3*i, ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+end
+t_ber_M(1,1) = toc/n;
+tic;
+for i = 1:n
+  Mq_sym = %RN%_inertia_joint_slag_vp1_mex(qJ+1e-3*i, ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+end
+t_ber_M(2,1) = toc/n;
+tic;
+for i = 1:n
+  Mq_sym = %RN%_inertia_joint_slag_vp2(qJ+1e-3*i, ...
+    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
+end
+t_ber_M(1,2) = toc/n;
+tic;
+for i = 1:n
+  Mq_sym = %RN%_inertia_joint_slag_vp2_mex(qJ+1e-3*i, ...
+    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
+end
+t_ber_M(2,2) = toc/n;
+tic;
+for i = 1:n
+  Mq_reg = %RN%_inertia_joint_regmin_slag_vp(qJ, ...
+    alpha, a, d, q_offset, b, beta);
+  Mq_mpv_vec = Mq_reg*MPV;
+  Mq_mpv = vec2symmat(Mq_mpv_vec);
+end
+t_ber_M(1,3) = toc/n;
+tic;
+for i = 1:n
+  Mq_reg = %RN%_inertia_joint_regmin_slag_vp_mex(qJ, ...
+    alpha, a, d, q_offset, b, beta);
+  Mq_mpv_vec = Mq_reg*MPV;
+  Mq_mpv = vec2symmat(Mq_mpv_vec);
+end
+t_ber_M(2,3) = toc/n;
+
+tic
+for i = 1:n
+  Mq_num1 = NaN(NJ,NJ);
+  INJ = eye(NJ);
+  for jj = 1:NJ
+    Mq_num1(:,jj) = [zeros(2,6), eye(2)]*robot_tree_invdyn_floatb_eulangrpy_nnew_vp1  (qJ+1e-3*i, zeros(NJ,1), INJ(:,jj), zeros(3,1), zeros(6,1), zeros(6,1) , ...
+      alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
+  end
+end
+t_ber_M(1,4) = toc/n;
+tic
+for i = 1:50
+  Mq_num2 = NaN(NJ,NJ);
+  INJ = eye(NJ);
+  for jj = 1:NJ
+    Mq_num2(:,jj) = [zeros(2,6), eye(2)]*%RN%_invdyn_floatb_eulangrpy_nnew_vp1(qJ+1e-3*i, zeros(NJ,1), INJ(:,jj), zeros(3,1), zeros(6,1), zeros(6,1) , ...
+      alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
+  end
+end
+t_ber_M(1,5) = toc/50;
+tic
+for i = 1:n
+  Mq_num2 = NaN(NJ,NJ);
+  INJ = eye(NJ);
+  for jj = 1:NJ
+    Mq_num2(:,jj) = [zeros(2,6), eye(2)]*%RN%_invdyn_floatb_eulangrpy_nnew_vp1_mex(qJ+1e-3*i, zeros(NJ,1), INJ(:,jj), zeros(3,1), zeros(6,1), zeros(6,1) , ...
+      alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
+  end
+end
+t_ber_M(2,5) = toc/n;
+
+subplot(2,4,sprc2no(2,4,1,3));
+bar(t_ber_M(1,:)*1e3); 
+set(gca, 'xticklabel', {'s1/M','s2/M','sm/M','n/id/allg', 'n/id'});
+ylabel('t [ms]'); title('inertia');
+subplot(2,4,sprc2no(2,4,2,3));
+bar(t_ber_M(2,:)*1e3); 
+set(gca, 'xticklabel', {'s1/M','s2/M','sm/M','n/id/allg', 'n/id'});
+ylabel('t [ms]'); title('inertia (mex)');
+%% Rechenzeit: Vorwärtsdynamik (Fixed Base)
+% Getrennte Betrachtung der inversen Dynamik, da bei numerischer Berechnung
+% Coriolis- und Gravitationsmoment zusammen berechnet werden können
+t_ber_fdyn = NaN(2,3);
+% Alternative 1: Alles symbolisch und kompiliert
+t_ber_fdyn(2,1) = t_ber_g(2,1) + t_ber_c(2,2) + t_ber_M(2,1);
+% Alternative 2: Nur Coriolisvektor numerisch, alles andere symbolisch und
+% kompiliert
+t_ber_fdyn(2,2) = t_ber_g(2,1) + t_ber_c(2,5) + t_ber_M(2,1);
+% Alternative 3: Gravitation und Coriolis in einem numerischen
+% Funktionsaufruf, Massenmatrix symbolisch
+t_ber_fdyn(2,3) =  t_ber_c(2,5) + t_ber_M(2,1);
+
+subplot(2,4,sprc2no(2,4,2,4));
+bar(t_ber_fdyn(2,:)*1e3); 
+set(gca, 'xticklabel', {'s1/s1/s1', 's1/n/s1', 'n/s1'});
+ylabel('t [ms]'); title('fdyn (mex)');
+
+
