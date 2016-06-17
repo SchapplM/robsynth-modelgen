@@ -9,11 +9,8 @@
 %   kinematic parameters
 % 
 % Output:
-% T_c_mdh [4x4x%NL%]
-%   homogenious transformation matrices for each body frame (MDH)
-%   1:  mdh base (link 0) -> mdh link 1
-%   ...
-%   %NL%:  mdh base (link 0) -> mdh link %NL%
+% T_mdh [4x4x%NJ%]
+%   homogenious transformation matrices for joint transformation (MDH)
 
-function T_c_mdh = %FN%(q, ...
+function T_mdh = %FN%(q, ...
   alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh)

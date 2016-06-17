@@ -71,14 +71,9 @@ R_W_0 = rpy2r(phi_base(1), phi_base(2), phi_base(3));
 T_basevel = rpy2jac(phi_base(1), phi_base(2), phi_base(3));
 
 %% Vorwärts-Iteration
-% Positionen
-T_mdh = NaN(4,4,%NJ%);
-for i = 1:%NJ%
-  T_mdh(:,:,i) = trotz(beta_mdh(i)) * ... 
-                     transl([0;0;b_mdh(i)]) * trotx(alpha_mdh(i)) * ...
-                     transl([a_mdh(i);0;0]) * trotz(q(i)+q_offset_mdh(i)) ...
-                     * transl([0;0;d_mdh(i)]);
-end
+% Positionen. Berechne symbolisch (effizienter).
+T_mdh = %RN%_joint_trafo_rotmat_mdh_sym_varpar(q, ...
+  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh);
 
 % Geschwindigkeiten
 v_i_i_ges = NaN(3,%NL%);

@@ -70,13 +70,21 @@ end do:
 # Maple-Export
 save Trf, Trf_c, sprintf("../codeexport/%s_kinematics_floatb_%s_rotmat_maple.m", robot_name, base_method_name):
 save Trf, Trf_c, sprintf("../codeexport/%s_kinematics_floatb_%s_rotmat_maple", robot_name, base_method_name):
-# Export des symbolischen Ausdrucks für alle Transformationsmatrizen auf einmal.
+# Export des symbolischen Ausdrucks für alle kumulierten Transformationsmatrizen auf einmal.
 Trf_c_Export := Matrix((NL)*4, 4):
 for i from 1 to NL do 
   Trf_c_Export((i-1)*4+1 .. 4*i, 1..4) := Trf_c(1..4, 1..4, i):
 end do:
 if codegen_act then
-  MatlabExport(convert_t_s(Trf_c_Export), sprintf("../codeexport/%s_fkine_floatb_%s_rotmat_matlab.m", robot_name, base_method_name), codegen_opt):
+  MatlabExport(convert_t_s(Trf_c_Export), sprintf("../codeexport/%s_fkine_mdh_floatb_%s_rotmat_matlab.m", robot_name, base_method_name), codegen_opt):
+end if:
+# Export des symbolischen Ausdrucks für alle Gelenk-Transformationsmatrizen auf einmal.
+Trf_Export := Matrix((NJ)*4, 4):
+for i from 1 to NJ do 
+  Trf_Export((i-1)*4+1 .. 4*i, 1..4) := Trf(1..4, 1..4, i):
+end do:
+if codegen_act then
+  MatlabExport(convert_t_s(Trf_Export), sprintf("../codeexport/%s_joint_transformation_mdh_rotmat_matlab.m", robot_name), codegen_opt):
 end if:
 # Export des symbolischen Ausdrucks für jede Transformationsmatrix einzeln
 for i from 1 to NL do

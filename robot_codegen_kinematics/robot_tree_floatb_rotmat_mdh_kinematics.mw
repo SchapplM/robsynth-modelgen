@@ -250,7 +250,7 @@ save Trf, Trf_c, sprintf(&quot;../codeexport/%s_kinematics_floatb_%s_rotmat_mapl
 </Group>
 <Group labelreference="L1592" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Export des symbolischen Ausdrucks f\303\274r alle Transformationsmatrizen auf einmal.</Font></Text-field>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Export des symbolischen Ausdrucks f\303\274r alle kumulierten Transformationsmatrizen auf einmal.</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1640" drawlabel="true">
@@ -268,7 +268,31 @@ end do:</Text-field>
 <Group labelreference="L1643" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(convert_t_s(Trf_c_Export), sprintf(&quot;../codeexport/%s_fkine_floatb_%s_rotmat_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
+  MatlabExport(convert_t_s(Trf_c_Export), sprintf(&quot;../codeexport/%s_fkine_mdh_floatb_%s_rotmat_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
+end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1690" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Export des symbolischen Ausdrucks f\303\274r alle Gelenk-Transformationsmatrizen auf einmal.</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1692" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Trf_Export := Matrix((NJ)*4, 4):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1689" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NJ do 
+  Trf_Export((i-1)*4+1 .. 4*i, 1..4) := Trf(1..4, 1..4, i):
+end do:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1691" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
+  MatlabExport(convert_t_s(Trf_Export), sprintf(&quot;../codeexport/%s_joint_transformation_mdh_rotmat_matlab.m&quot;, robot_name), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
