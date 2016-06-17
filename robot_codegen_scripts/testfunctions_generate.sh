@@ -22,6 +22,7 @@ dateiliste_testfunction="
   robot_varpar_floatbase_test.m.template
   robot_varpar_paramlin_test.m.template
   robot_varpar_simulink_test.m.template
+  robot_varpar_floatbase_num_test.m.template
   robot_varpar_testfunctions_parameter.m.template
   robot_test_everything.m.template
   simulink/lib_robot_dynamics.mdl.template
