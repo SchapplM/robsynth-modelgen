@@ -10,6 +10,8 @@ echo "Generiere Testskripte für Matlabfunktionen"
 
 repo_pfad=$(pwd)/..
 testfcn_pfad=$repo_pfad/robot_codegen_testfunctions
+tmp_pfad=$repo_pfad/robot_codegen_scripts/tmp
+
 # Initialisiere Variablen
 source robot_codegen_tmpvar_bash.sh
 source $repo_pfad/robot_codegen_definitions/robot_env.sh
@@ -48,4 +50,34 @@ do
   # Platzhalter in Datei ersetzen
   source robot_codegen_matlabfcn_postprocess.sh $dir/$filename_new 0
 done
+
+
+# Parameter-Generierungsskript anpassen (damit nicht MDH-Parameter mit Zufallswerten belegt sind, die einen bestimmten Wert haben sollen)
+zieldat=$testfcn_pfad/${robot_name}_varpar_testfunctions_parameter.m
+cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
+# Hänge alle Ausdrücke für die MDH-Parameter an und ersetze die Ergebnisvariable
+# So werden nur die Bestandteile übernommen, die Werte enthalten
+cat $repo_pfad/codeexport/${robot_name}_parameters_mdh_d.m >> $zieldat
+varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
+echo "d_mdh = $varname_tmp;" >> $zieldat
+cat $repo_pfad/codeexport/${robot_name}_parameters_mdh_a.m >> $zieldat
+varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
+echo "a_mdh = $varname_tmp;" >> $zieldat
+cat $repo_pfad/codeexport/${robot_name}_parameters_mdh_b.m >> $zieldat
+varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
+echo "b_mdh = $varname_tmp;" >> $zieldat
+cat $repo_pfad/codeexport/${robot_name}_parameters_mdh_beta.m >> $zieldat
+varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
+echo "beta_mdh = $varname_tmp;" >> $zieldat
+cat $repo_pfad/codeexport/${robot_name}_parameters_mdh_alpha.m >> $zieldat
+varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
+echo "alpha_mdh = $varname_tmp;" >> $zieldat
+cat $repo_pfad/codeexport/${robot_name}_parameters_mdh_qoffset.m >> $zieldat
+varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
+echo "q_offset_mdh = $varname_tmp;" >> $zieldat
+cat $repo_pfad/codeexport/${robot_name}_parameters_mdh_v.m >> $zieldat
+varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
+echo "v_mdh = uint8($varname_tmp);" >> $zieldat
+# Ersetze "_mdh", damit die Variablennamen stimmen
+sed -i "s/_mdh//g" $zieldat
 

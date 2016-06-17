@@ -12,6 +12,7 @@
 # Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
 restart:
 with(LinearAlgebra):
+read "../helper/proc_MatlabExport":
 # Lese Umgebungsvariable für Codegenerierung.
 read "../robot_codegen_definitions/robot_env":
 printf("Generiere Parameter für %s\n",robot_name):
@@ -121,4 +122,12 @@ end do:
 # Export
 save q_t, q_s, qD_t, qD_s, qDD_t, qDD_s, qJ_t, qJ_s, qJD_t, qJD_s, qJDD_t, qJDD_s, g_world, X_base_t, X_base_s, V_base_t, V_base_s, VD_base_t, VD_base_s, qoffset, theta, alpha, d, a,v,b,beta, M, r_i_i_Si, mr_i_i_Si, I_i_i, I_i_Si, PV2_vec, PV2_mat, robot_name, N,NB,NJ,NL, base_method_name, T_basevel, sprintf("../codeexport/%s_tree_floatb_twist_definitions", robot_name):
 save q_t, q_s, qD_t, qD_s, qDD_t, qDD_s, qJ_t, qJ_s, qJD_t, qJD_s, qJDD_t, qJDD_s, g_world, X_base_t, X_base_s, V_base_t, V_base_s, VD_base_t, VD_base_s, qoffset, theta, alpha, d, a,v,b,beta, M, r_i_i_Si, mr_i_i_Si, I_i_i, I_i_Si, PV2_vec, PV2_mat, robot_name, N,NB,NJ,NL, base_method_name, T_basevel, sprintf("../codeexport/%s_tree_floatb_definitions", robot_name):
+# Einzelne DH-Parameter als Matlab-Code exportieren. Damit lässt sich in Matlab ein passender Parametersatz generieren.
+MatlabExport(v, sprintf("../codeexport/%s_parameters_mdh_v.m", robot_name), 2):
+MatlabExport(a, sprintf("../codeexport/%s_parameters_mdh_a.m", robot_name), 2):
+MatlabExport(d, sprintf("../codeexport/%s_parameters_mdh_d.m", robot_name), 2):
+MatlabExport(b, sprintf("../codeexport/%s_parameters_mdh_b.m", robot_name), 2):
+MatlabExport(alpha, sprintf("../codeexport/%s_parameters_mdh_alpha.m", robot_name), 2):
+MatlabExport(beta, sprintf("../codeexport/%s_parameters_mdh_beta.m", robot_name), 2):
+MatlabExport(qoffset, sprintf("../codeexport/%s_parameters_mdh_qoffset.m", robot_name), 2):
 

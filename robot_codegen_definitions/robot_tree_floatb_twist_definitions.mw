@@ -118,6 +118,11 @@ Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(LinearAlgebra):</Text-field>
 </Input>
 </Group>
+<Group labelreference="L1639" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
+</Input>
+</Group>
 <Group labelreference="L1595" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Lese Umgebungsvariable f\303\274r Codegenerierung.</Font></Text-field>
@@ -401,7 +406,47 @@ end do:</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">save q_t, q_s, qD_t, qD_s, qDD_t, qDD_s, qJ_t, qJ_s, qJD_t, qJD_s, qJDD_t, qJDD_s, g_world, X_base_t, X_base_s, V_base_t, V_base_s, VD_base_t, VD_base_s, qoffset, theta, alpha, d, a,v,b,beta, M, r_i_i_Si, mr_i_i_Si, I_i_i, I_i_Si, PV2_vec, PV2_mat, robot_name, N,NB,NJ,NL, base_method_name, T_basevel, sprintf(&quot;../codeexport/%s_tree_floatb_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group>
+<Group labelreference="L1653" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Einzelne DH-Parameter als Matlab-Code exportieren. Damit l\303\244sst sich in Matlab ein passender Parametersatz generieren.</Font></Text-field>
+</Input>
+</Group>
 <Group labelreference="L1638" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(v, sprintf(&quot;../codeexport/%s_parameters_mdh_v.m&quot;, robot_name), 2):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1651" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(a, sprintf(&quot;../codeexport/%s_parameters_mdh_a.m&quot;, robot_name), 2):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1650" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(d, sprintf(&quot;../codeexport/%s_parameters_mdh_d.m&quot;, robot_name), 2):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1649" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(b, sprintf(&quot;../codeexport/%s_parameters_mdh_b.m&quot;, robot_name), 2):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1645" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(alpha, sprintf(&quot;../codeexport/%s_parameters_mdh_alpha.m&quot;, robot_name), 2):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1646" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(beta, sprintf(&quot;../codeexport/%s_parameters_mdh_beta.m&quot;, robot_name), 2):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1647" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(qoffset, sprintf(&quot;../codeexport/%s_parameters_mdh_qoffset.m&quot;, robot_name), 2):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1648" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
