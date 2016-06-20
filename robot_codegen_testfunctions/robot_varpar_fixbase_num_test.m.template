@@ -76,9 +76,9 @@ for i = 1:n
   Mq_num2 = NaN(NJ,NJ);
   INJ = eye(NJ);
   for jj = 1:NJ
-    Mq_num1(:,jj) = [zeros(2,6), eye(2)]*robot_tree_invdyn_floatb_eulangrpy_nnew_vp1  (qJ, zeros(NJ,1), INJ(:,jj), zeros(3,1), zeros(6,1), zeros(6,1) , ...
+    Mq_num1(:,jj) = [zeros(NJ,6), eye(NJ)]*robot_tree_invdyn_floatb_eulangrpy_nnew_vp1  (qJ, zeros(NJ,1), INJ(:,jj), zeros(3,1), zeros(6,1), zeros(6,1) , ...
       alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
-    Mq_num2(:,jj) = [zeros(2,6), eye(2)]*%RN%_invdyn_floatb_eulangrpy_nnew_vp1(qJ, zeros(NJ,1), INJ(:,jj), zeros(3,1), zeros(6,1), zeros(6,1) , ...
+    Mq_num2(:,jj) = [zeros(NJ,6), eye(NJ)]*%RN%_invdyn_floatb_eulangrpy_nnew_vp1(qJ, zeros(NJ,1), INJ(:,jj), zeros(3,1), zeros(6,1), zeros(6,1) , ...
       alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
   end
   if any( abs(Mq_num1(:)-Mq_sym(:)) > 1e-10)
@@ -322,7 +322,7 @@ for i = 1:n
   Mq_num1 = NaN(NJ,NJ);
   INJ = eye(NJ);
   for jj = 1:NJ
-    Mq_num1(:,jj) = [zeros(2,6), eye(2)]*robot_tree_invdyn_floatb_eulangrpy_nnew_vp1  (qJ+1e-3*i, zeros(NJ,1), INJ(:,jj), zeros(3,1), zeros(6,1), zeros(6,1) , ...
+    Mq_num1(:,jj) = [zeros(NJ,6), eye(NJ)]*robot_tree_invdyn_floatb_eulangrpy_nnew_vp1  (qJ+1e-3*i, zeros(NJ,1), INJ(:,jj), zeros(3,1), zeros(6,1), zeros(6,1) , ...
       alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
   end
 end
@@ -332,7 +332,7 @@ for i = 1:50
   Mq_num2 = NaN(NJ,NJ);
   INJ = eye(NJ);
   for jj = 1:NJ
-    Mq_num2(:,jj) = [zeros(2,6), eye(2)]*%RN%_invdyn_floatb_eulangrpy_nnew_vp1(qJ+1e-3*i, zeros(NJ,1), INJ(:,jj), zeros(3,1), zeros(6,1), zeros(6,1) , ...
+    Mq_num2(:,jj) = [zeros(NJ,6), eye(NJ)]*%RN%_invdyn_floatb_eulangrpy_nnew_vp1(qJ+1e-3*i, zeros(NJ,1), INJ(:,jj), zeros(3,1), zeros(6,1), zeros(6,1) , ...
       alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
   end
 end
@@ -342,7 +342,7 @@ for i = 1:n
   Mq_num2 = NaN(NJ,NJ);
   INJ = eye(NJ);
   for jj = 1:NJ
-    Mq_num2(:,jj) = [zeros(2,6), eye(2)]*%RN%_invdyn_floatb_eulangrpy_nnew_vp1_mex(qJ+1e-3*i, zeros(NJ,1), INJ(:,jj), zeros(3,1), zeros(6,1), zeros(6,1) , ...
+    Mq_num2(:,jj) = [zeros(NJ,6), eye(NJ)]*%RN%_invdyn_floatb_eulangrpy_nnew_vp1_mex(qJ+1e-3*i, zeros(NJ,1), INJ(:,jj), zeros(3,1), zeros(6,1), zeros(6,1) , ...
       alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
   end
 end
