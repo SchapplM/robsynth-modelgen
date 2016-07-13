@@ -116,7 +116,7 @@ for i = %NL%:-1:1
       f_i_i = f_i_i + R_i_j*f_j_j;
       n_i_i = n_i_i + R_i_j*n_j_j + cross(r_i_i_j, R_i_j*f_j_j);
       if tmp == length(I_nf)
-        break; % Abbruch. Alle Nochfolger untersucht.
+        break; % Abbruch. Alle Nachfolger untersucht.
       end
     end
   end
