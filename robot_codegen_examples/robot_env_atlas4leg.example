@@ -12,7 +12,7 @@ alpha := Matrix(6,1,[0, (1/2)*Pi, (1/2)*Pi, 0, 0, -(1/2)*Pi]):
 d := Matrix(6,1,[0, d2, d3, 0, 0, 0]):
 a := Matrix(6,1,[0, 0, a3, a4, a5, 0]):
 v := Matrix(6,1,[0, 1, 2, 3, 4, 5]):
-b := Matrix(6,1,[0, 0, 0, 0, 0]):
-beta := Matrix(6,1,[0, 0, 0, 0, 0]):
+b := Matrix(6,1,[0, 0, 0, 0, 0, 0]):
+beta := Matrix(6,1,[0, 0, 0, 0, 0, 0]):
 
 theta := qJ_t+qoffset:
