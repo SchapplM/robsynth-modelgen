@@ -23,6 +23,8 @@ source $repo_pfad/robot_codegen_definitions/robot_env.sh
 dateiliste_numfunction="
   robot_invdyn_floatb_eulangrpy_nnew_vp1.m.template
   robot_gravload_floatb_eulangrpy_nnew_vp1.m.template
+  robot_jacobig_mdh_num.m.template
+  robot_jacobigD_mdh_num.m.template
 "
 for dat in $dateiliste_numfunction
 do

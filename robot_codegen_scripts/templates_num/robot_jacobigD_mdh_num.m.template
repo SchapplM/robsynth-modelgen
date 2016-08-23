@@ -1,0 +1,113 @@
+% Zeitableitung der Gelenk-Jacobimatrix zu beliebigen Punkten eines Körpers für 
+% %RN%
+% 
+% Input:
+% qJ [1x%NJ%]
+%   Joint Angles [rad]
+% qJD [1x%NJ%]
+%   Joint Velocities [rad/s]
+% r_i_i_C [1x3]
+%   Ortsvektor vom KörperKS-Ursprung zum gesuchten Punkt
+% link_index [1x1 uint8]
+%   Index des Segmentes, auf dem der Punkt C liegt.
+%   Wie in %RN%_fkine_fixb_rotmat_mdh_sym_varpar.m
+% 
+% Output:
+% JgD_C [6x%NJ%]
+%   time derivative of geometric body jacobian for the defined point
+% 
+% Siehe auch: %RN%_jacobig_mdh_num.m
+% 
+% Quelle:
+% Berechnungen Moritz Schappler, 21.06.2016
+
+% Moritz Schappler, schappler@irt.uni-hannover.de, 2016-06
+% (c) Institut für Regelungstechnik, Leibniz Universität Hannover
+
+function JgD_C = %FN%(qJ, qJD, link_index, r_i_i_C, ...
+  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, v_mdh)
+%% Init
+%#codegen
+assert(isa(qJ,'double') && isreal(qJ) && all(size(qJ) == [%NJ% 1]), ...
+  '%FN%: Joint angles qJ have to be [%NJ%x1] double');
+assert(isa(qJD,'double') && isreal(qJD) && all(size(qJD) == [%NJ% 1]), ...
+  '%FN%: Joint velocities qJD have to be [%NJ%x1] double');
+assert(isa(r_i_i_C,'double') && isreal(r_i_i_C) && all(size(r_i_i_C) == [3 1]), ...
+  '%FN%: Position vector r_i_i_C has to be [3x1] double');
+assert(isa(link_index,'uint8') && all(size(link_index) == [1 1]), ...
+  '%FN%: link_index has to be [1x1] uint8'); 
+assert(isa(alpha_mdh,'double') && isreal(alpha_mdh) && all(size(alpha_mdh) == [%NJ% 1]), ...
+  '%FN%: alpha_mdh has to be [%NJ%x1] double');
+assert(isa(a_mdh,'double') && isreal(a_mdh) && all(size(a_mdh) == [%NJ% 1]), ...
+  '%FN%: a_mdh has to be [%NJ%x1] double');
+assert(isa(d_mdh,'double') && isreal(d_mdh) && all(size(d_mdh) == [%NJ% 1]), ...
+  '%FN%: d_mdh has to be [%NJ%x1] double');
+assert(isa(q_offset_mdh,'double') && isreal(q_offset_mdh) && all(size(q_offset_mdh) == [%NJ% 1]), ...
+  '%FN%: q_offset_mdh has to be [%NJ%x1] double');
+assert(isa(b_mdh,'double') && isreal(b_mdh) && all(size(b_mdh) == [%NJ% 1]), ...
+  '%FN%: b_mdh has to be [%NJ%x1] double');
+assert(isa(beta_mdh,'double') && isreal(beta_mdh) && all(size(beta_mdh) == [%NJ% 1]), ...
+  '%FN%: beta_mdh has to be [%NJ%x1] double'); 
+assert(isa(v_mdh,'uint8') && all(size(v_mdh) == [%NJ% 1]), ...
+  '%FN%: v_mdh has to be [%NJ%x1] uint8'); 
+
+% Initialisierung. Alle Spalten die nicht gesetzt werden haben keinen
+% Einfluss.
+JgD_C = zeros(6,%NJ%);
+
+if link_index == 1
+  % Die Gelenkwinkel haben keinen Einfluss auf die Basis
+  return;
+end
+
+%% Kinematik berechnen
+% direkte Kinematik
+T_c_mdh = %RN%_fkine_fixb_rotmat_mdh_sym_varpar(qJ, ...
+  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh);
+T_0_i = T_c_mdh(:,:,link_index);
+R_0_i = t2r(T_0_i);
+r_0_i_C = (R_0_i) * (r_i_i_C);
+
+% Geschwindigkeit des Punktes C
+Jg_C = %RN%_jacobig_mdh_num(qJ, link_index, r_i_i_C, ...
+  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, v_mdh);
+V_C = Jg_C*qJD;
+rD_0_0_C = V_C(1:3);
+  
+j = link_index;
+for tmp = 1:%NJ% % Schleife mit Dummy-Variable begrenzt maximale Anzahl an Durchgängen
+  % Vorgänger-Index
+  k = v_mdh(j-1); % Diese Indizes haben die Basis als 0.
+  
+  % Geschwindigkeit des Körpers j
+  Jg_j = %RN%_jacobig_mdh_num(qJ, j, zeros(3,1), ...
+    alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, v_mdh);
+  V_j = Jg_j*qJD;
+  rD_0_0_j = V_j(1:3);
+  omega_j = V_j(4:6);
+  
+  %  Drehachse des Gelenks, das diesen Körper bewegt ist die z-Achse dieses
+  %  Körpers (bei DH-Notation ist es der vorherige, hier MDH-Notation).
+  ax = T_c_mdh(1:3,3,j);
+  jrD = cross(omega_j, ax); % Zeitableitung von ax
+  
+  % Vektor vom Gelenk zum Punkt
+  r_0_j_i = -T_c_mdh(1:3,4,j) + T_0_i(1:3,4);
+  r_0_j_C = r_0_j_i + r_0_i_C;
+  
+  % Hebelarm vom Gelenk zum Punkt
+  rD_0_j_C = -rD_0_0_j + rD_0_0_C;
+  jtD = cross(cross(omega_j, ax), r_0_j_C) + ... % Zeitableitung von ax
+    cross(ax, rD_0_j_C); % Zeitableitung von r_0_j_C
+    
+  % Spalte der Jacobi-Matrix eintragen
+  JgD_C(:,j-1) = [jtD; jrD];
+  
+  % Indizes tauschen: Kinematische Kette weiter Richtung Basis entlanggehen
+  j = k+1; % Index mit Basis als 1
+
+  if j == 1
+    % An Basis angekommen
+    return;
+  end
+end
