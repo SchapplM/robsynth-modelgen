@@ -25,6 +25,8 @@ dateiliste_numfunction="
   robot_gravload_floatb_eulangrpy_nnew_vp1.m.template
   robot_jacobig_mdh_num.m.template
   robot_jacobigD_mdh_num.m.template
+  robot_jacobig_mdh_eulangrpy_num.m.template
+  robot_jacobigD_mdh_eulangrpy_num.m.template
 "
 for dat in $dateiliste_numfunction
 do
