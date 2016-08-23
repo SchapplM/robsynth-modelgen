@@ -18,21 +18,52 @@ Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
 
 * [KhalilKle1986] Khalil, W. and Kleinfinger, J.-F.: A new geometric notation for open and closed-loop robots (1986)
 
+## Voraussetzungen
+
+* Linux-Betriebssystem (für .sh-Skripte in Alternative 1). Ausführung der Maple-Arbeitsblätter in Alternative 2 auch unter Windows möglich.
+* Maple muss im Ordner /opt/maple18/ installiert sein (Standard-Ordner bei sudo-Installation unter Linux).
+
 ## Starten der Codeerstellung <a name="codeerstellung"></a> 
 
 Der vollständige Ablauf zur Generierung von Matlab-Dynamikfunktionen wird in diesem Teilkapitel beschrieben.
 
 ### Vorbereitung
 
-Die MDH-Parameter (modifizierte Denavit-Hartenberg Parameter nach [KhalilKle1986]) müssen in die Umgebungsvariablendatei eingetragen werden. Als Vorlage können die Dateien in robot_codegen_examples dienen.
+Die MDH-Parameter (modifizierte Denavit-Hartenberg Parameter nach [KhalilKle1986]) müssen in die Umgebungsvariablendatei robot_env im Verzeichnis robot_codegen_definitions eingetragen werden.
 
-        robot_env
+        robot_codegen_definitions/robot_env
+
+ Diese ist eine Maple-Eingabedatei und definiert Maple-Variablen, die in allen Maple-Arbeitsblättern verwendet werden. Als Vorlage können die Dateien im Verzeichnis robot_codegen_examples dienen.
+
+Für die Variablennamen in robot_env und in [KhalilKle1986] gilt folgender Zusammenhang. Die Reihenfolge der Transformationen entspricht der Reihenfolge der Tabellenzeilen.
+
+| [KhalilKle1986] | Vorkommnis | robot_env | Beschreibung  | Anmerkung |
+|---|---|---|---|---|
+| a | 3. Spiegelstrich unter Fig. 6 | v | Vorgänger-Index | Trivial bei seriellen Strukturen (Zahlen von 0 bis NJ-1) |
+| gamma | (9) | beta | 1. Rotation um z | Wird nur bei Baumstrukturen benötigt. Bei seriellen Strukturen Null setzen. |
+| epsilon | (9) | b | 2. Translation in z-Richtung | Wird nur bei Baumstrukturen benötigt |
+| alpha | (7)  | alpha | 3. Rotation um x |   |
+| d | (7) | a | 4. Translation in x-Richtung |   |
+| theta | (7) | qJ+q_offset | 5. Rotation um z | Der konstante Offset auf den zeitabhängigen Gelenkwinkel wird so gewählt, dass die Gesamttransformation passt |
+| r | (7) | d | 6. Translation in z-Richtung |   |
+
+Nach dem Erstellen dieser Datei werden die Dynamikfunktionen mit Maple generiert, wie im Folgenden beschrieben wird.
 
 ### Alternative 1: Automatisches Generieren aller Dateien
 
 Mit folgendem Aufruf werden alle Maple-Ausdrücke erzeugt und Matlab-Funktionen exportiert (wie unter Alternative 2 beschrieben).
 
         ./robot_codegen_start.sh
+
+Folgende Argumente sind möglich:
+
+* Parallele Berechnung der Maple-Arbeitsblätter (schnellere Berechnung):
+
+        -p, --parallel
+
+* Nur Berechnung der Fixed-Base Funktionen (kürzere Berechnung)
+ 
+        fixb_only
 
 ### Alternative 2: Händisches Generieren aller Dateien
 
