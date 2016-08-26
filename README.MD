@@ -34,6 +34,12 @@ Die MDH-Parameter (modifizierte Denavit-Hartenberg Parameter nach [KhalilKle1986
         robot_codegen_definitions/robot_env
 
  Diese ist eine Maple-Eingabedatei und definiert Maple-Variablen, die in allen Maple-Arbeitsblättern verwendet werden. Als Vorlage können die Dateien im Verzeichnis robot_codegen_examples dienen.
+Zu beachten ist, dass in die Maple-Vektoren nur symbolische Ausdrücke eingesetzt werden sollten, die so heißen, wie der Vektor selbst. Also a1, a2 in a, d1, d2 in d, qoffset3, qoffset4 in qoffset und so weiter. Zusätzlich können Nullen und Winkelangaben ("Pi", großgeschrieben) eingesetzt werden.
+Andere Variablennamen werden bei der Generierung von Matlab-Funktionen nicht erkannt. Beispiel:
+
+        qoffset := Matrix(7,1,[0, -(1/2)*Pi, qoffset3, qoffset4, 0, 0, 0]):
+
+Die Variablen "robot_name" (Präfix für alle Dateien und Funktionsnamen) und "NJ" (Anzahl der Gelenke) müssen an den Roboter angepasst werden.
 
 Für die Variablennamen in robot_env und in [KhalilKle1986] gilt folgender Zusammenhang. Die Reihenfolge der Transformationen entspricht der Reihenfolge der Tabellenzeilen.
 
