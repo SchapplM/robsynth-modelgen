@@ -98,11 +98,14 @@ for i from 1 to 3 do
     J_COG_s(i,j) := diff(c_s(i,1), qJ_s(j,1)):
   end:
 end:
-J_COG := convert_s_t(J_COG_s):
+# TODO: Wenn der Ausdruck J_COG_s nicht gespeichert und wieder geladen wird, hängt die Berechnung bei der Optimierung des Ausdrucks mit "tryhard"
+save J_COG_s, sprintf("../codeexport/%s_kinematics_Jcom_worldframe_floatb_%s_par1_maple.m", robot_name, base_method_name):
+read sprintf("../codeexport/%s_kinematics_Jcom_worldframe_floatb_%s_par1_maple.m", robot_name, base_method_name):
 if codegen_act then
-  MatlabExport(convert_t_s(J_COG), sprintf("../codeexport/%s_com_jacobi_baseframe_par1_matlab.m", robot_name), codegen_opt):
+  MatlabExport(J_COG_s, sprintf("../codeexport/%s_com_jacobi_baseframe_par1_matlab.m", robot_name), 2):
 end if:
 # CoG-Jacobian Time derivative
+J_COG := convert_s_t(J_COG_s):
 JD_COG := diff~(J_COG, t):
 JD_COG_s := convert_t_s(JD_COG):
 if codegen_act then

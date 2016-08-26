@@ -89,8 +89,8 @@
         <Metadata-attribute name="Subject" value="&lt;default&gt;"/>
         <Metadata-attribute name="Author" value="&lt;default&gt;"/>
         <Metadata-attribute name="Item List" value="true"/>
-        <Metadata-attribute name="Title" value="&lt;default&gt;"/>
         <Metadata-attribute name="Keywords" value="&lt;default&gt;"/>
+        <Metadata-attribute name="Title" value="&lt;default&gt;"/>
     </Metadata-tag>
 </Metadata-table>
 <Task-table>
@@ -328,21 +328,36 @@ end if:</Text-field>
 end:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1624" drawlabel="true">
+<Group labelreference="L1684" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">J_COG := convert_s_t(J_COG_s):</Text-field>
+<Text-field style="Text" layout="Normal">TODO: Wenn der Ausdruck <Font encoding="UTF-8">J_COG_s nicht gespeichert und wieder geladen wird, h\303\244ngt die Berechnung bei der Optimierung des Ausdrucks mit &quot;tryhard&quot;</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1682" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save J_COG_s, sprintf(&quot;../codeexport/%s_kinematics_Jcom_worldframe_floatb_%s_par1_maple.m&quot;, robot_name, base_method_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1683" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_kinematics_Jcom_worldframe_floatb_%s_par1_maple.m&quot;, robot_name, base_method_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1621" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(convert_t_s(J_COG), sprintf(&quot;../codeexport/%s_com_jacobi_baseframe_par1_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(J_COG_s, sprintf(&quot;../codeexport/%s_com_jacobi_baseframe_par1_matlab.m&quot;, robot_name), 2):
 end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1625" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal">CoG-Jacobian Time derivative</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1685" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">J_COG := convert_s_t(J_COG_s):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1629" drawlabel="true">
