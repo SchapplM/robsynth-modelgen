@@ -22,6 +22,7 @@ Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
 
 * Linux-Betriebssystem (für .sh-Skripte in Alternative 1). Ausführung der Maple-Arbeitsblätter in Alternative 2 auch unter Windows möglich.
 * Maple muss im Ordner /opt/maple18/ installiert sein (Standard-Ordner bei sudo-Installation unter Linux).
+* Die IRT-Matlab-Toolbox (git@130.75.135.95:software/matlab) muss im Matlab-Pfad initialisiert sein (Aufruf von irt_tb_init.m im Repo). Damit die Pfadinitialisierung auch im Matlab-Terminalaufruf funktioniert, sollte die startup.m richtig gesetzt sein.
 
 ## Starten der Codeerstellung <a name="codeerstellung"></a> 
 
@@ -33,7 +34,7 @@ Die MDH-Parameter (modifizierte Denavit-Hartenberg Parameter nach [KhalilKle1986
 
         robot_codegen_definitions/robot_env
 
- Diese ist eine Maple-Eingabedatei und definiert Maple-Variablen, die in allen Maple-Arbeitsblättern verwendet werden. Als Vorlage können die Dateien im Verzeichnis robot_codegen_examples dienen.
+Diese ist eine Maple-Eingabedatei und definiert Maple-Variablen, die in allen Maple-Arbeitsblättern verwendet werden. Als Vorlage können die Dateien im Verzeichnis robot_codegen_examples dienen.
 Zu beachten ist, dass in die Maple-Vektoren nur symbolische Ausdrücke eingesetzt werden sollten, die so heißen, wie der Vektor selbst. Also a1, a2 in a, d1, d2 in d, qoffset3, qoffset4 in qoffset und so weiter. Zusätzlich können Nullen und Winkelangaben ("Pi", großgeschrieben) eingesetzt werden.
 Andere Variablennamen werden bei der Generierung von Matlab-Funktionen nicht erkannt. Beispiel:
 
