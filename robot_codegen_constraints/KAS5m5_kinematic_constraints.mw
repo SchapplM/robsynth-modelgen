@@ -119,6 +119,11 @@ Modell m5:
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">restart:</Text-field>
 </Input>
 </Group>
+<Group view="code" labelreference="L2115" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">kin_constraints_exist<Font encoding="UTF-8"> := true: # F\303\274r Speicherung</Font></Text-field>
+</Input>
+</Group>
 <Group view="code" labelreference="L1913" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(RealDomain):
@@ -128,41 +133,40 @@ with(StringTools):</Text-field>
 </Group>
 <Group view="code" labelreference="L1574" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read proc_convert_s_t:
-read proc_convert_t_s: </Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_convert_s_t&quot;:
+read &quot;../helper/proc_convert_t_s&quot;: </Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1800" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read proc_subs_wpar_exp:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1573" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">KAS_version := 5:
-KAS_modell := 5:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1572" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../codeexport/KAS5_m5_definitions&quot;:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_constraints/proc_subs_kintmp_exp&quot;:</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
+<Group labelreference="L2114" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2113" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_tree_floatb_definitions&quot;, robot_name):</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1993" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal">Lese Ergebnisse der Kinematik von KAS5_m3 aus.
-Siehe KAS5_m3_sym_codegen_kinematik_parallelstruktur.mw
-wpar_qs, wpar_qt, lpar_qs, lpar_qt, wpar_subsexp</Text-field>
+Siehe KAS5_m3_sym_codegen_kinematic_constraints.mw
+kintmp_qs, kintmp_qt, lpar_qs, lpar_qt, kintmp_subsexp</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1992" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read  sprintf(&quot;../codeexport/KAS5_m3_kinematik_parallelstruktur_maple_inert.m&quot;, KAS_version, KAS_modell):
-wpar_qs_KAS5m3 := wpar_qs:
-wpar_qt_KAS5m3 := wpar_qt:
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read  sprintf(&quot;../codeexport/KAS5m3_kinematic_constraints_maple_inert.m&quot;, robot_name):
+kintmp_qs_KAS5m3 := kintmp_qs:
+kintmp_qt_KAS5m3 := kintmp_qt:
 lpar_qs_KAS5m3 := lpar_qs:
 lpar_qt_KAS5m3 := lpar_qt:
-wpar_subsexp_KAS5m3 := wpar_subsexp:</Text-field>
+kintmp_subsexp_KAS5m3 := kintmp_subsexp:</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -193,8 +197,8 @@ end proc:</Text-field>
 <Group view="code" labelreference="L2021" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">qJs_KAS5m3:=Matrix(7, 1, [qJs1_m3, qJs2_m3, qJs3_m3, qJs4_m3, qJs5_m3, qJs6_m3, qJs7_m3]):
-wpar_subsexp_KAS5m3 := subs_q_J_m3(wpar_subsexp_KAS5m3):
-wpar_qs_KAS5m3 := subs_q_J_m3(wpar_qs_KAS5m3):
+kintmp_subsexp_KAS5m3 := subs_q_J_m3(kintmp_subsexp_KAS5m3):
+kintmp_qs_KAS5m3 := subs_q_J_m3(kintmp_qs_KAS5m3):
 lpar_qs_KAS5m3 := subs_q_J_m3(lpar_qs_KAS5m3):</Text-field>
 </Input>
 </Group>
@@ -222,8 +226,8 @@ end proc:</Text-field>
 </Group>
 <Group view="code" labelreference="L2019" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_subsexp_KAS5m5 := subs_q_m3_m5(wpar_subsexp_KAS5m3):
-wpar_qs_KAS5m5 := subs_q_m3_m5(wpar_qs_KAS5m3):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">kintmp_subsexp_KAS5m5 := subs_q_m3_m5(kintmp_subsexp_KAS5m3):
+kintmp_qs_KAS5m5 := subs_q_m3_m5(kintmp_qs_KAS5m3):
 lpar_qs_KAS5m5 := subs_q_m3_m5(lpar_qs_KAS5m3):</Text-field>
 </Input>
 </Group></Presentation-Block>
@@ -254,14 +258,14 @@ end proc:</Text-field>
 </Group>
 <Group view="code" labelreference="L2055" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_subsexp := subs_q_m5_J(wpar_subsexp_KAS5m5):
-wpar_qs := subs_q_m5_J(wpar_qs_KAS5m5):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">kintmp_subsexp := subs_q_m5_J(kintmp_subsexp_KAS5m5):
+kintmp_qs := subs_q_m5_J(kintmp_qs_KAS5m5):
 lpar_qs := subs_q_m5_J(lpar_qs_KAS5m5):</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L2036" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">wpar_qt := convert_s_t(wpar_qs):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">kintmp_qt := convert_s_t(kintmp_qs):
 lpar_qt := convert_s_t(lpar_qs):</Text-field>
 </Input>
 </Group></Presentation-Block>
@@ -270,12 +274,12 @@ lpar_qt := convert_s_t(lpar_qs):</Text-field>
 <Text-field style="Heading 1" layout="Heading 1">Speichern der Ergebnisse</Text-field></Title><Presentation-Block>
 <Group view="code" labelreference="L2027" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save wpar_qs, wpar_qt, lpar_qs, lpar_qt, wpar_subsexp, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple_inert&quot;, KAS_version, KAS_modell):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kin_constraints_exist, kintmp_qs, kintmp_qt, lpar_qs, lpar_qt, kintmp_subsexp, sprintf(&quot;../codeexport/%s_kinematic_constraints_maple_inert&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L2028" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save wpar_qs, wpar_qt, lpar_qs, lpar_qt, wpar_subsexp, sprintf(&quot;../codeexport/KAS%d_m%d_kinematik_parallelstruktur_maple_inert.m&quot;, KAS_version, KAS_modell):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kin_constraints_exist, kintmp_qs, kintmp_qt, lpar_qs, lpar_qt, kintmp_subsexp, sprintf(&quot;../codeexport/%s_kinematic_constraints_maple_inert.m&quot;, robot_name):</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section><Presentation-Block>
@@ -291,7 +295,7 @@ lpar_qt := convert_s_t(lpar_qs):</Text-field>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L2" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
+<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Worksheet>
