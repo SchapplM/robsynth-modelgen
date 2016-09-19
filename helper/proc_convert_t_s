@@ -10,5 +10,8 @@ convert_t_s := proc (A_t)
     A_s := subs({VD_base_t[i,1] = VD_base_s[i,1]},A_s); 
     A_s := subs({V_base_t[i,1] = V_base_s[i,1]},A_s) 
   end do; 
+  for i to RowDimension(kintmp_t) do 
+    A_s := subs({kintmp_t[i,1] = kintmp_s[i,1]},A_s) 
+  end do;
   return A_s 
 end proc;
