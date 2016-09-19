@@ -281,12 +281,7 @@ qDD_s:= Matrix(N,1, &lt;VD_base_s, qJDD_s&gt;):</Text-field>
 <Text-field style="Heading 2" layout="Heading 2">Dynamic Parameters</Text-field></Title>
 <Group labelreference="L1630" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Anzahl der K\303\266rper (Number of Links)</Font></Text-field>
-</Input>
-</Group>
-<Group labelreference="L1631" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">NL := NJ + 1:</Text-field>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Anzahl der K\303\266rper (Number of Links): NL. Ist vorgegeben</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1597" drawlabel="true">

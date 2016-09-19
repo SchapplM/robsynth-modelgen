@@ -7,6 +7,7 @@
 robot_name := "rigidbody":
 
 NJ := 0:
+NL := 1: # Anzahl der Körper: Basis und keine aktuierten Segmente
 qoffset := Matrix(0, 1, []):
 alpha := Matrix(0, 1, []):
 d := Matrix(0, 1, []):
