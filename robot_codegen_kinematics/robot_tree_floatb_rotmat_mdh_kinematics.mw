@@ -102,7 +102,11 @@ Dateiname:
 tree -&gt; Berechnung f\303\274r eine beliebige Baumstruktur (ohne Schleifen)
 floatb -&gt; floating base wird durch base twist (Geschwindigkeit der Basis) oder vollst\303\244ndige Orientierung (Euler-Winkel) ber\303\274cksichtigt
 </Font>rotmat -&gt; Kinematik wird mit Rotationsmatrizen berechnet
-<Font encoding="UTF-8">mdh_kinematics -&gt; Berechnung der Vorw\303\244rtskinematik mit modifizierten DH-Parametern nach </Font>[KhalilKle1986]</Text-field>
+<Font encoding="UTF-8">mdh_kinematics -&gt; Berechnung der Vorw\303\244rtskinematik mit modifizierten DH-Parametern nach </Font>[KhalilKle1986]
+
+Prinzip:
+Berechne die direkte Kinematik.</Text-field>
+<Text-field style="Normal" layout="Normal"><Font encoding="UTF-8">Zus\303\244tzlich k\303\266nnen kinematische Zwangsbedingungen direkt ber\303\274cksichtigt werden. Diese sorgen daf\303\274r, dass MDH-Winkel durch analytische Ausdr\303\274cke verallgemeinerter Koordinaten ersetzt werden.</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1501" drawlabel="true">
@@ -172,7 +176,51 @@ read &quot;../transformation/proc_rpy2tr&quot;: </Text-field>
 </Group>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 1" layout="Heading 1">Calculate Forward Kinematics</Text-field></Title>
+<Text-field style="Heading 1" layout="Heading 1">Kinematische Zwangsbedingungen</Text-field></Title>
+<Group labelreference="L1700" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Zwangsbedingungen f\303\274r m3 und m4 gleich.</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1695" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Lese Variablen: kintmp_subsexp, kintmp_qs, kintmp_qt</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1716" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">kin_constraints_exist := false:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1717" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_constraints/proc_subs_kintmp_exp&quot;:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1699" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_kinematic_constraints_maple_inert.m&quot;, robot_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1721" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if kin_constraints_exist = true then:
+  kintmp_qs := kintmp_qs: # gelesene Variable sonst nicht sichtbar
+  kintmp_qt := kintmp_qt: # gelesene Variable sonst nicht sichtbar
+  kintmp_subsexp := kintmp_subsexp:
+  printf(&quot;Kinematische Zwangsbedingungen gelesen.&quot;):
+else
+  kintmp_t := Matrix(1,1):
+  kintmp_s := Matrix(1,1):
+  kintmp_qs := Matrix(1,1):
+  kintmp_qt := Matrix(1,1):
+  kintmp_subsexp := Matrix(1,2):
+end if:</Text-field>
+</Input>
+</Group>
+</Section>
+<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
+<Text-field style="Heading 1" layout="Heading 1">Calculate Forward Kinematics (Single-Joint Transformation)</Text-field></Title>
 <Group labelreference="L1124" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal">Trf is the Matrix of Transformation from i-1 to i
@@ -181,30 +229,83 @@ Trf_c is the cummulated Matrix of Transformation from 0 to i</Text-field>
 </Group>
 <Group labelreference="L1680" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Trf_c := Matrix(4, 4, NL): # Diese Initialisierung bringt nichts (initialisiert nur 4x4-Matrix)
-Trf := Matrix(4, 4, NJ): # Diese Initialisierung bringt nichts (initialisiert nur 4x4-Matrix)</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Trf := Matrix(4, 4, NL-1): # Diese Initialisierung bringt nichts (initialisiert nur 4x4-Matrix)</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1682" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NJ do 
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NL-1 do 
   Trf(1 .. 4, 1 .. 4, i) := Matrix(4,4):
 end do:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1681" drawlabel="true">
 <Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NL-1 do 
+  Trf(1 .. 4, 1 .. 4, i) := trafo_mdh_full(alpha[i,1], a[i,1], theta[i,1], d[i,1], beta[i,1], b[i,1]):
+end do:</Text-field>
+</Input>
+</Group>
+</Section>
+<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
+<Text-field style="Heading 1" layout="Heading 1">Kinematische Zwangsbedingungen ersetzen</Text-field></Title>
+<Group labelreference="L1714" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Substituiere allgemeine Ausdr\303\274cke der Winkel der Parallelstruktur mit kinematischen Zwangsbedingungen in Abh\303\244ngigkeit der Haupt-Gelenkwinkel</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1713" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">for i from 1 to NL-1 do # Index \303\274ber Transformationsmatrizen aller K\303\266rper
+  for ix from 1 to 4 do # Index \303\274ber Zeilen der Transformationsmatrizen
+</Font>    for iy from 1 to 4 do<Font encoding="UTF-8"> # Index \303\274ber Spalten der Transformationsmatrizen
+</Font>      # Substituiere Zeitvariablen
+      Trf(ix, iy, i) := convert_t_s( Trf(ix, iy, i) ):<Font encoding="UTF-8">
+      # Substituiere sin und cos der Winkel (einfachere Ausdr\303\274cke)
+</Font>      Trf(ix, iy, i) := subs_kintmp_exp(Trf(ix, iy, i)):
+<Font encoding="UTF-8">      # Substituiere die verbleibenden Winkel direkt (einige Winkel sind nicht in den Ersetzungsausdr\303\274cken enthalten, da sie keine problematischen arctan-Ausdr\303\274cke enthalten.
+</Font>      for jj from 1 to RowDimension(kintmp_qt) do<Font encoding="UTF-8"> # Index \303\274ber zu ersetzende Winkel
+</Font>        Trf(ix, iy, i) := subs( { kintmp_t(jj, 1) = kintmp_qt(jj, 1) }, Trf(ix, iy, i) ): 
+      end do:
+      Trf(ix, iy, i) := convert_s_t( Trf(ix, iy, i) ):
+    end do:
+  end do:
+end do:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1712" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if kin_constraints_exist = true then:
+  printf(&quot;Ersetzungen der MDH-Parameter mit Ergebnissen der Parallelstruktur in verallgemeinerten Koordinaten erfolgreich.&quot;):
+end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1703" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
+</Section>
+<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
+<Text-field style="Heading 1" layout="Heading 1">Calculate Forward Kinematics (Multi-Joint Transformation)</Text-field></Title>
+<Group labelreference="L1706" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Trf_c := Matrix(4, 4, NJ): # Diese Initialisierung bringt nichts (initialisiert nur 4x4-Matrix)</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1705" drawlabel="true">
+<Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NL do 
   Trf_c(1 .. 4, 1 .. 4, i) := Matrix(4,4):
 end do:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1525" drawlabel="true">
+<Group labelreference="L1711" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Basis-Transformation: Unterschiedliche Darstellungsmethoden. F\303\274hren zu unterschiedlichen verallgemeinerten Koordinaten.</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L1528" drawlabel="true">
+<Group labelreference="L1709" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if base_method_name = &quot;twist&quot; then:
   Trf_c(1 .. 4, 1 .. 4, 1) := transl(X_base_t[1..3,1]):
@@ -214,24 +315,28 @@ if base_method_name = &quot;eulangrpy&quot; then:
 end:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1686" drawlabel="true">
+<Group labelreference="L1707" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Nutze die Methode %s f\303\274r die Basis-Orientierung\134n&quot;, </Font>base_method_name):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1580" drawlabel="true">
+<Group labelreference="L1710" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Kinematik aller K\303\266rper mit MDH-Ansatz Bestimmen. </Font>[KhalilKle1986].</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1533" drawlabel="true">
+<Group labelreference="L1708" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NJ do 
-  Trf(1 .. 4, 1 .. 4, i) := trafo_mdh_full(alpha[i,1], a[i,1], theta[i,1], d[i,1], beta[i,1], b[i,1]):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NL-1 do 
   # Index des vorherigen Koordinatensystems
   j := v(i)+1:
   Trf_c(1 .. 4, 1 .. 4, i+1) := Multiply(Trf_c(1 .. 4, 1 .. 4, j), Trf(1 .. 4, 1 .. 4, i)):
 end do:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1702" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>
@@ -279,12 +384,12 @@ end if:</Text-field>
 </Group>
 <Group labelreference="L1692" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Trf_Export := Matrix((NJ)*4, 4):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Trf_Export := Matrix((NL-1)*4, 4):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1689" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NJ do 
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to (NL-1) do 
   Trf_Export((i-1)*4+1 .. 4*i, 1..4) := Trf(1..4, 1..4, i):
 end do:</Text-field>
 </Input>
