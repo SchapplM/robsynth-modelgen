@@ -36,6 +36,7 @@ with(codegen):
 with(CodeGeneration):
 codegen_act := true:
 codegen_opt := 1: # Geringerer Optimierungsgrad. Sonst zu lange.
+codegen_debug := 0: # Zur Code-Generierung auch für Nicht-Inert-Ausdrücke
 read "../helper/proc_MatlabExport":
 read "../transformation/proc_rotx":
 read "../transformation/proc_roty":
@@ -416,8 +417,10 @@ printf("Ausdrücke mit Inert-Arctan exportiert (Matlab). %s. CPU-Zeit bis hier: 
 # Trotzdem dauert der Vorgang sehr lange.
 # In den nachfolgenden Skripten werden nur noch die Ersetzungsausdrücke für sin/cos (kintmp_subsexp) und die Inert-Arctan-Ausdrücke ("%arctan") verwendet.
 # Die inert-Ausdrücke können schnell nach der Zeit abgeleitet werden. Das "%" taucht dann nicht mehr auf.
-kintmp_qs := value( kintmp_qs ):
-lpar_qs := value( lpar_qs ):
+if codegen_debug = 1 then
+  kintmp_qs := value( kintmp_qs ):
+  lpar_qs := value( lpar_qs ):
+end if:
 kintmp_qt := convert_s_t(kintmp_qs):
 lpar_qt := convert_s_t(lpar_qs):
 printf("Arcustangens ausgewertet. %s. CPU-Zeit bis hier: %1.2fs.", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):

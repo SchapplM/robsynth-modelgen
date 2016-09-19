@@ -155,7 +155,8 @@ with(CodeGeneration):</Text-field>
 <Group view="code" labelreference="L2105" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_act := true:
-codegen_opt := 1: # Geringerer Optimierungsgrad. Sonst zu lange.</Text-field>
+codegen_opt := 1: # Geringerer Optimierungsgrad. Sonst zu lange.
+<Font encoding="UTF-8">codegen_debug := 0: # Zur Code-Generierung auch f\303\274r Nicht-Inert-Ausdr\303\274cke</Font></Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group labelreference="L2110" drawlabel="true">
@@ -1411,12 +1412,10 @@ Die inert-Ausdr\303\274cke k\303\266nnen schnell nach der Zeit abgeleitet werden
 </Group><Presentation-Block>
 <Group view="code" labelreference="L1942" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">kintmp_qs := value( kintmp_qs ):</Text-field>
-</Input>
-</Group>
-<Group view="code" labelreference="L1963" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">lpar_qs := value( lpar_qs ):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_debug = 1 then
+  kintmp_qs := value( kintmp_qs ):
+  lpar_qs := value( lpar_qs ):
+end if:</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1966" drawlabel="true">
@@ -1504,7 +1503,7 @@ end do:</Text-field>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L2" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
+<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Worksheet>
