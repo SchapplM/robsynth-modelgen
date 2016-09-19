@@ -65,8 +65,7 @@ qDD_s:= Matrix(N,1, <VD_base_s, qJDD_s>):
 # MDH-Gelenkwinkel neu speichern (Definition der verallg. Koordinaten war dort noch nicht bekannt
 theta := value(theta):
 # Dynamic Parameters
-# Anzahl der Körper (Number of Links)
-NL := NJ + 1:
+# Anzahl der Körper (Number of Links): NL. Ist vorgegeben
 # Mass of each link
 M := Matrix(NL, 1):
 for i from 1 to NL do
