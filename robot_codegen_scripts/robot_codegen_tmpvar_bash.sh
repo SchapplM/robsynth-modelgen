@@ -12,13 +12,16 @@ repo_pfad=$(pwd)/..
 robot_env_pfad=$repo_pfad/robot_codegen_definitions/robot_env
 
 # Lese die Informationen aus der Maple-Datei
+robot_NQJ=`grep "NQJ := " $robot_env_pfad | tail -1 | sed 's/.*= \(.*\):/\1/'`
 robot_NJ=`grep "NJ := " $robot_env_pfad | tail -1 | sed 's/.*= \(.*\):/\1/'`
 robot_name=`grep "robot_name := " $robot_env_pfad | tail -1 | sed 's/.*= "\(.*\)":/\1/'`
 
+echo "robot_NQJ=$robot_NQJ"
 echo "robot_NJ=$robot_NJ"
 echo "robot_name=$robot_name"
 
 # Speichere die Daten als Shell-Variablen. Die Variablen werden von anderen Skripten mit `robot_codegen_definitions/robot_env.sh` eingebunden.
+echo "robot_NQJ=$robot_NQJ" > $robot_env_pfad.sh
 echo "robot_NJ=$robot_NJ" > $robot_env_pfad.sh
 echo "robot_name=$robot_name" >> $robot_env_pfad.sh
 

@@ -6,9 +6,9 @@ q_offset = zeros(NJ,1);
 b = zeros(NJ,1);
 beta = zeros(NJ,1);
 
-rSges = rand(NJ+1,3);
-m = rand(NJ+1,1);
-Icges = [rand(NJ+1,3), -rand(NJ+1,3)*0.01];
+rSges = rand(NL,3);
+m = rand(NL,1);
+Icges = [rand(NL,3), -rand(NL,3)*0.01];
 
 [mrSges, Ifges] = ...
   inertial_parameters_convert_par1_par2(rSges, Icges, m);
@@ -17,7 +17,7 @@ Icges = [rand(NJ+1,3), -rand(NJ+1,3)*0.01];
 if any(m) < 0
   error('Massen sollten positiv sein');
 end
-for i = 2:NJ+1
+for i = 2:NL
   Ic_i = inertiavector2matrix(Icges(i,:));
   if any(eig(Ic_i) < 0) 
     error('Trägheitstensor sollte positiv definit sein');
@@ -28,10 +28,10 @@ end
 
 n = 100;
 % Gelenkwinkel und -zeitableitungen
-Q = (0.5-rand(n, NJ))*pi;
-QD = (0.5-rand(n, NJ))*pi;
-QD(1:NJ,:)=eye(NJ);
-QDD = (0.5-rand(n, NJ))*pi;
+Q = (0.5-rand(n, NQJ))*pi;
+QD = (0.5-rand(n, NQJ))*pi;
+QD(1:NQJ,:)=eye(NQJ);
+QDD = (0.5-rand(n, NQJ))*pi;
 
 % Gravitation
 G = (0.5-rand(n, 3))*10;
@@ -68,3 +68,4 @@ for i = 1:n
   end
 end
 
+%% MDH-Parametereinträge Null setzen

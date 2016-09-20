@@ -4,7 +4,7 @@
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true">
 </View-Properties>
-<MapleNet-Properties elisiondigitsbefore="100" labelling="true" indentamount="4" elisiontermsthreshold="10000" ansi="false" errorbreak="1" useclientjvm="true" echo="1" imaginaryunit="I" labelwidth="20" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" contextmenusize="automatic" plotdriver="opengl" elisiondigitsafter="100" plotoutput="terminal" helpbrowser="standard" rtablesize="10" elisiontermsbefore="100" elisiondigitsthreshold="10000" typesetting="standard" plotdevice="inline" verboseproc="1" showassumed="1" quiet="false" errorcursor="false" longdelim="true" plotoptions="" elisiontermsafter="100" screenwidth="79" preplot="" prettyprint="3" displayprecision="-1" screenpixelheight="1080" warnlevel="3" screenheight="25" latexwidth="8.0" postplot="" prompt="&gt; " ShowLabels="true"/>
+<MapleNet-Properties elisiondigitsbefore="100" labelling="true" indentamount="4" elisiontermsthreshold="10000" ansi="false" errorbreak="1" useclientjvm="true" echo="1" imaginaryunit="I" labelwidth="20" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" contextmenusize="automatic" plotdriver="opengl" elisiondigitsafter="100" plotoutput="terminal" helpbrowser="standard" rtablesize="10" elisiontermsbefore="100" elisiondigitsthreshold="10000" typesetting="standard" plotdevice="inline" verboseproc="1" showassumed="1" quiet="false" errorcursor="false" longdelim="true" plotoptions="" elisiontermsafter="100" screenwidth="79" preplot="" prettyprint="3" displayprecision="-1" screenpixelheight="768" warnlevel="3" screenheight="25" latexwidth="8.0" postplot="" prompt="&gt; " ShowLabels="true"/>
 <Styles>
 <Font name="Ordered List 1" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Annotation Text" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -146,15 +146,15 @@ Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03</Text-field>
 </Group>
 <Group labelreference="L1625" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">qJ_t := Matrix(NJ, 1):
-qJ_s := Matrix(NJ, 1):
-qJD_s := Matrix(NJ, 1):
-qJDD_s := Matrix(NJ, 1):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">qJ_t := Matrix(NQJ, 1):
+qJ_s := Matrix(NQJ, 1):
+qJD_s := Matrix(NQJ, 1):
+qJDD_s := Matrix(NQJ, 1):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1610" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NJ do
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NQJ do
   qJ_t(i,1):=parse(sprintf(&quot;qJ%d(t)&quot;, i)):
   qJ_s(i,1):=parse(sprintf(&quot;qJ%ds&quot;, i)):
   qJD_s(i,1):=parse(sprintf(&quot;qJD%ds&quot;, i)):
@@ -253,7 +253,7 @@ Erm\303\266glicht eine einfachere Berechnung f\303\274r Mechanismen, wo die R\30
 </Group>
 <Group labelreference="L1592" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">N:=NJ+NB:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">N:=NQJ+NB:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1628" drawlabel="true">
@@ -281,7 +281,12 @@ qDD_s:= Matrix(N,1, &lt;VD_base_s, qJDD_s&gt;):</Text-field>
 <Text-field style="Heading 2" layout="Heading 2">Dynamic Parameters</Text-field></Title>
 <Group labelreference="L1630" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Anzahl der K\303\266rper (Number of Links): NL. Ist vorgegeben</Font></Text-field>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Anzahl der K\303\266rper (Number of Links):</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1655" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">NL := NJ + 1:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1597" drawlabel="true">
@@ -393,12 +398,12 @@ end do:</Text-field>
 <Text-field style="Heading 1" layout="Heading 1">Export</Text-field></Title>
 <Group labelreference="L1598" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save q_t, q_s, qD_t, qD_s, qDD_t, qDD_s, qJ_t, qJ_s, qJD_t, qJD_s, qJDD_t, qJDD_s, g_world, X_base_t, X_base_s, V_base_t, V_base_s, VD_base_t, VD_base_s, qoffset, theta, alpha, d, a,v,b,beta, M, r_i_i_Si, mr_i_i_Si, I_i_i, I_i_Si, PV2_vec, PV2_mat, robot_name, N,NB,NJ,NL, base_method_name, T_basevel, sprintf(&quot;../codeexport/%s_tree_floatb_twist_definitions&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save q_t, q_s, qD_t, qD_s, qDD_t, qDD_s, qJ_t, qJ_s, qJD_t, qJD_s, qJDD_t, qJDD_s, g_world, X_base_t, X_base_s, V_base_t, V_base_s, VD_base_t, VD_base_s, qoffset, theta, alpha, d, a,v,b,beta, M, r_i_i_Si, mr_i_i_Si, I_i_i, I_i_Si, PV2_vec, PV2_mat, robot_name, N,NB,NQJ,NL, base_method_name, T_basevel, sprintf(&quot;../codeexport/%s_tree_floatb_twist_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1632" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save q_t, q_s, qD_t, qD_s, qDD_t, qDD_s, qJ_t, qJ_s, qJD_t, qJD_s, qJDD_t, qJDD_s, g_world, X_base_t, X_base_s, V_base_t, V_base_s, VD_base_t, VD_base_s, qoffset, theta, alpha, d, a,v,b,beta, M, r_i_i_Si, mr_i_i_Si, I_i_i, I_i_Si, PV2_vec, PV2_mat, robot_name, N,NB,NJ,NL, base_method_name, T_basevel, sprintf(&quot;../codeexport/%s_tree_floatb_definitions&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save q_t, q_s, qD_t, qD_s, qDD_t, qDD_s, qJ_t, qJ_s, qJD_t, qJD_s, qJDD_t, qJDD_s, g_world, X_base_t, X_base_s, V_base_t, V_base_s, VD_base_t, VD_base_s, qoffset, theta, alpha, d, a,v,b,beta, M, r_i_i_Si, mr_i_i_Si, I_i_i, I_i_Si, PV2_vec, PV2_mat, robot_name, N,NB,NQJ,NL, base_method_name, T_basevel, sprintf(&quot;../codeexport/%s_tree_floatb_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1653" drawlabel="true">
@@ -439,11 +444,6 @@ end do:</Text-field>
 <Group labelreference="L1647" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(qoffset, sprintf(&quot;../codeexport/%s_parameters_mdh_qoffset.m&quot;, robot_name), 2):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1648" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>

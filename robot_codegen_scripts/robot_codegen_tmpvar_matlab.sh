@@ -13,21 +13,21 @@ source $repo_pfad/robot_codegen_definitions/robot_env.sh
 # Schnipsel für Matlab-varpar-Dateien vorbereiten
 # Gelenkwinkel
 echo "" > $tmp_pfad/robot_matlabtmp_q.m
-for (( i=1; i<=$robot_NJ; i++ ))
+for (( i=1; i<=$robot_NQJ; i++ ))
 do
 	echo "qJ${i}s = q(${i});" >> $tmp_pfad/robot_matlabtmp_q.m
 done
 
 # Gelenkwinkelgeschwindigkeit
 echo "" > $tmp_pfad/robot_matlabtmp_qD.m
-for (( i=1; i<=$robot_NJ; i++ ))
+for (( i=1; i<=$robot_NQJ; i++ ))
 do
 	echo "qJD${i}s = qD(${i});" >> $tmp_pfad/robot_matlabtmp_qD.m
 done
 
 # Gelenkwinkelbeschleunigung
 echo "" > $tmp_pfad/robot_matlabtmp_qDD.m
-for (( i=1; i<=$robot_NJ; i++ ))
+for (( i=1; i<=$robot_NQJ; i++ ))
 do
 	echo "qJDD${i}s = qDD(${i});" >> $tmp_pfad/robot_matlabtmp_qDD.m
 done

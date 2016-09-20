@@ -65,16 +65,16 @@ end if:
 # Calculate Forward Kinematics (Single-Joint Transformation)
 # Trf is the Matrix of Transformation from i-1 to i
 # Trf_c is the cummulated Matrix of Transformation from 0 to i
-Trf := Matrix(4, 4, NL-1): # Diese Initialisierung bringt nichts (initialisiert nur 4x4-Matrix)
-for i from 1 to NL-1 do 
+Trf := Matrix(4, 4, NJ): # Diese Initialisierung bringt nichts (initialisiert nur 4x4-Matrix)
+for i from 1 to NJ do 
   Trf(1 .. 4, 1 .. 4, i) := Matrix(4,4):
 end do:
-for i from 1 to NL-1 do 
+for i from 1 to NJ do 
   Trf(1 .. 4, 1 .. 4, i) := trafo_mdh_full(alpha[i,1], a[i,1], theta[i,1], d[i,1], beta[i,1], b[i,1]):
 end do:
 # Kinematische Zwangsbedingungen ersetzen
 # Substituiere allgemeine Ausdrücke der Winkel der Parallelstruktur mit kinematischen Zwangsbedingungen in Abhängigkeit der Haupt-Gelenkwinkel
-for i from 1 to NL-1 do # Index über Transformationsmatrizen aller Körper
+for i from 1 to NJ do # Index über Transformationsmatrizen aller Körper
   for ix from 1 to 4 do # Index über Zeilen der Transformationsmatrizen
     for iy from 1 to 4 do # Index über Spalten der Transformationsmatrizen
       # Substituiere Zeitvariablen
@@ -94,7 +94,7 @@ if kin_constraints_exist = true then:
 end if:
 
 # Calculate Forward Kinematics (Multi-Joint Transformation)
-Trf_c := Matrix(4, 4, NJ): # Diese Initialisierung bringt nichts (initialisiert nur 4x4-Matrix)
+Trf_c := Matrix(4, 4, NL): # Diese Initialisierung bringt nichts (initialisiert nur 4x4-Matrix)
 for i from 1 to NL do 
   Trf_c(1 .. 4, 1 .. 4, i) := Matrix(4,4):
 end do:
@@ -107,7 +107,7 @@ if base_method_name = "eulangrpy" then:
 end:
 printf("Nutze die Methode %s für die Basis-Orientierung\n", base_method_name):
 # Kinematik aller Körper mit MDH-Ansatz Bestimmen. [KhalilKle1986].
-for i from 1 to NL-1 do 
+for i from 1 to NJ do 
   # Index des vorherigen Koordinatensystems
   j := v(i)+1:
   Trf_c(1 .. 4, 1 .. 4, i+1) := Multiply(Trf_c(1 .. 4, 1 .. 4, j), Trf(1 .. 4, 1 .. 4, i)):
@@ -126,8 +126,8 @@ if codegen_act then
   MatlabExport(convert_t_s(Trf_c_Export), sprintf("../codeexport/%s_fkine_mdh_floatb_%s_rotmat_matlab.m", robot_name, base_method_name), codegen_opt):
 end if:
 # Export des symbolischen Ausdrucks für alle Gelenk-Transformationsmatrizen auf einmal.
-Trf_Export := Matrix((NL-1)*4, 4):
-for i from 1 to (NL-1) do 
+Trf_Export := Matrix((NJ)*4, 4):
+for i from 1 to NJ do 
   Trf_Export((i-1)*4+1 .. 4*i, 1..4) := Trf(1..4, 1..4, i):
 end do:
 if codegen_act then

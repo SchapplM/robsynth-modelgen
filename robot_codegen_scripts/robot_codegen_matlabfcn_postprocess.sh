@@ -26,6 +26,7 @@ FN="${fntmp%.*}"
 # Ersetze Platzhalterausdrücke $RN$, $NJ$, $NL$
 # Hier müssen normale und nicht einfache Anführungszeichen für `sed` genommen werden. Sonst wird das $-Zeichen für die Variable als Text interpretiert...
 sed -i "s/%RN%/$robot_name/g" $mfcndat
+sed -i "s/%NQJ%/$robot_NQJ/g" $mfcndat
 sed -i "s/%NJ%/$robot_NJ/g" $mfcndat
 sed -i "s/%NL%/$robot_NL/g" $mfcndat
 sed -i "s/%NMPV%/$robot_NMPV/g" $mfcndat
