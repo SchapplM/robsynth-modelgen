@@ -10,7 +10,9 @@
 clc
 clear
 
+NQJ = %NQJ%;
 NJ = %NJ%;
+NL = %NL%;
 robot_name = '%RN%';
 
 testfunctions_path_init

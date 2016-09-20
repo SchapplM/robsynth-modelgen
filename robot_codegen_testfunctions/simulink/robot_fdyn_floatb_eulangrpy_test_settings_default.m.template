@@ -4,7 +4,9 @@
 % Moritz Schappler, schappler@irt.uni-hannover.de, 2016-04
 % (c) Institut für Regelungstechnik, Universität Hannover
 
+NQJ = %NQJ%;
 NJ = %NJ%;
+NL = %NL%;
 robot_name = '%RN%';
 
 %% Init
@@ -18,24 +20,24 @@ KinPar_mdh = struct('a', a, 'd', d, 'alpha', alpha, ...
 DynPar1 = struct('m', m, 'r_S', rSges, 'I_S', Icges);
 
 %% Anfangswerte
-qJ_t0 = rand(NJ,1)*10;
-qJD_t0 = rand(NJ,1)*10;
+qJ_t0 = rand(NQJ,1)*10;
+qJD_t0 = rand(NQJ,1)*10;
 g_world = [0;0;-9.81];
 phi_base_t0 = rand(3,1)*pi/10;
 phiD_base_t0 = rand(3,1)*pi/10;
 r_base_t0 = zeros(3,1);
 rD_base_t0 = rand(3,1);
 %% Dämpfung
-d = zeros(NJ,1);
+d = zeros(NQJ,1);
 
 %% Simulink-Eingangsdaten
   
 simin_tau_ext = struct('time', 0, ...
-    'signals', struct('values', zeros(1,NJ), 'dimensions', NJ), ...
+    'signals', struct('values', zeros(1,NQJ), 'dimensions', NQJ), ...
     'name', 'tau_ext');
   
 simin_tau_m = struct('time', 0, ...
-    'signals', struct('values', zeros(1,NJ), 'dimensions', NJ), ...
+    'signals', struct('values', zeros(1,NQJ), 'dimensions', NQJ), ...
     'name', 'tau_m');
 %% Configure Model
 sl_Modellname = '%RN%_fdyn_floatb_eulangrpy_test';

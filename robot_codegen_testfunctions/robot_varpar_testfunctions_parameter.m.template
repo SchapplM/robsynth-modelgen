@@ -1,3 +1,9 @@
+%% Allgemeine Definitionen
+NQJ = %NQJ%;
+NJ = %NJ%;
+NL = %NL%;
+robot_name = '%RN%';
+
 %% Parameter definieren
 a = rand(NJ,1);
 alpha = zeros(NJ,1);
