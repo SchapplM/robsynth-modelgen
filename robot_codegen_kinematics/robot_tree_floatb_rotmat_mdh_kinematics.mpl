@@ -49,7 +49,10 @@ read sprintf("../codeexport/%s_tree_floatb_definitions", robot_name):
 # Lese Variablen: kintmp_subsexp, kintmp_qs, kintmp_qt
 kin_constraints_exist := false:
 read "../robot_codegen_constraints/proc_subs_kintmp_exp":
-read sprintf("../codeexport/%s_kinematic_constraints_maple_inert.m", robot_name):
+constrfile := sprintf("../codeexport/%s_kinematic_constraints_maple_inert.m", robot_name):
+if FileTools[Exists](constrfile) then
+  read constrfile:
+end if:
 if kin_constraints_exist = true then:
   kintmp_qs := kintmp_qs: # gelesene Variable sonst nicht sichtbar
   kintmp_qt := kintmp_qt: # gelesene Variable sonst nicht sichtbar
