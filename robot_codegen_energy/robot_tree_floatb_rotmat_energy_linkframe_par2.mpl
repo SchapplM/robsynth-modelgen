@@ -82,7 +82,7 @@ if codegen_act then
 end if:
 # Fixed Base
 T_s_fixb:=T_s:
-for i from 1 to NB do
+for i from 1 to NQB do
   T_s_fixb := subs({X_base_s[i,1]=0},T_s_fixb):
 end do:
 for i from 1 to 6 do

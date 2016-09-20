@@ -4,7 +4,7 @@
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true">
 </View-Properties>
-<MapleNet-Properties elisiondigitsbefore="100" labelling="true" indentamount="4" elisiontermsthreshold="10000" ansi="false" errorbreak="1" useclientjvm="true" echo="1" imaginaryunit="I" labelwidth="20" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" contextmenusize="automatic" plotdriver="opengl" elisiondigitsafter="100" plotoutput="terminal" helpbrowser="standard" rtablesize="10" elisiontermsbefore="100" elisiondigitsthreshold="10000" typesetting="standard" plotdevice="inline" verboseproc="1" showassumed="1" quiet="false" errorcursor="false" longdelim="true" plotoptions="" elisiontermsafter="100" screenwidth="79" preplot="" prettyprint="3" displayprecision="-1" screenpixelheight="1080" warnlevel="3" screenheight="25" latexwidth="8.0" postplot="" prompt="&gt; " ShowLabels="true"/>
+<MapleNet-Properties elisiondigitsbefore="100" labelling="true" indentamount="4" elisiontermsthreshold="10000" ansi="false" errorbreak="1" useclientjvm="true" echo="1" imaginaryunit="I" labelwidth="20" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" contextmenusize="automatic" plotdriver="opengl" elisiondigitsafter="100" plotoutput="terminal" helpbrowser="standard" rtablesize="10" elisiontermsbefore="100" elisiondigitsthreshold="10000" typesetting="standard" plotdevice="inline" verboseproc="1" showassumed="1" quiet="false" errorcursor="false" longdelim="true" plotoptions="" elisiontermsafter="100" screenwidth="79" preplot="" prettyprint="3" displayprecision="-1" screenpixelheight="768" warnlevel="3" screenheight="25" latexwidth="8.0" postplot="" prompt="&gt; " ShowLabels="true"/>
 <Styles>
 <Font name="Ordered List 1" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Annotation Text" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -237,7 +237,7 @@ save dTdqDdt_s, sprintf(&quot;../codeexport/%s_floatb_lagrange_dTdqDdt_s_regress
 <Group labelreference="L1673" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(taug_regressor_s(7..N,..), sprintf(&quot;../codeexport/%s_gravload_joint_regressor_minpar_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(taug_regressor_s(7..NQ,..), sprintf(&quot;../codeexport/%s_gravload_joint_regressor_minpar_matlab.m&quot;, robot_name), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -253,8 +253,8 @@ Siehe: https://de.wikipedia.org/wiki/Symmetrische_Matrix</Text-field>
 <Group labelreference="L1713" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">Paramvec_size := ColumnDimension(t_ges_minpar):
-tauMMj_regressor_s := dTdqDdt_s(7..N,..):
-MMjj_regressor_s := Matrix(NJ*(NJ+1)/2, Paramvec_size):</Text-field>
+tauMMj_regressor_s := dTdqDdt_s(7..NQ,..):
+MMjj_regressor_s := Matrix(NQJ*(NQJ+1)/2, Paramvec_size):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1714" drawlabel="true">
@@ -265,8 +265,8 @@ MMjj_regressor_s := Matrix(NJ*(NJ+1)/2, Paramvec_size):</Text-field>
 <Group labelreference="L1711" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">i_rr := 0:
-for i to NJ do # Zeilenindex der Massenmatrix
-  for j to NJ do  # Spaltenindex der Massenmatrix
+for i to NQJ do # Zeilenindex der Massenmatrix
+  for j to NQJ do  # Spaltenindex der Massenmatrix
     if j &gt; i then
       next: # rechte obere Seite der symmetrischen Matrix. Keine neue Information. Nicht berechnen oder speichern.
     end if:
@@ -336,7 +336,7 @@ end if:</Text-field>
 <Group labelreference="L1716" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">tauC_regressor_s := dTdqDdt_s-dTdq_s:
-for i to N do 
+for i to NQ do 
   tauC_regressor_s := subs({qDD_s(i, 1) = 0}, tauC_regressor_s):
 end do:</Text-field>
 </Input>
@@ -359,7 +359,7 @@ end do:</Text-field>
 <Group labelreference="L1718" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(tauC_regressor_s(7..N,..), sprintf(&quot;../codeexport/%s_coriolisvec_joint_fixb_regressor_minpar_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(tauC_regressor_s(7..NQ,..), sprintf(&quot;../codeexport/%s_coriolisvec_joint_fixb_regressor_minpar_matlab.m&quot;, robot_name), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -393,7 +393,7 @@ end proc:</Text-field>
 </Group>
 <Group labelreference="L1723" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Cjj_regressor_s := Matrix(NJ*(NJ+1)/2, Paramvec_size):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Cjj_regressor_s := Matrix(NQJ*(NQJ+1)/2, Paramvec_size):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1724" drawlabel="true">
@@ -404,21 +404,21 @@ end proc:</Text-field>
 <Group labelreference="L1725" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">i_rr := 0: # Vektor-Index f\303\274r den Regressor der Coriolismatrix (Ausgabe)
-</Font>for i to NJ do # Zeilenindex der Coriolismatrix
-  for j to NJ do  # Spaltenindex der Coriolismatrix
+</Font>for i to NQJ do # Zeilenindex der Coriolismatrix
+  for j to NQJ do  # Spaltenindex der Coriolismatrix
     if j &gt; i then
       next: # rechte obere Seite der symmetrischen Matrix. Keine neue Information. Nicht berechnen oder speichern.
     end if:
     i_rr := i_rr + 1: # Gehe zeilenweise durch den unteren linken Teil der Coriolismatrix (inkl. Diagonale)
     for k to Paramvec_size do # Spaltenindex der Regressormatrix
 <Font encoding="UTF-8">      # Massenmatrix f\303\274r Parameter k generieren (f\303\274r Funktion mit Christoffel-Symbol-Ansatz ben\303\266tigt)
-</Font>      MM_jj_k := Matrix(NJ,NJ):
-      for ii from 1 to NJ do
-        for jj from 1 to NJ do
-          MM_jj_k := MMjj_regressor_s(index_symmat2vec(NJ, ii, jj), k):
+</Font>      MM_jj_k := Matrix(NQJ,NQJ):
+      for ii from 1 to NQJ do
+        for jj from 1 to NQJ do
+          MM_jj_k := MMjj_regressor_s(index_symmat2vec(NQJ, ii, jj), k):
         end do:
       end do:
-      for l from 1 to NJ do # Siehe [KhalilDombre2002]
+      for l from 1 to NQJ do # Siehe [KhalilDombre2002]
         Cjj_regressor_s[i_rr, k] := Cjj_regressor_s[i_rr, k]+cijk(i,j,l,MM_jj_k,qJ_s)*qJD_s[l,1]:
       end do:
     end do:
@@ -474,7 +474,7 @@ end if:</Text-field>
 <Group labelreference="L1756" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(tau_regressor_s(7..N,..), sprintf(&quot;../codeexport/%s_invdyn_joint_fixb_regressor_minpar_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(tau_regressor_s(7..NQ,..), sprintf(&quot;../codeexport/%s_invdyn_joint_fixb_regressor_minpar_matlab.m&quot;, robot_name), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
