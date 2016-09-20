@@ -4,7 +4,7 @@
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true">
 </View-Properties>
-<MapleNet-Properties elisiondigitsbefore="100" labelling="true" indentamount="4" elisiontermsthreshold="10000" ansi="false" errorbreak="1" useclientjvm="true" echo="1" imaginaryunit="I" labelwidth="20" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" contextmenusize="automatic" plotdriver="opengl" elisiondigitsafter="100" plotoutput="terminal" helpbrowser="standard" rtablesize="10" elisiontermsbefore="100" elisiondigitsthreshold="10000" typesetting="standard" plotdevice="inline" verboseproc="1" showassumed="1" quiet="false" errorcursor="false" longdelim="true" plotoptions="" elisiontermsafter="100" screenwidth="79" preplot="" prettyprint="3" displayprecision="-1" screenpixelheight="768" warnlevel="3" screenheight="25" latexwidth="8.0" postplot="" prompt="&gt; " ShowLabels="true"/>
+<MapleNet-Properties elisiondigitsbefore="100" labelling="true" indentamount="4" elisiontermsthreshold="10000" ansi="false" errorbreak="1" useclientjvm="true" echo="1" imaginaryunit="I" labelwidth="20" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" contextmenusize="automatic" plotdriver="opengl" elisiondigitsafter="100" plotoutput="terminal" helpbrowser="standard" rtablesize="10" elisiontermsbefore="100" elisiondigitsthreshold="10000" typesetting="standard" plotdevice="inline" verboseproc="1" showassumed="1" quiet="false" errorcursor="false" longdelim="true" plotoptions="" elisiontermsafter="100" screenwidth="79" preplot="" prettyprint="3" displayprecision="-1" screenpixelheight="900" warnlevel="3" screenheight="25" latexwidth="8.0" postplot="" prompt="&gt; " ShowLabels="true"/>
 <Styles>
 <Font name="Ordered List 1" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Annotation Text" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -214,6 +214,9 @@ U_grav := U_grav:</Text-field>
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Generiere Dynamik f\303\274r %s mit Parametersatz %d\134n&quot;, robot_name, codegen_dynpar):</Font></Text-field>
 </Input>
+<Output>
+<Text-field style="Line Printed Output" layout="Line Printed Output"><Font encoding="UTF-8">Generiere Dynamik f\303\274r prothesis_2dof mit Parametersatz 1</Font></Text-field>
+</Output>
 </Group>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
@@ -283,9 +286,12 @@ end if:</Text-field>
 <Group labelreference="L1673" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_grav then
-  MatlabExport(taug_s(7..N), sprintf(&quot;../codeexport/%s_joint_gravload_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(taug_s(7..NQ), sprintf(&quot;../codeexport/%s_joint_gravload_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
+<Output>
+<Text-field style="HyperlinkError" layout="HyperlinkError"><Hyperlink linktarget="http://www.maplesoft.com/support/help/errors/view.aspx?path=Error,%20non-integer%20in%20index%20range" hyperlink="true"><Font style="HyperlinkError">Error, non-integer in index range</Font></Hyperlink></Text-field>
+</Output>
 </Group>
 <Group labelreference="L1692" drawlabel="true">
 <Input>
@@ -357,6 +363,9 @@ end do:</Text-field>
   MatlabExport(MMjj_s, sprintf(&quot;../codeexport/%s_inertia_joint_joint_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
+<Output>
+<Text-field style="Line Printed Output" layout="Line Printed Output">Exported Matlab code to ../codeexport/prothesis_2dof_inertia_joint_joint_floatb_twist_par1_matlab.m</Text-field>
+</Output>
 </Group>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
@@ -417,6 +426,9 @@ end do:</Text-field>
   MatlabExport(MMDjj_s, sprintf(&quot;../codeexport/%s_inertia_joint_joint_time_derivative_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
+<Output>
+<Text-field style="Line Printed Output" layout="Line Printed Output">Exported Matlab code to ../codeexport/prothesis_2dof_inertia_joint_joint_time_derivative_floatb_twist_par1_matlab.m</Text-field>
+</Output>
 </Group>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
@@ -491,6 +503,9 @@ end do:</Text-field>
   MatlabExport(tauCC_s_fixb[7..NQ], sprintf(&quot;../codeexport/%s_coriolisvec_joint_fixb_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
+<Output>
+<Text-field style="Line Printed Output" layout="Line Printed Output">Exported Matlab code to ../codeexport/prothesis_2dof_coriolisvec_joint_fixb_par1_matlab.m</Text-field>
+</Output>
 </Group>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
@@ -564,6 +579,9 @@ end do:</Text-field>
   MatlabExport(Cqs_fixb[7..NQ,7..NQ], sprintf(&quot;../codeexport/%s_coriolismat_joint_fixb_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
+<Output>
+<Text-field style="Line Printed Output" layout="Line Printed Output">Exported Matlab code to ../codeexport/prothesis_2dof_coriolismat_joint_fixb_par1_matlab.m</Text-field>
+</Output>
 </Group>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
@@ -623,6 +641,9 @@ end do:</Text-field>
   MatlabExport(taus_fixb[7..NQ], sprintf(&quot;../codeexport/%s_invdyn_fixb_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
+<Output>
+<Text-field style="Line Printed Output" layout="Line Printed Output">Exported Matlab code to ../codeexport/prothesis_2dof_invdyn_fixb_par1_matlab.m</Text-field>
+</Output>
 </Group>
 <Group labelreference="L1698" drawlabel="true">
 <Input>

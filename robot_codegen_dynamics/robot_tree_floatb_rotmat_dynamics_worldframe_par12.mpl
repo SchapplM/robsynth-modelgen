@@ -83,7 +83,7 @@ if codeexport_grav and not(base_method_name="twist") then
 end if:
 # Belastung der Gelenke
 if codeexport_grav then
-  MatlabExport(taug_s(7..N), sprintf("../codeexport/%s_joint_gravload_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(taug_s(7..NQ), sprintf("../codeexport/%s_joint_gravload_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
 # Kompletter Vektor
 if codeexport_grav and not(base_method_name="twist") then
