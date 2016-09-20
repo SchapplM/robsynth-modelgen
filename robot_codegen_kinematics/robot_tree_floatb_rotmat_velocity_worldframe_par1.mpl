@@ -50,10 +50,30 @@ Trf_c := Trf_c:
 read sprintf("../codeexport/%s_kinematics_com_worldframe_floatb_%s_par1_maple.m", robot_name, base_method_name):
 r_W_W_Si := r_W_W_Si:
 r_W_i_Si := r_W_i_Si:
+# Lade Ausdrücke für kinematische Zwangsbedingungen (Verknüpfung von MDH-Gelenkwinkeln durch verallgemeinerte Koordinaten)
+read sprintf("../codeexport/%s_kinematic_constraints_maple_inert.m", robot_name):
 # Zeitableitung der Drehwinkel berechnen
 # Ersetze die MDH-Winkel durch verallgemeinerte Koordinaten
-# Falls die Gelenkwinkel nicht direkt mit verallgemeinerten Koordinaten überstimmen (bei Kopplungen, kinematischen Schleifen) steht hier eine längere Berechnung.
-thetaD := qJD_t:
+# Falls die Gelenkwinkel nicht direkt mit verallgemeinerten Koordinaten überstimmen (bei Kopplungen, kinematischen Schleifen) steht hier eine längere Berechnung. Ansonsten reicht das triviale Einsetzen:
+# thetaD := qJD_t:
+# Ersetze die MDH-Winkel durch verallgemeinerte Koordinaten
+theta_qt := theta:
+for ii from 1 to NJ do
+  for jj from 1 to RowDimension(kintmp_qt) do
+    theta_qt(ii, 1) := subs( { kintmp_t(jj, 1) = kintmp_qt(jj, 1) }, theta_qt(ii, 1) ): 
+  end do:
+end do:
+# Zeitableitung der MDH-Winkel in Abhängigkeit der verallgemeinerten Koordinaten
+thetaD := Matrix(NJ, 1):
+for i from 1 to NJ do
+  thetaD(i,1) := diff(theta_qt(i,1), t):
+end do:
+# Ausdruck für Zeitableitungen der MDH-Winkel exportieren
+if codegen_act then
+  MatlabExport(convert_t_s(thetaD), sprintf("../codeexport/%s_velocity_mdh_angles_matlab.m", robot_name), codegen_opt):
+end if:
+# Ausdruck für Maple speichern
+save thetaD, sprintf("../codeexport/%s_velocity_mdh_angles_maple.m", robot_name):
 # Calculate Velocities
 # First assume fixed base model with base velocity and acceleration set to zero
 # Anfangsgeschwindigkeit definieren für floating base model

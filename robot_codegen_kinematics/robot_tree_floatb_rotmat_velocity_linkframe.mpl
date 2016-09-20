@@ -47,10 +47,10 @@ read sprintf("../codeexport/%s_tree_floatb_definitions", robot_name):
 read sprintf("../codeexport/%s_kinematics_floatb_%s_rotmat_maple.m", robot_name, base_method_name):
 Trf := Trf:
 Trf_c := Trf_c:
-# Zeitableitung der Drehwinkel berechnen
-# Ersetze die MDH-Winkel durch verallgemeinerte Koordinaten
-# Falls die Gelenkwinkel nicht direkt mit verallgemeinerten Koordinaten überstimmen (bei Kopplungen, kinematischen Schleifen) steht hier eine längere Berechnung.
-thetaD := qJD_t:
+# Zeitableitungen der MDH-Drehwinkel laden.
+# Die Berechnung soll nur an einer Stelle erfolgen. Siehe robot_tree_floatb_rotmat_velocity_worldframe_par1.
+read sprintf("../codeexport/%s_velocity_mdh_angles_maple.m", robot_name):
+thetaD := thetaD:
 # Calculate Velocities
 # First assume fixed base model with base velocity and acceleration set to zero
 # Anfangsgeschwindigkeit definieren für floating base model

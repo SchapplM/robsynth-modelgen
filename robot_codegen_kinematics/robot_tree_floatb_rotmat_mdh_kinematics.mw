@@ -4,7 +4,7 @@
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true">
 </View-Properties>
-<MapleNet-Properties elisiondigitsbefore="100" labelling="true" indentamount="4" elisiontermsthreshold="10000" ansi="false" errorbreak="1" useclientjvm="true" echo="1" imaginaryunit="I" labelwidth="20" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" contextmenusize="automatic" plotdriver="opengl" elisiondigitsafter="100" plotoutput="terminal" helpbrowser="standard" rtablesize="10" elisiontermsbefore="100" elisiondigitsthreshold="10000" typesetting="standard" plotdevice="inline" verboseproc="1" showassumed="1" quiet="false" errorcursor="false" longdelim="true" plotoptions="" elisiontermsafter="100" screenwidth="79" preplot="" prettyprint="3" displayprecision="-1" screenpixelheight="900" warnlevel="3" screenheight="25" latexwidth="8.0" postplot="" prompt="&gt; " ShowLabels="true"/>
+<MapleNet-Properties elisiondigitsbefore="100" labelling="true" indentamount="4" elisiontermsthreshold="10000" ansi="false" errorbreak="1" useclientjvm="true" echo="1" imaginaryunit="I" labelwidth="20" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" contextmenusize="automatic" plotdriver="opengl" elisiondigitsafter="100" plotoutput="terminal" helpbrowser="standard" rtablesize="10" elisiontermsbefore="100" elisiondigitsthreshold="10000" typesetting="standard" plotdevice="inline" verboseproc="1" showassumed="1" quiet="false" errorcursor="false" longdelim="true" plotoptions="" elisiontermsafter="100" screenwidth="79" preplot="" prettyprint="3" displayprecision="-1" screenpixelheight="768" warnlevel="3" screenheight="25" latexwidth="8.0" postplot="" prompt="&gt; " ShowLabels="true"/>
 <Styles>
 <Font name="Ordered List 1" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Annotation Text" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -179,7 +179,7 @@ read &quot;../transformation/proc_rpy2tr&quot;: </Text-field>
 <Text-field style="Heading 1" layout="Heading 1">Kinematische Zwangsbedingungen</Text-field></Title>
 <Group labelreference="L1700" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Zwangsbedingungen f\303\274r m3 und m4 gleich.</Font></Text-field>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Lade Ausdr\303\274cke f\303\274r kinematische Zwangsbedingungen (Verkn\303\274pfung von MDH-Gelenkwinkeln durch verallgemeinerte Koordinaten)</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1695" drawlabel="true">
@@ -213,6 +213,9 @@ else
   kintmp_qs := Matrix(1,1):
   kintmp_qt := Matrix(1,1):
   kintmp_subsexp := Matrix(1,2):
+  kin_constraints_exist := false:<Font encoding="UTF-8">
+  # Zwangsbedingungen neu speichern, damit diese auch f\303\274r andere Skripte verf\303\274gbar sind (als dummy-Variablen).
+  save </Font>kin_constraints_exist, kintmp_qs, kintmp_qt, kintmp_subsexp, sprintf(&quot;../codeexport/%s_kinematic_constraints_maple_inert.m&quot;, robot_name):
 end if:</Text-field>
 </Input>
 </Group>

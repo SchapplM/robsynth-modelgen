@@ -45,7 +45,7 @@ read "../robot_codegen_definitions/robot_env":
 printf("Generiere Kinematik für %s\n", robot_name):
 read sprintf("../codeexport/%s_tree_floatb_definitions", robot_name):
 # Kinematische Zwangsbedingungen
-# Zwangsbedingungen für m3 und m4 gleich.
+# Lade Ausdrücke für kinematische Zwangsbedingungen (Verknüpfung von MDH-Gelenkwinkeln durch verallgemeinerte Koordinaten)
 # Lese Variablen: kintmp_subsexp, kintmp_qs, kintmp_qt
 kin_constraints_exist := false:
 read "../robot_codegen_constraints/proc_subs_kintmp_exp":
@@ -59,6 +59,9 @@ else
   kintmp_qs := Matrix(1,1):
   kintmp_qt := Matrix(1,1):
   kintmp_subsexp := Matrix(1,2):
+  kin_constraints_exist := false:
+  # Zwangsbedingungen neu speichern, damit diese auch für andere Skripte verfügbar sind (als dummy-Variablen).
+  save kin_constraints_exist, kintmp_qs, kintmp_qt, kintmp_subsexp, sprintf("../codeexport/%s_kinematic_constraints_maple_inert.m", robot_name):
 end if:
 # Calculate Forward Kinematics (Single-Joint Transformation)
 # Trf is the Matrix of Transformation from i-1 to i
