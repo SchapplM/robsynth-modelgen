@@ -398,24 +398,12 @@ end do:</Text-field>
 <Text-field style="Heading 1" layout="Heading 1">Kinematische Zwangsbedingungen</Text-field></Title>
 <Group labelreference="L1663" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Pr\303\274fe, ob kinematische Zwangsbedingungen in der Roboterkonfiguration genannt sind durch Pr\303\274fung der Existenz der folgenden Variablen.</Font></Text-field>
-</Input>
-</Group>
-<Group labelreference="L1660" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">NKC := 0:</Text-field>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Pr\303\274fe, ob kinematische Zwangsbedingungen in der Roboterkonfiguration genannt sind durch Pr\303\274fung der Existenz der entsprechenden Variablen.</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1659" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">try
-  NKC := RowDimension( kintmp_t ): # Wenn die Variable in robot_env nicht vorkommt, ist diese Zeile wirkungslos
-end:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1661" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if NKC = 0 then
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if type( kintmp_t, 'Matrix') = false then
   kintmp_t<Font encoding="UTF-8"> := Matrix(1,1): # Dummy-Werte damit sp\303\244ter alles funktioniert
 </Font>  kintmp_s := Matrix(1,1):
 end if:</Text-field>

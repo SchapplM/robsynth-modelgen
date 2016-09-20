@@ -120,12 +120,8 @@ for i to NL do
   end do:
 end do:
 # Kinematische Zwangsbedingungen
-# Prüfe, ob kinematische Zwangsbedingungen in der Roboterkonfiguration genannt sind durch Prüfung der Existenz der folgenden Variablen.
-NKC := 0:
-try
-  NKC := RowDimension( kintmp_t ): # Wenn die Variable in robot_env nicht vorkommt, ist diese Zeile wirkungslos
-end:
-if NKC = 0 then
+# Prüfe, ob kinematische Zwangsbedingungen in der Roboterkonfiguration genannt sind durch Prüfung der Existenz der entsprechenden Variablen.
+if type( kintmp_t, 'Matrix') = false then
   kintmp_t := Matrix(1,1): # Dummy-Werte damit später alles funktioniert
   kintmp_s := Matrix(1,1):
 end if:
