@@ -3,12 +3,12 @@
 % Use Code from Maple symbolic Code Generation
 % 
 % Input:
-% q [%NJ%x1]
-%   Joint Angles [rad]
-% qD [%NJ%x1]
-%   Joint Velocities [rad/s]
-% qDD [%NJ%x1]
-%   Joint Acceleration [rad/s]
+% q [%NQJ%x1]
+%   Generalized coordinates (joint angles) [rad]
+% qD [%NQJ%x1]
+%   Generalized velocities (joint velocities) [rad/s]
+% qD [%NQJ%x1]
+%   Generalized accelerations (joint accelerations) [rad/s]
 % g [3x1]
 %   gravitation vector in mdh base frame [m/s^2]
 % a_mdh, d_mdh, q_offset_mdh [%NJ%x1]
