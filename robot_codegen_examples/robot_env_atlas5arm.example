@@ -7,7 +7,8 @@
 robot_name := "atlas5_arm":
 
 NJ := 7:
-NL := 8: # Anzahl der Körper: Basis und alle aktuierten Segmente
+NQJ := 7:
+
 qoffset := Matrix(7,1,[0, -(1/2)*Pi, 0, 0, 0, 0, 0]):
 alpha := Matrix(7,1,[0, -(1/2)*Pi, (1/2)*Pi, -(1/2)*Pi, (1/2)*Pi, -(1/2)*Pi, (1/2)*Pi]):
 d := Matrix(7,1,[d1, 0, d3, 0, d5, 0, 0]):

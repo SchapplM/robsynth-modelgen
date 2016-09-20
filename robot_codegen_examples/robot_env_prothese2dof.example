@@ -7,7 +7,8 @@
 robot_name := "prothesis_2dof":
 
 NJ := 2:
-NL := 3: # Anzahl der Körper: Basis und alle aktuierten Segmente
+NQJ := 2:
+
 qoffset := Matrix(2,1,[-(1/2)*Pi, 0]):
 alpha := Matrix(2,1,[-(1/2)*Pi, -(1/2)*Pi]):
 d := Matrix(2,1,[ 0, d2]):

@@ -7,9 +7,9 @@
 robot_name := "KAS5m6":
 
 # Anzahl der verallgemeinerten Gelenkkoordinaten
-NJ := 6: 
-# Anzahl der Körper: Basis und alle aktuierten Segmente
-NL := 13: 
+NQJ := 6:
+# Anzahl der Gelenke
+NJ := 13:
 
 qoffset := Matrix(13, 1, [-Pi/2, Pi/2, 0, 0, 0, Pi/2, 0, Pi/2, 0, 0, -Pi, 0, Pi]):
 theta := <qJ_t(1,1); qJ_t(2,1); qJ_t(3,1); qJ_t(4,1); qJ_t(5,1); qJ_t(5,1) + kintmp_t(23) - qJ_t(4,1) + Pi/2; qJ_t(6,1); kintmp_t(13,1); -kintmp_t(11,1); -kintmp_t(21,1); -kintmp_t(8,1); -kintmp_t(3,1); -kintmp_t(2,1)> + qoffset:
