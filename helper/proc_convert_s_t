@@ -1,7 +1,8 @@
 convert_s_t := proc (A_s) 
-  local A_t, i; 
+  local A_t, i, NQ; 
   A_t := A_s; 
-  for i to N do 
+  NQ := RowDimension(q_t):
+  for i to NQ do 
     A_t := subs({qDD_s[i,1] = qDD_t[i,1]},A_t);
     A_t := subs({qD_s[i,1] = qD_t[i,1]},A_t);
     A_t:= subs({q_s[i,1] = q_t[i,1]},A_t); 
