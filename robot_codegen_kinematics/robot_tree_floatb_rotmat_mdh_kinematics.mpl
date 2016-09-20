@@ -56,8 +56,6 @@ if kin_constraints_exist = true then:
   kintmp_subsexp := kintmp_subsexp:
   printf("Kinematische Zwangsbedingungen gelesen."):
 else
-  kintmp_t := Matrix(1,1):
-  kintmp_s := Matrix(1,1):
   kintmp_qs := Matrix(1,1):
   kintmp_qt := Matrix(1,1):
   kintmp_subsexp := Matrix(1,2):

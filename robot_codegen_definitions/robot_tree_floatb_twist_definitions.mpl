@@ -119,9 +119,19 @@ for i to NL do
     PV2_vec[10*(i-1)+j] := PV2_mat[i, j]:
   end do:
 end do:
+# Kinematische Zwangsbedingungen
+# Prüfe, ob kinematische Zwangsbedingungen in der Roboterkonfiguration genannt sind durch Prüfung der Existenz der folgenden Variablen.
+NKC := 0:
+try
+  NKC := RowDimension( kintmp_t ): # Wenn die Variable in robot_env nicht vorkommt, ist diese Zeile wirkungslos
+end:
+if NKC = 0 then
+  kintmp_t := Matrix(1,1): # Dummy-Werte damit später alles funktioniert
+  kintmp_s := Matrix(1,1):
+end if:
 # Export
-save q_t, q_s, qD_t, qD_s, qDD_t, qDD_s, qJ_t, qJ_s, qJD_t, qJD_s, qJDD_t, qJDD_s, g_world, X_base_t, X_base_s, V_base_t, V_base_s, VD_base_t, VD_base_s, qoffset, theta, alpha, d, a,v,b,beta, M, r_i_i_Si, mr_i_i_Si, I_i_i, I_i_Si, PV2_vec, PV2_mat, robot_name, NQ,NQB,NQJ,NJ,NL, base_method_name, T_basevel, sprintf("../codeexport/%s_tree_floatb_twist_definitions", robot_name):
-save q_t, q_s, qD_t, qD_s, qDD_t, qDD_s, qJ_t, qJ_s, qJD_t, qJD_s, qJDD_t, qJDD_s, g_world, X_base_t, X_base_s, V_base_t, V_base_s, VD_base_t, VD_base_s, qoffset, theta, alpha, d, a,v,b,beta, M, r_i_i_Si, mr_i_i_Si, I_i_i, I_i_Si, PV2_vec, PV2_mat, robot_name, NQ,NQB,NQJ,NJ,NL, base_method_name, T_basevel, sprintf("../codeexport/%s_tree_floatb_definitions", robot_name):
+save q_t, q_s, qD_t, qD_s, qDD_t, qDD_s, qJ_t, qJ_s, qJD_t, qJD_s, qJDD_t, qJDD_s, g_world, X_base_t, X_base_s, V_base_t, V_base_s, VD_base_t, VD_base_s, qoffset, theta, alpha, d, a,v,b,beta, M, r_i_i_Si, mr_i_i_Si, I_i_i, I_i_Si, PV2_vec, PV2_mat, robot_name, NQ,NQB,NQJ,NJ,NL, base_method_name, T_basevel, kintmp_t, kintmp_s, sprintf("../codeexport/%s_tree_floatb_twist_definitions", robot_name):
+save q_t, q_s, qD_t, qD_s, qDD_t, qDD_s, qJ_t, qJ_s, qJD_t, qJD_s, qJDD_t, qJDD_s, g_world, X_base_t, X_base_s, V_base_t, V_base_s, VD_base_t, VD_base_s, qoffset, theta, alpha, d, a,v,b,beta, M, r_i_i_Si, mr_i_i_Si, I_i_i, I_i_Si, PV2_vec, PV2_mat, robot_name, NQ,NQB,NQJ,NJ,NL, base_method_name, T_basevel, kintmp_t, kintmp_s, sprintf("../codeexport/%s_tree_floatb_definitions", robot_name):
 # Einzelne DH-Parameter als Matlab-Code exportieren. Damit lässt sich in Matlab ein passender Parametersatz generieren.
 MatlabExport(v, sprintf("../codeexport/%s_parameters_mdh_v.m", robot_name), 2):
 MatlabExport(a, sprintf("../codeexport/%s_parameters_mdh_a.m", robot_name), 2):
