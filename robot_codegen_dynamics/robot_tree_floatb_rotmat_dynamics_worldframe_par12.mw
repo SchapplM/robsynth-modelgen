@@ -214,9 +214,6 @@ U_grav := U_grav:</Text-field>
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Generiere Dynamik f\303\274r %s mit Parametersatz %d\134n&quot;, robot_name, codegen_dynpar):</Font></Text-field>
 </Input>
-<Output>
-<Text-field style="Line Printed Output" layout="Line Printed Output"><Font encoding="UTF-8">Generiere Dynamik f\303\274r prothesis_2dof mit Parametersatz 1</Font></Text-field>
-</Output>
 </Group>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
@@ -289,9 +286,6 @@ end if:</Text-field>
   MatlabExport(taug_s(7..NQ), sprintf(&quot;../codeexport/%s_joint_gravload_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
-<Output>
-<Text-field style="HyperlinkError" layout="HyperlinkError"><Hyperlink linktarget="http://www.maplesoft.com/support/help/errors/view.aspx?path=Error,%20non-integer%20in%20index%20range" hyperlink="true"><Font style="HyperlinkError">Error, non-integer in index range</Font></Hyperlink></Text-field>
-</Output>
 </Group>
 <Group labelreference="L1692" drawlabel="true">
 <Input>
@@ -301,7 +295,7 @@ end if:</Text-field>
 <Group labelreference="L1671" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_grav and not(base_method_name=&quot;twist&quot;) then
-  MatlabExport(taug_s(1..N), sprintf(&quot;../codeexport/%s_gravload_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(taug_s(1..NQ), sprintf(&quot;../codeexport/%s_gravload_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -363,9 +357,6 @@ end do:</Text-field>
   MatlabExport(MMjj_s, sprintf(&quot;../codeexport/%s_inertia_joint_joint_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
-<Output>
-<Text-field style="Line Printed Output" layout="Line Printed Output">Exported Matlab code to ../codeexport/prothesis_2dof_inertia_joint_joint_floatb_twist_par1_matlab.m</Text-field>
-</Output>
 </Group>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
@@ -426,9 +417,6 @@ end do:</Text-field>
   MatlabExport(MMDjj_s, sprintf(&quot;../codeexport/%s_inertia_joint_joint_time_derivative_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
-<Output>
-<Text-field style="Line Printed Output" layout="Line Printed Output">Exported Matlab code to ../codeexport/prothesis_2dof_inertia_joint_joint_time_derivative_floatb_twist_par1_matlab.m</Text-field>
-</Output>
 </Group>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
@@ -503,9 +491,6 @@ end do:</Text-field>
   MatlabExport(tauCC_s_fixb[7..NQ], sprintf(&quot;../codeexport/%s_coriolisvec_joint_fixb_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
-<Output>
-<Text-field style="Line Printed Output" layout="Line Printed Output">Exported Matlab code to ../codeexport/prothesis_2dof_coriolisvec_joint_fixb_par1_matlab.m</Text-field>
-</Output>
 </Group>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
@@ -579,9 +564,6 @@ end do:</Text-field>
   MatlabExport(Cqs_fixb[7..NQ,7..NQ], sprintf(&quot;../codeexport/%s_coriolismat_joint_fixb_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
-<Output>
-<Text-field style="Line Printed Output" layout="Line Printed Output">Exported Matlab code to ../codeexport/prothesis_2dof_coriolismat_joint_fixb_par1_matlab.m</Text-field>
-</Output>
 </Group>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
@@ -614,7 +596,7 @@ end if:</Text-field>
 <Group labelreference="L1651" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_invdyn and not(base_method_name=&quot;twist&quot;) then
-  MatlabExport(tau[7..N], sprintf(&quot;../codeexport/%s_invdyn_joint_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(tau[7..NQ], sprintf(&quot;../codeexport/%s_invdyn_joint_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -641,9 +623,6 @@ end do:</Text-field>
   MatlabExport(taus_fixb[7..NQ], sprintf(&quot;../codeexport/%s_invdyn_fixb_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
-<Output>
-<Text-field style="Line Printed Output" layout="Line Printed Output">Exported Matlab code to ../codeexport/prothesis_2dof_invdyn_fixb_par1_matlab.m</Text-field>
-</Output>
 </Group>
 <Group labelreference="L1698" drawlabel="true">
 <Input>

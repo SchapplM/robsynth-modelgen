@@ -87,7 +87,7 @@ if codeexport_grav then
 end if:
 # Kompletter Vektor
 if codeexport_grav and not(base_method_name="twist") then
-  MatlabExport(taug_s(1..N), sprintf("../codeexport/%s_gravload_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(taug_s(1..NQ), sprintf("../codeexport/%s_gravload_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
 # Mass Matrix
 # Generate
@@ -214,7 +214,7 @@ if codeexport_invdyn and not(base_method_name="twist") then
   MatlabExport(tau[1..6], sprintf("../codeexport/%s_invdyn_base_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
 if codeexport_invdyn and not(base_method_name="twist") then
-  MatlabExport(tau[7..N], sprintf("../codeexport/%s_invdyn_joint_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(tau[7..NQ], sprintf("../codeexport/%s_invdyn_joint_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
 # Matlab Export: Fixed base
 taus_fixb:=tau:
