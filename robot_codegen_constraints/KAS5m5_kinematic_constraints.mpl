@@ -84,6 +84,6 @@ save kin_constraints_exist, kintmp_qs, kintmp_qt, lpar_qs, lpar_qt, kintmp_subse
 read "../helper/proc_list_constant_expressions";
 kc_symbols := Matrix(list_constant_expressions( kintmp_subsexp(..,2) )):
 save kc_symbols, sprintf("../codeexport/%s_kinematic_constraints_symbols_list", robot_name):
-
+MatlabExport(Transpose(kc_symbols), sprintf("../codeexport/%s_kinematic_constraints_symbols_list_matlab.m", robot_name), 2):
 printf("Zwangsbedingungen der Parallelstruktur von KAS5_m3 nach KAS5_m5 angepasst. %s\n", FormatTime("%Y-%m-%d %H:%M:%S")):
 

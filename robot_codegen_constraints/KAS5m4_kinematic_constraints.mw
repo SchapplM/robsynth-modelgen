@@ -1403,7 +1403,12 @@ end if:</Text-field>
 </Group>
 <Group view="code" labelreference="L2106" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kc_symbols, sprintf(&quot;../codeexport/%s_kinematic_constraints_symbols_list&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kc_symbols, sprintf(&quot;../codeexport/%s_kinematic_constraints_symbols_list_maple&quot;, robot_name):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2120" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(Transpose(kc_symbols), sprintf(&quot;../codeexport/%s_kinematic_constraints_symbols_list_matlab.m&quot;, robot_name), 2):</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section><Presentation-Block>

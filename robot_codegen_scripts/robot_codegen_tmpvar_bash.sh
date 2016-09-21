@@ -38,7 +38,7 @@ if [ `grep "kintmp_s := Matrix(1, 1, \[\[0\]\]);" $robot_def_pfad | wc -l` -eq 1
   robot_kinconstr_exist=0
 fi
 
-robot_KCsymb_pfad=$repo_pfad/codeexport/${robot_name}_kinematic_constraints_symbols_list
+robot_KCsymb_pfad=$repo_pfad/codeexport/${robot_name}_kinematic_constraints_symbols_list_maple
 # robot_NKCP: Anzahl der Parameter der kin. ZB
 # KCP: Leerzeichengetrennte Liste der Parameter der kinematischen Zwangsbedingungen
 # KCPARG: Argument für Matlab-Funktionen
