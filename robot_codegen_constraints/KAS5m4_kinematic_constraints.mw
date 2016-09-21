@@ -1385,6 +1385,26 @@ end if:</Text-field>
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Ausdr\303\274cke mit Inert-Arctan exportiert (Matlab). %s. </Font>CPU-Zeit bis hier: %1.2fs.<Font encoding="UTF-8">\134n</Font>&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Text-field>
 </Input>
+</Group>
+<Group view="code" labelreference="L2103" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Liste mit abh\303\244ngigen konstanten Kinematikparametern erstellen (wichtig f\303\274r Matlab-Funktionsgenerierung)</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2118" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_list_constant_expressions&quot;;</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2119" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">kc_symbols := Matrix(list_constant_expressions( kintmp_subsexp(..,2) )):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2106" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kc_symbols, sprintf(&quot;../codeexport/%s_kinematic_constraints_symbols_list&quot;, robot_name):</Text-field>
+</Input>
 </Group></Presentation-Block>
 </Section><Presentation-Block>
 <Group labelreference="L1950" drawlabel="true">

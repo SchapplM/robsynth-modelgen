@@ -86,6 +86,11 @@ lpar_qt := convert_s_t(lpar_qs):
 save kin_constraints_exist, kintmp_qs, kintmp_qt, lpar_qs, lpar_qt, kintmp_subsexp, sprintf("../codeexport/%s_kinematic_constraints_maple_inert", robot_name):
 save kin_constraints_exist, kintmp_qs, kintmp_qt, lpar_qs, lpar_qt, kintmp_subsexp, sprintf("../codeexport/%s_kinematic_constraints_maple_inert.m", robot_name):
 printf("Zwangsbedingungen der Parallelstruktur von KAS5_m4 nach KAS5_m6 angepasst und gespeichert. %s\n", FormatTime("%Y-%m-%d %H:%M:%S")):
+# Liste der Parameter speichern
+# Liste mit abhängigen konstanten Kinematikparametern erstellen (wichtig für Matlab-Funktionsgenerierung)
+read "../helper/proc_list_constant_expressions";
+kc_symbols := Matrix(list_constant_expressions( kintmp_subsexp(..,2) )):
+save kc_symbols, sprintf("../codeexport/%s_kinematic_constraints_symbols_list", robot_name):
 # Exportieren der Ersetzungsausdrücke
 # Zum Testen
 # Exportieren des vollständigen Ausdruckes
@@ -93,4 +98,3 @@ if codegen_act then
   MatlabExport(kintmp_subsexp(..,2), sprintf("../codeexport/KAS5_m6_kinematik_parallel_kintmp_subsexp_matlab.m"), codegen_opt):
 end if:
 
-# 

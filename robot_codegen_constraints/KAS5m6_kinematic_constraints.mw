@@ -165,7 +165,12 @@ read &quot;../robot_codegen_constraints/proc_subs_kintmp_exp&quot;:</Text-field>
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_tree_floatb_definitions&quot;, robot_name):</Text-field>
 </Input>
-</Group></Presentation-Block><Presentation-Block></Presentation-Block><Presentation-Block>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L2115" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1993" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal">Lese Ergebnisse der Kinematik von KAS5_m4 aus.
@@ -299,6 +304,29 @@ lpar_qt := convert_s_t(lpar_qs):</Text-field>
 <Group view="code" labelreference="L2062" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Zwangsbedingungen der Parallelstruktur von KAS5_m4 nach KAS5_m6 angepasst und gespeichert. %s\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Font></Text-field>
+</Input>
+</Group></Presentation-Block>
+</Section>
+<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
+<Text-field style="Heading 1" layout="Heading 1">Liste der Parameter speichern</Text-field></Title><Presentation-Block>
+<Group view="code" labelreference="L2130" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Liste mit abh\303\244ngigen konstanten Kinematikparametern erstellen (wichtig f\303\274r Matlab-Funktionsgenerierung)</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2131" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_list_constant_expressions&quot;;</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2132" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">kc_symbols := Matrix(list_constant_expressions( kintmp_subsexp(..,2) )):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2133" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kc_symbols, sprintf(&quot;../codeexport/%s_kinematic_constraints_symbols_list&quot;, robot_name):</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>

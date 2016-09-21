@@ -397,4 +397,9 @@ if codegen_act then
   MatlabExport(kintmp_subsexp, sprintf("../codeexport/KAS5_kinematik_parallel_kintmp_subsexp_matlab_opt.m"), true):
 end if:
 printf("Ausdrücke mit Inert-Arctan exportiert (Matlab). %s. CPU-Zeit bis hier: %1.2fs.\n", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
+# Liste mit abhängigen konstanten Kinematikparametern erstellen (wichtig für Matlab-Funktionsgenerierung)
+read "../helper/proc_list_constant_expressions";
+kc_symbols := Matrix(list_constant_expressions( kintmp_subsexp(..,2) )):
+save kc_symbols, sprintf("../codeexport/%s_kinematic_constraints_symbols_list", robot_name):
+printf("Fertig. %s. CPU-Zeit bis hier: %1.2fs.\n", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
 

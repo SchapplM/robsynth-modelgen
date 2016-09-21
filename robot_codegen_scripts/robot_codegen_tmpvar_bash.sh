@@ -37,12 +37,14 @@ kinconstr_exist=1 # Existenz von Zwangsbedingungen prüfen
 if [ `grep "kintmp_s := Matrix(1, 1, \[\[0\]\]);" $robot_def_pfad | wc -l` -eq 1 ]; then
   kinconstr_exist=0
 fi
+
+robot_KCsymb_pfad=$repo_pfad/codeexport/${robot_name}_kinematic_constraints_symbols_list
 # robot_NKCP: Anzahl der Parameter der kin. ZB
 # KCP: Leerzeichengetrennte Liste der Parameter der kinematischen Zwangsbedingungen
 # KCPARG: Argument für Matlab-Funktionen
 if [ $kinconstr_exist == 1 ]; then
-  robot_NKCP=`sed -n -e 's/kintmp_s := Matrix(\([[:digit:]]\+\).*/\1/p' $robot_def_pfad`
-  KCP=`tr -d "\n" < $robot_def_pfad | sed -n -e 's/.*kintmp_s := Matrix(\([[:alnum:]]\+\), 1, \[\[\(.*\)\]\]);/\2/p' | sed 's/\],\[/ /g'`
+  robot_NKCP=`sed -n -e 's/kc_symbols := Matrix(1, \([[:alnum:]]\+\).*/\1/p' $robot_KCsymb_pfad`
+  KCP=`tr -d "\n" < $robot_KCsymb_pfad | sed -n -e 's/.*kc_symbols := Matrix(1, \([[:alnum:]]\+\), \[\[\(.*\)\]\]);/\2/p' | sed 's/,/ /g'`
   KCPARG=", kintmp"
 else
   robot_NKCP=0
