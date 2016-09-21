@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Worksheet>
+<Version major="18" minor="2"/>
+<Label-Scheme value="2" prefix=""/>
+<View-Properties presentation="true" autoexpanding_sections="true">
+</View-Properties>
+<MapleNet-Properties elisiondigitsbefore="100" labelling="true" indentamount="4" elisiontermsthreshold="10000" ansi="false" errorbreak="1" useclientjvm="true" echo="1" imaginaryunit="I" labelwidth="20" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" contextmenusize="automatic" plotdriver="opengl" elisiondigitsafter="100" plotoutput="terminal" helpbrowser="standard" rtablesize="10" elisiontermsbefore="100" elisiondigitsthreshold="10000" typesetting="standard" plotdevice="inline" verboseproc="1" showassumed="1" quiet="false" errorcursor="false" longdelim="true" plotoptions="" elisiontermsafter="100" screenwidth="79" preplot="" prettyprint="3" displayprecision="-1" screenpixelheight="1080" warnlevel="3" screenheight="25" latexwidth="8.0" postplot="" prompt="&gt; " ShowLabels="true"/>
+<Styles>
+<Font name="Ordered List 1" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Annotation Text" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Ordered List 2" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Ordered List 3" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Ordered List 4" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Ordered List 5" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Author" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Annotation Title" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Caption Reference" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Maple Input Placeholder" background="[255,255,255]" bold="true" executable="true" family="Courier New" foreground="[200,0,200]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="true"/>
+<Font name="Maple Plot" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Code" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[255,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Line Printed Output" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Text Output" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Diagnostic" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[40,120,40]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="2D Inert Output" background="[255,255,255]" bold="false" executable="true" family="Times New Roman" foreground="[144,144,144]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Normal" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Hyperlink" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,128,128]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="true" placeholder="false"/>
+<Font name="Maple Output" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Dash Item" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="2D Math" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Maple Input" background="[255,255,255]" bold="true" executable="true" family="Courier New" foreground="[120,0,14]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="2D Output" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="2D Input" background="[255,255,255]" bold="false" executable="true" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="HyperlinkError" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[255,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="true" placeholder="false"/>
+<Font name="Header and Footer" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="10" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Error" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[255,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Title" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Text" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Bullet Item" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Heading 4" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="true" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Equation Label" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Heading 3" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="true" opaque="false" readonly="false" size="14" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Heading 2" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="16" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="HyperlinkWarning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="true" placeholder="false"/>
+<Font name="Dictionary Hyperlink" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[147,0,15]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="true" placeholder="false"/>
+<Font name="Atomic Variable" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[175,0,175]" italic="true" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Caption Text" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="List Item" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Layout name="Ordered List 1" alignment="left" bullet="numeric" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix=""/>
+<Layout name="Ordered List 2" alignment="left" bullet="alphabetic" firstindent="0" leftmargin="36" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix=""/>
+<Layout name="Ordered List 3" alignment="left" bullet="roman" firstindent="0" leftmargin="72" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix=""/>
+<Layout name="Ordered List 4" alignment="left" bullet="ALPHABETIC" firstindent="0" leftmargin="108" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix=""/>
+<Layout name="Ordered List 5" alignment="left" bullet="ROMAN" firstindent="0" leftmargin="144" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix=""/>
+<Layout name="Author" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="8" spacebelow="8" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Warning" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Annotation Title" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="12" spacebelow="12" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Maple Plot" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Line Printed Output" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="any" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Text Output" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="newline" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Diagnostic" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="any" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Normal" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Maple Output" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.3" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Dash Item" alignment="left" bullet="dash" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="HyperlinkError" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Error" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Title" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="12" spacebelow="12" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Heading 1" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="8" spacebelow="4" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Bullet Item" alignment="left" bullet="dot" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Heading 4" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Heading 3" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Heading 2" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="8" spacebelow="2" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="HyperlinkWarning" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="List Item" alignment="left" bullet="indent" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Pencil-style name="Pencil 5" pen-color="[255,0,0]" pen-height="5.0" pen-width="5.0" pen-opacity="1.0"/>
+<Pencil-style name="Pencil 4" pen-color="[0,0,255]" pen-height="3.0" pen-width="3.0" pen-opacity="1.0"/>
+<Pencil-style name="Pencil 3" pen-color="[0,0,0]" pen-height="3.0" pen-width="3.0" pen-opacity="1.0"/>
+<Pencil-style name="Pencil 2" pen-color="[0,0,255]" pen-height="1.0" pen-width="1.0" pen-opacity="1.0"/>
+<Pencil-style name="Pencil 1" pen-color="[0,0,0]" pen-height="1.0" pen-width="1.0" pen-opacity="1.0"/>
+<Highlighter-style name="Highlighter 2" pen-color="[255,204,0]" pen-height="14.0" pen-width="14.0" pen-opacity="0.8"/>
+<Highlighter-style name="Highlighter 1" pen-color="[255,153,255]" pen-height="12.0" pen-width="8.0" pen-opacity="0.8"/>
+<Highlighter-style name="Highlighter 4" pen-color="[0,255,255]" pen-height="32.0" pen-width="32.0" pen-opacity="0.8"/>
+<Highlighter-style name="Highlighter 3" pen-color="[51,255,0]" pen-height="24.0" pen-width="24.0" pen-opacity="0.8"/>
+<Highlighter-style name="Highlighter 5" pen-color="[255,255,0]" pen-height="48.0" pen-width="48.0" pen-opacity="0.8"/>
+</Styles>
+<Task-table>
+    <Task-category name="&lt;default&gt;"/>
+</Task-table>
+<Task/><Presentation-Block>
+<Group view="code" labelreference="L7" drawlabel="true">
+<Input>
+<Text-field style="Heading 1" layout="Heading 1">Kinematik-Berechnung 3. Arm KAS5 (Debug)</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L18" drawlabel="true">
+<Input>
+<Text-field style="Heading 2" layout="Heading 2">Beschreibung</Text-field>
+<Text-field style="Normal" layout="Normal"><Font encoding="UTF-8">Berechnung der Kinematik der parallelen Struktur: Stellung des Kompensationsmechanismus in Abh\303\244ngigkeit der gemessenen Winkel der Haupt-Armkinematik
+</Font>Zu Geometrie und Winkeln, siehe Bild (Unterlagen)
+
+<Font encoding="UTF-8">Modell m3: Kurbel N7 ist starr mit K\303\266rper K2 gekoppelt (\303\274ber die Achse)
+</Font>
+<Font encoding="UTF-8">Berechne alle notwendigen Winkel in kintmp in Abh\303\244ngigkeit konstanter Gr\303\266\303\237en und der verallgemeinerten Koordinaten
+</Font>
+<Font encoding="UTF-8">Berechne zuerst nur Sinus und Cosinus jedes Winkels. Diese werden f\303\274r die Rotationsmatrizen ben\303\266tigt.
+Die Berechnung der Winkel selbst (zur Kontrolle) ben\303\266tigt die arctan-Funktion, die l\303\244ngere Ausdr\303\274cke nur sehr langsam auswertet.</Font></Text-field>
+<Text-field style="Normal" layout="Normal"><Font encoding="UTF-8">Daher werden zun\303\244chst alle Winkel mit %arctan (inert-Funktion berechnet) und am Ende erst ausgewertet.
+Die Zeitableitung der Winkel (in sp\303\244teren Skripten) wird aus der inert-Funktion berechnet.</Font></Text-field>
+<Text-field style="Text" layout="Normal">
+Hinweise:
+<Font encoding="UTF-8">Der Befehl arctan hat die Funktionalit\303\244t von atan2
+</Font>
+Eingabe:
+&quot;../codeexport/KAS5_m3_definitions&quot;
+<Font encoding="UTF-8">* enth\303\244lt die Definitionen aller Konstanten und verallgemeinerter Koordinaten</Font>
+
+Ausgabe:
+&quot;../codeexport/%s_kinematic_constraints_maple_inert.m&quot;
+<Font encoding="UTF-8">* Erzeugt die Ausdr\303\274cke f\303\274r Winkel der Parallelstruktur (kintmp), Ersetzungsausdr\303\274cke f\303\274r sin,cos (kintmp_subsexp) und die Federl\303\244nge (lpar) in Abh\303\244ngigkeit der verallgemeinerten Koordinaten.</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1819" drawlabel="true">
+<Input>
+<Text-field style="Heading 2" layout="Heading 2">Quellen</Text-field>
+<Text-field style="Normal" layout="Normal">[1] <Font encoding="UTF-8">Wang, Jiegao and Gosselin, Cl\303\251mentM.: </Font>A New Approach for the Dynamic Analysis of Parallel Manipulators (1998)</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L17" drawlabel="true">
+<Input>
+<Text-field style="Heading 2" layout="Heading 2">Autor</Text-field>
+<Text-field style="Normal" layout="Normal">Moritz Schappler, schappler@irt.uni-hannover.de, 2015-11</Text-field>
+<Text-field style="Normal" layout="Normal">Institut fuer Regelungstechnik, Leibniz Universitaet Hannover</Text-field>
+</Input>
+</Group></Presentation-Block>
+<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
+<Text-field style="Heading 1" layout="Heading 1">Initialisierung</Text-field></Title><Presentation-Block>
+<Group view="code" labelreference="L1770" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">restart:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2108" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">kin_constraints_exist<Font encoding="UTF-8"> := true: # F\303\274r Speicherung</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2004" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">with(StringTools): # F\303\274r Zeitausgabe</Font>
+with(LinearAlgebra):
+with(codegen):
+with(CodeGeneration):</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2105" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_act := true:
+codegen_opt := 1: # Geringerer Optimierungsgrad. Sonst zu lange.
+<Font encoding="UTF-8">codegen_debug := 0: # Zur Code-Generierung auch f\303\274r Nicht-Inert-Ausdr\303\274cke</Font></Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group labelreference="L2110" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2109" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../transformation/proc_rotx&quot;:
+read &quot;../transformation/proc_roty&quot;:
+read &quot;../transformation/proc_rotz&quot;:</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group labelreference="L2106" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_convert_s_t&quot;:
+read &quot;../helper/proc_convert_t_s&quot;:
+read &quot;../robot_codegen_constraints/proc_subs_kintmp_exp&quot;:
+read &quot;../helper/proc_intersect_circle&quot;:</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2102" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">with(RealDomain): # Schr\303\244nkt alle Funktionen auf den reellen Bereich ein. Muss nach Definition von MatlabExport kommen. Sonst geht dieses nicht.</Font></Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group labelreference="L1573" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2111" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_tree_floatb_definitions&quot;, robot_name):</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L1569" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Variable mit Winkeln der Nebenstruktur nur in Abh\303\244ngigkeit der verallgemeinerten Koordinaten</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1570" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">kintmp_qs := Matrix(RowDimension(kintmp_s),1):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1571" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Konstante Winkel bereits hineinschreiben</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1575" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to RowDimension(kintmp_s) do
+  if diff(kintmp_s(i,1), t) = 0 then
+    kintmp_qs(i,1) := kintmp_s(i,1):
+  end if:
+end do:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1583" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Variablen definieren f\303\274r die Hilfswinkel</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1906" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">gamma5_s := kintmp_s(5,1):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1618" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_s := kintmp_s(6..23,1):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1621" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_qs := kintmp_qs(6..23,1):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1782" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ersetzungsausdr\303\274cke definieren.
+</Font>Speichere Sinus und Cosinus der Winkel direkt ab, da diese in den Rotationsmatrizen direkt auftreten.
+Spalte 1: Zu suchender Ausdruck (sin oder cos eines Winkels)
+Spalte 2: Einzusetzender Ausdruck.
+<Font encoding="UTF-8">Dadurch werden arctan-Ausdr\303\274cke in der direkten Kinematik reduziert.
+\303\204hnliches Vorgehen wie in [1].</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1784" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">kintmp_subsexp := Matrix(2*RowDimension(kintmp_s),2):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1785" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to RowDimension(kintmp_s) do
+  kintmp_subsexp(2*i-1, 1) := sin(kintmp_s(i,1)):
+  kintmp_subsexp(2*i,   1) := cos(kintmp_s(i,1)):
+<Font encoding="UTF-8">  # Initialisierung der rechten Spalte mit gleichen Werten. Sp\303\244ter nur Ersetzung, wenn Vorteilhaft.
+</Font>  kintmp_subsexp(2*i-1, 2) := kintmp_subsexp(2*i-1, 1):
+  kintmp_subsexp(2*i,   2) := kintmp_subsexp(2*i,   1):
+end do:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1707" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Annahmen \303\274ber Konstanten: L\303\244ngen sind alle Positiv.
+(Wird anscheinend f\303\274r arctan gebraucht). Ansonsten steht csgn in exportiertem Code.</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1710" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l1&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l2&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l3&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l4&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l5&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l6&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l7&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l8&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l9&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l10&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l11&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l12&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l13&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l14&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l15&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l16&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l17&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l18&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l19&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l20&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l21&gt;0):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(l22&gt;0):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1991" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Schalter mit Optionen f\303\274r die Code-Generierung.
+W\303\244hle, ob trigonometrische arctan-Ausdr\303\274cke ausgewertet werden, oder ob Sinus- und Cosinussatz angewendet werden sollen.
+Dies hat gro\303\237en Einfluss auf die Rechendauer.
+Die Optimierungen sind so gew\303\244hlt, dass
+</Font>* Kreisschnittpunktsfunktionen nicht mit den komplizierten Eingabedaten aufgerufen, sondern mit allgemeinen Platzhaltern, die dann ersetzt werden,
+<Font encoding="UTF-8">* Keine Zwischenoptimierungen durchgef\303\274hrt werden. Durch simplify und combine werden die symbolischen Ausdr\303\274cke gr\303\266\303\237er, was sp\303\244ter die Rechenzeit enorm erh\303\266ht
+</Font>* Sinus und Cosinus der Parallelwinkel ersetzt werden und kein sin(arctan(...)) ausgerechnet wird.</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1993" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Schalter_Opt := &lt;1;1;0;0;0;0;0;1&gt;:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1994" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;Beginn der Berechnungen. %s&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+st := time():</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2040" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Reihenfolge, in der die Winkel der Parallelstruktur berechnet werden. Hilft beim exportieren von Code, wenn beim Debuggen in der gleichen Reihenfolge ausgegeben wird.</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2039" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Reihenfolge_kintmp := &lt;12; 5; 21; 4; 9; 16; 3; 8; 24; 11; 2; 1; 6; 7; 10; 13; 14; 15; 17; 18; 19; 20; 22; 23&gt;:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2113" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ergebnisse des vollst\303\244ndigen Skriptes.</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2112" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_kinematic_constraints_maple_inert.m&quot;, robot_name):</Text-field>
+</Input>
+</Group></Presentation-Block>
+</Section>
+<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
+<Text-field style="Heading 1" layout="Heading 1"><Font encoding="UTF-8">Exportiere Code f\303\274r folgende Skripte</Font></Text-field></Title><Presentation-Block></Presentation-Block><Presentation-Block></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L1972" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Exportiere Ersetzungsausdr\303\274cke</Font></Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2050" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Einzeln Exportieren ohne Optimierung</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2049" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to RowDimension(kintmp_subsexp) do
+  MatlabExport(kintmp_subsexp(i,2), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_kintmpsubsexp_%d_matlab_noopt.m&quot;, i), false):
+end do:</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2052" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Einzeln Exportieren mit Optimierung</Text-field>
+</Input>
+</Group>
+<Group labelreference="L2051" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to RowDimension(kintmp_subsexp) do
+  MatlabExport(kintmp_subsexp(i,2), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_kintmpsubsexp_%d_matlab_opt.m&quot;, i), true):
+end do:</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2053" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Exportieren des vollst\303\244ndigen Ausdruckes</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1971" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
+  MatlabExport(kintmp_subsexp, sprintf(&quot;../codeexport/KAS5_kinematik_parallel_kintmp_subsexp_matlab_noopt.m&quot;), false):
+  MatlabExport(kintmp_subsexp, sprintf(&quot;../codeexport/KAS5_kinematik_parallel_kintmp_subsexp_matlab_opt.m&quot;), true):
+end if:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2001" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Ausdr\303\274cke mit Inert-Arctan exportiert (Matlab). %s. </Font>CPU-Zeit bis hier: %1.2fs.&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Text-field>
+</Input>
+</Group></Presentation-Block>
+</Section>
+<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
+<Text-field style="Heading 1" layout="Heading 1">Arcustangens-Funktionen auswerten</Text-field></Title>
+<Group labelreference="L2057" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ab diesem Abschnitt sind die Ergebnisse nicht mehr f\303\274r nachfolgende Skripte wichtig.
+Die Auswertung der Arctan-Ausdr\303\274cke bewirkt eigentlich nur, dass &quot;arctan&quot; statt &quot;%arctan&quot; geschrieben wird.
+</Font>Trotzdem dauert der Vorgang sehr lange.
+<Font encoding="UTF-8">In den nachfolgenden Skripten werden nur noch die Ersetzungsausdr\303\274cke f\303\274r sin/cos (kintmp_subsexp) und die Inert-Arctan-Ausdr\303\274cke (&quot;%arctan&quot;) verwendet.
+Die inert-Ausdr\303\274cke k\303\266nnen schnell nach der Zeit abgeleitet werden. Das &quot;%&quot; taucht dann nicht mehr auf.</Font></Text-field>
+</Input>
+</Group><Presentation-Block>
+<Group view="code" labelreference="L1942" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_debug = 1 then
+  kintmp_qs := value( kintmp_qs ):
+  lpar_qs := value( lpar_qs ):
+end if:</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L1966" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">kintmp_qt := convert_s_t(kintmp_qs):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1965" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">lpar_qt := convert_s_t(lpar_qs):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2000" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;Arcustangens ausgewertet. %s. CPU-Zeit bis hier: %1.2fs.&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Text-field>
+</Input>
+</Group></Presentation-Block>
+</Section>
+<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
+<Text-field style="Heading 1" layout="Heading 1"><Font encoding="UTF-8">Exportiere Code f\303\274r ausgewertete Ausdr\303\274cke</Font></Text-field></Title><Presentation-Block>
+<Group view="code" labelreference="L1961" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to RowDimension(kintmp_s) do
+  tmp := kintmp_qs(i):
+  save tmp, sprintf(&quot;../codeexport/%s_kinematic_constraints_maple_kintmpq_%d&quot;, robot_name, i):
+  save tmp, sprintf(&quot;../codeexport/%s_kinematic_constraints_maple_kintmpq_%d.m&quot;, robot_name, i):
+end do:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1962" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kintmp_qs, kintmp_qt, lpar_qs, lpar_qt, kintmp_subsexp, sprintf(&quot;../codeexport/%s_kinematic_constraints_maple&quot;, robot_name):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1960" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kintmp_qs, kintmp_qt, lpar_qs, lpar_qt, kintmp_subsexp, sprintf(&quot;../codeexport/%s_kinematic_constraints_maple.m&quot;, robot_name):</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L1953" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Exportieren ohne Optimierung</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1956" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for j from 1 to RowDimension(Reihenfolge_kintmp) do
+  i := Reihenfolge_kintmp(j):
+  MatlabExport(value(kintmp_qs(i)), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_kintmp_%d_matlab_noopt.m&quot;, i), false):
+end do:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1955" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(kintmp_qs, sprintf(&quot;../codeexport/KAS5_kinematik_parallel_kintmp_matlab_noopt.m&quot;), false):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1954" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Exportieren mit Optimierung</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1957" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to RowDimension(kintmp_s) do
+  MatlabExport(kintmp_qs(i), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_kintmp_%d_matlab_opt.m&quot;, i), true):
+end do:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1952" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(kintmp_qs, sprintf(&quot;../codeexport/KAS5_kinematik_parallel_kintmp_matlab_opt.m&quot;), true):</Text-field>
+</Input>
+</Group></Presentation-Block>
+</Section><Presentation-Block>
+<Group labelreference="L1950" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;Fertig. %s. CPU-Zeit bis hier: %1.2fs.&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L2003" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L2" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
+</Input>
+</Group></Presentation-Block>
+</Worksheet>

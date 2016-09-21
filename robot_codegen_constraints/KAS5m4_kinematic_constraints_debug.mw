@@ -89,7 +89,7 @@
 <Task/><Presentation-Block>
 <Group view="code" labelreference="L7" drawlabel="true">
 <Input>
-<Text-field style="Heading 1" layout="Heading 1">Kinematik-Berechnung 3. Arm KAS5</Text-field>
+<Text-field style="Heading 1" layout="Heading 1">Kinematik-Berechnung 3. Arm KAS5 (Debug)</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L18" drawlabel="true">
@@ -315,7 +315,7 @@ Die Optimierungen sind so gew\303\244hlt, dass
 </Group>
 <Group view="code" labelreference="L1994" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;Beginn der Berechnungen. %s<Font encoding="UTF-8">\134n</Font>&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;Beginn der Berechnungen. %s&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
 st := time():</Text-field>
 </Input>
 </Group>
@@ -327,6 +327,16 @@ st := time():</Text-field>
 <Group view="code" labelreference="L2039" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">Reihenfolge_kintmp := &lt;12; 5; 21; 4; 9; 16; 3; 8; 24; 11; 2; 1; 6; 7; 10; 13; 14; 15; 17; 18; 19; 20; 22; 23&gt;:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2102" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ergebnisse des vollst\303\244ndigen Skriptes.</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2103" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_kinematic_constraints_maple_inert.m&quot;, robot_name):</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -477,7 +487,7 @@ end if:</Text-field>
 else
   ReturnValue := intersect_circle(r_4_G5_B, r_4_G5_D, l13, l22):
 end if:
-<Font encoding="UTF-8">printf(&quot;Erster Kreisschnittpunkt berechnet. %s. CPU-Zeit bis hier: %1.2fs.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Font></Text-field>
+printf(&quot;Erster Kreisschnittpunkt berechnet. %s. CPU-Zeit bis hier: %1.2fs.&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1924" drawlabel="true">
@@ -501,7 +511,7 @@ end if:</Text-field>
 </Group>
 <Group view="code" labelreference="L2018" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;CPU-Zeit bis hier: %1.2fs\134n&quot;, time()-st):</Font></Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;CPU-Zeit bis hier: %1.2fs&quot;, time()-st):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L2013" drawlabel="true">
@@ -648,7 +658,7 @@ end if:</Text-field>
 else
   ReturnValue := intersect_circle(r_3_D_E, r_3_D_G3, l20, l4):
 end if:
-<Font encoding="UTF-8">printf(&quot;Zweiter Kreisschnittpunkt berechnet. %s. CPU-Zeit bis hier: %1.2fs.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Font></Text-field>
+printf(&quot;Zweiter Kreisschnittpunkt berechnet. %s. CPU-Zeit bis hier: %1.2fs.&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1643" drawlabel="true">
@@ -677,7 +687,7 @@ end if:</Text-field>
 </Group>
 <Group view="code" labelreference="L2019" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;CPU-Zeit bis hier: %1.2fs\134n&quot;, time()-st):</Font></Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;CPU-Zeit bis hier: %1.2fs&quot;, time()-st):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1719" drawlabel="true">
@@ -729,7 +739,7 @@ kintmp_subsexp(8,2) := cos_gamma3_qs:</Text-field>
 </Group>
 <Group view="code" labelreference="L1997" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Winkel gamma3 berechnet. %s. CPU-Zeit bis hier: %1.2fs.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Font></Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;Winkel gamma3 berechnet. %s. CPU-Zeit bis hier: %1.2fs.&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -981,7 +991,7 @@ kintmp_subsexp(26,2) := cos_delta8_qs:</Text-field>
 </Group>
 <Group labelreference="L1998" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Winkel delta8 berechnet. %s. CPU-Zeit bis hier: %1.2fs.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Font></Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;Winkel delta8 berechnet. %s. CPU-Zeit bis hier: %1.2fs.&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Text-field>
 </Input>
 </Group>
 </Section>
@@ -1153,7 +1163,7 @@ Siehe auch: KAS5_m3_sym_codegen_kinematic_constraints_hilfsberechnungen.mw</Text
 </Group>
 <Group view="code" labelreference="L1999" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Kompensationsfederl\303\244nge berechnet. %s.  CPU-Zeit bis hier: %1.2fs.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Font></Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Kompensationsfederl\303\244nge berechnet. %s. </Font> CPU-Zeit bis hier: %1.2fs.&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -1337,7 +1347,7 @@ Quelle: http://www.mapleprimes.com/questions/207601-Remove-Assumptions</Text-fie
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L2021" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Ausdr\303\274cke f\303\274r kintmp_subsexp gespeichert (Maple). %s. CPU-Zeit bis hier: %1.2fs.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Font></Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Ausdr\303\274cke f\303\274r kintmp_subsexp gespeichert (Maple). %s. </Font>CPU-Zeit bis hier: %1.2fs.&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1735" drawlabel="true">
@@ -1369,6 +1379,35 @@ end do:</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L1972" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Exportiere Ersetzungsausdr\303\274cke</Font></Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2050" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Einzeln Exportieren ohne Optimierung</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2049" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to RowDimension(kintmp_subsexp) do
+  MatlabExport(kintmp_subsexp(i,2), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_kintmpsubsexp_%d_matlab_noopt.m&quot;, i), false):
+end do:</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2052" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Einzeln Exportieren mit Optimierung</Text-field>
+</Input>
+</Group>
+<Group labelreference="L2051" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to RowDimension(kintmp_subsexp) do
+  MatlabExport(kintmp_subsexp(i,2), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_kintmpsubsexp_%d_matlab_opt.m&quot;, i), 1):
+end do:</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L2053" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Exportieren des vollst\303\244ndigen Ausdruckes</Font></Text-field>
@@ -1383,13 +1422,110 @@ end if:</Text-field>
 </Group>
 <Group view="code" labelreference="L2001" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Ausdr\303\274cke mit Inert-Arctan exportiert (Matlab). %s. </Font>CPU-Zeit bis hier: %1.2fs.<Font encoding="UTF-8">\134n</Font>&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Ausdr\303\274cke mit Inert-Arctan exportiert (Matlab). %s. </Font>CPU-Zeit bis hier: %1.2fs.&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Text-field>
+</Input>
+</Group></Presentation-Block>
+</Section>
+<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
+<Text-field style="Heading 1" layout="Heading 1">Arcustangens-Funktionen auswerten</Text-field></Title>
+<Group labelreference="L2057" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ab diesem Abschnitt sind die Ergebnisse nicht mehr f\303\274r nachfolgende Skripte wichtig.
+Die Auswertung der Arctan-Ausdr\303\274cke bewirkt eigentlich nur, dass &quot;arctan&quot; statt &quot;%arctan&quot; geschrieben wird.
+</Font>Trotzdem dauert der Vorgang sehr lange.
+<Font encoding="UTF-8">In den nachfolgenden Skripten werden nur noch die Ersetzungsausdr\303\274cke f\303\274r sin/cos (kintmp_subsexp) und die Inert-Arctan-Ausdr\303\274cke (&quot;%arctan&quot;) verwendet.
+Die inert-Ausdr\303\274cke k\303\266nnen schnell nach der Zeit abgeleitet werden. Das &quot;%&quot; taucht dann nicht mehr auf.</Font></Text-field>
+</Input>
+</Group><Presentation-Block>
+<Group view="code" labelreference="L1963" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_debug = 1 then
+  kintmp_qs := value( kintmp_qs ):
+  lpar_qs := value( lpar_qs ):
+end if:</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L1966" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">kintmp_qt := convert_s_t(kintmp_qs):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1965" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">lpar_qt := convert_s_t(lpar_qs):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2000" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;Arcustangens ausgewertet. %s. CPU-Zeit bis hier: %1.2fs.&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Text-field>
+</Input>
+</Group></Presentation-Block>
+</Section>
+<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
+<Text-field style="Heading 1" layout="Heading 1"><Font encoding="UTF-8">Exportiere Code f\303\274r ausgewertete Ausdr\303\274cke</Font></Text-field></Title><Presentation-Block>
+<Group view="code" labelreference="L1961" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to RowDimension(kintmp_s) do
+  tmp := kintmp_qs(i):
+  save tmp, sprintf(&quot;../codeexport/%s_kinematic_constraints_maple_kintmpq_%d&quot;, robot_name, i):
+  save tmp, sprintf(&quot;../codeexport/%s_kinematic_constraints_maple_kintmpq_%d.m&quot;, robot_name, i):
+end do:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1962" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kintmp_qs, kintmp_qt, lpar_qs, lpar_qt, kintmp_subsexp, sprintf(&quot;../codeexport/%s_kinematic_constraints_maple&quot;, robot_name):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1960" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kintmp_qs, kintmp_qt, lpar_qs, lpar_qt, kintmp_subsexp, sprintf(&quot;../codeexport/%s_kinematic_constraints_maple.m&quot;, robot_name):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2075" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_kinematic_constraints_maple.m&quot;, robot_name):</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L1953" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Exportieren ohne Optimierung</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1956" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for j from 1 to RowDimension(Reihenfolge_kintmp) do
+  i := Reihenfolge_kintmp(j):
+  MatlabExport(value(kintmp_qs(i)), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_kintmp_%d_matlab_noopt.m&quot;, i), false):
+end do:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1955" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(kintmp_qs, sprintf(&quot;../codeexport/KAS5_kinematik_parallel_kintmp_matlab_noopt.m&quot;), false):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1954" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Exportieren mit Optimierung</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1957" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to RowDimension(kintmp_s) do
+  MatlabExport(kintmp_qs(i), sprintf(&quot;../codeexport/KAS5_kinematik_parallel_kintmp_%d_matlab_opt.m&quot;, i), codegen_opt):
+end do:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1952" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(kintmp_qs, sprintf(&quot;../codeexport/KAS5_kinematik_parallel_kintmp_matlab_opt.m&quot;), true):</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section><Presentation-Block>
 <Group labelreference="L1950" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Fertig. %s. CPU-Zeit bis hier: %1.2fs.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Font></Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;Fertig. %s. CPU-Zeit bis hier: %1.2fs.&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2003" drawlabel="true">

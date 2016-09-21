@@ -106,7 +106,7 @@ assume(l22>0):
 # * Keine Zwischenoptimierungen durchgeführt werden. Durch simplify und combine werden die symbolischen Ausdrücke größer, was später die Rechenzeit enorm erhöht
 # * Sinus und Cosinus der Parallelwinkel ersetzt werden und kein sin(arctan(...)) ausgerechnet wird.
 Schalter_Opt := <1;1;0;0;0;0;0;1>:
-printf("Beginn der Berechnungen. %s", FormatTime("%Y-%m-%d %H:%M:%S")):
+printf("Beginn der Berechnungen. %s\n", FormatTime("%Y-%m-%d %H:%M:%S")):
 st := time():
 # Reihenfolge, in der die Winkel der Parallelstruktur berechnet werden. Hilft beim exportieren von Code, wenn beim Debuggen in der gleichen Reihenfolge ausgegeben wird.
 Reihenfolge_kintmp := <12; 5; 21; 4; 9; 16; 3; 8; 24; 11; 2; 1; 6; 7; 10; 13; 14; 15; 17; 18; 19; 20; 22; 23>:
@@ -154,7 +154,7 @@ if Schalter_Opt(8) = 1 then
 else
   ReturnValue := intersect_circle(r_4_G5_B, r_4_G5_D, l13, l22):
 end if:
-printf("Erster Kreisschnittpunkt berechnet. %s. CPU-Zeit bis hier: %1.2fs.", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
+printf("Erster Kreisschnittpunkt berechnet. %s. CPU-Zeit bis hier: %1.2fs.\n", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
 r_4_G5_C := <ReturnValue(1..2, 2); 0>: # Alternative 2
 save r_4_G5_C, "../codeexport/KAS5_m3_kinematic_constraints_r_4_G5_C_debug_noopt_maple":
 if Schalter_Opt(4) = 1 then
@@ -162,7 +162,7 @@ if Schalter_Opt(4) = 1 then
   r_4_G5_C := simplify(r_4_G5_C):
   r_4_G5_C := combine(r_4_G5_C, trig):
 end if:
-printf("CPU-Zeit bis hier: %1.2fs", time()-st):
+printf("CPU-Zeit bis hier: %1.2fs\n", time()-st):
 save r_4_G5_C, "../codeexport/KAS5_m3_kinematic_constraints_r_4_G5_C_debug_opt_maple":
 r_4_D_C := - r_4_G5_D + r_4_G5_C:
 r_3_D_C := R_3_4 . r_4_D_C:
@@ -215,7 +215,7 @@ if Schalter_Opt(2) = 1 then
 else
   ReturnValue := intersect_circle(r_3_D_E, r_3_D_G3, l20, l4):
 end if:
-printf("Zweiter Kreisschnittpunkt berechnet. %s. CPU-Zeit bis hier: %1.2fs.", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
+printf("Zweiter Kreisschnittpunkt berechnet. %s. CPU-Zeit bis hier: %1.2fs.\n", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
 r_3_D_F := <ReturnValue(1..2, 2); 0>: # Alternative 2
 save r_3_D_F, sprintf("../codeexport/%s_kinematic_constraints_r_3_D_F_noopt_debug_maple", robot_name):
 if Schalter_Opt(3) = 1 then
@@ -224,7 +224,7 @@ if Schalter_Opt(3) = 1 then
   r_3_D_F := combine(r_3_D_F, trig):
 end if:
 r_3_F_G3 := -r_3_D_F + r_3_D_G3:
-printf("CPU-Zeit bis hier: %1.2fs", time()-st):
+printf("CPU-Zeit bis hier: %1.2fs\n", time()-st):
 save r_3_D_F, sprintf("../codeexport/%s_kinematic_constraints_r_3_D_F_opt_debug_maple", robot_name):
 save ReturnValue, r_3_D_F, r_3_F_G3, sprintf("../codeexport/%s_kinematic_constraints_gamma3_qs_debug_maple", robot_name):
 # Gl. (m3.6)
@@ -236,7 +236,7 @@ kintmp_subsexp(7,2) := sin_gamma3_qs:
 kintmp_subsexp(8,2) := cos_gamma3_qs:
 save ReturnValue, r_3_D_F, r_3_F_G3, gamma3_qs, sprintf("../codeexport/%s_kinematic_constraints_gamma3_qs_debug_maple", robot_name):
 save kintmp_qs, kintmp_subsexp, sprintf("../codeexport/%s_kinematic_constraints_maple_debug_nach_gamma3.m", robot_name):
-printf("Winkel gamma3 berechnet. %s. CPU-Zeit bis hier: %1.2fs.", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
+printf("Winkel gamma3 berechnet. %s. CPU-Zeit bis hier: %1.2fs.\n", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
 # Berechne delta4
 # Gl. (22)
 delta_qs(4) := Pi/2 - delta_qs(16) - delta_qs(12):
@@ -290,7 +290,7 @@ kintmp_qs(24) := rho3_qs:
 kintmp_subsexp(47,2) := sin_rho3_qs:
 kintmp_subsexp(48,2) := cos_rho3_qs:
 save kintmp_qs, kintmp_subsexp, sprintf("../codeexport/%s_kinematic_constraints_maple_debug_nach_rho3.m", robot_name):
-printf("Winkel rho3 berechnet. %s. CPU-Zeit bis hier: %1.2fs.", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
+printf("Winkel rho3 berechnet. %s. CPU-Zeit bis hier: %1.2fs.\n", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
 # Berechne delta6
 # Gl. (m3.8)
 # Siehe auch: KAS5_m3_sym_codegen_kinematic_constraints_hilfsberechnungen.mw
@@ -326,7 +326,7 @@ r_5_G5_B:=R_5_12 . (-r_12_B_G5):
 r_5_AB_2 := r_5_A_H - r_5_G5_H + r_5_G5_B: # Weg AB aus A-H-G5-B
 l16_c := sqrt(r_5_AB_2[1,1]^2 + r_5_AB_2[2,1]^2): # Länge AB entspricht Federlänge
 lpar_qs := l16_c:
-printf("Kompensationsfederlänge berechnet. %s.  CPU-Zeit bis hier: %1.2fs.", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
+printf("Kompensationsfederlänge berechnet. %s.  CPU-Zeit bis hier: %1.2fs.\n", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
 # Berechne beta1
 # Gl. (29)
 # Siehe auch: KAS5_m4_sym_codegen_kinematic_constraints_hilfsberechnungen.mw
@@ -382,7 +382,7 @@ lpar_qt := convert_s_t(lpar_qs):
 # Speichere Maple-Ausdruck (Eingabe-Format und internes Format)
 save kintmp_subsexp, sprintf("../codeexport/%s_kinematic_constraints_kintmp_subsexp_maple", robot_name):
 save kintmp_subsexp, sprintf("../codeexport/%s_kinematic_constraints_kintmp_subsexp_maple.m", robot_name):
-printf("Ausdrücke für kintmp_subsexp gespeichert (Maple). %s. CPU-Zeit bis hier: %1.2fs.", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
+printf("Ausdrücke für kintmp_subsexp gespeichert (Maple). %s. CPU-Zeit bis hier: %1.2fs.\n", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
 for i from 1 to RowDimension(kintmp_s) do
   tmp := kintmp_qs(i):
   save tmp, sprintf("../codeexport/%s_kinematic_constraints_maple_inert_kintmpq_%d", robot_name, i):
@@ -391,53 +391,10 @@ end do:
 save kin_constraints_exist, kintmp_qs, kintmp_qt, lpar_qs, lpar_qt, kintmp_subsexp, sprintf("../codeexport/%s_kinematic_constraints_maple_inert", robot_name):
 save kin_constraints_exist, kintmp_qs, kintmp_qt, lpar_qs, lpar_qt, kintmp_subsexp, sprintf("../codeexport/%s_kinematic_constraints_maple_inert.m", robot_name):
 save kintmp_qs, sprintf("../codeexport/%s_kinematic_constraints_kintmp_qs_maple_inert", robot_name):
-# Exportiere Ersetzungsausdrücke
-# Einzeln Exportieren ohne Optimierung
-for i from 1 to RowDimension(kintmp_subsexp) do
-  MatlabExport(kintmp_subsexp(i,2), sprintf("../codeexport/KAS5_kinematik_parallel_kintmpsubsexp_%d_matlab_noopt.m", i), false):
-end do:
-# Einzeln Exportieren mit Optimierung
-for i from 1 to RowDimension(kintmp_subsexp) do
-  MatlabExport(kintmp_subsexp(i,2), sprintf("../codeexport/KAS5_kinematik_parallel_kintmpsubsexp_%d_matlab_opt.m", i), true):
-end do:
 # Exportieren des vollständigen Ausdruckes
 if codegen_act then
   MatlabExport(kintmp_subsexp, sprintf("../codeexport/KAS5_kinematik_parallel_kintmp_subsexp_matlab_noopt.m"), false):
   MatlabExport(kintmp_subsexp, sprintf("../codeexport/KAS5_kinematik_parallel_kintmp_subsexp_matlab_opt.m"), true):
 end if:
-printf("Ausdrücke mit Inert-Arctan exportiert (Matlab). %s. CPU-Zeit bis hier: %1.2fs.", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
-# Arcustangens-Funktionen auswerten
-# Ab diesem Abschnitt sind die Ergebnisse nicht mehr für nachfolgende Skripte wichtig.
-# Die Auswertung der Arctan-Ausdrücke bewirkt eigentlich nur, dass "arctan" statt "%arctan" geschrieben wird.
-# Trotzdem dauert der Vorgang sehr lange.
-# In den nachfolgenden Skripten werden nur noch die Ersetzungsausdrücke für sin/cos (kintmp_subsexp) und die Inert-Arctan-Ausdrücke ("%arctan") verwendet.
-# Die inert-Ausdrücke können schnell nach der Zeit abgeleitet werden. Das "%" taucht dann nicht mehr auf.
-if codegen_debug = 1 then
-  kintmp_qs := value( kintmp_qs ):
-  lpar_qs := value( lpar_qs ):
-end if:
-kintmp_qt := convert_s_t(kintmp_qs):
-lpar_qt := convert_s_t(lpar_qs):
-printf("Arcustangens ausgewertet. %s. CPU-Zeit bis hier: %1.2fs.", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
-# Exportiere Code für ausgewertete Ausdrücke
-for i from 1 to RowDimension(kintmp_s) do
-  tmp := kintmp_qs(i):
-  save tmp, sprintf("../codeexport/%s_kinematic_constraints_maple_kintmpq_%d", robot_name, i):
-  save tmp, sprintf("../codeexport/%s_kinematic_constraints_maple_kintmpq_%d.m", robot_name, i):
-end do:
-save kintmp_qs, kintmp_qt, lpar_qs, lpar_qt, kintmp_subsexp, sprintf("../codeexport/%s_kinematic_constraints_maple", robot_name):
-save kintmp_qs, kintmp_qt, lpar_qs, lpar_qt, kintmp_subsexp, sprintf("../codeexport/%s_kinematic_constraints_maple.m", robot_name):
-# Exportieren ohne Optimierung
-for j from 1 to RowDimension(Reihenfolge_kintmp) do
-  i := Reihenfolge_kintmp(j):
-  MatlabExport(value(kintmp_qs(i)), sprintf("../codeexport/KAS5_kinematik_parallel_kintmp_%d_matlab_noopt.m", i), false):
-end do:
-MatlabExport(kintmp_qs, sprintf("../codeexport/KAS5_kinematik_parallel_kintmp_matlab_noopt.m"), false):
-# Exportieren mit Optimierung
-for i from 1 to RowDimension(kintmp_s) do
-  MatlabExport(kintmp_qs(i), sprintf("../codeexport/KAS5_kinematik_parallel_kintmp_%d_matlab_opt.m", i), true):
-end do:
-MatlabExport(kintmp_qs, sprintf("../codeexport/KAS5_kinematik_parallel_kintmp_matlab_opt.m"), true):
-printf("Fertig. %s. CPU-Zeit bis hier: %1.2fs.", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
+printf("Ausdrücke mit Inert-Arctan exportiert (Matlab). %s. CPU-Zeit bis hier: %1.2fs.\n", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
 
-# 
