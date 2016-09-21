@@ -15,4 +15,4 @@
 %   minimal parameter regressor of inerta matrix time derivative
 
 function MMD_reg = %FN%(q, qD, ...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh)
+  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh%KCPARG%)

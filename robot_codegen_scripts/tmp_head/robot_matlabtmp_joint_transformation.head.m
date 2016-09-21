@@ -13,4 +13,4 @@
 %   homogenious transformation matrices for joint transformation (MDH)
 
 function T_mdh = %FN%(q, ...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh)
+  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh%KCPARG%)

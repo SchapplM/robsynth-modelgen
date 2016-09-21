@@ -61,3 +61,12 @@ echo "assert(isa(Icges_num_mdh,'double') && isreal(Icges_num_mdh) && all(size(Ic
   '%FN%: Icges_num_mdh has to be [${robot_NL}x6] double'); " > $tmp_pfad/robot_matlabtmp_assert_Ic.m
 echo "assert(isa(Ifges_num_mdh,'double') && isreal(Ifges_num_mdh) && all(size(Ifges_num_mdh) == [$robot_NL 6]), ...
   '%FN%: Ifges_num_mdh has to be [${robot_NL}x6] double'); " > $tmp_pfad/robot_matlabtmp_assert_If.m
+
+# Kinematische Zwangsbedingungen
+if [ $robot_kinconstr_exist == 1 ]; then
+  echo "assert(isa(kintmp,'double') && isreal(kintmp) && all(size(kintmp) == [$robot_NKCP,1]), ...
+    '%FN%: kintmp has to be [${robot_NKCP}x1] double');" > $tmp_pfad/robot_matlabtmp_assert_KCP.m
+else
+  # Es gibt keine kinematischen Zwangsbedingungen, die Datei bleibt leer
+  echo "" > $tmp_pfad/robot_matlabtmp_assert_KCP.m
+fi;

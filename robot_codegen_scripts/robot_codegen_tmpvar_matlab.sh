@@ -158,3 +158,17 @@ echo "vDzs_base = xDD_base(3);" >> $tmp_pfad/robot_matlabtmp_xDDB.m
 echo "alphaDDx_base = xDD_base(4);" >> $tmp_pfad/robot_matlabtmp_xDDB.m
 echo "betaDDy_base = xDD_base(5);" >> $tmp_pfad/robot_matlabtmp_xDDB.m
 echo "gammaDDz_base = xDD_base(6);" >> $tmp_pfad/robot_matlabtmp_xDDB.m
+
+# Kinematische Zwangsbedingungen
+if [ $robot_kinconstr_exist == 1 ]; then
+  echo "" > $tmp_pfad/robot_matlabtmp_par_KCP.m
+  i=0;
+  for Kp in $robot_KCP; do
+    i=$((i+1));          
+    echo "$Kp = kintmp($i);" >> $tmp_pfad/robot_matlabtmp_par_KCP.m
+  done;
+else
+  # Es gibt keine kinematischen Zwangsbedingungen, die Datei bleibt leer
+  echo "" >> $tmp_pfad/robot_matlabtmp_par_KCP.m
+fi;
+

@@ -74,4 +74,9 @@ for i = 1:n
   end
 end
 
+%% Kinematikparameter (Zwangsbedingungen) zufällig setzen.
+% Bei kinematischen Zwangsbedingungen führen Zufallswerte aber wahrscheinlich zur 
+% Verletzung der Zwangsbedingungen
+kintmp = rand(%NKCP%,1);
+
 %% MDH-Parametereinträge Null setzen

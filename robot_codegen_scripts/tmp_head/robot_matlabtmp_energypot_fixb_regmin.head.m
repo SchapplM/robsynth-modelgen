@@ -15,4 +15,4 @@
 %   minimal parameter regressor of Potential energy
 
 function U_reg = %FN%(q, g, ...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh)
+  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh%KCPARG%)

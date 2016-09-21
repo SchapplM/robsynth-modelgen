@@ -19,4 +19,4 @@
 %   joint torques required to compensate gravitation load
 
 function taug = %FN%(q, phi_base, g, ...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, rSges_num_mdh)
+  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, rSges_num_mdh%KCPARG%)

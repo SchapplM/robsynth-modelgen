@@ -16,4 +16,4 @@
 %   %NL%:  mdh base (link 0) -> mdh link %NL%
 
 function T_c_mdh = %FN%(q, ...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh)
+  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh%KCPARG%)

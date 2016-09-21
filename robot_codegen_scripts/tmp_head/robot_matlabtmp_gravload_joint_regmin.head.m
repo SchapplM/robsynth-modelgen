@@ -15,4 +15,4 @@
 %   minimal parameter regressor of gravitation joint torque vector
 
 function taug_reg = %FN%(q, g, ...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh)
+  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh%KCPARG%)

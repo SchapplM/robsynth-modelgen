@@ -21,4 +21,4 @@
 %   %NL%:  world -> mdh link %NL% (last articulated link)
 
 function T_c_mdh = %FN%(q, r_base, phi_base, ...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh)
+  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh%KCPARG%)

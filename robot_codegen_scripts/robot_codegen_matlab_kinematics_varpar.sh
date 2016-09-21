@@ -23,10 +23,12 @@ if [ -f $quelldat ]; then
   printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_KCP.m >> $zieldat
   echo "%% Variable Initialization" >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
   printf "rxs_base=0;\nrys_base=0;\nrzs_base=0;\n" >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_par_KCP.m >> $zieldat
   printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
   cat $quelldat >> $zieldat
   # Benenne die Ergebnisvariable des exportierten Codes um (zusätzlich zu Hilfsskript robot_codegen_matlabfcn_postprocess.sh)
@@ -50,11 +52,13 @@ if [ -f $quelldat ]; then
   cat $tmp_pfad/robot_matlabtmp_assert_rB.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_phiB.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_KCP.m >> $zieldat
   echo "%% Variable Initialization" >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_rB.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_phiB.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_par_KCP.m >> $zieldat
   printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
   cat $quelldat >> $zieldat
   # Benenne die Ergebnisvariable des exportierten Codes um (zusätzlich zu Hilfsskript robot_codegen_matlabfcn_postprocess.sh)
@@ -76,9 +80,11 @@ if [ -f $quelldat ]; then
   printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_KCP.m >> $zieldat
   echo "%% Variable Initialization" >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_par_KCP.m >> $zieldat
   printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
   cat $quelldat >> $zieldat
   # Benenne die Ergebnisvariable des exportierten Codes um (zusätzlich zu Hilfsskript robot_codegen_matlabfcn_postprocess.sh)
