@@ -12,7 +12,7 @@ repo_pfad=$(pwd)/..
 robot_env_pfad=$repo_pfad/robot_codegen_definitions/robot_env
 
 
-# Lese die Informationen aus der Maple-Datei
+# Lese die Informationen aus der Eingabe-Maple-Datei
 robot_NQJ=`grep "NQJ := " $robot_env_pfad | tail -1 | sed 's/.*= \(.*\):/\1/'`
 robot_NJ=`grep "NJ := " $robot_env_pfad | tail -1 | sed 's/.*= \(.*\):/\1/'`
 robot_name=`grep "robot_name := " $robot_env_pfad | tail -1 | sed 's/.*= "\(.*\)":/\1/'`
@@ -28,15 +28,23 @@ echo "robot_name=\"$robot_name\"" >> $robot_env_pfad.sh
 
 # Lese weitere Informationen aus der generierten Definitionsdatei
 robot_def_pfad=$repo_pfad/codeexport/${robot_name}_tree_floatb_twist_definitions
-robot_NL=`grep "NL := " $robot_def_pfad | tail -1 | sed 's/.*= \(.*\);/\1/'`
+if [ -f $robot_def_pfad ]; then
+  robot_NL=`grep "NL := " $robot_def_pfad | tail -1 | sed 's/.*= \(.*\);/\1/'`
+else
+  robot_NL="UNDEFINED"
+fi;
 echo "robot_NL=$robot_NL" >> $robot_env_pfad.sh
 echo "robot_NL=$robot_NL"
 
 # Variablen für die kinematischen Zwangsbedingungen aus der generierten Definitionsdatei
 robot_kinconstr_exist=1 # Existenz von Zwangsbedingungen prüfen
-if [ `grep "kintmp_s := Matrix(1, 1, \[\[0\]\]);" $robot_def_pfad | wc -l` -eq 1 ]; then
+if [ -f $robot_def_pfad ]; then
+  if [ `grep "kintmp_s := Matrix(1, 1, \[\[0\]\]);" $robot_def_pfad | wc -l` -eq 1 ]; then
+    robot_kinconstr_exist=0
+  fi;
+else
   robot_kinconstr_exist=0
-fi
+fi;
 
 robot_KCsymb_pfad=$repo_pfad/codeexport/${robot_name}_kinematic_constraints_symbols_list_maple
 # robot_NKCP: Anzahl der Parameter der kin. ZB
