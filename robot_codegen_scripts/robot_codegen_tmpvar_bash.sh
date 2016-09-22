@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash -e
 # Speichere die Aktuelle Roboterkonfiguration als Bash-Variable in einer Datei
 # Code-Schnipsel enthalten Variablenzuweisungen
 #
@@ -50,15 +50,20 @@ robot_KCsymb_pfad=$repo_pfad/codeexport/${robot_name}_kinematic_constraints_symb
 # robot_NKCP: Anzahl der Parameter der kin. ZB
 # KCP: Leerzeichengetrennte Liste der Parameter der kinematischen Zwangsbedingungen
 # KCPARG: Argument für Matlab-Funktionen
-if [ $robot_kinconstr_exist == 1 ]; then
-  robot_NKCP=`sed -n -e 's/kc_symbols := Matrix(1, \([[:alnum:]]\+\).*/\1/p' $robot_KCsymb_pfad`
-  robot_KCP=`tr -d "\n" < $robot_KCsymb_pfad | sed -n -e 's/.*kc_symbols := Matrix(1, \([[:alnum:]]\+\), \[\[\(.*\)\]\]);/\2/p' | sed 's/,/ /g'`
-  robot_KCPARG=", kintmp"
+if [ -f $robot_KCsymb_pfad ]; then
+  if [ $robot_kinconstr_exist == 1 ]; then
+    robot_NKCP=`sed -n -e 's/kc_symbols := Matrix(1, \([[:alnum:]]\+\).*/\1/p' $robot_KCsymb_pfad`
+    robot_KCP=`tr -d "\n" < $robot_KCsymb_pfad | sed -n -e 's/.*kc_symbols := Matrix(1, \([[:alnum:]]\+\), \[\[\(.*\)\]\]);/\2/p' | sed 's/,/ /g'`
+    robot_KCPARG=", kintmp"
+  else
+    robot_NKCP=0
+    robot_KCPARG=""
+  fi;
 else
-  robot_NKCP=0
-  robot_KCPARG=""
+  robot_NKCP="UNDEFINED"
+  robot_KCP="UNDEFINED"
+  robot_KCPARG="UNDEFINED"
 fi;
-
 echo "robot_kinconstr_exist=$robot_kinconstr_exist" >> $robot_env_pfad.sh
 echo "robot_NKCP=$robot_NKCP" >> $robot_env_pfad.sh
 echo "robot_KCPARG=\"$robot_KCPARG\"" >> $robot_env_pfad.sh
