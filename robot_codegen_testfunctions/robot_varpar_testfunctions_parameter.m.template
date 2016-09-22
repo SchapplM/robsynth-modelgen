@@ -34,7 +34,8 @@ end
 
 n = 100;
 % Gelenkwinkel und -zeitableitungen
-Q = (0.5-rand(n, NQJ))*pi;
+%REPLACE_QDEF%
+Q = repmat(q_min',n,1) + rand(n,NQJ).*repmat(q_max'-q_min',n,1);
 QD = (0.5-rand(n, NQJ))*pi;
 QD(1:NQJ,:)=eye(NQJ);
 QDD = (0.5-rand(n, NQJ))*pi;

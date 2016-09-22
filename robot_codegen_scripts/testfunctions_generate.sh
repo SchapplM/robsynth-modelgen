@@ -53,9 +53,22 @@ do
   source robot_codegen_matlabfcn_postprocess.sh $dir/$filename_new 0
 done
 
+# Parameter-Generierungsskript anpassen
+zieldat=$testfcn_pfad/${robot_name}_varpar_testfunctions_parameter.m
+
+# Winkelgrenzen in Parameter-Skript berücksichtigen
+qlim_dat=$repo_pfad/robot_codegen_constraints/${robot_name}_kinematic_constraints_matlab.m
+if [ -f $qlim_dat ]; then
+  # TODO: Zeilenumbrüche nach Einsetzen wiederherstellen, Einrückung schön machen.
+  REPSTR=`tr "\n" " " < $qlim_dat`
+else
+  # nur zufällige Winkel
+  REPSTR="q_min = -pi*ones(NQJ,1);q_max = pi*ones(NQJ,1);"
+fi;
+# Ersetzungsausdruck für Winkelausdruck in Vorlage ersetzen.
+sed -i "s|%REPLACE_QDEF%|$REPSTR|" $zieldat
 
 # Parameter-Generierungsskript anpassen (damit nicht MDH-Parameter mit Zufallswerten belegt sind, die einen bestimmten Wert haben sollen)
-zieldat=$testfcn_pfad/${robot_name}_varpar_testfunctions_parameter.m
 printf "\n\n%%%% MDH-Parametereinträge auf Zufallswerte setzen" >> $zieldat
 printf "\n%% Aus robot_matlabtmp_par_mdh.m" >> $zieldat
 cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
