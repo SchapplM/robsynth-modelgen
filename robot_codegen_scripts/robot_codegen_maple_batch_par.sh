@@ -78,7 +78,9 @@ do
 			robot_codegen_kinematics/robot_tree_floatb_rotmat_mdh_kinematics.mpl
 			robot_codegen_kinematics/robot_tree_floatb_rotmat_kinematics_com_worldframe_par1.mpl
 	"
-
+	dateiliste_mdhvel="
+	    robot_codegen_kinematics/robot_tree_velocity_mdh_angles.mpl
+  "
 	dateiliste_vel="
 	    robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_worldframe_par1.mpl
 	    robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_linkframe.mpl
@@ -113,6 +115,13 @@ do
     ./maple -q <<< "currentdir(\"$dir\"): read \"$filename\";"
   done
   echo "FERTIG mit Kinematik für ${basemeth}"
+  for wsvelm in ${dateiliste_mdhvel[@]}
+  do
+    mpldat_full=$repo_pfad/$wsvelm
+    filename="${mpldat_full##*/}"
+    dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
+    ./maple -q <<< "currentdir(\"$dir\"): read \"$filename\";"
+  done
   for wsvel in ${dateiliste_vel[@]}
   do
     mpldat_full=$repo_pfad/$wsvel

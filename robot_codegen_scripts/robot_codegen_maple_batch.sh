@@ -50,6 +50,7 @@ dateiliste_kindyn="
     /robot_codegen_constraints/${robot_name}_kinematic_constraints.mpl
     /robot_codegen_kinematics/robot_tree_floatb_rotmat_mdh_kinematics.mpl
     /robot_codegen_kinematics/robot_tree_floatb_rotmat_kinematics_com_worldframe_par1.mpl
+    /robot_codegen_kinematics/robot_tree_velocity_mdh_angles.mpl
     /robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_worldframe_par1.mpl
     /robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_linkframe.mpl
     /robot_codegen_energy/robot_tree_floatb_rotmat_energy_worldframe_par1.mpl
