@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash -e
 # Erstelle temporäre Variablen mit Code-Schnipseln, die für die Erzeugung von Matlab-Code benötigt wird.
 # Code-Schnipsel enthalten assert-Befehle
 #

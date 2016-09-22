@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 # Erstelle fertige Matlab-Funktionen aus exportiertem Code von Maple
 # Dieses Skript erstellt die Funktionen zur Dynamik und wird von robot_codegen_matlab_varpar.sh aufgerufen.
 #

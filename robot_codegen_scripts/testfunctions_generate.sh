@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 # Passe die Vorlagen für Dynamik-Testfunktionen an den Roboter an.
 #
 # Dieses Skript im Ordner ausführen, in dem es im Repo liegt

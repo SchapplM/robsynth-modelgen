@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash -e
 # Starte alle Maple-Skripte nacheinander in der richtigen Reihenfolge
 #
 # Argumente:

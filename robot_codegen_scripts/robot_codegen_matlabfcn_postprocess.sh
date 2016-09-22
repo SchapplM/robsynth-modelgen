@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash -e 
 # Nachbearbeitung einer automatisch erstellten Matlab-Funktion
 #
 # Argumente:

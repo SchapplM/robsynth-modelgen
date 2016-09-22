@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 # Erstelle fertige Matlab-Funktionen aus exportiertem Code von Maple
 # Dieses Skript erledigt alle Schritte, nachdem der Code in Maple exportiert wurde
 #

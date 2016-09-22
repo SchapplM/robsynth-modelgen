@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash -e
 # Starte alle Maple-Skripte in der richtigen Reihenfolge
 # Führe so viele Berechnungen wie möglich parallel aus
 #
