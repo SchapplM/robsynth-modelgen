@@ -47,3 +47,17 @@ if [ "$replacelastassignment" != "0" ]; then # vergleiche strings, da das Argume
     echo "$varname_fcn = $varname_tmp;" >> $mfcndat
   fi
 fi
+
+# Versionsinformationen einfügen an vorgesehene Stelle
+# TODO: Versionsdatei nicht jedes Mal neu erzeugen (zu viele Schreibzugriffe)
+versionfile=$repo_pfad/robot_codegen_scripts/tmp/version_info.head.m
+echo "% Quelle: IRT-Maple-Repo" > $versionfile
+now="$(date +'%Y-%m-%d %H:%M')"
+printf "%% Datum: $now\n" >> $versionfile
+rev=`git rev-parse HEAD`
+printf "%% Revision: $rev\n" >> $versionfile
+echo "% (c) Institut für Regelungstechnik, Universität Hannover" >> $versionfile
+
+# TODO: Ersetzungen sauberer
+sed -i "/% %VERSIONINFO%/r $versionfile" $mfcndat
+sed -i "s/%VERSIONINFO%//g" $mfcndat

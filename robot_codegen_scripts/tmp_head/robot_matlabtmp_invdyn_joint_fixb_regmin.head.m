@@ -18,5 +18,7 @@
 % tau_reg [%NJ%x%NMPV%]
 %   minimal parameter regressor of inverse dynamics joint torque vector
 
+% %VERSIONINFO%
+
 function tau_reg = %FN%(q, qD, qDD, g, ...
   alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh%KCPARG%)

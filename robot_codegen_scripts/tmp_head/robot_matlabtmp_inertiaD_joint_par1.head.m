@@ -16,5 +16,7 @@
 % MqD [%NJ%x%NJ%]
 %   time derivative of inertia matrix
 
+% %VERSIONINFO%
+
 function Mq = %FN%1(q, qD, ...
   alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, rSges_num_mdh, Icges_num_mdh%KCPARG%)

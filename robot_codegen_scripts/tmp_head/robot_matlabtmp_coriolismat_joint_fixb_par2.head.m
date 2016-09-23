@@ -16,5 +16,7 @@
 % Cq [%NJ%x%NJ%]
 %   matrix of coriolis and centrifugal joint torques
 
+% %VERSIONINFO%
+
 function Cq = %FN%(q, qD, ...
   alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, mrSges_num_mdh, Ifges_num_mdh%KCPARG%)

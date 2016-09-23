@@ -20,5 +20,7 @@
 % tau [%NJ%x1]
 %   joint torques of inverse dynamics (contains inertial, gravitational coriolis and centrifugal forces)
 
+% %VERSIONINFO%
+
 function tau = %FN%(q, qD, qDD, g, ...
   alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, rSges_num_mdh, Icges_num_mdh%KCPARG%)

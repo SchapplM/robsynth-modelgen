@@ -14,5 +14,7 @@
 % MM_reg [%NJ%*%NJ%x%NMPV%]
 %   minimal parameter regressor of joint inertia matrix
 
+% %VERSIONINFO%
+
 function MM_reg = %FN%(q, ...
   alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh%KCPARG%)

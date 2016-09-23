@@ -14,5 +14,7 @@
 % taug_reg [%NJ%x%NMPV%]
 %   minimal parameter regressor of coriolis joint torque vector
 
+% %VERSIONINFO%
+
 function tauc_reg = %FN%(q, qD, ...
   alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh%KCPARG%)
