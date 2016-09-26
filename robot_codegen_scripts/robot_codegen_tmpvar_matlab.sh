@@ -160,7 +160,7 @@ echo "betaDDy_base = xDD_base(5);" >> $tmp_pfad/robot_matlabtmp_xDDB.m
 echo "gammaDDz_base = xDD_base(6);" >> $tmp_pfad/robot_matlabtmp_xDDB.m
 
 # Kinematische Zwangsbedingungen
-if [ $robot_kinconstr_exist == 1 ]; then
+if [ "$robot_kinconstr_exist" -eq "1" ]; then
   echo "" > $tmp_pfad/robot_matlabtmp_par_KCP.m
   i=0;
   for Kp in $robot_KCP; do
@@ -169,6 +169,6 @@ if [ $robot_kinconstr_exist == 1 ]; then
   done;
 else
   # Es gibt keine kinematischen Zwangsbedingungen, die Datei bleibt leer
-  echo "" >> $tmp_pfad/robot_matlabtmp_par_KCP.m
+  echo "" > $tmp_pfad/robot_matlabtmp_par_KCP.m
 fi;
 

@@ -87,10 +87,10 @@ if [ -f $KCP_dat1 ] && [ -f $KCP_dat2 ]; then
   varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
   echo "kintmp = $varname_tmp;" >> $zieldat
 else
-printf "\n\n%%%% Kinematikparameter (Zwangsbedingungen) zufällig setzen." >> $zieldat
-printf "\n\n%% Bei kinematischen Zwangsbedingungen führen Zufallswerte aber wahrscheinlich zur" >> $zieldat
-printf "\n\n%% Verletzung der Zwangsbedingungen" >> $zieldat
-printf "\n\nkintmp = rand($robot_NKCP,1);" >> $zieldat
+printf "\n%%%% Kinematikparameter (Zwangsbedingungen) zufällig setzen.\n" >> $zieldat
+printf "%% Bei kinematischen Zwangsbedingungen führen Zufallswerte aber wahrscheinlich zur\n" >> $zieldat
+printf "%% Verletzung der Zwangsbedingungen\n" >> $zieldat
+printf "kintmp = rand($robot_NKCP,1);\n" >> $zieldat
 fi;
 
 
