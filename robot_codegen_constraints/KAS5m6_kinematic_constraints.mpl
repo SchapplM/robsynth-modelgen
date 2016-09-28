@@ -25,10 +25,9 @@ read "../helper/proc_MatlabExport":
 read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s":
 read "../robot_codegen_constraints/proc_subs_kintmp_exp":
-with(RealDomain):
+read "../helper/proc_MatlabExport":
 read "../robot_codegen_definitions/robot_env":
 read sprintf("../codeexport/%s_tree_floatb_definitions", robot_name):
-# 
 # Lese Ergebnisse der Kinematik von KAS5_m4 aus.
 # Siehe KAS5_m4_sym_codegen_kinematic_constraints.mw
 # kintmp_qs, kintmp_qt, lpar_qs, lpar_qt, kintmp_subsexp

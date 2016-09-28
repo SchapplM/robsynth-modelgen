@@ -126,8 +126,7 @@ Modell m5:
 </Group>
 <Group view="code" labelreference="L1913" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(RealDomain):
-with(LinearAlgebra):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(LinearAlgebra):
 with(StringTools):</Text-field>
 </Input>
 </Group>
@@ -135,6 +134,11 @@ with(StringTools):</Text-field>
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_convert_s_t&quot;:
 read &quot;../helper/proc_convert_t_s&quot;: </Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2127" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1800" drawlabel="true">
