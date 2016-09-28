@@ -63,7 +63,6 @@ for i to NL do
   T := T+T_b[i, 1]:
 end do:
 # Maple Export
-save T, sprintf("../codeexport/%s_energy_kinetic_floatb_%s_linkframe_par2_maple",   robot_name, base_method_name):
 save T, sprintf("../codeexport/%s_energy_kinetic_floatb_%s_linkframe_par2_maple.m", robot_name, base_method_name):
 # Potential Energy
 # Berechnung in Welt-KS ist bereits erfolgreich. Wird hier nicht nochmal durchgeführt.

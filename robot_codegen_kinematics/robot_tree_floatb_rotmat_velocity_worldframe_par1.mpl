@@ -96,7 +96,6 @@ for i to NL do
   printf("Geschwindigkeit für Körperschwerpunkt %d aufgestellt. %s\n", i, FormatTime("%Y-%m-%d %H:%M:%S")):
 end do:
 # Maple Export
-save omega_W_i, rD_W_i, rD_W_Si, sprintf("../codeexport/%s_velocity_worldframe_floatbase_%s_par1_maple", robot_name, base_method_name):
 save omega_W_i, rD_W_i, rD_W_Si, sprintf("../codeexport/%s_velocity_worldframe_floatbase_%s_par1_maple.m", robot_name, base_method_name):
 printf("Maple-Ausdrücke exportiert. %s\n", FormatTime("%Y-%m-%d %H:%M:%S")):
 # Matlab Export
