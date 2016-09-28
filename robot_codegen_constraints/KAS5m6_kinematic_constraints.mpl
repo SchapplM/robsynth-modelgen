@@ -90,7 +90,7 @@ printf("Zwangsbedingungen der Parallelstruktur von KAS5_m4 nach KAS5_m6 angepass
 # Liste mit abhängigen konstanten Kinematikparametern erstellen (wichtig für Matlab-Funktionsgenerierung)
 read "../helper/proc_list_constant_expressions";
 kc_symbols := Matrix(list_constant_expressions( kintmp_subsexp(..,2) )):
-save kc_symbols, sprintf("../codeexport/%s_kinematic_constraints_symbols_list", robot_name):
+save kc_symbols, sprintf("../codeexport/%s_kinematic_constraints_symbols_list_maple", robot_name):
 MatlabExport(Transpose(kc_symbols), sprintf("../codeexport/%s_kinematic_constraints_symbols_list_matlab.m", robot_name), 2):
 # Exportieren der Ersetzungsausdrücke
 # Zum Testen
