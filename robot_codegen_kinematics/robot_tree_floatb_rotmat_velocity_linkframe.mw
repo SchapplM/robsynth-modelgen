@@ -195,18 +195,20 @@ Trf := Trf:
 Trf_c := Trf_c:</Text-field>
 </Input>
 </Group>
-</Section>
-<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 1" layout="Heading 1">Zeitableitung der Drehwinkel berechnen</Text-field></Title>
-<Group labelreference="L1670" drawlabel="true">
+<Group labelreference="L1699" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal">Ersetze die MDH-Winkel durch verallgemeinerte Koordinaten
-<Font encoding="UTF-8">Falls die Gelenkwinkel nicht direkt mit verallgemeinerten Koordinaten \303\274berstimmen (bei Kopplungen, kinematischen Schleifen) steht hier eine l\303\244ngere Berechnung.</Font></Text-field>
+<Text-field style="Text" layout="Normal">Zeitableitungen der MDH-Drehwinkel laden.
+Die Berechnung soll nur an einer Stelle erfolgen. Siehe robot_tree_velocity_mdh_angles.mw.</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1671" drawlabel="true">
+<Group labelreference="L1700" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">thetaD := qJD_t:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_velocity_mdh_angles_maple.m&quot;, robot_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1701" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">thetaD := thetaD:</Text-field>
 </Input>
 </Group>
 </Section>

@@ -3,10 +3,10 @@
 % Use Code from Maple symbolic Code Generation
 % 
 % Input:
-% q [%NJ%x1]
-%   Joint Angles [rad]
-% qD [%NJ%x1]
-%   Joint Velocities [rad/s]
+% q [%NQJ%x1]
+%   Generalized coordinates (joint angles) [rad]
+% qD [%NQJ%x1]
+%   Generalized velocities (joint velocities) [rad/s]
 % phi_base [3x1]
 %   Base orientation in world frame. Expressed with RPY Euler angles (xyz)
 % xD_base [6x1]
@@ -22,5 +22,7 @@
 % Fc [6x1]
 %   base forces and torques required to compensate coriolis and centrifugal load
 
+% %VERSIONINFO%
+
 function Fc = %FN%(q, qD, phi_base, xD_base, ...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, mrSges_num_mdh, Ifges_num_mdh)
+  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, mrSges_num_mdh, Ifges_num_mdh%KCPARG%)

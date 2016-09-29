@@ -3,8 +3,8 @@
 % Use Code from Maple symbolic Code Generation
 % 
 % Input:
-% q [%NJ%x1]
-%   Joint Angles [rad]
+% q [%NQJ%x1]
+%   Generalized coordinates (joint angles) [rad]
 % g [3x1]
 %   gravitation vector in mdh base frame [m/s^2]
 % a_mdh, d_mdh, q_offset_mdh [%NJ%x1]
@@ -16,5 +16,7 @@
 % U [1x1]
 %   Potential energy
 
+% %VERSIONINFO%
+
 function U = %FN%(q, g, ...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, rSges_num_mdh)
+  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, rSges_num_mdh%KCPARG%)

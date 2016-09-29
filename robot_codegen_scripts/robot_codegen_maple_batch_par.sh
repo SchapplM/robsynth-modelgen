@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash -e
 # Starte alle Maple-Skripte in der richtigen Reihenfolge
 # Führe so viele Berechnungen wie möglich parallel aus
 #
@@ -40,6 +40,10 @@ cp $repo_pfad/robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldfram
 cp $repo_pfad/robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par12.mpl $repo_pfad/robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2.mpl
 sed -i "s/codegen_dynpar := 1:/codegen_dynpar := 2:/g" $repo_pfad/robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2.mpl
 
+# Namen des Roboters herausfinden (damit roboterspezifische Zwangsbedingungen berechnet werden können)
+source robot_codegen_tmpvar_bash.sh
+source $repo_pfad/robot_codegen_definitions/robot_env.sh
+
 # Erstelle einzelne Arbeitsblätter für jeden Teil der inversen Dynamik
 codeexportswitches=( corvec cormat grav inertia inertiaD invdyn )
 for (( dynpar=1; dynpar<=2; dynpar++ ))
@@ -70,10 +74,13 @@ for basemeth in "${basemethodenames[@]}"
 do
 	dateiliste_kin="
 		  robot_codegen_definitions/robot_tree_floatb_${basemeth}_definitions.mpl
+      robot_codegen_constraints/${robot_name}_kinematic_constraints.mpl
 			robot_codegen_kinematics/robot_tree_floatb_rotmat_mdh_kinematics.mpl
 			robot_codegen_kinematics/robot_tree_floatb_rotmat_kinematics_com_worldframe_par1.mpl
 	"
-
+	dateiliste_mdhvel="
+	    robot_codegen_kinematics/robot_tree_velocity_mdh_angles.mpl
+  "
 	dateiliste_vel="
 	    robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_worldframe_par1.mpl
 	    robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_linkframe.mpl
@@ -108,6 +115,13 @@ do
     ./maple -q <<< "currentdir(\"$dir\"): read \"$filename\";"
   done
   echo "FERTIG mit Kinematik für ${basemeth}"
+  for wsvelm in ${dateiliste_mdhvel[@]}
+  do
+    mpldat_full=$repo_pfad/$wsvelm
+    filename="${mpldat_full##*/}"
+    dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
+    ./maple -q <<< "currentdir(\"$dir\"): read \"$filename\";"
+  done
   for wsvel in ${dateiliste_vel[@]}
   do
     mpldat_full=$repo_pfad/$wsvel

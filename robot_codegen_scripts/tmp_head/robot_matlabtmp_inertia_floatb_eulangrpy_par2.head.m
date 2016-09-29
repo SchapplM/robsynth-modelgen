@@ -3,8 +3,8 @@
 % Use Code from Maple symbolic Code Generation
 % 
 % Input:
-% q [%NJ%x1]
-%   Joint Angles [rad]
+% q [%NQJ%x1]
+%   Generalized coordinates (joint angles) [rad]
 % phi_base [3x1]
 %   Base orientation in world frame. Expressed with RPY Euler angles (xyz)
 % a_mdh, d_mdh, q_offset_mdh [%NJ%x1]
@@ -16,5 +16,7 @@
 % M [(6+%NJ%)x(6+%NJ%)]
 %   full inertia matrix (for base and joint dynamics)
 
+% %VERSIONINFO%
+
 function Mqb = %FN%(q, phi_base, ...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, mrSges_num_mdh, Ifges_num_mdh)
+  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, mrSges_num_mdh, Ifges_num_mdh%KCPARG%)

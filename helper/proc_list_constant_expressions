@@ -1,0 +1,20 @@
+list_constant_expressions := proc (exp)
+  local nms, i;
+  # Liste aller verwendeter Symbole erstellen
+  nms:=convert(indets(exp,name),list);
+
+  # Entferne Elemente aus Liste, die nicht konstanten Parameter gehören
+  nms := convert_s_t( nms );
+  for i from 1 to ColumnDimension( nms ) do
+    if not diff( nms[i], t) = 0 then
+      nms[i] := 0:
+    end if:
+  end do:
+  nms := convert_t_s( nms );
+  # Nullen entfernen. Dies sind die Elemente mit vorher zeitabhängigen Einträgen
+  nms := remove(t->t=0,nms);
+  # Variablen alphabetisch sortieren, damit sich die Reihenfolge möglichst nie ändert.
+  nms := sort(nms);
+  return nms:
+end proc:
+

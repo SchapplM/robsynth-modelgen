@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 # Passe die Vorlagen für numerische Funktionen an den Roboter an.
 # Diese Funktionen sind durch assert-Befehle und hart kodierte
 # Zahlen an den Roboter angepasst und dadurch kompilierbar.

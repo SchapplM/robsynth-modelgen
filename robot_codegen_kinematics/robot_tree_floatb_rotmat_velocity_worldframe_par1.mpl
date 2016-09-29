@@ -50,10 +50,10 @@ Trf_c := Trf_c:
 read sprintf("../codeexport/%s_kinematics_com_worldframe_floatb_%s_par1_maple.m", robot_name, base_method_name):
 r_W_W_Si := r_W_W_Si:
 r_W_i_Si := r_W_i_Si:
-# Zeitableitung der Drehwinkel berechnen
-# Ersetze die MDH-Winkel durch verallgemeinerte Koordinaten
-# Falls die Gelenkwinkel nicht direkt mit verallgemeinerten Koordinaten überstimmen (bei Kopplungen, kinematischen Schleifen) steht hier eine längere Berechnung.
-thetaD := qJD_t:
+# Zeitableitungen der MDH-Drehwinkel laden.
+# Die Berechnung soll nur an einer Stelle erfolgen. Siehe robot_tree_velocity_mdh_angles.mw.
+read sprintf("../codeexport/%s_velocity_mdh_angles_maple.m", robot_name):
+thetaD := thetaD:
 # Calculate Velocities
 # First assume fixed base model with base velocity and acceleration set to zero
 # Anfangsgeschwindigkeit definieren für floating base model
@@ -96,7 +96,6 @@ for i to NL do
   printf("Geschwindigkeit für Körperschwerpunkt %d aufgestellt. %s\n", i, FormatTime("%Y-%m-%d %H:%M:%S")):
 end do:
 # Maple Export
-save omega_W_i, rD_W_i, rD_W_Si, sprintf("../codeexport/%s_velocity_worldframe_floatbase_%s_par1_maple", robot_name, base_method_name):
 save omega_W_i, rD_W_i, rD_W_Si, sprintf("../codeexport/%s_velocity_worldframe_floatbase_%s_par1_maple.m", robot_name, base_method_name):
 printf("Maple-Ausdrücke exportiert. %s\n", FormatTime("%Y-%m-%d %H:%M:%S")):
 # Matlab Export

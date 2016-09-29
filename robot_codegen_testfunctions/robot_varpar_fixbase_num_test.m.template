@@ -10,7 +10,9 @@
 clc
 clear
 
+NQJ = %NQJ%;
 NJ = %NJ%;
+NL = %NL%;
 robot_name = '%RN%';
 
 testfunctions_path_init
@@ -273,6 +275,9 @@ ylabel('t [ms]'); title('coriolisvec (mex)');
 % kompiliert (mex) und normaler Aufruf
 Mex_Erstellen({'%RN%_inertia_floatb_eulangrpy_slag_vp1', ...
   '%RN%_inertia_floatb_eulangrpy_slag_vp2', ...
+  '%RN%_inertia_joint_slag_vp1', ...
+  '%RN%_inertia_joint_slag_vp2', ...
+  '%RN%_inertia_joint_regmin_slag_vp', ...
   '%RN%_invdyn_floatb_eulangrpy_nnew_vp1'});
 n = 200;
 t_ber_M = NaN(2,4);

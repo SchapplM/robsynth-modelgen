@@ -63,7 +63,6 @@ for i to NL do
   T := T+T_b[i, 1]:
 end do:
 # Maple Export
-save T, sprintf("../codeexport/%s_energy_kinetic_floatb_%s_linkframe_par2_maple",   robot_name, base_method_name):
 save T, sprintf("../codeexport/%s_energy_kinetic_floatb_%s_linkframe_par2_maple.m", robot_name, base_method_name):
 # Potential Energy
 # Berechnung in Welt-KS ist bereits erfolgreich. Wird hier nicht nochmal durchgeführt.
@@ -82,7 +81,7 @@ if codegen_act then
 end if:
 # Fixed Base
 T_s_fixb:=T_s:
-for i from 1 to NB do
+for i from 1 to NQB do
   T_s_fixb := subs({X_base_s[i,1]=0},T_s_fixb):
 end do:
 for i from 1 to 6 do

@@ -1,0 +1,8 @@
+subs_kintmp_exp := proc (A) 
+  local A_s, i; 
+  A_s := A; 
+  for i to RowDimension(kintmp_subsexp) do 
+    A_s := subs({kintmp_subsexp(i,1) = kintmp_subsexp(i,2)},A_s);
+  end do:
+  return A_s:
+end proc:

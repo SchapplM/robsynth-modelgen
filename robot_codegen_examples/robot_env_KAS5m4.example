@@ -1,0 +1,27 @@
+# Beispiel für Codegenerierung:
+# KAS5m4
+#
+# Quellen
+# [KhalilKle1986] Khalil, W. and Kleinfinger, J.-F.: A new geometric notation for open and closed-loop robots (1986)
+
+robot_name := "KAS5m4":
+
+# Anzahl der verallgemeinerten Gelenkkoordinaten
+NQJ := 7:
+# Anzahl der Gelenke
+NJ := 13:
+
+qoffset := Matrix(13, 1, [-Pi/2, Pi/2, 0, 0, 0, Pi/2, 0, Pi/2, 0, 0, -Pi, 0, Pi]):
+theta := <Matrix(7,1,qJ_t); kintmp_t(13,1); -kintmp_t(11,1); -kintmp_t(21,1); -kintmp_t(8,1); -kintmp_t(3,1); -kintmp_t(2,1)> + qoffset:
+alpha := Matrix(13, 1, [0, -Pi/2, Pi/2, 0, 0, 0, Pi/2, Pi/2, 0, 0, 0, 0, 0]):
+d := Matrix(13, 1, [d1, d2, d3, 0, 0, 0, d7, d8, 0, 0, 0, 0, 0]):
+a := Matrix(13, 1, [0, 0, 0, a4, a5, a6, 0, 0, a9, a10, a11, a12, 0]):
+v := Matrix(13,1, <0; 1; 2; 3; 4; 5; 6; 2; 8; 3; 10; 11; 12>):
+
+b := Matrix(13,1):
+beta := Matrix(13,1):
+
+# Allgemeine Winkel
+kintmp_t := Matrix(24, 1, [alpha1(t),beta1(t),beta2(t),gamma3(t),gamma5(t),delta1(t),delta2(t),delta3(t),delta4(t),delta5(t),delta6(t),delta7(t),delta8(t),delta9,delta10,delta11(t),delta12,delta13(t),delta14(t),delta15(t),delta16(t),delta17,delta18,rho3(t)]);
+kintmp_s := Matrix(24, 1, [alpha1s,beta1s,beta2s,gamma3s,gamma5s,delta1s,delta2s,delta3s,delta4s,delta5s,delta6s,delta7s,delta8s,delta9s,delta10s,delta11s,delta12s,delta13s,delta14s,delta15s,delta16s,delta17s,delta18s,rho3s]);
+

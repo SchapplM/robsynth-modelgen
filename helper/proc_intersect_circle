@@ -1,0 +1,17 @@
+intersect_circle := proc (r_p1, r_p2, r1, r2) 
+  # Berechne den Schnittpunkt zweier Kreise (gegeben mit Mittelpunkt und Radius)
+  local a, b, c, d, radikant, r_s1, r_s2, ReturnValue; 
+  a := 2*r_p2(1)-2*r_p1(1); 
+  b := 2*r_p2(2)-2*r_p1(2); 
+  c :=r1^2-r_p1(1)^2-r_p1(2)^2-r2^2+r_p2(1)^2+r_p2(2)^2; 
+  d := c-a*r_p1(1)-b*r_p1(2);
+  radikant := r1^2*(a^2+b^2)-d^2; 
+  r_s1 := Matrix(2,1); 
+  r_s2 := Matrix(2,1); 
+  r_s1(1) := r_p1(1)+(a*d+b*sqrt(radikant))/(a^2+b^2); 
+  r_s2(1) := r_p1(1)+(a*d-b*sqrt(radikant))/(a^2+b^2); 
+  r_s1(2) := r_p1(2)+(d*b-a*sqrt(radikant))/(a^2+b^2); 
+  r_s2(2) := r_p1(2)+(d*b+a*sqrt(radikant))/(a^2+b^2); 
+  ReturnValue := `<|>`(r_s1,r_s2); 
+  return ReturnValue 
+end proc;

@@ -1,36 +1,36 @@
-Lagrange1 := proc (Tv, Uv, NJ)
+Lagrange1 := proc (Tv, Uv, NQ)
   local ReturnValue, i, j, dTvdqD, dTvdqD_s, dTvdqDdt, dTvdqDdt_s, dTvdq_s, dUvdq_s, N, Tvs, Uvs:
   global qD_s:
   Tvs := convert_t_s(Tv):
   Uvs := convert_t_s(Uv):
 
   # Definitionen
-  dTvdqD := Matrix(NJ, 1);:
-  dTvdqD_s := Matrix(NJ, 1):
-  dTvdqDdt := Matrix(NJ, 1):
-  dTvdqDdt_s := Matrix(NJ, 1):
-  dTvdq_s := Matrix(NJ, 1):
-  dUvdq_s := Matrix(NJ, 1):
+  dTvdqD := Matrix(NQ, 1);:
+  dTvdqD_s := Matrix(NQ, 1):
+  dTvdqDdt := Matrix(NQ, 1):
+  dTvdqDdt_s := Matrix(NQ, 1):
+  dTvdq_s := Matrix(NQ, 1):
+  dUvdq_s := Matrix(NQ, 1):
 
   # Differentiate T with respect to qD
-  for i to NJ do 
+  for i to NQ do 
     dTvdqD_s[i, 1] := diff(Tvs, qD_s[i, 1]):
     dTvdqD[i, 1] := convert_s_t(dTvdqD_s[i, 1]):
   end do:
 
   # Differentiate dT/dqD with respect to time  
-  for i to NJ do 
+  for i to NQ do 
     dTvdqDdt[i, 1] := diff(dTvdqD[i, 1], t):
     dTvdqDdt_s[i, 1] := convert_t_s(dTvdqDdt[i, 1]):
   end do:
 
   # Differentiate T with respect to q
-  for i to NJ do 
+  for i to NQ do 
     dTvdq_s[i, 1] := diff(Tvs, q_s[i, 1]):
   end do:
 
   # Differentiate U with respect to q
-  for i to NJ do 
+  for i to NQ do 
    dUvdq_s[i, 1] := diff(Uvs, q_s[i, 1]):
   end do:
   ReturnValue := [dTvdqDdt_s, dTvdq_s, dUvdq_s]:

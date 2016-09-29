@@ -20,11 +20,11 @@ printf("Generiere Parameter für %s\n",robot_name):
 # Joint Angles, Velocities and Accelerations in time depending and substitution form.
 # Time Depending form is for time differentiation.
 # Substitution Form is for partial differentiation and code export.
-qJ_t := Matrix(NJ, 1):
-qJ_s := Matrix(NJ, 1):
-qJD_s := Matrix(NJ, 1):
-qJDD_s := Matrix(NJ, 1):
-for i from 1 to NJ do
+qJ_t := Matrix(NQJ, 1):
+qJ_s := Matrix(NQJ, 1):
+qJD_s := Matrix(NQJ, 1):
+qJDD_s := Matrix(NQJ, 1):
+for i from 1 to NQJ do
   qJ_t(i,1):=parse(sprintf("qJ%d(t)", i)):
   qJ_s(i,1):=parse(sprintf("qJ%ds", i)):
   qJD_s(i,1):=parse(sprintf("qJD%ds", i)):
@@ -38,7 +38,7 @@ g_world(1 .. 3, 1) := <g1, g2, g3>:
 # Position und Orientierung der Basis. Die Orientierung ist mit XYZ-Euler-Winkeln definiert, die aber nicht im weiteren Algorithmus verwendet werden (nur Platzhalter).
 # Eine Invertierung der Orientierungsdarstellung sollte nicht notwendig werden, von daher kein Problem mit Orientierungsrepräsentationssingularität.
 # gem. [2], S. 4 X_base_t SE(3): Position und Orientierung.
-NB := 6:
+NQB := 6:
 X_base_t:=Matrix(6, 1, [rx_base(t),ry_base(t),rz_base(t),alphax_base(t), betay_base(t), gammaz_base(t)]):
 X_base_s:=Matrix(6, 1, [rxs_base,rys_base,rzs_base,alphaxs_base, betays_base, gammazs_base]):
 # Geschwindigkeit der Basis (pelvis)
@@ -55,17 +55,17 @@ base_method_name := "twist":
 # Ermöglicht eine einfachere Berechnung für Mechanismen, wo die Rückwirkung auf die Basis nicht in der Vorwärtsdynamik simuliert werden muss.
 T_basevel := IdentityMatrix(3, 3):
 # Verallgemeinerte Koordinaten, gem [2], S. 4, [3], S.1
-N:=NJ+NB:
-q_t := Matrix(N,1, <X_base_t, qJ_t>):
-q_s := Matrix(N,1, <X_base_s, qJ_s>):
-qD_t:= Matrix(N,1, <V_base_t, qJD_t>):
-qD_s:= Matrix(N,1, <V_base_s, qJD_s>):
-qDD_t:= Matrix(N,1, <VD_base_t, qJDD_t>):
-qDD_s:= Matrix(N,1, <VD_base_s, qJDD_s>):
+NQ:=NQJ+NQB:
+q_t := Matrix(NQ,1, <X_base_t, qJ_t>):
+q_s := Matrix(NQ,1, <X_base_s, qJ_s>):
+qD_t:= Matrix(NQ,1, <V_base_t, qJD_t>):
+qD_s:= Matrix(NQ,1, <V_base_s, qJD_s>):
+qDD_t:= Matrix(NQ,1, <VD_base_t, qJDD_t>):
+qDD_s:= Matrix(NQ,1, <VD_base_s, qJDD_s>):
 # MDH-Gelenkwinkel neu speichern (Definition der verallg. Koordinaten war dort noch nicht bekannt
 theta := value(theta):
 # Dynamic Parameters
-# Anzahl der Körper (Number of Links)
+# Anzahl der Körper (Number of Links):
 NL := NJ + 1:
 # Mass of each link
 M := Matrix(NL, 1):
@@ -119,9 +119,15 @@ for i to NL do
     PV2_vec[10*(i-1)+j] := PV2_mat[i, j]:
   end do:
 end do:
+# Kinematische Zwangsbedingungen
+# Prüfe, ob kinematische Zwangsbedingungen in der Roboterkonfiguration genannt sind durch Prüfung der Existenz der entsprechenden Variablen.
+if type( kintmp_t, 'Matrix') = false then
+  kintmp_t := Matrix(1,1): # Dummy-Werte damit später alles funktioniert
+  kintmp_s := Matrix(1,1):
+end if:
 # Export
-save q_t, q_s, qD_t, qD_s, qDD_t, qDD_s, qJ_t, qJ_s, qJD_t, qJD_s, qJDD_t, qJDD_s, g_world, X_base_t, X_base_s, V_base_t, V_base_s, VD_base_t, VD_base_s, qoffset, theta, alpha, d, a,v,b,beta, M, r_i_i_Si, mr_i_i_Si, I_i_i, I_i_Si, PV2_vec, PV2_mat, robot_name, N,NB,NJ,NL, base_method_name, T_basevel, sprintf("../codeexport/%s_tree_floatb_twist_definitions", robot_name):
-save q_t, q_s, qD_t, qD_s, qDD_t, qDD_s, qJ_t, qJ_s, qJD_t, qJD_s, qJDD_t, qJDD_s, g_world, X_base_t, X_base_s, V_base_t, V_base_s, VD_base_t, VD_base_s, qoffset, theta, alpha, d, a,v,b,beta, M, r_i_i_Si, mr_i_i_Si, I_i_i, I_i_Si, PV2_vec, PV2_mat, robot_name, N,NB,NJ,NL, base_method_name, T_basevel, sprintf("../codeexport/%s_tree_floatb_definitions", robot_name):
+save q_t, q_s, qD_t, qD_s, qDD_t, qDD_s, qJ_t, qJ_s, qJD_t, qJD_s, qJDD_t, qJDD_s, g_world, X_base_t, X_base_s, V_base_t, V_base_s, VD_base_t, VD_base_s, qoffset, theta, alpha, d, a,v,b,beta, M, r_i_i_Si, mr_i_i_Si, I_i_i, I_i_Si, PV2_vec, PV2_mat, robot_name, NQ,NQB,NQJ,NJ,NL, base_method_name, T_basevel, kintmp_t, kintmp_s, sprintf("../codeexport/%s_tree_floatb_twist_definitions", robot_name):
+save q_t, q_s, qD_t, qD_s, qDD_t, qDD_s, qJ_t, qJ_s, qJD_t, qJD_s, qJDD_t, qJDD_s, g_world, X_base_t, X_base_s, V_base_t, V_base_s, VD_base_t, VD_base_s, qoffset, theta, alpha, d, a,v,b,beta, M, r_i_i_Si, mr_i_i_Si, I_i_i, I_i_Si, PV2_vec, PV2_mat, robot_name, NQ,NQB,NQJ,NJ,NL, base_method_name, T_basevel, kintmp_t, kintmp_s, sprintf("../codeexport/%s_tree_floatb_definitions", robot_name):
 # Einzelne DH-Parameter als Matlab-Code exportieren. Damit lässt sich in Matlab ein passender Parametersatz generieren.
 MatlabExport(v, sprintf("../codeexport/%s_parameters_mdh_v.m", robot_name), 2):
 MatlabExport(a, sprintf("../codeexport/%s_parameters_mdh_a.m", robot_name), 2):

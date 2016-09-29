@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash -e
 # Erstelle temporäre Variablen mit Code-Schnipseln, die für die Erzeugung von Matlab-Code benötigt wird.
 #
 # Dieses Skript im Ordner ausführen, in dem es im Repo liegt
@@ -13,21 +13,21 @@ source $repo_pfad/robot_codegen_definitions/robot_env.sh
 # Schnipsel für Matlab-varpar-Dateien vorbereiten
 # Gelenkwinkel
 echo "" > $tmp_pfad/robot_matlabtmp_q.m
-for (( i=1; i<=$robot_NJ; i++ ))
+for (( i=1; i<=$robot_NQJ; i++ ))
 do
 	echo "qJ${i}s = q(${i});" >> $tmp_pfad/robot_matlabtmp_q.m
 done
 
 # Gelenkwinkelgeschwindigkeit
 echo "" > $tmp_pfad/robot_matlabtmp_qD.m
-for (( i=1; i<=$robot_NJ; i++ ))
+for (( i=1; i<=$robot_NQJ; i++ ))
 do
 	echo "qJD${i}s = qD(${i});" >> $tmp_pfad/robot_matlabtmp_qD.m
 done
 
 # Gelenkwinkelbeschleunigung
 echo "" > $tmp_pfad/robot_matlabtmp_qDD.m
-for (( i=1; i<=$robot_NJ; i++ ))
+for (( i=1; i<=$robot_NQJ; i++ ))
 do
 	echo "qJDD${i}s = qDD(${i});" >> $tmp_pfad/robot_matlabtmp_qDD.m
 done
@@ -158,3 +158,17 @@ echo "vDzs_base = xDD_base(3);" >> $tmp_pfad/robot_matlabtmp_xDDB.m
 echo "alphaDDx_base = xDD_base(4);" >> $tmp_pfad/robot_matlabtmp_xDDB.m
 echo "betaDDy_base = xDD_base(5);" >> $tmp_pfad/robot_matlabtmp_xDDB.m
 echo "gammaDDz_base = xDD_base(6);" >> $tmp_pfad/robot_matlabtmp_xDDB.m
+
+# Kinematische Zwangsbedingungen
+if [ "$robot_kinconstr_exist" -eq "1" ]; then
+  echo "" > $tmp_pfad/robot_matlabtmp_par_KCP.m
+  i=0;
+  for Kp in $robot_KCP; do
+    i=$((i+1));          
+    echo "$Kp = kintmp($i);" >> $tmp_pfad/robot_matlabtmp_par_KCP.m
+  done;
+else
+  # Es gibt keine kinematischen Zwangsbedingungen, die Datei bleibt leer
+  echo "" > $tmp_pfad/robot_matlabtmp_par_KCP.m
+fi;
+

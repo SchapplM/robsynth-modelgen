@@ -3,8 +3,8 @@
 % Use Code from Maple symbolic Code Generation
 % 
 % Input:
-% q [%NJ%x1]
-%   Joint Angles [rad]
+% q [%NQJ%x1]
+%   Generalized coordinates (joint angles) [rad]
 % r_base [3x1]
 %   Base position in world frame
 % phi_base [3x1]
@@ -20,5 +20,7 @@
 %   ...
 %   %NL%:  world -> mdh link %NL% (last articulated link)
 
+% %VERSIONINFO%
+
 function T_c_mdh = %FN%(q, r_base, phi_base, ...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh)
+  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh%KCPARG%)

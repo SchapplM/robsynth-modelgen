@@ -3,8 +3,8 @@
 % Use Code from Maple symbolic Code Generation
 % 
 % Input:
-% q [%NJ%x1]
-%   Joint Angles [rad]
+% q [%NQJ%x1]
+%   Generalized coordinates (joint angles) [rad]
 % r_base [3x1]
 %   Position of the base link in world frame, rotated into mdh base frame
 % g [3x1]
@@ -18,5 +18,7 @@
 % U [1x1]
 %   Potential energy
 
+% %VERSIONINFO%
+
 function U = %FN%(q, r_base, g, ...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, mrSges_num_mdh)
+  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, mrSges_num_mdh%KCPARG%)

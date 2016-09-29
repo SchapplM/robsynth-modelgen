@@ -3,10 +3,10 @@
 % Use Code from Maple symbolic Code Generation
 % 
 % Input:
-% q [%NJ%x1]
-%   Joint Angles [rad]
-% qD [%NJ%x1]
-%   Joint Velocities [rad/s]
+% q [%NQJ%x1]
+%   Generalized coordinates (joint angles) [rad]
+% qD [%NQJ%x1]
+%   Generalized velocities (joint velocities) [rad/s]
 % r_base [3x1]
 %   Base position in world frame
 % phi_base [3x1]
@@ -23,5 +23,7 @@
 %   matrix of coriolis and centrifugal joint torques
 %   Gives coriolis joint torques when multiplied with base and joint velocities
 
+% %VERSIONINFO%
+
 function Cq = %FN%(q, qD, phi_base, xD_base, ...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, rSges_num_mdh, Icges_num_mdh)
+  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, rSges_num_mdh, Icges_num_mdh%KCPARG%)

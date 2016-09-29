@@ -91,10 +91,10 @@ end if:
 # Calculate CoG Jacobian
 # CoG Jacobian nach [SugiharaNakIno2002].
 # TODO: baseframe in worldframe ändern
-J_COG_s := Matrix(3, NJ):
+J_COG_s := Matrix(3, NQJ):
 c_s := convert_t_s(c):
 for i from 1 to 3 do
-  for j from 1 to NJ do
+  for j from 1 to NQJ do
     J_COG_s(i,j) := diff(c_s(i,1), qJ_s(j,1)):
   end:
 end:

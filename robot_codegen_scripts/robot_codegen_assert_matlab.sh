@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash -e
 # Erstelle temporäre Variablen mit Code-Schnipseln, die für die Erzeugung von Matlab-Code benötigt wird.
 # Code-Schnipsel enthalten assert-Befehle
 #
@@ -13,12 +13,12 @@ source $repo_pfad/robot_codegen_definitions/robot_env.sh
 
 # Schnipsel für Matlab-varpar-Dateien vorbereiten
 # Gelenkwinkel
-echo "assert(isa(q,'double') && isreal(q) && all(size(q) == [$robot_NJ 1]), ...
-  '%FN%: q has to be [${robot_NJ}x1] double');" > $tmp_pfad/robot_matlabtmp_assert_q.m
-echo "assert(isa(qD,'double') && isreal(qD) && all(size(qD) == [$robot_NJ 1]), ...
-  '%FN%: qD has to be [${robot_NJ}x1] double');" > $tmp_pfad/robot_matlabtmp_assert_qD.m
-echo "assert(isa(qDD,'double') && isreal(qDD) && all(size(qDD) == [$robot_NJ 1]), ...
-  '%FN%: qDD has to be [${robot_NJ}x1] double');" > $tmp_pfad/robot_matlabtmp_assert_qDD.m
+echo "assert(isa(q,'double') && isreal(q) && all(size(q) == [$robot_NQJ 1]), ...
+  '%FN%: q has to be [${robot_NQJ}x1] double');" > $tmp_pfad/robot_matlabtmp_assert_q.m
+echo "assert(isa(qD,'double') && isreal(qD) && all(size(qD) == [$robot_NQJ 1]), ...
+  '%FN%: qD has to be [${robot_NQJ}x1] double');" > $tmp_pfad/robot_matlabtmp_assert_qD.m
+echo "assert(isa(qDD,'double') && isreal(qDD) && all(size(qDD) == [$robot_NQJ 1]), ...
+  '%FN%: qDD has to be [${robot_NQJ}x1] double');" > $tmp_pfad/robot_matlabtmp_assert_qDD.m
 
 # Basis
 echo "assert(isa(g,'double') && isreal(g) && all(size(g) == [3 1]), ...
@@ -61,3 +61,12 @@ echo "assert(isa(Icges_num_mdh,'double') && isreal(Icges_num_mdh) && all(size(Ic
   '%FN%: Icges_num_mdh has to be [${robot_NL}x6] double'); " > $tmp_pfad/robot_matlabtmp_assert_Ic.m
 echo "assert(isa(Ifges_num_mdh,'double') && isreal(Ifges_num_mdh) && all(size(Ifges_num_mdh) == [$robot_NL 6]), ...
   '%FN%: Ifges_num_mdh has to be [${robot_NL}x6] double'); " > $tmp_pfad/robot_matlabtmp_assert_If.m
+
+# Kinematische Zwangsbedingungen
+if [ $robot_kinconstr_exist == 1 ]; then
+  echo "assert(isa(kintmp,'double') && isreal(kintmp) && all(size(kintmp) == [$robot_NKCP,1]), ...
+    '%FN%: kintmp has to be [${robot_NKCP}x1] double');" > $tmp_pfad/robot_matlabtmp_assert_KCP.m
+else
+  # Es gibt keine kinematischen Zwangsbedingungen, die Datei bleibt leer
+  echo "" > $tmp_pfad/robot_matlabtmp_assert_KCP.m
+fi;

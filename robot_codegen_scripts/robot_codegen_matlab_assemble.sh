@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash -e
 # Zusammensetzen von Teilausdrücken zu einem vollständigem Ausdruck.
 #
 # Beim Maple-Code-Export ist es teilweise schneller, größere Ausdrücke (z.B. 30x1-Coriolisvektor)
