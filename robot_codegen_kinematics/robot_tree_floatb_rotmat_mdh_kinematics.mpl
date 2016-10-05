@@ -87,7 +87,7 @@ for i from 1 to NJ do # Index über Transformationsmatrizen aller Körper
       Trf(ix, iy, i) := subs_kintmp_exp(Trf(ix, iy, i)):
       # Substituiere die verbleibenden Winkel direkt (einige Winkel sind nicht in den Ersetzungsausdrücken enthalten, da sie keine problematischen arctan-Ausdrücke enthalten.
       for jj from 1 to RowDimension(kintmp_qt) do # Index über zu ersetzende Winkel
-        Trf(ix, iy, i) := subs( { kintmp_t(jj, 1) = kintmp_qt(jj, 1) }, Trf(ix, iy, i) ): 
+        Trf(ix, iy, i) := subs( { kintmp_s(jj, 1) = kintmp_qs(jj, 1) }, Trf(ix, iy, i) ): 
       end do:
       Trf(ix, iy, i) := convert_s_t( Trf(ix, iy, i) ):
     end do:
@@ -96,7 +96,6 @@ end do:
 if kin_constraints_exist = true then:
   printf("Ersetzungen der MDH-Parameter mit Ergebnissen der Parallelstruktur in verallgemeinerten Koordinaten erfolgreich."):
 end if:
-
 # Calculate Forward Kinematics (Multi-Joint Transformation)
 Trf_c := Matrix(4, 4, NL): # Diese Initialisierung bringt nichts (initialisiert nur 4x4-Matrix)
 for i from 1 to NL do 
