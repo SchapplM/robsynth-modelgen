@@ -19,21 +19,24 @@ source $repo_pfad/robot_codegen_definitions/robot_env.sh
 source robot_codegen_tmpvar_matlab.sh
 source robot_codegen_assert_matlab.sh
 
+# Korrigiere mit Maple generierte Matlab-Code-Dateien
+./robot_codegen_matlabcode_postprocess_recursive.sh
+
 # Setze Teilausdrücke zu kompletten Ausdrücken zusammen
-source robot_codegen_matlab_assemble.sh
+./robot_codegen_matlab_assemble.sh
 
 # Erstelle Matlab-Funktionen der Kinematik
-source robot_codegen_matlab_kinematics_varpar.sh
+./robot_codegen_matlab_kinematics_varpar.sh
 
 # Erstelle Matlab-Funktionen der explizit ausgerechneten Dynamik (nicht in Regressorform)
-source robot_codegen_matlab_dynamics_fixb_varpar.sh
-source robot_codegen_matlab_dynamics_floatb_varpar.sh
+./robot_codegen_matlab_dynamics_fixb_varpar.sh
+./robot_codegen_matlab_dynamics_floatb_varpar.sh
 
 # Erstelle Matlab-Funktionen der parameterlinearen Dynamik
-source robot_codegen_matlab_paramlin_varpar.sh
+./robot_codegen_matlab_paramlin_varpar.sh
 
 # Erstelle Matlab-Funktionen aus numerischer Berechnung
-source robot_codegen_matlab_num_varpar.sh
+./robot_codegen_matlab_num_varpar.sh
 
 # Erstelle Matlab-Funktionen aus selbst definierten Dateien
 addgenscript=$repo_pfad/robot_codegen_additional/scripts/${robot_name}_codegen_matlab_additional_varpar.sh
