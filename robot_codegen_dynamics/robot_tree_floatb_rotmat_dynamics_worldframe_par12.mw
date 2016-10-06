@@ -4,7 +4,7 @@
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true">
 </View-Properties>
-<MapleNet-Properties elisiondigitsbefore="100" labelling="true" indentamount="4" elisiontermsthreshold="10000" ansi="false" errorbreak="1" useclientjvm="true" echo="1" imaginaryunit="I" labelwidth="20" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" contextmenusize="automatic" plotdriver="opengl" elisiondigitsafter="100" plotoutput="terminal" helpbrowser="standard" rtablesize="10" elisiontermsbefore="100" elisiondigitsthreshold="10000" typesetting="standard" plotdevice="inline" verboseproc="1" showassumed="1" quiet="false" errorcursor="false" longdelim="true" plotoptions="" elisiontermsafter="100" screenwidth="79" preplot="" prettyprint="3" displayprecision="-1" screenpixelheight="900" warnlevel="3" screenheight="25" latexwidth="8.0" postplot="" prompt="&gt; " ShowLabels="true"/>
+<MapleNet-Properties elisiondigitsbefore="100" labelling="true" indentamount="4" elisiontermsthreshold="10000" ansi="false" errorbreak="1" useclientjvm="true" echo="1" imaginaryunit="I" labelwidth="20" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" contextmenusize="automatic" plotdriver="opengl" elisiondigitsafter="100" plotoutput="terminal" helpbrowser="standard" rtablesize="10" elisiontermsbefore="100" elisiondigitsthreshold="10000" typesetting="standard" plotdevice="inline" verboseproc="1" showassumed="1" quiet="false" errorcursor="false" longdelim="true" plotoptions="" elisiontermsafter="100" screenwidth="79" preplot="" prettyprint="3" displayprecision="-1" screenpixelheight="1080" warnlevel="3" screenheight="25" latexwidth="8.0" postplot="" prompt="&gt; " ShowLabels="true"/>
 <Styles>
 <Font name="Ordered List 1" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Annotation Text" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -212,7 +212,26 @@ U_grav := U_grav:</Text-field>
 </Group>
 <Group labelreference="L1700" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Generiere Dynamik f\303\274r %s mit Parametersatz %d\134n&quot;, robot_name, codegen_dynpar):</Font></Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">DynString := &quot;Term:&quot;:
+if codeexport_grav then
+  DynString := sprintf(&quot;%s g&quot;,DynString):
+end if:
+if codeexport_corvec then
+  DynString := sprintf(&quot;%s c&quot;,DynString):
+end if:
+if codeexport_cormat then
+  DynString := sprintf(&quot;%s C&quot;,DynString):
+end if:
+if codeexport_inertia then
+  DynString := sprintf(&quot;%s M&quot;,DynString):
+end if:
+if codeexport_inertiaD then
+  DynString := sprintf(&quot;%s MD&quot;,DynString):
+end if:
+if codeexport_invdyn then
+  DynString := sprintf(&quot;%s tau&quot;,DynString):
+end if:
+<Font encoding="UTF-8">printf(&quot;Generiere Dynamik (%s) f\303\274r %s mit Parametersatz %d und %s\134n&quot;, </Font>DynString, robot_name, codegen_dynpar, base_method_name):</Text-field>
 </Input>
 </Group>
 </Section>

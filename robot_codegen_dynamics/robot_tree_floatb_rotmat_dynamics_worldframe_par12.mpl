@@ -60,7 +60,26 @@ else
 end:
 T := T:
 U_grav := U_grav:
-printf("Generiere Dynamik für %s mit Parametersatz %d\n", robot_name, codegen_dynpar):
+DynString := "Term:":
+if codeexport_grav then
+  DynString := sprintf("%s g",DynString):
+end if:
+if codeexport_corvec then
+  DynString := sprintf("%s c",DynString):
+end if:
+if codeexport_cormat then
+  DynString := sprintf("%s C",DynString):
+end if:
+if codeexport_inertia then
+  DynString := sprintf("%s M",DynString):
+end if:
+if codeexport_inertiaD then
+  DynString := sprintf("%s MD",DynString):
+end if:
+if codeexport_invdyn then
+  DynString := sprintf("%s tau",DynString):
+end if:
+printf("Generiere Dynamik (%s) für %s mit Parametersatz %d und %s\n", DynString, robot_name, codegen_dynpar, base_method_name):
 # Lagrange Formalismus (mit Funktion)
 OutputLagrange := Lagrange1(T, U_grav, NQ):
 dTdqDdt_s := OutputLagrange[1]:
