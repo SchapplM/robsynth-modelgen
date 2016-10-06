@@ -41,16 +41,16 @@ fprintf('Tested %d configurations for fixed base forward kinematics.\n', n);
 %% Kinematik gegen Jacobi-Matrix testen (fixed base)
 
 for i = 1:size(Q, 1)
-  for j  = 1:NJ % incremental change of joint angle j
+  for j  = 1:NQJ % incremental change of joint angle j
     q = Q(i,:)';
 
     % differential kinematics from forward dynamics
-    E = eye(NJ);
+    E = eye(NQJ);
     qDelta = 1e-10*E(:,j);
     Tc_1 = %RN%_fkine_fixb_rotmat_mdh_sym_varpar(q, ...
-      alpha, a, d, q_offset, b, beta);
+      alpha, a, d, q_offset, b, beta%KCPARG%);
     Tc_2 = %RN%_fkine_fixb_rotmat_mdh_sym_varpar(q+qDelta, ...
-      alpha, a, d, q_offset, b, beta);
+      alpha, a, d, q_offset, b, beta%KCPARG%);
     xDelta_fkine = Tc_2(1:3,4,end) - Tc_1(1:3,4,end);
 
     % differential kinematics from Jacobian function
