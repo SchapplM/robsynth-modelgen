@@ -1,5 +1,12 @@
 MatlabExport := proc (Term, filepath, optimierung) 
   local Tmp, fd; 
+  local filepath_stat, fdstat, starttime:
+  filepath_stat := sprintf("%s.stats", filepath):
+  starttime:=time(): # CPU-Zeit seit Maple-Start
+  fdstat := fopen(filepath_stat,WRITE); 
+  fprintf(fdstat, "TargetFile: %s\n", filepath):
+  fprintf(fdstat, "OptimizationMode: %d\n", optimierung):
+  fprintf(fdstat, "StartTime: %s\n", StringTools[FormatTime]("%Y-%m-%d %H:%M:%S") ):
   if optimierung = 1 then 
     Tmp := eval([codegen:-optimize](Term),pow = `^`);
   elif optimierung = 2 then 
@@ -12,5 +19,8 @@ MatlabExport := proc (Term, filepath, optimierung)
   fclose(fd); 
   # Optimierten Code direkt exportieren
   CodeGeneration[Matlab](Tmp,optimize = false,resultname = "res",output = filepath); 
-  printf("Exported Matlab code to %s\n",filepath) 
+  fprintf(fdstat, "EndTime: %s\n", StringTools[FormatTime]("%Y-%m-%d %H:%M:%S") ):
+  fprintf(fdstat, "DurationCPUTime: %1.2fs\n", time()-starttime ): # CPU-Zeit für die Berechnung
+  printf("Exported Matlab code to %s\n",filepath) :
+  fclose(fdstat); 
 end proc;
