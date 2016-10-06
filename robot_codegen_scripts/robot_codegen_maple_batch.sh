@@ -66,7 +66,6 @@ dateiliste_kindyn="$dateiliste_kindyn
     /robot_codegen_dynamics/robot_chain_fixb_rotmat_dynamics_regressor.mpl
 "
 
-echo $CG_FIXBONLY
 if ! [ "$CG_FIXBONLY" == "1" ]; then
 # Skripte für Floating-Base-Modellierung
 dateiliste_kindyn="$dateiliste_kindyn
@@ -83,7 +82,11 @@ dateiliste_kindyn="$dateiliste_kindyn
 "
 fi;
 
-
+# Zusätzliche Maple-Skripte speziell für dieses System (benutzerdefiniert)
+addlistfile=$repo_pfad/robot_codegen_additional/scripts/${robot_name}_maple_additional_worksheet_list
+if [ -f $addlistfile ]; then
+  dateiliste_kindyn="$dateiliste_kindyn `cat $addlistfile`"
+fi;
 
 # Alle Maple-Dateien der Reihe nach ausführen
 cd /opt/maple18/bin

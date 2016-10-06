@@ -105,6 +105,15 @@ do
 		  robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2_invdyn.mpl
 	"
 
+  # Zusätzliche Maple-Skripte speziell für dieses System (benutzerdefiniert)
+  addlistfile=$repo_pfad/robot_codegen_additional/scripts/${robot_name}_maple_additional_worksheet_list
+  if [ -f $addlistfile ]; then
+    dateiliste_add="$dateiliste_kindyn `cat $addlistfile`"
+  else
+    dateiliste_add=""
+  fi;
+
+
   # Alle Arbeitsblätter parallel ausführen, wo dies möglich ist
   cd /opt/maple18/bin
   for wskin in ${dateiliste_kin[@]}
@@ -149,7 +158,6 @@ do
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
     ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
   done
-
   wait
   echo "FERTIG mit Dynamik für ${basemeth}"
 done
@@ -165,5 +173,16 @@ do
   dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
   ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";"
 done
+
+if [ -f $addlistfile ]; then
+  for wsadd in ${dateiliste_add[@]}
+  do
+    mpldat_full=$repo_pfad/$wsadd
+    filename="${mpldat_full##*/}"
+    dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
+    ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
+  done
+  echo "FERTIG mit zusätzlichen Dateien für ${basemeth}"
+fi;
 
 echo "Alle Matlab-Funktionen exportiert"

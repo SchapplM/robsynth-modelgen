@@ -34,3 +34,11 @@ source robot_codegen_matlab_paramlin_varpar.sh
 
 # Erstelle Matlab-Funktionen aus numerischer Berechnung
 source robot_codegen_matlab_num_varpar.sh
+
+# Erstelle Matlab-Funktionen aus selbst definierten Dateien
+addgenscript=$repo_pfad/robot_codegen_additional/scripts/${robot_name}_codegen_matlab_additional_varpar.sh
+if [ -f $addgenscript ]; then
+  # cd $repo_pfad/robot_codegen_additional/scripts/
+  source $addgenscript
+fi;
+
