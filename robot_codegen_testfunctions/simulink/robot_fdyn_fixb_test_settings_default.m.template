@@ -13,10 +13,12 @@ robot_name = '%RN%';
 % Parameter
 
 %RN%_varpar_testfunctions_parameter
-MPV = %RN%_convert_par2_MPV(alpha, a, d, q_offset, b, beta, ...
-  m, mrSges, Ifges);
+if strcmp(ParameterModus, 'mp')
+  MPV = %RN%_convert_par2_MPV(alpha, a, d, q_offset, b, beta, ...
+    m, mrSges, Ifges);
+end
 KinPar_mdh = struct('a', a, 'd', d, 'alpha', alpha, ...
-  'q_offset', q_offset, 'b', b, 'beta', beta, 'v', NaN(NJ,1));
+  'q_offset', q_offset, 'b', b, 'beta', beta, 'v', NaN(NJ,1), 'kintmp', kintmp);
 DynPar1 = struct('m', m, 'r_S', rSges, 'I_S', Icges);
 
 
