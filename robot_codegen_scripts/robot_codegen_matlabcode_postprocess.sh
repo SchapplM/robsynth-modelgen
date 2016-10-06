@@ -53,5 +53,10 @@ if [ "$teststring2" != "" ]; then
   sed -i "1s/^/unknown=NaN($imax,$jmax)\n/" $matfilepath
 fi;
 
-
-
+# Ersetze exportierte Inert-Funktionen aus Maple
+# Bei inert-Funktionen ist dem Funktiosnamen ein "%" vorgesetzt.
+# Diese Funktionen werten einen Ausdruck nicht sofort aus und ermöglichen schnellere Berechnungen.
+teststring=`grep "%arctan" $matfilepath | head -1`
+if [ "$teststring" != "" ]; then
+  sed -i "s/%arctan/atan2/g" $matfilepath
+fi;
