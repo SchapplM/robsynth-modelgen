@@ -99,7 +99,7 @@ else
 fi
 
 # Jacobi-Matrizen für jeden Körper
-for (( jacart=1; jacart<=4; jacart++ ))
+for (( jacart=1; jacart<=5; jacart++ ))
 do
   for (( ib=1; ib<=$robot_NL; ib++ ))
   do
@@ -108,33 +108,54 @@ do
       zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_jacobia_transl_${ib}_floatb_twist_sym_varpar.m
       headdat=${tmp_pfad}_head/robot_matlabtmp_jacobia_transl.head.m
     elif [ "$jacart" -eq "2" ]; then
-      quelldat=$repo_pfad/codeexport/${robot_name}_jacobig_transl_${ib}_floatb_twist_matlab.m
-      zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_jacobig_transl_${ib}_floatb_twist_sym_varpar.m
-      headdat=${tmp_pfad}_head/robot_matlabtmp_jacobig_transl.head.m
-    elif [ "$jacart" -eq "3" ]; then
       quelldat=$repo_pfad/codeexport/${robot_name}_jacobia_rot_${ib}_floatb_twist_matlab.m
       zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_jacobia_rot_${ib}_floatb_twist_sym_varpar.m
       headdat=${tmp_pfad}_head/robot_matlabtmp_jacobia_rot.head.m
-    elif [ "$jacart" -eq "4" ]; then
+    elif [ "$jacart" -eq "3" ]; then
       quelldat=$repo_pfad/codeexport/${robot_name}_jacobig_rot_${ib}_floatb_twist_matlab.m
       zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_jacobig_rot_${ib}_floatb_twist_sym_varpar.m
       headdat=${tmp_pfad}_head/robot_matlabtmp_jacobig_rot.head.m
+    elif [ "$jacart" -eq "4" ]; then
+      quelldat=$repo_pfad/codeexport/${robot_name}_jacobig_${ib}_floatb_twist_matlab.m
+      zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_jacobig_${ib}_floatb_twist_sym_varpar.m
+      headdat=${tmp_pfad}_head/robot_matlabtmp_jacobig.head.m
+    elif [ "$jacart" -eq "5" ]; then
+      quelldat=$repo_pfad/codeexport/${robot_name}_jacobia_${ib}_floatb_twist_matlab.m
+      zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_jacobia_${ib}_floatb_twist_sym_varpar.m
+      headdat=${tmp_pfad}_head/robot_matlabtmp_jacobia.head.m
     fi;
-    if [ -f $quelldat ]; then
-      cat $headdat > $zieldat
-      printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_KCP.m >> $zieldat
-      echo "%% Variable Initialization" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_par_KCP.m >> $zieldat
-      printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
-      cat $quelldat >> $zieldat
-      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+    if [ "$jacart" -lt "4" ]; then
+      if [ -f $quelldat ]; then
+        cat $headdat > $zieldat
+        printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
+        if [ "$jacart" -eq "1" ] || [ "$jacart" -gt "3" ]; then
+          printf "assert(isa(r_i_i_C,'double') && isreal(r_i_i_C) && all(size(r_i_i_C) == [3 1]), ..." >> $zieldat
+          printf "\n\t'%%FN%%: Position vector r_i_i_C has to be [3x1] double');\n" >> $zieldat
+        fi
+        cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_assert_KCP.m >> $zieldat
+        echo "%% Variable Initialization" >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
+        if [ "$jacart" -eq "1" ] || [ "$jacart" -gt "3" ]; then
+          printf "\npx = r_i_i_C(1);\npy = r_i_i_C(2);\npz = r_i_i_C(3);\n" >> $zieldat
+        fi;
+        cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_par_KCP.m >> $zieldat
+        printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+        cat $quelldat >> $zieldat
+      else
+        echo "Code in ${quelldat##*/} nicht gefunden."
+        continue
+      fi
     else
-      echo "Code in ${quelldat##*/} nicht gefunden."
-    fi
+      cat $headdat > $zieldat
+    fi;
+    source robot_codegen_matlabfcn_postprocess.sh $zieldat 1
+    # Markierung ersetzen mit Segmentnummer der Jacobi-Matrix
+    sed -i "s/%LIJAC%/${ib}/g" $zieldat
   done
 done
+
+# 
+

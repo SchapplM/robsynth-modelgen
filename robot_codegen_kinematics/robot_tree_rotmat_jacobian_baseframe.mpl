@@ -42,7 +42,7 @@ read sprintf("../codeexport/%s_kinematics_floatb_%s_rotmat_maple.m", robot_name,
 Trf := Trf:
 Trf_c := Trf_c:
 # Link-Index, für den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber für beliebige Segmente aufgestellt werden.
-LIJAC:=8;#NL:
+LIJAC:=NL:
 # Jacobi-Matrix analytisch (Translatorisch)
 # Ortmaier2014a Gl. (1.15), S.14: Geometrische Zwangsbedingungen in impliziter Form
 # Gleichung enthält verallgemeinerte Koordinaten und Endeffektorposition und ergibt Null.
