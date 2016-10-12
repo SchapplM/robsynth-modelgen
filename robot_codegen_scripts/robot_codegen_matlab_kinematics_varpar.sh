@@ -97,3 +97,44 @@ if [ -f $quelldat ]; then
 else
   echo "Code in ${quelldat##*/} nicht gefunden."
 fi
+
+# Jacobi-Matrizen für jeden Körper
+for (( jacart=1; jacart<=4; jacart++ ))
+do
+  for (( ib=1; ib<=$robot_NL; ib++ ))
+  do
+    if [ "$jacart" -eq "1" ]; then
+      quelldat=$repo_pfad/codeexport/${robot_name}_jacobia_transl_${ib}_floatb_twist_matlab.m
+      zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_jacobia_transl_${ib}_floatb_twist_sym_varpar.m
+      headdat=${tmp_pfad}_head/robot_matlabtmp_jacobia_transl.head.m
+    elif [ "$jacart" -eq "2" ]; then
+      quelldat=$repo_pfad/codeexport/${robot_name}_jacobig_transl_${ib}_floatb_twist_matlab.m
+      zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_jacobig_transl_${ib}_floatb_twist_sym_varpar.m
+      headdat=${tmp_pfad}_head/robot_matlabtmp_jacobig_transl.head.m
+    elif [ "$jacart" -eq "3" ]; then
+      quelldat=$repo_pfad/codeexport/${robot_name}_jacobia_rot_${ib}_floatb_twist_matlab.m
+      zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_jacobia_rot_${ib}_floatb_twist_sym_varpar.m
+      headdat=${tmp_pfad}_head/robot_matlabtmp_jacobia_rot.head.m
+    elif [ "$jacart" -eq "4" ]; then
+      quelldat=$repo_pfad/codeexport/${robot_name}_jacobig_rot_${ib}_floatb_twist_matlab.m
+      zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_jacobig_rot_${ib}_floatb_twist_sym_varpar.m
+      headdat=${tmp_pfad}_head/robot_matlabtmp_jacobig_rot.head.m
+    fi;
+    if [ -f $quelldat ]; then
+      cat $headdat > $zieldat
+      printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_KCP.m >> $zieldat
+      echo "%% Variable Initialization" >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_par_KCP.m >> $zieldat
+      printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+      cat $quelldat >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+    else
+      echo "Code in ${quelldat##*/} nicht gefunden."
+    fi
+  done
+done
