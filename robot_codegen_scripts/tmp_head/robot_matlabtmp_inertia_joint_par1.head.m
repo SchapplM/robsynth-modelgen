@@ -11,7 +11,7 @@
 %   dynamic parameters (parameter set 1: center of mass and inertia about center of mass)
 % 
 % Output:
-% Mq [%NJ%x%NJ%]
+% Mq [%NQJ%x%NQJ%]
 %   inertia matrix
 
 % %VERSIONINFO%

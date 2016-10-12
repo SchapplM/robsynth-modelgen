@@ -11,7 +11,7 @@
 %   kinematic parameters
 % 
 % Output:
-% cmat_reg [%NJ%*%NJ%x%NMPV%]
+% cmat_reg [%NQJ%*%NQJ%x%NMPV%]
 %   minimal parameter regressor of coriolis matrix
 
 % %VERSIONINFO%

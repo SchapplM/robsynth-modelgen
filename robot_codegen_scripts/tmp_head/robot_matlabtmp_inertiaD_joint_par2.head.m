@@ -13,7 +13,7 @@
 %   dynamic parameters (parameter set 2: first moment and inertia about link frame origin)
 % 
 % Output:
-% MqD [%NJ%x%NJ%]
+% MqD [%NQJ%x%NQJ%]
 %   time derivative of inertia matrix
 
 % %VERSIONINFO%

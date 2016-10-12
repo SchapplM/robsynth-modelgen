@@ -25,7 +25,7 @@
 %   dynamic parameters (parameter set 2: first moment and inertia about link frame origin)
 % 
 % Output:
-% tau [%NJ%x1]
+% tau [%NQJ%x1]
 %   joint torques of inverse dynamics (contains inertial, gravitational coriolis and centrifugal forces)
 
 % %VERSIONINFO%

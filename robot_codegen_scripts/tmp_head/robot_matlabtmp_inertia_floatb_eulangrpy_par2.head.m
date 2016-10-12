@@ -13,7 +13,7 @@
 %   dynamic parameters (parameter set 2: first moment and inertia about link frame origin)
 % 
 % Output:
-% M [(6+%NJ%)x(6+%NJ%)]
+% M [(6+%NQJ%)x(6+%NQJ%)]
 %   full inertia matrix (for base and joint dynamics)
 
 % %VERSIONINFO%

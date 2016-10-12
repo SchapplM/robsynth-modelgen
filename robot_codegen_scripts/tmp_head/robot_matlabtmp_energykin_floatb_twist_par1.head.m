@@ -15,7 +15,6 @@
 %   dynamic parameters (parameter set 1: center of mass and inertia about center of mass)
 % 
 % Output:
-% Output:
 % T [1x1]
 %   kinetic energy
 

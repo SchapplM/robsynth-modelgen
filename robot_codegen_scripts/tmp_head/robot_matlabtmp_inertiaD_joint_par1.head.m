@@ -13,7 +13,7 @@
 %   dynamic parameters (parameter set 1: center of mass and inertia about center of mass)
 % 
 % Output:
-% MqD [%NJ%x%NJ%]
+% MqD [%NQJ%x%NQJ%]
 %   time derivative of inertia matrix
 
 % %VERSIONINFO%

@@ -19,7 +19,7 @@
 %   dynamic parameters (parameter set 2: first moment and inertia about link frame origin)
 % 
 % Output:
-% tauc [%NJ%x1]
+% tauc [%NQJ%x1]
 %   joint torques required to compensate coriolis and centrifugal load
 
 % %VERSIONINFO%

@@ -11,7 +11,7 @@
 %   kinematic parameters
 % 
 % Output:
-% taug_reg [%NJ%x%NMPV%]
+% taug_reg [%NQJ%x%NMPV%]
 %   minimal parameter regressor of coriolis joint torque vector
 
 % %VERSIONINFO%

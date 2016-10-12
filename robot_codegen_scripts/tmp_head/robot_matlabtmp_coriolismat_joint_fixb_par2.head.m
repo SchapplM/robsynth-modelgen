@@ -13,7 +13,7 @@
 %   dynamic parameters (parameter set 2: first moment and inertia about link frame origin)
 % 
 % Output:
-% Cq [%NJ%x%NJ%]
+% Cq [%NQJ%x%NQJ%]
 %   matrix of coriolis and centrifugal joint torques
 
 % %VERSIONINFO%

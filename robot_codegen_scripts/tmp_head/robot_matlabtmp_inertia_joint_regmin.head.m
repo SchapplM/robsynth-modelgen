@@ -11,7 +11,7 @@
 %   kinematic parameters
 % 
 % Output:
-% MM_reg [%NJ%*%NJ%x%NMPV%]
+% MM_reg [%NQJ%*%NQJ%x%NMPV%]
 %   minimal parameter regressor of joint inertia matrix
 
 % %VERSIONINFO%

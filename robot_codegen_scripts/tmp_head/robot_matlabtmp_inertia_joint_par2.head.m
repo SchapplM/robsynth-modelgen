@@ -11,7 +11,7 @@
 %   dynamic parameters (parameter set 2: first moment and inertia about link frame origin)
 % 
 % Output:
-% Mq [%NJ%x%NJ%]
+% Mq [%NQJ%x%NQJ%]
 %   inertia matrix
 
 % %VERSIONINFO%

@@ -19,7 +19,7 @@
 %   dynamic parameters (parameter set 1: center of mass and inertia about center of mass)
 % 
 % Output:
-% Cq [(6+%NJ%)x(6+%NJ%)]
+% Cq [(6+%NQJ%)x(6+%NQJ%)]
 %   matrix of coriolis and centrifugal generalized forces
 %   Gives coriolis base forces/torques and joint torques when multiplied with base and joint velocities
 

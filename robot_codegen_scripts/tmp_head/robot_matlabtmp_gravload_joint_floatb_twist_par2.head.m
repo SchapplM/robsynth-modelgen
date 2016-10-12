@@ -13,7 +13,7 @@
 %   dynamic parameters
 % 
 % Output:
-% taug [%NJ%x1]
+% taug [%NQJ%x1]
 %   joint torques required to compensate gravitation load
 
 % %VERSIONINFO%

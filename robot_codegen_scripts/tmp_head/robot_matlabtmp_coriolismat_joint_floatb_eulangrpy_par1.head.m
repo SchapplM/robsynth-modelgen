@@ -19,7 +19,7 @@
 %   dynamic parameters (parameter set 1: center of mass and inertia about center of mass)
 % 
 % Output:
-% Cq [%NJ%x(6+%NJ%)]
+% Cq [%NQJ%x(6+%NQJ%)]
 %   matrix of coriolis and centrifugal joint torques
 %   Gives coriolis joint torques when multiplied with base and joint velocities
 

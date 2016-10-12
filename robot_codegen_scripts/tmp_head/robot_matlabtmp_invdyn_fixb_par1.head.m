@@ -17,7 +17,7 @@
 %   dynamic parameters (parameter set 1: center of mass and inertia about center of mass)
 % 
 % Output:
-% tau [%NJ%x1]
+% tau [%NQJ%x1]
 %   joint torques of inverse dynamics (contains inertial, gravitational coriolis and centrifugal forces)
 
 % %VERSIONINFO%

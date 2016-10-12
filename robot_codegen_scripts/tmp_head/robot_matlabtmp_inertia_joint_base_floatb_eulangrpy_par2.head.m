@@ -11,7 +11,7 @@
 %   dynamic parameters (parameter set 2: first moment and inertia about link frame origin)
 % 
 % Output:
-% Mqb [%NJ%x6]
+% Mqb [%NQJ%x6]
 %   joint-base inertia matrix (gives inertial forces on the joins from base acceleration)
 
 % %VERSIONINFO%
