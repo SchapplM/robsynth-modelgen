@@ -24,6 +24,12 @@ while [[ $# > 0 ]]
 do
 key="$1"
 case $key in
+    --help)
+    echo "zulässige Parameter sind:"
+    echo "-p (--parallel): Parallele Berechnung der Maple-Arbeitsblätter"
+    echo "--fixb_only: Nur Berechnung der Fixed-Based-Funktionen (nicht: Floating Base)"
+    exit 0
+    ;;
     -p|--parallel)
     CG_PARALLEL=1
     ;;
@@ -31,7 +37,8 @@ case $key in
     CG_FIXBONLY=1
     ;;
     *)
-            # unknown option
+    echo "Unbekannte Option: $key"
+    exit 1
     ;;
 esac
 shift # past argument or value
