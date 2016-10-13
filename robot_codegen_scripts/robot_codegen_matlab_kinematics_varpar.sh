@@ -157,5 +157,29 @@ do
   done
 done
 
-# 
+# Jacobi-Matrix für alle Körper zusammen
+zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_jacobig_floatb_twist_sym_varpar.m
+headdat=${tmp_pfad}_head/robot_matlabtmp_jacobig_all.head.m
 
+cat $headdat > $zieldat
+printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
+printf "assert(isa(r_i_i_C,'double') && isreal(r_i_i_C) && all(size(r_i_i_C) == [3 1]), ..." >> $zieldat
+printf "\n\t'%%FN%%: Position vector r_i_i_C has to be [3x1] double');\n" >> $zieldat
+printf "assert(isa(link_index,'uint8') && all(size(link_index) == [1 1]), ..." >> $zieldat
+printf "\n\t'%%FN%%: link_index has to be [1x1] uint8');\n" >> $zieldat
+cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
+cat $tmp_pfad/robot_matlabtmp_assert_KCP.m >> $zieldat
+echo "%% Function calls" >> $zieldat
+for (( ib=1; ib<=$robot_NL; ib++ ))
+do
+  if [ "$ib" -eq "1" ]; then
+    printf "if link_index == ${ib}\n" >> $zieldat
+  else
+    printf "elseif link_index == ${ib}\n" >> $zieldat
+  fi;
+  printf "\tJg=${robot_name}_jacobig_${ib}_floatb_twist_sym_varpar(q, r_i_i_C, ...\n" >> $zieldat
+  printf "\t\talpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh%%KCPARG%%);\n" >> $zieldat
+done
+printf "else\n\tJg=NaN(6,$robot_NQJ);\nend" >> $zieldat
+source robot_codegen_matlabfcn_postprocess.sh $zieldat 0

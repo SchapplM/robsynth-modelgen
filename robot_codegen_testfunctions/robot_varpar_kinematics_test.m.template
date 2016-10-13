@@ -120,3 +120,21 @@ for kk = 1:NJ % Test for linear joint trajectory
 end
 fprintf('Tested Jacobian Time derivative for fixed base.\n');
 
+%% Symbolische gegen numerische Jacobi-Matrix testen
+for iq = 1:size(Q, 1) % Über Zufallsposen
+  for jb  = 1:NL % Über alle Körper
+    r_i_i_C = rand(3,1);
+    q = Q(i,:)';
+
+    JG_num = %RN%_jacobig_mdh_num(q, uint8(jb), r_i_i_C, ...
+      alpha, a, d, q_offset, b, beta, v);
+    JG_sym = %RN%_jacobig_floatb_twist_sym_varpar(q, uint8(jb), r_i_i_C, ...
+      alpha, a, d, q_offset, b, beta);
+    
+    JD_Delta = JG_num - JG_sym;
+    if any(abs (JD_Delta(:)) > 1e-10) || any(isnan(JD_Delta(:)))
+      error('Symbolische und numerische Jacobi-Matrizen stimmen nicht');
+    end
+  end
+end
+fprintf('Erfolgreich Symbolische gegen numerische Jacobi-Matrix getestet.\n');
