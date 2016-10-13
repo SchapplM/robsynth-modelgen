@@ -28,8 +28,6 @@ sl = get_simulink_outputs(simOut, sl_Modellname);
 fprintf('Simulink-Modell berechnet. Rechenzeit: %1.1fs\n', toc(t1));
 
 %% Plot
-PlotSettings = struct('atlas_version', uint8(5));
-
 figure(1);clf;
 plot(sl.t, [sl.E, sum(sl.E,2)]);
 legend({'T', 'U', 'Ges'});
