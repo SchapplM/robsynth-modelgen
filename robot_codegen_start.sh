@@ -56,6 +56,9 @@ fi;
 
 cd $repo_pfad/robot_codegen_scripts/
 
+# Umgebungsvariablen vorbereiten
+source robot_codegen_tmpvar_bash.sh
+
 # Skripte vorbereiten
 source $repo_pfad/robot_codegen_scripts/robot_codegen_maple_preparation.sh
 
