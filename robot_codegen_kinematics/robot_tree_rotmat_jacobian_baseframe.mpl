@@ -52,7 +52,7 @@ T_p := Trf_c(1 .. 4, 1..4, LIJAC) . transl(<px;py;pz>):
 h_transl := Matrix(T_p(1..3,4)) - x_EE:
 h_transl_s :=convert_t_s(h_transl):
 # Jacobi-Matrix der inversen Kinematik
-b_transl := Matrix(3, N_FG):
+b_transl := Matrix(3, NQJ):
 for i from 1 to 3 do
   for j from 1 to NQJ do
     b_transl(i,j) := diff(h_transl_s(i,1), qJ_s(j,1)):
@@ -65,6 +65,9 @@ for i from 1 to 3 do
     MatlabExport(b_transl(i,j), sprintf("../codeexport/%s_jacobia_transl_%d_floatb_%s_%d_%d_matlab.m", robot_name, LIJAC, base_method_name, i, j), codegen_opt):
   end do:
 end do:
+# Ausdruck muss nochmal geladen werden, ansonsten hängt sich die Code-Optimerung mit "tryhard" auf.
+read sprintf("../codeexport/%s_jacobia_transl_maple.m", robot_name):
+b_transl := b_transl:
 MatlabExport(b_transl, sprintf("../codeexport/%s_jacobia_transl_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
 # Jacobi-Matrix analytisch (Rotatorisch)
 # Ortmaier2014a Gl. (1.15), S.14: Geometrische Zwangsbedingungen in impliziter Form
@@ -87,6 +90,9 @@ for i from 1 to 3 do
     MatlabExport(b_rota(i,j), sprintf("../codeexport/%s_jacobia_rot_%d_floatb_%s_%d_%d_matlab.m", robot_name, LIJAC, base_method_name, i, j), codegen_opt):
   end do:
 end do:
+# Ausdruck nochmal laden.
+read sprintf("../codeexport/%s_jacobia_rot_maple.m", robot_name):
+b_rota := b_rota:
 MatlabExport(b_rota, sprintf("../codeexport/%s_jacobia_rot_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
 # Jacobi-Matrix geometrisch (Rotatorisch)
 # Zusammenhang zwischen Geschwindigkeit der verallgemeinerten Koordinaten und Winkelgeschwindigkeit des Endeffektors ausgedrückt im Basis-Koordinatensystems
@@ -119,8 +125,8 @@ JD_rotg_s := convert_t_s(JD_rotg_t):
 JD_rota_t := diff~(convert_s_t(b_rota), t):
 JD_rota_s := convert_t_s(JD_rota_t):
 JD_transla_t := diff~(convert_s_t(b_transl), t):
-JD_transla_s := convert_t_s(JD_transl_t):
+JD_transla_s := convert_t_s(JD_transla_t):
 MatlabExport(JD_rotg_s, sprintf("../codeexport/%s_jacobigD_rot_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
 MatlabExport(JD_rota_s, sprintf("../codeexport/%s_jacobiaD_rot_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
-MatlabExport(JD_transl_s, sprintf("../codeexport/%s_jacobiD_transl_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
+MatlabExport(JD_transla_s, sprintf("../codeexport/%s_jacobiD_transl_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
 

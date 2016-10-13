@@ -246,7 +246,7 @@ Trf_c := Trf_c:</Text-field>
 </Group>
 <Group labelreference="L1698" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">b_transl := Matrix(3, N_FG):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">b_transl := Matrix(3, NQJ):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1697" drawlabel="true">
@@ -275,6 +275,13 @@ end do:</Text-field>
     MatlabExport(b_transl(i,j), sprintf(&quot;../codeexport/%s_jacobia_transl_%d_floatb_%s_%d_%d_matlab.m&quot;, robot_name, LIJAC, base_method_name, i, j), codegen_opt):
   end do:
 end do:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L2117" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8"># Ausdruck muss nochmal geladen werden, ansonsten h\303\244ngt sich die Code-Optimerung mit &quot;tryhard&quot; auf.
+read </Font>sprintf(&quot;../codeexport/%s_jacobia_transl_maple.m&quot;, robot_name):
+b_transl := b_transl:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1703" drawlabel="true">
@@ -343,6 +350,13 @@ end do:</Text-field>
     MatlabExport(b_rota(i,j), sprintf(&quot;../codeexport/%s_jacobia_rot_%d_floatb_%s_%d_%d_matlab.m&quot;, robot_name, LIJAC, base_method_name, i, j), codegen_opt):
   end do:
 end do:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L2119" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"># Ausdruck nochmal laden.
+read sprintf(&quot;../codeexport/%s_jacobia_rot_maple.m&quot;, robot_name):
+b_rota := b_rota:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1737" drawlabel="true">
@@ -451,7 +465,7 @@ JD_rota_s := convert_t_s(JD_rota_t):</Text-field>
 <Group labelreference="L1779" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">JD_transla_t := diff~(convert_s_t(b_transl), t):
-JD_transla_s := convert_t_s(JD_transl_t):</Text-field>
+JD_transla_s := convert_t_s(JD_transla_t):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1780" drawlabel="true">
@@ -466,7 +480,7 @@ JD_transla_s := convert_t_s(JD_transl_t):</Text-field>
 </Group>
 <Group labelreference="L1782" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(JD_transl_s, sprintf(&quot;../codeexport/%s_jacobiD_transl_%d_floatb_%s_matlab.m&quot;, robot_name, LIJAC, base_method_name), codegen_opt):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(JD_transla_s, sprintf(&quot;../codeexport/%s_jacobiD_transl_%d_floatb_%s_matlab.m&quot;, robot_name, LIJAC, base_method_name), codegen_opt):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1783" drawlabel="true">
