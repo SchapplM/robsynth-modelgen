@@ -21,6 +21,6 @@ MatlabExport := proc (Term, filepath, optimierung)
   CodeGeneration[Matlab](Tmp,optimize = false,resultname = "res",output = filepath); 
   fprintf(fdstat, "EndTime: %s\n", StringTools[FormatTime]("%Y-%m-%d %H:%M:%S") ):
   fprintf(fdstat, "DurationCPUTime: %1.2fs\n", time()-starttime ): # CPU-Zeit für die Berechnung
-  printf("Exported Matlab code to %s\n",filepath) :
+  printf("Exported Matlab code to %s (CPUTime: %1.2fs)\n",filepath, time()-starttime) :
   fclose(fdstat); 
 end proc;
