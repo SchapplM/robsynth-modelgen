@@ -99,44 +99,37 @@
 <Task/>
 <Group labelreference="L1509" drawlabel="true">
 <Input>
-<Text-field style="Title" layout="Title">Center of Mass Calculation for the Robot based on MDH frames</Text-field>
+<Text-field style="Title" layout="Title">Center of Mass Jacobian for the Robot based on MDH frames</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1507" drawlabel="true">
 <Input>
 <Text-field style="Heading 2" layout="Heading 2">Introduction</Text-field>
-<Text-field style="Normal" layout="Normal">Berechnung der Schwerpunkts-Kinematik (Positionen)
+<Text-field style="Normal" layout="Normal"><Font encoding="UTF-8">Berechnung der Schwerpunkts-Jacobi-Matrix (Ver\303\244nderung des Schwerpunktes in Abh\303\244ngigkeit der Gelenkwinkel).</Font></Text-field>
+<Text-field style="Normal" layout="Normal">Diese Matrix wird bei Gleichgewichtsregelungen (z.B. zweibeiniges Laufen) gebraucht.
 
 Dateiname:
 <Font encoding="UTF-8">robot -&gt; Berechnung f\303\274r allgemeinen Roboter
 tree -&gt; Berechnung f\303\274r eine beliebige Baumstruktur (ohne Schleifen)
 floatb -&gt; floating base wird durch base twist (Geschwindigkeit der Basis) oder vollst\303\244ndige Orientierung (Euler-Winkel) ber\303\274cksichtigt
 </Font>rotmat -&gt; Kinematik wird mit Rotationsmatrizen berechnet
-<Font encoding="UTF-8">kinematics_com -&gt; Kinematik der K\303\266rperschwerpunkte
+<Font encoding="UTF-8">kinematics_comjacobi -&gt; Jacobi-Matrix der K\303\266rperschwerpunkte
 </Font>worldframe -&gt; Berechnung der Geschwindigkeit im Welt-KS (KSW)
 par1 -&gt; Parametersatz 1 (Schwerpunkt als Parameter: SX,SY,SZ)</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1515" drawlabel="true">
-<Input>
-<Text-field style="Heading 2" layout="Heading 2">Testergebnisse</Text-field>
-<Text-field style="Heading 2" layout="Heading 2"><Font style="Normal">Test des exportierten Matlab-Codes erfolgreich (kinetische Energie)</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1510" drawlabel="true">
 <Input>
 <Text-field style="Heading 2" layout="Heading 2">Authors</Text-field>
-<Text-field style="Normal" layout="Normal">Moritz Schappler, schappler@irt.uni-hannover.de, 2014-11</Text-field>
+<Text-field style="Normal" layout="Normal">Moritz Schappler, schappler@irt.uni-hannover.de, 2015-12</Text-field>
 <Text-field style="Normal" layout="Normal">Institut fuer Regelungstechnik, Leibniz Universitaet Hannover</Text-field>
+<Text-field style="Text" layout="Normal"></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1508" drawlabel="true">
 <Input>
 <Text-field style="Heading 2" layout="Heading 2">Sources</Text-field>
-<Text-field style="Normal" layout="Normal">[GautierKhalil1990] Direct Calculation of Minimum Set of Inertial Parameters of Serial Robots
-[KhalilDombre2002] Modeling, Identification and Control of Robots
-[Ortmaier2014] Vorlesungsskript Robotik I (WS 2014/15)
-[Ott2008] Cartesian Impedance Control of Redundant and Flexible-Joint Robots</Text-field>
+<Text-field style="Normal" layout="Normal">[SugiharaNakIno2002] Sugihara, T. and Nakamura, Y. and Inoue, H.: Real-time humanoid motion generation through ZMP manipulation based on inverted pendulum control (2002)</Text-field>
 </Input>
 </Group>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
@@ -199,102 +192,92 @@ Trf := Trf:
 Trf_c := Trf_c:</Text-field>
 </Input>
 </Group>
-</Section>
-<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 1" layout="Heading 1">Positions of Center of Mass</Text-field></Title>
-<Group labelreference="L1670" drawlabel="true">
+<Group labelreference="L1686" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_W_i_Si := Matrix(3, NL):
-r_W_W_Si := Matrix(3, NL):
-mr_W_i_Si := Matrix(3, NL):</Text-field>
+<Text-field style="Text" layout="Normal">Schwerpunkt des Roboters laden</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1663" drawlabel="true">
+<Group labelreference="L1687" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Es gibt NL K\303\266rper (Basis und NJ bewegliche K\303\266rper).
-</Font>r_i_i_Si(1 .. 3, i) <Font encoding="UTF-8">ist der Vektor vom Ursprung des K\303\266rper-KS i zum Schwerpunkt des K\303\266rpers i ausgedr\303\274ckt im K\303\266rper-KS i
-</Font>r_W_i_Si(1 .. 3, i) <Font encoding="UTF-8">ist der Vektor vom Ursprung des K\303\266rper-KS i zum Schwerpunkt des K\303\266rpers i ausgedr\303\274ckt im Basis-KS</Font>
-mr_W_i_Si(1 .. 3, i) <Font encoding="UTF-8">ist der Vektor vom Ursprung des K\303\266rper-KS i zum Schwerpunkt des K\303\266rpers i ausgedr\303\274ckt im Basis-KS multipliziert mit der Masse des Segments i </Font>
-r_W_W_Si(1 .. 3, i)<Font encoding="UTF-8"> ist der Vektor vom Ursprung des Basis-KS zum Schwerpunkt des K\303\266rpers i ausgedr\303\274ckt im Basis-KS</Font>
-<Font encoding="UTF-8">Trf_c(1 .. 3, 1 .. 3, i) ist das K\303\266rperkoordinatensystem zu K\303\266rper i im Basis KS.</Font></Text-field>
-</Input>
-</Group>
-<Group labelreference="L1671" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i to NL do
-  r_W_i_Si(1 .. 3, i) :=  Multiply(Matrix(Trf_c(1 .. 3, 1 .. 3, i)), r_i_i_Si(1 .. 3, i)):
-  mr_W_i_Si(1 .. 3, i) := Multiply(Matrix(Trf_c(1 .. 3, 1 .. 3, i)), mr_i_i_Si(1 .. 3, i)):
-  r_W_W_Si(1 .. 3, i) :=  Matrix(Trf_c(1 .. 3, 4, i)) + Matrix(r_W_i_Si(1 .. 3, i)):
-  <Font encoding="UTF-8">printf(&quot;Schwerpunktsposition in Weltkoordinaten f\303\274r K\303\266rper %d aufgestellt.\134n&quot;, i):</Font>
-end do:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1668" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Maple Export</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1669" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save mr_W_i_Si, r_W_W_Si, r_W_i_Si, sprintf(&quot;../codeexport/%s_kinematics_com_worldframe_floatb_%s_par1_maple&quot;, robot_name, base_method_name):
-save mr_W_i_Si, r_W_W_Si, r_W_i_Si, sprintf(&quot;../codeexport/%s_kinematics_com_worldframe_floatb_%s_par1_maple.m&quot;, robot_name, base_method_name):
-<Font encoding="UTF-8">printf(&quot;Maple-Ausdr\303\274cke exportiert.\134n&quot;):</Font></Text-field>
-</Input>
-</Group>
-<Group labelreference="L1664" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Matlab-Export</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1666" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(convert_t_s(r_W_W_Si), sprintf(&quot;../codeexport/%s_fkine_com_floatb_%s_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
-end if:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_kinematics_com_total_worldframe_floatb_%s_par1_maple.m&quot;, robot_name, base_method_name):</Text-field>
 </Input>
 </Group>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 1" layout="Heading 1">Calculate CoM of the whole robot</Text-field></Title>
-<Group labelreference="L1610" drawlabel="true">
+<Text-field style="Heading 1" layout="Heading 1">Calculate CoG Jacobian</Text-field></Title>
+<Group labelreference="L1618" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">c:=Vector(3):</Text-field>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">M_ges:=0:</Text-field>
+<Text-field style="Text" layout="Normal">CoG Jacobian nach [SugiharaNakIno2002].
+<Font encoding="UTF-8">TODO: baseframe in worldframe \303\244ndern</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L1609" drawlabel="true">
+<Group labelreference="L1617" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NL do
-  c:=c + r_W_W_Si(1 .. 3,i)*M[i,1]:
-  M_ges:=M_ges + M[i,1]:
-end do:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">J_COG_s := Matrix(3, NQJ):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1608" drawlabel="true">
+<Group labelreference="L1623" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">c:=c/M_ges:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">c_s := convert_t_s(c):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1613" drawlabel="true">
+<Group labelreference="L1619" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal">Maple-Export</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to 3 do
+  for j from 1 to NQJ do
+    J_COG_s(i,j) := diff(c_s(i,1), qJ_s(j,1)):
+  end:
+end:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1612" drawlabel="true">
+<Group labelreference="L1684" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save c, sprintf(&quot;../codeexport/%s_kinematics_com_total_worldframe_floatb_%s_par1_maple.m&quot;, robot_name, base_method_name):</Text-field>
+<Text-field style="Text" layout="Normal">TODO: Wenn der Ausdruck <Font encoding="UTF-8">J_COG_s nicht gespeichert und wieder geladen wird, h\303\244ngt die Berechnung bei der Optimierung des Ausdrucks mit &quot;tryhard&quot;</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L1614" drawlabel="true">
+<Group labelreference="L1682" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal">Matlab-Export</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save J_COG_s, sprintf(&quot;../codeexport/%s_kinematics_Jcom_worldframe_floatb_%s_par1_maple.m&quot;, robot_name, base_method_name):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1615" drawlabel="true">
+<Group labelreference="L1683" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_kinematics_Jcom_worldframe_floatb_%s_par1_maple.m&quot;, robot_name, base_method_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1621" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(convert_t_s(c), sprintf(&quot;../codeexport/%s_com_total_worldframe_floatb_%s_par1_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
+  MatlabExport(J_COG_s, sprintf(&quot;../codeexport/%s_com_jacobi_baseframe_par1_matlab.m&quot;, robot_name), 2):
 end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1625" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">CoG-Jacobian Time derivative</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1685" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">J_COG := convert_s_t(J_COG_s):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1629" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">JD_COG := diff~(J_COG, t):
+JD_COG_s := convert_t_s(JD_COG):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1630" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
+  MatlabExport(convert_t_s(JD_COG_s), sprintf(&quot;../codeexport/%s_com_jacobiD_baseframe_par1_matlab.m&quot;, robot_name), codegen_opt):
+end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1672" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>

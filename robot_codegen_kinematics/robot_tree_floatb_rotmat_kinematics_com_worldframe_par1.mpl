@@ -1,6 +1,6 @@
 # Center of Mass Calculation for the Robot based on MDH frames
 # Introduction
-# Berechnung der Schwerpunkts-Kinematik (Positionen, Jacobi)
+# Berechnung der Schwerpunkts-Kinematik (Positionen)
 # 
 # Dateiname:
 # robot -> Berechnung für allgemeinen Roboter
@@ -12,17 +12,14 @@
 # par1 -> Parametersatz 1 (Schwerpunkt als Parameter: SX,SY,SZ)
 # Testergebnisse
 # Test des exportierten Matlab-Codes erfolgreich (kinetische Energie)
-
 # Authors
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2014-11
 # Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
-# 
 # Sources
 # [GautierKhalil1990] Direct Calculation of Minimum Set of Inertial Parameters of Serial Robots
 # [KhalilDombre2002] Modeling, Identification and Control of Robots
 # [Ortmaier2014] Vorlesungsskript Robotik I (WS 2014/15)
 # [Ott2008] Cartesian Impedance Control of Redundant and Flexible-Joint Robots
-# [SugiharaNakIno2002] Sugihara, T. and Nakamura, Y. and Inoue, H.: Real-time humanoid motion generation through ZMP manipulation based on inverted pendulum control (2002)
 # Initialization
 restart:
 with(LinearAlgebra):
@@ -83,32 +80,8 @@ for i from 1 to NL do
 end do:
 c:=c/M_ges:
 # Maple-Export
-save c, sprintf("../codeexport/%s_kinematics_com_total_worldframe_floatb_%s_par1_maple", robot_name, base_method_name):
+save c, sprintf("../codeexport/%s_kinematics_com_total_worldframe_floatb_%s_par1_maple.m", robot_name, base_method_name):
 # Matlab-Export
 if codegen_act then
   MatlabExport(convert_t_s(c), sprintf("../codeexport/%s_com_total_worldframe_floatb_%s_par1_matlab.m", robot_name, base_method_name), codegen_opt):
 end if:
-# Calculate CoG Jacobian
-# CoG Jacobian nach [SugiharaNakIno2002].
-# TODO: baseframe in worldframe ändern
-J_COG_s := Matrix(3, NQJ):
-c_s := convert_t_s(c):
-for i from 1 to 3 do
-  for j from 1 to NQJ do
-    J_COG_s(i,j) := diff(c_s(i,1), qJ_s(j,1)):
-  end:
-end:
-# TODO: Wenn der Ausdruck J_COG_s nicht gespeichert und wieder geladen wird, hängt die Berechnung bei der Optimierung des Ausdrucks mit "tryhard"
-save J_COG_s, sprintf("../codeexport/%s_kinematics_Jcom_worldframe_floatb_%s_par1_maple.m", robot_name, base_method_name):
-read sprintf("../codeexport/%s_kinematics_Jcom_worldframe_floatb_%s_par1_maple.m", robot_name, base_method_name):
-if codegen_act then
-  MatlabExport(J_COG_s, sprintf("../codeexport/%s_com_jacobi_baseframe_par1_matlab.m", robot_name), 2):
-end if:
-# CoG-Jacobian Time derivative
-J_COG := convert_s_t(J_COG_s):
-JD_COG := diff~(J_COG, t):
-JD_COG_s := convert_t_s(JD_COG):
-if codegen_act then
-  MatlabExport(convert_t_s(JD_COG_s), sprintf("../codeexport/%s_com_jacobiD_baseframe_par1_matlab.m", robot_name), codegen_opt):
-end if:
-
