@@ -54,6 +54,9 @@ else
   CG_FIXBONLY_ARGUMENT=""
 fi;
 
+# Skripte vorbereiten
+source $repo_pfad/robot_codegen_scripts/robot_codegen_maple_preparation.sh
+
 # Maple-Skripte starten
 cd $repo_pfad/robot_codegen_scripts/
 if [ "$CG_PARALLEL" == "1" ]; then

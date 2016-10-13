@@ -35,7 +35,6 @@ read sprintf("../transformation/proc_transl", maple_repo_path):
 read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s": 
 read "../robot_codegen_definitions/robot_env":
-printf("Generiere Jacobi-Matrix für %s\n", robot_name):
 read sprintf("../codeexport/%s_tree_floatb_definitions", robot_name):
 # Ergebnisse der Kinematik laden
 read sprintf("../codeexport/%s_kinematics_floatb_%s_rotmat_maple.m", robot_name, base_method_name):
@@ -43,6 +42,7 @@ Trf := Trf:
 Trf_c := Trf_c:
 # Link-Index, für den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber für beliebige Segmente aufgestellt werden.
 LIJAC:=NL:
+printf("Generiere Jacobi-Matrix für %s (Körper %d)\n", robot_name, LIJAC):
 # Jacobi-Matrix analytisch (Translatorisch)
 # Ortmaier2014a Gl. (1.15), S.14: Geometrische Zwangsbedingungen in impliziter Form
 # Gleichung enthält verallgemeinerte Koordinaten und Endeffektorposition und ergibt Null.

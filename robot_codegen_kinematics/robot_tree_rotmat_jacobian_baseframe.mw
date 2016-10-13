@@ -170,8 +170,7 @@ read &quot;../helper/proc_convert_t_s&quot;: </Text-field>
 </Group></Presentation-Block>
 <Group labelreference="L2107" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:
-<Font encoding="UTF-8">printf(&quot;Generiere Jacobi-Matrix f\303\274r %s\134n&quot;, robot_name):</Font></Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2108" drawlabel="true">
@@ -199,6 +198,11 @@ Trf_c := Trf_c:</Text-field>
 <Group labelreference="L2109" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">LIJAC:=NL:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L2114" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Generiere Jacobi-Matrix f\303\274r %s (K\303\266rper %d)\134n&quot;, robot_name, </Font>LIJAC):</Text-field>
 </Input>
 </Group>
 </Section>

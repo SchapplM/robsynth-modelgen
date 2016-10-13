@@ -33,12 +33,6 @@ shift # past argument or value
 done
 
 
-
-# Dynamik-Skripte für Parametersätze 1 und 2 vorbereiten
-cp $repo_pfad/robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par12.mpl $repo_pfad/robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1.mpl
-cp $repo_pfad/robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par12.mpl $repo_pfad/robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2.mpl
-sed -i "s/codegen_dynpar := 1:/codegen_dynpar := 2:/g" $repo_pfad/robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2.mpl
-
 # Namen des Roboters herausfinden (damit roboterspezifische Zwangsbedingungen berechnet werden können)
 source robot_codegen_tmpvar_bash.sh
 source $repo_pfad/robot_codegen_definitions/robot_env.sh
@@ -53,6 +47,18 @@ dateiliste_kindyn="
     /robot_codegen_kinematics/robot_tree_velocity_mdh_angles.mpl
     /robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_worldframe_par1.mpl
     /robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_linkframe.mpl
+"
+
+# Jacobi-Matrizen
+for (( ib=1; ib<=$robot_NL; ib++ ))
+do
+  dateiliste_kindyn="$dateiliste_kindyn
+        /robot_codegen_kinematics/robot_tree_rotmat_jacobian_baseframe_body${ib}.mpl
+  "
+done
+
+# Dynamik
+dateiliste_kindyn="$dateiliste_kindyn
     /robot_codegen_energy/robot_tree_floatb_rotmat_energy_worldframe_par1.mpl
     /robot_codegen_energy/robot_tree_floatb_rotmat_energy_worldframe_par2.mpl
     /robot_codegen_energy/robot_tree_floatb_rotmat_energy_linkframe_par2.mpl
@@ -98,5 +104,4 @@ do
 
   # Maple im Kommandozeilenmodus starten (vorher ins richtige Verzeichnis wechseln)
   ./maple <<< "currentdir(\"$dir\"): read \"$filename\";"
-
 done

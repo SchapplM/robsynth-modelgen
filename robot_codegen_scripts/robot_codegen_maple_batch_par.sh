@@ -35,32 +35,10 @@ shift # past argument or value
 done
 
 
-# Dynamik-Skripte für Parametersätze 1 und 2 vorbereiten
-cp $repo_pfad/robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par12.mpl $repo_pfad/robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1.mpl
-cp $repo_pfad/robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par12.mpl $repo_pfad/robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2.mpl
-sed -i "s/codegen_dynpar := 1:/codegen_dynpar := 2:/g" $repo_pfad/robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2.mpl
-
 # Namen des Roboters herausfinden (damit roboterspezifische Zwangsbedingungen berechnet werden können)
 source robot_codegen_tmpvar_bash.sh
 source $repo_pfad/robot_codegen_definitions/robot_env.sh
 
-# Erstelle einzelne Arbeitsblätter für jeden Teil der inversen Dynamik
-codeexportswitches=( corvec cormat grav inertia inertiaD invdyn )
-for (( dynpar=1; dynpar<=2; dynpar++ ))
-do
-  for ces in "${codeexportswitches[@]}"
-  do
-    mpldat=$repo_pfad/robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par${dynpar}_${ces}.mpl
-    cp $repo_pfad/robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par${dynpar}.mpl $mpldat
-		# deaktiviere jede Code-Exportierung
-		for ces2 in "${codeexportswitches[@]}"
-		do
-		  sed -i "s/codeexport_${ces2} := true:/codeexport_${ces2} := false:/g" $mpldat
-    done
-    # Aktivierung der gewünschten Code-Exportierung
-		sed -i "s/codeexport_${ces} := false:/codeexport_${ces} := true:/g" $mpldat
-  done
-done
 
 if [ "$CG_FIXBONLY" == "1" ]; then
   # Berechne alles nur für fixed-base Modellierung (dafür reicht die Methode "twist")
@@ -162,6 +140,25 @@ do
   echo "FERTIG mit Dynamik für ${basemeth}"
 done
 
+
+# Jacobi-Matrizen
+dateiliste_jac=""
+for (( ib=1; ib<=$robot_NL; ib++ ))
+do
+  dateiliste_jac="$dateiliste_jac
+        /robot_codegen_kinematics/robot_tree_rotmat_jacobian_baseframe_body${ib}.mpl
+  "
+done
+for wsjac in ${dateiliste_jac[@]}
+do
+  mpldat_full=$repo_pfad/$wsjac
+  filename="${mpldat_full##*/}"
+  dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
+  ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
+done
+wait
+echo "FERTIG mit Jacobi-Matrizen"
+
 dateiliste_plin="
   /robot_codegen_energy/robot_chain_fixb_rotmat_energy_regressor.mpl
   /robot_codegen_dynamics/robot_chain_fixb_rotmat_dynamics_regressor.mpl
@@ -182,7 +179,8 @@ if [ -f $addlistfile ]; then
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
     ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
   done
-  echo "FERTIG mit zusätzlichen Dateien für ${basemeth}"
+  echo "Zusätzlichen Dateien gestartet"
 fi;
 
+wait
 echo "Alle Matlab-Funktionen exportiert"
