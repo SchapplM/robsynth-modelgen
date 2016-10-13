@@ -103,5 +103,5 @@ do
   dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}" # Substring from 0 thru pos of filename
 
   # Maple im Kommandozeilenmodus starten (vorher ins richtige Verzeichnis wechseln)
-  ./maple <<< "currentdir(\"$dir\"): read \"$filename\";"
+  nice -n 10 ./maple <<< "currentdir(\"$dir\"): read \"$filename\";"
 done

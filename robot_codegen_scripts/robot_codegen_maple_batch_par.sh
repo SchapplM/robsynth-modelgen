@@ -99,7 +99,7 @@ do
     mpldat_full=$repo_pfad/$wskin
     filename="${mpldat_full##*/}"
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
-    ./maple -q <<< "currentdir(\"$dir\"): read \"$filename\";"
+    nice -n 10 ./maple -q <<< "currentdir(\"$dir\"): read \"$filename\";"
   done
   echo "FERTIG mit Kinematik für ${basemeth}"
   for wsvelm in ${dateiliste_mdhvel[@]}
@@ -107,14 +107,14 @@ do
     mpldat_full=$repo_pfad/$wsvelm
     filename="${mpldat_full##*/}"
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
-    ./maple -q <<< "currentdir(\"$dir\"): read \"$filename\";"
+    nice -n 10 ./maple -q <<< "currentdir(\"$dir\"): read \"$filename\";"
   done
   for wsvel in ${dateiliste_vel[@]}
   do
     mpldat_full=$repo_pfad/$wsvel
     filename="${mpldat_full##*/}"
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
-    ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
+    nice -n 10 ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
   done
   wait
   echo "FERTIG mit Geschwindigkeit für ${basemeth}"
@@ -124,7 +124,7 @@ do
     mpldat_full=$repo_pfad/$wsen
     filename="${mpldat_full##*/}"
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
-    ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
+    nice -n 10 ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
   done
   wait
   echo "FERTIG mit Energie für ${basemeth}"
@@ -134,7 +134,7 @@ do
     mpldat_full=$repo_pfad/$wsdyn
     filename="${mpldat_full##*/}"
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
-    ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
+    nice -n 10 ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
   done
   wait
   echo "FERTIG mit Dynamik für ${basemeth}"
@@ -154,7 +154,7 @@ do
   mpldat_full=$repo_pfad/$wsjac
   filename="${mpldat_full##*/}"
   dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
-  ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
+  nice -n 10 ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
 done
 wait
 echo "FERTIG mit Jacobi-Matrizen"
@@ -168,7 +168,7 @@ do
   mpldat_full=$repo_pfad/$wsplin
   filename="${mpldat_full##*/}"
   dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
-  ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";"
+  nice -n 10 ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";"
 done
 
 if [ -f $addlistfile ]; then
@@ -177,7 +177,7 @@ if [ -f $addlistfile ]; then
     mpldat_full=$repo_pfad/$wsadd
     filename="${mpldat_full##*/}"
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
-    ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
+    nice -n 10 ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
   done
   echo "Zusätzlichen Dateien gestartet"
 fi;
