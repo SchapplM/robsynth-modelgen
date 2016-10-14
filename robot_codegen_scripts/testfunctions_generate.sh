@@ -19,8 +19,8 @@ source $repo_pfad/robot_codegen_definitions/robot_env.sh
 dateiliste_testfunction="
   robot_varpar_fixbase_kinematics_test.m.template
   robot_varpar_floatbase_kinematics_test.m.template
-  robot_varpar_invdyn_test.m.template
-  robot_varpar_floatbase_test.m.template
+  robot_varpar_fixbase_invdyn_test.m.template
+  robot_varpar_floatbase_invdyn_test.m.template
   robot_varpar_paramlin_test.m.template
   robot_varpar_simulink_test.m.template
   robot_varpar_fixbase_num_test.m.template

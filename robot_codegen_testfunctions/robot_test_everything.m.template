@@ -11,8 +11,8 @@ testfunctions_path_init
 
 %RN%_varpar_fixbase_kinematics_test
 %RN%_varpar_floatbase_kinematics_test
-%RN%_varpar_invdyn_test
-%RN%_varpar_floatbase_test
+%RN%_varpar_fixbase_invdyn_test
+%RN%_varpar_floatbase_invdyn_test
 %RN%_varpar_paramlin_test
 %RN%_varpar_fixbase_num_test
 %RN%_varpar_floatbase_num_test
