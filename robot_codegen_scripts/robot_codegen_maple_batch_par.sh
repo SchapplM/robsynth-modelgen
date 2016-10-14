@@ -54,7 +54,14 @@ for basemeth in "${basemethodenames[@]}"
 do
 	dateiliste_kin="
 		  robot_codegen_definitions/robot_tree_floatb_${basemeth}_definitions.mpl
-      robot_codegen_constraints/${robot_name}_kinematic_constraints.mpl
+	"
+ 	if [ -f  $repo_pfad/robot_codegen_constraints/${robot_name}_kinematic_constraints.mpl ]; then
+		echo "test"
+		dateiliste_kin="$dateiliste_kin
+			robot_codegen_constraints/${robot_name}_kinematic_constraints.mpl
+		"
+	fi;
+	dateiliste_kin="$dateiliste_kin
 			robot_codegen_kinematics/robot_tree_floatb_rotmat_mdh_kinematics.mpl
 			robot_codegen_kinematics/robot_tree_floatb_rotmat_kinematics_com_worldframe_par1.mpl
 	"
