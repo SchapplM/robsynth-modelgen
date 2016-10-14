@@ -48,6 +48,8 @@ else
   basemethodenames=( twist eulangrpy )
 fi;
 
+cd /opt/maple18/bin
+
 for basemeth in "${basemethodenames[@]}"
 do
 	dateiliste_kin="
@@ -93,7 +95,6 @@ do
 
 
   # Alle Arbeitsblätter parallel ausführen, wo dies möglich ist
-  cd /opt/maple18/bin
   for wskin in ${dateiliste_kin[@]}
   do
     mpldat_full=$repo_pfad/$wskin
@@ -139,7 +140,6 @@ do
   wait
   echo "FERTIG mit Dynamik für ${basemeth}"
 done
-
 
 # Jacobi-Matrizen
 dateiliste_jac=""
