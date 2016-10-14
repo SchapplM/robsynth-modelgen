@@ -268,6 +268,13 @@ end do:</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">save b_transl, sprintf(&quot;../codeexport/%s_jacobia_transl_maple.m&quot;, robot_name):</Text-field>
 </Input>
 </Group>
+<Group labelreference="L2122" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8"># Ausdruck muss nochmal geladen werden, ansonsten h\303\244ngt sich die Code-Optimerung mit &quot;tryhard&quot; auf.
+</Font>read sprintf(&quot;../codeexport/%s_jacobia_transl_maple.m&quot;, robot_name):
+b_transl := b_transl:</Text-field>
+</Input>
+</Group>
 <Group labelreference="L1705" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to 3 do
@@ -275,13 +282,6 @@ end do:</Text-field>
     MatlabExport(b_transl(i,j), sprintf(&quot;../codeexport/%s_jacobia_transl_%d_floatb_%s_%d_%d_matlab.m&quot;, robot_name, LIJAC, base_method_name, i, j), codegen_opt):
   end do:
 end do:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L2117" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8"># Ausdruck muss nochmal geladen werden, ansonsten h\303\244ngt sich die Code-Optimerung mit &quot;tryhard&quot; auf.
-read </Font>sprintf(&quot;../codeexport/%s_jacobia_transl_maple.m&quot;, robot_name):
-b_transl := b_transl:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1703" drawlabel="true">
@@ -343,6 +343,13 @@ end do:</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">save b_rota, sprintf(&quot;../codeexport/%s_jacobia_rot_maple.m&quot;, robot_name):</Text-field>
 </Input>
 </Group>
+<Group labelreference="L2121" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"># Ausdruck nochmal laden.
+read sprintf(&quot;../codeexport/%s_jacobia_rot_maple.m&quot;, robot_name):
+b_rota := b_rota:</Text-field>
+</Input>
+</Group>
 <Group labelreference="L1739" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to 3 do
@@ -350,13 +357,6 @@ end do:</Text-field>
     MatlabExport(b_rota(i,j), sprintf(&quot;../codeexport/%s_jacobia_rot_%d_floatb_%s_%d_%d_matlab.m&quot;, robot_name, LIJAC, base_method_name, i, j), codegen_opt):
   end do:
 end do:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L2119" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"># Ausdruck nochmal laden.
-read sprintf(&quot;../codeexport/%s_jacobia_rot_maple.m&quot;, robot_name):
-b_rota := b_rota:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1737" drawlabel="true">
@@ -431,6 +431,13 @@ end do:</Text-field>
 <Group labelreference="L1755" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">save b_rotg, sprintf(&quot;../codeexport/%s_jacobig_rot_maple.m&quot;, robot_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L2120" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"># Ausdruck nochmal laden.
+read sprintf(&quot;../codeexport/%s_jacobig_rot_maple.m&quot;, robot_name):
+b_rotg := b_rotg:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1756" drawlabel="true">

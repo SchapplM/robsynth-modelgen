@@ -60,14 +60,14 @@ for i from 1 to 3 do
 end do:
 # Export
 save b_transl, sprintf("../codeexport/%s_jacobia_transl_maple.m", robot_name):
+# Ausdruck muss nochmal geladen werden, ansonsten hängt sich die Code-Optimerung mit "tryhard" auf.
+read sprintf("../codeexport/%s_jacobia_transl_maple.m", robot_name):
+b_transl := b_transl:
 for i from 1 to 3 do
   for j from 1 to NQJ do
     MatlabExport(b_transl(i,j), sprintf("../codeexport/%s_jacobia_transl_%d_floatb_%s_%d_%d_matlab.m", robot_name, LIJAC, base_method_name, i, j), codegen_opt):
   end do:
 end do:
-# Ausdruck muss nochmal geladen werden, ansonsten hängt sich die Code-Optimerung mit "tryhard" auf.
-read sprintf("../codeexport/%s_jacobia_transl_maple.m", robot_name):
-b_transl := b_transl:
 MatlabExport(b_transl, sprintf("../codeexport/%s_jacobia_transl_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
 # Jacobi-Matrix analytisch (Rotatorisch)
 # Ortmaier2014a Gl. (1.15), S.14: Geometrische Zwangsbedingungen in impliziter Form
@@ -85,14 +85,14 @@ for i from 1 to 3 do
 end do:
 # Export
 save b_rota, sprintf("../codeexport/%s_jacobia_rot_maple.m", robot_name):
+# Ausdruck nochmal laden.
+read sprintf("../codeexport/%s_jacobia_rot_maple.m", robot_name):
+b_rota := b_rota:
 for i from 1 to 3 do
   for j from 1 to NQJ do
     MatlabExport(b_rota(i,j), sprintf("../codeexport/%s_jacobia_rot_%d_floatb_%s_%d_%d_matlab.m", robot_name, LIJAC, base_method_name, i, j), codegen_opt):
   end do:
 end do:
-# Ausdruck nochmal laden.
-read sprintf("../codeexport/%s_jacobia_rot_maple.m", robot_name):
-b_rota := b_rota:
 MatlabExport(b_rota, sprintf("../codeexport/%s_jacobia_rot_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
 # Jacobi-Matrix geometrisch (Rotatorisch)
 # Zusammenhang zwischen Geschwindigkeit der verallgemeinerten Koordinaten und Winkelgeschwindigkeit des Endeffektors ausgedrückt im Basis-Koordinatensystems
@@ -113,6 +113,9 @@ end do:
 B_s := b_rotg:
 # Export
 save b_rotg, sprintf("../codeexport/%s_jacobig_rot_maple.m", robot_name):
+# Ausdruck nochmal laden.
+read sprintf("../codeexport/%s_jacobig_rot_maple.m", robot_name):
+b_rotg := b_rotg:
 for i from 1 to 3 do
   for j from 1 to NQJ do
     MatlabExport(b_rotg(i,j), sprintf("../codeexport/%s_jacobig_rot_%d_floatb_%s_%d_%d_matlab.m", robot_name, LIJAC, base_method_name, i, j), codegen_opt):
