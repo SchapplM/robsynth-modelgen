@@ -1,15 +1,24 @@
 r2rpy := proc (R) 
+  # siehe: tr2rpy aus Peter Corke Robotics Toolbox
   local rpy, sr, cr: 
   rpy := Matrix(3,1):
 
-  rpy(1,1) := %arctan(-R(2,3), R(3,3)): # roll
-  # compute sin/cos of roll angle
-  sr := sin(rpy(1,1)):
-  cr := cos(rpy(1,1)):
+  if R(3,3) = 0 then
+    printf("Test");
+    # singularity
+    # Durch die Singularität folgen Fehler beim Ableiten von arctan(y,0)
+    rpy(1,1) := 0:  # roll is zero
+    rpy(2,1) := %arctan(R(1,3), R(3,3)):  # pitch
+    rpy(3,1) := %arctan(R(2,1), R(2,2)):  # yaw is sum of roll+yaw
+  else
+    rpy(1,1) := %arctan(-R(2,3), R(3,3)): # roll
+    # compute sin/cos of roll angle
+    sr := sin(rpy(1,1)):
+    cr := cos(rpy(1,1)):
 
-  rpy(2,1) := %arctan(R(1,3), cr * R(3,3) - sr * R(2,3));  # pitch
-  rpy(3,1) := %arctan(-R(1,2), R(1,1));        # yaw
-
+    rpy(2,1) := %arctan(R(1,3), cr * R(3,3) - sr * R(2,3)):  # pitch
+    rpy(3,1) := %arctan(-R(1,2), R(1,1)):        # yaw
+  end if;
   return rpy:
 end proc:
  
