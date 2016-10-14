@@ -77,10 +77,16 @@ xo_EE := Matrix(3,1,<phi_xEE; phi_yEE; phi_zEE>):
 h_rota_rpy := r2rpy(T_p) - xo_EE: 
 h_rota_s :=convert_t_s(h_rota_rpy):
 # Jacobi-Matrix der inversen Kinematik
+# Falls die RPY-Darstellung für dieses Körper-KS singulär ist, existiert die analytische Jacobi-Matrix nicht. Maple gibt dann einen Fehler aus. Die Kennzeichnung mit NaN sorgt dafür, dass dies in Matlab erkennbar ist.
+# Die Singularität kann bei kinematischen Strukturen am Anfang auftreten.
 b_rota := Matrix(3, NQJ):
 for i from 1 to 3 do
   for j from 1 to NQJ do
-    b_rota(i,j) := diff(h_rota_s(i,1), qJ_s(j,1)):
+    if T_p(3,3) = 0 then
+      b_rota(i,j) := NaN: # Singulär
+    else
+      b_rota(i,j) := diff(h_rota_s(i,1), qJ_s(j,1)):
+    end if:
   end do:
 end do:
 # Export
