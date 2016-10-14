@@ -3,7 +3,7 @@ r2rpy := proc (R)
   local rpy, sr, cr: 
   rpy := Matrix(3,1):
 
-  if R(3,3) = 0 then
+  if R(3,3) = 0 and R(2,3) = 0 then
     # singularity
     # Durch die Singularität folgen Fehler beim Ableiten von arctan(y,0)
     rpy(1,1) := 0:  # roll is zero
