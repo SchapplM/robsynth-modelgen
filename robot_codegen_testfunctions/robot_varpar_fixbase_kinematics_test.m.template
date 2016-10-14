@@ -17,26 +17,6 @@ testfunctions_path_init
 %% Parameter
 %RN%_varpar_testfunctions_parameter
 
-%% Fixed Base und Floating Base Kinematik testen
-for i = 1:n
-  ob = OB(i,:);
-  q = Q(i,:)';
-
-  T_c_fixb = %RN%_fkine_fixb_rotmat_mdh_sym_varpar(q, ...
-    alpha, a, d, q_offset, b, beta%KCPARG%);
-  T_c_floatb_xyz = %RN%_fkine_floatb_eulangrpy_rotmat_mdh_sym_varpar(q, zeros(3,1), zeros(3,1), ...
-    alpha, a, d, q_offset, b, beta%KCPARG%);
-
-  for j = 1:size(T_c_fixb, 3)
-    T_Diff = T_c_fixb(:,:,j) / T_c_floatb_xyz(:,:,j);
-    Delta = T_Diff-eye(4);
-    if any(abs(Delta(:)) > 1e-6)
-      error('Forward Kinematics does not match between floating and fixed base');
-    end
-  end
-end
-
-fprintf('Tested %d configurations for fixed base forward kinematics.\n', n);
 
 %% Kinematik gegen Jacobi-Matrix testen (fixed base)
 
@@ -54,8 +34,8 @@ for i = 1:size(Q, 1)
     xDelta_fkine = Tc_2(1:3,4,end) - Tc_1(1:3,4,end);
 
     % differential kinematics from Jacobian function
-    JG = %RN%_jacobig_mdh_num(q, uint8(NJ+1), zeros(3,1), ...
-      alpha, a, d, q_offset, b, beta, v%KCPARG%);
+    JG = %RN%_jacobig_floatb_twist_sym_varpar(q, uint8(NJ+1), zeros(3,1), ...
+      alpha, a, d, q_offset, b, beta%KCPARG%);
     xDelta_jacob = JG*qDelta;
 
     x1_fkine = Tc_1(1:3,4,end);
@@ -125,11 +105,11 @@ for iq = 1:size(Q, 1) % Über Zufallsposen
   for jb  = 1:NL % Über alle Körper
     r_i_i_C = rand(3,1);
     q = Q(i,:)';
-
+    % TODO: Übergabe der Kinematikparameter bei kinem. Zwangsbedingungen
     JG_num = %RN%_jacobig_mdh_num(q, uint8(jb), r_i_i_C, ...
       alpha, a, d, q_offset, b, beta, v);
     JG_sym = %RN%_jacobig_floatb_twist_sym_varpar(q, uint8(jb), r_i_i_C, ...
-      alpha, a, d, q_offset, b, beta);
+      alpha, a, d, q_offset, b, beta%KCPARG%);
     
     JD_Delta = JG_num - JG_sym;
     if any(abs (JD_Delta(:)) > 1e-10) || any(isnan(JD_Delta(:)))
