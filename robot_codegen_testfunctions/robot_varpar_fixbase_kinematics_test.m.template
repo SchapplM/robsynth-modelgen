@@ -118,3 +118,35 @@ for iq = 1:size(Q, 1) % Über Zufallsposen
   end
 end
 fprintf('Erfolgreich Symbolische gegen numerische Jacobi-Matrix getestet.\n');
+
+
+%% Analytische gegen Geometrische Jacobi-Matrix testen
+for iq = 1:size(Q, 1) % Über Zufallsposen
+  for jb  = 1:NL % Über alle Körper
+    Jg_rot = %RN%_jacobig_rot_floatb_twist_sym_varpar(q, uint8(jb), ...
+      alpha, a, d, q_offset, b, beta%KCPARG%);
+    Ja_rot = %RN%_jacobia_rot_floatb_twist_sym_varpar(q, uint8(jb), ...
+      alpha, a, d, q_offset, b, beta%KCPARG%);
+    
+    % direkte Kinematik (mit gleichem Modell berechnet. Gleichheit der
+    % Modelle wird in anderer Testfunktion  verifiziert)
+    Tc_mdh = %RN%_fkine_fixb_rotmat_mdh_sym_varpar(q, ...
+      alpha, a, d, q_offset, b, beta%KCPARG%);
+    T_jb = Tc_mdh(:,:,jb);
+
+    % Winkelkonvention und Umrechnungsfaktor
+    rpy = r2rpy(t2r(T_jb));
+    J_rpy = rpy2jac(rpy(1), rpy(2), rpy(3));
+
+    % Umrechnung der analytischen in die geometrische Jacobi-Matrix
+    % [1], S. 52, Gl. (4.25)
+    Jg_rot_test = J_rpy * Ja_rot;
+
+    % Vergleiche die auf zwei Wegen berechnete  geometrische Jacobi-Matrix
+    Diff = Jg_rot_test - Jg_rot;
+    if any(abs(Diff(:)) > 1e-10)
+      error('Geometrische und Analytische Jacobi-Matrizen stimmen nicht überein (Körper %d)', jb);
+    end
+  end
+end
+fprintf('Erfolgreich analytische gegen geometrische Jacobi-Matrix (Rotationsteil) getestet.\n');

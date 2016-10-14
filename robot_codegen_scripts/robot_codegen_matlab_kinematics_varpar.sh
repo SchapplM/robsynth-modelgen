@@ -158,28 +158,54 @@ do
 done
 
 # Jacobi-Matrix für alle Körper zusammen
-zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_jacobig_floatb_twist_sym_varpar.m
-headdat=${tmp_pfad}_head/robot_matlabtmp_jacobig_all.head.m
-
-cat $headdat > $zieldat
-printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
-printf "assert(isa(r_i_i_C,'double') && isreal(r_i_i_C) && all(size(r_i_i_C) == [3 1]), ..." >> $zieldat
-printf "\n\t'%%FN%%: Position vector r_i_i_C has to be [3x1] double');\n" >> $zieldat
-printf "assert(isa(link_index,'uint8') && all(size(link_index) == [1 1]), ..." >> $zieldat
-printf "\n\t'%%FN%%: link_index has to be [1x1] uint8');\n" >> $zieldat
-cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
-cat $tmp_pfad/robot_matlabtmp_assert_KCP.m >> $zieldat
-echo "%% Function calls" >> $zieldat
-for (( ib=1; ib<=$robot_NL; ib++ ))
+for (( jacart=1; jacart<=3; jacart++ ))
 do
-  if [ "$ib" -eq "1" ]; then
-    printf "if link_index == ${ib}\n" >> $zieldat
-  else
-    printf "elseif link_index == ${ib}\n" >> $zieldat
+  if [ "$jacart" -eq "1" ]; then
+    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_jacobig_floatb_twist_sym_varpar.m
+    headdat=${tmp_pfad}_head/robot_matlabtmp_jacobig_all.head.m
+  elif [ "$jacart" -eq "2" ]; then
+    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_jacobig_rot_floatb_twist_sym_varpar.m
+    headdat=${tmp_pfad}_head/robot_matlabtmp_jacobig_rot_all.head.m
+  elif [ "$jacart" -eq "3" ]; then
+    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}_jacobia_rot_floatb_twist_sym_varpar.m
+    headdat=${tmp_pfad}_head/robot_matlabtmp_jacobia_rot_all.head.m
   fi;
-  printf "\tJg=${robot_name}_jacobig_${ib}_floatb_twist_sym_varpar(q, r_i_i_C, ...\n" >> $zieldat
-  printf "\t\talpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh%%KCPARG%%);\n" >> $zieldat
+
+  cat $headdat > $zieldat
+  printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
+  if [ "$jacart" -eq "1" ]; then
+    printf "assert(isa(r_i_i_C,'double') && isreal(r_i_i_C) && all(size(r_i_i_C) == [3 1]), ..." >> $zieldat
+    printf "\n\t'%%FN%%: Position vector r_i_i_C has to be [3x1] double');\n" >> $zieldat
+  fi;
+  printf "assert(isa(link_index,'uint8') && all(size(link_index) == [1 1]), ..." >> $zieldat
+  printf "\n\t'%%FN%%: link_index has to be [1x1] uint8');\n" >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_KCP.m >> $zieldat
+  echo "%% Function calls" >> $zieldat
+  for (( ib=1; ib<=$robot_NL; ib++ ))
+  do
+    if [ "$ib" -eq "1" ]; then
+      printf "if link_index == ${ib}\n" >> $zieldat
+    else
+      printf "elseif link_index == ${ib}\n" >> $zieldat
+    fi;
+    if [ "$jacart" -eq "1" ]; then
+      printf "\tJg=${robot_name}_jacobig_${ib}_floatb_twist_sym_varpar(q, r_i_i_C, ...\n" >> $zieldat
+    elif [ "$jacart" -eq "2" ]; then
+      printf "\tJg_rot=${robot_name}_jacobig_rot_${ib}_floatb_twist_sym_varpar(q, ...\n" >> $zieldat
+    elif [ "$jacart" -eq "3" ]; then
+      printf "\tJa_rot=${robot_name}_jacobia_rot_${ib}_floatb_twist_sym_varpar(q, ...\n" >> $zieldat
+    fi;
+    printf "\t\talpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh%%KCPARG%%);\n" >> $zieldat
+  done
+  if [ "$jacart" -eq "1" ]; then
+    printf "else\n\tJg=NaN(6,$robot_NQJ);\nend" >> $zieldat
+  elif [ "$jacart" -eq "2" ]; then
+    printf "else\n\tJg_rot=NaN(3,$robot_NQJ);\nend" >> $zieldat
+  elif [ "$jacart" -eq "3" ]; then
+    printf "else\n\tJa_rot=NaN(3,$robot_NQJ);\nend" >> $zieldat
+  fi
+  source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
 done
-printf "else\n\tJg=NaN(6,$robot_NQJ);\nend" >> $zieldat
-source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+
