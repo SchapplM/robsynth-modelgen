@@ -151,7 +151,11 @@ do
     else
       cat $headdat > $zieldat
     fi;
-    source robot_codegen_matlabfcn_postprocess.sh $zieldat 1
+    if [ "$jacart" -lt "4" ]; then
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 1
+    else
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+	fi;
     # Markierung ersetzen mit Segmentnummer der Jacobi-Matrix
     sed -i "s/%LIJAC%/${ib}/g" $zieldat
   done
