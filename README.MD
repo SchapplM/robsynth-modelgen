@@ -10,6 +10,10 @@ Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
 ## Inhalt
 
 * [Codeerstellung starten](#codeerstellung)
+  * [Vorbereitung](#start_vorbereitung)
+  * [Alternative 1](#start_alt1)
+  * [Alternative 2](#start_alt2)
+  * [Kinematische Zwangsbedingungen](#start_zwangsbed)
 * [Benennungsschema der Dateien](#benennung)
 * [Ordnerstruktur](#ordnerstruktur)
 
@@ -20,7 +24,7 @@ Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
 
 ## Voraussetzungen
 
-* Linux-Betriebssystem (für .sh-Skripte in Alternative 1). Ausführung der Maple-Arbeitsblätter in Alternative 2 auch unter Windows möglich.
+* Linux-Betriebssystem (für .sh-Skripte in [Alternative 1](#start_alt1)). Ausführung der Maple-Arbeitsblätter in [Alternative 2](#start_alt2) auch unter Windows möglich.
 * Maple muss im Ordner /opt/maple18/ installiert sein (Standard-Ordner bei sudo-Installation unter Linux).
 * Die IRT-Matlab-Toolbox (git@130.75.135.95:software/matlab) muss im Matlab-Pfad initialisiert sein (Aufruf von irt_tb_init.m im Repo). Damit die Pfadinitialisierung auch im Matlab-Terminalaufruf funktioniert, sollte die startup.m richtig gesetzt sein.
 
@@ -28,14 +32,14 @@ Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
 
 Der vollständige Ablauf zur Generierung von Matlab-Dynamikfunktionen wird in diesem Teilkapitel beschrieben.
 
-### Vorbereitung
+### Vorbereitung <a name="start_vorbereitung"></a> 
 
 Die MDH-Parameter (modifizierte Denavit-Hartenberg Parameter nach [KhalilKle1986]) müssen in die Umgebungsvariablendatei robot_env im Verzeichnis robot_codegen_definitions eingetragen werden.
 
         robot_codegen_definitions/robot_env
 
 Diese ist eine Maple-Eingabedatei und definiert Maple-Variablen, die in allen Maple-Arbeitsblättern verwendet werden. Als Vorlage können die Dateien im Verzeichnis robot_codegen_examples dienen.
-Zu beachten ist, dass in die Maple-Vektoren nur symbolische Ausdrücke eingesetzt werden sollten, die so heißen, wie der Vektor selbst. Also a1, a2 in a, d1, d2 in d, qoffset3, qoffset4 in qoffset und so weiter. Zusätzlich können Nullen und Winkelangaben ("Pi", großgeschrieben) eingesetzt werden.
+Zu beachten ist, dass in die Maple-Vektoren nur symbolische Ausdrücke eingesetzt werden sollten, die so heißen, wie der Vektor selbst. Also __a1__, __a2__ in __a__, __d1__, __d2__ in __d__, __qoffset3__, __qoffset4__ in __qoffset__ und so weiter. Zusätzlich können Nullen und Winkelangaben ("__Pi__", großgeschrieben) eingesetzt werden.
 Andere Variablennamen werden bei der Generierung von Matlab-Funktionen nicht erkannt. Beispiel:
 
         qoffset := Matrix(7,1,[0, -(1/2)*Pi, qoffset3, qoffset4, 0, 0, 0]):
@@ -56,7 +60,7 @@ Für die Variablennamen in robot_env und in [KhalilKle1986] gilt folgender Zusam
 
 Nach dem Erstellen dieser Datei werden die Dynamikfunktionen mit Maple generiert, wie im Folgenden beschrieben wird.
 
-### Alternative 1: Automatisches Generieren aller Dateien
+### Alternative 1: Automatisches Generieren aller Dateien <a name="start_alt1"></a> 
 
 Mit folgendem Aufruf werden alle Maple-Ausdrücke erzeugt und Matlab-Funktionen exportiert (wie unter Alternative 2 beschrieben).
 
@@ -70,9 +74,9 @@ Folgende Argumente sind möglich:
 
 * Nur Berechnung der Fixed-Base Funktionen (kürzere Berechnung)
  
-        fixb_only
+        --fixb_only
 
-### Alternative 2: Händisches Generieren aller Dateien
+### Alternative 2: Händisches Generieren aller Dateien <a name="start_alt2"></a> 
 
 Im Folgenden werden die Einzelbefehle gezeigt, die im Gesamt-Skript aus Alternative 1 ausgeführt werden.
 
@@ -144,10 +148,80 @@ Die Tests werden durch Ausführen der erstellten Skripte mit Matlab gestartet:
 
 Beim Durchlaufen der Tests sollten keine Fehler auftreten.
 
+### Systeme mit kinematischen Zwangsbedingungen <a name="start_zwangsbed"></a> 
+
+Neben seriellen und verzweigten kinematischen Strukturen, können auch geschlossene Ketten behandelt werden, wenn die daraus resultierenden kinematischen Zwangsbedingungen vollständig eliminiert werden können.
+Die Struktur eines verzweigten Systems wird mit MDH-Parametern in der Datei robot_env eingegeben.
+Einige MDH-Parameter sind nun aber keine verallgemeinerten Koordinaten des Systems mehr, sondern z.B. zeitabhängige Winkel, die von den verallgemeinerten Koordinaten abhängen (beschrieben durch die kinematischen Zwangsbedingungen).
+Folgende Dateien müssen zusätzlich erzeugt werden, damit die Dynamikgleichungen generiert werden können:
+
+#### Anpassung der Definitionen
+
+Folgende Ausführungen beziehen sich auf die robot_env:
+
+Maple-Variablen wie __theta__ können nun neben den verallgemeinerten Koordinaten __qJ_t__ auch andere Ausdrücke beinhalten.
+Diese müssen in zwei zusätzlichen Matrizen __kintmp_t__ und __kintmp_s__ aufgelistet werden.
+In __kintmp_t__ stehen zeitabhängige Größen der Ersetzungsvariablen aus __kintmp_s__.
+*kintmp* steht dabei für temporäre Kinematikparameter. Diese Parameter werden im Folgenden substituiert.
+
+#### Kinematische Zwangsbedingungen
+
+Ein Maple-Arbeitsblatt mit den kinematischen Zwangsbedingungen muss erstellt werden:
+
+        robot_codegen_constraints/%RN%_kinematic_constraints.mpl
+        robot_codegen_constraints/%RN%_kinematic_constraints.mw
+
+In diesem Arbeitsblatt werden die Ausdrücke __kintmp_subsexp__, __kintmp_qs__ und __kintmp_qt__ generiert.
+Diese Ausdrücke setzen für die Kinematikzwischengrößen aus __kintmp_s__ Ausdrücke nur in Abhängigkeit konstanter Parameter und der verallgemeinerten Koordinaten ein.
+__kintmp_subsexp__ enthält dabei Ausdrücke für Sinus und Cosinus der Parameter aus __kintmp_s__.
+__kintmp_qs__ und __kintmp_qt__ enthalten Ausdrücke direkt für __kintmp_s__ und __kintmp_t__.
+Die Verwendung von __kintmp_subsexp__ kann rechentechnische günstiger sein, da z.B. in Rotationsmatrizen oft nur Sinus und Cosinus eines MDH-Winkels auftreten, diese werden direkt ersetzt.
+Andernfalls wäre die Berechnung Sinus(Arctan(...)) notwendig.
+
+#### Werte für die Zwangsbedingungen
+
+Damit die Testfunktionen funktionieren, müssen konkrete Zahlenwerte für die Kinematikparameter vorgegeben werden.
+Die Konstanten müssen in der Datei 
+
+        robot_codegen_constraints/%RN%_kinematic_constraints_matlab.m
+
+eingetragen sein und Variablen initialisieren, die den gleichen Namen haben, wie die in __%RN%_kinematic_constraints.mpl__ verwendeten Konsanten. Z.B. __l1__, __l2__, ... für konstante Längen.
+Die Parameter können im Allgemeinen nicht zufällig zum Testen gewählt werden, da sonst die kinematischen Zwangsbedingungen verletzt werden.
+
+#### Auswirkungen auf exportierten Code
+
+Werden kinematische Zwangsbedingungen verwendet, enthalten alle exportierten Matlab-Funktionen zusätzlich den Eingabeparameter __kintmp__. 
+Dieser enthält alle konstanten Parameter für die Zwangsbedingungen, die in die Maple-Ausdrücke __kintmp_s__/__kintmp_t__ eingesetzt wurden.
+Eine Liste dieser Parameter ist der Testfunktionsparameterinitialisierung
+
+        robot_codegen_testfunctions/%RN%_varpar_testfunctions_parameter.m
+
+zu entnehmen.
+
+#### Beispiele
+
+Beispiele für die Implementierung von Zwangsbedingungen finden sich in den Dateien für *KAS5m3* bis *KAS5m6* (Kraftassistenzsystem 3. Arm).
+
 ### Weitergehendes Arbeiten
 
 Der Aufruf der Funktionen in den Testskripten kann als Vorlage für weitere Arbeiten verwendet werden.
 Zum vereinfachten Aufruf empfiehlt es sich, Aufruffunktionen zu erstellen ("wrapper"), in denen die Parameter (Kinematik und Dynamik) durch Aufruf von Parameterfunktionen vorliegen.
+
+#### Zusätzliche Dateien  <a name="start_zusatzdateien"></a> 
+
+Falls zusätzliche Ausdrücke zu einem System exportiert werden sollen, können dazu entsprechende Skripte in den Ordnern
+
+        robot_codegen_additional/maple
+        robot_codegen_additional/scripts
+        robot_codegen_additional/templates
+
+abgelegt werden.  
+Existiert im Ordner *scripts* eine Datei *%RN%_maple_additional_worksheet_list*, werden darin enthaltene Verweise auf Maple-Skripte im Ordner *maple* mit der Code-Generierung ausgeführt.  
+Die Datei *%RN%_maple_additional_worksheet_list* im Ordner scripts wird bei der Matlab-Funktionsgenerierung mit ausgeführt und kann aus dem generierten Matlab-Code sowie Funktionsvorlagen aus dem Ordner *templates* Matlab-Funktionen erstellen.
+
+Die Verwendung dieser zusätzlicher Dateien ist sinnvoll, um die komplette Code-Generierung zu einem System mit einem Startskript durchführen zu können.
+Beispiele sind z.B. Gleichgewichtsfunktionen für zweibeinige Roboter oder eingebaute Feder-Dämpfer-Systeme.
+
 
 ## Benennung  <a name="benennung"></a> 
 
@@ -248,8 +322,8 @@ Diese Variablen sollten in allen Maple-Arbeitsblättern nicht verwendet werden, 
 Anzahl Freiheitsgrade (Gesamt, Basis und Gelenke)
 
         N
-        NB
-        NJ
+        NQB
+        NQJ
 
 Anzahl der Körper
 
@@ -354,6 +428,11 @@ Positionen (Koordinatensysteme, Schwerpunkten), Geschwindigkeiten
               <-- robot_tree_floatb_definitions
               <-- robot_kinematics_rotmat_maple.m
               --> robot_velocity_worldframe_floatb_twist_maple.m
+          robot_tree_rotmat_jacobian_baseframe.mw
+              <-- robot_env
+              <-- robot_tree_floatb_definitions
+              <-- robot_kinematics_rotmat_maple.m
+              <-- robot_velocity_worldframe_floatb_twist_maple.m
 
 ### Energie
 
@@ -400,7 +479,27 @@ Positionen (Koordinatensysteme, Schwerpunkten), Geschwindigkeiten
               <-- energy_kinetic_fixb_regressor_minpar_maple.m
               <-- energy_potential_fixb_regressor_minpar_maple.m
 
+
+### Kinematische Zwangsbedingungen
+
+Die Skripte müssen vom Benutzer erstellt werden, da jedes System unterschiedlich ist.
+Die Skripte müssen mit dem Namen des Roboters anfangen (hier Platzhalter *%RN%*)
+
+        /robot_codegen_constraints
+          %RN%_kinematic_constraints.mw
+
+### Zusätzliche Dateien
+
+Die Skripte müssen vom Benutzer erstellt werden, je nach System.
+Siehe Beschreibung in [Zusätzliche Dateien](#start_zusatzdateien)
+
+        /robot_codegen_additional/scripts
+          %RN%_codegen_matlab_additional_varpar.sh
+          %RN%_maple_additional_worksheet_list
+
+
 ### Beispielkonfigurationen
+
 
         /robot_codegen_examples
           robot_env_atlas5arm.example
