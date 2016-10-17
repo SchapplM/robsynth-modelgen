@@ -78,21 +78,27 @@ cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
 
 # Werte für kinematische Zwangsbedingungen in Parameter-Generierungsskript eintragen
 # Setzt auch Zahlenwerte für die Kinematikparameter der MDH-Notation, falls gegeben.
-KCP_dat1=$repo_pfad/robot_codegen_constraints/${robot_name}_kinematic_parameter_values.m
-KCP_dat2=$repo_pfad/codeexport/${robot_name}_kinematic_constraints_symbols_list_matlab.m
-if [ -f $KCP_dat1 ] && [ -f $KCP_dat2 ]; then
-  printf "\n%%%% Werte für kinematische Zwangsbedingungen direkt eintragen\n" >> $zieldat
-  printf "\n%% Aus ${robot_name}_kinematic_parameter_values.m\n" >> $zieldat
-  cat $KCP_dat1 >> $zieldat
-  printf "\n%% Aus ${robot_name}_kinematic_constraints_symbols_list_matlab.m\n" >> $zieldat
-  cat $KCP_dat2 >> $zieldat
-  varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
-  echo "kintmp = $varname_tmp;" >> $zieldat
+if [ "$robot_kinconstr_exist" == "1" ]; then
+  KCP_dat1=$repo_pfad/robot_codegen_constraints/${robot_name}_kinematic_parameter_values.m
+  KCP_dat2=$repo_pfad/codeexport/${robot_name}_kinematic_constraints_symbols_list_matlab.m
+  if [ -f $KCP_dat1 ] && [ -f $KCP_dat2 ]; then
+    printf "\n%%%% Werte für kinematische Zwangsbedingungen direkt eintragen\n" >> $zieldat
+    printf "\n%% Aus ${robot_name}_kinematic_parameter_values.m\n" >> $zieldat
+    cat $KCP_dat1 >> $zieldat
+    printf "\n%% Aus ${robot_name}_kinematic_constraints_symbols_list_matlab.m\n" >> $zieldat
+    cat $KCP_dat2 >> $zieldat
+    varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
+    echo "kintmp = $varname_tmp;" >> $zieldat
+  else
+    printf "\n%%%% Kinematikparameter (Zwangsbedingungen) zufällig setzen.\n" >> $zieldat
+    printf "%% Bei kinematischen Zwangsbedingungen führen Zufallswerte aber wahrscheinlich zur\n" >> $zieldat
+    printf "%% Verletzung der Zwangsbedingungen\n" >> $zieldat
+    printf "kintmp = rand($robot_NKCP,1);\n" >> $zieldat
+  fi;
 else
-  printf "\n%%%% Kinematikparameter (Zwangsbedingungen) zufällig setzen.\n" >> $zieldat
-  printf "%% Bei kinematischen Zwangsbedingungen führen Zufallswerte aber wahrscheinlich zur\n" >> $zieldat
-  printf "%% Verletzung der Zwangsbedingungen\n" >> $zieldat
-  printf "kintmp = rand($robot_NKCP,1);\n" >> $zieldat
+    printf "\n%%%% Kinematikparameter (Zwangsbedingungen) Platzhalter.\n" >> $zieldat
+    printf "%% Wird für Simulink-Parameterinitialsierung gebraucht\n" >> $zieldat
+    printf "kintmp = 0;\n" >> $zieldat
 fi;
 
 
