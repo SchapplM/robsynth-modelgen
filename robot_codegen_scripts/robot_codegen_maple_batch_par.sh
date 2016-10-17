@@ -148,6 +148,9 @@ do
   echo "FERTIG mit Dynamik für ${basemeth}"
 done
 
+# Definitionen des Fixed-Base-Modell wieder laden (für Jacobi-Matrizen und zusätzliche Dateien)
+nice -n 10 ./maple -q  <<< "currentdir(\"$repo_pfad/robot_codegen_definitions\"): read \"robot_tree_floatb_twist_definitions.mpl\";"
+
 # Jacobi-Matrizen
 dateiliste_jac=""
 for (( ib=1; ib<=$robot_NL; ib++ ))
