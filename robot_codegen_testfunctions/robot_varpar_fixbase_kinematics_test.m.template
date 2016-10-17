@@ -44,8 +44,8 @@ for i = 1:size(Q, 1)
 
     % calculate error
     Error_cart = x2_fkine(1:3) - x2_jacob(1:3);
-    if any(abs(Error_cart) > 10*eps)
-      error('Jacobian does not match with forward kinematics. Error = [%s]. Atlas v%d, %s arm, Deltaq%d', ...
+    if any(abs(Error_cart) > 1e-10)
+      error('Jacobian does not match with forward kinematics. Error = [%s]. Deltaq%d', ...
         dispparam(Error_cart', '%.5e'), j);
     end
 
@@ -59,21 +59,21 @@ fprintf('Tested Jacobian (fixed base) against forward kinematics for %d random j
 Mex_Erstellen({'%RN%_jacobig_mdh_num', '%RN%_jacobigD_mdh_num'});
 for kk = 1:NJ % Test for linear joint trajectory
   n = 1e5; % little steps -> small error
-  Q = zeros(n,NJ);
+  Q_traj = zeros(n,NJ);
   q_kk_start = -pi/2;
   q_kk_end = pi/2;
-  Q(:,kk) = linspace(q_kk_start, q_kk_end, n);
-  QD = zeros(n,NJ);
+  Q_traj(:,kk) = linspace(q_kk_start, q_kk_end, n);
+  QD_traj = zeros(n,NJ);
   T = 1;
-  QD(:,kk) = (q_kk_end-q_kk_start)/T; % linear velocity profile
+  QD_traj(:,kk) = (q_kk_end-q_kk_start)/T; % linear velocity profile
   dT = T/n;
   JG = zeros(6,NJ);
 
   t1 = tic;
   for i = 1:n % Test Difference for each trajectory point
     JG_vorher = JG;
-    q = Q(i,:)';
-    qD = QD(i,:)';     
+    q = Q_traj(i,:)';
+    qD = QD_traj(i,:)';     
     % calculate jacobian time derivate with two methods
     JG = %RN%_jacobig_mdh_num_mex(q, uint8(NJ+1), zeros(3,1), ...
       alpha, a, d, q_offset, b, beta, v);
@@ -84,7 +84,7 @@ for kk = 1:NJ % Test for linear joint trajectory
     % calculate error
     if i > 2
       JGD_Diff = JGD_num1 - JGD_num2;
-      I = abs(JGD_Diff) > 1e-4;
+      I = abs(JGD_Diff) > 1e-3;
       if any(I(:))
         disp('from numeric differentiation:');
         disp(JGD_num1);
@@ -104,7 +104,7 @@ fprintf('Tested Jacobian Time derivative for fixed base.\n');
 for iq = 1:size(Q, 1) % Über Zufallsposen
   for jb  = 1:NL % Über alle Körper
     r_i_i_C = rand(3,1);
-    q = Q(i,:)';
+    q = Q(iq,:)';
     % TODO: Übergabe der Kinematikparameter bei kinem. Zwangsbedingungen
     JG_num = %RN%_jacobig_mdh_num(q, uint8(jb), r_i_i_C, ...
       alpha, a, d, q_offset, b, beta, v);
@@ -123,6 +123,7 @@ fprintf('Erfolgreich Symbolische gegen numerische Jacobi-Matrix getestet.\n');
 %% Analytische gegen Geometrische Jacobi-Matrix testen
 for iq = 1:size(Q, 1) % Über Zufallsposen
   for jb  = 1:NL % Über alle Körper
+    q = Q(iq,:)';
     Jg_rot = %RN%_jacobig_rot_floatb_twist_sym_varpar(q, uint8(jb), ...
       alpha, a, d, q_offset, b, beta%KCPARG%);
     Ja_rot = %RN%_jacobia_rot_floatb_twist_sym_varpar(q, uint8(jb), ...
@@ -150,3 +151,4 @@ for iq = 1:size(Q, 1) % Über Zufallsposen
   end
 end
 fprintf('Erfolgreich analytische gegen geometrische Jacobi-Matrix (Rotationsteil) getestet.\n');
+
