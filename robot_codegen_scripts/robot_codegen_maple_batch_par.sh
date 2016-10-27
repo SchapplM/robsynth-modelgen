@@ -93,7 +93,8 @@ do
 	"
 
   # Zusätzliche Maple-Skripte speziell für dieses System (benutzerdefiniert)
-  addlistfile=$repo_pfad/robot_codegen_additional/scripts/${robot_name}_maple_additional_worksheet_list
+  # Für jede Basis-Methode anhängen.
+  addlistfile=$repo_pfad/robot_codegen_additional/scripts/${robot_name}_maple_additional_worksheet_list_${basemeth}
   if [ -f $addlistfile ]; then
     dateiliste_add="$dateiliste_kindyn `cat $addlistfile`"
   else

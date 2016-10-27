@@ -14,6 +14,7 @@ Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
   * [Alternative 1](#start_alt1)
   * [Alternative 2](#start_alt2)
   * [Kinematische Zwangsbedingungen](#start_zwangsbed)
+  * [Einbinden Zusätzlicher Dateien](#start_zusatzdateien)
 * [Benennungsschema der Dateien](#benennung)
 * [Ordnerstruktur](#ordnerstruktur)
 
@@ -216,8 +217,8 @@ Falls zusätzliche Ausdrücke zu einem System exportiert werden sollen, können 
         robot_codegen_additional/templates
 
 abgelegt werden.  
-Existiert im Ordner *scripts* eine Datei *%RN%_maple_additional_worksheet_list*, werden darin enthaltene Verweise auf Maple-Skripte im Ordner *maple* mit der Code-Generierung ausgeführt.  
-Die Datei *%RN%_maple_additional_worksheet_list* im Ordner scripts wird bei der Matlab-Funktionsgenerierung mit ausgeführt und kann aus dem generierten Matlab-Code sowie Funktionsvorlagen aus dem Ordner *templates* Matlab-Funktionen erstellen.
+Existiert im Ordner *scripts* eine Datei *%RN%\_maple_additional_worksheet_list_%BASE%*, werden darin enthaltene Verweise auf Maple-Skripte im Ordner *maple* mit der Code-Generierung ausgeführt. *%BASE%* bezeichnet die Basisdarstellungsmethode. Möglich sind hier *twist* oder *eulangrpy*. Siehe dazu den Abschnitt [Modellkennung](#benennung_modell).  
+Die Datei *%RN%_matlab_codegen_additional* im Ordner scripts wird bei der Matlab-Funktionsgenerierung mit ausgeführt und kann aus dem generierten Matlab-Code sowie Funktionsvorlagen aus dem Ordner *templates* Matlab-Funktionen erstellen.
 
 Die Verwendung dieser zusätzlicher Dateien ist sinnvoll, um die komplette Code-Generierung zu einem System mit einem Startskript durchführen zu können.
 Beispiele sind z.B. Gleichgewichtsfunktionen für zweibeinige Roboter oder eingebaute Feder-Dämpfer-Systeme.
@@ -274,7 +275,7 @@ Teil 3: Kennung der Kette
 * joint_base (Einfluss der Basis auf die Gelenke; bei Massenmatrix)
 * base (Nur Einfluss auf die Basis)
 
-Teil 4: Modellkennung
+Teil 4: Modellkennung  <a name="benennung_modell"></a> 
 
 * fixb (Fixed Base Modell: Orientierung, Geschwindigkeit und Beschleunigung der Basis werden nicht berücksichtigt. Impliziert bei einigen Funktionen "joint")
 * floatb_twist  (Floating Base Modell: Geschwindigkeit und Beschleunigung der Basis werden berücksichtigt. Nicht aber die Orientierung)

@@ -78,9 +78,16 @@ dateiliste_kindyn="$dateiliste_kindyn
     /robot_codegen_dynamics/robot_chain_fixb_rotmat_dynamics_regressor.mpl
 "
 
+# Initialisiere zusätzliche Maple-Skripte speziell für dieses System (benutzerdefiniert)
+# Mit Basis-Methode "twist"
+addlistfile=$repo_pfad/robot_codegen_additional/scripts/${robot_name}_maple_additional_worksheet_list_twist
+if [ -f $addlistfile ]; then
+  dateiliste_kindyn="$dateiliste_kindyn `cat $addlistfile`"
+fi;
+
 if ! [ "$CG_FIXBONLY" == "1" ]; then
-# Skripte für Floating-Base-Modellierung
-dateiliste_kindyn="$dateiliste_kindyn
+  # Skripte für Floating-Base-Modellierung
+  dateiliste_kindyn="$dateiliste_kindyn
     /robot_codegen_definitions/robot_tree_floatb_eulangrpy_definitions.mpl
     /robot_codegen_kinematics/robot_tree_floatb_rotmat_mdh_kinematics.mpl
     /robot_codegen_kinematics/robot_tree_floatb_rotmat_kinematics_com_worldframe_par1.mpl
@@ -91,13 +98,14 @@ dateiliste_kindyn="$dateiliste_kindyn
     /robot_codegen_energy/robot_tree_floatb_rotmat_energy_linkframe_par2.mpl
     /robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1.mpl
     /robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2.mpl
-"
-fi;
+  "
 
-# Zusätzliche Maple-Skripte speziell für dieses System (benutzerdefiniert)
-addlistfile=$repo_pfad/robot_codegen_additional/scripts/${robot_name}_maple_additional_worksheet_list
-if [ -f $addlistfile ]; then
-  dateiliste_kindyn="$dateiliste_kindyn `cat $addlistfile`"
+  # Initialisiere zusätzliche Maple-Skripte speziell für dieses System (benutzerdefiniert)
+  # Mit Basis-Methode "eulangrpy"
+  addlistfile=$repo_pfad/robot_codegen_additional/scripts/${robot_name}_maple_additional_worksheet_list_eulangrpy
+  if [ -f $addlistfile ]; then
+    dateiliste_kindyn="$dateiliste_kindyn `cat $addlistfile`"
+  fi;
 fi;
 
 # Alle Maple-Dateien der Reihe nach ausführen
