@@ -286,7 +286,7 @@ end do:</Text-field>
 <Group labelreference="L1712" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(MMjj_regressor_s, sprintf(&quot;../codeexport/%s_inertia_joint_joint_regressor_minpar_matlab.m&quot;, robot_name), true):
+  MatlabExport(MMjj_regressor_s, sprintf(&quot;../codeexport/%s_inertia_joint_joint_regressor_minpar_matlab.m&quot;, robot_name), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -321,7 +321,7 @@ end if:</Text-field>
 <Group labelreference="L1600" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(MMDjj_regressor_s, sprintf(&quot;../codeexport/%s_inertiaD_joint_joint_regressor_minpar_matlab.m&quot;, robot_name), true):
+  MatlabExport(MMDjj_regressor_s, sprintf(&quot;../codeexport/%s_inertiaD_joint_joint_regressor_minpar_matlab.m&quot;, robot_name), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -434,7 +434,7 @@ end do:</Text-field>
 <Group labelreference="L1609" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(Cjj_regressor_s, sprintf(&quot;../codeexport/%s_coriolismat_joint_fixb_regressor_minpar_matlab.m&quot;, robot_name), true):
+  MatlabExport(Cjj_regressor_s, sprintf(&quot;../codeexport/%s_coriolismat_joint_fixb_regressor_minpar_matlab.m&quot;, robot_name), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>

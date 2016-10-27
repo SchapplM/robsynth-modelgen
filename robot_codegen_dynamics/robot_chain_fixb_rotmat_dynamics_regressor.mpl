@@ -84,7 +84,7 @@ for i to NQJ do # Zeilenindex der Massenmatrix
 end do:
 # Matlab Export
 if codegen_act then
-  MatlabExport(MMjj_regressor_s, sprintf("../codeexport/%s_inertia_joint_joint_regressor_minpar_matlab.m", robot_name), true):
+  MatlabExport(MMjj_regressor_s, sprintf("../codeexport/%s_inertia_joint_joint_regressor_minpar_matlab.m", robot_name), codegen_opt):
 end if:
 # Mass Matrix Time Derivative
 # Konvertiere Massenmatrix in zeitabhängige Variablen, um Zeitableitung zu berechnen
@@ -93,7 +93,7 @@ MMDjj_regressor_t := diff~(MMjj_regressor_t, t):
 MMDjj_regressor_s := convert_t_s(MMDjj_regressor_t):
 # Matlab Export
 if codegen_act then
-  MatlabExport(MMDjj_regressor_s, sprintf("../codeexport/%s_inertiaD_joint_joint_regressor_minpar_matlab.m", robot_name), true):
+  MatlabExport(MMDjj_regressor_s, sprintf("../codeexport/%s_inertiaD_joint_joint_regressor_minpar_matlab.m", robot_name), codegen_opt):
 end if:
 # Coriolis Vector
 # Generate
@@ -142,7 +142,7 @@ for i to NQJ do # Zeilenindex der Coriolismatrix
 end do:
 # Matlab Export: Fixed base
 if codegen_act then
-  MatlabExport(Cjj_regressor_s, sprintf("../codeexport/%s_coriolismat_joint_fixb_regressor_minpar_matlab.m", robot_name), true):
+  MatlabExport(Cjj_regressor_s, sprintf("../codeexport/%s_coriolismat_joint_fixb_regressor_minpar_matlab.m", robot_name), codegen_opt):
 end if:
 
 # Inverse Dynamics
