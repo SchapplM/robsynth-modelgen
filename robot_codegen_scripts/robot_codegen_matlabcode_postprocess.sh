@@ -6,8 +6,8 @@
 # Argumente:
 # $1 Zu untersuchende Datei
 
+# TODO: Prüfung auf unknown beeinflusst nicht die Prüfung auf %arctan
 
-# ./robot_codegen_matlabcode_postprocess.sh /home/schappler/IRT_REPOS/maple/codeexport/KAS6m4_kinematic_constraints_subsexp_matlab2.m
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-10
 # (c) Institut für Regelungstechnik, Leibniz Universität Hannover
 
@@ -48,9 +48,11 @@ if [ "$teststring2" != "" ]; then
       jmax=${arrIN[1]}
     fi
   done;
-  # Initialisieren die Variable "unknown"
+  # Initialisieren die Variable "unknown" am Anfang
   # Siehe http://superuser.com/questions/246837/how-do-i-add-text-to-the-beginning-of-a-file-in-bash/246841
   sed -i "1s/^/unknown=NaN($imax,$jmax)\n/" $matfilepath
+  # Nochmaliges Setzen der Variable "unknown" am Ende (damit Variablenname von Skript robot_codegen_matlabfcn_postprocess.sh erkannt wird)
+  echo "unknown = unknown; % für automatische Verarbeitung" > $matfilepath
 fi;
 
 # Ersetze exportierte Inert-Funktionen aus Maple
