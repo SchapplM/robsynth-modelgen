@@ -1,0 +1,23 @@
+% Test script for all fixed-base Matlab/Simulink functions for 
+% %RN%
+
+% Moritz Schappler, schappler@irt.uni-hannover.de, 2016-10
+% (c) Institut für Regelungstechnik, Universität Hannover
+
+clc
+clear
+
+testfunctions_path_init
+
+%RN%_varpar_fixbase_kinematics_test
+%RN%_varpar_fixbase_invdyn_test
+%RN%_varpar_fixbase_num_test
+
+% Regressorform
+%RN%_varpar_paramlin_test
+
+% Simulink
+%RN%_fdyn_fixb_test_mp_start
+%RN%_fdyn_fixb_test_vp1_start
+
+robot_compile_test

@@ -80,10 +80,9 @@ source $repo_pfad/robot_codegen_scripts/testfunctions_generate.sh
 # Matlab-Testfunktionen starten
 if [ ! "$CG_FIXBONLY" == "1" ]; then
   matlab -nodesktop -nosplash -r "run('$repo_pfad/robot_codegen_testfunctions/${robot_name}_test_everything');quit;"
+else
+  matlab -nodesktop -nosplash -r "run('$repo_pfad/robot_codegen_testfunctions/${robot_name}_test_everything_fixbase');quit;"  
 fi;
 
-if [ "$CG_FIXBONLY" == "1" ]; then
-  echo "Funktionsgenerierung abgeschlossen. Gesamt-Test aller Matlab-Funktionen noch nicht implementiert. Für Einzeltests, siehe robot_codegen_testfunctions/${robot_name}_test_everything.m"
-else
-  echo "Funktionsgenerierung abgeschlossen. Alle Tests erfolgreich."
-fi;
+echo "Funktionsgenerierung abgeschlossen. Alle Tests erfolgreich."
+
