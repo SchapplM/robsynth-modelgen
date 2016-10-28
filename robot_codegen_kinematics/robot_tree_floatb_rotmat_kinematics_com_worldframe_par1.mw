@@ -89,8 +89,8 @@
         <Metadata-attribute name="Subject" value="&lt;default&gt;"/>
         <Metadata-attribute name="Author" value="&lt;default&gt;"/>
         <Metadata-attribute name="Item List" value="true"/>
-        <Metadata-attribute name="Keywords" value="&lt;default&gt;"/>
         <Metadata-attribute name="Title" value="&lt;default&gt;"/>
+        <Metadata-attribute name="Keywords" value="&lt;default&gt;"/>
     </Metadata-tag>
 </Metadata-table>
 <Task-table>
@@ -236,8 +236,7 @@ end do:</Text-field>
 </Group>
 <Group labelreference="L1669" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save mr_W_i_Si, r_W_W_Si, r_W_i_Si, sprintf(&quot;../codeexport/%s_kinematics_com_worldframe_floatb_%s_par1_maple&quot;, robot_name, base_method_name):
-save mr_W_i_Si, r_W_W_Si, r_W_i_Si, sprintf(&quot;../codeexport/%s_kinematics_com_worldframe_floatb_%s_par1_maple.m&quot;, robot_name, base_method_name):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save mr_W_i_Si, r_W_W_Si, r_W_i_Si, sprintf(&quot;../codeexport/%s_kinematics_com_worldframe_floatb_%s_par1_maple.m&quot;, robot_name, base_method_name):
 <Font encoding="UTF-8">printf(&quot;Maple-Ausdr\303\274cke exportiert.\134n&quot;):</Font></Text-field>
 </Input>
 </Group>

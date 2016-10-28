@@ -89,8 +89,8 @@
         <Metadata-attribute name="Subject" value="&lt;default&gt;"/>
         <Metadata-attribute name="Author" value="&lt;default&gt;"/>
         <Metadata-attribute name="Item List" value="true"/>
-        <Metadata-attribute name="Keywords" value="&lt;default&gt;"/>
         <Metadata-attribute name="Title" value="&lt;default&gt;"/>
+        <Metadata-attribute name="Keywords" value="&lt;default&gt;"/>
     </Metadata-tag>
 </Metadata-table>
 <Task-table>
@@ -308,8 +308,7 @@ end do:</Text-field>
 </Group>
 <Group labelreference="L1676" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save omega_i_i, rD_i_i, sprintf(&quot;../codeexport/%s_velocity_linkframe_floatb_%s_maple&quot;, robot_name, base_method_name):
-save omega_i_i, rD_i_i, sprintf(&quot;../codeexport/%s_velocity_linkframe_floatb_%s_maple.m&quot;, robot_name, base_method_name):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save omega_i_i, rD_i_i, sprintf(&quot;../codeexport/%s_velocity_linkframe_floatb_%s_maple.m&quot;, robot_name, base_method_name):
 <Font encoding="UTF-8">printf(&quot;Maple-Ausdr\303\274cke exportiert. %s\134n&quot;, </Font>FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Text-field>
 </Input>
 </Group>

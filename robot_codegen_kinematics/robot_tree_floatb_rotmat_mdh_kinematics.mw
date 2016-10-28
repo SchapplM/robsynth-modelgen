@@ -348,8 +348,7 @@ end do:</Text-field>
 </Group>
 <Group labelreference="L1587" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save Trf, Trf_c, sprintf(&quot;../codeexport/%s_kinematics_floatb_%s_rotmat_maple.m&quot;, robot_name, base_method_name):
-save Trf, Trf_c, sprintf(&quot;../codeexport/%s_kinematics_floatb_%s_rotmat_maple&quot;, robot_name, base_method_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save Trf, Trf_c, sprintf(&quot;../codeexport/%s_kinematics_floatb_%s_rotmat_maple.m&quot;, robot_name, base_method_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1592" drawlabel="true">

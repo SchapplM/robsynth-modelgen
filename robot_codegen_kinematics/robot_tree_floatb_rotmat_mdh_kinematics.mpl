@@ -119,7 +119,6 @@ end do:
 # Export
 # Maple-Export
 save Trf, Trf_c, sprintf("../codeexport/%s_kinematics_floatb_%s_rotmat_maple.m", robot_name, base_method_name):
-save Trf, Trf_c, sprintf("../codeexport/%s_kinematics_floatb_%s_rotmat_maple", robot_name, base_method_name):
 # Export des symbolischen Ausdrucks für alle kumulierten Transformationsmatrizen auf einmal.
 Trf_c_Export := Matrix((NL)*4, 4):
 for i from 1 to NL do 

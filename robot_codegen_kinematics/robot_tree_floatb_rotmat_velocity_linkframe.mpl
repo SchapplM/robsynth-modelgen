@@ -92,7 +92,6 @@ for i from 1 to NJ do # Gelenke durchgehen
 end do:
 # Export
 # Maple Export
-save omega_i_i, rD_i_i, sprintf("../codeexport/%s_velocity_linkframe_floatb_%s_maple", robot_name, base_method_name):
 save omega_i_i, rD_i_i, sprintf("../codeexport/%s_velocity_linkframe_floatb_%s_maple.m", robot_name, base_method_name):
 printf("Maple-Ausdrücke exportiert. %s\n", FormatTime("%Y-%m-%d %H:%M:%S")):
 # Matlab Export

@@ -64,7 +64,6 @@ for i to NL do
   printf("Schwerpunktsposition in Weltkoordinaten für Körper %d aufgestellt.\n", i):
 end do:
 # Maple Export
-save mr_W_i_Si, r_W_W_Si, r_W_i_Si, sprintf("../codeexport/%s_kinematics_com_worldframe_floatb_%s_par1_maple", robot_name, base_method_name):
 save mr_W_i_Si, r_W_W_Si, r_W_i_Si, sprintf("../codeexport/%s_kinematics_com_worldframe_floatb_%s_par1_maple.m", robot_name, base_method_name):
 printf("Maple-Ausdrücke exportiert.\n"):
 # Matlab-Export
