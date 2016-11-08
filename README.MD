@@ -285,7 +285,7 @@ Teil 5: Regressorform.
 Um die gewünschte Größe zu erhalten, muss der ausgegebene Regressorvektor bzw. -Matrix mit dem Parametervektor multipliziert werden.
 
 * regmin (Regressor basierend auf Minimalparametern)
-* regpar2 (Regressor basierend auf Parametersatz 2)
+* reg2 (Regressor basierend auf Parametersatz 2)
 
 Teil 6: Berechnungskennung
 

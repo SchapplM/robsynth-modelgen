@@ -16,8 +16,20 @@ testfunctions_path_init
 %% Parameter
 %RN%_varpar_testfunctions_parameter
 
+% Minimalparametervektor
 MPV = %RN%_convert_par2_MPV(alpha, a, d, q_offset, b, beta, ...
   m, mrSges, Ifges);
+
+% Vektor mit Inertialparametern
+PV2 = NaN(10*NJ,1);
+for i = 1:NJ
+  % different order:
+  % Ifges_num_mdh: XX,YY,ZZ,XY,XZ,YZ
+  % PV2: XX,XY,XZ,YY,YZ,ZZ
+  PV2((1:6) +10*(i-1)) = Ifges(i+1,[1,4,5,2,6,3]);
+  PV2((1:3) +10*(i-1)+6) = mrSges(i+1,:);
+  PV2(10*i) = m(i+1);
+end
 %% Test kinetic Energy
 for i = 1:n
   q = Q(i,:)';
@@ -25,12 +37,19 @@ for i = 1:n
   % calculate kinetic energy with optimized function
   T_func = %RN%_energykin_fixb_slag_vp1(q, qD, ...
     alpha, a, d, q_offset, b, beta, m, rSges, Icges);
-  % calculate kinetic energy with regressor
-  t_reg = %RN%_energykin_fixb_regmin_slag_vp(q, qD, ...
+  % calculate kinetic energy with minimal parameter regressor
+  t_regmin = %RN%_energykin_fixb_regmin_slag_vp(q, qD, ...
     alpha, a, d, q_offset, b, beta);
-  T_mpv = t_reg*MPV;
+  T_mpv = t_regmin*MPV;
   if abs(T_mpv-T_func) > 1e-12
     error('Kinetic Energy from base parameter vector does not match with direct form.');
+  end
+  
+  t_reg2 = %RN%_energykin_fixb_reg2_slag_vp(q, qD, ...
+    alpha, a, d, q_offset, b, beta);
+  T_pv2 = t_reg2*PV2;
+  if abs(T_pv2-T_func) > 1e-12
+    error('Kinetic Energy from inertial parameter vector does not match with direct form.');
   end
 end
 fprintf('Tested kinetic energy for %d random joint angles for %s\n', ...
@@ -46,16 +65,28 @@ for i = 1:n
     alpha, a, d, q_offset, b, beta, m, rSges);
   U_func0 = %RN%_energypot_fixb_slag_vp1(zeros(NJ,1), g_base, ...
     alpha, a, d, q_offset, b, beta, m, rSges);
-  % calculate potential energy with regressor
-  u_reg = %RN%_energypot_fixb_regmin_slag_vp(q, g_base, ...
+  
+  % calculate potential energy with minimal regressor
+  u_regmin = %RN%_energypot_fixb_regmin_slag_vp(q, g_base, ...
     alpha, a, d, q_offset, b, beta);
-  u_reg0 = %RN%_energypot_fixb_regmin_slag_vp(zeros(NJ,1), g_base, ...
+  u_regmin0 = %RN%_energypot_fixb_regmin_slag_vp(zeros(NJ,1), g_base, ...
     alpha, a, d, q_offset, b, beta);
-  U_mpv = u_reg*MPV;
-  U_mpv0 = u_reg0*MPV;
+  U_mpv = u_regmin*MPV;
+  U_mpv0 = u_regmin0*MPV;
   if abs((U_mpv-U_mpv0)-(U_func-U_func0)) > 1e-12
     error('Potential Energy from base parameter vector does not match with direct form.');
   end
+  
+  % calculate potential energy with inertial parameters regressor
+  u_reg2 = %RN%_energypot_fixb_reg2_slag_vp(q, g_base, ...
+    alpha, a, d, q_offset, b, beta);
+  u_reg20 = %RN%_energypot_fixb_reg2_slag_vp(zeros(NJ,1), g_base, ...
+    alpha, a, d, q_offset, b, beta);
+  U_pv2 = u_reg2*PV2;
+  U_pv20 = u_reg20*PV2;
+  if abs((U_pv2-U_pv20)-(U_func-U_func0)) > 1e-12
+    error('Potential Energy from inertial parameter vector does not match with direct form.');
+  end  
 end
 fprintf('Tested potential energy for %d random joint angles for %s\n', ...
   n, robot_name);
@@ -67,12 +98,20 @@ for i = 1:n
   % calculate gravitational load with optimized function
   taug_func = %RN%_gravload_joint_floatb_twist_slag_vp1(q, g_base, ...
     alpha, a, d, q_offset, b, beta, m, rSges);
-  % calculate gravitational load with regressor
-  taug_reg = %RN%_gravload_joint_regmin_slag_vp(q, g_base, ...
+  % calculate gravitational load with base parameter regressor
+  taug_regmin = %RN%_gravload_joint_regmin_slag_vp(q, g_base, ...
     alpha, a, d, q_offset, b, beta);
-  taug_mpv = taug_reg*MPV;
+  taug_mpv = taug_regmin*MPV;
   if abs(taug_mpv-taug_func) > 1e-12
     error('Gravitation joint torque from base parameter vector does not match with direct form.');
+  end
+  
+  % calculate gravitational load with inertial parameter regressor
+  taug_reg2 = %RN%_gravload_joint_reg2_slag_vp(q, g_base, ...
+    alpha, a, d, q_offset, b, beta);
+  taug_pv2 = taug_reg2*PV2;
+  if abs(taug_pv2-taug_func) > 1e-12
+    error('Gravitation joint torque from inertial parameter vector does not match with direct form.');
   end
 end
 fprintf('Tested gravitation joint torque for %d random joint angles for %s\n', ...
@@ -85,12 +124,20 @@ for i = 1:n
   % calculate coriolis torques with optimized function
   tauc_func = %RN%_coriolisvec_joint_fixb_slag_vp1(q, qD, ...
     alpha, a, d, q_offset, b, beta, m, rSges, Icges);
-  % calculate coriolis torques with regressor
-  tauc_reg = %RN%_coriolisvec_joint_fixb_regmin_slag_vp(q, qD, ...
+  % calculate coriolis torques with base parameter regressor
+  tauc_regmin = %RN%_coriolisvec_joint_fixb_regmin_slag_vp(q, qD, ...
     alpha, a, d, q_offset, b, beta);
-  tauc_mpv = tauc_reg*MPV;
+  tauc_mpv = tauc_regmin*MPV;
   if abs(tauc_mpv-tauc_func) > 1e-12
     error('Coriolis joint torque from base parameter vector does not match with direct form.');
+  end
+  
+  % calculate coriolis torques with inertial parameter regressor
+  tauc_reg2 = %RN%_coriolisvec_joint_fixb_reg2_slag_vp(q, qD, ...
+    alpha, a, d, q_offset, b, beta);
+  tauc_pv2 = tauc_reg2*PV2;
+  if abs(tauc_mpv-tauc_func) > 1e-12
+    error('Coriolis joint torque from inertial parameter vector does not match with direct form.');
   end
 end
 fprintf('Tested Coriolis joint torque for %d random joint angles for %s\n', ...
@@ -103,13 +150,22 @@ for i = 1:n
   % calculate Coriolis-Matrix with optimized function
   Cq_func = %RN%_coriolismat_joint_fixb_slag_vp1(q, qD, ...
     alpha, a, d, q_offset, b, beta, m, rSges, Icges);
-  % calculate Coriolis-Matrix with regressor
-  Cq_reg = %RN%_coriolismat_joint_fixb_regmin_slag_vp(q, qD, ...
+  % calculate Coriolis-Matrix with base parameter regressor
+  Cq_regmin = %RN%_coriolismat_joint_fixb_regmin_slag_vp(q, qD, ...
     alpha, a, d, q_offset, b, beta);
-  Cq_mpv_vec = Cq_reg*MPV;
+  Cq_mpv_vec = Cq_regmin*MPV;
   Cq_mpv = vec2symmat(Cq_mpv_vec);
   if abs(Cq_func(:)-Cq_mpv(:)) > 1e-12
     error('Coriolis matrix from base parameter vector does not match with direct form.');
+  end
+  
+  % calculate Coriolis-Matrix with inertial parameter regressor
+  Cq_reg2 = %RN%_coriolismat_joint_fixb_reg2_slag_vp(q, qD, ...
+    alpha, a, d, q_offset, b, beta);
+  Cq_pv2_vec = Cq_reg2*PV2;
+  Cq_pv2 = vec2symmat(Cq_pv2_vec);
+  if abs(Cq_func(:)-Cq_pv2(:)) > 1e-12
+    error('Coriolis matrix from inertial parameter vector does not match with direct form.');
   end
 end
 fprintf('Tested Coriolis matrix for %d random joint angles for %s\n', ...
@@ -121,13 +177,21 @@ for i = 1:n
   % calculate inertia with optimized function
   Mq_func = %RN%_inertia_joint_slag_vp1(q, ...
     alpha, a, d, q_offset, b, beta, m, rSges, Icges);
-  % calculate inertia with regressor
-  Mq_reg = %RN%_inertia_joint_regmin_slag_vp(q, ...
+  % calculate inertia with base parameter regressor
+  Mq_regmin = %RN%_inertia_joint_regmin_slag_vp(q, ...
     alpha, a, d, q_offset, b, beta);
-  Mq_mpv_vec = Mq_reg*MPV;
+  Mq_mpv_vec = Mq_regmin*MPV;
   Mq_mpv = vec2symmat(Mq_mpv_vec);
   if abs(Mq_func(:)-Mq_mpv(:)) > 1e-12
     error('Joint inertia matrix from base parameter vector does not match with direct form.');
+  end
+  % calculate inertia with inertial parameter regressor
+  Mq_reg2 = %RN%_inertia_joint_reg2_slag_vp(q, ...
+    alpha, a, d, q_offset, b, beta);
+  Mq_pv2_vec = Mq_reg2*PV2;
+  Mq_pv2 = vec2symmat(Mq_mpv_vec);
+  if abs(Mq_func(:)-Mq_pv2(:)) > 1e-12
+    error('Joint inertia matrix from inertial parameter vector does not match with direct form.');
   end
 end
 fprintf('Tested Joint inertia matrix for %d random joint angles for %s\n', ...
@@ -140,14 +204,22 @@ for i = 1:n
   % calculate inertia time derivative with optimized function
   MqD_func = %RN%_inertiaD_joint_slag_vp1(q, qD, ...
     alpha, a, d, q_offset, b, beta, m, rSges, Icges);
-  % calculate inertia time derivative with regressor
-  MqD_reg = %RN%_inertiaD_joint_regmin_slag_vp(q, qD, ...
+  % calculate inertia time derivative with base parameter regressor
+  MqD_regmin = %RN%_inertiaD_joint_regmin_slag_vp(q, qD, ...
     alpha, a, d, q_offset, b, beta);
-  MqD_mpv_vec = MqD_reg*MPV;
+  MqD_mpv_vec = MqD_regmin*MPV;
   MqD_mpv = vec2symmat(MqD_mpv_vec);
   if abs(MqD_func(:)-MqD_mpv(:)) > 1e-12
     error('Joint inertia matrix time derivative from base parameter vector does not match with direct form.');
   end
+  % calculate inertia time derivative with inertial parameter regressor
+  MqD_reg2 = %RN%_inertiaD_joint_reg2_slag_vp(q, qD, ...
+    alpha, a, d, q_offset, b, beta);
+  MqD_pv2_vec = MqD_reg2*PV2;
+  MqD_pv2 = vec2symmat(MqD_pv2_vec);
+  if abs(MqD_func(:)-MqD_pv2(:)) > 1e-12
+    error('Joint inertia matrix time derivative from inertial parameter vector does not match with direct form.');
+  end  
 end
 fprintf('Tested Joint inertia matrix time derivative for %d random joint angles for %s\n', ...
   n, robot_name);
@@ -162,14 +234,22 @@ for i = 1:n
   % calculate inverse dynamics with optimized function
   tau_func = %RN%_invdyn_fixb_slag_vp1(q, qD, qDD, g_base, ...
     alpha, a, d, q_offset, b, beta, m, rSges, Icges);
-  % calculate inverse dynamics with regressor
-  tau_reg = %RN%_invdyn_joint_fixb_regmin_slag_vp(q, qD, qDD, g_base, ...
+  % calculate inverse dynamics with base parameter regressor
+  tau_regmin = %RN%_invdyn_joint_fixb_regmin_slag_vp(q, qD, qDD, g_base, ...
     alpha, a, d, q_offset, b, beta);
-  tau_mpv = tau_reg*MPV;
+  tau_mpv = tau_regmin*MPV;
   if abs(tau_func-tau_mpv) > 1e-12
     error('Inverse dynamics from base parameter vector does not match with direct form.');
+  end
+  % calculate inverse dynamics with inertial parameter regressor
+  tau_reg2 = %RN%_invdyn_joint_fixb_reg2_slag_vp(q, qD, qDD, g_base, ...
+    alpha, a, d, q_offset, b, beta);
+  tau_pv2 = tau_reg2*PV2;
+  if abs(tau_func-tau_pv2) > 1e-12
+    error('Inverse dynamics from inertial parameter vector does not match with direct form.');
   end
 end
 fprintf('Tested inverse dynamics for %d random joint angles for %s\n', ...
   n, robot_name);
+
 

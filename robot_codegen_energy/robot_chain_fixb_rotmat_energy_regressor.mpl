@@ -59,12 +59,22 @@ end do:
 # Parameterlinearisierung
 # Parameterlinearisierung auf Basis von [HRL_IDR] (14) und (15)
 # Linearisierung
-t_ges := Matrix(1, 10*NL):
-u_ges := Matrix(1, 10*NL):
-for i to 10*NL do 
-  t_ges[1,i] := diff(T_fixb,PV2_vec[i,1]);
-  u_ges[1,i] := diff(U_fixb,PV2_vec[i,1]);
+t_ges := Matrix(1, 10*NJ):
+u_ges := Matrix(1, 10*NJ):
+for i to 10*NJ do 
+  t_ges[1,i] := diff(T_fixb,PV2_vec[10+i,1]);
+  u_ges[1,i] := diff(U_fixb,PV2_vec[10+i,1]);
 end do: 
+# Export
+save t_ges, sprintf("../codeexport/%s_energy_kinetic_fixb_regressor_maple.m", robot_name):
+save u_ges, sprintf("../codeexport/%s_energy_potential_fixb_regressor_maple.m", robot_name):
+if codegen_act then
+  MatlabExport(convert_t_s(t_ges), sprintf("../codeexport/%s_energy_kinetic_fixb_regressor_matlab.m", robot_name), codegen_opt):
+end if:
+if codegen_act then
+  MatlabExport(convert_t_s(u_ges), sprintf("../codeexport/%s_energy_potential_fixb_regressor_matlab.m", robot_name), codegen_opt):
+end if:
+
 # Parameterminimierung
 # Minimalparametervekor
 # Definiere Parametermatrix
@@ -100,21 +110,21 @@ printf("The following parameters don't have any effect:\n"):
 
 for i to 10*NJ do 
   effect := 0:
-  if not (t_ges[1,10+i]=0) then
-    # printf("t_ges[1,%d] not Null\n", 10+i):
+  if not (t_ges[1,i]=0) then
+    # printf("t_ges[1,%d] not Null\n", i):
     effect := 1:
   else
     for j to NJ do
-      if has(u_ges[1,10+i],{qJ_t(j,1)}) then
-        # printf("u_ges[1,%d] not constant\n", 10+i):
+      if has(u_ges[1,i],{qJ_t(j,1)}) then
+        # printf("u_ges[1,%d] not constant\n", i):
         effect := 1:
         break:
       end if:
     end do:
   end if:
   if effect = 0 then
-       t_ges[1,10+i] := REMOVE:
-       u_ges[1,10+i] := REMOVE:
+       t_ges[1,i] := REMOVE:
+       u_ges[1,i] := REMOVE:
 
        if `mod`(i, 10) = 1 then XX[trunc((1/10)*i)+1, 1] := 0; printf("XX%d \n", trunc((1/10)*i)+1+1) end if:
        if `mod`(i, 10) = 2 then XY[trunc((1/10)*i)+1, 1] := 0; printf("XY%d \n", trunc((1/10)*i)+1+1) end if:
@@ -177,20 +187,20 @@ end if;
 # [GautierKhalil1990], p.369
 for i from 0 to NJ-1 do 
 
-   t_ges[1,10+i*10+ 4]:=REMOVE;
-   t_ges[1,10+i*10+ 9]:=REMOVE;
-   t_ges[1,10+i*10+10]:=REMOVE;
+   t_ges[1,i*10+ 4]:=REMOVE;
+   t_ges[1,i*10+ 9]:=REMOVE;
+   t_ges[1,i*10+10]:=REMOVE;
 
-   u_ges[1,10+i*10+ 4]:=REMOVE;
-   u_ges[1,10+i*10+ 9]:=REMOVE;
-   u_ges[1,10+i*10+10]:=REMOVE;
+   u_ges[1,i*10+ 4]:=REMOVE;
+   u_ges[1,i*10+ 9]:=REMOVE;
+   u_ges[1,i*10+10]:=REMOVE;
 
 end do: 
 # Entfernungen von markierten Elementen
 # Durch Entfernung der markierten Elemente, äquivalent zum Minimalparametervektor beta_b, haben t und u die gleiche Spaltenanzahl wie 'C_b'.
 p:=0:
 for i from 1 to 10*NJ do       #Nullen Zählen um die Matrixgröße von t_ges zu bestimmen   
-  if t_ges[1,10+i]=REMOVE and u_ges[1,10+i]=REMOVE then       
+  if t_ges[1,i]=REMOVE and u_ges[1,i]=REMOVE then       
     p:=p+1;
   end if
 end do: 
@@ -201,11 +211,11 @@ printf("Dimension der Regressormatrix: 1x%d\n", size_Matrix):
 
 p:=0:
 for i from 1 to 10*NJ do       #Nullen Zählen     
-   if t_ges[1,10+i]=REMOVE and u_ges[1,10+i]=REMOVE then       
+   if t_ges[1,i]=REMOVE and u_ges[1,i]=REMOVE then       
       p:=p+1; 
    else 
-      t_ges_minpar[1,i-p]:=t_ges[1,10+i]; #Um die Anzahl der im Iterationsschritt gezählten Nullen verschieben
-      u_ges_minpar[1,i-p]:=u_ges[1,10+i]; #Um die Anzahl der im Iterationsschritt gezählten Nullen verschieben
+      t_ges_minpar[1,i-p]:=t_ges[1,i]; #Um die Anzahl der im Iterationsschritt gezählten Nullen verschieben
+      u_ges_minpar[1,i-p]:=u_ges[1,i]; #Um die Anzahl der im Iterationsschritt gezählten Nullen verschieben
    end if
 end do: 
 save t_ges_minpar, sprintf("../codeexport/%s_energy_kinetic_fixb_regressor_minpar_maple.m", robot_name):

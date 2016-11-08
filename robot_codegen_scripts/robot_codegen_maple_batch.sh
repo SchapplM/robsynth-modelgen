@@ -75,7 +75,8 @@ dateiliste_kindyn="$dateiliste_kindyn
 # Skripte für Regressorform
 dateiliste_kindyn="$dateiliste_kindyn
     /robot_codegen_energy/robot_chain_fixb_rotmat_energy_regressor.mpl
-    /robot_codegen_dynamics/robot_chain_fixb_rotmat_dynamics_regressor.mpl
+    /robot_codegen_dynamics/robot_chain_fixb_rotmat_dynamics_regressor_pv2.mpl
+    /robot_codegen_dynamics/robot_chain_fixb_rotmat_dynamics_regressor_minpar.mpl
 "
 
 # Initialisiere zusätzliche Maple-Skripte speziell für dieses System (benutzerdefiniert)

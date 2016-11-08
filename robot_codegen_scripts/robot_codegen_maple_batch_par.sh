@@ -172,15 +172,23 @@ echo "FERTIG mit Jacobi-Matrizen"
 
 dateiliste_plin="
   /robot_codegen_energy/robot_chain_fixb_rotmat_energy_regressor.mpl
-  /robot_codegen_dynamics/robot_chain_fixb_rotmat_dynamics_regressor.mpl
+  /robot_codegen_dynamics/robot_chain_fixb_rotmat_dynamics_regressor_pv2.mpl
+  /robot_codegen_dynamics/robot_chain_fixb_rotmat_dynamics_regressor_minpar.mpl
 "
+erster=1 # Merker für ersten Durchlauf von plin
 for wsplin in ${dateiliste_plin[@]}
 do
   mpldat_full=$repo_pfad/$wsplin
   filename="${mpldat_full##*/}"
   dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
-  nice -n 10 ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";"
+  if [ $erster == 1 ]; then
+    nice -n 10 ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";"
+    erster=0 # nicht parallel, die folgenden Skripte sind hiervon abhängig
+  else # parallel ausführen
+    nice -n 10 ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
 done
+wait
+echo "FERTIG mit Regressorform"
 
 if [ -f $addlistfile ]; then
   for wsadd in ${dateiliste_add[@]}
