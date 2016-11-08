@@ -79,13 +79,15 @@ cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
 
 # Werte für kinematische Zwangsbedingungen in Parameter-Generierungsskript eintragen
 # Setzt auch Zahlenwerte für die Kinematikparameter der MDH-Notation, falls gegeben.
+KCP_dat1=$repo_pfad/robot_codegen_constraints/${robot_name}_kinematic_parameter_values.m
+if [ -f $KCP_dat1 ]; then
+  printf "\n%%%% Werte für kinematische Zwangsbedingungen direkt eintragen\n" >> $zieldat
+  printf "\n%% Aus ${robot_name}_kinematic_parameter_values.m\n" >> $zieldat
+  cat $KCP_dat1 >> $zieldat
+fi
 if [ "$robot_kinconstr_exist" == "1" ]; then
-  KCP_dat1=$repo_pfad/robot_codegen_constraints/${robot_name}_kinematic_parameter_values.m
   KCP_dat2=$repo_pfad/codeexport/${robot_name}_kinematic_constraints_symbols_list_matlab.m
-  if [ -f $KCP_dat1 ] && [ -f $KCP_dat2 ]; then
-    printf "\n%%%% Werte für kinematische Zwangsbedingungen direkt eintragen\n" >> $zieldat
-    printf "\n%% Aus ${robot_name}_kinematic_parameter_values.m\n" >> $zieldat
-    cat $KCP_dat1 >> $zieldat
+  if [ -f $KCP_dat2 ]; then
     printf "\n%% Aus ${robot_name}_kinematic_constraints_symbols_list_matlab.m\n" >> $zieldat
     cat $KCP_dat2 >> $zieldat
     varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
