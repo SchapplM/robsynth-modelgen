@@ -1,0 +1,19 @@
+# Beispiel für Codegenerierung:
+# LWR4
+# Quelle für Kinematik:
+# [DeLuca_Rob1] http://www.diag.uniroma1.it/~deluca/rob1_en/09_DirectKinematics.pdf
+# Die letzte Verschiebung (d7=78mm) ist im Modell nicht enthalten (ist für Dynamik irrelevant).
+
+robot_name := "lwr4p":
+NJ := 7:
+NQJ := 7:
+
+qoffset := Matrix(7,1,[0,0,0,0,0,0]):
+alpha := Matrix(7,1,[0,Pi/2,-Pi/2,-Pi/2,Pi/2,Pi/2,-Pi/2]):
+d := Matrix(7,1,[d1,0,d3,0,d5,0,0]):
+a := Matrix(7,1,[0,0,0,0,0,0,0]):
+v := Matrix(7,1,[0, 1, 2, 3, 4, 5, 6]):
+b := Matrix(7,1,[0, 0, 0, 0, 0, 0]):
+beta := Matrix(7,1,[0, 0, 0, 0, 0, 0]):
+
+theta := qJ_t+qoffset:
