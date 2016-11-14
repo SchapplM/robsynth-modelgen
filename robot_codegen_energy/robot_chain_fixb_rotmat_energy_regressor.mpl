@@ -32,15 +32,6 @@ codegen_opt := 2:
 read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s": 
 read "../helper/proc_MatlabExport":
-read "../helper/proc_LagrangeN":
-read "../transformation/proc_rotx": 
-read "../transformation/proc_roty": 
-read "../transformation/proc_rotz": 
-read "../transformation/proc_trotx": 
-read "../transformation/proc_troty": 
-read "../transformation/proc_trotz": 
-read "../transformation/proc_transl": 
-read "../transformation/proc_trafo_mdh": 
 read "../robot_codegen_definitions/robot_env":
 printf("Generiere Minimalparameterregressor der Energie für %s\n", robot_name, codegen_dynpar):
 read sprintf("../codeexport/%s/tree_floatb_definitions", robot_name, base_method_name):

@@ -161,20 +161,7 @@ codegen_opt := 2:</Text-field>
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_convert_s_t&quot;:
 read &quot;../helper/proc_convert_t_s&quot;: 
-read &quot;../helper/proc_MatlabExport&quot;:
-read &quot;../helper/proc_LagrangeN&quot;:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1772" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../transformation/proc_rotx&quot;: 
-read &quot;../transformation/proc_roty&quot;: 
-read &quot;../transformation/proc_rotz&quot;: 
-read &quot;../transformation/proc_trotx&quot;: 
-read &quot;../transformation/proc_troty&quot;: 
-read &quot;../transformation/proc_trotz&quot;: 
-read &quot;../transformation/proc_transl&quot;: 
-read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
+read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1769" drawlabel="true">
