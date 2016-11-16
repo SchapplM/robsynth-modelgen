@@ -192,7 +192,7 @@ end if:
 # [KhalilDombre2002], equ. (9.7) (p. 195)
 cijk := proc (i::integer, j::integer, k::integer, A, qs)
   local c:
-  c := (1/2)*(diff(A[i, j], q_s(k, 1)))+(1/2)*(diff(A[i, k], q_s(j, 1)))-(1/2)*(diff(A[j, k], q_s(i, 1))):
+  c := (1/2)*(diff(A[i, j], qs(k, 1)))+(1/2)*(diff(A[i, k], qs(j, 1)))-(1/2)*(diff(A[j, k], qs(i, 1))):
   return c:
 end proc:
 Cqs:=Matrix(NQ,NQ): 
