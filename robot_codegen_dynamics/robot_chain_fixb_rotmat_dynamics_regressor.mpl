@@ -125,38 +125,35 @@ end if:
 # Funktion zur Anwendung des Algorithmus aus [KhalilDombre2002]:
 cijk := proc (i::integer, j::integer, k::integer, A, qs)
   local c:
-  c := (1/2)*(diff(A[i, j], q_s(k, 1)))+(1/2)*(diff(A[i, k], q_s(j, 1)))-(1/2)*(diff(A[j, k], q_s(i, 1))):
+  c := (1/2)*(diff(A[i, j], qs(k, 1)))+(1/2)*(diff(A[i, k], qs(j, 1)))-(1/2)*(diff(A[j, k], qs(i, 1))):
   return c:
 end proc:
-# Initialisierung. Speichere nur den unteren linken Teil der Matrix als Regressorform (siehe Vorgehen bei der Massenmatrix)
-Cjj_regressor_s := Matrix(NQJ*(NQJ+1)/2, Paramvec_size):
+# Initialisierung. Speichere die vollständige Coriolismatrix (nicht symmetrisch/schiefsymmetrisch). Unterschied zum Vorgehen bei der Massenmatrix
+Cjj_regressor_s := Matrix(NQJ*NQJ, Paramvec_size):
 # Berechnung
 i_rr := 0: # Vektor-Index für den Regressor der Coriolismatrix (Ausgabe)
 for i to NQJ do # Zeilenindex der Coriolismatrix
   for j to NQJ do  # Spaltenindex der Coriolismatrix
-    if j > i then
-      next: # rechte obere Seite der symmetrischen Matrix. Keine neue Information. Nicht berechnen oder speichern.
-    end if:
     i_rr := i_rr + 1: # Gehe zeilenweise durch den unteren linken Teil der Coriolismatrix (inkl. Diagonale)
-    for k to Paramvec_size do # Spaltenindex der Regressormatrix
+    for k from 1 to Paramvec_size do # Spaltenindex der Regressormatrix
       # Massenmatrix für Parameter k generieren (für Funktion mit Christoffel-Symbol-Ansatz benötigt)
       MM_jj_k := Matrix(NQJ,NQJ):
       for ii from 1 to NQJ do
         for jj from 1 to NQJ do
-          MM_jj_k := MMjj_regressor_s(index_symmat2vec(NQJ, ii, jj), k):
+          MM_jj_k(ii,jj) := MMjj_regressor_s(index_symmat2vec(NQJ, ii, jj), k):
         end do:
       end do:
       for l from 1 to NQJ do # Siehe [KhalilDombre2002]
-        Cjj_regressor_s[i_rr, k] := Cjj_regressor_s[i_rr, k]+cijk(i,j,l,MM_jj_k,qJ_s)*qJD_s[l,1]:
+        Cjj_regressor_s[i_rr, k] := Cjj_regressor_s[i_rr,k] + cijk(i,j,l,MM_jj_k,qJ_s)*qJD_s[l,1]:
       end do:
     end do:
   end do:
 end do:
+save Cjj_regressor_s, sprintf("../codeexport/%s_coriolismat_joint_fixb_%s_maple.m", robot_name, regressor_modus):
 # Matlab Export: Fixed base
 if codegen_act then
   MatlabExport(Cjj_regressor_s, sprintf("../codeexport/%s_coriolismat_joint_fixb_%s_matlab.m", robot_name, regressor_modus), codegen_opt):
 end if:
-
 # Inverse Dynamics
 # Generate
 tau_regressor_s := dTdqDdt_s-dTdq_s+dUdq_s:

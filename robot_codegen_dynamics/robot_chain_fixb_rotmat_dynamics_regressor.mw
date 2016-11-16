@@ -405,19 +405,19 @@ end if:</Text-field>
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">cijk := proc (i::integer, j::integer, k::integer, A, qs)
   local c:
-  c := (1/2)*(diff(A[i, j], q_s(k, 1)))+(1/2)*(diff(A[i, k], q_s(j, 1)))-(1/2)*(diff(A[j, k], q_s(i, 1))):
+  c := (1/2)*(diff(A[i, j], qs(k, 1)))+(1/2)*(diff(A[i, k], qs(j, 1)))-(1/2)*(diff(A[j, k], qs(i, 1))):
   return c:
 end proc:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1732" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal">Initialisierung. Speichere nur den unteren linken Teil der Matrix als Regressorform (siehe Vorgehen bei der Massenmatrix)</Text-field>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Initialisierung. Speichere die vollst\303\244ndige Coriolismatrix (nicht symmetrisch/schiefsymmetrisch). Unterschied zum Vorgehen bei der Massenmatrix</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1723" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Cjj_regressor_s := Matrix(NQJ*(NQJ+1)/2, Paramvec_size):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Cjj_regressor_s := Matrix(NQJ*NQJ, Paramvec_size):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1724" drawlabel="true">
@@ -430,24 +430,26 @@ end proc:</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">i_rr := 0: # Vektor-Index f\303\274r den Regressor der Coriolismatrix (Ausgabe)
 </Font>for i to NQJ do # Zeilenindex der Coriolismatrix
   for j to NQJ do  # Spaltenindex der Coriolismatrix
-    if j &gt; i then
-      next: # rechte obere Seite der symmetrischen Matrix. Keine neue Information. Nicht berechnen oder speichern.
-    end if:
     i_rr := i_rr + 1: # Gehe zeilenweise durch den unteren linken Teil der Coriolismatrix (inkl. Diagonale)
-    for k to Paramvec_size do # Spaltenindex der Regressormatrix
+    for k from 1 to Paramvec_size do # Spaltenindex der Regressormatrix
 <Font encoding="UTF-8">      # Massenmatrix f\303\274r Parameter k generieren (f\303\274r Funktion mit Christoffel-Symbol-Ansatz ben\303\266tigt)
 </Font>      MM_jj_k := Matrix(NQJ,NQJ):
       for ii from 1 to NQJ do
         for jj from 1 to NQJ do
-          MM_jj_k := MMjj_regressor_s(index_symmat2vec(NQJ, ii, jj), k):
+          MM_jj_k(ii,jj) := MMjj_regressor_s(index_symmat2vec(NQJ, ii, jj), k):
         end do:
       end do:
       for l from 1 to NQJ do # Siehe [KhalilDombre2002]
-        Cjj_regressor_s[i_rr, k] := Cjj_regressor_s[i_rr, k]+cijk(i,j,l,MM_jj_k,qJ_s)*qJD_s[l,1]:
+        Cjj_regressor_s[i_rr, k] := Cjj_regressor_s[i_rr,k] + cijk(i,j,l,MM_jj_k,qJ_s)*qJD_s[l,1]:
       end do:
     end do:
   end do:
 end do:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1766" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save Cjj_regressor_s, sprintf(&quot;../codeexport/%s_coriolismat_joint_fixb_%s_maple.m&quot;, robot_name, regressor_modus):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1610" drawlabel="true">
@@ -460,11 +462,6 @@ end do:</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
   MatlabExport(Cjj_regressor_s, sprintf(&quot;../codeexport/%s_coriolismat_joint_fixb_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
 end if:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1730" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>
