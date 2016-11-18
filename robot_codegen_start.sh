@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 # Starte die komplette Code-Erstellung für eine beliebige Roboterstrukter
 #
 # Argumente:
@@ -55,6 +55,12 @@ else
 fi;
 
 cd $repo_pfad/robot_codegen_scripts/
+
+# Maple-Definitionen einmal ausführen (damit dort definierte Variablen in Bash übernommen werden)
+pwd_alt=$(pwd)
+cd /opt/maple18/bin
+nice -n 10 ./maple -q  <<< "currentdir(\"$repo_pfad/robot_codegen_definitions\"): read \"robot_tree_floatb_twist_definitions.mpl\";"
+cd $pwd_alt
 
 # Umgebungsvariablen vorbereiten
 source robot_codegen_tmpvar_bash.sh
