@@ -186,6 +186,7 @@ do
     erster=0 # nicht parallel, die folgenden Skripte sind hiervon abhängig
   else # parallel ausführen
     nice -n 10 ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
+  fi;
 done
 wait
 echo "FERTIG mit Regressorform"
