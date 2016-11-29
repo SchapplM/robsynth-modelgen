@@ -1,4 +1,4 @@
-% Rotatorische Teilmatrix der analytischen Jacobi-Matrix für Segment Nr. %LIJAC% von
+% Analytische Jacobi-Matrix für beliebiges Segment von
 % %RN%
 % Use Code from Maple symbolic Code Generation
 % 
@@ -11,14 +11,21 @@
 % Input:
 % q [%NQJ%x1]
 %   Generalized coordinates (joint angles) (generalized coordinates) [rad]
+% link_index [1x1 uint8]
+%   Index des Segmentes, auf dem der Punkt C liegt.
+%   Wie in %RN%_fkine_fixb_rotmat_mdh_sym_varpar.m
+% r_i_i_C [3x1]
+%   Ortsvektor vom KörperKS-Ursprung zum gesuchten Punkt
 % a_mdh, d_mdh, q_offset_mdh, ... [%NJ%x1]
 %   kinematic parameters
 % 
 % Output:
-% Ja_rot [3x%NQJ%]
-%   Rotatorische Teilmatrix der analytischen Jacobi-Matrix
+% Ja [6x%NQJ%]
+%   Analytische Jacobi-Matrix
 
 % %VERSIONINFO%
 
-function Ja_rot = %FN%(q, ...
+function Ja = %FN%(q, link_index, r_i_i_C, ...
   alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh%KCPARG%)
+
+

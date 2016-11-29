@@ -1,8 +1,7 @@
 % Test function for kinematics from symbolic calculations
 % with floating base model
 
-% Moritz Schappler, schappler@irt.uni-hannover.de, 2016-04
-% (c) Institut für Regelungstechnik, Universität Hannover
+% %VERSIONINFO%
 
 clc
 clear
@@ -100,30 +99,41 @@ for kk = 1:NJ % Test for linear joint trajectory
 end
 fprintf('Tested Jacobian Time derivative for fixed base.\n');
 
-%% Symbolische gegen numerische Jacobi-Matrix testen
+%% Symbolische gegen numerische (geometrische) Jacobi-Matrix testen
 for iq = 1:size(Q, 1) % Über Zufallsposen
   for jb  = 1:NL % Über alle Körper
     r_i_i_C = rand(3,1);
     q = Q(iq,:)';
+    qD = QD(iq,:)';
     % TODO: Übergabe der Kinematikparameter bei kinem. Zwangsbedingungen
-    JG_num = %RN%_jacobig_mdh_num(q, uint8(jb), r_i_i_C, ...
+    Jg_num = %RN%_jacobig_mdh_num(q, uint8(jb), r_i_i_C, ...
       alpha, a, d, q_offset, b, beta, v);
-    JG_sym = %RN%_jacobig_floatb_twist_sym_varpar(q, uint8(jb), r_i_i_C, ...
+    Jg_sym = %RN%_jacobig_floatb_twist_sym_varpar(q, uint8(jb), r_i_i_C, ...
       alpha, a, d, q_offset, b, beta%KCPARG%);
     
-    JD_Delta = JG_num - JG_sym;
-    if any(abs (JD_Delta(:)) > 1e-10) || any(isnan(JD_Delta(:)))
+    Jg_Delta = Jg_num - Jg_sym;
+    if any(abs (Jg_Delta(:)) > 1e-10) || any(isnan(Jg_Delta(:)))
       error('Symbolische und numerische Jacobi-Matrizen stimmen nicht');
+    end
+    
+    JgD_num = %RN%_jacobigD_mdh_num(q, qD, uint8(jb), r_i_i_C, ...
+      alpha, a, d, q_offset, b, beta, v);
+    JgD_sym = %RN%_jacobigD_floatb_twist_sym_varpar(q, qD, uint8(jb), r_i_i_C, ...
+      alpha, a, d, q_offset, b, beta%KCPARG%);
+    JgD_Delta = JgD_num - JgD_sym;
+    if any(abs (JgD_Delta(:)) > 1e-10) || any(isnan(JgD_Delta(:)))
+      error('Symbolische und numerische Jacobi-Matrix-Zeitableitungen stimmen nicht');
     end
   end
 end
-fprintf('Erfolgreich Symbolische gegen numerische Jacobi-Matrix getestet.\n');
+fprintf('Erfolgreich symbolische gegen numerische (geometrische) Jacobi-Matrix getestet (und Zeitableitung).\n');
 
 
 %% Analytische gegen Geometrische Jacobi-Matrix testen
 for iq = 1:size(Q, 1) % Über Zufallsposen
   for jb  = 1:NL % Über alle Körper
     q = Q(iq,:)';
+    qD = Q(iq,:)';    
     Jg_rot = %RN%_jacobig_rot_floatb_twist_sym_varpar(q, uint8(jb), ...
       alpha, a, d, q_offset, b, beta%KCPARG%);
     Ja_rot = %RN%_jacobia_rot_floatb_twist_sym_varpar(q, uint8(jb), ...
@@ -136,19 +146,45 @@ for iq = 1:size(Q, 1) % Über Zufallsposen
     T_jb = Tc_mdh(:,:,jb);
 
     % Winkelkonvention und Umrechnungsfaktor
-    rpy = r2rpy(t2r(T_jb));
+    rpy = r2rpy(t2r(T_jb))';
     J_rpy = rpy2jac(rpy(1), rpy(2), rpy(3));
 
     % Umrechnung der analytischen in die geometrische Jacobi-Matrix
     % [1], S. 52, Gl. (4.25)
     Jg_rot_test = J_rpy * Ja_rot;
 
-    % Vergleiche die auf zwei Wegen berechnete  geometrische Jacobi-Matrix
+    % Vergleiche die auf zwei Wegen berechnete geometrische Jacobi-Matrix
     Diff = Jg_rot_test - Jg_rot;
     if any(abs(Diff(:)) > 1e-10)
       error('Geometrische und Analytische Jacobi-Matrizen stimmen nicht überein (Körper %d)', jb);
     end
+    
+    % Berechne Zeitableitung der analytischen und geometrischen
+    % Jacobi-Matrix
+    JgD_rot = %RN%_jacobigD_rot_floatb_twist_sym_varpar(q, qD, uint8(jb), ...
+      alpha, a, d, q_offset, b, beta%KCPARG%);
+    JaD_rot = %RN%_jacobiaD_rot_floatb_twist_sym_varpar(q, qD, uint8(jb), ...
+      alpha, a, d, q_offset, b, beta%KCPARG%);
+    % Aus Produktregel der Zeitableitung von [1], S. 52, Gl. (4.25)
+    rpyD = Ja_rot*qD;
+    JD_rpy = angvelotrans_rpyD(rpy, rpyD);
+    JgD_rot_test = JD_rpy * Ja_rot + J_rpy * JaD_rot;
+    % Vergleiche die auf zwei Wegen berechnete Zeitableitung der geometrischen Jacobi-Matrix
+    DiffD = JgD_rot_test - JgD_rot;
+    if any(abs(DiffD(:)) > 1e-10)
+      error('Zeitableitung der geometrischen und analytischen Jacobi-Matrizen stimmen nicht überein (Körper %d)', jb);
+    end
   end
 end
-fprintf('Erfolgreich analytische gegen geometrische Jacobi-Matrix (Rotationsteil) getestet.\n');
+fprintf('Erfolgreich analytische gegen geometrische Jacobi-Matrix (Rotationsteil) getestet (und Zeitableitung).\n');
 
+%% Kompiliere alle Jacobi-bezogenen Funktionen
+Mex_Erstellen({ '%RN%_jacobigD_rot_floatb_twist_sym_varpar', ...
+                '%RN%_jacobiaD_rot_floatb_twist_sym_varpar', ...
+                '%RN%_jacobigD_floatb_twist_sym_varpar', ...
+                '%RN%_jacobiaD_floatb_twist_sym_varpar', ...
+                '%RN%_jacobig_floatb_twist_sym_varpar', ...
+                '%RN%_jacobia_floatb_twist_sym_varpar', ...
+                '%RN%_jacobig_rot_floatb_twist_sym_varpar', ...
+                '%RN%_jacobia_rot_floatb_twist_sym_varpar'});
+        

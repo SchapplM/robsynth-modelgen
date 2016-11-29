@@ -9,7 +9,7 @@
 % Input:
 % q [%NQJ%x1]
 %   Generalized coordinates (joint angles) (generalized coordinates) [rad]
-% a_mdh, d_mdh, q_offset_mdh [%NJ%x1]
+% a_mdh, d_mdh, q_offset_mdh, ... [%NJ%x1]
 %   kinematic parameters
 % 
 % Output:

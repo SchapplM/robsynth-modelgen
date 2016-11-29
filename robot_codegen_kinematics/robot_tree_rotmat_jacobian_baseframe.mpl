@@ -137,5 +137,5 @@ JD_transla_t := diff~(convert_s_t(b_transl), t):
 JD_transla_s := convert_t_s(JD_transla_t):
 MatlabExport(JD_rotg_s, sprintf("../codeexport/%s_jacobigD_rot_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
 MatlabExport(JD_rota_s, sprintf("../codeexport/%s_jacobiaD_rot_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
-MatlabExport(JD_transla_s, sprintf("../codeexport/%s_jacobiD_transl_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
+MatlabExport(JD_transla_s, sprintf("../codeexport/%s_jacobiaD_transl_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
 

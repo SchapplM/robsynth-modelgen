@@ -493,7 +493,7 @@ JD_transla_s := convert_t_s(JD_transla_t):</Text-field>
 </Group>
 <Group labelreference="L1782" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(JD_transla_s, sprintf(&quot;../codeexport/%s_jacobiD_transl_%d_floatb_%s_matlab.m&quot;, robot_name, LIJAC, base_method_name), codegen_opt):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(JD_transla_s, sprintf(&quot;../codeexport/%s_jacobiaD_transl_%d_floatb_%s_matlab.m&quot;, robot_name, LIJAC, base_method_name), codegen_opt):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1783" drawlabel="true">

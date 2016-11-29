@@ -1,4 +1,4 @@
-% Geometrischen Jacobi-Matrix für Segment Nr. %LIJAC% von
+% Zeitableitung der geometrischen Jacobi-Matrix für Segment Nr. %LIJAC% von
 % %RN%
 % Use Code from Maple symbolic Code Generation
 % 
@@ -8,24 +8,26 @@
 % Input:
 % q [%NQJ%x1]
 %   Generalized coordinates (joint angles) (generalized coordinates) [rad]
+% qD [%NQJ%x1]
+%   Generalized velocities (joint velocities) [rad/s]
 % r_i_i_C [3x1]
 %   Ortsvektor vom KörperKS-Ursprung zum gesuchten Punkt
 % a_mdh, d_mdh, q_offset_mdh, ... [%NJ%x1]
 %   kinematic parameters
 % 
 % Output:
-% Jg [3x%NQJ%]
-%   Geometrischen Jacobi-Matrix
+% JgD [6x%NQJ%]
+%   Zeitableitung der geometrischen Jacobi-Matrix
 
 % %VERSIONINFO%
 
-function Jg = %FN%(q, r_i_i_C, ...
+function JgD = %FN%(q, qD, r_i_i_C, ...
   alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh%KCPARG%)
 
 
-Ja_transl = %RN%_jacobia_transl_%LIJAC%_floatb_twist_sym_varpar(q, r_i_i_C, ...
+JaD_transl = %RN%_jacobiaD_transl_%LIJAC%_floatb_twist_sym_varpar(q, qD, r_i_i_C, ...
   alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh%KCPARG%);
-Jg_rot = %RN%_jacobig_rot_%LIJAC%_floatb_twist_sym_varpar(q, ...
+JgD_rot = %RN%_jacobigD_rot_%LIJAC%_floatb_twist_sym_varpar(q, qD, ...
   alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh%KCPARG%);
 
-Jg = [Ja_transl; Jg_rot];
+JgD = [JaD_transl; JgD_rot];
