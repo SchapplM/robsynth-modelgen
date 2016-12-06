@@ -3,6 +3,8 @@
 #
 # Quellen
 # [KhalilKle1986] Khalil, W. and Kleinfinger, J.-F.: A new geometric notation for open and closed-loop robots (1986)
+# Zum Test des Modells, siehe: IRT-Matlab-Toolbox testfunctions/rigidbody_fdyn
+# Die hier erstellten Simulink-Blöcke müssen noch angepasst werden (0 Gelenke)
 
 robot_name := "rigidbody":
 
