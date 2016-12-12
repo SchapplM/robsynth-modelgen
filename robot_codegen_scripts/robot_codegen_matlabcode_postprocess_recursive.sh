@@ -1,15 +1,20 @@
 #!/bin/bash -e 
 # Nachbearbeitung aller automatisch generierter Matlab-Dateien (Code, keine Funktionen)
 # Bearbeitet das Verzeichnis codeexport in diesem Repo
+#
+# Argument: Verzeichnis der m-Dateien
 
 
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-10
 # (c) Institut für Regelungstechnik, Leibniz Universität Hannover
 
-repo_pfad=$(pwd)/..
+if [ "$1" == "" ] || [ ! -d "$1" ]; then
+  echo "Eingabeargument \"$1\" ist kein gültiges Verzeichnis."
+  exit 1
+fi;
 
 # Alle Matlab-Dateien im Ordner codeexport korrigieren, falls notwendig
-for f in $(find $repo_pfad/codeexport -maxdepth 1 -name "*_matlab.m")
+for f in $(find $1 -maxdepth 1 -name "*_matlab.m")
 do
   mtime_old=`stat $f --printf '%Y'`
   ./robot_codegen_matlabcode_postprocess.sh $f

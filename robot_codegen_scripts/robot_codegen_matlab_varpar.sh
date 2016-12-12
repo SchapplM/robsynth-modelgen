@@ -20,7 +20,7 @@ source robot_codegen_tmpvar_matlab.sh
 source robot_codegen_assert_matlab.sh
 
 # Korrigiere mit Maple generierte Matlab-Code-Dateien
-./robot_codegen_matlabcode_postprocess_recursive.sh
+./robot_codegen_matlabcode_postprocess_recursive.sh $repo_pfad/codeexport/$robot_name
 
 # Setze Teilausdrücke zu kompletten Ausdrücken zusammen
 ./robot_codegen_matlab_assemble.sh

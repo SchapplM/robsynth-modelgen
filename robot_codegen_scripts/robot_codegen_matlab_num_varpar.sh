@@ -14,11 +14,12 @@ echo "Generiere Dynamikfunktion (numerisch)"
 
 repo_pfad=$(pwd)/..
 template_pfad=$repo_pfad/robot_codegen_scripts/templates_num
-fcn_pfad=$repo_pfad/codeexport/matlabfcn
 
 # Initialisiere Variablen
 source robot_codegen_tmpvar_bash.sh
 source $repo_pfad/robot_codegen_definitions/robot_env.sh
+
+fcn_pfad=$repo_pfad/codeexport/matlabfcn/$robot_name
 
 dateiliste_numfunction="
   robot_invdyn_floatb_eulangrpy_nnew_vp1.m.template

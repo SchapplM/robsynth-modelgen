@@ -11,6 +11,10 @@
 repo_pfad=$(pwd)/..
 robot_env_pfad=$repo_pfad/robot_codegen_definitions/robot_env
 
+if [ ! -f "$robot_env_pfad" ]; then
+  echo "Keine Roboterdefinition \"$robot_env_pfad\" gefunden"
+  exit 1
+fi;
 
 # Lese die Informationen aus der Eingabe-Maple-Datei
 robot_NQJ=`grep "NQJ := " $robot_env_pfad | tail -1 | sed 's/.*= \(.*\):/\1/'`
@@ -27,7 +31,7 @@ echo "robot_NJ=$robot_NJ" >> $robot_env_pfad.sh
 echo "robot_name=\"$robot_name\"" >> $robot_env_pfad.sh
 
 # Lese weitere Informationen aus der generierten Definitionsdatei
-robot_def_pfad=$repo_pfad/codeexport/${robot_name}_tree_floatb_twist_definitions
+robot_def_pfad=$repo_pfad/codeexport/${robot_name}/tree_floatb_twist_definitions
 if [ -f $robot_def_pfad ]; then
   robot_NL=`grep "NL := " $robot_def_pfad | tail -1 | sed 's/.*= \(.*\);/\1/'`
 else
@@ -46,7 +50,7 @@ else
   robot_kinconstr_exist=0
 fi;
 
-robot_KCsymb_pfad=$repo_pfad/codeexport/${robot_name}_kinematic_constraints_symbols_list_maple
+robot_KCsymb_pfad=$repo_pfad/codeexport/${robot_name}/kinematic_constraints_symbols_list_maple
 # robot_NKCP: Anzahl der Parameter der kin. ZB
 # KCP: Leerzeichengetrennte Liste der Parameter der kinematischen Zwangsbedingungen
 # KCPARG: Argument für Matlab-Funktionen
@@ -75,7 +79,7 @@ echo "robot_KCPARG=\"$robot_KCPARG\"" >> $robot_env_pfad.sh
 echo "robot_KCP=\"$robot_KCP\"" >> $robot_env_pfad.sh
 
 # Dimension des MPV (aus exportiertem Code)
-mpv_pfad=$repo_pfad/codeexport/${robot_name}_minimal_parameter_vector_maple
+mpv_pfad=$repo_pfad/codeexport/${robot_name}/minimal_parameter_vector_maple
 if [ -f $mpv_pfad ]; then
   # Ersetze Text links und rechts von der Dimension mit nichts.
   robot_NMPV=`grep "Matrix" $mpv_pfad | tail -1 | sed 's/.*Matrix[(]\(.*\)/\1/' | sed 's/, 1, .*//'`

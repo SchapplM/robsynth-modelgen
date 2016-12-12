@@ -163,7 +163,7 @@ read &quot;../robot_codegen_constraints/proc_subs_kintmp_exp&quot;:</Text-field>
 </Group>
 <Group view="code" labelreference="L2113" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_tree_floatb_definitions&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tree_floatb_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1993" drawlabel="true">
@@ -288,12 +288,12 @@ lpar_qt := convert_s_t(lpar_qs):</Text-field>
 <Text-field style="Heading 1" layout="Heading 1">Speichern der Ergebnisse</Text-field></Title><Presentation-Block>
 <Group view="code" labelreference="L2027" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kin_constraints_exist, kintmp_qs, kintmp_qt, lpar_qs, lpar_qt, kintmp_subsexp, sprintf(&quot;../codeexport/%s_kinematic_constraints_maple_inert&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kin_constraints_exist, kintmp_qs, kintmp_qt, lpar_qs, lpar_qt, kintmp_subsexp, sprintf(&quot;../codeexport/%s/kinematic_constraints_maple_inert&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L2028" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kin_constraints_exist, kintmp_qs, kintmp_qt, lpar_qs, lpar_qt, kintmp_subsexp, sprintf(&quot;../codeexport/%s_kinematic_constraints_maple_inert.m&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kin_constraints_exist, kintmp_qs, kintmp_qt, lpar_qs, lpar_qt, kintmp_subsexp, sprintf(&quot;../codeexport/%s/kinematic_constraints_maple_inert.m&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L2062" drawlabel="true">
@@ -321,12 +321,12 @@ lpar_qt := convert_s_t(lpar_qs):</Text-field>
 </Group>
 <Group view="code" labelreference="L2133" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kc_symbols, sprintf(&quot;../codeexport/%s_kinematic_constraints_symbols_list_maple&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kc_symbols, sprintf(&quot;../codeexport/%s/kinematic_constraints_symbols_list_maple&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L2134" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(Transpose(kc_symbols), sprintf(&quot;../codeexport/%s_kinematic_constraints_symbols_list_matlab.m&quot;, robot_name), 2):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(Transpose(kc_symbols), sprintf(&quot;../codeexport/%s/kinematic_constraints_symbols_list_matlab.m&quot;, robot_name), 2):</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>

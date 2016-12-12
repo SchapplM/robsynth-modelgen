@@ -45,11 +45,11 @@ read "../transformation/proc_transl":
 read "../transformation/proc_trafo_mdh": 
 read "../robot_codegen_definitions/robot_env":
 printf("Generiere Geschwindigkeit für %s\n", robot_name):
-read sprintf("../codeexport/%s_tree_floatb_definitions", robot_name):
+read sprintf("../codeexport/%s/tree_floatb_definitions", robot_name):
 # Ergebnisse der Kinematik laden
-read sprintf("../codeexport/%s_kinematics_floatb_%s_rotmat_maple.m", robot_name, base_method_name):
+read sprintf("../codeexport/%s/kinematics_floatb_%s_rotmat_maple.m", robot_name, base_method_name):
 Trf_c := Trf_c:
-read sprintf("../codeexport/%s_kinematics_com_worldframe_floatb_%s_par1_maple.m", robot_name, base_method_name):
+read sprintf("../codeexport/%s/kinematics_com_worldframe_floatb_%s_par1_maple.m", robot_name, base_method_name):
 r_W_i_Si := r_W_i_Si:
 mr_W_i_Si := mr_W_i_Si:
 # Potential Energy
@@ -62,7 +62,7 @@ for i to NL do
   printf("Potentielle Energie aus Gravitation für Körper %d berechnet\n", i):
 end do:
 # Maple Export
-save U_grav, sprintf("../codeexport/%s_energy_potential_floatb_%s_worldframe_par2_maple.m", robot_name, base_method_name):
+save U_grav, sprintf("../codeexport/%s/energy_potential_floatb_%s_worldframe_par2_maple.m", robot_name, base_method_name):
 # Kinetic Energy
 # Using velocities in world frame and MX,MY,MZ as a parameter does not work.
 # Only calculation of potential energy in this worksheet
@@ -71,7 +71,7 @@ save U_grav, sprintf("../codeexport/%s_energy_potential_floatb_%s_worldframe_par
 # Floating Base
 U_s := convert_t_s(U_grav):
 if codegen_act then
-  MatlabExport(U_s, sprintf("../codeexport/%s_energy_potential_floatb_%s_worldframe_par2_matlab.m", robot_name, base_method_name), codegen_opt):
+  MatlabExport(U_s, sprintf("../codeexport/%s/energy_potential_floatb_%s_worldframe_par2_matlab.m", robot_name, base_method_name), codegen_opt):
 end if:
 # Fixed Base
 U_s_fixb:=U_s:
@@ -82,6 +82,6 @@ for i from 1 to 6 do
   U_s_fixb := subs({V_base_s[i,1]=0},U_s_fixb):
 end do:
 if codegen_act then
-  MatlabExport(U_s_fixb, sprintf("../codeexport/%s_energy_potential_fixb_worldframe_par2_matlab.m", robot_name), codegen_opt):
+  MatlabExport(U_s_fixb, sprintf("../codeexport/%s/energy_potential_fixb_worldframe_par2_matlab.m", robot_name), codegen_opt):
 end if:
 

@@ -169,7 +169,7 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Group>
 <Group labelreference="L1695" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_tree_floatb_definitions&quot;, robot_name, base_method_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tree_floatb_definitions&quot;, robot_name, base_method_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1692" drawlabel="true">
@@ -179,13 +179,13 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Group>
 <Group labelreference="L1693" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_kinematics_floatb_%s_rotmat_maple.m&quot;, robot_name, base_method_name):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/kinematics_floatb_%s_rotmat_maple.m&quot;, robot_name, base_method_name):
 Trf_c := Trf_c:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1697" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_velocity_linkframe_floatb_%s_maple.m&quot;, robot_name, base_method_name):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/velocity_linkframe_floatb_%s_maple.m&quot;, robot_name, base_method_name):
 omega_i_i := omega_i_i: 
 rD_i_i := rD_i_i:</Text-field>
 </Input>
@@ -226,7 +226,7 @@ end do:</Text-field>
 </Group>
 <Group labelreference="L1706" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save T, sprintf(&quot;../codeexport/%s_energy_kinetic_floatb_%s_linkframe_par2_maple.m&quot;, robot_name, base_method_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save T, sprintf(&quot;../codeexport/%s/energy_kinetic_floatb_%s_linkframe_par2_maple.m&quot;, robot_name, base_method_name):</Text-field>
 </Input>
 </Group>
 </Section>
@@ -262,7 +262,7 @@ end do:</Text-field>
 <Group labelreference="L1699" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(T_s, sprintf(&quot;../codeexport/%s_energy_kinetic_floatb_%s_linkframe_par2_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
+  MatlabExport(T_s, sprintf(&quot;../codeexport/%s/energy_kinetic_floatb_%s_linkframe_par2_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -285,7 +285,7 @@ end do:</Text-field>
 <Group labelreference="L1707" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(T_s_fixb, sprintf(&quot;../codeexport/%s_energy_kinetic_fixb_linkframe_par2_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(T_s_fixb, sprintf(&quot;../codeexport/%s/energy_kinetic_fixb_linkframe_par2_matlab.m&quot;, robot_name), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>

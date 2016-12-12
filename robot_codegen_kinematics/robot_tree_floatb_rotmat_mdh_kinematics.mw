@@ -171,7 +171,7 @@ read &quot;../transformation/proc_rpy2tr&quot;: </Text-field>
 </Group>
 <Group labelreference="L1645" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_tree_floatb_definitions&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tree_floatb_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 </Section>
@@ -199,7 +199,7 @@ read &quot;../transformation/proc_rpy2tr&quot;: </Text-field>
 </Group>
 <Group labelreference="L1699" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">constrfile := sprintf(&quot;../codeexport/%s_kinematic_constraints_maple_inert.m&quot;, robot_name):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">constrfile := sprintf(&quot;../codeexport/%s/kinematic_constraints_maple_inert.m&quot;, robot_name):
 if FileTools[Exists](constrfile) then
   read constrfile:
 end if:</Text-field>
@@ -218,7 +218,7 @@ else
   kintmp_subsexp := Matrix(1,2):
   kin_constraints_exist := false:
 <Font encoding="UTF-8">  # Zwangsbedingungen neu speichern, damit diese auch f\303\274r andere Skripte verf\303\274gbar sind (als dummy-Variablen).
-</Font>  save kin_constraints_exist, kintmp_qs, kintmp_qt, kintmp_subsexp, sprintf(&quot;../codeexport/%s_kinematic_constraints_maple_inert.m&quot;, robot_name):
+</Font>  save kin_constraints_exist, kintmp_qs, kintmp_qt, kintmp_subsexp, sprintf(&quot;../codeexport/%s/kinematic_constraints_maple_inert.m&quot;, robot_name):
 end if:</Text-field>
 </Input>
 </Group>
@@ -348,7 +348,7 @@ end do:</Text-field>
 </Group>
 <Group labelreference="L1587" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save Trf, Trf_c, sprintf(&quot;../codeexport/%s_kinematics_floatb_%s_rotmat_maple.m&quot;, robot_name, base_method_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save Trf, Trf_c, sprintf(&quot;../codeexport/%s/kinematics_floatb_%s_rotmat_maple.m&quot;, robot_name, base_method_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1592" drawlabel="true">
@@ -371,7 +371,7 @@ end do:</Text-field>
 <Group labelreference="L1643" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(convert_t_s(Trf_c_Export), sprintf(&quot;../codeexport/%s_fkine_mdh_floatb_%s_rotmat_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
+  MatlabExport(convert_t_s(Trf_c_Export), sprintf(&quot;../codeexport/%s/fkine_mdh_floatb_%s_rotmat_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -395,7 +395,7 @@ end do:</Text-field>
 <Group labelreference="L1691" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(convert_t_s(Trf_Export), sprintf(&quot;../codeexport/%s_joint_transformation_mdh_rotmat_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(convert_t_s(Trf_Export), sprintf(&quot;../codeexport/%s/joint_transformation_mdh_rotmat_matlab.m&quot;, robot_name), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -408,7 +408,7 @@ end if:</Text-field>
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NL do
   if codegen_act then
-    MatlabExport(convert_t_s(Trf_c(1 .. 4, 1 .. 4, i)), sprintf(&quot;../codeexport/%s_fkine_%d_floatb_%s_rotmat_matlab.m&quot;, robot_name, i, base_method_name), codegen_opt):
+    MatlabExport(convert_t_s(Trf_c(1 .. 4, 1 .. 4, i)), sprintf(&quot;../codeexport/%s/fkine_%d_floatb_%s_rotmat_matlab.m&quot;, robot_name, i, base_method_name), codegen_opt):
   end if:
 end do:</Text-field>
 </Input>

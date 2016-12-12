@@ -39,20 +39,20 @@ read "../transformation/proc_trotz":
 read "../transformation/proc_transl": 
 read "../transformation/proc_trafo_mdh": 
 read "../robot_codegen_definitions/robot_env":
-read sprintf("../codeexport/%s_tree_floatb_twist_definitions", robot_name):
+read sprintf("../codeexport/%s/tree_floatb_twist_definitions", robot_name):
 # Es ist in diesem Arbeitsblatt möglich, zwei verschiedene Regressoren zu generieren und zu exportieren: Basierend auf Minimalparametern und auf vollem Parametersatz (PV2).
 # Der Term "regressor" oder "regressor_minpar" ist jeweils in den Dateinamen enthalten
 regressor_modus := "regressor_minpar":
 if regressor_modus = "regressor_minpar" then
-  read sprintf("../codeexport/%s_energy_kinetic_fixb_regressor_minpar_maple.m", robot_name):
-  read sprintf("../codeexport/%s_energy_potential_fixb_regressor_minpar_maple.m", robot_name):
+  read sprintf("../codeexport/%s/energy_kinetic_fixb_regressor_minpar_maple.m", robot_name):
+  read sprintf("../codeexport/%s/energy_potential_fixb_regressor_minpar_maple.m", robot_name):
   t_ges := t_ges_minpar:
   u_ges := u_ges_minpar:
   printf("Generiere Minimalparameterregressor der Dynamik für %s\n", robot_name):
 end if:
 if regressor_modus = "regressor" then
-  read sprintf("../codeexport/%s_energy_kinetic_fixb_regressor_maple.m", robot_name):
-  read sprintf("../codeexport/%s_energy_potential_fixb_regressor_maple.m", robot_name):
+  read sprintf("../codeexport/%s/energy_kinetic_fixb_regressor_maple.m", robot_name):
+  read sprintf("../codeexport/%s/energy_potential_fixb_regressor_maple.m", robot_name):
   t_ges := t_ges:
   u_ges := u_ges:
   printf("Generiere Regressor der Dynamik für %s (nicht Minimalparameter)\n", robot_name):
@@ -62,18 +62,18 @@ OutputLagrange := LagrangeN(t_ges, u_ges):
 dTdqDdt_s := OutputLagrange[1]:
 dTdq_s := OutputLagrange[2]:
 dUdq_s := OutputLagrange[3]:
-save dUdq_s, sprintf("../codeexport/%s_floatb_lagrange_dUdq_s_%s_maple.m", robot_name, regressor_modus):
-save dTdq_s, sprintf("../codeexport/%s_floatb_lagrange_dTdq_s_%s_maple.m", robot_name, regressor_modus):
-save dTdqDdt_s, sprintf("../codeexport/%s_floatb_lagrange_dTdqDdt_s_%s_maple.m", robot_name, regressor_modus):
+save dUdq_s, sprintf("../codeexport/%s/floatb_lagrange_dUdq_s_%s_maple.m", robot_name, regressor_modus):
+save dTdq_s, sprintf("../codeexport/%s/floatb_lagrange_dTdq_s_%s_maple.m", robot_name, regressor_modus):
+save dTdqDdt_s, sprintf("../codeexport/%s/floatb_lagrange_dTdqDdt_s_%s_maple.m", robot_name, regressor_modus):
 # Extraktion einzelner Terme
 # Gravitational Load
 # Generate
 taug_regressor_s := dUdq_s:
-save taug_regressor_s, sprintf("../codeexport/%s_gravload_%s_maple.m", robot_name, regressor_modus):
+save taug_regressor_s, sprintf("../codeexport/%s/gravload_%s_maple.m", robot_name, regressor_modus):
 # Matlab Export
 # Belastung der Gelenke
 if codegen_act then
-  MatlabExport(taug_regressor_s(7..NQ,..), sprintf("../codeexport/%s_gravload_joint_%s_matlab.m", robot_name, regressor_modus), codegen_opt):
+  MatlabExport(taug_regressor_s(7..NQ,..), sprintf("../codeexport/%s/gravload_joint_%s_matlab.m", robot_name, regressor_modus), codegen_opt):
 end if:
 # Mass Matrix
 # Initialisiere. Speichere nur den unteren linken Teil der Massenmatrix
@@ -96,7 +96,7 @@ for i to NQJ do # Zeilenindex der Massenmatrix
 end do:
 # Matlab Export
 if codegen_act then
-  MatlabExport(MMjj_regressor_s, sprintf("../codeexport/%s_inertia_joint_joint_%s_matlab.m", robot_name, regressor_modus), codegen_opt):
+  MatlabExport(MMjj_regressor_s, sprintf("../codeexport/%s/inertia_joint_joint_%s_matlab.m", robot_name, regressor_modus), codegen_opt):
 end if:
 # Mass Matrix Time Derivative
 # Konvertiere Massenmatrix in zeitabhängige Variablen, um Zeitableitung zu berechnen
@@ -105,7 +105,7 @@ MMDjj_regressor_t := diff~(MMjj_regressor_t, t):
 MMDjj_regressor_s := convert_t_s(MMDjj_regressor_t):
 # Matlab Export
 if codegen_act then
-  MatlabExport(MMDjj_regressor_s, sprintf("../codeexport/%s_inertiaD_joint_joint_%s_matlab.m", robot_name, regressor_modus), codegen_opt):
+  MatlabExport(MMDjj_regressor_s, sprintf("../codeexport/%s/inertiaD_joint_joint_%s_matlab.m", robot_name, regressor_modus), codegen_opt):
 end if:
 # Coriolis Vector
 # Generate
@@ -113,11 +113,11 @@ tauC_regressor_s := dTdqDdt_s-dTdq_s:
 for i to NQ do 
   tauC_regressor_s := subs({qDD_s(i, 1) = 0}, tauC_regressor_s):
 end do:
-save tauC_regressor_s, sprintf("../codeexport/%s_coriolisvec_joint_fixb_%s_maple.m", robot_name, regressor_modus):
+save tauC_regressor_s, sprintf("../codeexport/%s/coriolisvec_joint_fixb_%s_maple.m", robot_name, regressor_modus):
 # Matlab Export
 # Belastung der Gelenke
 if codegen_act then
-  MatlabExport(tauC_regressor_s(7..NQ,..), sprintf("../codeexport/%s_coriolisvec_joint_fixb_%s_matlab.m", robot_name, regressor_modus), codegen_opt):
+  MatlabExport(tauC_regressor_s(7..NQ,..), sprintf("../codeexport/%s/coriolisvec_joint_fixb_%s_matlab.m", robot_name, regressor_modus), codegen_opt):
 end if:
 # Coriolis Matrix
 # Calculation with Christoffel Symbol approach
@@ -149,18 +149,18 @@ for i to NQJ do # Zeilenindex der Coriolismatrix
     end do:
   end do:
 end do:
-save Cjj_regressor_s, sprintf("../codeexport/%s_coriolismat_joint_fixb_%s_maple.m", robot_name, regressor_modus):
+save Cjj_regressor_s, sprintf("../codeexport/%s/coriolismat_joint_fixb_%s_maple.m", robot_name, regressor_modus):
 # Matlab Export: Fixed base
 if codegen_act then
-  MatlabExport(Cjj_regressor_s, sprintf("../codeexport/%s_coriolismat_joint_fixb_%s_matlab.m", robot_name, regressor_modus), codegen_opt):
+  MatlabExport(Cjj_regressor_s, sprintf("../codeexport/%s/coriolismat_joint_fixb_%s_matlab.m", robot_name, regressor_modus), codegen_opt):
 end if:
 # Inverse Dynamics
 # Generate
 tau_regressor_s := dTdqDdt_s-dTdq_s+dUdq_s:
-save tau_regressor_s, sprintf("../codeexport/%s_invdyn_joint_fixb_%s_maple.m", robot_name, regressor_modus):
+save tau_regressor_s, sprintf("../codeexport/%s/invdyn_joint_fixb_%s_maple.m", robot_name, regressor_modus):
 # Matlab Export
 # Belastung der Gelenke
 if codegen_act then
-  MatlabExport(tau_regressor_s(7..NQ,..), sprintf("../codeexport/%s_invdyn_joint_fixb_%s_matlab.m", robot_name, regressor_modus), codegen_opt):
+  MatlabExport(tau_regressor_s(7..NQ,..), sprintf("../codeexport/%s/invdyn_joint_fixb_%s_matlab.m", robot_name, regressor_modus), codegen_opt):
 end if:
 

@@ -9,51 +9,34 @@
 echo "Generiere Testskripte für Matlabfunktionen"
 
 repo_pfad=$(pwd)/..
-testfcn_pfad=$repo_pfad/robot_codegen_testfunctions
 tmp_pfad=$repo_pfad/robot_codegen_scripts/tmp
 
 # Initialisiere Variablen
 source robot_codegen_tmpvar_bash.sh
 source $repo_pfad/robot_codegen_definitions/robot_env.sh
 
-dateiliste_testfunction="
-  robot_varpar_fixbase_kinematics_test.m.template
-  robot_varpar_floatbase_kinematics_test.m.template
-  robot_varpar_fixbase_invdyn_test.m.template
-  robot_varpar_floatbase_invdyn_test.m.template
-  robot_varpar_paramlin_test.m.template
-  robot_varpar_simulink_test.m.template
-  robot_varpar_fixbase_num_test.m.template
-  robot_varpar_floatbase_num_test.m.template
-  robot_varpar_testfunctions_parameter.m.template
-  robot_test_everything.m.template
-  robot_test_everything_fixbase.m.template
-  simulink/lib_robot_dynamics.mdl.template
-  simulink/lib_robot_kinematics.mdl.template
-  simulink/robot_fdyn_fixb_test_mp_start.m.template
-  simulink/robot_fdyn_fixb_test_mp_vp.mdl.template
-  simulink/robot_fdyn_fixb_test_settings_default.m.template
-  simulink/robot_fdyn_fixb_test_vp1.mdl.template
-  simulink/robot_fdyn_fixb_test_vp1_start.m.template
-  simulink/robot_fdyn_floatb_eulangrpy_test.mdl.template
-  simulink/robot_fdyn_floatb_eulangrpy_test_settings_default.m.template
-  simulink/robot_fdyn_floatb_eulangrpy_test_start.m.template
-"
-for dat in $dateiliste_testfunction
+testfcn_pfad=$repo_pfad/codeexport/testfcn/$robot_name
+
+for f in $(find $repo_pfad/robot_codegen_testfunctions -name "*.template")
 do
-  tmpdat_full=$testfcn_pfad/$dat
+  tmpdat_full=$f
   filename="${tmpdat_full##*/}"                      # Strip longest match of */ from start
-  dir="${tmpdat_full:0:${#tmpdat_full} - ${#filename} - 1}" # Substring from 0 thru pos of filename
+  # Verzeichnis der Vorlagen-Datei
+  dir1="${tmpdat_full:0:${#tmpdat_full} - ${#filename} - 1}" # Substring from 0 thru pos of filename
 
   # Neuen Dateinamen generieren
-  tmp="${filename/robot/$robot_name}"
-  filename_new="${tmp/.template/}"
+  tmp="${filename/robot/$robot_name}" # Ersetze Begriff robot mit Roboternamen
+  filename_new="${tmp/.template/}" # Endung .template entfernen
   
+  # Neues Verzeichnis generieren: Jetzt im Ordner codeexport/testfcn
+  dir2=`echo "$dir1" | sed "s/robot_codegen_testfunctions/codeexport\/testfcn\/$robot_name/g"`
+
   # Datei kopieren
-  cp $dir/$filename $dir/$filename_new
+  mkdir -p "$dir2"
+  cp $dir1/$filename $dir2/$filename_new
 
   # Platzhalter in Datei ersetzen
-  source robot_codegen_matlabfcn_postprocess.sh $dir/$filename_new 0
+  source robot_codegen_matlabfcn_postprocess.sh $dir2/$filename_new 0
 done
 
 # Parameter-Generierungsskript anpassen
@@ -76,7 +59,6 @@ printf "\n\n%%%% MDH-Parametereinträge auf Zufallswerte setzen" >> $zieldat
 printf "\n%% Aus robot_matlabtmp_par_mdh.m" >> $zieldat
 cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
 
-
 # Werte für kinematische Zwangsbedingungen in Parameter-Generierungsskript eintragen
 # Setzt auch Zahlenwerte für die Kinematikparameter der MDH-Notation, falls gegeben.
 KCP_dat1=$repo_pfad/robot_codegen_constraints/${robot_name}_kinematic_parameter_values.m
@@ -86,7 +68,7 @@ if [ -f $KCP_dat1 ]; then
   cat $KCP_dat1 >> $zieldat
 fi
 if [ "$robot_kinconstr_exist" == "1" ]; then
-  KCP_dat2=$repo_pfad/codeexport/${robot_name}_kinematic_constraints_symbols_list_matlab.m
+  KCP_dat2=$repo_pfad/codeexport/${robot_name}/kinematic_constraints_symbols_list_matlab.m
   if [ -f $KCP_dat2 ]; then
     printf "\n%% Aus ${robot_name}_kinematic_constraints_symbols_list_matlab.m\n" >> $zieldat
     cat $KCP_dat2 >> $zieldat
@@ -110,31 +92,31 @@ fi;
 # Null-Einträge werden automatisch zu Null gesetzt.
 printf "\n\n%%%% MDH-Parametereinträge mit vorgegebenen Werten überschreiben" >> $zieldat
 printf "\n%% Aus ${robot_name}_parameters_mdh_d.m\n" >> $zieldat
-cat $repo_pfad/codeexport/${robot_name}_parameters_mdh_d.m >> $zieldat
+cat $repo_pfad/codeexport/${robot_name}/parameters_mdh_d.m >> $zieldat
 varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
 echo "d_mdh = $varname_tmp;" >> $zieldat
 printf "\n%% Aus ${robot_name}_parameters_mdh_a.m\n" >> $zieldat
-cat $repo_pfad/codeexport/${robot_name}_parameters_mdh_a.m >> $zieldat
+cat $repo_pfad/codeexport/${robot_name}/parameters_mdh_a.m >> $zieldat
 varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
 echo "a_mdh = $varname_tmp;" >> $zieldat
 printf "\n%% Aus ${robot_name}_parameters_mdh_b.m\n" >> $zieldat
-cat $repo_pfad/codeexport/${robot_name}_parameters_mdh_b.m >> $zieldat
+cat $repo_pfad/codeexport/${robot_name}/parameters_mdh_b.m >> $zieldat
 varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
 echo "b_mdh = $varname_tmp;" >> $zieldat
 printf "\n%% Aus ${robot_name}_parameters_mdh_beta.m\n" >> $zieldat
-cat $repo_pfad/codeexport/${robot_name}_parameters_mdh_beta.m >> $zieldat
+cat $repo_pfad/codeexport/${robot_name}/parameters_mdh_beta.m >> $zieldat
 varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
 echo "beta_mdh = $varname_tmp;" >> $zieldat
 printf "\n%% Aus ${robot_name}_parameters_mdh_alpha.m\n" >> $zieldat
-cat $repo_pfad/codeexport/${robot_name}_parameters_mdh_alpha.m >> $zieldat
+cat $repo_pfad/codeexport/${robot_name}/parameters_mdh_alpha.m >> $zieldat
 varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
 echo "alpha_mdh = $varname_tmp;" >> $zieldat
 printf "\n%% Aus ${robot_name}_parameters_mdh_qoffset.m\n" >> $zieldat
-cat $repo_pfad/codeexport/${robot_name}_parameters_mdh_qoffset.m >> $zieldat
+cat $repo_pfad/codeexport/${robot_name}/parameters_mdh_qoffset.m >> $zieldat
 varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
 echo "q_offset_mdh = $varname_tmp;" >> $zieldat
 printf "\n%% Aus ${robot_name}_parameters_mdh_v.m\n" >> $zieldat
-cat $repo_pfad/codeexport/${robot_name}_parameters_mdh_v.m >> $zieldat
+cat $repo_pfad/codeexport/${robot_name}/parameters_mdh_v.m >> $zieldat
 varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
 echo "v_mdh = uint8($varname_tmp);" >> $zieldat
 # Ersetze "_mdh", damit die Variablennamen stimmen

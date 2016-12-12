@@ -171,7 +171,7 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Group>
 <Group labelreference="L1702" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_tree_floatb_twist_definitions&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tree_floatb_twist_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1762" drawlabel="true">
@@ -188,8 +188,8 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 <Group labelreference="L1686" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if regressor_modus = &quot;regressor_minpar&quot; then
-  read sprintf(&quot;../codeexport/%s_energy_kinetic_fixb_regressor_minpar_maple.m&quot;, robot_name):
-  read sprintf(&quot;../codeexport/%s_energy_potential_fixb_regressor_minpar_maple.m&quot;, robot_name):
+  read sprintf(&quot;../codeexport/%s/energy_kinetic_fixb_regressor_minpar_maple.m&quot;, robot_name):
+  read sprintf(&quot;../codeexport/%s/energy_potential_fixb_regressor_minpar_maple.m&quot;, robot_name):
   t_ges := t_ges_minpar:
   u_ges := u_ges_minpar:
   <Font encoding="UTF-8">printf(&quot;Generiere Minimalparameterregressor der Dynamik f\303\274r %s\134n&quot;, robot_name):</Font>
@@ -199,8 +199,8 @@ end if:</Text-field>
 <Group labelreference="L1761" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if regressor_modus = &quot;regressor&quot; then
-  read sprintf(&quot;../codeexport/%s_energy_kinetic_fixb_regressor_maple.m&quot;, robot_name):
-  read sprintf(&quot;../codeexport/%s_energy_potential_fixb_regressor_maple.m&quot;, robot_name):
+  read sprintf(&quot;../codeexport/%s/energy_kinetic_fixb_regressor_maple.m&quot;, robot_name):
+  read sprintf(&quot;../codeexport/%s/energy_potential_fixb_regressor_maple.m&quot;, robot_name):
   t_ges := t_ges:
   u_ges := u_ges:
   <Font encoding="UTF-8">printf(&quot;Generiere Regressor der Dynamik f\303\274r %s (nicht Minimalparameter)\134n&quot;, robot_name):</Font>
@@ -220,9 +220,9 @@ dUdq_s := OutputLagrange[3]:</Text-field>
 </Group>
 <Group labelreference="L1629" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save dUdq_s, sprintf(&quot;../codeexport/%s_floatb_lagrange_dUdq_s_%s_maple.m&quot;, robot_name, regressor_modus):
-save dTdq_s, sprintf(&quot;../codeexport/%s_floatb_lagrange_dTdq_s_%s_maple.m&quot;, robot_name, regressor_modus):
-save dTdqDdt_s, sprintf(&quot;../codeexport/%s_floatb_lagrange_dTdqDdt_s_%s_maple.m&quot;, robot_name, regressor_modus):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save dUdq_s, sprintf(&quot;../codeexport/%s/floatb_lagrange_dUdq_s_%s_maple.m&quot;, robot_name, regressor_modus):
+save dTdq_s, sprintf(&quot;../codeexport/%s/floatb_lagrange_dTdq_s_%s_maple.m&quot;, robot_name, regressor_modus):
+save dTdqDdt_s, sprintf(&quot;../codeexport/%s/floatb_lagrange_dTdqDdt_s_%s_maple.m&quot;, robot_name, regressor_modus):</Text-field>
 </Input>
 </Group>
 </Section>
@@ -245,7 +245,7 @@ save dTdqDdt_s, sprintf(&quot;../codeexport/%s_floatb_lagrange_dTdqDdt_s_%s_mapl
 </Group>
 <Group labelreference="L1674" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save taug_regressor_s, sprintf(&quot;../codeexport/%s_gravload_%s_maple.m&quot;, robot_name, regressor_modus):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save taug_regressor_s, sprintf(&quot;../codeexport/%s/gravload_%s_maple.m&quot;, robot_name, regressor_modus):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1672" drawlabel="true">
@@ -261,7 +261,7 @@ save dTdqDdt_s, sprintf(&quot;../codeexport/%s_floatb_lagrange_dTdqDdt_s_%s_mapl
 <Group labelreference="L1673" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(taug_regressor_s(7..NQ,..), sprintf(&quot;../codeexport/%s_gravload_joint_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
+  MatlabExport(taug_regressor_s(7..NQ,..), sprintf(&quot;../codeexport/%s/gravload_joint_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -310,7 +310,7 @@ end do:</Text-field>
 <Group labelreference="L1712" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(MMjj_regressor_s, sprintf(&quot;../codeexport/%s_inertia_joint_joint_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
+  MatlabExport(MMjj_regressor_s, sprintf(&quot;../codeexport/%s/inertia_joint_joint_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -345,7 +345,7 @@ end if:</Text-field>
 <Group labelreference="L1600" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(MMDjj_regressor_s, sprintf(&quot;../codeexport/%s_inertiaD_joint_joint_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
+  MatlabExport(MMDjj_regressor_s, sprintf(&quot;../codeexport/%s/inertiaD_joint_joint_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -367,7 +367,7 @@ end do:</Text-field>
 </Group>
 <Group labelreference="L1717" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save tauC_regressor_s, sprintf(&quot;../codeexport/%s_coriolisvec_joint_fixb_%s_maple.m&quot;, robot_name, regressor_modus):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save tauC_regressor_s, sprintf(&quot;../codeexport/%s/coriolisvec_joint_fixb_%s_maple.m&quot;, robot_name, regressor_modus):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1720" drawlabel="true">
@@ -383,7 +383,7 @@ end do:</Text-field>
 <Group labelreference="L1718" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(tauC_regressor_s(7..NQ,..), sprintf(&quot;../codeexport/%s_coriolisvec_joint_fixb_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
+  MatlabExport(tauC_regressor_s(7..NQ,..), sprintf(&quot;../codeexport/%s/coriolisvec_joint_fixb_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -449,7 +449,7 @@ end do:</Text-field>
 </Group>
 <Group labelreference="L1766" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save Cjj_regressor_s, sprintf(&quot;../codeexport/%s_coriolismat_joint_fixb_%s_maple.m&quot;, robot_name, regressor_modus):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save Cjj_regressor_s, sprintf(&quot;../codeexport/%s/coriolismat_joint_fixb_%s_maple.m&quot;, robot_name, regressor_modus):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1610" drawlabel="true">
@@ -460,7 +460,7 @@ end do:</Text-field>
 <Group labelreference="L1609" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(Cjj_regressor_s, sprintf(&quot;../codeexport/%s_coriolismat_joint_fixb_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
+  MatlabExport(Cjj_regressor_s, sprintf(&quot;../codeexport/%s/coriolismat_joint_fixb_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -479,7 +479,7 @@ end if:</Text-field>
 </Group>
 <Group labelreference="L1755" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save tau_regressor_s, sprintf(&quot;../codeexport/%s_invdyn_joint_fixb_%s_maple.m&quot;, robot_name, regressor_modus):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save tau_regressor_s, sprintf(&quot;../codeexport/%s/invdyn_joint_fixb_%s_maple.m&quot;, robot_name, regressor_modus):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1753" drawlabel="true">
@@ -495,7 +495,7 @@ end if:</Text-field>
 <Group labelreference="L1756" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(tau_regressor_s(7..NQ,..), sprintf(&quot;../codeexport/%s_invdyn_joint_fixb_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
+  MatlabExport(tau_regressor_s(7..NQ,..), sprintf(&quot;../codeexport/%s/invdyn_joint_fixb_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>

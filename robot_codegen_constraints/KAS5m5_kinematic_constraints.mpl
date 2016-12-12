@@ -21,7 +21,7 @@ read "../helper/proc_convert_t_s":
 read "../helper/proc_MatlabExport":
 read "../robot_codegen_constraints/proc_subs_kintmp_exp":
 read "../robot_codegen_definitions/robot_env":
-read sprintf("../codeexport/%s_tree_floatb_definitions", robot_name):
+read sprintf("../codeexport/%s/tree_floatb_definitions", robot_name):
 # Lese Ergebnisse der Kinematik von KAS5_m3 aus.
 # Siehe KAS5_m3_sym_codegen_kinematic_constraints.mw
 # kintmp_qs, kintmp_qt, lpar_qs, lpar_qt, kintmp_subsexp
@@ -76,13 +76,13 @@ lpar_qs := subs_q_m5_J(lpar_qs_KAS5m5):
 kintmp_qt := convert_s_t(kintmp_qs):
 lpar_qt := convert_s_t(lpar_qs):
 # Speichern der Ergebnisse
-save kin_constraints_exist, kintmp_qs, kintmp_qt, lpar_qs, lpar_qt, kintmp_subsexp, sprintf("../codeexport/%s_kinematic_constraints_maple_inert", robot_name):
-save kin_constraints_exist, kintmp_qs, kintmp_qt, lpar_qs, lpar_qt, kintmp_subsexp, sprintf("../codeexport/%s_kinematic_constraints_maple_inert.m", robot_name):
+save kin_constraints_exist, kintmp_qs, kintmp_qt, lpar_qs, lpar_qt, kintmp_subsexp, sprintf("../codeexport/%s/kinematic_constraints_maple_inert", robot_name):
+save kin_constraints_exist, kintmp_qs, kintmp_qt, lpar_qs, lpar_qt, kintmp_subsexp, sprintf("../codeexport/%s/kinematic_constraints_maple_inert.m", robot_name):
 # Liste der Parameter speichern
 # Liste mit abhängigen konstanten Kinematikparametern erstellen (wichtig für Matlab-Funktionsgenerierung)
 read "../helper/proc_list_constant_expressions";
 kc_symbols := Matrix(list_constant_expressions( kintmp_subsexp(..,2) )):
-save kc_symbols, sprintf("../codeexport/%s_kinematic_constraints_symbols_list_maple", robot_name):
-MatlabExport(Transpose(kc_symbols), sprintf("../codeexport/%s_kinematic_constraints_symbols_list_matlab.m", robot_name), 2):
+save kc_symbols, sprintf("../codeexport/%s/kinematic_constraints_symbols_list_maple", robot_name):
+MatlabExport(Transpose(kc_symbols), sprintf("../codeexport/%s/kinematic_constraints_symbols_list_matlab.m", robot_name), 2):
 printf("Zwangsbedingungen der Parallelstruktur von KAS5_m3 nach KAS5_m5 angepasst. %s\n", FormatTime("%Y-%m-%d %H:%M:%S")):
 

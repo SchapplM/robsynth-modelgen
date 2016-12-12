@@ -177,7 +177,7 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Group>
 <Group labelreference="L1686" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_tree_floatb_definitions&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tree_floatb_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1697" drawlabel="true">
@@ -198,11 +198,11 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 <Group labelreference="L1580" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_dynpar = 1 then
-  read sprintf(&quot;../codeexport/%s_energy_potential_floatb_%s_worldframe_par1_maple.m&quot;, robot_name, base_method_name):
-  read sprintf(&quot;../codeexport/%s_energy_kinetic_floatb_%s_worldframe_par1_maple.m&quot;, robot_name, base_method_name):
+  read sprintf(&quot;../codeexport/%s/energy_potential_floatb_%s_worldframe_par1_maple.m&quot;, robot_name, base_method_name):
+  read sprintf(&quot;../codeexport/%s/energy_kinetic_floatb_%s_worldframe_par1_maple.m&quot;, robot_name, base_method_name):
 elif codegen_dynpar = 2 then
-  read sprintf(&quot;../codeexport/%s_energy_potential_floatb_%s_worldframe_par2_maple.m&quot;, robot_name, base_method_name):
-  read sprintf(&quot;../codeexport/%s_energy_kinetic_floatb_%s_linkframe_par2_maple.m&quot;, robot_name, base_method_name):
+  read sprintf(&quot;../codeexport/%s/energy_potential_floatb_%s_worldframe_par2_maple.m&quot;, robot_name, base_method_name):
+  read sprintf(&quot;../codeexport/%s/energy_kinetic_floatb_%s_linkframe_par2_maple.m&quot;, robot_name, base_method_name):
 else
 <Font encoding="UTF-8">  printf(&quot;Dynamikfunktionen nur f\303\274r Parametersatz 1 oder 2 definiert\134n&quot;):
 </Font>end:
@@ -247,9 +247,9 @@ dUdq_s := OutputLagrange[3]:</Text-field>
 </Group>
 <Group labelreference="L1629" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save dUdq_s, sprintf(&quot;../codeexport/%s_floatb_%s_lagrange_dUdq_s_par%d_maple.m&quot;, robot_name, base_method_name, codegen_dynpar):
-save dTdq_s, sprintf(&quot;../codeexport/%s_floatb_%s_lagrange_dTdq_s_par%d_maple.m&quot;, robot_name, base_method_name, codegen_dynpar):
-save dTdqDdt_s, sprintf(&quot;../codeexport/%s_floatb_%s_lagrange_dTdqDdt_s_par%d_maple.m&quot;, robot_name, base_method_name, codegen_dynpar):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save dUdq_s, sprintf(&quot;../codeexport/%s/floatb_%s_lagrange_dUdq_s_par%d_maple.m&quot;, robot_name, base_method_name, codegen_dynpar):
+save dTdq_s, sprintf(&quot;../codeexport/%s/floatb_%s_lagrange_dTdq_s_par%d_maple.m&quot;, robot_name, base_method_name, codegen_dynpar):
+save dTdqDdt_s, sprintf(&quot;../codeexport/%s/floatb_%s_lagrange_dTdqDdt_s_par%d_maple.m&quot;, robot_name, base_method_name, codegen_dynpar):</Text-field>
 </Input>
 </Group>
 </Section>
@@ -272,7 +272,7 @@ save dTdqDdt_s, sprintf(&quot;../codeexport/%s_floatb_%s_lagrange_dTdqDdt_s_par%
 </Group>
 <Group labelreference="L1674" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save taug_s, sprintf(&quot;../codeexport/%s_gravload_par%d_maple.m&quot;, robot_name, codegen_dynpar):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save taug_s, sprintf(&quot;../codeexport/%s/gravload_par%d_maple.m&quot;, robot_name, codegen_dynpar):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1672" drawlabel="true">
@@ -290,7 +290,7 @@ Die Berechnungen werden deshalb nicht f\303\274r floatb_twist durchgef\303\274hr
 <Group labelreference="L1670" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_grav and not(base_method_name=&quot;twist&quot;) then
-  MatlabExport(taug_s(1..6), sprintf(&quot;../codeexport/%s_base_gravload_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(taug_s(1..6), sprintf(&quot;../codeexport/%s/base_gravload_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -302,7 +302,7 @@ end if:</Text-field>
 <Group labelreference="L1673" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_grav then
-  MatlabExport(taug_s(7..NQ), sprintf(&quot;../codeexport/%s_joint_gravload_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(taug_s(7..NQ), sprintf(&quot;../codeexport/%s/joint_gravload_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -314,7 +314,7 @@ end if:</Text-field>
 <Group labelreference="L1671" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_grav and not(base_method_name=&quot;twist&quot;) then
-  MatlabExport(taug_s(1..NQ), sprintf(&quot;../codeexport/%s_gravload_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(taug_s(1..NQ), sprintf(&quot;../codeexport/%s/gravload_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -345,14 +345,14 @@ end do:</Text-field>
 <Group labelreference="L1586" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertia and not(base_method_name=&quot;twist&quot;) then
-  MatlabExport(MM_s(1..NQ,1..NQ), sprintf(&quot;../codeexport/%s_inertia_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(MM_s(1..NQ,1..NQ), sprintf(&quot;../codeexport/%s/inertia_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1693" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertia and not(base_method_name=&quot;twist&quot;) then
-  MatlabExport(MM_s(7..NQ,1..6), sprintf(&quot;../codeexport/%s_inertia_joint_base_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(MM_s(7..NQ,1..6), sprintf(&quot;../codeexport/%s/inertia_joint_base_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -373,7 +373,7 @@ end do:</Text-field>
 <Group labelreference="L1646" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertia then
-  MatlabExport(MMjj_s, sprintf(&quot;../codeexport/%s_inertia_joint_joint_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(MMjj_s, sprintf(&quot;../codeexport/%s/inertia_joint_joint_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -408,14 +408,14 @@ end if:</Text-field>
 <Group labelreference="L1600" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertiaD and not(base_method_name=&quot;twist&quot;) then
-  MatlabExport(MMD_s[1..NQ,1..NQ], sprintf(&quot;../codeexport/%s_inertia_time_derivative_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(MMD_s[1..NQ,1..NQ], sprintf(&quot;../codeexport/%s/inertia_time_derivative_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1694" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertiaD and not(base_method_name=&quot;twist&quot;) then
-  MatlabExport(MMD_s[7..NQ,1..6], sprintf(&quot;../codeexport/%s_inertia_joint_base_time_derivative_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(MMD_s[7..NQ,1..6], sprintf(&quot;../codeexport/%s/inertia_joint_base_time_derivative_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -433,7 +433,7 @@ end do:</Text-field>
 <Group labelreference="L1695" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertiaD then
-  MatlabExport(MMDjj_s, sprintf(&quot;../codeexport/%s_inertia_joint_joint_time_derivative_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(MMDjj_s, sprintf(&quot;../codeexport/%s/inertia_joint_joint_time_derivative_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -457,7 +457,7 @@ end do:</Text-field>
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_corvec and not(base_method_name=&quot;twist&quot;) then
   for i to NQ do 
-    MatlabExport(tauCC_s(i), sprintf(&quot;../codeexport/%s_coriolisvec_floatb_%s_%d_par%d_matlab.m&quot;, robot_name, base_method_name, i, codegen_dynpar), codegen_opt):
+    MatlabExport(tauCC_s(i), sprintf(&quot;../codeexport/%s/coriolisvec_floatb_%s_%d_par%d_matlab.m&quot;, robot_name, base_method_name, i, codegen_dynpar), codegen_opt):
   end do:
 end if:</Text-field>
 </Input>
@@ -470,21 +470,21 @@ end if:</Text-field>
 <Group labelreference="L1621" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_corvec and not(base_method_name=&quot;twist&quot;) then
-  MatlabExport(tauCC_s[1..6], sprintf(&quot;../codeexport/%s_coriolisvec_base_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(tauCC_s[1..6], sprintf(&quot;../codeexport/%s/coriolisvec_base_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1620" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_corvec and not(base_method_name=&quot;twist&quot;) then
-  MatlabExport(tauCC_s[7..NQ], sprintf(&quot;../codeexport/%s_coriolisvec_joint_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(tauCC_s[7..NQ], sprintf(&quot;../codeexport/%s/coriolisvec_joint_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1588" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_corvec and not(base_method_name=&quot;twist&quot;) then
-  MatlabExport(tauCC_s[1..NQ], sprintf(&quot;../codeexport/%s_coriolisvec_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(tauCC_s[1..NQ], sprintf(&quot;../codeexport/%s/coriolisvec_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -507,7 +507,7 @@ end do:</Text-field>
 <Group labelreference="L1605" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_corvec then
-  MatlabExport(tauCC_s_fixb[7..NQ], sprintf(&quot;../codeexport/%s_coriolisvec_joint_fixb_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
+  MatlabExport(tauCC_s_fixb[7..NQ], sprintf(&quot;../codeexport/%s/coriolisvec_joint_fixb_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -550,14 +550,14 @@ end do:</Text-field>
 <Group labelreference="L1591" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_cormat and not(base_method_name=&quot;twist&quot;) then
-  MatlabExport(Cqs[1..NQ,1..NQ], sprintf(&quot;../codeexport/%s_coriolismat_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(Cqs[1..NQ,1..NQ], sprintf(&quot;../codeexport/%s/coriolismat_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1699" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_cormat and not(base_method_name=&quot;twist&quot;) then
-  MatlabExport(Cqs[7..NQ,1..NQ], sprintf(&quot;../codeexport/%s_coriolismat_joint_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(Cqs[7..NQ,1..NQ], sprintf(&quot;../codeexport/%s/coriolismat_joint_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -580,7 +580,7 @@ end do:</Text-field>
 <Group labelreference="L1608" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_cormat then
-  MatlabExport(Cqs_fixb[7..NQ,7..NQ], sprintf(&quot;../codeexport/%s_coriolismat_joint_fixb_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
+  MatlabExport(Cqs_fixb[7..NQ,7..NQ], sprintf(&quot;../codeexport/%s/coriolismat_joint_fixb_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -601,21 +601,21 @@ end if:</Text-field>
 <Group labelreference="L1593" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_invdyn and not(base_method_name=&quot;twist&quot;) then
-  MatlabExport(tau, sprintf(&quot;../codeexport/%s_invdyn_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), true):
+  MatlabExport(tau, sprintf(&quot;../codeexport/%s/invdyn_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), true):
 end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1650" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_invdyn and not(base_method_name=&quot;twist&quot;) then
-  MatlabExport(tau[1..6], sprintf(&quot;../codeexport/%s_invdyn_base_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(tau[1..6], sprintf(&quot;../codeexport/%s/invdyn_base_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1651" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_invdyn and not(base_method_name=&quot;twist&quot;) then
-  MatlabExport(tau[7..NQ], sprintf(&quot;../codeexport/%s_invdyn_joint_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(tau[7..NQ], sprintf(&quot;../codeexport/%s/invdyn_joint_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -639,7 +639,7 @@ end do:</Text-field>
 <Group labelreference="L1616" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_invdyn then
-  MatlabExport(taus_fixb[7..NQ], sprintf(&quot;../codeexport/%s_invdyn_fixb_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
+  MatlabExport(taus_fixb[7..NQ], sprintf(&quot;../codeexport/%s/invdyn_fixb_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>

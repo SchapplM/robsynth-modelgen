@@ -43,13 +43,13 @@ read "../transformation/proc_rpy2r":
 read "../transformation/proc_rpy2tr": 
 read "../robot_codegen_definitions/robot_env":
 printf("Generiere Kinematik für %s\n", robot_name):
-read sprintf("../codeexport/%s_tree_floatb_definitions", robot_name):
+read sprintf("../codeexport/%s/tree_floatb_definitions", robot_name):
 # Kinematische Zwangsbedingungen
 # Lade Ausdrücke für kinematische Zwangsbedingungen (Verknüpfung von MDH-Gelenkwinkeln durch verallgemeinerte Koordinaten)
 # Lese Variablen: kintmp_subsexp, kintmp_qs, kintmp_qt
 kin_constraints_exist := false:
 read "../robot_codegen_constraints/proc_subs_kintmp_exp":
-constrfile := sprintf("../codeexport/%s_kinematic_constraints_maple_inert.m", robot_name):
+constrfile := sprintf("../codeexport/%s/kinematic_constraints_maple_inert.m", robot_name):
 if FileTools[Exists](constrfile) then
   read constrfile:
 end if:
@@ -64,7 +64,7 @@ else
   kintmp_subsexp := Matrix(1,2):
   kin_constraints_exist := false:
   # Zwangsbedingungen neu speichern, damit diese auch für andere Skripte verfügbar sind (als dummy-Variablen).
-  save kin_constraints_exist, kintmp_qs, kintmp_qt, kintmp_subsexp, sprintf("../codeexport/%s_kinematic_constraints_maple_inert.m", robot_name):
+  save kin_constraints_exist, kintmp_qs, kintmp_qt, kintmp_subsexp, sprintf("../codeexport/%s/kinematic_constraints_maple_inert.m", robot_name):
 end if:
 # Calculate Forward Kinematics (Single-Joint Transformation)
 # Trf is the Matrix of Transformation from i-1 to i
@@ -118,14 +118,14 @@ end do:
 
 # Export
 # Maple-Export
-save Trf, Trf_c, sprintf("../codeexport/%s_kinematics_floatb_%s_rotmat_maple.m", robot_name, base_method_name):
+save Trf, Trf_c, sprintf("../codeexport/%s/kinematics_floatb_%s_rotmat_maple.m", robot_name, base_method_name):
 # Export des symbolischen Ausdrucks für alle kumulierten Transformationsmatrizen auf einmal.
 Trf_c_Export := Matrix((NL)*4, 4):
 for i from 1 to NL do 
   Trf_c_Export((i-1)*4+1 .. 4*i, 1..4) := Trf_c(1..4, 1..4, i):
 end do:
 if codegen_act then
-  MatlabExport(convert_t_s(Trf_c_Export), sprintf("../codeexport/%s_fkine_mdh_floatb_%s_rotmat_matlab.m", robot_name, base_method_name), codegen_opt):
+  MatlabExport(convert_t_s(Trf_c_Export), sprintf("../codeexport/%s/fkine_mdh_floatb_%s_rotmat_matlab.m", robot_name, base_method_name), codegen_opt):
 end if:
 # Export des symbolischen Ausdrucks für alle Gelenk-Transformationsmatrizen auf einmal.
 Trf_Export := Matrix((NJ)*4, 4):
@@ -133,12 +133,12 @@ for i from 1 to NJ do
   Trf_Export((i-1)*4+1 .. 4*i, 1..4) := Trf(1..4, 1..4, i):
 end do:
 if codegen_act then
-  MatlabExport(convert_t_s(Trf_Export), sprintf("../codeexport/%s_joint_transformation_mdh_rotmat_matlab.m", robot_name), codegen_opt):
+  MatlabExport(convert_t_s(Trf_Export), sprintf("../codeexport/%s/joint_transformation_mdh_rotmat_matlab.m", robot_name), codegen_opt):
 end if:
 # Export des symbolischen Ausdrucks für jede Transformationsmatrix einzeln
 for i from 1 to NL do
   if codegen_act then
-    MatlabExport(convert_t_s(Trf_c(1 .. 4, 1 .. 4, i)), sprintf("../codeexport/%s_fkine_%d_floatb_%s_rotmat_matlab.m", robot_name, i, base_method_name), codegen_opt):
+    MatlabExport(convert_t_s(Trf_c(1 .. 4, 1 .. 4, i)), sprintf("../codeexport/%s/fkine_%d_floatb_%s_rotmat_matlab.m", robot_name, i, base_method_name), codegen_opt):
   end if:
 end do:
 

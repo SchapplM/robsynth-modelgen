@@ -180,7 +180,7 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Group>
 <Group labelreference="L1647" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_tree_floatb_definitions&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tree_floatb_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1431" drawlabel="true">
@@ -190,7 +190,7 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Group>
 <Group labelreference="L1527" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_kinematics_floatb_%s_rotmat_maple.m&quot;, robot_name, base_method_name):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/kinematics_floatb_%s_rotmat_maple.m&quot;, robot_name, base_method_name):
 Trf := Trf:
 Trf_c := Trf_c:</Text-field>
 </Input>
@@ -203,7 +203,7 @@ Die Berechnung soll nur an einer Stelle erfolgen. Siehe robot_tree_velocity_mdh_
 </Group>
 <Group labelreference="L1700" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_velocity_mdh_angles_maple.m&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/velocity_mdh_angles_maple.m&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1701" drawlabel="true">
@@ -308,7 +308,7 @@ end do:</Text-field>
 </Group>
 <Group labelreference="L1676" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save omega_i_i, rD_i_i, sprintf(&quot;../codeexport/%s_velocity_linkframe_floatb_%s_maple.m&quot;, robot_name, base_method_name):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save omega_i_i, rD_i_i, sprintf(&quot;../codeexport/%s/velocity_linkframe_floatb_%s_maple.m&quot;, robot_name, base_method_name):
 <Font encoding="UTF-8">printf(&quot;Maple-Ausdr\303\274cke exportiert. %s\134n&quot;, </Font>FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Text-field>
 </Input>
 </Group>
@@ -320,8 +320,8 @@ end do:</Text-field>
 <Group labelreference="L1675" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(convert_t_s(omega_i_i), sprintf(&quot;../codeexport/%s_velocity_omegaii_floatb_%s_linkframe_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
-  MatlabExport(convert_t_s(rD_i_i), sprintf(&quot;../codeexport/%s_velocity_rDii_floatb_%s_linkframe_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
+  MatlabExport(convert_t_s(omega_i_i), sprintf(&quot;../codeexport/%s/velocity_omegaii_floatb_%s_linkframe_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
+  MatlabExport(convert_t_s(rD_i_i), sprintf(&quot;../codeexport/%s/velocity_rDii_floatb_%s_linkframe_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
   <Font encoding="UTF-8">printf(&quot;Geschwindigkeiten in Matlab exportiert. %s\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Font>
 end if:</Text-field>
 </Input>

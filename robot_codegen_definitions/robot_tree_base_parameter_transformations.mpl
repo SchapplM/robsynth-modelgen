@@ -26,9 +26,9 @@ read "../helper/proc_convert_t_s":
 read "../helper/proc_MatlabExport":
 read "../robot_codegen_definitions/robot_env":
 printf("Generiere Minimalparameterregressor der Energie für %s\n", robot_name, codegen_dynpar):
-read sprintf("../codeexport/%s_tree_floatb_twist_definitions", robot_name):
+read sprintf("../codeexport/%s/tree_floatb_twist_definitions", robot_name):
 # Ergebnisse der Minimalparametergruppierung laden
-read sprintf("../codeexport/%s_minimal_parameter_vector_maple", robot_name):
+read sprintf("../codeexport/%s/minimal_parameter_vector_maple", robot_name):
 Paramvec2 := Paramvec2:
 # Minimalparametervektor als Matrixdarstellung
 # Siehe atlas_limb_sym_codegen_fixedbase_mdh_dynamics_regressor_minpar.mw
@@ -45,6 +45,6 @@ for i to Paramvec_size do
   end do:
 end do:
 # Export der Umwandlung von Parametersatz 2 nach Minimalparameter (Matrix)
-MatlabExport(dMPVdPV2, sprintf("../codeexport/%s_minparvec_diff_wrt_par2_matlab.m", robot_name), true):
-save dMPVdPV2, sprintf("../codeexport/%s_minparvec_diff_wrt_par2_maple", robot_name):
+MatlabExport(dMPVdPV2, sprintf("../codeexport/%s/minparvec_diff_wrt_par2_matlab.m", robot_name), true):
+save dMPVdPV2, sprintf("../codeexport/%s/minparvec_diff_wrt_par2_maple", robot_name):
 

@@ -13,8 +13,6 @@ NJ = %NJ%;
 NL = %NL%;
 robot_name = '%RN%';
 
-testfunctions_path_init
-
 %% Parameter
 %RN%_varpar_testfunctions_parameter
 

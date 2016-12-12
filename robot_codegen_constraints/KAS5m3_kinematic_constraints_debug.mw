@@ -115,7 +115,7 @@ Eingabe:
 <Font encoding="UTF-8">* enth\303\244lt die Definitionen aller Konstanten und verallgemeinerter Koordinaten</Font>
 
 Ausgabe:
-&quot;../codeexport/%s_kinematic_constraints_maple_inert.m&quot;
+&quot;../codeexport/%s/kinematic_constraints_maple_inert.m&quot;
 <Font encoding="UTF-8">* Erzeugt die Ausdr\303\274cke f\303\274r Winkel der Parallelstruktur (kintmp), Ersetzungsausdr\303\274cke f\303\274r sin,cos (kintmp_subsexp) und die Federl\303\244nge (lpar) in Abh\303\244ngigkeit der verallgemeinerten Koordinaten.</Font></Text-field>
 </Input>
 </Group>
@@ -191,7 +191,7 @@ read &quot;../helper/proc_intersect_circle&quot;:</Text-field>
 </Group>
 <Group view="code" labelreference="L2111" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_tree_floatb_definitions&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tree_floatb_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1569" drawlabel="true">
@@ -335,7 +335,7 @@ st := time():</Text-field>
 </Group>
 <Group view="code" labelreference="L2112" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_kinematic_constraints_maple_inert.m&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/kinematic_constraints_maple_inert.m&quot;, robot_name):</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -430,19 +430,19 @@ end if:</Text-field>
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to RowDimension(kintmp_s) do
   tmp := kintmp_qs(i):
-  save tmp, sprintf(&quot;../codeexport/%s_kinematic_constraints_maple_kintmpq_%d&quot;, robot_name, i):
-  save tmp, sprintf(&quot;../codeexport/%s_kinematic_constraints_maple_kintmpq_%d.m&quot;, robot_name, i):
+  save tmp, sprintf(&quot;../codeexport/%s/kinematic_constraints_maple_kintmpq_%d&quot;, robot_name, i):
+  save tmp, sprintf(&quot;../codeexport/%s/kinematic_constraints_maple_kintmpq_%d.m&quot;, robot_name, i):
 end do:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1962" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kintmp_qs, kintmp_qt, lpar_qs, lpar_qt, kintmp_subsexp, sprintf(&quot;../codeexport/%s_kinematic_constraints_maple&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kintmp_qs, kintmp_qt, lpar_qs, lpar_qt, kintmp_subsexp, sprintf(&quot;../codeexport/%s/kinematic_constraints_maple&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1960" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kintmp_qs, kintmp_qt, lpar_qs, lpar_qt, kintmp_subsexp, sprintf(&quot;../codeexport/%s_kinematic_constraints_maple.m&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kintmp_qs, kintmp_qt, lpar_qs, lpar_qt, kintmp_subsexp, sprintf(&quot;../codeexport/%s/kinematic_constraints_maple.m&quot;, robot_name):</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1953" drawlabel="true">

@@ -42,17 +42,17 @@ read "../transformation/proc_transl":
 read "../transformation/proc_trafo_mdh": 
 read "../robot_codegen_definitions/robot_env":
 printf("Generiere Geschwindigkeit für %s\n", robot_name):
-read sprintf("../codeexport/%s_tree_floatb_definitions", robot_name):
+read sprintf("../codeexport/%s/tree_floatb_definitions", robot_name):
 # Ergebnisse der Kinematik laden
-read sprintf("../codeexport/%s_kinematics_floatb_%s_rotmat_maple.m", robot_name, base_method_name):
+read sprintf("../codeexport/%s/kinematics_floatb_%s_rotmat_maple.m", robot_name, base_method_name):
 Trf := Trf:
 Trf_c := Trf_c:
-read sprintf("../codeexport/%s_kinematics_com_worldframe_floatb_%s_par1_maple.m", robot_name, base_method_name):
+read sprintf("../codeexport/%s/kinematics_com_worldframe_floatb_%s_par1_maple.m", robot_name, base_method_name):
 r_W_W_Si := r_W_W_Si:
 r_W_i_Si := r_W_i_Si:
 # Zeitableitungen der MDH-Drehwinkel laden.
 # Die Berechnung soll nur an einer Stelle erfolgen. Siehe robot_tree_velocity_mdh_angles.mw.
-read sprintf("../codeexport/%s_velocity_mdh_angles_maple.m", robot_name):
+read sprintf("../codeexport/%s/velocity_mdh_angles_maple.m", robot_name):
 thetaD := thetaD:
 # Calculate Velocities
 # First assume fixed base model with base velocity and acceleration set to zero
@@ -96,13 +96,13 @@ for i to NL do
   printf("Geschwindigkeit für Körperschwerpunkt %d aufgestellt. %s\n", i, FormatTime("%Y-%m-%d %H:%M:%S")):
 end do:
 # Maple Export
-save omega_W_i, rD_W_i, rD_W_Si, sprintf("../codeexport/%s_velocity_worldframe_floatbase_%s_par1_maple.m", robot_name, base_method_name):
+save omega_W_i, rD_W_i, rD_W_Si, sprintf("../codeexport/%s/velocity_worldframe_floatbase_%s_par1_maple.m", robot_name, base_method_name):
 printf("Maple-Ausdrücke exportiert. %s\n", FormatTime("%Y-%m-%d %H:%M:%S")):
 # Matlab Export
 if codegen_act then
-  MatlabExport(convert_t_s(omega_W_i), sprintf("../codeexport/%s_velocity_omegai0_floatb_%s_worldframe_matlab.m", robot_name, base_method_name), codegen_opt):
-  MatlabExport(convert_t_s(rD_W_i), sprintf("../codeexport/%s_velocity_rDi0_floatb_%s_worldframe_matlab.m", robot_name, base_method_name), codegen_opt):
-  MatlabExport(convert_t_s(rD_W_Si), sprintf("../codeexport/%s_velocity_rDSi0_floatb_%s_worldframe_par1_matlab.m", robot_name, base_method_name), codegen_opt):
+  MatlabExport(convert_t_s(omega_W_i), sprintf("../codeexport/%s/velocity_omegai0_floatb_%s_worldframe_matlab.m", robot_name, base_method_name), codegen_opt):
+  MatlabExport(convert_t_s(rD_W_i), sprintf("../codeexport/%s/velocity_rDi0_floatb_%s_worldframe_matlab.m", robot_name, base_method_name), codegen_opt):
+  MatlabExport(convert_t_s(rD_W_Si), sprintf("../codeexport/%s/velocity_rDSi0_floatb_%s_worldframe_par1_matlab.m", robot_name, base_method_name), codegen_opt):
   printf("Geschwindigkeiten in Matlab exportiert. %s\n", FormatTime("%Y-%m-%d %H:%M:%S")):
 end if:
 

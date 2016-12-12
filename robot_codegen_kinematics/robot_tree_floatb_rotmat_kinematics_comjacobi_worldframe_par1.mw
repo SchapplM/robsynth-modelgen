@@ -177,7 +177,7 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Group>
 <Group labelreference="L1647" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_tree_floatb_definitions&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tree_floatb_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1431" drawlabel="true">
@@ -187,7 +187,7 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Group>
 <Group labelreference="L1527" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_kinematics_floatb_%s_rotmat_maple.m&quot;, robot_name, base_method_name):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/kinematics_floatb_%s_rotmat_maple.m&quot;, robot_name, base_method_name):
 Trf := Trf:
 Trf_c := Trf_c:</Text-field>
 </Input>
@@ -199,7 +199,7 @@ Trf_c := Trf_c:</Text-field>
 </Group>
 <Group labelreference="L1687" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_kinematics_com_total_worldframe_floatb_%s_par1_maple.m&quot;, robot_name, base_method_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/kinematics_com_total_worldframe_floatb_%s_par1_maple.m&quot;, robot_name, base_method_name):</Text-field>
 </Input>
 </Group>
 </Section>
@@ -237,18 +237,18 @@ end:</Text-field>
 </Group>
 <Group labelreference="L1682" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save J_COG_s, sprintf(&quot;../codeexport/%s_kinematics_Jcom_worldframe_floatb_%s_par1_maple.m&quot;, robot_name, base_method_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save J_COG_s, sprintf(&quot;../codeexport/%s/kinematics_Jcom_worldframe_floatb_%s_par1_maple.m&quot;, robot_name, base_method_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1683" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_kinematics_Jcom_worldframe_floatb_%s_par1_maple.m&quot;, robot_name, base_method_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/kinematics_Jcom_worldframe_floatb_%s_par1_maple.m&quot;, robot_name, base_method_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1621" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(J_COG_s, sprintf(&quot;../codeexport/%s_com_jacobi_baseframe_par1_matlab.m&quot;, robot_name), 2):
+  MatlabExport(J_COG_s, sprintf(&quot;../codeexport/%s/com_jacobi_baseframe_par1_matlab.m&quot;, robot_name), 2):
 end if:</Text-field>
 </Input>
 </Group>
@@ -271,7 +271,7 @@ JD_COG_s := convert_t_s(JD_COG):</Text-field>
 <Group labelreference="L1630" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(convert_t_s(JD_COG_s), sprintf(&quot;../codeexport/%s_com_jacobiD_baseframe_par1_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(convert_t_s(JD_COG_s), sprintf(&quot;../codeexport/%s/com_jacobiD_baseframe_par1_matlab.m&quot;, robot_name), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>

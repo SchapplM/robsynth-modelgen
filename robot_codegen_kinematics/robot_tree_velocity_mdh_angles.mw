@@ -168,7 +168,7 @@ read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
 </Group>
 <Group labelreference="L1647" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_tree_floatb_definitions&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tree_floatb_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1710" drawlabel="true">
@@ -178,7 +178,7 @@ read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
 </Group>
 <Group labelreference="L1711" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s_kinematic_constraints_maple_inert.m&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/kinematic_constraints_maple_inert.m&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 </Section>
@@ -239,7 +239,7 @@ end do:</Text-field>
 <Group labelreference="L1706" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(convert_t_s(thetaD), sprintf(&quot;../codeexport/%s_velocity_mdh_angles_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(convert_t_s(thetaD), sprintf(&quot;../codeexport/%s/velocity_mdh_angles_matlab.m&quot;, robot_name), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -250,7 +250,7 @@ end if:</Text-field>
 </Group>
 <Group labelreference="L1708" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save thetaD, sprintf(&quot;../codeexport/%s_velocity_mdh_angles_maple.m&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save thetaD, sprintf(&quot;../codeexport/%s/velocity_mdh_angles_maple.m&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1713" drawlabel="true">

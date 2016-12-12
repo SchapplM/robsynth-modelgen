@@ -7,7 +7,7 @@
 clc
 clear
 
-testfunctions_path_init
+%RN%_testfunctions_path_init
 
 %RN%_varpar_fixbase_kinematics_test
 %RN%_varpar_floatbase_kinematics_test

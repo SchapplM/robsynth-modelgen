@@ -39,13 +39,13 @@ read "../transformation/proc_transl":
 read "../transformation/proc_trafo_mdh": 
 read "../robot_codegen_definitions/robot_env":
 printf("Generiere Schwerpunktskinematik für %s\n", robot_name):
-read sprintf("../codeexport/%s_tree_floatb_definitions", robot_name):
+read sprintf("../codeexport/%s/tree_floatb_definitions", robot_name):
 # Ergebnisse der Kinematik laden
-read sprintf("../codeexport/%s_kinematics_floatb_%s_rotmat_maple.m", robot_name, base_method_name):
+read sprintf("../codeexport/%s/kinematics_floatb_%s_rotmat_maple.m", robot_name, base_method_name):
 Trf := Trf:
 Trf_c := Trf_c:
 # Schwerpunkt des Roboters laden
-read sprintf("../codeexport/%s_kinematics_com_total_worldframe_floatb_%s_par1_maple.m", robot_name, base_method_name):
+read sprintf("../codeexport/%s/kinematics_com_total_worldframe_floatb_%s_par1_maple.m", robot_name, base_method_name):
 # Calculate CoG Jacobian
 # CoG Jacobian nach [SugiharaNakIno2002].
 # TODO: baseframe in worldframe ändern
@@ -57,16 +57,16 @@ for i from 1 to 3 do
   end:
 end:
 # TODO: Wenn der Ausdruck J_COG_s nicht gespeichert und wieder geladen wird, hängt die Berechnung bei der Optimierung des Ausdrucks mit "tryhard"
-save J_COG_s, sprintf("../codeexport/%s_kinematics_Jcom_worldframe_floatb_%s_par1_maple.m", robot_name, base_method_name):
-read sprintf("../codeexport/%s_kinematics_Jcom_worldframe_floatb_%s_par1_maple.m", robot_name, base_method_name):
+save J_COG_s, sprintf("../codeexport/%s/kinematics_Jcom_worldframe_floatb_%s_par1_maple.m", robot_name, base_method_name):
+read sprintf("../codeexport/%s/kinematics_Jcom_worldframe_floatb_%s_par1_maple.m", robot_name, base_method_name):
 if codegen_act then
-  MatlabExport(J_COG_s, sprintf("../codeexport/%s_com_jacobi_baseframe_par1_matlab.m", robot_name), 2):
+  MatlabExport(J_COG_s, sprintf("../codeexport/%s/com_jacobi_baseframe_par1_matlab.m", robot_name), 2):
 end if:
 # CoG-Jacobian Time derivative
 J_COG := convert_s_t(J_COG_s):
 JD_COG := diff~(J_COG, t):
 JD_COG_s := convert_t_s(JD_COG):
 if codegen_act then
-  MatlabExport(convert_t_s(JD_COG_s), sprintf("../codeexport/%s_com_jacobiD_baseframe_par1_matlab.m", robot_name), codegen_opt):
+  MatlabExport(convert_t_s(JD_COG_s), sprintf("../codeexport/%s/com_jacobiD_baseframe_par1_matlab.m", robot_name), codegen_opt):
 end if:
 

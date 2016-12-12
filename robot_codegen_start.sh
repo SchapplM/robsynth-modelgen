@@ -56,14 +56,20 @@ fi;
 
 cd $repo_pfad/robot_codegen_scripts/
 
+# Ordner vorbereiten
+source robot_codegen_tmpvar_bash.sh > /dev/null # enthält zunächst unvollständige Definitionen und wird nur für den Roboternamen gebraucht.
+mkdir -p "$repo_pfad/codeexport/$robot_name"
+mkdir -p "$repo_pfad/codeexport/matlabfcn/$robot_name"
+mkdir -p "$repo_pfad/codeexport/testfcn/$robot_name"
+
 # Maple-Definitionen einmal ausführen (damit dort definierte Variablen in Bash übernommen werden)
 pwd_alt=$(pwd)
 cd /opt/maple18/bin
 nice -n 10 ./maple -q  <<< "currentdir(\"$repo_pfad/robot_codegen_definitions\"): read \"robot_tree_floatb_twist_definitions.mpl\";"
 cd $pwd_alt
 
-# Umgebungsvariablen vorbereiten
-source robot_codegen_tmpvar_bash.sh
+# Umgebungsvariablen vorbereiten (jetzt enthalten sie die vollen MDH-Informationen (Name, Dimensionen)
+source robot_codegen_tmpvar_bash.sh > /dev/null
 
 # Skripte vorbereiten
 source $repo_pfad/robot_codegen_scripts/robot_codegen_maple_preparation.sh
@@ -85,9 +91,9 @@ source $repo_pfad/robot_codegen_scripts/testfunctions_generate.sh
 
 # Matlab-Testfunktionen starten
 if [ ! "$CG_FIXBONLY" == "1" ]; then
-  matlab -nodesktop -nosplash -r "run('$repo_pfad/robot_codegen_testfunctions/${robot_name}_test_everything');quit;"
+  matlab -nodesktop -nosplash -r "run('$repo_pfad/codeexport/testfcn/${robot_name}/${robot_name}_test_everything');quit;"
 else
-  matlab -nodesktop -nosplash -r "run('$repo_pfad/robot_codegen_testfunctions/${robot_name}_test_everything_fixbase');quit;"  
+  matlab -nodesktop -nosplash -r "run('$repo_pfad/codeexport/testfcn/${robot_name}/${robot_name}_test_everything_fixbase');quit;"  
 fi;
 
 echo "Funktionsgenerierung abgeschlossen. Alle Tests erfolgreich."
