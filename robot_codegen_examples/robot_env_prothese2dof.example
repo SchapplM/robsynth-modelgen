@@ -4,7 +4,7 @@
 # Quellen
 # [KhalilKle1986] Khalil, W. and Kleinfinger, J.-F.: A new geometric notation for open and closed-loop robots (1986)
 
-robot_name := "prothesis_2dof":
+robot_name := "prothese2dof":
 
 NJ := 2:
 NQJ := 2:
