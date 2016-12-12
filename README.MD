@@ -77,6 +77,8 @@ Folgende Argumente sind möglich:
  
         --fixb_only
 
+Zum Speicherort der Ergebnisse siehe [Ergebnisordner](#ergebnisordner).
+
 ### Alternative 2: Händisches Generieren aller Dateien <a name="start_alt2"></a> 
 
 Im Folgenden werden die Einzelbefehle gezeigt, die im Gesamt-Skript aus Alternative 1 ausgeführt werden.
@@ -367,6 +369,17 @@ Dateien:
 * maple.m Gespeicherte Maple-Ausdrücke (Maple-internes Format)
 * matlab.m Exportierter Matlab-Code
 * proc_... Maple-Prozedur (Reintext, Maple-Eingabeformat)
+
+### Ergebnisse der Code-Generierung <a name="ergebnisordner"></a> 
+
+Die Ordner der Code-Generierung werden im Ordner "codeexport" abgelegt.
+Für jedes System werden eigene Unterordner für temporäre Maple- und Matlab-Ausdrücke angelegt, für fertige Matlab-Funktionen ("matlabfcn") und für Testfunktionen ("testfcn").
+Die letztgenannten können danach z.B. in ein eigenes Repo für das untersuchte System kopiert werden.
+
+        /codeexport/
+          %RN%/
+          matlabfcn/%RN%/
+          testfcn/%RN%/
 
 ### Koordinatentransformation
 
