@@ -43,11 +43,11 @@ dateiliste_kindyn="
     /robot_codegen_definitions/robot_tree_floatb_twist_definitions.mpl
 "
 if [ -f  $repo_pfad/robot_codegen_constraints/${robot_name}_kinematic_constraints.mpl ]; then
-	dateiliste_kin="$dateiliste_kin
+	dateiliste_kindyn="$dateiliste_kindyn
 		/robot_codegen_constraints/${robot_name}_kinematic_constraints.mpl
 	"
 fi;
-dateiliste_kin="$dateiliste_kin
+dateiliste_kindyn="$dateiliste_kindyn
     /robot_codegen_kinematics/robot_tree_floatb_rotmat_mdh_kinematics.mpl
     /robot_codegen_kinematics/robot_tree_floatb_rotmat_kinematics_com_worldframe_par1.mpl
     /robot_codegen_kinematics/robot_tree_velocity_mdh_angles.mpl
@@ -119,5 +119,5 @@ do
 
   # Maple im Kommandozeilenmodus starten (vorher ins richtige Verzeichnis wechseln)
   echo "Starte Maple-Skript $filename"
-  nice -n 10 ./maple <<< "currentdir(\"$dir\"): read \"$filename\";" > /dev/null
+  nice -n 10 ./maple <<< "currentdir(\"$dir\"): read \"$filename\";"
 done
