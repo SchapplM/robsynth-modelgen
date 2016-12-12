@@ -158,6 +158,12 @@ read &quot;../helper/proc_MatlabExport&quot;:
 read &quot;../helper/proc_Lagrange1&quot;:</Text-field>
 </Input>
 </Group>
+<Group labelreference="L1708" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_index_symmat2vector&quot;:
+read &quot;../helper/proc_symmat2vector&quot;:</Text-field>
+</Input>
+</Group>
 <Group labelreference="L1687" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../transformation/proc_rotx&quot;: 
@@ -339,13 +345,17 @@ end do:</Text-field>
 </Group>
 <Group labelreference="L1107" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal">Matlab Export</Text-field>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Matlab Export (nur linke untere Dreiecksmatrix bei vollst\303\244ndigen Matrizen)</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1586" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertia and not(base_method_name=&quot;twist&quot;) then
-  MatlabExport(MM_s(1..NQ,1..NQ), sprintf(&quot;../codeexport/%s/inertia_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MM_s_vek := symmat2vec(MM_s):
+  filename_tmp := sprintf(&quot;../codeexport/%s/inertia_floatb_%s_par%d_maple_symvec.m&quot;, robot_name, base_method_name, codegen_dynpar):
+  save MM_s_vek, filename_tmp:
+  read filename_tmp:
+  MatlabExport(MM_s_vek, sprintf(&quot;../codeexport/%s/inertia_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -373,7 +383,11 @@ end do:</Text-field>
 <Group labelreference="L1646" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertia then
-  MatlabExport(MMjj_s, sprintf(&quot;../codeexport/%s/inertia_joint_joint_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MMjj_s_vek := symmat2vec(MMjj_s):
+  filename_tmp := sprintf(&quot;../codeexport/%s/inertia_joint_joint_floatb_%s_par%d_maple_symvec.m&quot;, robot_name, base_method_name, codegen_dynpar):
+  save MMjj_s_vek, filename_tmp:
+  read filename_tmp:
+  MatlabExport(MMjj_s_vek, sprintf(&quot;../codeexport/%s/inertia_joint_joint_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -408,7 +422,11 @@ end if:</Text-field>
 <Group labelreference="L1600" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertiaD and not(base_method_name=&quot;twist&quot;) then
-  MatlabExport(MMD_s[1..NQ,1..NQ], sprintf(&quot;../codeexport/%s/inertia_time_derivative_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MMD_s_vek := symmat2vec(MMD_s):
+  filename_tmp := sprintf(&quot;../codeexport/%s/inertia_time_derivative_floatb_%s_par%d_maple_symvec.m&quot;, robot_name, base_method_name, codegen_dynpar):
+  save MMD_s_vek, filename_tmp:
+  read filename_tmp:
+  MatlabExport(MMD_s_vek, sprintf(&quot;../codeexport/%s/inertia_time_derivative_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -432,8 +450,13 @@ end do:</Text-field>
 </Group>
 <Group labelreference="L1695" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertiaD then
-  MatlabExport(MMDjj_s, sprintf(&quot;../codeexport/%s/inertia_joint_joint_time_derivative_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">if codeexport_inertiaD then
+  # Vektor der unteren linken Dreiecksmatrix generieren, speichern und wieder laden. Ohne Neuladen h\303\244ngt sich maple durch einen Bug auf. TODO: Kl\303\244ren.
+  </Font>MMDjj_s_vek := symmat2vec(MMDjj_s):
+  filename_tmp := sprintf(&quot;../codeexport/%s/inertia_joint_joint_time_derivative_floatb_%s_par%d_maple_symvec.m&quot;, robot_name, base_method_name, codegen_dynpar):
+  save MMDjj_s_vek, filename_tmp:
+  read filename_tmp:
+  MatlabExport(MMDjj_s_vek, sprintf(&quot;../codeexport/%s/inertia_joint_joint_time_derivative_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>

@@ -36,6 +36,8 @@ read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s": 
 read "../helper/proc_MatlabExport":
 read "../helper/proc_Lagrange1":
+read "../helper/proc_index_symmat2vector":
+read "../helper/proc_symmat2vector":
 read "../transformation/proc_rotx": 
 read "../transformation/proc_roty": 
 read "../transformation/proc_rotz": 
@@ -117,9 +119,13 @@ for i to NQ do
     MM_s[i, j] := diff(tauMM_s[i, 1], qDD_s[j, 1]):
   end do:
 end do:
-# Matlab Export
+# Matlab Export (nur linke untere Dreiecksmatrix bei vollständigen Matrizen)
 if codeexport_inertia and not(base_method_name="twist") then
-  MatlabExport(MM_s(1..NQ,1..NQ), sprintf("../codeexport/%s/inertia_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MM_s_vek := symmat2vec(MM_s):
+  filename_tmp := sprintf("../codeexport/%s/inertia_floatb_%s_par%d_maple_symvec.m", robot_name, base_method_name, codegen_dynpar):
+  save MM_s_vek, filename_tmp:
+  read filename_tmp:
+  MatlabExport(MM_s_vek, sprintf("../codeexport/%s/inertia_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
 if codeexport_inertia and not(base_method_name="twist") then
   MatlabExport(MM_s(7..NQ,1..6), sprintf("../codeexport/%s/inertia_joint_base_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
@@ -131,7 +137,11 @@ for i from 1 to NQB do
   MMjj_s := subs({X_base_s[i,1]=0},MMjj_s):
 end do:
 if codeexport_inertia then
-  MatlabExport(MMjj_s, sprintf("../codeexport/%s/inertia_joint_joint_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MMjj_s_vek := symmat2vec(MMjj_s):
+  filename_tmp := sprintf("../codeexport/%s/inertia_joint_joint_floatb_%s_par%d_maple_symvec.m", robot_name, base_method_name, codegen_dynpar):
+  save MMjj_s_vek, filename_tmp:
+  read filename_tmp:
+  MatlabExport(MMjj_s_vek, sprintf("../codeexport/%s/inertia_joint_joint_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
 # Mass Matrix Time Derivative
 # Konvertiere Massenmatrix in zeitabhängige Variablen, um Zeitableitung zu berechnen
@@ -140,7 +150,11 @@ MMD_t := diff~(MM_t, t):
 MMD_s := convert_t_s(MMD_t):
 # Matlab Export
 if codeexport_inertiaD and not(base_method_name="twist") then
-  MatlabExport(MMD_s[1..NQ,1..NQ], sprintf("../codeexport/%s/inertia_time_derivative_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MMD_s_vek := symmat2vec(MMD_s):
+  filename_tmp := sprintf("../codeexport/%s/inertia_time_derivative_floatb_%s_par%d_maple_symvec.m", robot_name, base_method_name, codegen_dynpar):
+  save MMD_s_vek, filename_tmp:
+  read filename_tmp:
+  MatlabExport(MMD_s_vek, sprintf("../codeexport/%s/inertia_time_derivative_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
 if codeexport_inertiaD and not(base_method_name="twist") then
   MatlabExport(MMD_s[7..NQ,1..6], sprintf("../codeexport/%s/inertia_joint_base_time_derivative_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
@@ -153,7 +167,12 @@ for i from 1 to 6 do
   MMDjj_s := subs({V_base_s[i,1]=0},MMDjj_s):
 end do:
 if codeexport_inertiaD then
-  MatlabExport(MMDjj_s, sprintf("../codeexport/%s/inertia_joint_joint_time_derivative_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  # Vektor der unteren linken Dreiecksmatrix generieren, speichern und wieder laden. Ohne Neuladen hängt sich maple durch einen Bug auf. TODO: Klären.
+  MMDjj_s_vek := symmat2vec(MMDjj_s):
+  filename_tmp := sprintf("../codeexport/%s/inertia_joint_joint_time_derivative_floatb_%s_par%d_maple_symvec.m", robot_name, base_method_name, codegen_dynpar):
+  save MMDjj_s_vek, filename_tmp:
+  read filename_tmp:
+  MatlabExport(MMDjj_s_vek, sprintf("../codeexport/%s/inertia_joint_joint_time_derivative_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
 # Coriolis Vector
 # Generate

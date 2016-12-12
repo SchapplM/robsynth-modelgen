@@ -1,0 +1,17 @@
+symmat2vec := proc(A)
+  local ni, nv, i, j, i_v, a:
+  ni := RowDimension(A):
+  nv := index_symmat2vec(ni, ni, ni):
+  a := Matrix(nv, 1):
+  i_v := 0:
+  for i to ni do # Zeilenindex der Matrix
+    for j to ni do  # Spaltenindex der Matrix
+      if j > i then
+        next: # rechte obere Seite der symmetrischen Matrix. Keine neue Information. Nicht berechnen oder speichern.
+      end if:
+      i_v := i_v + 1:
+      a(i_v,1) := A(i,j):
+    end do:
+  end do:
+return a
+end proc:
