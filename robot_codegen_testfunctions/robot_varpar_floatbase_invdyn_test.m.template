@@ -195,6 +195,24 @@ for i = 1:n
   if any(abs(taug_j_par1-taug_j_par2) > 1e-12)
     error('joint gravitation force vectors do not match between par1/par2.');
   end
+
+  % Massenmatrix
+  MM_par1 = %RN%_inertia_floatb_eulangrpy_slag_vp1(q, ob, ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+  MM_par2 = %RN%_inertia_floatb_eulangrpy_slag_vp2(q, ob, ...
+    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
+  if any(abs(MM_par1(:)-MM_par2(:)) > 1e-12)
+    error('mass matrix does not match between par1/par2.');
+  end
+  
+  % Massenmatrix-Zeitableitung
+  MMD_par1 = %RN%_inertiaD_floatb_eulangrpy_slag_vp1(q, qD, ob, xDB, ...
+    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+  MMD_par2 = %RN%_inertiaD_floatb_eulangrpy_slag_vp2(q, qD, ob, xDB, ...
+    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
+  if any(abs(MMD_par1(:)-MMD_par2(:)) > 1e-12)
+    error('mass matrix does not match between par1/par2.');
+  end
   
   % Coriolis
   tauc_j_par1 = %RN%_coriolisvec_joint_floatb_eulangrpy_slag_vp1(q, qD, ob, xDB,...
