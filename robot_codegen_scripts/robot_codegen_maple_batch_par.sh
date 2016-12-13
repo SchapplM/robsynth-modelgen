@@ -5,6 +5,8 @@
 # Argumente:
 # --fixb_only
 #   Nur Berechnung der Fixed-Base Funktionen.
+# --floatb_only
+#   Nur Berechnung der Fixed-Base Funktionen.
 #
 # Dieses Skript im Ordner ausführen, in dem es im Repo liegt
 
@@ -17,6 +19,7 @@ echo $repo_pfad
 
 # Standard-Einstellungen
 CG_FIXBONLY=0
+CG_FLOATBONLY=0
 
 # Argumente verarbeiten
 # http://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
@@ -27,6 +30,9 @@ case $key in
     --fixb_only)
     CG_FIXBONLY=1
     ;;
+    --floatb_only)
+    CG_FLOATBONLY=1
+    ;;
     *)
             # unknown option
     ;;
@@ -34,6 +40,10 @@ esac
 shift # past argument or value
 done
 
+if [ "$CG_FIXBONLY" == "1" ] && [ "$CG_FLOATBONLY" == "1" ]; then
+  echo "Nicht beide Optionen gleichzeitig möglich: fixb_only, floatb_only"
+  exit 1
+fi;
 
 # Namen des Roboters herausfinden (damit roboterspezifische Zwangsbedingungen berechnet werden können)
 source robot_codegen_tmpvar_bash.sh
@@ -43,8 +53,11 @@ source $repo_pfad/robot_codegen_definitions/robot_env.sh
 if [ "$CG_FIXBONLY" == "1" ]; then
   # Berechne alles nur für fixed-base Modellierung (dafür reicht die Methode "twist")
   basemethodenames=( twist )
+elif [ "$CG_FLOATBONLY" == "1" ]; then
+  # Berechne nur floating base Modellierung
+  basemethodenames=( eulangrpy )
 else
-  # Berechne auch die floating-base Modellierung
+  # Berechne beides
   basemethodenames=( twist eulangrpy )
 fi;
 
