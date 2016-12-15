@@ -87,6 +87,11 @@ for i = 1:n
   if any( abs(Mq_num2(:)-Mq_sym(:)) > 1e-10)
     error('Fehler in numerisch berechneter Massenmatrix (Methode 2): Stimmt nicht mit symbolisch berechneter überein.');
   end
+  Mq_num3 = %RN%_inertia_joint_nCRB_vp1(qJ, ...
+    alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
+  if any( abs(Mq_num3(:)-Mq_sym(:)) > 1e-10)
+    error('Fehler in numerisch berechneter Massenmatrix (Methode 3): Stimmt nicht mit symbolisch berechneter überein.');
+  end
 end
 fprintf('Numerische Dynamikfunktionen (Fixed Base) gegen symbolische erfolgreich getestet\n');
 %% Zeitmessung gegen numerische Funktionen: Gravitation (Fixed Base)
@@ -100,7 +105,7 @@ Mex_Erstellen({'%RN%_gravload_joint_floatb_twist_slag_vp1', ...
   '%RN%_gravload_floatb_eulangrpy_nnew_vp1'});
 n = 2000;
 % Berechne Rechenzeiten. Zeile 1: Normale Funktionen. Zeile 2: Kompilierte Fkt (mex)
-t_ber_g = NaN(2,6);
+t_ber_g = NaN(2,7);
 tic;
 for i = 1:n
   taug_sym = %RN%_gravload_joint_floatb_twist_slag_vp1(qJ+i*1e-3, g_base, ...
@@ -276,7 +281,8 @@ Mex_Erstellen({'%RN%_inertia_floatb_eulangrpy_slag_vp1', ...
   '%RN%_inertia_joint_slag_vp1', ...
   '%RN%_inertia_joint_slag_vp2', ...
   '%RN%_inertia_joint_regmin_slag_vp', ...
-  '%RN%_invdyn_floatb_eulangrpy_nnew_vp1'});
+  '%RN%_invdyn_floatb_eulangrpy_nnew_vp1', ...
+  '%RN%_inertia_joint_nCRB_vp1'});
 n = 200;
 t_ber_M = NaN(2,4);
 tic;
@@ -329,7 +335,7 @@ for i = 1:n
       alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
   end
 end
-t_ber_M(1,4) = toc/n;
+t_ber_M(1,6) = toc/n;
 tic
 for i = 1:50
   Mq_num2 = NaN(NJ,NJ);
@@ -350,14 +356,28 @@ for i = 1:n
   end
 end
 t_ber_M(2,5) = toc/n;
+tic
+for i = 1:50
+  Mq_num3 = %RN%_inertia_joint_nCRB_vp1(qJ, ...
+    alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
+end
+t_ber_M(1,6) = toc/50;
+
+v_test = uint8(ones(30,1));
+tic
+for i = 1:n
+  Mq_num4 = %RN%_inertia_joint_nCRB_vp1_mex(qJ, ...
+    alpha, a, d, q_offset, b, beta, uint8(v), m, rSges, Icges);
+end
+t_ber_M(2,6) = toc/n;
 
 subplot(2,4,sprc2no(2,4,1,3));
 bar(t_ber_M(1,:)*1e3); 
-set(gca, 'xticklabel', {'s1/M','s2/M','sm/M','n/id/allg', 'n/id'});
+set(gca, 'xticklabel', {'s1/M','s2/M','sm/M','n/id/allg', 'n/id', 'n/CRBA'});
 ylabel('t [ms]'); title('inertia');
 subplot(2,4,sprc2no(2,4,2,3));
 bar(t_ber_M(2,:)*1e3); 
-set(gca, 'xticklabel', {'s1/M','s2/M','sm/M','n/id/allg', 'n/id'});
+set(gca, 'xticklabel', {'s1/M','s2/M','sm/M','n/id/allg', 'n/id', 'n/CRBA'});
 ylabel('t [ms]'); title('inertia (mex)');
 %% Rechenzeit: Vorwärtsdynamik (Fixed Base)
 % Getrennte Betrachtung der inversen Dynamik, da bei numerischer Berechnung

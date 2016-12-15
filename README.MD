@@ -19,10 +19,6 @@ Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
 * [Ordnerstruktur](#ordnerstruktur)
 
 
-## Quellen
-
-* [KhalilKle1986] Khalil, W. and Kleinfinger, J.-F.: A new geometric notation for open and closed-loop robots (1986)
-
 ## Voraussetzungen
 
 * Linux-Betriebssystem (für .sh-Skripte in [Alternative 1](#start_alt1)). Ausführung der Maple-Arbeitsblätter in [Alternative 2](#start_alt2) auch unter Windows möglich.
@@ -35,7 +31,7 @@ Der vollständige Ablauf zur Generierung von Matlab-Dynamikfunktionen wird in di
 
 ### Vorbereitung <a name="start_vorbereitung"></a> 
 
-Die MDH-Parameter (modifizierte Denavit-Hartenberg Parameter nach [KhalilKle1986]) müssen in die Umgebungsvariablendatei robot_env im Verzeichnis robot_codegen_definitions eingetragen werden.
+Die MDH-Parameter (modifizierte Denavit-Hartenberg Parameter nach [KhalilKle1986](#quellen)) müssen in die Umgebungsvariablendatei robot_env im Verzeichnis robot_codegen_definitions eingetragen werden.
 
         robot_codegen_definitions/robot_env
 
@@ -47,9 +43,9 @@ Andere Variablennamen werden bei der Generierung von Matlab-Funktionen nicht erk
 
 Die Variablen "robot_name" (Präfix für alle Dateien und Funktionsnamen) und "NJ" (Anzahl der Gelenke) müssen an den Roboter angepasst werden.
 
-Für die Variablennamen in robot_env und in [KhalilKle1986] gilt folgender Zusammenhang. Die Reihenfolge der Transformationen entspricht der Reihenfolge der Tabellenzeilen.
+Für die Variablennamen in robot_env und in [KhalilKle1986](#quellen) gilt folgender Zusammenhang. Die Reihenfolge der Transformationen entspricht der Reihenfolge der Tabellenzeilen.
 
-| [KhalilKle1986] | Vorkommnis | robot_env | Beschreibung  | Anmerkung |
+| [KhalilKle1986](#quellen) | Vorkommnis | robot_env | Beschreibung  | Anmerkung |
 |---|---|---|---|---|
 | a | 3. Spiegelstrich unter Fig. 6 | v | Vorgänger-Index | Trivial bei seriellen Strukturen (Zahlen von 0 bis NJ-1) |
 | gamma | (9) | beta | 1. Rotation um z | Wird nur bei Baumstrukturen benötigt. Bei seriellen Strukturen Null setzen. |
@@ -295,6 +291,7 @@ Teil 6: Berechnungskennung
 * n (Funktion wurde numerisch z.B. nur in Matlab erzeugt. Z.B. rekursives Newton-Euler in Matlab).
 * lag (Es wurde das Lagrange-Verfahren benutzt)
 * new (Es wurde das Newton-Euler-Verfahren benutzt)
+* CRB (Composite Rigid Body Algorithm aus [Featherstone2008](#quellen). Verfahren zur Berechnung der Massenmatrix)
 
 Teil 7: Parameterkennung
 Kennzeichnung, welche Parameter als Eingabe für die Funktion verwendet werden.
@@ -539,3 +536,9 @@ Textbausteine für Funktionsköpfe:
           robot_matlabtmp_convert_par2_MPV.head.m
           robot_matlabtmp_coriolisvec_joint_floatb_par1.head.m
           ...
+
+# Quellen <a name="quellen"></a> 
+
+* [KhalilKle1986] Khalil, W. and Kleinfinger, J.-F.: A new geometric notation for open and closed-loop robots (1986)
+* [Featherstone2008] Featherstone, R.: Rigid Body Dynamics Algorithms (2008)
+

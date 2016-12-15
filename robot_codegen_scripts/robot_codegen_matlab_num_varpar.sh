@@ -28,6 +28,7 @@ dateiliste_numfunction="
   robot_jacobigD_mdh_num.m.template
   robot_jacobig_mdh_eulangrpy_num.m.template
   robot_jacobigD_mdh_eulangrpy_num.m.template
+  robot_inertia_joint_nCRB_vp1.m.template
 "
 for dat in $dateiliste_numfunction
 do
