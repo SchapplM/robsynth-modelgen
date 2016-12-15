@@ -19,7 +19,16 @@ Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
 * [Ordnerstruktur](#ordnerstruktur)
 
 
-## Voraussetzungen
+## Kurzversion dieser Anleitung
+
+Folgende Schritte müssen durchgeführt werden:
+
+* [Installation und Einrichtung der Abhängigkeiten](#voraussetzungen)
+* [Eingabe der Roboterkinematik in Form der MDH-Parameter](#start_vorbereitung)
+* [Starten der Code-Erstellung](#start_alt1)
+* [Kopieren der generierten Dateien in eine eigene Ordnerstruktur](#ergebnisordner)
+
+## Voraussetzungen <a name="voraussetzungen"></a> 
 
 * Linux-Betriebssystem (für .sh-Skripte in [Alternative 1](#start_alt1)). Ausführung der Maple-Arbeitsblätter in [Alternative 2](#start_alt2) auch unter Windows möglich.
 * Maple muss im Ordner /opt/maple18/ installiert sein (Standard-Ordner bei sudo-Installation unter Linux).
@@ -72,6 +81,10 @@ Folgende Argumente sind möglich:
 * Nur Berechnung der Fixed-Base Funktionen (kürzere Berechnung)
  
         --fixb_only
+
+* Nur Berechnung der Floating-Base Funktionen (sinnvoll, falls fixed-Base Modell schon vorhanden ist)
+ 
+        --floatb_only
 
 Zum Speicherort der Ergebnisse siehe [Ergebnisordner](#ergebnisordner).
 
