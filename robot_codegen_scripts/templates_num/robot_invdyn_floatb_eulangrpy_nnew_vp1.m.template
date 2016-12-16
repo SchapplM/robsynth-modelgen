@@ -7,12 +7,16 @@
 %   Joint Angles [rad]
 % qD [%NJ%x1]
 %   Joint Velocities [rad/s]
+% qDD [%NJ%x1]
+%   Joint Accelerations [rad/s]
 % phi_base [3x1]
 %   Base orientation in world frame. Expressed with RPY Euler angles (xyz)
 % xD_base [6x1]
 %   time derivative of 
 %   r_base (3x1 Base position in world frame) and 
 %   phi_base (3x1)
+% xDD_base [6x1]
+%   time derivative of xD_base
 % a_mdh, d_mdh, q_offset_mdh [%NJ%x1]
 %   kinematic parameters
 % m_num_mdh [%NL%x1], rSges_num_mdh [%NL%x3], Icges_num_mdh [%NL%x6]
@@ -21,8 +25,8 @@
 % 
 % Output:
 % tau [(6+%NJ%)x1]
-%   base forces and joint torques required to compensate inverse dynamics
-%   base moments in generalized coordinates (euler-RPY)
+%   Base forces and joint torques required to compensate inverse dynamics.
+%   Base moments in generalized coordinates (euler-RPY)
 % 
 % See also:
 % IRT-Matlab-Toolbox: dynamics/robot_tree_invdyn_floatb_eulangrpy_nnew_vp1.m

@@ -1,28 +1,23 @@
-% Calculate vector of centrifugal and coriolis load on the joints for
+% Calculate vector of base and joint gravitational load for
 % %RN%
-% Use Code from Maple symbolic Code Generation
+% Use numerical implementation of recursive Newton-Euler Algorithm
 % 
 % Input:
 % q [%NJ%x1]
 %   Joint Angles [rad]
-% qD [%NJ%x1]
-%   Joint Velocities [rad/s]
 % phi_base [3x1]
 %   Base orientation in world frame. Expressed with RPY Euler angles (xyz)
-% xD_base [6x1]
-%   time derivative of 
-%   r_base (3x1 Base position in world frame) and 
-%   phi_base (3x1)
+% g_world [3x1]
+%   gravitation vector in world frame [m/s^2]
 % a_mdh, d_mdh, q_offset_mdh [%NJ%x1]
 %   kinematic parameters
-% m_num_mdh [%NL%x1], rSges_num_mdh [%NL%x3], Icges_num_mdh [%NL%x6]
-%   dynamic parameters (parameter set 1: center of mass in link frame and 
-%   inertia about center of mass. Order: xx, yy, zz, xy, xz, yz)
+% m_num_mdh [%NL%x1], rSges_num_mdh [%NL%x3]
+%   dynamic parameters (parameter set 1: center of mass in link frame)
 % 
 % Output:
-% tau [(6+%NJ%)x1]
-%   base forces and joint torques required to compensate inverse dynamics
-%   base moments in generalized coordinates (euler-RPY)
+% tau_g [(6+%NJ%)x1]
+%   Base forces and joint torques required to compensate gravitational load.
+%   Base moments in generalized coordinates (euler-RPY)
 % 
 % See also:
 % IRT-Matlab-Toolbox: dynamics/robot_tree_invdyn_floatb_eulangrpy_nnew_vp1.m
