@@ -15,7 +15,10 @@ tmp_pfad=$repo_pfad/robot_codegen_scripts/tmp
 source robot_codegen_tmpvar_bash.sh
 source $repo_pfad/robot_codegen_definitions/robot_env.sh
 
-basemethodenames=( twist eulangrpy )
+# Schleife für beide Basis-Darstellungen durchgehen.
+# Die Methode "twist" muss am Ende kommen, damit Basis-unabhängige Funktionen mit den Ergebnissen dieser Methode
+# generiert werden ("twist"-Code ist kürzer; Zuerst erstellte Datei mit "eulangrpy" wird dann überschrieben).
+basemethodenames=( eulangrpy twist )
 
 # Erstelle Matlab-Funktionen der explizit ausgerechneten Dynamik (nicht in Regressorform)
 for (( dynpar=1; dynpar<=2; dynpar++ ))
