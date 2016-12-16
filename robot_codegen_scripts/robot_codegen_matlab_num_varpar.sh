@@ -21,18 +21,9 @@ source $repo_pfad/robot_codegen_definitions/robot_env.sh
 
 fcn_pfad=$repo_pfad/codeexport/matlabfcn/$robot_name
 
-dateiliste_numfunction="
-  robot_invdyn_floatb_eulangrpy_nnew_vp1.m.template
-  robot_gravload_floatb_eulangrpy_nnew_vp1.m.template
-  robot_jacobig_mdh_num.m.template
-  robot_jacobigD_mdh_num.m.template
-  robot_jacobig_mdh_eulangrpy_num.m.template
-  robot_jacobigD_mdh_eulangrpy_num.m.template
-  robot_inertia_joint_nCRB_vp1.m.template
-"
-for dat in $dateiliste_numfunction
+for f in $(find $template_pfad -name "*.template")
 do
-  tmpdat_full=$template_pfad/$dat
+  tmpdat_full=$f
   filename="${tmpdat_full##*/}"                      # Strip longest match of */ from start
   dir="${tmpdat_full:0:${#tmpdat_full} - ${#filename} - 1}" # Substring from 0 thru pos of filename
 
