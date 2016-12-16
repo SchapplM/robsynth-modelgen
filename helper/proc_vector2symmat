@@ -1,0 +1,16 @@
+vec2symmat := proc(a, N)
+local i,j,k,A:
+A := Matrix(N,N):
+for i from 1 to N do
+  for j from 1 to N do
+    if j > i then
+      # tausche Zeilen und Spaltenindex (oberer rechter Teil)
+      k := j*(j-1)/2 + i:
+    else
+      k := i*(i-1)/2 + j:
+    end if:
+    A(i,j) := a(k):
+  end do:
+end do:
+return A:
+end proc:

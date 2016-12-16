@@ -96,6 +96,12 @@ else
   source $repo_pfad/robot_codegen_scripts/robot_codegen_maple_batch.sh $CG_BASE_ARGUMENT
 fi;
 
+# Hilfs-Skripte für die Matlab-Code-Generierung
+pwd_alt=$(pwd)
+cd /opt/maple18/bin
+nice -n 10 ./maple -q  <<< "currentdir(\"$repo_pfad/helper\"): read \"robot_gen_symmat2vector.mpl\";"
+cd $pwd_alt
+
 # Matlab-Funktionen generieren
 cd $repo_pfad/robot_codegen_scripts/
 source $repo_pfad/robot_codegen_scripts/robot_codegen_matlab_varpar.sh

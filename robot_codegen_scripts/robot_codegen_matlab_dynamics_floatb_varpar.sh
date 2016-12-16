@@ -514,9 +514,10 @@ do
       printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
       cat $quelldat >> $zieldat
       # Benenne die Ergebnisvariable des exportierten Codes um (zusätzlich zu Hilfsskript robot_codegen_matlabfcn_postprocess.sh)
-      varname_tmp=`grep "=" $zieldat| tail -1 | sed 's/\(.*\)=.*/\1/'`
+      varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/' | tr -d '[:space:]'`
       echo "%% Postprocessing: Reshape Output" >> $zieldat
-      printf "MM = vec2symmat($varname_tmp);\n" >> $zieldat
+      echo "% From vec2symmat_$((6+robot_NQJ))_matlab.m" >> $zieldat
+      sed "s/mv/$varname_tmp/g" $repo_pfad/codeexport/${robot_name}/vec2symmat_$((6+robot_NQJ))_matlab.m >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0
     else
       echo "Code in ${quelldat##*/} nicht gefunden."
@@ -615,9 +616,10 @@ do
       printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
       cat $quelldat >> $zieldat
       # Benenne die Ergebnisvariable des exportierten Codes um (zusätzlich zu Hilfsskript robot_codegen_matlabfcn_postprocess.sh)
-      varname_tmp=`grep "=" $zieldat| tail -1 | sed 's/\(.*\)=.*/\1/'`
+      varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/' | tr -d '[:space:]'`
       echo "%% Postprocessing: Reshape Output" >> $zieldat
-      printf "MM = vec2symmat($varname_tmp);\n" >> $zieldat
+      echo "% From vec2symmat_$((6+robot_NQJ))_matlab.m" >> $zieldat
+      sed "s/mv/$varname_tmp/g" $repo_pfad/codeexport/${robot_name}/vec2symmat_$((6+robot_NQJ))_matlab.m >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0
     else
       echo "Code in ${quelldat##*/} nicht gefunden."
