@@ -1,8 +1,9 @@
 # Beispiel für Codegenerierung:
-# LWR4
+# LWR4+
 # Quelle für Kinematik:
 # [DeLuca_Rob1] http://www.diag.uniroma1.it/~deluca/rob1_en/09_DirectKinematics.pdf
 # Die letzte Verschiebung (d7=78mm) ist im Modell nicht enthalten (ist für Dynamik irrelevant).
+# [ZachariasHowHulHir2010] Workspace comparisons of setup configurations for human-robot interaction (2010)
 
 robot_name := "lwr4p":
 NJ := 7:
