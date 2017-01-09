@@ -135,6 +135,14 @@ end do:
 if codegen_act then
   MatlabExport(convert_t_s(Trf_Export), sprintf("../codeexport/%s/joint_transformation_mdh_rotmat_matlab.m", robot_name), codegen_opt):
 end if:
+# Export ohne letzte Zeile
+Trf_Export_m := Matrix((NJ)*3, 4):
+for i from 1 to NJ do 
+  Trf_Export_m((i-1)*3+1 .. 3*i, 1..4) := Trf(1..3, 1..4, i):
+end do:
+if codegen_act then
+  MatlabExport(convert_t_s(Trf_Export_m), sprintf("../codeexport/%s/joint_transformation_mdh_rotmat_m_matlab.m", robot_name), codegen_opt):
+end if:
 # Export des symbolischen Ausdrucks für jede Transformationsmatrix einzeln
 for i from 1 to NL do
   if codegen_act then
