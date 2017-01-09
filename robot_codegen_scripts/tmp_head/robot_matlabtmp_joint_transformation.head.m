@@ -1,4 +1,4 @@
-% Calculate matrix of centrifugal and coriolis load on the joints for
+% Calculate homogenous joint transformation matrices for
 % %RN%
 % Use Code from Maple symbolic Code Generation
 % 
@@ -10,7 +10,8 @@
 % 
 % Output:
 % T_mdh [4x4x%NJ%]
-%   homogenious transformation matrices for joint transformation (MDH)
+%   homogenous transformation matrices for joint transformation (MDH)
+%   Transformation matrices from one joint to the next (not: from base to joints)
 
 % %VERSIONINFO%
 
