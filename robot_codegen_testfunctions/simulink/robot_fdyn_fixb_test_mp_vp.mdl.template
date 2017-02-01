@@ -926,7 +926,7 @@ Model {
       SourceBlock	      "lib_%RN%_dynamics/%RN%_energy_fixb_mp"
       SourceType	      ""
       ContentPreviewEnabled   off
-      KinPar_mdh	      "KinPar_mdh"
+      pkin	      "pkin"
       MPV		      "MPV"
       g_base		      "g_base"
       Port {
@@ -957,7 +957,7 @@ Model {
       q_t0		      "q_t0"
       qD_t0		      "qD_t0"
       g_base		      "g_base"
-      KinPar_mdh	      "KinPar_mdh"
+      pkin	      "pkin"
       MPV		      "MPV"
     }
     Block {

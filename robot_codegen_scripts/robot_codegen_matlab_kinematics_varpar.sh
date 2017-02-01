@@ -22,13 +22,12 @@ if [ -f $quelldat ]; then
   cat ${tmp_pfad}_head/robot_matlabtmp_fkine_fixb_rotmat.head.m > $zieldat
   printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
-  cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
-  cat $tmp_pfad/robot_matlabtmp_assert_KCP.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
   echo "%% Variable Initialization" >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
   printf "rxs_base=0;\nrys_base=0;\nrzs_base=0;\n" >> $zieldat
-  cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
-  cat $tmp_pfad/robot_matlabtmp_par_KCP.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
+  
   printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
   cat $quelldat >> $zieldat
   # Benenne die Ergebnisvariable des exportierten Codes um (zusätzlich zu Hilfsskript robot_codegen_matlabfcn_postprocess.sh)
@@ -51,14 +50,14 @@ if [ -f $quelldat ]; then
   cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_rB.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_phiB.m >> $zieldat
-  cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
-  cat $tmp_pfad/robot_matlabtmp_assert_KCP.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+
   echo "%% Variable Initialization" >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_rB.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_phiB.m >> $zieldat
-  cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
-  cat $tmp_pfad/robot_matlabtmp_par_KCP.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
+  
   printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
   cat $quelldat >> $zieldat
   # Benenne die Ergebnisvariable des exportierten Codes um (zusätzlich zu Hilfsskript robot_codegen_matlabfcn_postprocess.sh)
@@ -79,12 +78,12 @@ if [ -f $quelldat ]; then
   cat ${tmp_pfad}_head/robot_matlabtmp_joint_transformation.head.m > $zieldat
   printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
-  cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
-  cat $tmp_pfad/robot_matlabtmp_assert_KCP.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+
   echo "%% Variable Initialization" >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
-  cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
-  cat $tmp_pfad/robot_matlabtmp_par_KCP.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
+  
   printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
   cat $quelldat >> $zieldat
   # Benenne die Ergebnisvariable des exportierten Codes um (zusätzlich zu Hilfsskript robot_codegen_matlabfcn_postprocess.sh)
@@ -179,8 +178,8 @@ do
           printf "assert(isa(r_i_i_C,'double') && isreal(r_i_i_C) && all(size(r_i_i_C) == [3 1]), ..." >> $zieldat
           printf "\n\t'%%FN%%: Position vector r_i_i_C has to be [3x1] double');\n" >> $zieldat
         fi
-        cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
-        cat $tmp_pfad/robot_matlabtmp_assert_KCP.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+      
         echo "%% Variable Initialization" >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
         if [ "$input_qD" == "true" ]; then
@@ -189,8 +188,8 @@ do
         if [ "$input_r" == "true" ]; then
           printf "\npx = r_i_i_C(1);\npy = r_i_i_C(2);\npz = r_i_i_C(3);\n" >> $zieldat
         fi;
-        cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
-        cat $tmp_pfad/robot_matlabtmp_par_KCP.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
+        
         printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
         cat $quelldat >> $zieldat
       else
@@ -269,8 +268,8 @@ do
   fi;
   printf "assert(isa(link_index,'uint8') && all(size(link_index) == [1 1]), ..." >> $zieldat
   printf "\n\t'%%FN%%: link_index has to be [1x1] uint8');\n" >> $zieldat
-  cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
-  cat $tmp_pfad/robot_matlabtmp_assert_KCP.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+
   echo "%% Function calls" >> $zieldat
   for (( ib=1; ib<=$robot_NL; ib++ ))
   do
@@ -280,23 +279,22 @@ do
       printf "elseif link_index == ${ib}\n" >> $zieldat
     fi;
     if [ "$jacart" -eq "1" ]; then
-      printf "\tJg=${robot_name}_jacobig_${ib}_floatb_twist_sym_varpar(q, r_i_i_C, ...\n" >> $zieldat
+      printf "\tJg=${robot_name}_jacobig_${ib}_floatb_twist_sym_varpar(q, r_i_i_C, pkin);\n" >> $zieldat
     elif [ "$jacart" -eq "2" ]; then
-      printf "\tJa=${robot_name}_jacobia_${ib}_floatb_twist_sym_varpar(q, r_i_i_C, ...\n" >> $zieldat
+      printf "\tJa=${robot_name}_jacobia_${ib}_floatb_twist_sym_varpar(q, r_i_i_C, pkin);\n" >> $zieldat
     elif [ "$jacart" -eq "3" ]; then
-      printf "\tJg_rot=${robot_name}_jacobig_rot_${ib}_floatb_twist_sym_varpar(q, ...\n" >> $zieldat
+      printf "\tJg_rot=${robot_name}_jacobig_rot_${ib}_floatb_twist_sym_varpar(q, pkin);\n" >> $zieldat
     elif [ "$jacart" -eq "4" ]; then
-      printf "\tJa_rot=${robot_name}_jacobia_rot_${ib}_floatb_twist_sym_varpar(q, ...\n" >> $zieldat
+      printf "\tJa_rot=${robot_name}_jacobia_rot_${ib}_floatb_twist_sym_varpar(q, pkin);\n" >> $zieldat
     elif [ "$jacart" -eq "5" ]; then
-      printf "\tJgD=${robot_name}_jacobigD_${ib}_floatb_twist_sym_varpar(q, qD, r_i_i_C, ...\n" >> $zieldat
+      printf "\tJgD=${robot_name}_jacobigD_${ib}_floatb_twist_sym_varpar(q, qD, r_i_i_C, pkin);\n" >> $zieldat
     elif [ "$jacart" -eq "6" ]; then
-      printf "\tJaD=${robot_name}_jacobiaD_${ib}_floatb_twist_sym_varpar(q, qD, r_i_i_C, ...\n" >> $zieldat
+      printf "\tJaD=${robot_name}_jacobiaD_${ib}_floatb_twist_sym_varpar(q, qD, r_i_i_C, pkin);\n" >> $zieldat
     elif [ "$jacart" -eq "7" ]; then
-      printf "\tJgD_rot=${robot_name}_jacobigD_rot_${ib}_floatb_twist_sym_varpar(q, qD, ...\n" >> $zieldat
+      printf "\tJgD_rot=${robot_name}_jacobigD_rot_${ib}_floatb_twist_sym_varpar(q, qD, pkin);\n" >> $zieldat
     elif [ "$jacart" -eq "8" ]; then
-      printf "\tJaD_rot=${robot_name}_jacobiaD_rot_${ib}_floatb_twist_sym_varpar(q, qD, ...\n" >> $zieldat
+      printf "\tJaD_rot=${robot_name}_jacobiaD_rot_${ib}_floatb_twist_sym_varpar(q, qD, pkin);\n" >> $zieldat
     fi;
-    printf "\t\talpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh%%KCPARG%%);\n" >> $zieldat
   done
   if [ "$jacart" -eq "1" ]; then
     printf "else\n\tJg=NaN(6,$robot_NQJ);\nend" >> $zieldat

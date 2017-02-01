@@ -11,7 +11,7 @@
 %   Joint accelerations [rad/s]
 % g [3x1]
 %   gravitation vector in mdh base frame [m/s^2]
-% a_mdh, d_mdh, q_offset_mdh [%NJ%x1]
+% pkin [%NKP%x1]
 %   kinematic parameters
 % 
 % Output:
@@ -21,4 +21,4 @@
 % %VERSIONINFO%
 
 function tau_reg = %FN%(q, qD, qDD, g, ...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh%KCPARG%)
+  pkin)

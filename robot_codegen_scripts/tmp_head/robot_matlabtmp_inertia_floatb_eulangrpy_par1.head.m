@@ -7,7 +7,7 @@
 %   Generalized coordinates (joint angles) [rad]
 % phi_base [3x1]
 %   Base orientation in world frame. Expressed with RPY Euler angles (xyz)
-% a_mdh, d_mdh, q_offset_mdh [%NJ%x1]
+% pkin [%NKP%x1]
 %   kinematic parameters
 % m_num_mdh, rSges_num_mdh, Icges_num_mdh [%NL%x1]
 %   dynamic parameters (parameter set 1: center of mass and inertia about center of mass)
@@ -19,4 +19,4 @@
 % %VERSIONINFO%
 
 function M = %FN%(q, phi_base, ...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, rSges_num_mdh, Icges_num_mdh%KCPARG%)
+  pkin, m_num, rSges_num_mdh, Icges_num_mdh)

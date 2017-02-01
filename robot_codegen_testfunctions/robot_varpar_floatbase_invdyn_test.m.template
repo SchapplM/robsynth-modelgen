@@ -50,27 +50,27 @@ for i = 1:n
    
   % Prüfe potentielle Energie
   U_eulxyz = %RN%_energypot_floatb_eulangrpy_slag_vp1(q, r_W_W_0, ob, g_world, ...
-    alpha, a, d, q_offset, b, beta, m, rSges);
+    pkin, m, rSges);
   U_twist = %RN%_energypot_floatb_twist_slag_vp1(q, r_0_W_0, g_base, ...
-    alpha, a, d, q_offset, b, beta, m, rSges);
+    pkin, m, rSges);
   if abs(U_eulxyz - U_twist) > 1e-10
     error('Potentielle Energie mit XYZ-Euler-Winkeln stimmt nicht mit normaler Form überein (par1)');
   end
 
   % Prüfe kinetische Energie
   T_eulxyz = %RN%_energykin_floatb_eulangrpy_slag_vp1(q, qD, ob, xDB, ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+    pkin, m, rSges, Icges);
   T_twist = %RN%_energykin_floatb_twist_slag_vp1(q, qD, V_0_W_0, ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+    pkin, m, rSges, Icges);
   if abs(T_eulxyz - T_twist) > 1e-10
     error('Kinetische Energie mit XYZ-Euler-Winkeln stimmt nicht mit normaler Form überein (par1)');
   end
   
   % Prüfe Gravitationsmoment
   taug_eulxyz = %RN%_gravload_joint_floatb_eulangrpy_slag_vp1(q, ob, g_world,...
-    alpha, a, d, q_offset, b, beta, m, rSges);
+    pkin, m, rSges);
   taug_twist = %RN%_gravload_joint_floatb_twist_slag_vp1(q, g_base, ...
-    alpha, a, d, q_offset, b, beta, m, rSges);
+    pkin, m, rSges);
   if any(abs(taug_eulxyz - taug_twist) > 1e-10)
     error('Gravitationsmoment mit XYZ-Euler-Winkeln stimmt nicht mit normaler Form überein (par1)');
   end
@@ -87,9 +87,9 @@ for i = 1:n
   % calculate coriolis vector directly from optimized function with
   % base velocity set to zero
   cq_fixb = %RN%_coriolisvec_joint_fixb_slag_vp1(q, qD, ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+    pkin, m, rSges, Icges);
   cq_floatb = %RN%_coriolisvec_joint_floatb_eulangrpy_slag_vp1(q, qD, zeros(3,1), zeros(6,1), ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+    pkin, m, rSges, Icges);
   if any(abs(cq_fixb - cq_floatb) > 1e-12)
     error('coriolis vector from floating base does not match with fixed base.');
   end
@@ -97,9 +97,9 @@ for i = 1:n
   % calculate coriolis vector directly from optimized function with
   % base velocity set to zero
   Cq_fixb = %RN%_coriolismat_joint_fixb_slag_vp1(q, qD, ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+    pkin, m, rSges, Icges);
   Cq_floatb = %RN%_coriolismat_joint_floatb_eulangrpy_slag_vp1(q, qD, zeros(3,1), zeros(6,1), ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+    pkin, m, rSges, Icges);
   Delta = Cq_fixb - Cq_floatb(:,7:end);
   if any(abs(Delta(:)) > 1e-12)
     error('coriolis matrix from floating base does not match with fixed base.');
@@ -119,10 +119,10 @@ for i = 1:n
   % Drehmoment aus Gravitation im Vergleich mit Drehmoment aus
   % Basis-Beschleunigung
   Mqb = %RN%_inertia_joint_base_floatb_eulangrpy_slag_vp1(q, ob, ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+    pkin, m, rSges, Icges);
   tau_acc_floatb = (Mqb*[-g_world; zeros(3,1);]);
   tau_acc_grav = %RN%_gravload_joint_floatb_twist_slag_vp1(q, g_base, ...
-    alpha, a, d, q_offset, b, beta, m, rSges);
+    pkin, m, rSges);
   if any(abs(tau_acc_floatb - tau_acc_grav) > 1e-12)
     error('acceleration torque floating base and gravload do not match. %1.5e');
   end
@@ -147,34 +147,34 @@ for i = 1:n
 
   % Potentielle Energie
   U_par1 = %RN%_energypot_floatb_eulangrpy_slag_vp1(q, r_W_W_0, ob, g_world, ...
-    alpha, a, d, q_offset, b, beta, m, rSges);
+    pkin, m, rSges);
   U_par2 = %RN%_energypot_floatb_eulangrpy_slag_vp2(q, r_W_W_0, ob, g_world, ...
-    alpha, a, d, q_offset, b, beta, m, mrSges);
+    pkin, m, mrSges);
   if any(abs(U_par1-U_par2) > 1e-12)
     error('Potential energy does not match between par1/par2.');
   end
   
   U_par1 = %RN%_energypot_floatb_twist_slag_vp1(q, r_0_W_0, g_base, ...
-    alpha, a, d, q_offset, b, beta, m, rSges);
+    pkin, m, rSges);
   U_par2 = %RN%_energypot_floatb_twist_slag_vp2(q, r_0_W_0, g_base, ...
-    alpha, a, d, q_offset, b, beta, m, mrSges);
+    pkin, m, mrSges);
   if any(abs(U_par1-U_par2) > 1e-12)
     error('Potential energy does not match between par1/par2.');
   end
   
   % Kinetische Energie  
   T_par1 = %RN%_energykin_floatb_eulangrpy_slag_vp1(q, qD, ob, xDB, ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+    pkin, m, rSges, Icges);
   T_par2 = %RN%_energykin_floatb_eulangrpy_slag_vp2(q, qD, ob, xDB, ...
-    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
+    pkin, m, mrSges, Ifges);
   if any(abs(T_par1-T_par2) > 1e-12)
     error('kinetic energy does not match between par1/par2.');
   end
   
   T_par1 = %RN%_energykin_floatb_twist_slag_vp1(q, qD, V_0_W_0, ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+    pkin, m, rSges, Icges);
   T_par2 = %RN%_energykin_floatb_twist_slag_vp2(q, qD, V_0_W_0, ...
-    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
+    pkin, m, mrSges, Ifges);
   if any(abs(T_par1-T_par2) > 1e-12)
     error('kinetic energy does not match between par1/par2.');
   end
@@ -182,66 +182,66 @@ for i = 1:n
   
   % Gravitationsmoment
   taug_b_par1 = %RN%_gravload_base_floatb_eulangrpy_slag_vp1(q, ob, g_world, ...
-    alpha, a, d, q_offset, b, beta, m, rSges);
+    pkin, m, rSges);
   taug_b_par2 = %RN%_gravload_base_floatb_eulangrpy_slag_vp2(q, ob, g_world, ...
-    alpha, a, d, q_offset, b, beta, m, mrSges);
+    pkin, m, mrSges);
   if any(abs(taug_b_par1-taug_b_par2) > 1e-12)
     error('base gravitation force vectors do not match between par1/par2.');
   end
   taug_j_par1 = %RN%_gravload_joint_floatb_eulangrpy_slag_vp1(q, ob, g_world, ...
-    alpha, a, d, q_offset, b, beta, m, rSges);
+    pkin, m, rSges);
   taug_j_par2 = %RN%_gravload_joint_floatb_eulangrpy_slag_vp2(q, ob, g_world, ...
-    alpha, a, d, q_offset, b, beta, m, mrSges);
+    pkin, m, mrSges);
   if any(abs(taug_j_par1-taug_j_par2) > 1e-12)
     error('joint gravitation force vectors do not match between par1/par2.');
   end
 
   % Massenmatrix
   MM_par1 = %RN%_inertia_floatb_eulangrpy_slag_vp1(q, ob, ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+    pkin, m, rSges, Icges);
   MM_par2 = %RN%_inertia_floatb_eulangrpy_slag_vp2(q, ob, ...
-    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
+    pkin, m, mrSges, Ifges);
   if any(abs(MM_par1(:)-MM_par2(:)) > 1e-12)
     error('mass matrix does not match between par1/par2.');
   end
   
   % Massenmatrix-Zeitableitung
   MMD_par1 = %RN%_inertiaD_floatb_eulangrpy_slag_vp1(q, qD, ob, xDB, ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+    pkin, m, rSges, Icges);
   MMD_par2 = %RN%_inertiaD_floatb_eulangrpy_slag_vp2(q, qD, ob, xDB, ...
-    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
+    pkin, m, mrSges, Ifges);
   if any(abs(MMD_par1(:)-MMD_par2(:)) > 1e-12)
     error('mass matrix does not match between par1/par2.');
   end
   
   % Coriolis
   tauc_j_par1 = %RN%_coriolisvec_joint_floatb_eulangrpy_slag_vp1(q, qD, ob, xDB,...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+    pkin, m, rSges, Icges);
   tauc_j_par2 = %RN%_coriolisvec_joint_floatb_eulangrpy_slag_vp2(q, qD, ob, xDB, ...
-    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
+    pkin, m, mrSges, Ifges);
   if any(abs(tauc_j_par1-tauc_j_par2) > 1e-12)
     error('joint coriolis vectors do not match between par1/par2.');
   end
   tauc_g_par1 = %RN%_coriolisvec_floatb_eulangrpy_slag_vp1(q, qD, ob, xDB,...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+    pkin, m, rSges, Icges);
   tauc_g_par2 = %RN%_coriolisvec_floatb_eulangrpy_slag_vp2(q, qD, ob, xDB, ...
-    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
+    pkin, m, mrSges, Ifges);
   if any(abs(tauc_g_par1-tauc_g_par2) > 1e-12)
     error('base+joint coriolis vectors do not match between par1/par2.');
   end
   Cq_par1 = %RN%_coriolismat_joint_floatb_eulangrpy_slag_vp1(q, qD, ob, xDB, ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+    pkin, m, rSges, Icges);
   Cq_par2 = %RN%_coriolismat_joint_floatb_eulangrpy_slag_vp2(q, qD, ob, xDB, ...
-    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges); 
+    pkin, m, mrSges, Ifges); 
   if any(abs(Cq_par1(:)-Cq_par2(:)) > 1e-12)
     error('coriolis matrices do not match between par1/par2.');
   end 
   
   % Inverse Dynamics
   tau_par1 = %RN%_invdyn_joint_floatb_eulangrpy_slag_vp1(q, qD, qDD, ob, xDB, xDDB, g_world, ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+    pkin, m, rSges, Icges);
   tau_par2 = %RN%_invdyn_joint_floatb_eulangrpy_slag_vp2(q, qD, qDD, ob, xDB, xDDB, g_world, ...
-    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
+    pkin, m, mrSges, Ifges);
   if any(abs(tau_par1-tau_par2) > 1e-12)
     error('inverse dynamics joint torque vectors do not match between par1/par2.');
   end
@@ -259,11 +259,11 @@ for i = 1:n
 
   % symbolische Berechnung
   Fg_base_sym = %RN%_gravload_base_floatb_eulangrpy_slag_vp1(q, ob, g_world, ...
-    alpha, a, d, q_offset, b, beta, m, rSges);
+    pkin, m, rSges);
   % numerische Berechnung
   % Kinematik aller Körperschwerpunkte berechnen
   T_c_mdh = %RN%_fkine_floatb_eulangrpy_rotmat_mdh_sym_varpar(q, zeros(3,1), ob, ...
-    alpha, a, d, q_offset, b, beta);
+    pkin);
     
   r_W_0_Sjj_ges = NaN(size(rSges));
   r_0_0_Sjj_ges = NaN(size(rSges));

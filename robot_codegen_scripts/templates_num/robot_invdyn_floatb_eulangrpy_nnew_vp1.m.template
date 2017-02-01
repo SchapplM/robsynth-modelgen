@@ -32,7 +32,7 @@
 % IRT-Matlab-Toolbox: dynamics/robot_tree_invdyn_floatb_eulangrpy_nnew_vp1.m
 
 function [tau, v_i_i_ges, w_i_i_ges] = %FN%(q, qD, qDD, phi_base, xD_base, xDD_base, ...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, v_mdh, m_num, rSges_num_mdh, Icges_num_mdh)
+  pkin, v_mdh, m_num, rSges_num_mdh, Icges_num_mdh)
 
 %%Coder Information
 %#codegen
@@ -48,18 +48,8 @@ assert(isa(xD_base,'double') && isreal(xD_base) && all(size(xD_base) == [6 1]), 
   '%FN%: xD_base has to be [6x1] double');
 assert(isa(xDD_base,'double') && isreal(xDD_base) && all(size(xDD_base) == [6 1]), ...
   '%FN%: xDD_base has to be [6x1] double');
-assert(isa(alpha_mdh,'double') && isreal(alpha_mdh) && all(size(alpha_mdh) == [%NJ% 1]), ...
-  '%FN%: alpha_mdh has to be [%NJ%x1] double');
-assert(isa(a_mdh,'double') && isreal(a_mdh) && all(size(a_mdh) == [%NJ% 1]), ...
-  '%FN%: a_mdh has to be [%NJ%x1] double');
-assert(isa(d_mdh,'double') && isreal(d_mdh) && all(size(d_mdh) == [%NJ% 1]), ...
-  '%FN%: d_mdh has to be [%NJ%x1] double');
-assert(isa(q_offset_mdh,'double') && isreal(q_offset_mdh) && all(size(q_offset_mdh) == [%NJ% 1]), ...
-  '%FN%: q_offset_mdh has to be [%NJ%x1] double');
-assert(isa(b_mdh,'double') && isreal(b_mdh) && all(size(b_mdh) == [%NJ% 1]), ...
-  '%FN%: b_mdh has to be [%NJ%x1] double');
-assert(isa(beta_mdh,'double') && isreal(beta_mdh) && all(size(beta_mdh) == [%NJ% 1]), ...
-  '%FN%: beta_mdh has to be [%NJ%x1] double');
+assert(isa(pkin,'double') && isreal(pkin) && all(size(pkin) == [%NKP% 1]), ...
+  '%FN%: Kinematic parameters pkin have to be [%NKP%x1] double');
 assert(isa(v_mdh,'uint8') && all(size(v_mdh) == [%NJ% 1]), ...
   '%FN%: v_mdh has to be [%NJ%x1] uint8'); 
 assert(isa(m_num,'double') && isreal(m_num) && all(size(m_num) == [%NL% 1]), ...
@@ -76,8 +66,7 @@ T_basevel = rpy2jac(phi_base(1), phi_base(2), phi_base(3));
 
 %% Vorwärts-Iteration
 % Positionen. Berechne symbolisch (effizienter).
-T_mdh = %RN%_joint_trafo_rotmat_mdh_sym_varpar(q, ...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh);
+T_mdh = %RN%_joint_trafo_rotmat_mdh_sym_varpar(q, pkin);
 
 % Geschwindigkeiten
 v_i_i_ges = NaN(3,%NL%);

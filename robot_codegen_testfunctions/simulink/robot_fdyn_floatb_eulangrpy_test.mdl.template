@@ -1111,7 +1111,7 @@ Model {
       SourceBlock	      "lib_%RN%_dynamics/%RN%_energy_floatb_eulangrpy_vp1"
       SourceType	      ""
       ContentPreviewEnabled   off
-      KinPar_mdh	      "KinPar_mdh"
+      pkin	      "pkin"
       DynPar1		      "DynPar1"
       g_world		      "g_world"
       Port {
@@ -1148,7 +1148,7 @@ Model {
       qJ_t0		      "qJ_t0"
       qJD_t0		      "qJD_t0"
       g_world		      "g_world"
-      KinPar_mdh	      "KinPar_mdh"
+      pkin	      "pkin"
       DynPar1		      "DynPar1"
     }
     Block {

@@ -38,14 +38,14 @@ do
         cat $tmp_pfad/robot_matlabtmp_assert_phiB.m >> $zieldat
       fi
       cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
         cat $tmp_pfad/robot_matlabtmp_assert_rcom.m >> $zieldat
       else
         cat $tmp_pfad/robot_matlabtmp_assert_mrcom.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_assert_KCP.m >> $zieldat
+      
       printf "\n%%%% Variable Initialization" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
       if [ $basemeth == "twist" ]; then
@@ -54,14 +54,14 @@ do
         cat $tmp_pfad/robot_matlabtmp_phiB.m >> $zieldat
       fi
       cat $tmp_pfad/robot_matlabtmp_g.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
         cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> $zieldat
       else
         cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_par_KCP.m >> $zieldat
+      
       printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
       cat $quelldat >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 1
@@ -87,7 +87,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_assert_phiB.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_assert_xDB.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
         cat $tmp_pfad/robot_matlabtmp_assert_rcom.m >> $zieldat
@@ -96,7 +96,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_assert_mrcom.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_assert_If.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_assert_KCP.m >> $zieldat
+      
       printf "\n%%%% Variable Initialization" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
@@ -107,7 +107,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_phiB.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_xDB.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
         cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> $zieldat
@@ -116,7 +116,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_par_If.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_par_KCP.m >> $zieldat
+      
       printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
       cat $quelldat >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat
@@ -138,14 +138,14 @@ do
         cat $tmp_pfad/robot_matlabtmp_assert_phiB.m >> $zieldat
       fi
       cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
         cat $tmp_pfad/robot_matlabtmp_assert_rcom.m >> $zieldat
       else
         cat $tmp_pfad/robot_matlabtmp_assert_mrcom.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_assert_KCP.m >> $zieldat
+      
       printf "\n%%%% Variable Initialization" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_rB.m >> $zieldat
@@ -155,14 +155,14 @@ do
         cat $tmp_pfad/robot_matlabtmp_phiB.m >> $zieldat
       fi
       cat $tmp_pfad/robot_matlabtmp_g.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
         cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> $zieldat
       else
         cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_par_KCP.m >> $zieldat
+      
       printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
       cat $quelldat >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat
@@ -188,14 +188,14 @@ do
         cat $tmp_pfad/robot_matlabtmp_assert_phiB.m >> $zieldat
       fi
       cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
         cat $tmp_pfad/robot_matlabtmp_assert_rcom.m >> $zieldat
       else
         cat $tmp_pfad/robot_matlabtmp_assert_mrcom.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_assert_KCP.m >> $zieldat
+      
       printf "\n%%%% Variable Initialization" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
       if [ $basemeth == "twist" ]; then
@@ -204,14 +204,14 @@ do
         cat $tmp_pfad/robot_matlabtmp_phiB.m >> $zieldat
       fi
       cat $tmp_pfad/robot_matlabtmp_g.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
         cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> $zieldat
       else
         cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_par_KCP.m >> $zieldat
+      
       printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
       cat $quelldat >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 1
@@ -233,7 +233,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_assert_phiB.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_assert_xDB.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
         cat $tmp_pfad/robot_matlabtmp_assert_rcom.m >> $zieldat
@@ -242,7 +242,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_assert_mrcom.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_assert_If.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_assert_KCP.m >> $zieldat
+      
       printf "\n%%%% Variable Initialization" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
@@ -252,7 +252,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_phiB.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_xDB.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
         cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> $zieldat
@@ -261,7 +261,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_par_If.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_par_KCP.m >> $zieldat
+      
       printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
       cat $quelldat >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 1
@@ -283,7 +283,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_assert_phiB.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_assert_xDB.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
         cat $tmp_pfad/robot_matlabtmp_assert_rcom.m >> $zieldat
@@ -292,7 +292,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_assert_mrcom.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_assert_If.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_assert_KCP.m >> $zieldat
+      
       printf "\n%%%% Variable Initialization" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
@@ -302,7 +302,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_phiB.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_xDB.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
         cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> $zieldat
@@ -311,7 +311,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_par_If.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_par_KCP.m >> $zieldat
+      
       printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
       cat $quelldat >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 1
@@ -334,7 +334,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_assert_phiB.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_assert_xDB.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
         cat $tmp_pfad/robot_matlabtmp_assert_rcom.m >> $zieldat
@@ -343,7 +343,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_assert_mrcom.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_assert_If.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_assert_KCP.m >> $zieldat
+      
       printf "\n%%%% Variable Initialization" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
@@ -353,7 +353,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_phiB.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_xDB.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
         cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> $zieldat
@@ -362,7 +362,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_par_If.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_par_KCP.m >> $zieldat
+      
       printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
       cat $quelldat >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 1
@@ -385,7 +385,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_assert_phiB.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_assert_xDB.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
         cat $tmp_pfad/robot_matlabtmp_assert_rcom.m >> $zieldat
@@ -394,7 +394,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_assert_mrcom.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_assert_If.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_assert_KCP.m >> $zieldat
+      
       printf "\n%%%% Variable Initialization" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
@@ -404,7 +404,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_phiB.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_xDB.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
         cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> $zieldat
@@ -413,7 +413,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_par_If.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_par_KCP.m >> $zieldat
+      
       printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
       cat $quelldat >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat
@@ -436,7 +436,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_assert_phiB.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_assert_xDB.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
         cat $tmp_pfad/robot_matlabtmp_assert_rcom.m >> $zieldat
@@ -445,7 +445,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_assert_mrcom.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_assert_If.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_assert_KCP.m >> $zieldat
+      
       printf "\n%%%% Variable Initialization" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
@@ -455,7 +455,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_phiB.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_xDB.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
         cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> $zieldat
@@ -464,7 +464,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_par_If.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_par_KCP.m >> $zieldat
+      
       printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
       cat $quelldat >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat
@@ -484,7 +484,7 @@ do
       else
         cat $tmp_pfad/robot_matlabtmp_assert_phiB.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
         cat $tmp_pfad/robot_matlabtmp_assert_rcom.m >> $zieldat
@@ -493,7 +493,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_assert_mrcom.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_assert_If.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_assert_KCP.m >> $zieldat
+      
       printf "\n%%%% Variable Initialization" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
       if [ $basemeth == "twist" ]; then
@@ -501,7 +501,7 @@ do
       else
         cat $tmp_pfad/robot_matlabtmp_phiB.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
         cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> $zieldat
@@ -510,7 +510,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_par_If.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_par_KCP.m >> $zieldat
+      
       printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
       cat $quelldat >> $zieldat
       # Benenne die Ergebnisvariable des exportierten Codes um (zusätzlich zu Hilfsskript robot_codegen_matlabfcn_postprocess.sh)
@@ -535,7 +535,7 @@ do
       else
         cat $tmp_pfad/robot_matlabtmp_assert_phiB.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
         cat $tmp_pfad/robot_matlabtmp_assert_rcom.m >> $zieldat
@@ -544,7 +544,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_assert_mrcom.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_assert_If.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_assert_KCP.m >> $zieldat
+      
       printf "\n%%%% Variable Initialization" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
       if [ $basemeth == "twist" ]; then
@@ -552,7 +552,7 @@ do
       else
         cat $tmp_pfad/robot_matlabtmp_phiB.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
         cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> $zieldat
@@ -561,7 +561,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_par_If.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_par_KCP.m >> $zieldat
+      
       printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
       cat $quelldat >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat
@@ -584,7 +584,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_assert_phiB.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_assert_xDB.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
         cat $tmp_pfad/robot_matlabtmp_assert_rcom.m >> $zieldat
@@ -593,7 +593,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_assert_mrcom.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_assert_If.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_assert_KCP.m >> $zieldat
+      
       printf "\n%%%% Variable Initialization" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
@@ -603,7 +603,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_phiB.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_xDB.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
         cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> $zieldat
@@ -612,7 +612,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_par_If.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_par_KCP.m >> $zieldat
+      
       printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
       cat $quelldat >> $zieldat
       # Benenne die Ergebnisvariable des exportierten Codes um (zusätzlich zu Hilfsskript robot_codegen_matlabfcn_postprocess.sh)
@@ -643,7 +643,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_assert_xDDB.m >> $zieldat
       fi
       cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_mdh.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
         cat $tmp_pfad/robot_matlabtmp_assert_rcom.m >> $zieldat
@@ -652,7 +652,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_assert_mrcom.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_assert_If.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_assert_KCP.m >> $zieldat
+      
       printf "\n%%%% Variable Initialization" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
@@ -666,7 +666,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_xDDB.m >> $zieldat
       fi
       cat $tmp_pfad/robot_matlabtmp_g.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
         cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> $zieldat
@@ -675,7 +675,7 @@ do
         cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_par_If.m >> $zieldat
       fi
-      cat $tmp_pfad/robot_matlabtmp_par_KCP.m >> $zieldat
+      
       printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
       cat $quelldat >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 1

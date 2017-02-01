@@ -24,14 +24,14 @@ for i = 1:size(Q, 1)
     E = eye(NQJ);
     qDelta = 1e-10*E(:,j);
     Tc_1 = %RN%_fkine_fixb_rotmat_mdh_sym_varpar(q, ...
-      alpha, a, d, q_offset, b, beta%KCPARG%);
+      pkin);
     Tc_2 = %RN%_fkine_fixb_rotmat_mdh_sym_varpar(q+qDelta, ...
-      alpha, a, d, q_offset, b, beta%KCPARG%);
+      pkin);
     xDelta_fkine = Tc_2(1:3,4,end) - Tc_1(1:3,4,end);
 
     % differential kinematics from Jacobian function
     JG = %RN%_jacobig_floatb_twist_sym_varpar(q, uint8(NJ+1), zeros(3,1), ...
-      alpha, a, d, q_offset, b, beta%KCPARG%);
+      pkin);
     xDelta_jacob = JG*qDelta;
 
     x1_fkine = Tc_1(1:3,4,end);
@@ -72,10 +72,10 @@ for kk = 1:NJ % Test for linear joint trajectory
     qD = QD_traj(i,:)';     
     % calculate jacobian time derivate with two methods
     JG = %RN%_jacobig_mdh_num_mex(q, uint8(NJ+1), zeros(3,1), ...
-      alpha, a, d, q_offset, b, beta, v);
+      pkin, v);
     JGD_num1 = (JG - JG_vorher) / dT;
     JGD_num2 =  %RN%_jacobigD_mdh_num_mex(q, qD, uint8(NJ+1), zeros(3,1), ...
-      alpha, a, d, q_offset, b, beta, v);
+      pkin, v);
 
     % calculate error
     if i > 2
@@ -104,9 +104,9 @@ for iq = 1:size(Q, 1) % Über Zufallsposen
     qD = QD(iq,:)';
     % TODO: Übergabe der Kinematikparameter bei kinem. Zwangsbedingungen
     Jg_num = %RN%_jacobig_mdh_num(q, uint8(jb), r_i_i_C, ...
-      alpha, a, d, q_offset, b, beta, v);
+      pkin, v);
     Jg_sym = %RN%_jacobig_floatb_twist_sym_varpar(q, uint8(jb), r_i_i_C, ...
-      alpha, a, d, q_offset, b, beta%KCPARG%);
+      pkin);
     
     Jg_Delta = Jg_num - Jg_sym;
     if any(abs (Jg_Delta(:)) > 1e-10) || any(isnan(Jg_Delta(:)))
@@ -114,9 +114,9 @@ for iq = 1:size(Q, 1) % Über Zufallsposen
     end
     
     JgD_num = %RN%_jacobigD_mdh_num(q, qD, uint8(jb), r_i_i_C, ...
-      alpha, a, d, q_offset, b, beta, v);
+      pkin, v);
     JgD_sym = %RN%_jacobigD_floatb_twist_sym_varpar(q, qD, uint8(jb), r_i_i_C, ...
-      alpha, a, d, q_offset, b, beta%KCPARG%);
+      pkin);
     JgD_Delta = JgD_num - JgD_sym;
     if any(abs (JgD_Delta(:)) > 1e-10) || any(isnan(JgD_Delta(:)))
       error('Symbolische und numerische Jacobi-Matrix-Zeitableitungen stimmen nicht');
@@ -132,14 +132,14 @@ for iq = 1:size(Q, 1) % Über Zufallsposen
     q = Q(iq,:)';
     qD = Q(iq,:)';    
     Jg_rot = %RN%_jacobig_rot_floatb_twist_sym_varpar(q, uint8(jb), ...
-      alpha, a, d, q_offset, b, beta%KCPARG%);
+      pkin);
     Ja_rot = %RN%_jacobia_rot_floatb_twist_sym_varpar(q, uint8(jb), ...
-      alpha, a, d, q_offset, b, beta%KCPARG%);
+      pkin);
     
     % direkte Kinematik (mit gleichem Modell berechnet. Gleichheit der
     % Modelle wird in anderer Testfunktion  verifiziert)
     Tc_mdh = %RN%_fkine_fixb_rotmat_mdh_sym_varpar(q, ...
-      alpha, a, d, q_offset, b, beta%KCPARG%);
+      pkin);
     T_jb = Tc_mdh(:,:,jb);
 
     % Winkelkonvention und Umrechnungsfaktor
@@ -159,9 +159,9 @@ for iq = 1:size(Q, 1) % Über Zufallsposen
     % Berechne Zeitableitung der analytischen und geometrischen
     % Jacobi-Matrix
     JgD_rot = %RN%_jacobigD_rot_floatb_twist_sym_varpar(q, qD, uint8(jb), ...
-      alpha, a, d, q_offset, b, beta%KCPARG%);
+      pkin);
     JaD_rot = %RN%_jacobiaD_rot_floatb_twist_sym_varpar(q, qD, uint8(jb), ...
-      alpha, a, d, q_offset, b, beta%KCPARG%);
+      pkin);
     % Aus Produktregel der Zeitableitung von [1], S. 52, Gl. (4.25)
     rpyD = Ja_rot*qD;
     JD_rpy = angvelotrans_rpyD(rpy, rpyD);

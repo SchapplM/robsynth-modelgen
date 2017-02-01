@@ -18,7 +18,7 @@ Library {
       $ObjectID		      2
       $ClassName	      "Simulink.WindowInfo"
       IsActive		      [1]
-      Location		      [2894.0, 14.0, 955.0, 548.0]
+      Location		      [975.0, 52.0, 955.0, 548.0]
       Object {
 	$PropName		"ModelBrowserInfo"
 	$ObjectID		3
@@ -40,16 +40,16 @@ Library {
 	Dimension		2
 	Object {
 	  $ObjectID		  5
-	  IsActive		  [0]
-	  ViewObjType		  "SimulinkTopLevel"
-	  LoadSaveID		  "0"
+	  IsActive		  [1]
+	  ViewObjType		  "SimulinkSubsys"
+	  LoadSaveID		  "17"
 	  Extents		  [899.0, 360.0]
 	  ZoomFactor		  [1.0]
-	  Offset		  [0.0, 0.0]
+	  Offset		  [-165.70371588968342, 117.50110654141913]
 	}
 	Object {
 	  $ObjectID		  6
-	  IsActive		  [1]
+	  IsActive		  [0]
 	  ViewObjType		  "SimulinkSubsys"
 	  LoadSaveID		  "1"
 	  Extents		  [899.0, 360.0]
@@ -66,9 +66,9 @@ Library {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "schappler"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Fri Oct 14 19:06:23 2016"
-  RTWModifiedTimeStamp	  398372782
-  ModelVersionFormat	  "1.%<AutoIncrement:14>"
+  LastModifiedDate	  "Wed Feb 01 18:08:41 2017"
+  RTWModifiedTimeStamp	  407873318
+  ModelVersionFormat	  "1.%<AutoIncrement:18>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -833,8 +833,8 @@ Library {
   }
   System {
     Name		    "lib_%RN%_kinematics"
-    Location		    [2894, 14, 3849, 562]
-    Open		    on
+    Location		    [975, 52, 1930, 600]
+    Open		    off
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
     ScreenColor		    "white"
@@ -860,8 +860,6 @@ Library {
 	$PropName		"MaskObject"
 	$ObjectID		18
 	$ClassName		"Simulink.Mask"
-	Initialization		"a_mdh = KinPar_mdh.a;\nd_mdh = KinPar_mdh.d;\nb_mdh = KinPar_mdh.b;\nbeta_mdh = KinPar_mdh.beta;\nal"
-	"pha_mdh = KinPar_mdh.alpha;\nq_offset_mdh = KinPar_mdh.q_offset;\n\nkintmp = KinPar_mdh.kintmp;"
 	Display			"text(0.5,0.8, 'fkine', 'horizontalAlignment', 'center');\ntext(0.5,0.2, sprintf('Link %d', iL), 'horizonta"
 	"lAlignment', 'center');\nport_label('input', 1, 'qJ');\nport_label('output', 1, sprintf('T_0_%d', iL));"
 	IconUnits		"normalized"
@@ -871,9 +869,9 @@ Library {
 	  Object {
 	    $ObjectID		    19
 	    Type		    "edit"
-	    Name		    "KinPar_mdh"
+	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
-	    Value		    "KinPar_mdh"
+	    Value		    "pkin"
 	  }
 	  Object {
 	    $ObjectID		    20
@@ -887,7 +885,7 @@ Library {
       }
       System {
 	Name			"%RN%_fkine"
-	Location		[2894, 14, 3849, 562]
+	Location		[975, 52, 1930, 600]
 	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -904,56 +902,16 @@ Library {
 	  BlockType		  Inport
 	  Name			  "qJ"
 	  SID			  "2"
-	  Position		  [35, 33, 65, 47]
+	  Position		  [60, 93, 90, 107]
 	  ZOrder		  11
 	  IconDisplay		  "Port number"
 	  PortDimensions	  "NQJ"
 	}
 	Block {
 	  BlockType		  Constant
-	  Name			  "Constant"
-	  SID			  "4"
-	  Position		  [25, 152, 75, 168]
-	  ZOrder		  2
-	  Value			  "a_mdh"
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "Constant1"
-	  SID			  "5"
-	  Position		  [25, 192, 75, 208]
-	  ZOrder		  3
-	  Value			  "d_mdh"
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "Constant2"
-	  SID			  "6"
-	  Position		  [25, 232, 90, 248]
-	  ZOrder		  4
-	  Value			  "q_offset_mdh"
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "Constant3"
-	  SID			  "7"
-	  Position		  [25, 272, 90, 288]
-	  ZOrder		  5
-	  Value			  "b_mdh"
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "Constant4"
-	  SID			  "8"
-	  Position		  [25, 312, 90, 328]
-	  ZOrder		  6
-	  Value			  "beta_mdh"
-	}
-	Block {
-	  BlockType		  Constant
 	  Name			  "Constant5"
 	  SID			  "15"
-	  Position		  [65, 65, 120, 95]
+	  Position		  [50, 200, 105, 230]
 	  ZOrder		  16
 	  Value			  "uint8(iL)"
 	}
@@ -961,24 +919,16 @@ Library {
 	  BlockType		  Constant
 	  Name			  "Constant6"
 	  SID			  "10"
-	  Position		  [25, 112, 75, 128]
+	  Position		  [50, 322, 100, 338]
 	  ZOrder		  10
-	  Value			  "alpha_mdh"
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "Constant8"
-	  SID			  "12"
-	  Position		  [25, 352, 90, 368]
-	  ZOrder		  15
-	  Value			  "kintmp"
+	  Value			  "pkin"
 	}
 	Block {
 	  BlockType		  SubSystem
 	  Name			  "fkine_fcn"
 	  SID			  "13"
-	  Ports			  [9, 1]
-	  Position		  [190, 31, 300, 379]
+	  Ports			  [3, 1]
+	  Position		  [190, 39, 300, 391]
 	  ZOrder		  1
 	  LibraryVersion	  "1.32"
 	  ErrorFcn		  "Stateflow.Translate.translate"
@@ -1021,65 +971,11 @@ Library {
 	    }
 	    Block {
 	      BlockType		      Inport
-	      Name		      "alpha_mdh"
+	      Name		      "pkin"
 	      SID		      "13::20"
 	      Position		      [20, 171, 40, 189]
 	      ZOrder		      11
 	      Port		      "3"
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Inport
-	      Name		      "a_mdh"
-	      SID		      "13::21"
-	      Position		      [20, 206, 40, 224]
-	      ZOrder		      12
-	      Port		      "4"
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Inport
-	      Name		      "d_mdh"
-	      SID		      "13::22"
-	      Position		      [20, 246, 40, 264]
-	      ZOrder		      13
-	      Port		      "5"
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Inport
-	      Name		      "q_offset_mdh"
-	      SID		      "13::23"
-	      Position		      [20, 281, 40, 299]
-	      ZOrder		      14
-	      Port		      "6"
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Inport
-	      Name		      "b_mdh"
-	      SID		      "13::24"
-	      Position		      [20, 316, 40, 334]
-	      ZOrder		      15
-	      Port		      "7"
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Inport
-	      Name		      "beta_mdh"
-	      SID		      "13::25"
-	      Position		      [20, 351, 40, 369]
-	      ZOrder		      16
-	      Port		      "8"
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Inport
-	      Name		      "kintmp"
-	      SID		      "13::57"
-	      Position		      [20, 386, 40, 404]
-	      ZOrder		      22
-	      Port		      "9"
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
@@ -1096,11 +992,11 @@ Library {
 	      Name		      " SFunction "
 	      SID		      "13::58"
 	      Tag		      "Stateflow S-Function lib_%RN%_kinematics 6"
-	      Ports		      [9, 2]
-	      Position		      [180, 95, 230, 295]
+	      Ports		      [3, 2]
+	      Position		      [180, 105, 230, 185]
 	      ZOrder		      23
 	      FunctionName	      "sf_sfun"
-	      PortCounts	      "[9 2]"
+	      PortCounts	      "[3 2]"
 	      Port {
 		PortNumber		2
 		Name			"T_i"
@@ -1124,71 +1020,29 @@ Library {
 	      IconDisplay	      "Port number"
 	    }
 	    Line {
-	      ZOrder		      80
+	      ZOrder		      137
 	      SrcBlock		      "qJ"
 	      SrcPort		      1
 	      DstBlock		      " SFunction "
 	      DstPort		      1
 	    }
 	    Line {
-	      ZOrder		      81
+	      ZOrder		      138
 	      SrcBlock		      "iL"
 	      SrcPort		      1
 	      DstBlock		      " SFunction "
 	      DstPort		      2
 	    }
 	    Line {
-	      ZOrder		      82
-	      SrcBlock		      "alpha_mdh"
+	      ZOrder		      139
+	      SrcBlock		      "pkin"
 	      SrcPort		      1
 	      DstBlock		      " SFunction "
 	      DstPort		      3
 	    }
 	    Line {
-	      ZOrder		      83
-	      SrcBlock		      "a_mdh"
-	      SrcPort		      1
-	      DstBlock		      " SFunction "
-	      DstPort		      4
-	    }
-	    Line {
-	      ZOrder		      84
-	      SrcBlock		      "d_mdh"
-	      SrcPort		      1
-	      DstBlock		      " SFunction "
-	      DstPort		      5
-	    }
-	    Line {
-	      ZOrder		      85
-	      SrcBlock		      "q_offset_mdh"
-	      SrcPort		      1
-	      DstBlock		      " SFunction "
-	      DstPort		      6
-	    }
-	    Line {
-	      ZOrder		      86
-	      SrcBlock		      "b_mdh"
-	      SrcPort		      1
-	      DstBlock		      " SFunction "
-	      DstPort		      7
-	    }
-	    Line {
-	      ZOrder		      87
-	      SrcBlock		      "beta_mdh"
-	      SrcPort		      1
-	      DstBlock		      " SFunction "
-	      DstPort		      8
-	    }
-	    Line {
-	      ZOrder		      88
-	      SrcBlock		      "kintmp"
-	      SrcPort		      1
-	      DstBlock		      " SFunction "
-	      DstPort		      9
-	    }
-	    Line {
 	      Name		      "T_i"
-	      ZOrder		      89
+	      ZOrder		      140
 	      Labels		      [0, 0]
 	      SrcBlock		      " SFunction "
 	      SrcPort		      2
@@ -1196,14 +1050,14 @@ Library {
 	      DstPort		      1
 	    }
 	    Line {
-	      ZOrder		      90
+	      ZOrder		      141
 	      SrcBlock		      " Demux "
 	      SrcPort		      1
 	      DstBlock		      " Terminator "
 	      DstPort		      1
 	    }
 	    Line {
-	      ZOrder		      91
+	      ZOrder		      142
 	      SrcBlock		      " SFunction "
 	      SrcPort		      1
 	      DstBlock		      " Demux "
@@ -1215,48 +1069,15 @@ Library {
 	  BlockType		  Outport
 	  Name			  "T_0_iL"
 	  SID			  "14"
-	  Position		  [495, 180, 510, 210]
+	  Position		  [430, 200, 445, 230]
 	  ZOrder		  13
 	  NamePlacement		  "alternate"
 	  IconDisplay		  "Port number"
 	}
 	Line {
-	  ZOrder		  1
-	  SrcBlock		  "Constant2"
-	  SrcPort		  1
-	  Points		  [80, 0]
-	  DstBlock		  "fkine_fcn"
-	  DstPort		  6
-	}
-	Line {
-	  ZOrder		  2
-	  SrcBlock		  "Constant1"
-	  SrcPort		  1
-	  Points		  [95, 0]
-	  DstBlock		  "fkine_fcn"
-	  DstPort		  5
-	}
-	Line {
-	  ZOrder		  3
-	  SrcBlock		  "Constant4"
-	  SrcPort		  1
-	  Points		  [80, 0]
-	  DstBlock		  "fkine_fcn"
-	  DstPort		  8
-	}
-	Line {
-	  ZOrder		  4
-	  SrcBlock		  "Constant"
-	  SrcPort		  1
-	  Points		  [95, 0]
-	  DstBlock		  "fkine_fcn"
-	  DstPort		  4
-	}
-	Line {
 	  ZOrder		  5
 	  SrcBlock		  "fkine_fcn"
 	  SrcPort		  1
-	  Points		  [0, -10]
 	  DstBlock		  "T_0_iL"
 	  DstPort		  1
 	}
@@ -1264,7 +1085,6 @@ Library {
 	  ZOrder		  6
 	  SrcBlock		  "Constant6"
 	  SrcPort		  1
-	  Points		  [95, 0]
 	  DstBlock		  "fkine_fcn"
 	  DstPort		  3
 	}
@@ -1272,31 +1092,13 @@ Library {
 	  ZOrder		  8
 	  SrcBlock		  "qJ"
 	  SrcPort		  1
-	  Points		  [105, 0]
 	  DstBlock		  "fkine_fcn"
 	  DstPort		  1
-	}
-	Line {
-	  ZOrder		  9
-	  SrcBlock		  "Constant3"
-	  SrcPort		  1
-	  Points		  [80, 0]
-	  DstBlock		  "fkine_fcn"
-	  DstPort		  7
-	}
-	Line {
-	  ZOrder		  12
-	  SrcBlock		  "Constant8"
-	  SrcPort		  1
-	  Points		  [80, 0]
-	  DstBlock		  "fkine_fcn"
-	  DstPort		  9
 	}
 	Line {
 	  ZOrder		  13
 	  SrcBlock		  "Constant5"
 	  SrcPort		  1
-	  Points		  [50, 0]
 	  DstBlock		  "fkine_fcn"
 	  DstPort		  2
 	}
@@ -1314,8 +1116,6 @@ Library {
 	$PropName		"MaskObject"
 	$ObjectID		21
 	$ClassName		"Simulink.Mask"
-	Initialization		"a_mdh = KinPar_mdh.a;\nd_mdh = KinPar_mdh.d;\nb_mdh = KinPar_mdh.b;\nbeta_mdh = KinPar_mdh.beta;\nal"
-	"pha_mdh = KinPar_mdh.alpha;\nq_offset_mdh = KinPar_mdh.q_offset;\n\nkintmp = KinPar_mdh.kintmp;"
 	Display			"text(0.5,0.8, 'Jacobi (geom)', 'horizontalAlignment', 'center');\ntext(0.5,0.2, sprintf('Link %d', iL), 'h"
 	"orizontalAlignment', 'center');\nport_label('input', 1, 'qJ');\nport_label('output', 1, sprintf('Jg_%d', iL));"
 	IconUnits		"normalized"
@@ -1325,9 +1125,9 @@ Library {
 	  Object {
 	    $ObjectID		    22
 	    Type		    "edit"
-	    Name		    "KinPar_mdh"
+	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
-	    Value		    "KinPar_mdh"
+	    Value		    "pkin"
 	  }
 	  Object {
 	    $ObjectID		    23
@@ -1348,8 +1148,8 @@ Library {
       }
       System {
 	Name			"%RN%_jacobig"
-	Location		[2894, 14, 3849, 562]
-	Open			off
+	Location		[975, 52, 1930, 600]
+	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -1365,55 +1165,15 @@ Library {
 	  BlockType		  Inport
 	  Name			  "qJ"
 	  SID			  "18"
-	  Position		  [60, 3, 90, 17]
+	  Position		  [60, 78, 90, 92]
 	  ZOrder		  11
 	  IconDisplay		  "Port number"
 	}
 	Block {
 	  BlockType		  Constant
-	  Name			  "Constant"
-	  SID			  "19"
-	  Position		  [60, 177, 110, 193]
-	  ZOrder		  2
-	  Value			  "a_mdh"
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "Constant1"
-	  SID			  "20"
-	  Position		  [60, 212, 110, 228]
-	  ZOrder		  3
-	  Value			  "d_mdh"
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "Constant2"
-	  SID			  "21"
-	  Position		  [60, 247, 125, 263]
-	  ZOrder		  4
-	  Value			  "q_offset_mdh"
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "Constant3"
-	  SID			  "22"
-	  Position		  [60, 292, 125, 308]
-	  ZOrder		  5
-	  Value			  "b_mdh"
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "Constant4"
-	  SID			  "23"
-	  Position		  [60, 332, 125, 348]
-	  ZOrder		  6
-	  Value			  "beta_mdh"
-	}
-	Block {
-	  BlockType		  Constant
 	  Name			  "Constant5"
 	  SID			  "24"
-	  Position		  [130, 65, 175, 95]
+	  Position		  [55, 155, 100, 185]
 	  ZOrder		  16
 	  Value			  "uint8(iL)"
 	}
@@ -1421,32 +1181,24 @@ Library {
 	  BlockType		  Constant
 	  Name			  "Constant6"
 	  SID			  "25"
-	  Position		  [60, 142, 110, 158]
+	  Position		  [55, 332, 105, 348]
 	  ZOrder		  10
-	  Value			  "alpha_mdh"
+	  Value			  "pkin"
 	}
 	Block {
 	  BlockType		  Constant
 	  Name			  "Constant7"
 	  SID			  "29"
-	  Position		  [20, 75, 65, 115]
+	  Position		  [55, 235, 100, 275]
 	  ZOrder		  17
 	  Value			  "r_i_i_C"
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "Constant8"
-	  SID			  "26"
-	  Position		  [60, 377, 125, 393]
-	  ZOrder		  15
-	  Value			  "kintmp"
 	}
 	Block {
 	  BlockType		  SubSystem
 	  Name			  "jacobig_fcn"
 	  SID			  "27"
-	  Ports			  [10, 1]
-	  Position		  [225, 29, 335, 376]
+	  Ports			  [4, 1]
+	  Position		  [225, 37, 335, 388]
 	  ZOrder		  1
 	  LibraryVersion	  "1.32"
 	  ErrorFcn		  "Stateflow.Translate.translate"
@@ -1498,65 +1250,11 @@ Library {
 	    }
 	    Block {
 	      BlockType		      Inport
-	      Name		      "alpha_mdh"
+	      Name		      "pkin"
 	      SID		      "27::20"
 	      Position		      [20, 206, 40, 224]
 	      ZOrder		      11
 	      Port		      "4"
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Inport
-	      Name		      "a_mdh"
-	      SID		      "27::21"
-	      Position		      [20, 246, 40, 264]
-	      ZOrder		      12
-	      Port		      "5"
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Inport
-	      Name		      "d_mdh"
-	      SID		      "27::22"
-	      Position		      [20, 281, 40, 299]
-	      ZOrder		      13
-	      Port		      "6"
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Inport
-	      Name		      "q_offset_mdh"
-	      SID		      "27::23"
-	      Position		      [20, 316, 40, 334]
-	      ZOrder		      14
-	      Port		      "7"
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Inport
-	      Name		      "b_mdh"
-	      SID		      "27::24"
-	      Position		      [20, 351, 40, 369]
-	      ZOrder		      15
-	      Port		      "8"
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Inport
-	      Name		      "beta_mdh"
-	      SID		      "27::25"
-	      Position		      [20, 386, 40, 404]
-	      ZOrder		      16
-	      Port		      "9"
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Inport
-	      Name		      "kintmp"
-	      SID		      "27::57"
-	      Position		      [20, 426, 40, 444]
-	      ZOrder		      22
-	      Port		      "10"
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
@@ -1573,11 +1271,11 @@ Library {
 	      Name		      " SFunction "
 	      SID		      "27::61"
 	      Tag		      "Stateflow S-Function lib_%RN%_kinematics 1"
-	      Ports		      [10, 2]
-	      Position		      [180, 100, 230, 320]
+	      Ports		      [4, 2]
+	      Position		      [180, 107, 230, 208]
 	      ZOrder		      26
 	      FunctionName	      "sf_sfun"
-	      PortCounts	      "[10 2]"
+	      PortCounts	      "[4 2]"
 	      Port {
 		PortNumber		2
 		Name			"Jg_i"
@@ -1601,78 +1299,37 @@ Library {
 	      IconDisplay	      "Port number"
 	    }
 	    Line {
-	      ZOrder		      38
+	      ZOrder		      101
 	      SrcBlock		      "qJ"
 	      SrcPort		      1
 	      DstBlock		      " SFunction "
 	      DstPort		      1
 	    }
 	    Line {
-	      ZOrder		      39
+	      ZOrder		      102
 	      SrcBlock		      "iL"
 	      SrcPort		      1
 	      DstBlock		      " SFunction "
 	      DstPort		      2
 	    }
 	    Line {
-	      ZOrder		      40
+	      ZOrder		      103
 	      SrcBlock		      "r_i_i_C"
 	      SrcPort		      1
+	      Points		      [120, 0]
 	      DstBlock		      " SFunction "
 	      DstPort		      3
 	    }
 	    Line {
-	      ZOrder		      41
-	      SrcBlock		      "alpha_mdh"
+	      ZOrder		      104
+	      SrcBlock		      "pkin"
 	      SrcPort		      1
 	      DstBlock		      " SFunction "
 	      DstPort		      4
 	    }
 	    Line {
-	      ZOrder		      42
-	      SrcBlock		      "a_mdh"
-	      SrcPort		      1
-	      DstBlock		      " SFunction "
-	      DstPort		      5
-	    }
-	    Line {
-	      ZOrder		      43
-	      SrcBlock		      "d_mdh"
-	      SrcPort		      1
-	      DstBlock		      " SFunction "
-	      DstPort		      6
-	    }
-	    Line {
-	      ZOrder		      44
-	      SrcBlock		      "q_offset_mdh"
-	      SrcPort		      1
-	      DstBlock		      " SFunction "
-	      DstPort		      7
-	    }
-	    Line {
-	      ZOrder		      45
-	      SrcBlock		      "b_mdh"
-	      SrcPort		      1
-	      DstBlock		      " SFunction "
-	      DstPort		      8
-	    }
-	    Line {
-	      ZOrder		      46
-	      SrcBlock		      "beta_mdh"
-	      SrcPort		      1
-	      DstBlock		      " SFunction "
-	      DstPort		      9
-	    }
-	    Line {
-	      ZOrder		      47
-	      SrcBlock		      "kintmp"
-	      SrcPort		      1
-	      DstBlock		      " SFunction "
-	      DstPort		      10
-	    }
-	    Line {
 	      Name		      "Jg_i"
-	      ZOrder		      48
+	      ZOrder		      105
 	      Labels		      [0, 0]
 	      SrcBlock		      " SFunction "
 	      SrcPort		      2
@@ -1680,14 +1337,14 @@ Library {
 	      DstPort		      1
 	    }
 	    Line {
-	      ZOrder		      49
+	      ZOrder		      106
 	      SrcBlock		      " Demux "
 	      SrcPort		      1
 	      DstBlock		      " Terminator "
 	      DstPort		      1
 	    }
 	    Line {
-	      ZOrder		      50
+	      ZOrder		      107
 	      SrcBlock		      " SFunction "
 	      SrcPort		      1
 	      DstBlock		      " Demux "
@@ -1699,45 +1356,15 @@ Library {
 	  BlockType		  Outport
 	  Name			  "Jg_iL"
 	  SID			  "28"
-	  Position		  [530, 180, 545, 210]
+	  Position		  [500, 200, 515, 230]
 	  ZOrder		  13
 	  NamePlacement		  "alternate"
 	  IconDisplay		  "Port number"
 	}
 	Line {
-	  ZOrder		  1
-	  SrcBlock		  "Constant2"
-	  SrcPort		  1
-	  DstBlock		  "jacobig_fcn"
-	  DstPort		  7
-	}
-	Line {
-	  ZOrder		  2
-	  SrcBlock		  "Constant1"
-	  SrcPort		  1
-	  DstBlock		  "jacobig_fcn"
-	  DstPort		  6
-	}
-	Line {
-	  ZOrder		  3
-	  SrcBlock		  "Constant4"
-	  SrcPort		  1
-	  Points		  [45, 0; 0, -15]
-	  DstBlock		  "jacobig_fcn"
-	  DstPort		  9
-	}
-	Line {
-	  ZOrder		  4
-	  SrcBlock		  "Constant"
-	  SrcPort		  1
-	  DstBlock		  "jacobig_fcn"
-	  DstPort		  5
-	}
-	Line {
 	  ZOrder		  5
 	  SrcBlock		  "jacobig_fcn"
 	  SrcPort		  1
-	  Points		  [0, -10]
 	  DstBlock		  "Jg_iL"
 	  DstPort		  1
 	}
@@ -1752,25 +1379,8 @@ Library {
 	  ZOrder		  7
 	  SrcBlock		  "qJ"
 	  SrcPort		  1
-	  Points		  [63, 0; 0, 35]
 	  DstBlock		  "jacobig_fcn"
 	  DstPort		  1
-	}
-	Line {
-	  ZOrder		  8
-	  SrcBlock		  "Constant3"
-	  SrcPort		  1
-	  Points		  [80, 0]
-	  DstBlock		  "jacobig_fcn"
-	  DstPort		  8
-	}
-	Line {
-	  ZOrder		  9
-	  SrcBlock		  "Constant8"
-	  SrcPort		  1
-	  Points		  [45, 0; 0, -25]
-	  DstBlock		  "jacobig_fcn"
-	  DstPort		  10
 	}
 	Line {
 	  ZOrder		  10
@@ -1783,7 +1393,6 @@ Library {
 	  ZOrder		  11
 	  SrcBlock		  "Constant7"
 	  SrcPort		  1
-	  Points		  [33, 0; 0, 20]
 	  DstBlock		  "jacobig_fcn"
 	  DstPort		  3
 	}
@@ -1802,7 +1411,7 @@ Stateflow {
     name		    "lib_%RN%_kinematics"
     created		    "14-Oct-2016 14:07:35"
     isLibrary		    1
-    firstTarget		    33
+    firstTarget		    21
     sfVersion		    80000005
   }
   chart {
@@ -1812,8 +1421,8 @@ Stateflow {
     viewLimits		    [0 156.75 0 153.75]
     screen		    [1 1 3600 1200 1.180555555555556]
     treeNode		    [0 3 0 0]
-    firstTransition	    16
-    firstJunction	    15
+    firstTransition	    10
+    firstJunction	    9
     viewObj		    2
     visible		    1
     machine		    1
@@ -1844,9 +1453,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function Jg_i = jacobig(qJ, iL, r_i_i_C, ...\n  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, bet"
-      "a_mdh, kintmp)\n%#codegen\nJg_i = %RN%_jacobig_floatb_twist_sym_varpar(qJ, iL, r_i_i_C, ...\n  alpha_mdh, a_md"
-      "h, d_mdh, q_offset_mdh, b_mdh, beta_mdh%KCPARG%);\n\n"
+      script		      "function Jg_i = jacobig(qJ, iL, r_i_i_C, pkin)\n%#codegen\nJg_i = %RN%_jacobig_floatb_twist_sym"
+      "_varpar(qJ, iL, r_i_i_C, pkin);\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -1936,140 +1544,8 @@ Stateflow {
   data {
     id			    8
     ssIdNumber		    7
-    name		    "alpha_mdh"
-    linkNode		    [2 7 9]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-    }
-    dataType		    "Inherit: Same as Simulink"
-  }
-  data {
-    id			    9
-    ssIdNumber		    8
-    name		    "a_mdh"
-    linkNode		    [2 8 10]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-    }
-    dataType		    "Inherit: Same as Simulink"
-  }
-  data {
-    id			    10
-    ssIdNumber		    9
-    name		    "d_mdh"
-    linkNode		    [2 9 11]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-    }
-    dataType		    "Inherit: Same as Simulink"
-  }
-  data {
-    id			    11
-    ssIdNumber		    10
-    name		    "q_offset_mdh"
-    linkNode		    [2 10 12]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-    }
-    dataType		    "Inherit: Same as Simulink"
-  }
-  data {
-    id			    12
-    ssIdNumber		    11
-    name		    "b_mdh"
-    linkNode		    [2 11 13]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-    }
-    dataType		    "Inherit: Same as Simulink"
-  }
-  data {
-    id			    13
-    ssIdNumber		    12
-    name		    "beta_mdh"
-    linkNode		    [2 12 14]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-    }
-    dataType		    "Inherit: Same as Simulink"
-  }
-  data {
-    id			    14
-    ssIdNumber		    15
-    name		    "kintmp"
-    linkNode		    [2 13 0]
+    name		    "pkin"
+    linkNode		    [2 7 0]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -2088,7 +1564,7 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   junction {
-    id			    15
+    id			    9
     position		    [23.5747 49.5747 7]
     chart		    2
     linkNode		    [2 0 0]
@@ -2097,7 +1573,7 @@ Stateflow {
     type		    CONNECTIVE_JUNCTION
   }
   transition {
-    id			    16
+    id			    10
     labelString		    "{eML_blk_kernel();}"
     labelPosition	    [28.125 13.875 102.544 14.964]
     fontSize		    12
@@ -2105,7 +1581,7 @@ Stateflow {
       intersection	      [0 0 1 0 23.5747 14.625 0 0]
     }
     dst {
-      id		      15
+      id		      9
       intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
     }
     midPoint		    [23.5747 24.9468]
@@ -2121,21 +1597,21 @@ Stateflow {
     ssIdNumber		    2
   }
   instance {
-    id			    17
+    id			    11
     name		    "%RN%_jacobig/jacobig_fcn"
     machine		    1
     chart		    2
   }
   chart {
-    id			    18
+    id			    12
     name		    "%RN%_fkine/fkine_fcn"
     windowPosition	    [422 539.941 189 413]
     viewLimits		    [0 156.75 0 153.75]
     screen		    [1 1 3600 1200 1.180555555555556]
-    treeNode		    [0 19 0 0]
-    firstTransition	    31
-    firstJunction	    30
-    viewObj		    18
+    treeNode		    [0 13 0 0]
+    firstTransition	    19
+    firstJunction	    18
+    viewObj		    12
     visible		    1
     machine		    1
     toolbarMode		    LIBRARY_TOOLBAR
@@ -2144,7 +1620,7 @@ Stateflow {
     ssIdHighWaterMark	    16
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
-    firstData		    20
+    firstData		    14
     chartFileNumber	    6
     disableImplicitCasting  1
     eml {
@@ -2152,30 +1628,29 @@ Stateflow {
     }
   }
   state {
-    id			    19
+    id			    13
     labelString		    "eML_blk_kernel()"
     position		    [18 64.5 118 66]
     fontSize		    12
-    chart		    18
-    treeNode		    [18 0 0 0]
+    chart		    12
+    treeNode		    [12 0 0 0]
     superState		    SUBCHART
-    subviewer		    18
+    subviewer		    12
     ssIdNumber		    1
     type		    FUNC_STATE
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function T_i = fkine(qJ, iL, ...\n  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, kintm"
-      "p)\n%#codegen\nT_c_mdh = %RN%_fkine_fixb_rotmat_mdh_sym_varpar(qJ, ...\n  alpha_mdh, a_mdh, d_mdh, q_offset_md"
-      "h, b_mdh, beta_mdh%KCPARG%);\nT_i = T_c_mdh(:,:,iL);\n\n"
+      script		      "function T_i = fkine(qJ, iL, pkin)\n%#codegen\nT_c_mdh = %RN%_fkine_fixb_rotmat_mdh_sym_varpar("
+      "qJ, pkin);\nT_i = T_c_mdh(:,:,iL);\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
   data {
-    id			    20
+    id			    14
     ssIdNumber		    4
     name		    "qJ"
-    linkNode		    [18 0 21]
+    linkNode		    [12 0 15]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -2191,10 +1666,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    21
+    id			    15
     ssIdNumber		    5
     name		    "T_i"
-    linkNode		    [18 20 22]
+    linkNode		    [12 14 16]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -2211,10 +1686,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    22
+    id			    16
     ssIdNumber		    6
     name		    "iL"
-    linkNode		    [18 21 23]
+    linkNode		    [12 15 17]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -2233,142 +1708,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    23
+    id			    17
     ssIdNumber		    7
-    name		    "alpha_mdh"
-    linkNode		    [18 22 24]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-    }
-    dataType		    "Inherit: Same as Simulink"
-  }
-  data {
-    id			    24
-    ssIdNumber		    8
-    name		    "a_mdh"
-    linkNode		    [18 23 25]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-    }
-    dataType		    "Inherit: Same as Simulink"
-  }
-  data {
-    id			    25
-    ssIdNumber		    9
-    name		    "d_mdh"
-    linkNode		    [18 24 26]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-    }
-    dataType		    "Inherit: Same as Simulink"
-  }
-  data {
-    id			    26
-    ssIdNumber		    10
-    name		    "q_offset_mdh"
-    linkNode		    [18 25 27]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-    }
-    dataType		    "Inherit: Same as Simulink"
-  }
-  data {
-    id			    27
-    ssIdNumber		    11
-    name		    "b_mdh"
-    linkNode		    [18 26 28]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-    }
-    dataType		    "Inherit: Same as Simulink"
-  }
-  data {
-    id			    28
-    ssIdNumber		    12
-    name		    "beta_mdh"
-    linkNode		    [18 27 29]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-    }
-    dataType		    "Inherit: Same as Simulink"
-  }
-  data {
-    id			    29
-    ssIdNumber		    15
-    name		    "kintmp"
-    linkNode		    [18 28 0]
+    name		    "pkin"
+    linkNode		    [12 16 0]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -2387,16 +1730,16 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   junction {
-    id			    30
+    id			    18
     position		    [23.5747 49.5747 7]
-    chart		    18
-    linkNode		    [18 0 0]
-    subviewer		    18
+    chart		    12
+    linkNode		    [12 0 0]
+    subviewer		    12
     ssIdNumber		    3
     type		    CONNECTIVE_JUNCTION
   }
   transition {
-    id			    31
+    id			    19
     labelString		    "{eML_blk_kernel();}"
     labelPosition	    [28.125 13.875 102.544 14.964]
     fontSize		    12
@@ -2404,14 +1747,14 @@ Stateflow {
       intersection	      [0 0 1 0 23.5747 14.625 0 0]
     }
     dst {
-      id		      30
+      id		      18
       intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
     }
     midPoint		    [23.5747 24.9468]
-    chart		    18
-    linkNode		    [18 0 0]
+    chart		    12
+    linkNode		    [12 0 0]
     dataLimits		    [21.175 25.975 14.625 42.575]
-    subviewer		    18
+    subviewer		    12
     drawStyle		    SMART
     slide {
       sticky		      BOTH_STICK
@@ -2420,13 +1763,13 @@ Stateflow {
     ssIdNumber		    2
   }
   instance {
-    id			    32
+    id			    20
     name		    "%RN%_fkine/fkine_fcn"
     machine		    1
-    chart		    18
+    chart		    12
   }
   target {
-    id			    33
+    id			    21
     name		    "sfun"
     description		    "Default Simulink S-Function Target."
     machine		    1
