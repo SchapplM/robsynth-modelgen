@@ -44,7 +44,7 @@ Die MDH-Parameter (modifizierte Denavit-Hartenberg Parameter nach [KhalilKle1986
 
         robot_codegen_definitions/robot_env
 
-Diese ist eine Maple-Eingabedatei und definiert Maple-Variablen, die in allen Maple-Arbeitsblättern verwendet werden. Als Vorlage können die Dateien im Verzeichnis robot_codegen_examples dienen.
+Diese ist eine Maple-Eingabedatei und definiert Maple-Variablen, die in allen Maple-Arbeitsblättern verwendet werden. Als Vorlage können die Dateien im Verzeichnis robot_codegen_definitions/examples dienen.
 Zu beachten ist, dass in die Maple-Vektoren nur symbolische Ausdrücke eingesetzt werden sollten, die so heißen, wie der Vektor selbst. Also __a1__, __a2__ in __a__, __d1__, __d2__ in __d__, __qoffset3__, __qoffset4__ in __qoffset__ und so weiter. Zusätzlich können Nullen und Winkelangaben ("__Pi__", großgeschrieben) eingesetzt werden.
 Andere Variablennamen werden bei der Generierung von Matlab-Funktionen nicht erkannt. Beispiel:
 
@@ -415,7 +415,10 @@ Die letztgenannten können danach z.B. in ein eigenes Repo für das untersuchte 
 
 ### Definitionen
 
+Der Ordner examples enthält Beispiele für die Datei robot_env
+
         /codegen_definitions
+          examples
           robot_env
           robot_tree_floatbase_twist_definitions.mw
               <-- robot_env
@@ -520,17 +523,6 @@ Siehe Beschreibung in [Zusätzliche Dateien](#start_zusatzdateien)
         /robot_codegen_additional/scripts
           %RN%_codegen_matlab_additional_varpar.sh
           %RN%_maple_additional_worksheet_list
-
-
-### Beispielkonfigurationen
-
-
-        /robot_codegen_examples
-          robot_env_atlas5arm.example
-          robot_env_atlas5wbody.example
-          robot_env_atlas4leg.example
-          robot_env_prothese2dof.example
-          robot_env_rigidbody.example
 
 ### Skripte zur Generierung von Matlabfunktionen
 
