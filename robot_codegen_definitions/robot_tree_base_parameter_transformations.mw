@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="18" minor="2"/>
+<Version major="18" minor="0"/>
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true">
 </View-Properties>
@@ -89,8 +89,8 @@
         <Metadata-attribute name="Subject" value="&lt;default&gt;"/>
         <Metadata-attribute name="Author" value="&lt;default&gt;"/>
         <Metadata-attribute name="Item List" value="true"/>
-        <Metadata-attribute name="Keywords" value="&lt;default&gt;"/>
         <Metadata-attribute name="Title" value="&lt;default&gt;"/>
+        <Metadata-attribute name="Keywords" value="&lt;default&gt;"/>
     </Metadata-tag>
 </Metadata-table>
 <Task-table>
@@ -110,7 +110,7 @@
 Dateiname:
 <Font encoding="UTF-8">robot -&gt; Berechnung f\303\274r allgemeinen Roboter
 tree -&gt; Berechnung f\303\274r eine allgemeine Baumstruktur
-base_parameter_transformations -&gt; Umwandlung der Minimalparameterform in andere Darstellungen</Font></Text-field>
+</Font>base_parameter_transformations -&gt; Umwandlung der Minimalparameterform in andere Darstellungen</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1515" drawlabel="true">
@@ -129,10 +129,16 @@ base_parameter_transformations -&gt; Umwandlung der Minimalparameterform in ande
 </Group>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
 <Text-field style="Heading 1" layout="Heading 1">Initialisierung</Text-field></Title>
+<Group labelreference="L1813" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">interface(warnlevel=0): # Unterdr\303\274cke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet wird.
+</Font>interface(warnlevel=3):</Text-field>
+</Input>
+</Group>
 <Group labelreference="L1771" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">restart:
-with(LinearAlgebra):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(LinearAlgebra):
 with(ArrayTools):
 with(codegen):
 with(CodeGeneration):
@@ -182,8 +188,8 @@ Siehe [SousaCor2014] equ. (38)</Text-field>
 <Group labelreference="L1806" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal">Beispielrechnung:
-<Font encoding="UTF-8">U=dU/dPV2*PV2=dU/dMPV*MPV # Parameterlineare Form
-MPV=dMPV/dPV2 * PV2 # Minimalparametervektor MPV h\303\244ngt nur linear von den normalen Parametern im Parametervektor PV2 ab
+U=dU/dPV2*PV2=dU/dMPV*MPV # Parameterlineare Form
+<Font encoding="UTF-8">MPV=dMPV/dPV2 * PV2 # Minimalparametervektor MPV h\303\244ngt nur linear von den normalen Parametern im Parametervektor PV2 ab
 </Font>dU/dMPV = dU/dPV2 * dMPV/dPV1</Text-field>
 </Input>
 </Group>

@@ -7,7 +7,9 @@
 # 
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2017-02
 # Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
-restart:
+interface(warnlevel=0): # Unterdrücke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
+interface(warnlevel=3):
 interface(rtablesize=100): # Damit der ganze Parametervektor ausgegeben werden kann
 with(LinearAlgebra):
 read "../helper/proc_MatlabExport":

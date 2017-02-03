@@ -10,7 +10,9 @@
 # 
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
 # Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
-restart:
+interface(warnlevel=0): # Unterdrücke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
+interface(warnlevel=3):
 with(LinearAlgebra):
 read "../helper/proc_MatlabExport":
 # Lese Umgebungsvariable für Codegenerierung.

@@ -20,7 +20,9 @@
 # [KhalilDombre2002] Modeling, Identification and Control of Robots
 # [Ortmaier2014] Vorlesungsskript Robotik I
 # Initialization
-restart:
+interface(warnlevel=0): # Unterdrücke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
+interface(warnlevel=3):
 with(LinearAlgebra):
 with(ArrayTools):
 with(codegen):
@@ -137,8 +139,8 @@ if codegen_act then
 end if:
 # Export ohne letzte Zeile
 Trf_Export_m := Matrix((NJ)*3, 4):
-for i from 1 to NJ do 
-  Trf_Export_m((i-1)*3+1 .. 3*i, 1..4) := Trf(1..3, 1..4, i):
+for i from 1 to NL do 
+  Trf_Export_m((i-1)*3+1 .. 3*i, 1..4) := Trf_c(1..3, 1..4, i):
 end do:
 if codegen_act then
   MatlabExport(convert_t_s(Trf_Export_m), sprintf("../codeexport/%s/joint_transformation_mdh_rotmat_m_matlab.m", robot_name), codegen_opt):

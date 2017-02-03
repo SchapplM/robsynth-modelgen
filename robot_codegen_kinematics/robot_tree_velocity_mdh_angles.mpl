@@ -21,7 +21,9 @@
 # [Ortmaier2014] Vorlesungsskript Robotik I (WS 2014/15)
 # [Ott2008] Cartesian Impedance Control of Redundant and Flexible-Joint Robots
 # Initialization
-restart:
+interface(warnlevel=0): # Unterdrücke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
+interface(warnlevel=3):
 with(LinearAlgebra):
 with(ArrayTools):
 with(codegen):
@@ -59,3 +61,4 @@ if codegen_act then
 end if:
 # Ausdruck für Maple speichern
 save thetaD, sprintf("../codeexport/%s/velocity_mdh_angles_maple.m", robot_name):
+

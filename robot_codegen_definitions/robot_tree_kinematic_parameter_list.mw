@@ -4,7 +4,7 @@
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true">
 </View-Properties>
-<MapleNet-Properties elisiondigitsbefore="100" labelling="true" indentamount="4" elisiontermsthreshold="10000" ansi="false" errorbreak="1" useclientjvm="true" echo="1" imaginaryunit="I" labelwidth="20" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" contextmenusize="automatic" plotdriver="opengl" elisiondigitsafter="100" plotoutput="terminal" helpbrowser="standard" rtablesize="100" elisiontermsbefore="100" elisiondigitsthreshold="10000" typesetting="standard" plotdevice="inline" verboseproc="1" showassumed="1" quiet="false" errorcursor="false" longdelim="true" plotoptions="" elisiontermsafter="100" screenwidth="79" preplot="" prettyprint="3" displayprecision="-1" screenpixelheight="1080" warnlevel="3" screenheight="25" latexwidth="8.0" postplot="" prompt="&gt; " ShowLabels="true"/>
+<MapleNet-Properties elisiondigitsbefore="100" labelling="true" indentamount="4" elisiontermsthreshold="10000" ansi="false" errorbreak="1" useclientjvm="true" echo="1" imaginaryunit="I" labelwidth="20" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" contextmenusize="automatic" plotdriver="opengl" elisiondigitsafter="100" plotoutput="terminal" helpbrowser="standard" rtablesize="10" elisiontermsbefore="100" elisiondigitsthreshold="10000" typesetting="standard" plotdevice="inline" verboseproc="1" showassumed="1" quiet="false" errorcursor="false" longdelim="true" plotoptions="" elisiontermsafter="100" screenwidth="79" preplot="" prettyprint="3" displayprecision="-1" screenpixelheight="1080" warnlevel="3" screenheight="25" latexwidth="8.0" postplot="" prompt="&gt; " ShowLabels="true"/>
 <Styles>
 <Font name="Ordered List 1" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Annotation Text" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -96,10 +96,10 @@
 <Text-field style="Heading 1" layout="Heading 1">Init</Text-field></Title>
 <Group labelreference="L1602" drawlabel="true">
 <Input>
-<Text-field style="Normal" layout="Normal"><Font encoding="UTF-8">Dieses Arbeitsblatt erstellt einen Vektor mit allen Kinematikparameter
-Es werden nur die Kinematikparameter eingetragen, die ungleich Null sind, also z.B. keine MDH-Parameter die L\303\244nge oder Winkel Null sind.
-
-TODO: Liste mit Kinematikparametern muss immer die selbe Reihenfolge haben. Am besten in der Form a,alpha,qoffset,d,b,beta,kc. Momentan scheint die Reihenfolge zuf\303\244llig, aber reproduzierbar.
+<Text-field style="Normal" layout="Normal">Dieses Arbeitsblatt erstellt einen Vektor mit allen Kinematikparameter
+<Font encoding="UTF-8">Es werden nur die Kinematikparameter eingetragen, die ungleich Null sind, also z.B. keine MDH-Parameter die L\303\244nge oder Winkel Null sind.
+</Font>
+<Font encoding="UTF-8">TODO: Liste mit Kinematikparametern muss immer die selbe Reihenfolge haben. Am besten in der Form a,alpha,qoffset,d,b,beta,kc. Momentan scheint die Reihenfolge zuf\303\244llig, aber reproduzierbar.
 </Font>
 Moritz Schappler, schappler@irt.uni-hannover.de, 2017-02</Text-field>
 <Text-field style="Normal" layout="Normal">Institut fuer Regelungstechnik, Leibniz Universitaet Hannover</Text-field>
@@ -107,7 +107,9 @@ Moritz Schappler, schappler@irt.uni-hannover.de, 2017-02</Text-field>
 </Group>
 <Group labelreference="L1601" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">restart:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">interface(warnlevel=0): # Unterdr\303\274cke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet wird.
+</Font>interface(warnlevel=3):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1695" drawlabel="true">
@@ -222,10 +224,10 @@ TODO: Liste mit besserer Reihenfolge (siehe oben)</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to ColumnDimension(nms) do
   if nms[i] = Pi then
     next:
-  end if:<Font encoding="UTF-8">
-  # Parameter zur Liste hinzuf\303\274gen
-  kk := kk + 1:
-  </Font>pkin_tmp2[kk,1] := nms[i]:
+  end if:
+<Font encoding="UTF-8">  # Parameter zur Liste hinzuf\303\274gen
+</Font>  kk := kk + 1:
+  pkin_tmp2[kk,1] := nms[i]:
 end do:</Text-field>
 </Input>
 </Group>

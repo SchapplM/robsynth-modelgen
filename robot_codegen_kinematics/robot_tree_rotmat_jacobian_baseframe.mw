@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="18" minor="2"/>
+<Version major="18" minor="0"/>
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true">
 </View-Properties>
@@ -129,10 +129,16 @@ baseframe -&gt; Berechnung der Jacobi-Matrix bezogen auf das Basis-Koordinatensy
 </Group>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
 <Text-field style="Heading 1" layout="Heading 1">Initialization</Text-field></Title>
+<Group labelreference="L2123" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">interface(warnlevel=0): # Unterdr\303\274cke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet wird.
+</Font>interface(warnlevel=3):</Text-field>
+</Input>
+</Group>
 <Group labelreference="L1522" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">restart:
-with(LinearAlgebra):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(LinearAlgebra):
 with(ArrayTools):
 with(codegen):
 with(CodeGeneration):
@@ -316,8 +322,8 @@ h_rota_s :=convert_t_s(h_rota_rpy):</Text-field>
 </Group>
 <Group labelreference="L1728" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Jacobi-Matrix der inversen Kinematik
-Falls die RPY-Darstellung f\303\274r dieses K\303\266rper-KS singul\303\244r ist, existiert die analytische Jacobi-Matrix nicht. Maple gibt dann einen Fehler aus. Die Kennzeichnung mit NaN sorgt daf\303\274r, dass dies in Matlab erkennbar ist.
+<Text-field style="Text" layout="Normal">Jacobi-Matrix der inversen Kinematik
+<Font encoding="UTF-8">Falls die RPY-Darstellung f\303\274r dieses K\303\266rper-KS singul\303\244r ist, existiert die analytische Jacobi-Matrix nicht. Maple gibt dann einen Fehler aus. Die Kennzeichnung mit NaN sorgt daf\303\274r, dass dies in Matlab erkennbar ist.
 Die Singularit\303\244t kann bei kinematischen Strukturen am Anfang auftreten.</Font></Text-field>
 </Input>
 </Group>
@@ -332,7 +338,7 @@ Die Singularit\303\244t kann bei kinematischen Strukturen am Anfang auftreten.</
   for j from 1 to NQJ do
     if T_p(3,3) = 0 then
       <Font encoding="UTF-8">b_rota(i,j) := NaN: # Singul\303\244r
-    else</Font>
+</Font>    else
       b_rota(i,j) := diff(h_rota_s(i,1), qJ_s(j,1)):
     end if:
   end do:
