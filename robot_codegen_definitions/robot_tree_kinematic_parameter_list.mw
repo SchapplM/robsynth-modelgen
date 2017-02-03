@@ -243,7 +243,7 @@ end do:</Text-field>
 </Group>
 <Group labelreference="L1714" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Kinematik-Parameter f\303\274r %s:\134n&quot;, robot_name):</Font></Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Kinematik-Parameter f\303\274r %s: %dx%d\134n&quot;, robot_name, RowDimension(</Font>pkin), ColumnDimension(pkin)):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1689" drawlabel="true">

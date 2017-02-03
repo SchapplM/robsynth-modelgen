@@ -51,7 +51,7 @@ for i from 1 to ColumnDimension(nms) do
 end do:
 # Ausgabevariable belegen
 pkin := Matrix(pkin_tmp2[1..kk,1],kk,1):
-printf("Kinematik-Parameter für %s:\n", robot_name):
+printf("Kinematik-Parameter für %s: %dx%d\n", robot_name, RowDimension(pkin), ColumnDimension(pkin)):
 pkin;
 # Ergebnis speichern
 # Für Generierung des Kinematikparametervektors in Matlab
