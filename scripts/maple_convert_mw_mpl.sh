@@ -1,6 +1,8 @@
 #!/bin/bash 
 # Konvertiere ein Maple-Worksheet in eine mpl Datei
 # Argument: Pfad zur ws-Datei
+#
+# TODO: Funktioniert nicht, wenn mpl-Datei schon existiert
 
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-05
 # (c) Institut für Regelungstechnik, Leibniz Universität Hannover
@@ -91,6 +93,4 @@ xte 'keyup F' 'keyup Alt_L'
 sleep 1             
 xte 'key X'
 sleep 1
-
-
 
