@@ -50,48 +50,53 @@ source $repo_pfad/robot_codegen_definitions/robot_env.sh
 # Liste mit Maple-Skripten in der richtigen Reihenfolge
 # Skripte für Fixed-Base-Modellierung
 dateiliste_kindyn="
-    /robot_codegen_definitions/robot_tree_floatb_twist_definitions.mpl
+    robot_codegen_definitions/robot_tree_floatb_twist_definitions.mpl
 "
 if [ -f  $repo_pfad/robot_codegen_constraints/${robot_name}_kinematic_constraints.mpl ]; then
 	dateiliste_kindyn="$dateiliste_kindyn
-		/robot_codegen_constraints/${robot_name}_kinematic_constraints.mpl
+		robot_codegen_constraints/${robot_name}_kinematic_constraints.mpl
 	"
 fi;
+# Liste der Kinematikparameter
+dateiliste_kindyn="$dateiliste_kindyn
+	robot_codegen_definitions/robot_tree_kinematic_parameter_list.mpl
+"
+
 # Fixed-Base Terme
 if ! [ "$CG_FLOATBONLY" == "1" ]; then
   # Kinematik, Geschwindigkeiten
   dateiliste_kindyn="$dateiliste_kindyn
-      /robot_codegen_kinematics/robot_tree_floatb_rotmat_mdh_kinematics.mpl
-      /robot_codegen_kinematics/robot_tree_floatb_rotmat_kinematics_com_worldframe_par1.mpl
-      /robot_codegen_kinematics/robot_tree_velocity_mdh_angles.mpl
-      /robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_worldframe_par1.mpl
-      /robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_linkframe.mpl
+      robot_codegen_kinematics/robot_tree_floatb_rotmat_mdh_kinematics.mpl
+      robot_codegen_kinematics/robot_tree_floatb_rotmat_kinematics_com_worldframe_par1.mpl
+      robot_codegen_kinematics/robot_tree_velocity_mdh_angles.mpl
+      robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_worldframe_par1.mpl
+      robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_linkframe.mpl
   "
 
   # Jacobi-Matrizen
   for (( ib=1; ib<=$robot_NL; ib++ ))
   do
     dateiliste_kindyn="$dateiliste_kindyn
-          /robot_codegen_kinematics/robot_tree_rotmat_jacobian_baseframe_body${ib}.mpl
+          robot_codegen_kinematics/robot_tree_rotmat_jacobian_baseframe_body${ib}.mpl
     "
   done
 
   # Dynamik
   dateiliste_kindyn="$dateiliste_kindyn
-      /robot_codegen_energy/robot_tree_floatb_rotmat_energy_worldframe_par1.mpl
-      /robot_codegen_energy/robot_tree_floatb_rotmat_energy_worldframe_par2.mpl
-      /robot_codegen_energy/robot_tree_floatb_rotmat_energy_linkframe_par2.mpl
-      /robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1.mpl
-      /robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2.mpl
+      robot_codegen_energy/robot_tree_floatb_rotmat_energy_worldframe_par1.mpl
+      robot_codegen_energy/robot_tree_floatb_rotmat_energy_worldframe_par2.mpl
+      robot_codegen_energy/robot_tree_floatb_rotmat_energy_linkframe_par2.mpl
+      robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1.mpl
+      robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2.mpl
   "
 
 
   # Skripte für Regressorform
   # TODO: Anpassung hier, wenn Regressorformen auch für Floating Base verfügbar
   dateiliste_kindyn="$dateiliste_kindyn
-      /robot_codegen_energy/robot_chain_fixb_rotmat_energy_regressor.mpl
-      /robot_codegen_dynamics/robot_chain_fixb_rotmat_dynamics_regressor_pv2.mpl
-      /robot_codegen_dynamics/robot_chain_fixb_rotmat_dynamics_regressor_minpar.mpl
+      robot_codegen_energy/robot_chain_fixb_rotmat_energy_regressor.mpl
+      robot_codegen_dynamics/robot_chain_fixb_rotmat_dynamics_regressor_pv2.mpl
+      robot_codegen_dynamics/robot_chain_fixb_rotmat_dynamics_regressor_minpar.mpl
   "
 
   # Initialisiere zusätzliche Maple-Skripte speziell für dieses System (benutzerdefiniert)
@@ -107,16 +112,16 @@ fi; # fixb
 if ! [ "$CG_FIXBONLY" == "1" ]; then
   # Skripte für Floating-Base-Modellierung
   dateiliste_kindyn="$dateiliste_kindyn
-    /robot_codegen_definitions/robot_tree_floatb_eulangrpy_definitions.mpl
-    /robot_codegen_kinematics/robot_tree_floatb_rotmat_mdh_kinematics.mpl
-    /robot_codegen_kinematics/robot_tree_floatb_rotmat_kinematics_com_worldframe_par1.mpl
-    /robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_worldframe_par1.mpl
-    /robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_linkframe.mpl
-    /robot_codegen_energy/robot_tree_floatb_rotmat_energy_worldframe_par1.mpl
-    /robot_codegen_energy/robot_tree_floatb_rotmat_energy_worldframe_par2.mpl
-    /robot_codegen_energy/robot_tree_floatb_rotmat_energy_linkframe_par2.mpl
-    /robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1.mpl
-    /robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2.mpl
+    robot_codegen_definitions/robot_tree_floatb_eulangrpy_definitions.mpl
+    robot_codegen_kinematics/robot_tree_floatb_rotmat_mdh_kinematics.mpl
+    robot_codegen_kinematics/robot_tree_floatb_rotmat_kinematics_com_worldframe_par1.mpl
+    robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_worldframe_par1.mpl
+    robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_linkframe.mpl
+    robot_codegen_energy/robot_tree_floatb_rotmat_energy_worldframe_par1.mpl
+    robot_codegen_energy/robot_tree_floatb_rotmat_energy_worldframe_par2.mpl
+    robot_codegen_energy/robot_tree_floatb_rotmat_energy_linkframe_par2.mpl
+    robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1.mpl
+    robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2.mpl
   "
 
   # Initialisiere zusätzliche Maple-Skripte speziell für dieses System (benutzerdefiniert)

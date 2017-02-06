@@ -32,7 +32,15 @@ do
 	echo "qJDD${i}s = qDD(${i});" >> $tmp_pfad/robot_matlabtmp_qDD.m
 done
 
-# Kinematik MDH
+# Kinematikparameter (alle als Vektor): MDH-Parameter und Parameter für Zwangsbedingungen
+echo "" > $tmp_pfad/robot_matlabtmp_par_KP.m
+i=0;
+for Kp in $robot_KP; do
+  i=$((i+1));          
+  echo "$Kp = pkin($i);" >> $tmp_pfad/robot_matlabtmp_par_KP.m
+done
+
+# Kinematik MDH (separat, wird nur noch von wenigen Funktionen gebraucht)
 echo "" > $tmp_pfad/robot_matlabtmp_par_mdh.m
 for (( i=1; i<=$robot_NJ; i++ ))
 do
@@ -159,16 +167,4 @@ echo "alphaDDx_base = xDD_base(4);" >> $tmp_pfad/robot_matlabtmp_xDDB.m
 echo "betaDDy_base = xDD_base(5);" >> $tmp_pfad/robot_matlabtmp_xDDB.m
 echo "gammaDDz_base = xDD_base(6);" >> $tmp_pfad/robot_matlabtmp_xDDB.m
 
-# Kinematische Zwangsbedingungen
-if [ "$robot_kinconstr_exist" -eq "1" ]; then
-  echo "" > $tmp_pfad/robot_matlabtmp_par_KCP.m
-  i=0;
-  for Kp in $robot_KCP; do
-    i=$((i+1));          
-    echo "$Kp = kintmp($i);" >> $tmp_pfad/robot_matlabtmp_par_KCP.m
-  done;
-else
-  # Es gibt keine kinematischen Zwangsbedingungen, die Datei bleibt leer
-  echo "" > $tmp_pfad/robot_matlabtmp_par_KCP.m
-fi;
 

@@ -9,7 +9,7 @@
 %   Base position in world frame
 % phi_base [3x1]
 %   Base orientation in world frame. Expressed with RPY Euler angles (xyz)
-% a_mdh, d_mdh, q_offset_mdh [%NJ%x1]
+% pkin [%NKP%x1]
 %   kinematic parameters
 % 
 % Output:
@@ -23,4 +23,4 @@
 % %VERSIONINFO%
 
 function T_c_mdh = %FN%(q, r_base, phi_base, ...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh%KCPARG%)
+  pkin)

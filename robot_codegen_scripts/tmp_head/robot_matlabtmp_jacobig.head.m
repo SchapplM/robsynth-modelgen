@@ -20,12 +20,12 @@
 % %VERSIONINFO%
 
 function Jg = %FN%(q, r_i_i_C, ...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh%KCPARG%)
+  pkin)
 
 
 Ja_transl = %RN%_jacobia_transl_%LIJAC%_floatb_twist_sym_varpar(q, r_i_i_C, ...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh%KCPARG%);
+  pkin);
 Jg_rot = %RN%_jacobig_rot_%LIJAC%_floatb_twist_sym_varpar(q, ...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh%KCPARG%);
+  pkin);
 
 Jg = [Ja_transl; Jg_rot];

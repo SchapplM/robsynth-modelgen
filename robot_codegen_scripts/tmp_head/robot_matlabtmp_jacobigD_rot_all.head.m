@@ -24,4 +24,4 @@
 % %VERSIONINFO%
 
 function JgD_rot = %FN%(q, qD, link_index, ...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh%KCPARG%)
+  pkin)

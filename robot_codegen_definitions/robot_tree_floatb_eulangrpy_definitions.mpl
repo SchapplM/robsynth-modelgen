@@ -12,7 +12,9 @@
 # 
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-04
 # Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
-restart:
+interface(warnlevel=0): # Unterdrücke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
+interface(warnlevel=3):
 read "../transformation/proc_rpyjac": 
 # Lese Umgebungsvariable für Codegenerierung.
 read "../robot_codegen_definitions/robot_env":

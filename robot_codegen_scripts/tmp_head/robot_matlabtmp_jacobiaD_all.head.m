@@ -28,7 +28,7 @@
 % %VERSIONINFO%
 
 function JaD = %FN%(q, qD, link_index, r_i_i_C, ...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh%KCPARG%)
+  pkin)
 
 
 

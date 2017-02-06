@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="18" minor="2"/>
+<Version major="18" minor="0"/>
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true">
 </View-Properties>
@@ -89,8 +89,8 @@
         <Metadata-attribute name="Subject" value="&lt;default&gt;"/>
         <Metadata-attribute name="Author" value="&lt;default&gt;"/>
         <Metadata-attribute name="Item List" value="true"/>
-        <Metadata-attribute name="Title" value="&lt;default&gt;"/>
         <Metadata-attribute name="Keywords" value="&lt;default&gt;"/>
+        <Metadata-attribute name="Title" value="&lt;default&gt;"/>
     </Metadata-tag>
 </Metadata-table>
 <Task-table>
@@ -137,10 +137,16 @@ par1 -&gt; Parametersatz 1 (Schwerpunkt als Parameter: SX,SY,SZ)
 </Group>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
 <Text-field style="Heading 1" layout="Heading 1">Initialization</Text-field></Title>
+<Group labelreference="L1702" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">interface(warnlevel=0): # Unterdr\303\274cke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet wird.
+</Font>interface(warnlevel=3):</Text-field>
+</Input>
+</Group>
 <Group labelreference="L1649" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">restart:
-with(LinearAlgebra):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(LinearAlgebra):
 with(ArrayTools):
 with(codegen):
 with(CodeGeneration):

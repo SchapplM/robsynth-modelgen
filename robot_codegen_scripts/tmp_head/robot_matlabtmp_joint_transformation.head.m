@@ -5,7 +5,7 @@
 % Input:
 % q [%NQJ%x1]
 %   Generalized coordinates (joint angles) [rad]
-% a_mdh, d_mdh, q_offset_mdh [%NJ%x1]
+% pkin [%NKP%x1]
 %   kinematic parameters
 % 
 % Output:
@@ -16,4 +16,4 @@
 % %VERSIONINFO%
 
 function T_mdh = %FN%(q, ...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh%KCPARG%)
+  pkin)

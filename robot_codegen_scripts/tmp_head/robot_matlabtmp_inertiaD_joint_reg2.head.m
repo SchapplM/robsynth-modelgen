@@ -7,7 +7,7 @@
 %   Generalized coordinates (joint angles) [rad]
 % qD [%NQJ%x1]
 %   Generalized velocities (joint velocities) [rad/s]
-% a_mdh, d_mdh, q_offset_mdh [%NJ%x1]
+% pkin [%NKP%x1]
 %   kinematic parameters
 % 
 % Output:
@@ -18,4 +18,4 @@
 % %VERSIONINFO%
 
 function MMD_reg = %FN%(q, qD, ...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh%KCPARG%)
+  pkin)

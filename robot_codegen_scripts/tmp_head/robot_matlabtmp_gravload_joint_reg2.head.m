@@ -7,7 +7,7 @@
 %   Generalized coordinates (joint angles) [rad]
 % g_base [3x1]
 %   gravitation vector in mdh base frame [m/s^2]
-% a_mdh, d_mdh, q_offset_mdh [%NJ%x1]
+% pkin [%NKP%x1]
 %   kinematic parameters
 % 
 % Output:
@@ -17,4 +17,4 @@
 % %VERSIONINFO%
 
 function taug_reg = %FN%(q, g, ...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh%KCPARG%)
+  pkin)

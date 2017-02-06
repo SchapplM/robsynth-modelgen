@@ -44,7 +44,7 @@ zieldat=$testfcn_pfad/${robot_name}_varpar_testfunctions_parameter.m
 
 # Winkelgrenzen in Parameter-Skript berücksichtigen
 qlim_dat=$repo_pfad/robot_codegen_constraints/${robot_name}_kinematic_constraints_matlab.m
-if [ -f $qlim_dat ]; then
+if [ -f "$qlim_dat" ]; then
   # TODO: Zeilenumbrüche nach Einsetzen wiederherstellen, Einrückung schön machen.
   REPSTR=`tr "\n" " " < $qlim_dat`
 else
@@ -59,33 +59,30 @@ printf "\n\n%%%% MDH-Parametereinträge auf Zufallswerte setzen" >> $zieldat
 printf "\n%% Aus robot_matlabtmp_par_mdh.m" >> $zieldat
 cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
 
-# Werte für kinematische Zwangsbedingungen in Parameter-Generierungsskript eintragen
+# Werte für Kinematik-Parametervektor in Parameter-Generierungsskript eintragen
 # Setzt auch Zahlenwerte für die Kinematikparameter der MDH-Notation, falls gegeben.
 KCP_dat1=$repo_pfad/robot_codegen_constraints/${robot_name}_kinematic_parameter_values.m
 if [ -f $KCP_dat1 ]; then
-  printf "\n%%%% Werte für kinematische Zwangsbedingungen direkt eintragen\n" >> $zieldat
+  printf "\n%%%% Werte für Kinematikparameter direkt eintragen\n" >> $zieldat
   printf "\n%% Aus ${robot_name}_kinematic_parameter_values.m\n" >> $zieldat
   cat $KCP_dat1 >> $zieldat
+elif [ "$robot_kinconstr_exist" == "1" ]; then
+  # Die einzelnen skalaren Werte für die Kinematik-Zwangsbedingungen müssen zufällig initialisiert werden und in den Kinematikparametervektor eingetragen werden
+  printf "\n%%%% Zufällige Werte für Kinematikparameter der Zwangsbedingungen\n" >> $zieldat
+  for Kcp in $robot_KCP; do
+    echo "$Kcp = rand(1,1);" >> $zieldat
+  done
 fi
-if [ "$robot_kinconstr_exist" == "1" ]; then
-  KCP_dat2=$repo_pfad/codeexport/${robot_name}/kinematic_constraints_symbols_list_matlab.m
-  if [ -f $KCP_dat2 ]; then
-    printf "\n%% Aus ${robot_name}_kinematic_constraints_symbols_list_matlab.m\n" >> $zieldat
-    cat $KCP_dat2 >> $zieldat
-    varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
-    echo "kintmp = $varname_tmp;" >> $zieldat
-  else
-    printf "\n%%%% Kinematikparameter (Zwangsbedingungen) zufällig setzen.\n" >> $zieldat
-    printf "%% Bei kinematischen Zwangsbedingungen führen Zufallswerte aber wahrscheinlich zur\n" >> $zieldat
-    printf "%% Verletzung der Zwangsbedingungen\n" >> $zieldat
-    printf "kintmp = rand($robot_NKCP,1);\n" >> $zieldat
-  fi;
+KP_dat2=$repo_pfad/codeexport/${robot_name}/parameter_kin_matlab.m
+if [ -f "$KP_dat2" ]; then
+  printf "\n%% Aus ${robot_name}/parameter_kin_matlab.m\n" >> $zieldat
+  cat $KP_dat2 >> $zieldat
+  varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
+  echo "pkin = $varname_tmp;" >> $zieldat
 else
-    printf "\n%%%% Kinematikparameter (Zwangsbedingungen) Platzhalter.\n" >> $zieldat
-    printf "%% Wird für Simulink-Parameterinitialsierung gebraucht\n" >> $zieldat
-    printf "kintmp = 0;\n" >> $zieldat
+  echo "Kinematik-Parametervektor in $KP_dat2 nicht gefunden"
+  exit 1
 fi;
-
 
 # Hänge alle Ausdrücke für die MDH-Parameter an und ersetze die Ergebnisvariable
 # So werden nur die Bestandteile übernommen, die Werte enthalten

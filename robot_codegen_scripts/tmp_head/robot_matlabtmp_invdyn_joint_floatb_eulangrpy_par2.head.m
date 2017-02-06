@@ -19,7 +19,7 @@
 %   second time derivative of r_base and phi_base
 % g [3x1]
 %   gravitation vector in world frame [m/s^2]
-% a_mdh, d_mdh, q_offset_mdh [%NJ%x1]
+% pkin [%NKP%x1]
 %   kinematic parameters
 % m_num_mdh, rSges_num_mdh, Icges_num_mdh [%NL%x1]
 %   dynamic parameters (parameter set 2: first moment and inertia about link frame origin)
@@ -31,4 +31,4 @@
 % %VERSIONINFO%
 
 function tau = %FN%(q, qD, qDD, phi_base, xD_base, xDD_base, g, ...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, mrSges_num_mdh, Ifges_num_mdh%KCPARG%)
+  pkin, m_num, mrSges_num_mdh, Ifges_num_mdh)

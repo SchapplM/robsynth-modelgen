@@ -18,4 +18,4 @@
 % %VERSIONINFO%
 
 function Jg_transl = %FN%(q, ...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh%KCPARG%)
+  pkin)

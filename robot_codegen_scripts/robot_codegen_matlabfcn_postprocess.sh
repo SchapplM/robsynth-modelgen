@@ -31,7 +31,7 @@ sed -i "s/%NJ%/$robot_NJ/g" $mfcndat
 sed -i "s/%NL%/$robot_NL/g" $mfcndat
 sed -i "s/%NMPV%/$robot_NMPV/g" $mfcndat
 sed -i "s/%FN%/$FN/g" $mfcndat
-sed -i "s/%KCPARG%/$robot_KCPARG/g" $mfcndat
+sed -i "s/%NKP%/$robot_NKP/g" $mfcndat
 sed -i "s/%NKCP%/$robot_NKCP/g" $mfcndat
 
 if [ "$replacelastassignment" != "0" ]; then # vergleiche strings, da das Argument auch leer sein könnte

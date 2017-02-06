@@ -20,7 +20,9 @@
 # [Craig] Introduction to Robotics, Modeling and Control (3rd Edition)
 # [Ortmaier2014] Vorlesungsskript Robotik I
 # Initialization
-restart:
+interface(warnlevel=0): # Unterdrücke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
+interface(warnlevel=3):
 with(LinearAlgebra):
 with(ArrayTools):
 with(codegen):

@@ -87,423 +87,196 @@
     <Task-category name="&lt;default&gt;"/>
 </Task-table>
 <Task/>
-<Group labelreference="L1" drawlabel="true">
+<Group labelreference="L1506" drawlabel="true">
 <Input>
-<Text-field style="Title" layout="Title">Calculate Jacobi-Matrix based on MDH-Frames</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1503" drawlabel="true">
-<Input>
-<Text-field style="Heading 2" layout="Heading 2">Introduction</Text-field>
-<Text-field style="Normal" layout="Normal"><Font encoding="UTF-8">Jacobi-Matrix f\303\274r Roboterkinematik basierend auf MDH-Parametern berechnen.
-Die Berechnung erfolgt durch symbolische Ableitung der Transformationsmatrizen f\303\274r jeden K\303\266rper</Font>
-
-<Font encoding="UTF-8">robot -&gt; Berechnung f\303\274r allgemeinen Roboter
-tree -&gt; Berechnung f\303\274r eine beliebige Baumstruktur (ohne Schleifen)
-</Font>rotmat -&gt; Kinematik wird mit Rotationsmatrizen berechnet
-jacobian -&gt; Berechnung der Jacobi-Matrix
-baseframe -&gt; Berechnung der Jacobi-Matrix bezogen auf das Basis-Koordinatensystem des Roboters (nicht: Welt-KS)
-</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1510" drawlabel="true">
-<Input>
-<Text-field style="Heading 2" layout="Heading 2">Tests</Text-field>
-<Text-field style="Normal" layout="Normal"></Text-field>
-</Input>
-</Group>
-<Group labelreference="L1501" drawlabel="true">
-<Input>
-<Text-field style="Heading 2" layout="Heading 2">Autor</Text-field>
-<Text-field style="Normal" layout="Normal">Moritz Schappler, schappler@irt.uni-hannover.de, 2016-10</Text-field>
-<Text-field style="Normal" layout="Normal">Institut fuer Regelungstechnik, Leibniz Universitaet Hannover</Text-field>
-<Text-field style="Text" layout="Normal"></Text-field>
-</Input>
-</Group>
-<Group labelreference="L1502" drawlabel="true">
-<Input>
-<Text-field style="Heading 2" layout="Heading 2">Sources</Text-field>
-<Text-field style="Normal" layout="Normal"><Font style="Text">[Ortmaier2014] Vorlesungsskript Robotik I
-[Ortmaier2014a] Vorlesungsskript Robotik II</Font></Text-field>
+<Text-field style="Title" layout="Title">Erstelle Liste aller Kinematikparameter</Text-field>
 </Input>
 </Group>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 1" layout="Heading 1">Initialization</Text-field></Title>
-<Group labelreference="L2123" drawlabel="true">
+<Text-field style="Heading 1" layout="Heading 1">Init</Text-field></Title>
+<Group labelreference="L1602" drawlabel="true">
+<Input>
+<Text-field style="Normal" layout="Normal">Dieses Arbeitsblatt erstellt einen Vektor mit allen Kinematikparameter
+<Font encoding="UTF-8">Es werden nur die Kinematikparameter eingetragen, die ungleich Null sind, also z.B. keine MDH-Parameter die L\303\244nge oder Winkel Null sind.
+</Font>
+<Font encoding="UTF-8">TODO: Liste mit Kinematikparametern muss immer die selbe Reihenfolge haben. Am besten in der Form a,alpha,qoffset,d,b,beta,kc. Momentan scheint die Reihenfolge zuf\303\244llig, aber reproduzierbar.
+</Font>
+Moritz Schappler, schappler@irt.uni-hannover.de, 2017-02</Text-field>
+<Text-field style="Normal" layout="Normal">Institut fuer Regelungstechnik, Leibniz Universitaet Hannover</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1601" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">interface(warnlevel=0): # Unterdr\303\274cke die folgende Warnung.
 restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet wird.
 </Font>interface(warnlevel=3):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1522" drawlabel="true">
+<Group labelreference="L1695" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(LinearAlgebra):
-with(ArrayTools):
-with(codegen):
-with(CodeGeneration):
-with(StringTools):
-printlevel := 2:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">interface(rtablesize=100): # Damit der ganze Parametervektor ausgegeben werden kann</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1647" drawlabel="true">
+<Group labelreference="L1637" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_act := true:
-codegen_opt := 2:</Text-field>
-</Input>
-</Group><Presentation-Block>
-<Group labelreference="L2105" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Funktionen aus IRT-Maple-Repo</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(LinearAlgebra):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L2101" drawlabel="true">
+<Group labelreference="L1715" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../helper/proc_MatlabExport&quot;, maple_repo_path):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
 </Input>
 </Group>
-<Group view="code" labelreference="L2100" drawlabel="true">
+<Group labelreference="L1595" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../transformation/proc_r2rpy&quot;, maple_repo_path):
-read sprintf(&quot;../transformation/proc_transl&quot;, maple_repo_path):</Text-field>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Lese Umgebungsvariable f\303\274r Codegenerierung.</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L2104" drawlabel="true">
+<Group labelreference="L1594" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_convert_s_t&quot;:
-read &quot;../helper/proc_convert_t_s&quot;: </Text-field>
-</Input>
-</Group></Presentation-Block>
-<Group labelreference="L2107" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L2108" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tree_floatb_definitions&quot;, robot_name):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1706" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Ergebnisse der Kinematik laden</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1707" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/kinematics_floatb_%s_rotmat_maple.m&quot;, robot_name, base_method_name):
-Trf := Trf:
-Trf_c := Trf_c:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L2110" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Link-Index, f\303\274r den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber f\303\274r beliebige Segmente aufgestellt werden.</Font></Text-field>
-</Input>
-</Group>
-<Group labelreference="L2109" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">LIJAC:=NL:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L2114" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Generiere Jacobi-Matrix f\303\274r %s (K\303\266rper %d)\134n&quot;, robot_name, </Font>LIJAC):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:
+<Font encoding="UTF-8">printf(&quot;Generiere Kinematik-Parametervektor f\303\274r %s\134n&quot;,robot_name):</Font></Text-field>
 </Input>
 </Group>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 1" layout="Heading 1">Jacobi-Matrix analytisch (Translatorisch)</Text-field></Title>
-<Group labelreference="L1689" drawlabel="true">
+<Text-field style="Heading 1" layout="Heading 1">Parameter der Zwangsbedingungen lesen</Text-field></Title>
+<Group labelreference="L1719" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal">Ortmaier2014a Gl. (1.15), S.14: Geometrische Zwangsbedingungen in impliziter Form
-<Font encoding="UTF-8">Gleichung enth\303\244lt verallgemeinerte Koordinaten und Endeffektorposition und ergibt Null.</Font></Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">kin_constraints_exist := false:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1694" drawlabel="true">
+<Group labelreference="L1721" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">x_EE := Matrix(3,1,&lt;r_xEE; r_yEE; r_zEE&gt;):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">constrfile := sprintf(&quot;../codeexport/%s/kinematic_constraints_symbols_list_maple&quot;, robot_name):
+if FileTools[Exists](constrfile) then
+  read constrfile:
+  kin_constraints_exist := true:
+end if:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L2112" drawlabel="true">
+</Section>
+<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
+<Text-field style="Heading 1" layout="Heading 1">Liste der Kinematikparameter erstellen</Text-field></Title>
+<Group labelreference="L1711" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Transformationsmatrix von der Basis zum gegebenen Punkt auf dem K\303\266rper. Die Koordinaten px,py,pz f\303\274r den Punkt werden sp\303\244ter eingesetzt.</Font></Text-field>
-</Input>
-</Group>
-<Group labelreference="L2111" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">T_p := Trf_c(1 .. 4, 1..4, LIJAC) . transl(&lt;px;py;pz&gt;):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L2113" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">h_transl := Matrix(T_p(1..3,4)) - x_EE:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1688" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">h_transl_s :=convert_t_s(h_transl):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1695" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Jacobi-Matrix der inversen Kinematik</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1698" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">b_transl := Matrix(3, NQJ):</Text-field>
+<Text-field style="Text" layout="Normal">Alle einzelnen MDH-Parametervektoren stapeln</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1697" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to 3 do
-  for j from 1 to NQJ do
-    b_transl(i,j) := diff(h_transl_s(i,1), qJ_s(j,1)):
-  end do:
-end do:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">pkin_tmp1 := &lt;a;alpha;d;qoffset;b;beta&gt;:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1701" drawlabel="true">
+<Group labelreference="L1724" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal">Export</Text-field>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Kinematikparameter f\303\274r kinematische Zwangsbedingungen hinzuf\303\274gen (falls vorhanden)</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L1702" drawlabel="true">
+<Group labelreference="L1722" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save b_transl, sprintf(&quot;../codeexport/%s/jacobia_transl_%d_maple.m&quot;, robot_name, LIJAC):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if kin_constraints_exist then
+  pkin_tmp1 := &lt;pkin_tmp1;Transpose(kc_symbols)&gt;:
+  np_kc := ColumnDimension(kc_symbols):
+else
+  <Font encoding="UTF-8">np_kc := 0:# Anzahl der Kinematikparameter f\303\274r die Zwangsbedingungen</Font>
+end if:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L2122" drawlabel="true">
+<Group labelreference="L1699" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8"># Ausdruck muss nochmal geladen werden, ansonsten h\303\244ngt sich die Code-Optimerung mit &quot;tryhard&quot; auf.
-# TODO: Kl\303\244ren warum das so ist und Problem beheben.
-</Font>read sprintf(&quot;../codeexport/%s/jacobia_transl_%d_maple.m&quot;, robot_name, LIJAC):
-b_transl := b_transl:</Text-field>
+<Text-field style="Text" layout="Normal">Alle Symbole herausfinden
+TODO: Liste mit besserer Reihenfolge (siehe oben)</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1700" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">nms:=convert(indets(pkin_tmp1,name),list):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1706" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Laufende Nummer f\303\274r Parameterliste</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1707" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">kk := 0:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1705" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to 3 do
-  for j from 1 to NQJ do
-    MatlabExport(b_transl(i,j), sprintf(&quot;../codeexport/%s/jacobia_transl_%d_floatb_%s_%d_%d_matlab.m&quot;, robot_name, LIJAC, base_method_name, i, j), codegen_opt):
-  end do:
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Matrix mit Platz f\303\274r alle Kinematikparameter (falls alle ungleich Null)</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1704" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">pkin_tmp2 := Matrix(NJ*6+np_kc,1):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1712" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Pi aus Liste entfernen (wird im Code sowieso automatisch eingesetzt)</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1701" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to ColumnDimension(nms) do
+  if nms[i] = Pi then
+    next:
+  end if:
+<Font encoding="UTF-8">  # Parameter zur Liste hinzuf\303\274gen
+</Font>  kk := kk + 1:
+  pkin_tmp2[kk,1] := nms[i]:
 end do:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1703" drawlabel="true">
+<Group labelreference="L1687" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(b_transl, sprintf(&quot;../codeexport/%s/jacobia_transl_%d_floatb_%s_matlab.m&quot;, robot_name, LIJAC, base_method_name), codegen_opt):</Text-field>
+<Text-field style="Text" layout="Normal">Ausgabevariable belegen</Text-field>
 </Input>
 </Group>
-</Section>
-<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 1" layout="Heading 1">Jacobi-Matrix analytisch (Rotatorisch)</Text-field></Title>
-<Group labelreference="L1734" drawlabel="true">
+<Group labelreference="L1688" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal">Ortmaier2014a Gl. (1.15), S.14: Geometrische Zwangsbedingungen in impliziter Form
-Rotationsdarstellung des Endeffektors in RPY-Winkeln</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">pkin := Matrix(pkin_tmp2[1..kk,1],kk,1):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1729" drawlabel="true">
+<Group labelreference="L1714" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">xo_EE := Matrix(3,1,&lt;phi_xEE; phi_yEE; phi_zEE&gt;):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Kinematik-Parameter f\303\274r %s: %dx%d\134n&quot;, robot_name, RowDimension(</Font>pkin), ColumnDimension(pkin)):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1776" drawlabel="true">
+<Group labelreference="L1689" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">r2rpy liefert inert-arctan (%). Auswertung vor Export dauert zu lange. In exportiertem Matlab-Code muss &quot;%arctan&quot; h\303\244ndisch gegen &quot;atan2&quot; getauscht werden.</Font></Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">pkin;</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1733" drawlabel="true">
+<Group labelreference="L1708" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">h_rota_rpy := r2rpy(T_p) - xo_EE: 
-h_rota_s :=convert_t_s(h_rota_rpy):</Text-field>
+<Text-field style="Text" layout="Normal">Ergebnis speichern</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1728" drawlabel="true">
+<Group labelreference="L1716" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal">Jacobi-Matrix der inversen Kinematik
-<Font encoding="UTF-8">Falls die RPY-Darstellung f\303\274r dieses K\303\266rper-KS singul\303\244r ist, existiert die analytische Jacobi-Matrix nicht. Maple gibt dann einen Fehler aus. Die Kennzeichnung mit NaN sorgt daf\303\274r, dass dies in Matlab erkennbar ist.
-Die Singularit\303\244t kann bei kinematischen Strukturen am Anfang auftreten.</Font></Text-field>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">F\303\274r Generierung des Kinematikparametervektors in Matlab</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L1740" drawlabel="true">
+<Group labelreference="L1690" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">b_rota := Matrix(3, NQJ):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(pkin, sprintf(&quot;../codeexport/%s/parameter_kin_matlab.m&quot;, robot_name), 2):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1726" drawlabel="true">
+<Group labelreference="L1709" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to 3 do
-  for j from 1 to NQJ do
-    if T_p(3,3) = 0 then
-      <Font encoding="UTF-8">b_rota(i,j) := NaN: # Singul\303\244r
-</Font>    else
-      b_rota(i,j) := diff(h_rota_s(i,1), qJ_s(j,1)):
-    end if:
-  end do:
-end do:</Text-field>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">F\303\274r schnelle Erkennung der Dimension zum Auslesen durch Bash-Skripte</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L1735" drawlabel="true">
+<Group labelreference="L1717" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal">Export</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save pkin, sprintf(&quot;../codeexport/%s/parameter_kin&quot;, robot_name):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1738" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save b_rota, sprintf(&quot;../codeexport/%s/jacobia_rot_maple.m&quot;, robot_name):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L2121" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"># Ausdruck nochmal laden.
-read sprintf(&quot;../codeexport/%s/jacobia_rot_maple.m&quot;, robot_name):
-b_rota := b_rota:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1739" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to 3 do
-  for j from 1 to NQJ do
-    MatlabExport(b_rota(i,j), sprintf(&quot;../codeexport/%s/jacobia_rot_%d_floatb_%s_%d_%d_matlab.m&quot;, robot_name, LIJAC, base_method_name, i, j), codegen_opt):
-  end do:
-end do:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1737" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(b_rota, sprintf(&quot;../codeexport/%s/jacobia_rot_%d_floatb_%s_matlab.m&quot;, robot_name, LIJAC, base_method_name), codegen_opt):</Text-field>
-</Input>
-</Group>
-</Section>
-<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 1" layout="Heading 1">Jacobi-Matrix geometrisch (Rotatorisch)</Text-field></Title>
-<Group labelreference="L1751" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Zusammenhang zwischen Geschwindigkeit der verallgemeinerten Koordinaten und Winkelgeschwindigkeit des Endeffektors ausgedr\303\274ckt im Basis-Koordinatensystems</Font></Text-field>
-</Input>
-</Group>
-<Group labelreference="L1763" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/velocity_worldframe_floatbase_%s_par1_maple.m&quot;, robot_name, base_method_name):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1764" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">omega_W_i := omega_W_i:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1758" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">omega_EE := Matrix(3,1,&lt;omega_xEE; omega_yEE; omega_zEE&gt;):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1770" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">h_rotg := Matrix(omega_W_i(1..3,LIJAC)) - omega_EE:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1750" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">h_rotg_s :=convert_t_s(h_rotg):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1757" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Jacobi-Matrix der inversen Kinematik
-Leite die Winkelgeschwindigkeiten des Endeffektors nach den Gelenkwinkelgeschwindigkeiten ab.
-Damit wird der Zusammenhang nach Ortmaier2014 Gl. (4.17), S.51 umgeformt.</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1760" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">b_rotg := Matrix(3, NQJ):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1746" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to 3 do
-  for j from 1 to NQJ do
-    b_rotg(i,j) := diff(h_rotg_s(i,1), qJD_s(j,1)):
-  end do:
-end do:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1748" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">B_s := b_rotg:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1752" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Export</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1755" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save b_rotg, sprintf(&quot;../codeexport/%s/jacobig_rot_maple.m&quot;, robot_name):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L2120" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"># Ausdruck nochmal laden.
-read sprintf(&quot;../codeexport/%s/jacobig_rot_maple.m&quot;, robot_name):
-b_rotg := b_rotg:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1756" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to 3 do
-  for j from 1 to NQJ do
-    MatlabExport(b_rotg(i,j), sprintf(&quot;../codeexport/%s/jacobig_rot_%d_floatb_%s_%d_%d_matlab.m&quot;, robot_name, LIJAC, base_method_name, i, j), codegen_opt):
-  end do:
-end do:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1754" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(b_rotg, sprintf(&quot;../codeexport/%s/jacobig_rot_%d_floatb_%s_matlab.m&quot;, robot_name, LIJAC, base_method_name), codegen_opt):</Text-field>
-</Input>
-</Group>
-</Section>
-<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 1" layout="Heading 1">Jacobi-Zeitableitung</Text-field></Title>
-<Group labelreference="L1777" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">JD_rotg_t := diff~(convert_s_t(b_rotg), t):
-JD_rotg_s := convert_t_s(JD_rotg_t):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1778" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">JD_rota_t := diff~(convert_s_t(b_rota), t):
-JD_rota_s := convert_t_s(JD_rota_t):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1779" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">JD_transla_t := diff~(convert_s_t(b_transl), t):
-JD_transla_s := convert_t_s(JD_transla_t):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1780" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(JD_rotg_s, sprintf(&quot;../codeexport/%s/jacobigD_rot_%d_floatb_%s_matlab.m&quot;, robot_name, LIJAC, base_method_name), codegen_opt):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1781" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(JD_rota_s, sprintf(&quot;../codeexport/%s/jacobiaD_rot_%d_floatb_%s_matlab.m&quot;, robot_name, LIJAC, base_method_name), codegen_opt):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1782" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(JD_transla_s, sprintf(&quot;../codeexport/%s/jacobiaD_transl_%d_floatb_%s_matlab.m&quot;, robot_name, LIJAC, base_method_name), codegen_opt):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1783" drawlabel="true">
+<Group labelreference="L1718" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>

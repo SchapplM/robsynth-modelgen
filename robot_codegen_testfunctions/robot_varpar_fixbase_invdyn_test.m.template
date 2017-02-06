@@ -24,10 +24,10 @@ for i = 1:n
   qD = QD(i,:)';
   % calculate kinetic energy with optimized function
   T_func = %RN%_energykin_fixb_slag_vp1(q, qD, ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges%KCPARG%);
+    pkin, m, rSges, Icges);
   % calculate kinetic energy with mass matrix
   Mq = %RN%_inertia_joint_slag_vp1(q, ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges%KCPARG%);
+    pkin, m, rSges, Icges);
   T_M = 1/2 * qD' * Mq*qD;
 
   % compare both
@@ -48,11 +48,11 @@ for i = 1:n
 
   % calculate coriolis vector directly from optimized function
   cq = %RN%_coriolisvec_joint_fixb_slag_vp1(q, qD, ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges%KCPARG%);
+    pkin, m, rSges, Icges);
 
   % calculate with coriolis matrix
   Cq = %RN%_coriolismat_joint_fixb_slag_vp1(q, qD, ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges%KCPARG%);
+    pkin, m, rSges, Icges);
   cq_mat = (Cq*qD);
 
   % compare both
@@ -74,11 +74,11 @@ for i = 1:n
 
   % Coriolis Matrix
   Cq = %RN%_coriolismat_joint_fixb_slag_vp1(q, qD, ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges%KCPARG%);
+    pkin, m, rSges, Icges);
 
   % Inertia Matrix time derivative
   MqD = %RN%_inertiaD_joint_slag_vp1(q, qD, ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges%KCPARG%);
+    pkin, m, rSges, Icges);
 
   % Calculate test expression
   Test = MqD-2*Cq;
@@ -103,56 +103,56 @@ for i = 1:n
   g_base = G(i,:)';
   % Gravitation
   taug_par1 = %RN%_gravload_joint_floatb_twist_slag_vp1(q, g_base, ...
-    alpha, a, d, q_offset, b, beta, m, rSges%KCPARG%);
+    pkin, m, rSges);
   taug_par2 = %RN%_gravload_joint_floatb_twist_slag_vp2(q, g_base, ...
-    alpha, a, d, q_offset, b, beta, m, mrSges%KCPARG%);
+    pkin, m, mrSges);
   if any(abs(taug_par1 - taug_par2) > 1e-12)
     error('gravity torques do not match between par1/par2.');
   end
   % Coriolis
   tauc_par1 = %RN%_coriolisvec_joint_fixb_slag_vp1(q, qD, ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges%KCPARG%);
+    pkin, m, rSges, Icges);
   tauc_par2 = %RN%_coriolisvec_joint_fixb_slag_vp2(q, qD, ...
-    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges%KCPARG%);
+    pkin, m, mrSges, Ifges);
   if any(abs(tauc_par1-tauc_par2) > 1e-12)
     error('coriolis vectors do not match between par1/par2.');
   end
   Cq_par1 = %RN%_coriolismat_joint_fixb_slag_vp1(q, qD, ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges%KCPARG%);
+    pkin, m, rSges, Icges);
   Cq_par2 = %RN%_coriolismat_joint_fixb_slag_vp2(q, qD, ...
-    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges%KCPARG%); 
+    pkin, m, mrSges, Ifges); 
   if any(abs(Cq_par1(:)-Cq_par2(:)) > 1e-12)
     error('coriolis matrices do not match between par1/par2.');
   end 
   % Inertia
   Mq_par1 = %RN%_inertia_joint_slag_vp1(q, ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges%KCPARG%);
+    pkin, m, rSges, Icges);
   Mq_par2 = %RN%_inertia_joint_slag_vp2(q, ...
-    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges%KCPARG%);
+    pkin, m, mrSges, Ifges);
   if any(abs(Mq_par1(:)-Mq_par2(:)) > 1e-12)
     error('inertia matrices do not match between par1/par2.');
   end
   % Inverse Dynamics
   tau_par1 = %RN%_invdyn_fixb_slag_vp1(q, qD, qDD, g_base, ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges%KCPARG%);
+    pkin, m, rSges, Icges);
   tau_par2 = %RN%_invdyn_fixb_slag_vp2(q, qD, qDD, g_base, ...
-    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges%KCPARG%);
+    pkin, m, mrSges, Ifges);
   if any(abs(tau_par1-tau_par2) > 1e-12)
     error('inverse dynamics joint torque vectors do not match between par1/par2.');
   end
   % Potentielle Energie
   U_par1 = %RN%_energypot_fixb_slag_vp1(q, g_base, ...
-    alpha, a, d, q_offset, b, beta, m, rSges%KCPARG%);
+    pkin, m, rSges);
   U_par2 = %RN%_energypot_fixb_slag_vp2(q, g_base, ...
-    alpha, a, d, q_offset, b, beta, m, mrSges%KCPARG%);
+    pkin, m, mrSges);
   if any(abs(U_par1-U_par2) > 1e-12)
     error('Potential energies do not match between par1/par2.');
   end
   % Kinetische Energie
   T_par1 = %RN%_energykin_fixb_slag_vp1(q, qD, ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges%KCPARG%);
+    pkin, m, rSges, Icges);
   T_par2 = %RN%_energykin_fixb_slag_vp2(q, qD, ...
-    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges%KCPARG%);
+    pkin, m, mrSges, Ifges);
   if any(abs(T_par1-T_par2) > 1e-12)
     error('Kinetic energies do not match between par1/par2.');
   end
@@ -168,9 +168,9 @@ for i = 1:n
   g_base = G(i,:)';
   % Gravitation
   taug_id = %RN%_invdyn_fixb_slag_vp1(q, zeros(NQJ,1), zeros(NQJ,1), g_base, ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges%KCPARG%);
+    pkin, m, rSges, Icges);
   taug_sp = %RN%_gravload_joint_floatb_twist_slag_vp1(q, g_base, ...
-    alpha, a, d, q_offset, b, beta, m, rSges%KCPARG%);
+    pkin, m, rSges);
   Delta = taug_id - taug_sp;
   if any(abs(Delta) > 1e-12)
     error('gravity torques from inverse dynamics and own function do not match. %1.5e', ...
@@ -179,9 +179,9 @@ for i = 1:n
   
   % Coriolis
   tauc_id = %RN%_invdyn_fixb_slag_vp1(q, qD, zeros(NQJ,1), zeros(3,1), ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges%KCPARG%);
+    pkin, m, rSges, Icges);
   tauc_sp = %RN%_coriolisvec_joint_fixb_slag_vp1(q, qD, ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges%KCPARG%);
+    pkin, m, rSges, Icges);
   Delta = tauc_id - tauc_sp;
   if any(abs(Delta) > 1e-12)
     error('Coriolis torques from inverse dynamics and own function do not match. %1.5e', ...
@@ -190,9 +190,9 @@ for i = 1:n
   
   % Inertia
   taua_id = %RN%_invdyn_fixb_slag_vp1(q, zeros(NQJ,1), qDD, zeros(3,1), ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges%KCPARG%);
+    pkin, m, rSges, Icges);
   Mq = %RN%_inertia_joint_slag_vp1(q, ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges%KCPARG%);
+    pkin, m, rSges, Icges);
   taua_sp = Mq*qDD;
   Delta = taua_id - taua_sp;
   if any(abs(Delta) > 1e-12)
@@ -216,9 +216,9 @@ for ii = 1:n
   % Funktion zur Berechnung der Beschleunigung (Inverse Massenmatrix
   % multipliziert mit Beschleunigungsmoment)
   odefun = @(t, x) ([x(NQJ+1:2*NQJ); -%RN%_inertia_joint_slag_vp1(x(1:NQJ), ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges%KCPARG%) ...
+    pkin, m, rSges, Icges) ...
     \ ...
-    (%RN%_invdyn_fixb_slag_vp1(x(1:NQJ), x(NQJ+1:2*NQJ), zeros(NQJ,1), [0;0;-9.81], alpha, a, d, q_offset, b, beta, m, rSges, Icges%KCPARG%))]);
+    (%RN%_invdyn_fixb_slag_vp1(x(1:NQJ), x(NQJ+1:2*NQJ), zeros(NQJ,1), [0;0;-9.81], pkin, m, rSges, Icges))]);
   odefun(0, x0); % Testen der Funktion
   % Numerische Integration konfigurieren und durchführen
   options = odeset('MaxStep',1e-3); % mit automatischer Schrittweite ist der Fehler zu groß
@@ -230,9 +230,9 @@ for ii = 1:n
   for i = 1:length(t)
     q = SolverOutput.y(1:NQJ,i);
     qD = SolverOutput.y(NQJ+1:2*NQJ,i);
-    E(i,1) = %RN%_energykin_fixb_slag_vp1(q, qD, alpha, a, d, q_offset, b, beta, m, rSges, Icges%KCPARG%);
-    E(i,2) = %RN%_energypot_fixb_slag_vp1(q, [0;0;-9.81], alpha, a, d, q_offset, b, beta, m, rSges%KCPARG%);
-    tau_Acc(i,:) = %RN%_invdyn_fixb_slag_vp1(q, qD, zeros(NQJ,1), [0;0;-9.81], alpha, a, d, q_offset, b, beta, m, rSges, Icges%KCPARG%)';
+    E(i,1) = %RN%_energykin_fixb_slag_vp1(q, qD, pkin, m, rSges, Icges);
+    E(i,2) = %RN%_energypot_fixb_slag_vp1(q, [0;0;-9.81], pkin, m, rSges);
+    tau_Acc(i,:) = %RN%_invdyn_fixb_slag_vp1(q, qD, zeros(NQJ,1), [0;0;-9.81], pkin, m, rSges, Icges)';
   end
   E(:,3) = sum(E(:,1:2),2); % Gesamtenergie
   % Ergebnisse zeichnen

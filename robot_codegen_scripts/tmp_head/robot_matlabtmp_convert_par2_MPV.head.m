@@ -14,7 +14,5 @@
 
 % %VERSIONINFO%
 
-function MPV = %FN%(alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m_num, mrSges_num_mdh, Ifges_num_mdh)
-
-% %VERSIONINFO%
+function MPV = %FN%(pkin, m_num, mrSges_num_mdh, Ifges_num_mdh)
 

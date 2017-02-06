@@ -15,6 +15,14 @@ NJ = %NJ%;
 NL = %NL%;
 robot_name = '%RN%';
 
+% Prüfe, ob kinematische Zwangsbedingungen vorliegen.
+% Dann entfallen alle folgenden Tests (noch nicht implementiert)
+if NJ ~= NQJ
+  KINCONSTR = true;
+  fprintf('Tests entfallen aufgrund der Existenz kinematischer Zwangsbedingungen\n');
+  return
+end
+
 %% Parameter
 %RN%_varpar_testfunctions_parameter
 
@@ -35,9 +43,9 @@ for i = 1:n
   
   % Gravitation
   taugj_sym = %RN%_gravload_joint_floatb_eulangrpy_slag_vp1(qJ, ob, g_world,...
-    alpha, a, d, q_offset, b, beta, m, rSges);
+    pkin, m, rSges);
   taugb_sym = %RN%_gravload_base_floatb_eulangrpy_slag_vp1(qJ, ob, g_world,...
-    alpha, a, d, q_offset, b, beta, m, rSges);
+    pkin, m, rSges);
   taug_sym = [taugb_sym;taugj_sym];
   taug_num1 = robot_tree_invdyn_floatb_eulangrpy_nnew_vp1(qJ, zeros(NJ,1), zeros(NJ,1), ob, zeros(6,1), [-g_world;zeros(3,1)], ...
     alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
@@ -50,21 +58,21 @@ for i = 1:n
     error('Fehler in numerisch berechneter Gravitationslast (Methode 2): Stimmt nicht mit symbolisch berechneter überein.');
   end
   taug_num3 = %RN%_invdyn_floatb_eulangrpy_nnew_vp1(qJ, zeros(NJ,1), zeros(NJ,1), ob, zeros(6,1), [-g_world;zeros(3,1)], ...
-    alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
+    pkin, v, m, rSges, Icges);
   if any( abs(taug_sym-taug_num3) > 1e-10)
     error('Fehler in numerisch berechneter Gravitationslast (Methode 3): Stimmt nicht mit symbolisch berechneter überein.');
   end
   taug_num4 = %RN%_gravload_floatb_eulangrpy_nnew_vp1(qJ, ob, g_world, ...
-    alpha, a, d, q_offset, b, beta, v, m, rSges);
+    pkin, v, m, rSges);
   if any( abs(taug_sym-taug_num4) > 1e-10)
     error('Fehler in numerisch berechneter Gravitationslast (Methode 4): Stimmt nicht mit symbolisch berechneter überein.');
   end
 
   % Coriolis
   cqj_sym = %RN%_coriolisvec_joint_floatb_eulangrpy_slag_vp1(qJ, qJD, ob, xDB, ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+    pkin, m, rSges, Icges);
   cqb_sym = %RN%_coriolisvec_base_floatb_eulangrpy_slag_vp1(qJ, qJD, ob, xDB, ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+    pkin, m, rSges, Icges);
   tauc_sym = [cqb_sym;cqj_sym];
   tauc_num1 = robot_tree_invdyn_floatb_eulangrpy_nnew_vp1(qJ, qJD, zeros(NJ,1), ob, xDB, zeros(6,1), ...
     alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
@@ -72,7 +80,7 @@ for i = 1:n
     error('Fehler in numerisch berechneter Corioliskraft (Methode 1): Stimmt nicht mit symbolisch berechneter überein.');
   end
   tauc_num2 = %RN%_invdyn_floatb_eulangrpy_nnew_vp1(qJ, qJD, zeros(NJ,1), ob, xDB, zeros(6,1), ...
-    alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
+    pkin, v, m, rSges, Icges);
   if any( abs(tauc_sym-tauc_num2) > 1e-10)
     error('Fehler in numerisch berechneter Corioliskraft (Methode 2): Stimmt nicht mit symbolisch berechneter überein.');
   end
@@ -84,7 +92,7 @@ for i = 1:n
 
   % Massenmatrix
   Mq_sym = %RN%_inertia_floatb_eulangrpy_slag_vp1(qJ, ob, ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+    pkin, m, rSges, Icges);
   Mq_num1 = NaN(6+NJ,6+NJ);
   Mq_num2 = NaN(6+NJ,6+NJ);
   I6 = eye(6);
@@ -92,14 +100,14 @@ for i = 1:n
     Mq_num1(:,jj) = robot_tree_invdyn_floatb_eulangrpy_nnew_vp1  (qJ, zeros(NJ,1), zeros(NJ,1), ob, zeros(6,1), I6(:,jj), ...
       alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
     Mq_num2(:,jj) = %RN%_invdyn_floatb_eulangrpy_nnew_vp1(qJ, zeros(NJ,1), zeros(NJ,1), ob, zeros(6,1), I6(:,jj), ...
-      alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
+      pkin, v, m, rSges, Icges);
   end
   INJ = eye(NJ);
   for jj = 1:NJ
     Mq_num1(:,6+jj) = robot_tree_invdyn_floatb_eulangrpy_nnew_vp1  (qJ, zeros(NJ,1), INJ(:,jj), ob, zeros(6,1), zeros(6,1) , ...
       alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
     Mq_num2(:,6+jj) = %RN%_invdyn_floatb_eulangrpy_nnew_vp1(qJ, zeros(NJ,1), INJ(:,jj), ob, zeros(6,1), zeros(6,1) , ...
-      alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
+      pkin, v, m, rSges, Icges);
   end
   if any( abs(Mq_num1(:)-Mq_sym(:)) > 1e-10)
     error('Fehler in numerisch berechneter Massenmatrix (Methode 1): Stimmt nicht mit symbolisch berechneter überein.');
@@ -125,36 +133,36 @@ t_ber_g = NaN(2,6);
 tic;
 for i = 1:n
   taugj_sym = %RN%_gravload_joint_floatb_eulangrpy_slag_vp1(qJ+i*1e-3, ob, g_world,...
-    alpha, a, d, q_offset, b, beta, m, rSges);
+    pkin, m, rSges);
   taugb_sym = %RN%_gravload_base_floatb_eulangrpy_slag_vp1(qJ+i*1e-3, ob, g_world,...
-    alpha, a, d, q_offset, b, beta, m, rSges);
+    pkin, m, rSges);
   taug_sym = [taugb_sym;taugj_sym];
 end
 t_ber_g(1,1) = toc/n;
 tic;
 for i = 1:n
   taugj_sym = %RN%_gravload_joint_floatb_eulangrpy_slag_vp1_mex(qJ+i*1e-3, ob, g_world,...
-    alpha, a, d, q_offset, b, beta, m, rSges);
+    pkin, m, rSges);
   taugb_sym = %RN%_gravload_base_floatb_eulangrpy_slag_vp1_mex(qJ+i*1e-3, ob, g_world,...
-    alpha, a, d, q_offset, b, beta, m, rSges);
+    pkin, m, rSges);
   taug_sym = [taugb_sym;taugj_sym];
 end
 t_ber_g(2,1) = toc/n;
 tic;
 for i = 1:n
   taugj_sym = %RN%_gravload_joint_floatb_eulangrpy_slag_vp2(qJ+i*1e-3, ob, g_world,...
-    alpha, a, d, q_offset, b, beta, m, mrSges);
+    pkin, m, mrSges);
   taugb_sym = %RN%_gravload_base_floatb_eulangrpy_slag_vp2(qJ+i*1e-3, ob, g_world,...
-    alpha, a, d, q_offset, b, beta, m, mrSges);
+    pkin, m, mrSges);
   taug_sym = [taugb_sym;taugj_sym];
 end
 t_ber_g(1,2) = toc/n;
 tic;
 for i = 1:n
   taugj_sym = %RN%_gravload_joint_floatb_eulangrpy_slag_vp2_mex(qJ+i*1e-3, ob, g_world,...
-    alpha, a, d, q_offset, b, beta, m, mrSges);
+    pkin, m, mrSges);
   taugb_sym = %RN%_gravload_base_floatb_eulangrpy_slag_vp2_mex(qJ+i*1e-3, ob, g_world,...
-    alpha, a, d, q_offset, b, beta, m, mrSges);
+    pkin, m, mrSges);
   taug_sym = [taugb_sym;taugj_sym];
 end
 t_ber_g(2,2) = toc/n;
@@ -173,25 +181,25 @@ t_ber_g(1,4) = toc/n;
 tic;
 for i = 1:n
   taug_num3 = %RN%_invdyn_floatb_eulangrpy_nnew_vp1(qJ+i*1e-3, zeros(NJ,1), zeros(NJ,1), ob, zeros(6,1), [-g_world;zeros(3,1)], ...
-    alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
+    pkin, v, m, rSges, Icges);
 end
 t_ber_g(1,5) = toc/n;
 tic;
 for i = 1:n
   taug_num3 = %RN%_invdyn_floatb_eulangrpy_nnew_vp1_mex(qJ+i*1e-3, zeros(NJ,1), zeros(NJ,1), ob, zeros(6,1), [-g_world;zeros(3,1)], ...
-    alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
+    pkin, v, m, rSges, Icges);
 end
 t_ber_g(2,5) = toc/n;
 tic;
 for i = 1:n
   taug_num4 = %RN%_gravload_floatb_eulangrpy_nnew_vp1(qJ+i*1e-3, ob, g_world, ...
-    alpha, a, d, q_offset, b, beta, v, m, rSges);
+    pkin, v, m, rSges);
 end
 t_ber_g(1,6) = toc/n;
 tic;
 for i = 1:n
   taug_num4 = %RN%_gravload_floatb_eulangrpy_nnew_vp1_mex(qJ+i*1e-3, ob, g_world, ...
-    alpha, a, d, q_offset, b, beta, v, m, rSges);
+    pkin, v, m, rSges);
 end
 t_ber_g(2,6) = toc/n;
 
@@ -221,36 +229,36 @@ t_ber_c = NaN(2,4);
 tic;
 for i = 1:n
   taucj_sym = %RN%_coriolisvec_joint_floatb_eulangrpy_slag_vp1(qJ+i*1e-3, qJD, ob, xDB,...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+    pkin, m, rSges, Icges);
   taucb_sym = %RN%_coriolisvec_base_floatb_eulangrpy_slag_vp1(qJ+i*1e-3, qJD, ob, xDB,...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+    pkin, m, rSges, Icges);
   tauc_sym = [taucb_sym;taucj_sym];
 end
 t_ber_c(1,1) = toc/n;
 tic;
 for i = 1:n
   taucj_sym = %RN%_coriolisvec_joint_floatb_eulangrpy_slag_vp1_mex(qJ+i*1e-3, qJD, ob, xDB,...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+    pkin, m, rSges, Icges);
   taucb_sym = %RN%_coriolisvec_base_floatb_eulangrpy_slag_vp1_mex(qJ+i*1e-3, qJD, ob, xDB,...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+    pkin, m, rSges, Icges);
   tauc_sym = [taucb_sym;taucj_sym];
 end
 t_ber_c(2,1) = toc/n;
 tic;
 for i = 1:n
   taucj_sym = %RN%_coriolisvec_joint_floatb_eulangrpy_slag_vp2(qJ+i*1e-3, qJD, ob, xDB,...
-    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
+    pkin, m, mrSges, Ifges);
   taucb_sym = %RN%_coriolisvec_base_floatb_eulangrpy_slag_vp2(qJ+i*1e-3, qJD, ob, xDB,...
-    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
+    pkin, m, mrSges, Ifges);
   tauc_sym = [taucb_sym;taucj_sym];
 end
 t_ber_c(1,2) = toc/n;
 tic;
 for i = 1:n
   taucj_sym = %RN%_coriolisvec_joint_floatb_eulangrpy_slag_vp2_mex(qJ+i*1e-3, qJD, ob, xDB,...
-    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
+    pkin, m, mrSges, Ifges);
   taucb_sym = %RN%_coriolisvec_base_floatb_eulangrpy_slag_vp2_mex(qJ+i*1e-3, qJD, ob, xDB,...
-    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
+    pkin, m, mrSges, Ifges);
   tauc_sym = [taucb_sym;taucj_sym];
 end
 t_ber_c(2,2) = toc/n;
@@ -263,13 +271,13 @@ t_ber_c(1,3) = toc/n;
 tic;
 for i = 1:n
   tauc_num2 = %RN%_invdyn_floatb_eulangrpy_nnew_vp1(qJ+i*1e-3, qJD, zeros(NJ,1), ob, xDB, zeros(6,1), ...
-    alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
+    pkin, v, m, rSges, Icges);
 end
 t_ber_c(1,4) = toc/n;
 tic;
 for i = 1:n
   tauc_num3 = %RN%_invdyn_floatb_eulangrpy_nnew_vp1_mex(qJ+i*1e-3, qJD, zeros(NJ,1), ob, xDB, zeros(6,1), ...
-    alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
+    pkin, v, m, rSges, Icges);
 end
 t_ber_c(2,4) = toc/n;
 
@@ -294,25 +302,25 @@ t_ber_M = NaN(2,4);
 tic;
 for i = 1:n
   Mq_sym = %RN%_inertia_floatb_eulangrpy_slag_vp1(qJ+1e-3*i, ob, ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+    pkin, m, rSges, Icges);
 end
 t_ber_M(1,1) = toc/n;
 tic;
 for i = 1:n
   Mq_sym = %RN%_inertia_floatb_eulangrpy_slag_vp1_mex(qJ+1e-3*i, ob, ...
-    alpha, a, d, q_offset, b, beta, m, rSges, Icges);
+    pkin, m, rSges, Icges);
 end
 t_ber_M(2,1) = toc/n;
 tic
 for i = 1:n
   Mq_sym = %RN%_inertia_floatb_eulangrpy_slag_vp2(qJ+1e-3*i, ob, ...
-    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
+    pkin, m, mrSges, Ifges);
 end
 t_ber_M(1,2) = toc/n;
 tic;
 for i = 1:n
   Mq_sym = %RN%_inertia_floatb_eulangrpy_slag_vp2_mex(qJ+1e-3*i, ob, ...
-    alpha, a, d, q_offset, b, beta, m, mrSges, Ifges);
+    pkin, m, mrSges, Ifges);
 end
 t_ber_M(2,2) = toc/n;
 tic
@@ -336,12 +344,12 @@ for i = 1:50
   I6 = eye(6);
   for jj = 1:6
     Mq_num2(:,jj) = %RN%_invdyn_floatb_eulangrpy_nnew_vp1(qJ+1e-3*i, zeros(NJ,1), zeros(NJ,1), ob, zeros(6,1), I6(:,jj), ...
-      alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
+      pkin, v, m, rSges, Icges);
   end
   INJ = eye(NJ);
   for jj = 1:NJ
     Mq_num2(:,6+jj) = %RN%_invdyn_floatb_eulangrpy_nnew_vp1(qJ+1e-3*i, zeros(NJ,1), INJ(:,jj), ob, zeros(6,1), zeros(6,1) , ...
-      alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
+      pkin, v, m, rSges, Icges);
   end
 end
 t_ber_M(1,4) = toc/50;
@@ -351,12 +359,12 @@ for i = 1:n
   I6 = eye(6);
   for jj = 1:6
     Mq_num2(:,jj) = %RN%_invdyn_floatb_eulangrpy_nnew_vp1_mex(qJ+1e-3*i, zeros(NJ,1), zeros(NJ,1), ob, zeros(6,1), I6(:,jj), ...
-      alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
+      pkin, v, m, rSges, Icges);
   end
   INJ = eye(NJ);
   for jj = 1:NJ
     Mq_num2(:,6+jj) = %RN%_invdyn_floatb_eulangrpy_nnew_vp1_mex(qJ+1e-3*i, zeros(NJ,1), INJ(:,jj), ob, zeros(6,1), zeros(6,1) , ...
-      alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
+      pkin, v, m, rSges, Icges);
   end
 end
 t_ber_M(2,4) = toc/n;

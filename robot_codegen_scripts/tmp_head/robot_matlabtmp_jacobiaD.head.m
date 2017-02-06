@@ -25,11 +25,11 @@
 % %VERSIONINFO%
 
 function JaD = %FN%(q, qD, r_i_i_C, ...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh%KCPARG%)
+  pkin)
 
 JaD_transl = %RN%_jacobiaD_transl_%LIJAC%_floatb_twist_sym_varpar(q, qD, r_i_i_C, ...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh%KCPARG%);
+  pkin);
 JaD_rot = %RN%_jacobiaD_rot_%LIJAC%_floatb_twist_sym_varpar(q, qD, ...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh%KCPARG%);
+  pkin);
 
 JaD = [JaD_transl; JaD_rot];

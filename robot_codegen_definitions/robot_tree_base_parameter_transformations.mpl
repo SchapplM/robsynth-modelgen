@@ -13,7 +13,9 @@
 # Quellen
 # [SousaCor2014] Sousa, C. D. and Cortesao, R.: Physical feasibility of robot base inertial parameter identification: A linear matrix inequality approach (2014)
 # Initialisierung
-restart:
+interface(warnlevel=0): # Unterdrücke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
+interface(warnlevel=3):
 with(LinearAlgebra):
 with(ArrayTools):
 with(codegen):
