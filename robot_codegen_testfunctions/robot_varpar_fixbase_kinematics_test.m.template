@@ -110,7 +110,7 @@ for iq = 1:size(Q, 1) % Über Zufallsposen
     
     Jg_Delta = Jg_num - Jg_sym;
     if any(abs (Jg_Delta(:)) > 1e-10) || any(isnan(Jg_Delta(:)))
-      error('Symbolische und numerische Jacobi-Matrizen stimmen nicht');
+      error('iq=%d, jb=%d: Symbolische und numerische Jacobi-Matrizen stimmen nicht', iq, jb);
     end
     
     JgD_num = %RN%_jacobigD_mdh_num(q, qD, uint8(jb), r_i_i_C, ...

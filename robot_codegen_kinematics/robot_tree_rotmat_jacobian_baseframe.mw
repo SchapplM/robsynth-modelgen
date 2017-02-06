@@ -265,13 +265,14 @@ end do:</Text-field>
 </Group>
 <Group labelreference="L1702" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save b_transl, sprintf(&quot;../codeexport/%s/jacobia_transl_maple.m&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save b_transl, sprintf(&quot;../codeexport/%s/jacobia_transl_%d_maple.m&quot;, robot_name, LIJAC):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2122" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8"># Ausdruck muss nochmal geladen werden, ansonsten h\303\244ngt sich die Code-Optimerung mit &quot;tryhard&quot; auf.
-</Font>read sprintf(&quot;../codeexport/%s/jacobia_transl_maple.m&quot;, robot_name):
+# TODO: Kl\303\244ren warum das so ist und Problem beheben.
+</Font>read sprintf(&quot;../codeexport/%s/jacobia_transl_%d_maple.m&quot;, robot_name, LIJAC):
 b_transl := b_transl:</Text-field>
 </Input>
 </Group>

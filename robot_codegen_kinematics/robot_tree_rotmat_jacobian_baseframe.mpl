@@ -59,9 +59,10 @@ for i from 1 to 3 do
   end do:
 end do:
 # Export
-save b_transl, sprintf("../codeexport/%s/jacobia_transl_maple.m", robot_name):
+save b_transl, sprintf("../codeexport/%s/jacobia_transl_%d_maple.m", robot_name, LIJAC):
 # Ausdruck muss nochmal geladen werden, ansonsten hängt sich die Code-Optimerung mit "tryhard" auf.
-read sprintf("../codeexport/%s/jacobia_transl_maple.m", robot_name):
+# TODO: Klären warum das so ist und Problem beheben.
+read sprintf("../codeexport/%s/jacobia_transl_%d_maple.m", robot_name, LIJAC):
 b_transl := b_transl:
 for i from 1 to 3 do
   for j from 1 to NQJ do
