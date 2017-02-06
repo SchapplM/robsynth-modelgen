@@ -18,6 +18,14 @@ if ~isempty(this_path), cd(this_path); end
 ParameterModus = 'mp';
 %RN%_fdyn_fixb_test_settings_default
 
+% Prüfe, ob kinematische Zwangsbedingungen vorliegen.
+% Dann entfallen alle folgenden Tests (noch nicht implementiert)
+if NJ ~= NQJ
+  KINCONSTR = true;
+  fprintf('Tests entfallen aufgrund der Existenz kinematischer Zwangsbedingungen\n');
+  return
+end
+
 %% modify default settings
 
 %% Start Simulation
