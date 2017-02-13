@@ -9,7 +9,7 @@
 %   dynamic parameters (parameter set 2: first moment and inertia about link frame origin)
 % 
 % Output:
-% MPV [%NMPV%x1]
+% MPV [%NMPVFIXB%x1]
 %   base parameter vector (minimal parameter vector)
 
 % %VERSIONINFO%
