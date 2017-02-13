@@ -86,13 +86,22 @@ echo "robot_NKCP=$robot_NKCP" >> $robot_env_pfad.sh
 echo "robot_KCP=\"$robot_KCP\"" >> $robot_env_pfad.sh
 
 # Dimension des MPV (aus exportiertem Code)
-mpv_pfad=$repo_pfad/codeexport/${robot_name}/minimal_parameter_vector_fixb_maple
-if [ -f $mpv_pfad ]; then
+mpv_fixb_pfad=$repo_pfad/codeexport/${robot_name}/minimal_parameter_vector_fixb_maple
+if [ -f $mpv_fixb_pfad ]; then
   # Ersetze Text links und rechts von der Dimension mit nichts.
-  robot_NMPVFIXB=`grep "Matrix" $mpv_pfad | tail -1 | sed 's/.*Matrix[(]\(.*\)/\1/' | sed 's/, 1, .*//'`
+  robot_NMPVFIXB=`grep "Matrix" $mpv_fixb_pfad | tail -1 | sed 's/.*Matrix[(]\(.*\)/\1/' | sed 's/, 1, .*//'`
 else
   robot_NMPVFIXB="NOTDEFINED"
 fi
 echo "robot_NMPVFIXB=$robot_NMPVFIXB" >> $robot_env_pfad.sh
 echo "robot_NMPVFIXB=$robot_NMPVFIXB"
+
+mpv_floatb_pfad=$repo_pfad/codeexport/${robot_name}/minimal_parameter_vector_floatb_maple
+if [ -f $mpv_floatb_pfad ]; then
+  robot_NMPVFLOATB=`grep "Matrix" $mpv_floatb_pfad | tail -1 | sed 's/.*Matrix[(]\(.*\)/\1/' | sed 's/, 1, .*//'`
+else
+  robot_NMPVFLOATB="NOTDEFINED"
+fi
+echo "robot_NMPVFLOATB=$robot_NMPVFLOATB" >> $robot_env_pfad.sh
+echo "robot_NMPVFLOATB=$robot_NMPVFLOATB"
 

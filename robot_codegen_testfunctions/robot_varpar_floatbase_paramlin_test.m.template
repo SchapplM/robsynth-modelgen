@@ -1,0 +1,110 @@
+% Teste parameterlineare Formen der Dynamik
+
+% %VERSIONINFO%
+
+% Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
+% (c) Institut für Regelungstechnik, Universität Hannover
+
+clc
+clear
+
+NQJ = %NQJ%;
+NJ = %NJ%;
+NL = %NL%;
+robot_name = '%RN%';
+
+% Prüfe, ob kinematische Zwangsbedingungen vorliegen.
+% Dann entfallen alle folgenden Tests (noch nicht implementiert)
+if NJ ~= NQJ
+  KINCONSTR = true;
+  fprintf('Tests entfallen aufgrund der Existenz kinematischer Zwangsbedingungen\n');
+  return
+end
+
+%% Parameter
+%RN%_varpar_testfunctions_parameter
+
+% Minimalparametervektor
+MPV = %RN%_convert_par2_MPV_floatb_eulangrpy(pkin, ...
+  m, mrSges, Ifges);
+
+% Vektor mit Inertialparametern
+PV2floatb = NaN(10*NL,1);
+for i = 1:NL
+  % different order:
+  % Ifges_num_mdh: XX,YY,ZZ,XY,XZ,YZ
+  % PV2floatb: XX,XY,XZ,YY,YZ,ZZ
+  PV2floatb((1:6) +10*(i-1)) = Ifges(i,[1,4,5,2,6,3]);
+  PV2floatb((1:3) +10*(i-1)+6) = mrSges(i,:);
+  PV2floatb(10*i) = m(i);
+end
+%% Test kinetic Energy
+for i = 1:n
+  ob = OB(i,:)';
+  q = Q(i,:)';
+  qD = QD(i,:)';
+  oDb = OBD(i,:)';
+  V_W_W_0 = VB(i,:)';
+  xDB = [V_W_W_0(1:3); oDb];
+  % calculate kinetic energy with optimized function
+  T_func = %RN%_energykin_floatb_eulangrpy_slag_vp1(q, qD, ob, xDB, ...
+    pkin, m, rSges, Icges);
+  % calculate kinetic energy with minimal parameter regressor
+  t_regmin = %RN%_energykin_floatb_eulangrpy_regmin_slag_vp(q, qD, ob, xDB, ...
+    pkin);
+  T_mpv = t_regmin*MPV;
+  if abs(T_mpv-T_func) > 1e-12
+    error('Kinetic Energy from base parameter vector does not match with direct form.');
+  end
+  
+  t_reg2 = %RN%_energykin_floatb_eulangrpy_reg2_slag_vp(q, qD, ob, xDB, ...
+    pkin);
+  T_PV2 = t_reg2*PV2floatb;
+  if abs(T_PV2-T_func) > 1e-12
+    error('Kinetic Energy from inertial parameter vector does not match with direct form.');
+  end
+end
+fprintf('Tested kinetic energy for %d random joint angles for %s\n', ...
+  n, robot_name);
+
+%% Test Potential Energy
+% Die potentielle Energie hat aufgrund des wegstreichens von Parametern
+% einen unterschiedlichen statischen Anteil bei der Minimalparameterform
+for i = 1:n
+  r_W_W_0 = RB(i,:)';
+  ob = OB(i,:)';
+  q = Q(i,:)';
+  g_world = G(i,:)';
+  R_W_0 = rpy2r(ob(1), ob(2), ob(3));
+  g_base = (R_W_0')*g_world;
+  % calculate potential energy with optimized function
+  U_func = %RN%_energypot_floatb_eulangrpy_slag_vp1(q, r_W_W_0, ob, g_world, ...
+    pkin, m, rSges);
+  U_func0 = %RN%_energypot_floatb_eulangrpy_slag_vp1(zeros(NQJ,1), r_W_W_0, ob, g_world, ...
+    pkin, m, rSges);
+  
+  % calculate potential energy with minimal regressor
+  u_regmin = %RN%_energypot_floatb_eulangrpy_regmin_slag_vp(q, r_W_W_0, ob, g_world, ...
+    pkin);
+  u_regmin0 = %RN%_energypot_floatb_eulangrpy_regmin_slag_vp(zeros(NQJ,1), r_W_W_0, ob, g_world, ...
+    pkin);
+  U_mpv = u_regmin*MPV;
+  U_mpv0 = u_regmin0*MPV;
+  if abs((U_mpv-U_mpv0)-(U_func-U_func0)) > 1e-12
+    error('Potential Energy from base parameter vector does not match with direct form.');
+  end
+  
+  % calculate potential energy with inertial parameters regressor
+  u_reg2 = %RN%_energypot_floatb_eulangrpy_reg2_slag_vp(q, r_W_W_0, ob, g_world, ...
+    pkin);
+  u_reg20 = %RN%_energypot_floatb_eulangrpy_reg2_slag_vp(zeros(NQJ,1), r_W_W_0, ob, g_world, ...
+    pkin);
+  U_PV2 = u_reg2*PV2floatb;
+  U_PV20 = u_reg20*PV2floatb;
+  if abs((U_PV2-U_PV20)-(U_func-U_func0)) > 1e-12
+    error('Potential Energy from inertial parameter vector does not match with direct form.');
+  end  
+end
+fprintf('Tested potential energy for %d random joint angles for %s\n', ...
+  n, robot_name);
+
