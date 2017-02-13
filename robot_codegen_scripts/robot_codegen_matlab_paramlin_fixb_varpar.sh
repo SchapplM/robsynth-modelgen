@@ -21,7 +21,7 @@ source $repo_pfad/robot_codegen_definitions/robot_env.sh
 quelldat=$repo_pfad/codeexport/${robot_name}/minimal_parameter_vector_fixb_matlab.m
 zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_convert_par2_MPV_fixb.m
 if [ -f $quelldat ]; then
-  cat ${tmp_pfad}_head/robot_matlabtmp_convert_par2_MPV.head.m > $zieldat
+  cat ${tmp_pfad}_head/robot_matlabtmp_convert_par2_MPV_fixb.head.m > $zieldat
   printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
