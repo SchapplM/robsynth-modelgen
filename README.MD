@@ -131,7 +131,7 @@ Für die Dynamik in Regressorform müssen zusätzlich folgende Maple-Arbeitsblä
 Dies funktioniert momentan nur für serielle Strukturen und feste Basis.
 
         /robot_codegen_energy/robot_chain_fixb_rotmat_energy_regressor.mw
-        /robot_codegen_dynamics/robot_chain_fixb_rotmat_dynamics_regressor.mw
+        /robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor.mw
 
 #### Generierung von Matlab-Funktionen
 
@@ -493,7 +493,7 @@ Positionen (Koordinatensysteme, Schwerpunkten), Geschwindigkeiten
               <-- robot_tree_floatb_definitions
               <-- robot_energy_potential_floatb_worldframe_par1_maple.m
               <-- robot_energy_kinetic_floatb_worldframe_par1_maple.m
-          robot_chain_fixb_rotmat_dynamics_regressor.mw
+          robot_chain_floatb_rotmat_dynamics_regressor.mw
               <-- robot_env
               <-- robot_tree_floatb_definitions
               <-- energy_kinetic_fixb_regressor_minpar_maple.m

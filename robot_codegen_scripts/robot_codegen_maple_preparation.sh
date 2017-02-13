@@ -39,9 +39,9 @@ do
 done
 
 # Regressor-Berechnung für Minimalparameter und Parametersatz 2 vorbereiten
-cp $repo_pfad/robot_codegen_dynamics/robot_chain_fixb_rotmat_dynamics_regressor.mpl $repo_pfad/robot_codegen_dynamics/robot_chain_fixb_rotmat_dynamics_regressor_minpar.mpl
-cp $repo_pfad/robot_codegen_dynamics/robot_chain_fixb_rotmat_dynamics_regressor.mpl $repo_pfad/robot_codegen_dynamics/robot_chain_fixb_rotmat_dynamics_regressor_pv2.mpl
-sed -i "s/regressor_modus := \"regressor_minpar\":/regressor_modus := \"regressor\":/g" $repo_pfad/robot_codegen_dynamics/robot_chain_fixb_rotmat_dynamics_regressor_pv2.mpl
+cp $repo_pfad/robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor.mpl $repo_pfad/robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_minpar.mpl
+cp $repo_pfad/robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor.mpl $repo_pfad/robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_pv2.mpl
+sed -i "s/regressor_modus := \"regressor_minpar\":/regressor_modus := \"regressor\":/g" $repo_pfad/robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_pv2.mpl
 
 # Jacobi-Matrix-Skripte vorbereiten, so dass die Jacobi-Matrix für alle Körper generiert wird.
 for (( ib=1; ib<=$robot_NL; ib++ ))
