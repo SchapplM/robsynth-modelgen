@@ -155,7 +155,7 @@ Die Tests werden durch Ausführen der erstellten Skripte mit Matlab gestartet:
         robot_codegen_testfunctions/robot_varpar_invdyn_test.m
         robot_codegen_testfunctions/robot_varpar_floatbase_test.m
         robot_codegen_testfunctions/robot_varpar_simulink_test.m
-        robot_codegen_testfunctions/robot_varpar_paramlin_test.m
+        robot_codegen_testfunctions/robot_varpar_fixbase_paramlin_test.m
         robot_codegen_testfunctions/robot_compile_test.m
         robot_codegen_testfunctions/robot_test_everything.m
 
