@@ -12,9 +12,8 @@
 % 
 % Output:
 % taug_reg [%NQJ%x(%NQJ%*10)]
-%   minimal parameter regressor of coriolis joint torque vector
+%   inertial parameter regressor of coriolis joint torque vector
 
 % %VERSIONINFO%
 
-function tauc_reg = %FN%(q, qD, ...
-  pkin)
+function tauc_reg = %FN%(q, qD, pkin)

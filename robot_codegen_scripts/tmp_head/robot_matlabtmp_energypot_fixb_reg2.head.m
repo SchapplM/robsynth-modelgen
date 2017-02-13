@@ -12,9 +12,8 @@
 % 
 % Output:
 % U_reg [1x(%NQJ%*10)]
-%   minimal parameter regressor of Potential energy
+%   inertial parameter regressor of Potential energy
 
 % %VERSIONINFO%
 
-function U_reg = %FN%(q, g, ...
-  pkin)
+function U_reg = %FN%(q, g, pkin)

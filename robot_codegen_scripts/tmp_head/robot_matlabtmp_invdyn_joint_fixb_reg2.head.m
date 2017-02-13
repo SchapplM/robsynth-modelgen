@@ -16,9 +16,8 @@
 % 
 % Output:
 % tau_reg [%NQJ%x(%NQJ%*10)]
-%   minimal parameter regressor of inverse dynamics joint torque vector
+%   inertial parameter regressor of inverse dynamics joint torque vector
 
 % %VERSIONINFO%
 
-function tau_reg = %FN%(q, qD, qDD, g, ...
-  pkin)
+function tau_reg = %FN%(q, qD, qDD, g, pkin)

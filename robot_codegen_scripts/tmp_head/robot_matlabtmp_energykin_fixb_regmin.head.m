@@ -1,4 +1,4 @@
-% Calculate minimal parameter regressor of kinetic energy for
+% Calculate minimal parameter regressor of fixed base kinetic energy for
 % %RN%
 % Use Code from Maple symbolic Code Generation
 % 
@@ -16,5 +16,4 @@
 
 % %VERSIONINFO%
 
-function T_reg = %FN%(q, qD, ...
-  pkin)
+function T_reg = %FN%(q, qD, pkin)

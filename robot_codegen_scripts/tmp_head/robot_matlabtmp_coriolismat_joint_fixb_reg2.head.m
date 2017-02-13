@@ -12,9 +12,8 @@
 % 
 % Output:
 % cmat_reg [(%NQJ%*%NQJ%)x(%NQJ%*10)]
-%   minimal parameter regressor of coriolis matrix
+%   inertial parameter regressor of coriolis matrix
 
 % %VERSIONINFO%
 
-function cmat_reg = %FN%(q, qD, ...
-  pkin)
+function cmat_reg = %FN%(q, qD, pkin)

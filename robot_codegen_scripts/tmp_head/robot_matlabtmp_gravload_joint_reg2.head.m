@@ -12,9 +12,8 @@
 % 
 % Output:
 % taug_reg [%NQJ%x(%NQJ%*10)]
-%   minimal parameter regressor of gravitation joint torque vector
+%   inertial parameter regressor of gravitation joint torque vector
 
 % %VERSIONINFO%
 
-function taug_reg = %FN%(q, g, ...
-  pkin)
+function taug_reg = %FN%(q, g, pkin)
