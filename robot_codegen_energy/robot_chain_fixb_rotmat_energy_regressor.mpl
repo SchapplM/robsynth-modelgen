@@ -119,16 +119,16 @@ for i to 10*NJ do
        t_ges[1,i] := REMOVE:
        u_ges[1,i] := REMOVE:
 
-       if `mod`(i, 10) = 1 then XX[trunc((1/10)*i)+1, 1] := 0; printf("XX%d \n", trunc((1/10)*i)+1+1) end if:
-       if `mod`(i, 10) = 2 then XY[trunc((1/10)*i)+1, 1] := 0; printf("XY%d \n", trunc((1/10)*i)+1+1) end if:
-       if `mod`(i, 10) = 3 then XZ[trunc((1/10)*i)+1, 1] := 0; printf("XZ%d \n", trunc((1/10)*i)+1+1) end if:
-       if `mod`(i, 10) = 4 then YY[trunc((1/10)*i)+1, 1] := 0; printf("YY%d \n", trunc((1/10)*i)+1+1) end if:
-       if `mod`(i, 10) = 5 then YZ[trunc((1/10)*i)+1, 1] := 0; printf("YZ%d \n", trunc((1/10)*i)+1+1) end if:
-       if `mod`(i, 10) = 6 then ZZ[trunc((1/10)*i)+1, 1] := 0; printf("ZZ%d \n", trunc((1/10)*i)+1+1) end if:
-       if `mod`(i, 10) = 7 then mX[trunc((1/10)*i)+1, 1] := 0; printf("mX%d \n", trunc((1/10)*i)+1+1) end if:
-       if `mod`(i, 10) = 8 then mY[trunc((1/10)*i)+1, 1] := 0; printf("mY%d \n", trunc((1/10)*i)+1+1) end if:
-       if `mod`(i, 10) = 9 then mZ[trunc((1/10)*i)+1, 1] := 0; printf("mZ%d \n", trunc((1/10)*i)+1+1) end if:
-       if `mod`(i, 10) = 0 then m[trunc((1/10)*i), 1] := 0;    printf(" m%d \n", trunc((1/10)*i+1))   end if:
+       if `mod`(i, 10) = 1 then XX[trunc((1/10)*i)+1, 1] := 0; printf("XX%d \n", trunc((1/10)*i)+1): end if:
+       if `mod`(i, 10) = 2 then XY[trunc((1/10)*i)+1, 1] := 0; printf("XY%d \n", trunc((1/10)*i)+1): end if:
+       if `mod`(i, 10) = 3 then XZ[trunc((1/10)*i)+1, 1] := 0; printf("XZ%d \n", trunc((1/10)*i)+1): end if:
+       if `mod`(i, 10) = 4 then YY[trunc((1/10)*i)+1, 1] := 0; printf("YY%d \n", trunc((1/10)*i)+1): end if:
+       if `mod`(i, 10) = 5 then YZ[trunc((1/10)*i)+1, 1] := 0; printf("YZ%d \n", trunc((1/10)*i)+1): end if:
+       if `mod`(i, 10) = 6 then ZZ[trunc((1/10)*i)+1, 1] := 0; printf("ZZ%d \n", trunc((1/10)*i)+1): end if:
+       if `mod`(i, 10) = 7 then mX[trunc((1/10)*i)+1, 1] := 0; printf("MX%d \n", trunc((1/10)*i)+1): end if:
+       if `mod`(i, 10) = 8 then mY[trunc((1/10)*i)+1, 1] := 0; printf("MY%d \n", trunc((1/10)*i)+1): end if:
+       if `mod`(i, 10) = 9 then mZ[trunc((1/10)*i)+1, 1] := 0; printf("MZ%d \n", trunc((1/10)*i)+1): end if:
+       if `mod`(i, 10) = 0 then m[trunc((1/10)*i), 1] := 0;    printf(" M%d \n", trunc((1/10)*i)):   end if:
   end if:
 end do:
 # Parametervektor in Richtiger Reihenfolge aufstellen und Entfernen von mZ, YY, m
@@ -169,9 +169,9 @@ for i to MPV_n_max do
 end do: 
 printf("Dimension des Minimalparametervektors: %dx1\n", Paramvec_size):
 # Export - Minimalparametervektor
-save Paramvec2, sprintf("../codeexport/%s/minimal_parameter_vector_maple", robot_name):
+save Paramvec2, sprintf("../codeexport/%s/minimal_parameter_vector_fixb_maple", robot_name):
 if codegen_act then
-   MatlabExport(Paramvec2, sprintf("../codeexport/%s/minimal_parameter_vector_matlab.m", robot_name), codegen_opt):
+   MatlabExport(Paramvec2, sprintf("../codeexport/%s/minimal_parameter_vector_fixb_matlab.m", robot_name), codegen_opt):
 end if;
 # Minimal geometrievektor t_i und u_i
 # Markieren von t_mZ, t_YY, t_m, u_mZ, u_YY, u_m_j

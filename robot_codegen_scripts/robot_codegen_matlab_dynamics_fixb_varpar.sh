@@ -251,13 +251,13 @@ do
       cat $tmp_pfad/robot_matlabtmp_g.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat
-      printf "M1=0;%%Masse der Basis nicht relevant.\n" >> $zieldat
+      printf "M0=0;%%Masse der Basis nicht relevant.\n" >> $zieldat
       if [ $dynpar == 1 ]; then
         cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> $zieldat
-        printf "SX1=0;SY1=0;SZ1=0;%%nicht relevant.\n" >> $zieldat
+        printf "SX0=0;SY0=0;SZ0=0;%%Basis-Schwerpunkt nicht relevant.\n" >> $zieldat
       else
         cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> $zieldat
-        printf "MX1=0;MY1=0;MZ1=0;%%nicht relevant.\n" >> $zieldat
+        printf "MX0=0;MY0=0;MZ0=0;%%Basis-1. Moment nicht relevant.\n" >> $zieldat
       fi
       
       printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat

@@ -219,7 +219,7 @@ end do:</Text-field>
 </Group>
 <Group labelreference="L1803" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(dMPVdPV2, sprintf(&quot;../codeexport/%s/minparvec_diff_wrt_par2_matlab.m&quot;, robot_name), true):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(dMPVdPV2, sprintf(&quot;../codeexport/%s_minparvec_diff_wrt_par2_matlab.m&quot;, robot_name), 2):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1802" drawlabel="true">

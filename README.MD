@@ -531,7 +531,7 @@ Enthält Variablendefinitionen und -deklarationen
 Textbausteine für Funktionsköpfe:
 
         /robot_codegen_scripts/tmp_head
-          robot_matlabtmp_convert_par2_MPV.head.m
+          robot_matlabtmp_convert_par2_MPV_fixb.head.m
           robot_matlabtmp_coriolisvec_joint_floatb_par1.head.m
           ...
 

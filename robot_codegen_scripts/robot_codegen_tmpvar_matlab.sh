@@ -67,49 +67,55 @@ do
 	echo "beta${i} = beta_mdh(${i});" >> $tmp_pfad/robot_matlabtmp_par_mdh.m
 done
 
-# Dynamikparameter
+# Dynamikparameter.
+# Das Matlab-Array beginnt bei 1 zu zählen. Die Maple-Variablen beginnen in der Benennung bei 0 (MDH-Notation)
 echo "" > $tmp_pfad/robot_matlabtmp_par_m.m
-for (( i=1; i<=$robot_NL; i++ ))
+for (( i=0; i<$robot_NL; i++ ))
 do
-	echo "M${i} = m_num(${i});" >> $tmp_pfad/robot_matlabtmp_par_m.m
+  j=$((i+1)) # Index für Matlab-Variablen (beginnen bei 1)
+	echo "M${i} = m_num(${j});" >> $tmp_pfad/robot_matlabtmp_par_m.m
 done
 
 echo "" > $tmp_pfad/robot_matlabtmp_par_rcom.m
-for (( i=1; i<=$robot_NL; i++ ))
+for (( i=0; i<$robot_NL; i++ ))
 do
-	echo "SX${i} = rSges_num_mdh(${i},1);" >> $tmp_pfad/robot_matlabtmp_par_rcom.m
-	echo "SY${i} = rSges_num_mdh(${i},2);" >> $tmp_pfad/robot_matlabtmp_par_rcom.m
-	echo "SZ${i} = rSges_num_mdh(${i},3);" >> $tmp_pfad/robot_matlabtmp_par_rcom.m
+  j=$((i+1)) # Index für Matlab-Variablen (beginnen bei 1)
+	echo "SX${i} = rSges_num_mdh(${j},1);" >> $tmp_pfad/robot_matlabtmp_par_rcom.m
+	echo "SY${i} = rSges_num_mdh(${j},2);" >> $tmp_pfad/robot_matlabtmp_par_rcom.m
+	echo "SZ${i} = rSges_num_mdh(${j},3);" >> $tmp_pfad/robot_matlabtmp_par_rcom.m
 done
 
 echo "" > $tmp_pfad/robot_matlabtmp_par_mrcom.m
-for (( i=1; i<=$robot_NL; i++ ))
+for (( i=0; i<$robot_NL; i++ ))
 do
-	echo "MX${i} = mrSges_num_mdh(${i},1);" >> $tmp_pfad/robot_matlabtmp_par_mrcom.m
-	echo "MY${i} = mrSges_num_mdh(${i},2);" >> $tmp_pfad/robot_matlabtmp_par_mrcom.m
-	echo "MZ${i} = mrSges_num_mdh(${i},3);" >> $tmp_pfad/robot_matlabtmp_par_mrcom.m
+  j=$((i+1)) # Index für Matlab-Variablen (beginnen bei 1)
+	echo "MX${i} = mrSges_num_mdh(${j},1);" >> $tmp_pfad/robot_matlabtmp_par_mrcom.m
+	echo "MY${i} = mrSges_num_mdh(${j},2);" >> $tmp_pfad/robot_matlabtmp_par_mrcom.m
+	echo "MZ${i} = mrSges_num_mdh(${j},3);" >> $tmp_pfad/robot_matlabtmp_par_mrcom.m
 done
 
 echo "" > $tmp_pfad/robot_matlabtmp_par_Ic.m
-for (( i=1; i<=$robot_NL; i++ ))
+for (( i=0; i<$robot_NL; i++ ))
 do
-	echo "XXC${i} = Icges_num_mdh(${i},1);" >> $tmp_pfad/robot_matlabtmp_par_Ic.m
-	echo "XYC${i} = Icges_num_mdh(${i},4);" >> $tmp_pfad/robot_matlabtmp_par_Ic.m
-	echo "XZC${i} = Icges_num_mdh(${i},5);" >> $tmp_pfad/robot_matlabtmp_par_Ic.m
-	echo "YYC${i} = Icges_num_mdh(${i},2);" >> $tmp_pfad/robot_matlabtmp_par_Ic.m
-	echo "YZC${i} = Icges_num_mdh(${i},6);" >> $tmp_pfad/robot_matlabtmp_par_Ic.m
-	echo "ZZC${i} = Icges_num_mdh(${i},3);" >> $tmp_pfad/robot_matlabtmp_par_Ic.m
+  j=$((i+1)) # Index für Matlab-Variablen (beginnen bei 1)
+	echo "XXC${i} = Icges_num_mdh(${j},1);" >> $tmp_pfad/robot_matlabtmp_par_Ic.m
+	echo "XYC${i} = Icges_num_mdh(${j},4);" >> $tmp_pfad/robot_matlabtmp_par_Ic.m
+	echo "XZC${i} = Icges_num_mdh(${j},5);" >> $tmp_pfad/robot_matlabtmp_par_Ic.m
+	echo "YYC${i} = Icges_num_mdh(${j},2);" >> $tmp_pfad/robot_matlabtmp_par_Ic.m
+	echo "YZC${i} = Icges_num_mdh(${j},6);" >> $tmp_pfad/robot_matlabtmp_par_Ic.m
+	echo "ZZC${i} = Icges_num_mdh(${j},3);" >> $tmp_pfad/robot_matlabtmp_par_Ic.m
 done
 
 echo "" > $tmp_pfad/robot_matlabtmp_par_If.m
-for (( i=1; i<=$robot_NL; i++ ))
+for (( i=0; i<$robot_NL; i++ ))
 do
-	echo "XX${i} = Ifges_num_mdh(${i},1);" >> $tmp_pfad/robot_matlabtmp_par_If.m
-	echo "XY${i} = Ifges_num_mdh(${i},4);" >> $tmp_pfad/robot_matlabtmp_par_If.m
-	echo "XZ${i} = Ifges_num_mdh(${i},5);" >> $tmp_pfad/robot_matlabtmp_par_If.m
-	echo "YY${i} = Ifges_num_mdh(${i},2);" >> $tmp_pfad/robot_matlabtmp_par_If.m
-	echo "YZ${i} = Ifges_num_mdh(${i},6);" >> $tmp_pfad/robot_matlabtmp_par_If.m
-	echo "ZZ${i} = Ifges_num_mdh(${i},3);" >> $tmp_pfad/robot_matlabtmp_par_If.m
+  j=$((i+1)) # Index für Matlab-Variablen (beginnen bei 1)
+	echo "XX${i} = Ifges_num_mdh(${j},1);" >> $tmp_pfad/robot_matlabtmp_par_If.m
+	echo "XY${i} = Ifges_num_mdh(${j},4);" >> $tmp_pfad/robot_matlabtmp_par_If.m
+	echo "XZ${i} = Ifges_num_mdh(${j},5);" >> $tmp_pfad/robot_matlabtmp_par_If.m
+	echo "YY${i} = Ifges_num_mdh(${j},2);" >> $tmp_pfad/robot_matlabtmp_par_If.m
+	echo "YZ${i} = Ifges_num_mdh(${j},6);" >> $tmp_pfad/robot_matlabtmp_par_If.m
+	echo "ZZ${i} = Ifges_num_mdh(${j},3);" >> $tmp_pfad/robot_matlabtmp_par_If.m
 done
 
 # Gravitationsvektor

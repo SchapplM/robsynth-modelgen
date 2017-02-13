@@ -25,7 +25,7 @@ end
 %RN%_varpar_testfunctions_parameter
 
 % Minimalparametervektor
-MPV = %RN%_convert_par2_MPV(pkin, ...
+MPV = %RN%_convert_par2_MPV_fixb(pkin, ...
   m, mrSges, Ifges);
 
 % Vektor mit Inertialparametern

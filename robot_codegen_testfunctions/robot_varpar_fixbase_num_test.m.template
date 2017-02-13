@@ -25,7 +25,7 @@ end
 
 %% Parameter
 %RN%_varpar_testfunctions_parameter
-MPV = %RN%_convert_par2_MPV(pkin,  m, mrSges, Ifges);
+MPV = %RN%_convert_par2_MPV_fixb(pkin,  m, mrSges, Ifges);
 %% Test gegen numerische Funktionen der fixed base Dynamik
 for i = 1:n
   qJ = Q(i,:)';
