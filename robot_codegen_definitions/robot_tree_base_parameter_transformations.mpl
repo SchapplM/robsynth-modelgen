@@ -47,6 +47,100 @@ for i to Paramvec_size do
   end do:
 end do:
 # Export der Umwandlung von Parametersatz 2 nach Minimalparameter (Matrix)
-MatlabExport(dMPVdPV2, sprintf("../codeexport/%s/minparvec_diff_wrt_par2_fixb_matlab.m", robot_name), 2):
-save dMPVdPV2, sprintf("../codeexport/%s/minparvec_diff_wrt_par2_fixb_maple", robot_name):
+MatlabExport(dMPVdPV2, sprintf("../codeexport/%s/PV2_MPV_transformation_linear_fixb_matlab.m", robot_name), 2):
+save dMPVdPV2, sprintf("../codeexport/%s/PV2_MPV_transformation_linear_dependant_fixb_maple", robot_name):
 
+# Aufteilung der Matrixdarstellung in einzelne Teilmatrizen
+K := dMPVdPV2:
+# Generate the Matrices required in [SousaCor2014] equ. (33)
+# Wenn ein Inertialparameter zu einer linear unabhängigen Spalte der Regressormatrizen gehört, 
+# steht er in dX2dX1 als 1, alle anderen SpalteneintrÃ¤ge dieser Zeile sind Null und der Inertialparameter steht auch in keiner anderen Zeile.
+# Falls er zu einer linear abhängigen Spalte der Regressormatrix gehört, steht er in mehreren Spalten von dX2dX1
+# Die Permutationsmatrizen P_b, P_d wählen die jeweiligen Parameter aus dem Gesamt-Inertialparametervektor aus 
+n_b := RowDimension(K):
+n_d := ColumnDimension(K)-RowDimension(K): 
+n := n_b+n_d: # [SousaCor2014] equ. (31)
+P_b := Matrix(n, n_b): # für [SousaCor2014] equ. (33) 
+P_d := Matrix(n, n_d): # für [SousaCor2014] equ. (33)
+for i from 1 to n_b do:
+  # gehe alle Zeilen durch und prüfe, ob der MPV nur aus einem Inertialparameter-Eintrag besteht   
+  # falls er nicht aus einem Inertialparameter-Eintrag besteht, kommt der Basis-Eintrag nur in dieser Zeile vor.   
+  # falls der MPV-Eintrag aus mehreren Inertialparameter-Einträgen besteht, die nur hier vorkommen, wird der kleinere genommen (der weiter unten steht)
+
+  # gehe alle Spalten durch und prüfe, wenn dieser Eintrag 1 ist, ob er noch in einer anderen Zeile vorkommt.
+  linunabh_gefunden :=false: # Merker, ob ein Basis-Inertialparameter gefunden wurde.
+  for j from 1 to n do: # alle Spalten durchgehen
+    if K(i,j)=1 then
+      printf("In MPV-Zeile %d kommt Inertialparameter %d (%s) direkt vor.\n", i, j, convert(PV2_vec(10+j,1), string)):
+      # gehe alle anderen Zeilen durch
+      Index_j_lin_unabh := true: # Merker, dass aktueller Index Basis-Inertialparameter ist.
+      for i2 from 1 to n_b do:
+        if i = i2 then # die selbe Zeile die gegengeprüft wird ausschließen
+          next
+        end if:
+        if not (K(i2,j) = 0) then
+          # Der Inertialparameter kommt auch in einem anderen MPV-Eintrag vor, damit ist er kein Basisparameter
+          printf("Inertialparameter %d (%s) kommt sowohl in MPV-Zeile %d als auch in Zeile %d vor. Kein Basisparameter.\n", j, convert(PV2_vec(10+j,1), string), i, i2):
+          Index_j_lin_unabh := false:
+          break:
+        end if:
+      end do:
+      if Index_j_lin_unabh then
+        # linear unabhängigen Parameter speichern
+        P_b(j,i):=1:
+        printf("Für MPV-Zeile %d ist %d (%s) der Basisparameter\n", i, j, convert(PV2_vec(10+j,1), string)):
+        linunabh_gefunden:=true:
+      end if:  
+    end if:
+    if linunabh_gefunden then
+      # Nicht weiter nach einem Basisparameter suchen, da bereits einer gefunden wurde.
+      break:
+    end if
+  end do: # j-Schleife über Inertialparameter
+  if not linunabh_gefunden then
+    printf("Keinen Basis-Inertialparameter in MPV Zeile %d gefunden.\n", i):
+  end if:
+end do:
+# Alle linear abhängigen Parameter (der Rest) in andere Permutationsmatrix P_d packen
+i_d := 0:
+for j from 1 to n do:
+  # Prüfe ob der betrachtete Parameter in der Permutationsmatrix für linear unabhängige vorkommt
+  # Summe über die Zeilen von P_b: Prüfe, ob linear unabhängig
+  linunabh := false:
+  for i_b from 1 to ColumnDimension(P_b) do:
+    if P_b(j, i_b) = 1 then:
+      linunabh := true: # kommt in P_b vor: Linear unabhängig!
+      break:      
+    end if:    
+  end do:
+  
+  if not (linunabh) then 
+    i_d := i_d+1; 
+    P_d(j, i_d) := 1 
+  end if
+end do:
+# Transformationsmatrix K_d füllen. Setze K_d nur aus den Spalten von K für die linear abhängigen Inertialparameter zusammen
+# K_d: Matrix zur Aufteilung des Minimalparametervektors in linear abhängige und unabhängige Inertialparameter
+K_d:=Matrix(n_b, n_d):
+j_Kd := 0:
+for j from 1 to n do:
+  # Prüfe, ob der Inertialparameter j linear abhängig ist.
+  linabh := false:
+  for j_d from 1 to ColumnDimension(P_d) do:
+    # j: Index des untersuchten Inertialparameters
+    # j_d: Index der untersuchten Spalte von P_d. Ein Eintrag hier bedeutet, dass der Inertialparameter abhängig ist.
+    if P_d(j, j_d) = 1 then:
+      linabh := true:
+      break:      
+    end if:    
+  end do:
+
+  if linabh then
+    j_Kd := j_Kd + 1:
+    K_d(..,j_Kd) := K(..,j):
+  end if:
+end do:
+printf("Inertialparametervektor hat %d linear abhängige und %d linear unabhängige Einträge", n_d, n_b):
+MatlabExport(K_d, sprintf("../codeexport/%s/PV2_MPV_transformation_linear_dependant_matlab.m", robot_name), 2):
+MatlabExport(P_b, sprintf("../codeexport/%s/PV2_permutation_linear_independant_matlab.m", robot_name), 2):
+MatlabExport(P_d, sprintf("../codeexport/%s/PV2_permutation_linear_dependant_matlab.m", robot_name), 2):

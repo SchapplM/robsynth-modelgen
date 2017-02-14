@@ -261,11 +261,20 @@ fprintf('Tested inverse dynamics for %d random joint angles for %s\n', ...
   n, robot_name);
 
 %% Prüfe Minimalparametervektor gegen Matrix mit Inertialparameterzuordnung
-dMPVdPV2 = %RN%_diff_MPV_wrt_PV2_fixb(pkin);
-MPV_test = dMPVdPV2*PV2;
+% [Sousa2014] Gl. (38)
+[K, K_d, P_b, P_d] = %RN%_PV2_MPV_transformations_fixb(pkin);
+
+MPV_test = K*PV2;
 test = MPV - MPV_test;
 if any(abs(test(:)) > 1e-10)
   error('Minimalparametervektor stimmt nicht mit MPV aus Inertialparametermatrix überein');
 end
+% MPV-Transformationsmatrix aus Teilmatrizen aus [Sousa2014] aufbauen und testen
+K_test = (P_b' + K_d*P_d'); % [Sousa2014] Gl. (39)
+Test = abs(K-K_test);
+if any(Test(:)>1e-12)
+  error('Test [Sousa2014] Gl. (38) fehlgeschlagen!');
+end
+fprintf('Transformationen des fixb-Minimalparametervektors erfolgreich getestet\n');
 
 

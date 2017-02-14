@@ -187,9 +187,10 @@ wait
 echo "FERTIG mit Jacobi-Matrizen"
 
 dateiliste_plin="
-  /robot_codegen_energy/robot_chain_fixb_rotmat_energy_regressor.mpl
-  /robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_pv2.mpl
-  /robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_minpar.mpl
+  robot_codegen_energy/robot_chain_fixb_rotmat_energy_regressor.mpl
+  robot_codegen_definitions/robot_tree_base_parameter_transformations.mpl
+  robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_pv2.mpl
+  robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_minpar.mpl
 "
 erster=1 # Merker für ersten Durchlauf von plin
 for wsplin in ${dateiliste_plin[@]}
