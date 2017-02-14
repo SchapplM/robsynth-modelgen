@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="18" minor="0"/>
+<Version major="18" minor="2"/>
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true">
 </View-Properties>
@@ -89,8 +89,8 @@
         <Metadata-attribute name="Subject" value="&lt;default&gt;"/>
         <Metadata-attribute name="Author" value="&lt;default&gt;"/>
         <Metadata-attribute name="Item List" value="true"/>
-        <Metadata-attribute name="Title" value="&lt;default&gt;"/>
         <Metadata-attribute name="Keywords" value="&lt;default&gt;"/>
+        <Metadata-attribute name="Title" value="&lt;default&gt;"/>
     </Metadata-tag>
 </Metadata-table>
 <Task-table>
@@ -172,8 +172,8 @@ read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
 </Group>
 <Group labelreference="L1774" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/minimal_parameter_vector_maple&quot;, robot_name):
-Paramvec2 := Paramvec2:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/minimal_parameter_vector_fixb_maple&quot;, robot_name):
+MPV_fixb := Paramvec2:</Text-field>
 </Input>
 </Group>
 </Section>
@@ -181,8 +181,7 @@ Paramvec2 := Paramvec2:</Text-field>
 <Text-field style="Heading 1" layout="Heading 1">Minimalparametervektor als Matrixdarstellung</Text-field></Title>
 <Group labelreference="L1808" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal">Siehe atlas_limb_sym_codegen_fixedbase_mdh_dynamics_regressor_minpar.mw
-Siehe [SousaCor2014] equ. (38)</Text-field>
+<Text-field style="Text" layout="Normal">Siehe [SousaCor2014] equ. (38)</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1806" drawlabel="true">
@@ -193,21 +192,26 @@ U=dU/dPV2*PV2=dU/dMPV*MPV # Parameterlineare Form
 </Font>dU/dMPV = dU/dPV2 * dMPV/dPV1</Text-field>
 </Input>
 </Group>
+<Group labelreference="L1815" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Benutze Fixed-Base Parameter: Ignoriere Parameter der Basis</Text-field>
+</Input>
+</Group>
 <Group labelreference="L1809" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Paramvec_size := RowDimension(Paramvec2):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Paramvec_size := RowDimension(MPV_fixb):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1805" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">dMPVdPV2 := Matrix(Paramvec_size, 10*NL):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">dMPVdPV2 := Matrix(Paramvec_size, 10*NJ):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1804" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i to Paramvec_size do 
-  for j to 10*NL do 
-    dMPVdPV2[i, j] := diff(Paramvec2[i, 1], PV2_vec[j, 1]):
+  for j from 1 to 10*NJ do 
+    dMPVdPV2[i, j] := diff(MPV_fixb[i, 1], PV2_vec[10+j, 1]):
   end do:
 end do:</Text-field>
 </Input>
@@ -219,12 +223,12 @@ end do:</Text-field>
 </Group>
 <Group labelreference="L1803" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(dMPVdPV2, sprintf(&quot;../codeexport/%s_minparvec_diff_wrt_par2_matlab.m&quot;, robot_name), 2):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(dMPVdPV2, sprintf(&quot;../codeexport/%s/minparvec_diff_wrt_par2_fixb_matlab.m&quot;, robot_name), 2):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1802" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save dMPVdPV2, sprintf(&quot;../codeexport/%s/minparvec_diff_wrt_par2_maple&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save dMPVdPV2, sprintf(&quot;../codeexport/%s/minparvec_diff_wrt_par2_fixb_maple&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1812" drawlabel="true">

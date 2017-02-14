@@ -43,6 +43,22 @@ else
   echo "Code in ${quelldat##*/} nicht gefunden."
 fi
 
+# Belegungsmatrix des Minimalparametervektors mit den Inertialparametern (Fixed Base)
+quelldat=$repo_pfad/codeexport/${robot_name}/minparvec_diff_wrt_par2_fixb_matlab.m
+zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_diff_MPV_wrt_PV2_fixb.m
+if [ -f $quelldat ]; then
+  cat ${tmp_pfad}_head/robot_matlabtmp_diff_MPV_wrt_PV2.head.m > $zieldat
+  printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+  echo "%% Variable Initialization" >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
+  printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+  cat $quelldat >> $zieldat
+  source robot_codegen_matlabfcn_postprocess.sh $zieldat
+else
+  echo "Code in ${quelldat##*/} nicht gefunden."
+fi
+
 # Generiere zwei verschiedene Regressorformen:
 # Minimalparameterregressor (rm=1) und Inertialparameterregressor (rm=2)
 for (( rm=1; rm<=2; rm++ ))

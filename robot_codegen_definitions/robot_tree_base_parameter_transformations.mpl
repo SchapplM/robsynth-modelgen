@@ -31,22 +31,22 @@ printf("Generiere Minimalparameterregressor der Energie für %s\n", robot_name, 
 read sprintf("../codeexport/%s/tree_floatb_twist_definitions", robot_name):
 # Ergebnisse der Minimalparametergruppierung laden
 read sprintf("../codeexport/%s/minimal_parameter_vector_fixb_maple", robot_name):
-Paramvec2 := Paramvec2:
+MPV_fixb := Paramvec2:
 # Minimalparametervektor als Matrixdarstellung
-# Siehe atlas_limb_sym_codegen_fixedbase_mdh_dynamics_regressor_minpar.mw
 # Siehe [SousaCor2014] equ. (38)
 # Beispielrechnung:
 # U=dU/dPV2*PV2=dU/dMPV*MPV # Parameterlineare Form
 # MPV=dMPV/dPV2 * PV2 # Minimalparametervektor MPV hängt nur linear von den normalen Parametern im Parametervektor PV2 ab
 # dU/dMPV = dU/dPV2 * dMPV/dPV1
-Paramvec_size := RowDimension(Paramvec2):
-dMPVdPV2 := Matrix(Paramvec_size, 10*NL):
+# Benutze Fixed-Base Parameter: Ignoriere Parameter der Basis
+Paramvec_size := RowDimension(MPV_fixb):
+dMPVdPV2 := Matrix(Paramvec_size, 10*NJ):
 for i to Paramvec_size do 
-  for j to 10*NL do 
-    dMPVdPV2[i, j] := diff(Paramvec2[i, 1], PV2_vec[j, 1]):
+  for j from 1 to 10*NJ do 
+    dMPVdPV2[i, j] := diff(MPV_fixb[i, 1], PV2_vec[10+j, 1]):
   end do:
 end do:
 # Export der Umwandlung von Parametersatz 2 nach Minimalparameter (Matrix)
-MatlabExport(dMPVdPV2, sprintf("../codeexport/%s_minparvec_diff_wrt_par2_matlab.m", robot_name), 2):
-save dMPVdPV2, sprintf("../codeexport/%s/minparvec_diff_wrt_par2_maple", robot_name):
+MatlabExport(dMPVdPV2, sprintf("../codeexport/%s/minparvec_diff_wrt_par2_fixb_matlab.m", robot_name), 2):
+save dMPVdPV2, sprintf("../codeexport/%s/minparvec_diff_wrt_par2_fixb_maple", robot_name):
 
