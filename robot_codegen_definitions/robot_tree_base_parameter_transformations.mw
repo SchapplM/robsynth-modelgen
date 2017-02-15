@@ -4,7 +4,7 @@
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true">
 </View-Properties>
-<MapleNet-Properties elisiondigitsbefore="100" labelling="true" indentamount="4" elisiontermsthreshold="10000" ansi="false" errorbreak="1" useclientjvm="true" echo="1" imaginaryunit="I" labelwidth="20" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" contextmenusize="automatic" plotdriver="opengl" elisiondigitsafter="100" plotoutput="terminal" helpbrowser="standard" rtablesize="30" elisiontermsbefore="100" elisiondigitsthreshold="10000" typesetting="standard" plotdevice="inline" verboseproc="1" showassumed="1" quiet="false" errorcursor="false" longdelim="true" plotoptions="" elisiontermsafter="100" screenwidth="79" preplot="" prettyprint="3" displayprecision="-1" screenpixelheight="1080" warnlevel="3" screenheight="25" latexwidth="8.0" postplot="" prompt="&gt; " ShowLabels="true"/>
+<MapleNet-Properties elisiondigitsbefore="100" labelling="true" indentamount="4" elisiontermsthreshold="10000" ansi="false" errorbreak="1" useclientjvm="true" echo="1" imaginaryunit="I" labelwidth="20" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" contextmenusize="automatic" plotdriver="opengl" elisiondigitsafter="100" plotoutput="terminal" helpbrowser="standard" rtablesize="10" elisiontermsbefore="100" elisiondigitsthreshold="10000" typesetting="standard" plotdevice="inline" verboseproc="1" showassumed="1" quiet="false" errorcursor="false" longdelim="true" plotoptions="" elisiontermsafter="100" screenwidth="79" preplot="" prettyprint="3" displayprecision="-1" screenpixelheight="1080" warnlevel="3" screenheight="25" latexwidth="8.0" postplot="" prompt="&gt; " ShowLabels="true"/>
 <Styles>
 <Font name="Ordered List 1" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Annotation Text" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -89,8 +89,8 @@
         <Metadata-attribute name="Subject" value="&lt;default&gt;"/>
         <Metadata-attribute name="Author" value="&lt;default&gt;"/>
         <Metadata-attribute name="Item List" value="true"/>
-        <Metadata-attribute name="Keywords" value="&lt;default&gt;"/>
         <Metadata-attribute name="Title" value="&lt;default&gt;"/>
+        <Metadata-attribute name="Keywords" value="&lt;default&gt;"/>
     </Metadata-tag>
 </Metadata-table>
 <Task-table>
@@ -109,7 +109,7 @@
 <Text-field style="Text" layout="Heading 2">
 Dateiname:
 <Font encoding="UTF-8">robot -&gt; Berechnung f\303\274r allgemeinen Roboter
-tree -&gt; Berechnung f\303\274r eine allgemeine Baumstruktur
+tree -&gt; Berechnung f\303\274r eine allgemeine Baumstruktur (aber bisher nur f\303\274r serielle Strukturen getestet)
 </Font>base_parameter_transformations -&gt; Umwandlung der Minimalparameterform in andere Darstellungen</Text-field>
 </Input>
 </Group>
@@ -156,13 +156,12 @@ read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
 </Group>
 <Group labelreference="L1769" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:
-<Font encoding="UTF-8">printf(&quot;Generiere Minimalparameterregressor der Energie f\303\274r %s\134n&quot;, robot_name, codegen_dynpar):</Font></Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1770" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tree_floatb_twist_definitions&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tree_floatb_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1775" drawlabel="true">
@@ -172,8 +171,23 @@ read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
 </Group>
 <Group labelreference="L1774" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/minimal_parameter_vector_fixb_maple&quot;, robot_name):
-MPV_fixb := Paramvec2:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if base_method_name=&quot;twist&quot; then
+  read sprintf(&quot;../codeexport/%s/minimal_parameter_vector_fixb_maple&quot;, robot_name):
+  expstring:=&quot;fixb&quot;:
+  PV2:=Matrix(PV2_vec[11..10*NL,1]):
+elif base_method_name=&quot;eulangrpy&quot; then 
+  read sprintf(&quot;../codeexport/%s/minimal_parameter_vector_floatb_eulangrpy_maple&quot;, robot_name):
+  expstring:=&quot;floatb_eulangrpy&quot;:
+  PV2:=PV2_vec:<Font encoding="UTF-8">
+else
+  printf(&quot;Nicht behandelte Basis-Methode: %s\134n&quot;, </Font>base_method_name):
+fi:
+MPV := Paramvec2:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1841" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Generiere Minimalparameter-Transformationen f\303\274r %s (%s)\134n&quot;, robot_name, </Font>expstring):</Text-field>
 </Input>
 </Group>
 </Section>
@@ -199,19 +213,19 @@ U=dU/dPV2*PV2=dU/dMPV*MPV # Parameterlineare Form
 </Group>
 <Group labelreference="L1809" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Paramvec_size := RowDimension(MPV_fixb):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Paramvec_size := RowDimension(MPV):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1805" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">dMPVdPV2 := Matrix(Paramvec_size, 10*NJ):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">K := Matrix(Paramvec_size, RowDimension(PV2)):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1804" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i to Paramvec_size do 
-  for j from 1 to 10*NJ do 
-    dMPVdPV2[i, j] := diff(MPV_fixb[i, 1], PV2_vec[10+j, 1]):
+  for j from 1 to RowDimension(PV2) do 
+    K[i,j] := diff(MPV[i, 1], PV2[j,1]):
   end do:
 end do:</Text-field>
 </Input>
@@ -223,27 +237,17 @@ end do:</Text-field>
 </Group>
 <Group labelreference="L1803" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(dMPVdPV2, sprintf(&quot;../codeexport/%s/PV2_MPV_transformation_linear_fixb_matlab.m&quot;, robot_name), 2):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(K, sprintf(&quot;../codeexport/%s/PV2_MPV_transformation_linear_%s_matlab.m&quot;, robot_name, expstring), 2):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1802" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save dMPVdPV2, sprintf(&quot;../codeexport/%s/PV2_MPV_transformation_linear_dependant_fixb_maple&quot;, robot_name):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1812" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save K, sprintf(&quot;../codeexport/%s/PV2_MPV_transformation_linear_dependant_%s_maple&quot;, robot_name, expstring):</Text-field>
 </Input>
 </Group>
 </Section>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
 <Text-field style="Heading 1" layout="Heading 1">Aufteilung der Matrixdarstellung in einzelne Teilmatrizen</Text-field></Title>
-<Group labelreference="L1816" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">K := dMPVdPV2:</Text-field>
-</Input>
-</Group>
 <Group labelreference="L1822" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal">Generate the Matrices required in [SousaCor2014] equ. (33)</Text-field>
@@ -252,8 +256,8 @@ end do:</Text-field>
 <Group labelreference="L1832" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Wenn ein Inertialparameter zu einer linear unabh\303\244ngigen Spalte der Regressormatrizen geh\303\266rt, </Font></Text-field>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">steht er in dX2dX1 als 1, alle anderen Spalteneintr\303\203\302\244ge dieser Zeile sind Null und der Inertialparameter steht auch in keiner anderen Zeile.</Font></Text-field>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Falls er zu einer linear abh\303\244ngigen Spalte der Regressormatrix geh\303\266rt, steht er in mehreren Spalten von dX2dX1</Font></Text-field>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">steht er in K als 1, alle anderen Spalteneintr\303\244ge dieser Zeile sind Null und der Inertialparameter steht auch in keiner anderen Zeile.</Font></Text-field>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Falls er zu einer linear abh\303\244ngigen Spalte der Regressormatrix geh\303\266rt, steht er in mehreren Spalten von K oder nur in einer Spalte aber dort nicht alleine.</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1823" drawlabel="true">
@@ -285,7 +289,7 @@ P_d := Matrix(n, n_d): # f\303\274r [SousaCor2014] equ. (33)</Font></Text-field>
 </Font>  linunabh_gefunden :=false: # Merker, ob ein Basis-Inertialparameter gefunden wurde.
   for j from 1 to n do: # alle Spalten durchgehen
     if K(i,j)=1 then
-<Font encoding="UTF-8">      printf(&quot;In MPV-Zeile %d kommt Inertialparameter %d (%s) direkt vor.\134n&quot;, i, j, </Font>convert(PV2_vec(10+j,1), string)):
+<Font encoding="UTF-8">      # printf(&quot;In MPV-Zeile %d kommt Inertialparameter %d (%s) direkt vor.\134n&quot;, i, j, </Font>convert(PV2(j,1), string)):
       # gehe alle anderen Zeilen durch
       Index_j_lin_unabh := true: # Merker, dass aktueller Index Basis-Inertialparameter ist.
       for i2 from 1 to n_b do:
@@ -294,7 +298,7 @@ P_d := Matrix(n, n_d): # f\303\274r [SousaCor2014] equ. (33)</Font></Text-field>
         end if:
         if not (K(i2,j) = 0) then
           # Der Inertialparameter kommt auch in einem anderen MPV-Eintrag vor, damit ist er kein Basisparameter
-<Font encoding="UTF-8">          printf(&quot;Inertialparameter %d (%s) kommt sowohl in MPV-Zeile %d als auch in Zeile %d vor. Kein Basisparameter.\134n&quot;, j, </Font>convert(PV2_vec(10+j,1), string), i, i2):
+<Font encoding="UTF-8">          # printf(&quot;Inertialparameter %d (%s) kommt sowohl in MPV-Zeile %d als auch in Zeile %d vor. Kein Basisparameter.\134n&quot;, j, </Font>convert(PV2_vec(10+j,1), string), i, i2):
           Index_j_lin_unabh := false:
           break:
         end if:
@@ -302,7 +306,7 @@ P_d := Matrix(n, n_d): # f\303\274r [SousaCor2014] equ. (33)</Font></Text-field>
       if Index_j_lin_unabh then
 <Font encoding="UTF-8">        # linear unabh\303\244ngigen Parameter speichern
 </Font>        P_b(j,i):=1:
-<Font encoding="UTF-8">        printf(&quot;F\303\274r MPV-Zeile %d ist %d (%s) der Basisparameter\134n&quot;, i, j, convert(PV</Font>2_vec(10+j,1), string)):
+<Font encoding="UTF-8">        # printf(&quot;F\303\274r MPV-Zeile %d ist %d (%s) der Basisparameter\134n&quot;, i, j, convert(PV</Font>2(j,1), string)):
         linunabh_gefunden:=true:
       end if:  
     end if:
@@ -312,7 +316,7 @@ P_d := Matrix(n, n_d): # f\303\274r [SousaCor2014] equ. (33)</Font></Text-field>
     end if
 <Font encoding="UTF-8">  end do: # j-Schleife \303\274ber Inertialparameter
 </Font>  if not linunabh_gefunden then
-<Font encoding="UTF-8">    printf(&quot;Keinen Basis-Inertialparameter in MPV Zeile %d gefunden.\134n&quot;, i):</Font>
+<Font encoding="UTF-8">    # printf(&quot;Keinen Basis-Inertialparameter in MPV Zeile %d gefunden.\134n&quot;, i):</Font>
   end if:
 end do:</Text-field>
 </Input>
@@ -377,11 +381,26 @@ end do:</Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Inertialparametervektor hat %d linear abh\303\244ngige und %d linear unabh\303\244ngige Eintr\303\244ge&quot;, n_d, n_b):</Font></Text-field>
 </Input>
 </Group>
+<Group labelreference="L1839" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">delta_b := Transpose(P_b) . PV2: # Zur \303\234berpr\303\274fung</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1837" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">delta_d := Transpose(P_d) . PV2<Font encoding="UTF-8">: # Zur \303\234berpr\303\274fung</Font></Text-field>
+</Input>
+</Group>
 <Group labelreference="L1817" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(K_d, sprintf(&quot;../codeexport/%s/PV2_MPV_transformation_linear_dependant_matlab.m&quot;, robot_name), 2):
-MatlabExport(P_b, sprintf(&quot;../codeexport/%s/PV2_permutation_linear_independant_matlab.m&quot;, robot_name), 2):
-MatlabExport(P_d, sprintf(&quot;../codeexport/%s/PV2_permutation_linear_dependant_matlab.m&quot;, robot_name), 2):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(K_d, sprintf(&quot;../codeexport/%s/PV2_MPV_transformation_linear_dependant_%s_matlab.m&quot;, robot_name, expstring), 2):
+MatlabExport(P_b, sprintf(&quot;../codeexport/%s/PV2_permutation_linear_independant_%s_matlab.m&quot;, robot_name, expstring), 2):
+MatlabExport(P_d, sprintf(&quot;../codeexport/%s/PV2_permutation_linear_dependant_%s_matlab.m&quot;, robot_name, expstring), 2):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1833" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>

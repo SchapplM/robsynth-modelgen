@@ -4,7 +4,7 @@
 # 
 # Dateiname:
 # robot -> Berechnung für allgemeinen Roboter
-# tree -> Berechnung für eine allgemeine Baumstruktur
+# tree -> Berechnung für eine allgemeine Baumstruktur (aber bisher nur für serielle Strukturen getestet)
 # base_parameter_transformations -> Umwandlung der Minimalparameterform in andere Darstellungen
 # Authors
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-04
@@ -27,11 +27,21 @@ read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s": 
 read "../helper/proc_MatlabExport":
 read "../robot_codegen_definitions/robot_env":
-printf("Generiere Minimalparameterregressor der Energie für %s\n", robot_name, codegen_dynpar):
-read sprintf("../codeexport/%s/tree_floatb_twist_definitions", robot_name):
+read sprintf("../codeexport/%s/tree_floatb_definitions", robot_name):
 # Ergebnisse der Minimalparametergruppierung laden
-read sprintf("../codeexport/%s/minimal_parameter_vector_fixb_maple", robot_name):
-MPV_fixb := Paramvec2:
+if base_method_name="twist" then
+  read sprintf("../codeexport/%s/minimal_parameter_vector_fixb_maple", robot_name):
+  expstring:="fixb":
+  PV2:=Matrix(PV2_vec[11..10*NL,1]):
+elif base_method_name="eulangrpy" then 
+  read sprintf("../codeexport/%s/minimal_parameter_vector_floatb_eulangrpy_maple", robot_name):
+  expstring:="floatb_eulangrpy":
+  PV2:=PV2_vec:
+else
+  printf("Nicht behandelte Basis-Methode: %s\n", base_method_name):
+fi:
+MPV := Paramvec2:
+printf("Generiere Minimalparameter-Transformationen für %s (%s)\n", robot_name, expstring):
 # Minimalparametervektor als Matrixdarstellung
 # Siehe [SousaCor2014] equ. (38)
 # Beispielrechnung:
@@ -39,23 +49,21 @@ MPV_fixb := Paramvec2:
 # MPV=dMPV/dPV2 * PV2 # Minimalparametervektor MPV hängt nur linear von den normalen Parametern im Parametervektor PV2 ab
 # dU/dMPV = dU/dPV2 * dMPV/dPV1
 # Benutze Fixed-Base Parameter: Ignoriere Parameter der Basis
-Paramvec_size := RowDimension(MPV_fixb):
-dMPVdPV2 := Matrix(Paramvec_size, 10*NJ):
+Paramvec_size := RowDimension(MPV):
+K := Matrix(Paramvec_size, RowDimension(PV2)):
 for i to Paramvec_size do 
-  for j from 1 to 10*NJ do 
-    dMPVdPV2[i, j] := diff(MPV_fixb[i, 1], PV2_vec[10+j, 1]):
+  for j from 1 to RowDimension(PV2) do 
+    K[i,j] := diff(MPV[i, 1], PV2[j,1]):
   end do:
 end do:
 # Export der Umwandlung von Parametersatz 2 nach Minimalparameter (Matrix)
-MatlabExport(dMPVdPV2, sprintf("../codeexport/%s/PV2_MPV_transformation_linear_fixb_matlab.m", robot_name), 2):
-save dMPVdPV2, sprintf("../codeexport/%s/PV2_MPV_transformation_linear_dependant_fixb_maple", robot_name):
-
+MatlabExport(K, sprintf("../codeexport/%s/PV2_MPV_transformation_linear_%s_matlab.m", robot_name, expstring), 2):
+save K, sprintf("../codeexport/%s/PV2_MPV_transformation_linear_dependant_%s_maple", robot_name, expstring):
 # Aufteilung der Matrixdarstellung in einzelne Teilmatrizen
-K := dMPVdPV2:
 # Generate the Matrices required in [SousaCor2014] equ. (33)
 # Wenn ein Inertialparameter zu einer linear unabhängigen Spalte der Regressormatrizen gehört, 
-# steht er in dX2dX1 als 1, alle anderen SpalteneintrÃ¤ge dieser Zeile sind Null und der Inertialparameter steht auch in keiner anderen Zeile.
-# Falls er zu einer linear abhängigen Spalte der Regressormatrix gehört, steht er in mehreren Spalten von dX2dX1
+# steht er in K als 1, alle anderen Spalteneinträge dieser Zeile sind Null und der Inertialparameter steht auch in keiner anderen Zeile.
+# Falls er zu einer linear abhängigen Spalte der Regressormatrix gehört, steht er in mehreren Spalten von K oder nur in einer Spalte aber dort nicht alleine.
 # Die Permutationsmatrizen P_b, P_d wählen die jeweiligen Parameter aus dem Gesamt-Inertialparametervektor aus 
 n_b := RowDimension(K):
 n_d := ColumnDimension(K)-RowDimension(K): 
@@ -71,7 +79,7 @@ for i from 1 to n_b do:
   linunabh_gefunden :=false: # Merker, ob ein Basis-Inertialparameter gefunden wurde.
   for j from 1 to n do: # alle Spalten durchgehen
     if K(i,j)=1 then
-      printf("In MPV-Zeile %d kommt Inertialparameter %d (%s) direkt vor.\n", i, j, convert(PV2_vec(10+j,1), string)):
+      # printf("In MPV-Zeile %d kommt Inertialparameter %d (%s) direkt vor.\n", i, j, convert(PV2(j,1), string)):
       # gehe alle anderen Zeilen durch
       Index_j_lin_unabh := true: # Merker, dass aktueller Index Basis-Inertialparameter ist.
       for i2 from 1 to n_b do:
@@ -80,7 +88,7 @@ for i from 1 to n_b do:
         end if:
         if not (K(i2,j) = 0) then
           # Der Inertialparameter kommt auch in einem anderen MPV-Eintrag vor, damit ist er kein Basisparameter
-          printf("Inertialparameter %d (%s) kommt sowohl in MPV-Zeile %d als auch in Zeile %d vor. Kein Basisparameter.\n", j, convert(PV2_vec(10+j,1), string), i, i2):
+          # printf("Inertialparameter %d (%s) kommt sowohl in MPV-Zeile %d als auch in Zeile %d vor. Kein Basisparameter.\n", j, convert(PV2_vec(10+j,1), string), i, i2):
           Index_j_lin_unabh := false:
           break:
         end if:
@@ -88,7 +96,7 @@ for i from 1 to n_b do:
       if Index_j_lin_unabh then
         # linear unabhängigen Parameter speichern
         P_b(j,i):=1:
-        printf("Für MPV-Zeile %d ist %d (%s) der Basisparameter\n", i, j, convert(PV2_vec(10+j,1), string)):
+        # printf("Für MPV-Zeile %d ist %d (%s) der Basisparameter\n", i, j, convert(PV2(j,1), string)):
         linunabh_gefunden:=true:
       end if:  
     end if:
@@ -98,7 +106,7 @@ for i from 1 to n_b do:
     end if
   end do: # j-Schleife über Inertialparameter
   if not linunabh_gefunden then
-    printf("Keinen Basis-Inertialparameter in MPV Zeile %d gefunden.\n", i):
+    # printf("Keinen Basis-Inertialparameter in MPV Zeile %d gefunden.\n", i):
   end if:
 end do:
 # Alle linear abhängigen Parameter (der Rest) in andere Permutationsmatrix P_d packen
@@ -141,6 +149,9 @@ for j from 1 to n do:
   end if:
 end do:
 printf("Inertialparametervektor hat %d linear abhängige und %d linear unabhängige Einträge", n_d, n_b):
-MatlabExport(K_d, sprintf("../codeexport/%s/PV2_MPV_transformation_linear_dependant_matlab.m", robot_name), 2):
-MatlabExport(P_b, sprintf("../codeexport/%s/PV2_permutation_linear_independant_matlab.m", robot_name), 2):
-MatlabExport(P_d, sprintf("../codeexport/%s/PV2_permutation_linear_dependant_matlab.m", robot_name), 2):
+delta_b := Transpose(P_b) . PV2: # Zur Überprüfung
+delta_d := Transpose(P_d) . PV2: # Zur Überprüfung
+MatlabExport(K_d, sprintf("../codeexport/%s/PV2_MPV_transformation_linear_dependant_%s_matlab.m", robot_name, expstring), 2):
+MatlabExport(P_b, sprintf("../codeexport/%s/PV2_permutation_linear_independant_%s_matlab.m", robot_name, expstring), 2):
+MatlabExport(P_d, sprintf("../codeexport/%s/PV2_permutation_linear_dependant_%s_matlab.m", robot_name, expstring), 2):
+

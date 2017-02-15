@@ -89,8 +89,8 @@
         <Metadata-attribute name="Subject" value="&lt;default&gt;"/>
         <Metadata-attribute name="Author" value="&lt;default&gt;"/>
         <Metadata-attribute name="Item List" value="true"/>
-        <Metadata-attribute name="Keywords" value="&lt;default&gt;"/>
         <Metadata-attribute name="Title" value="&lt;default&gt;"/>
+        <Metadata-attribute name="Keywords" value="&lt;default&gt;"/>
     </Metadata-tag>
 </Metadata-table>
 <Task-table>
@@ -120,7 +120,7 @@ regressor -&gt; Regressorform (parameterlinear)</Text-field>
 <Input>
 <Text-field style="Heading 2" layout="Heading 2">Authors</Text-field>
 <Text-field style="Normal" layout="Normal"><Font encoding="UTF-8">Alexander T\303\266dtheide, toedtheide@irt.uni-hannover.de</Font>
-Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03</Text-field>
+Moritz Schappler, schappler@irt.uni-hannover.de, 2017-02</Text-field>
 <Text-field style="Normal" layout="Normal"></Text-field>
 <Text-field style="Normal" layout="Normal">Institut fuer Regelungstechnik, Leibniz Universitaet Hannover</Text-field>
 </Input>
@@ -275,8 +275,7 @@ m :=  Matrix(NL, 1, PV2_mat[1 .. NL, 10]):</Text-field>
 <Group labelreference="L1691" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from NL by -1 to 2 do 
-<Font encoding="UTF-8">  printf(&quot;%d\134n&quot;, i):
-  j := i-1: # Laufvariable f\303\274r die MDH-Kinematikparameter (Inertialparameter von Segment 0 fangen auch bei 1 an).
+<Font encoding="UTF-8">  j := i-1: # Laufvariable f\303\274r die MDH-Kinematikparameter (Inertialparameter von Segment 0 fangen auch bei 1 an).
 </Font>  XX[i,1] := XX[i,1]-YY[i,1]:
   XX[i-1,1] := d[j,1]^2*m[i,1]+2*d[j,1]*mZ[i,1]+XX[i-1,1]+YY[i,1]: 
   XY[i-1,1] := XY[i-1,1]+a[j,1]*sin(alpha[j,1])*mZ[i,1]+a[j,1]*d[j,1]*sin(alpha[j,1])*m[i,1]: 
@@ -308,12 +307,31 @@ end do: </Text-field>
 [GautierKhalil1990] (eq. 18)</Text-field>
 </Input>
 </Group>
+<Group labelreference="L1828" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">MPV_n_max := 10+7*NJ: # ignoriere Abz\303\274ge in der Formel</Font>
+Paramvec := Matrix(MPV_n_max, 1):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1829" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Basis-Parameter direkt \303\274bernehmen</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1830" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Paramvec(1..10,1) := &lt;XX[1,1],XY[1,1],XZ[1,1],YY[1,1],YZ[1,1],ZZ[1,1],mX[1,1],mY[1,1],mZ[1,1],m[1,1]&gt;:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1831" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"># Paramvec(1..10,1);</Text-field>
+</Input>
+</Group>
 <Group labelreference="L1699" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">MPV_n_max := 10+7*NJ: # ignoriere Abz\303\274ge in der Formel
-</Font>Paramvec := Matrix(MPV_n_max, 1):
-Paramvec(1..10,1) := PV2_vec(1..10,1):
-for i from 1 to NJ do 
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8"># Formel f\303\274r Parameter, die durch Gelenke bewegt werden, anwenden
+</Font>for i from 1 to NJ do 
   Paramvec[10+7*(i-1)+1, 1] := XX[i+1, 1]:
   Paramvec[10+7*(i-1)+2, 1] := XY[i+1, 1]:
   Paramvec[10+7*(i-1)+3, 1] := XZ[i+1, 1]:
@@ -339,8 +357,7 @@ for i to MPV_n_max do
   if Paramvec[i, 1] = 0 then 
     p := p+1 
   end if:
-end do:
-</Text-field>
+end do:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1746" drawlabel="true">
@@ -384,22 +401,22 @@ end if;</Text-field>
 <Text-field style="Heading 3" layout="Heading 3">Markieren von t_mZ, t_YY, t_m, u_mZ, u_YY, u_m_j</Text-field></Title>
 <Group labelreference="L1760" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal">Anwendung von [HRL_IDR] Regel 3 (S. 5) auf die Geometrievektoren t und u der Energien T und U
-<Font encoding="UTF-8">Der Basis-K\303\266rper wird nicht betrachtet. Daher ignorieren der ersten zehn Eintr\303\244ge in </Font>t_ges
-[GautierKhalil1990], p.369</Text-field>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Anwendung von [HRL_IDR] Regel 3 (S. 5) auf die Geometrievektoren t und u der Energien T und U
+Die Regel bezieht sich auf  K\303\266rper, die durch Drehgelenke bewegt werden. Eintr\303\244ge f\303\274r den Basisk\303\266rper werden daher nicht ge\303\244ndert.
+Die Parameter YY,MZ und M sind immer linear abh\303\244ngig. Die entsprechenden Spalten der Regressormatrizen werden daher zum Entfernen markiert.
+</Font>[GautierKhalil1990], p.369</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1717" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 0 to NJ-1 do 
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NL-1 do 
+  t_ges[1,i*10+ 4]:=REMOVE; #YY
+  t_ges[1,i*10+ 9]:=REMOVE; #MZ
+  t_ges[1,i*10+10]:=REMOVE; #M
 
-   t_ges[1,i*10+ 4]:=REMOVE;
-   t_ges[1,i*10+ 9]:=REMOVE;
-   t_ges[1,i*10+10]:=REMOVE;
-
-   u_ges[1,i*10+ 4]:=REMOVE;
-   u_ges[1,i*10+ 9]:=REMOVE;
-   u_ges[1,i*10+10]:=REMOVE;
+  u_ges[1,i*10+ 4]:=REMOVE; #YY
+  u_ges[1,i*10+ 9]:=REMOVE; #MZ
+  u_ges[1,i*10+10]:=REMOVE; #M
 
 end do: </Text-field>
 </Input>
@@ -415,7 +432,7 @@ end do: </Text-field>
 <Group labelreference="L1716" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">p:=0:
-for i from 1 to 10*NJ do       <Font encoding="UTF-8">#Nullen Z\303\244hlen um die Matrixgr\303\266\303\237e von t_ges zu bestimmen</Font>   
+for i from 1 to 10*NL do       <Font encoding="UTF-8">#Nullen Z\303\244hlen um die Matrixgr\303\266\303\237e von t_ges zu bestimmen</Font>   
   if t_ges[1,i]=REMOVE and u_ges[1,i]=REMOVE then       
     p:=p+1;
   end if
@@ -427,7 +444,7 @@ end do: </Text-field>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">size_Matrix:=10*NL-p: 
 t_ges_minpar:=Matrix(1,size_Matrix):
 u_ges_minpar:=Matrix(1,size_Matrix):
-<Font encoding="UTF-8">printf(&quot;Dimension der Regressormatrix: 1x%d\134n&quot;, </Font>size_Matrix):
+<Font encoding="UTF-8">printf(&quot;Dimension der Minimalparameter-Regressormatrix: 1x%d\134n&quot;, </Font>size_Matrix):
 </Text-field>
 </Input>
 </Group>

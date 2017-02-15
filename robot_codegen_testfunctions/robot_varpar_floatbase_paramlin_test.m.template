@@ -1,4 +1,4 @@
-% Teste parameterlineare Formen der Dynamik
+% Teste parameterlineare Formen der Dynamik (Floating Base)
 
 % %VERSIONINFO%
 
@@ -37,6 +37,20 @@ for i = 1:NL
   PV2floatb((1:6) +10*(i-1)) = Ifges(i,[1,4,5,2,6,3]);
   PV2floatb((1:3) +10*(i-1)+6) = mrSges(i,:);
   PV2floatb(10*i) = m(i);
+end
+
+PV2_Names = cell(10*NL,1);
+for i = 1:NL
+  PV2_Names{10*(i-1)+ 1} = sprintf('XX%d',i-1);
+  PV2_Names{10*(i-1)+ 2} = sprintf('XY%d',i-1);
+  PV2_Names{10*(i-1)+ 3} = sprintf('XZ%d',i-1);
+  PV2_Names{10*(i-1)+ 4} = sprintf('YY%d',i-1);
+  PV2_Names{10*(i-1)+ 5} = sprintf('YZ%d',i-1);
+  PV2_Names{10*(i-1)+ 6} = sprintf('ZZ%d',i-1);
+  PV2_Names{10*(i-1)+ 7} = sprintf('MX%d',i-1);
+  PV2_Names{10*(i-1)+ 8} = sprintf('MY%d',i-1);
+  PV2_Names{10*(i-1)+ 9} = sprintf('MZ%d',i-1);
+  PV2_Names{10*(i-1)+10} = sprintf('M%d', i-1);
 end
 %% Test kinetic Energy
 for i = 1:n
@@ -108,3 +122,56 @@ end
 fprintf('Tested potential energy for %d random joint angles for %s\n', ...
   n, robot_name);
 
+%% Prüfe Minimalparametervektor gegen Matrix mit Inertialparameterzuordnung
+% [Sousa2014] Gl. (38)
+[K, K_d, P_b, P_d] = %RN%_PV2_MPV_transformations_floatb_eulangrpy(pkin);
+                
+MPV_test = K*PV2floatb;
+test = MPV - MPV_test;
+if any(abs(test(:)) > 1e-10)
+  error('Minimalparametervektor stimmt nicht mit MPV aus Inertialparametermatrix überein');
+end
+% MPV-Transformationsmatrix aus Teilmatrizen aus [Sousa2014] aufbauen und testen
+K_test = (P_b' + K_d*P_d'); % [Sousa2014] Gl. (39)
+Test = abs(K-K_test);
+if any(Test(:)>1e-12)
+  error('Test [Sousa2014] Gl. (38) fehlgeschlagen!');
+end
+fprintf('Transformationen des fixb-Minimalparametervektors erfolgreich getestet\n');
+
+%% Teste Minimalparameterform gegen numerische Berechnung nach [Gautier1990]
+% Matrix mit Samples der Regressormatrix erstellen ([Gautier1990], Gl. (8))
+% Zufällige Werte, nach [Gautier1990], Kap. 5-1-1
+c = length(PV2floatb);
+W_g = NaN(n, c); % Informationsmatrix des Inertialparameter-Regressors. Zum Testen des Rangs
+for i = 1:n
+  r_W_W_0 = RB(i,:)';
+  ob = OB(i,:)';
+  q = Q(i,:)';
+  qD = QD(i,:)';
+  oDb = OBD(i,:)';
+  V_W_W_0 = VB(i,:)';
+  xDB = [V_W_W_0(1:3); oDb];
+  g_world = G(i,:)';
+  % [Gautier1990] Gl. (7)
+  t_reg2 = %RN%_energykin_floatb_eulangrpy_reg2_slag_vp(q, qD, ob, xDB, ...
+    pkin);
+  u_reg2 = %RN%_energypot_floatb_eulangrpy_reg2_slag_vp(q, r_W_W_0, ob, g_world, ...
+    pkin);
+  % [Gautier1990] Gl. (8)
+  W_g(i,:) = t_reg2+u_reg2;
+end
+% Struktur mit Eingabedaten für Algorithmus generieren
+% [Ksym, K_dsym, P1sym, P2sym] = %RN%_PV2_MPV_transformations_fixb(pkin);
+b = 24;
+[Ksym, K_dsym, P1sym, P2sym] = %RN%_PV2_MPV_transformations_floatb_eulangrpy(pkin);
+% Ksym = NaN(b,c);K_dsym=NaN(b,c-b);P1sym=NaN(c,b);P2sym=NaN(c,c-b);
+plin_num_test_struct = struct('W', W_g, 'PV2', PV2floatb, 'MPV', MPV, ...
+  'P1sym', P1sym, 'P2sym', P2sym, 'K_dsym', K_dsym, 'Ksym', Ksym, ...
+  'NQ', NQJ, 'PV2_Names', {PV2_Names});
+% Aufruf des Test-Algorithmus als Funktion (der Test kann genauso für
+% Floating Base durchgeführt werden und wird deshalb ausgelagert. Die
+% Übergabeargumente unterscheiden sich nur minimal)
+%RN%_varpar_paramlin_test_reg_num(plin_num_test_struct);
+
+fprintf('Symbolisch berechnete Minimalparameterform gegen numerische Form geprüft\n');

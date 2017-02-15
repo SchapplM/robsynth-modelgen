@@ -45,9 +45,9 @@ fi
 
 # Belegungsmatrix des Minimalparametervektors mit den Inertialparametern (Fixed Base)
 quelldat1=$repo_pfad/codeexport/${robot_name}/PV2_MPV_transformation_linear_fixb_matlab.m
-quelldat2=$repo_pfad/codeexport/${robot_name}/PV2_MPV_transformation_linear_dependant_matlab.m
-quelldat3=$repo_pfad/codeexport/${robot_name}/PV2_permutation_linear_independant_matlab.m
-quelldat4=$repo_pfad/codeexport/${robot_name}/PV2_permutation_linear_dependant_matlab.m
+quelldat2=$repo_pfad/codeexport/${robot_name}/PV2_MPV_transformation_linear_dependant_fixb_matlab.m
+quelldat3=$repo_pfad/codeexport/${robot_name}/PV2_permutation_linear_independant_fixb_matlab.m
+quelldat4=$repo_pfad/codeexport/${robot_name}/PV2_permutation_linear_dependant_fixb_matlab.m
 zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_PV2_MPV_transformations_fixb.m
 if [ -f $quelldat1 ] && [ -f $quelldat2 ] && [ -f $quelldat3 ] && [ -f $quelldat4 ]; then
   cat ${tmp_pfad}_head/robot_matlabtmp_PV2_MPV_transformations_fixb.head.m > $zieldat
