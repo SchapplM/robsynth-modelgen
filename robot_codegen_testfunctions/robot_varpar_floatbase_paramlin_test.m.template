@@ -172,6 +172,6 @@ plin_num_test_struct = struct('W', W_g, 'PV2', PV2floatb, 'MPV', MPV, ...
 % Aufruf des Test-Algorithmus als Funktion (der Test kann genauso für
 % Floating Base durchgeführt werden und wird deshalb ausgelagert. Die
 % Übergabeargumente unterscheiden sich nur minimal)
-%RN%_varpar_paramlin_test_reg_num(plin_num_test_struct);
+robot_paramlin_test_reg_num(plin_num_test_struct);
 
 fprintf('Symbolisch berechnete Minimalparameterform gegen numerische Form geprüft\n');
