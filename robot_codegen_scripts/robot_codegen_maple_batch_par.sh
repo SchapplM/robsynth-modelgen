@@ -73,9 +73,9 @@ do
 			robot_codegen_constraints/${robot_name}_kinematic_constraints.mpl
 		"
 	fi;
-		dateiliste_kin="$dateiliste_kin
-			robot_codegen_definitions/robot_tree_kinematic_parameter_list.mpl
-		"
+	dateiliste_kin="$dateiliste_kin
+		robot_codegen_definitions/robot_tree_kinematic_parameter_list.mpl
+	"
 	
 	dateiliste_kin="$dateiliste_kin
 			robot_codegen_kinematics/robot_tree_floatb_rotmat_mdh_kinematics.mpl
@@ -107,6 +107,17 @@ do
 		  robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2_inertiaD.mpl
 		  robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2_invdyn.mpl
 	"
+  if [ ${basemeth} == "twist" ]; then
+      dateiliste_plin="robot_codegen_energy/robot_chain_fixb_rotmat_energy_regressor.mpl"
+  else
+      dateiliste_plin="robot_codegen_energy/robot_chain_floatb_rotmat_energy_regressor.mpl"
+  fi;
+  dateiliste_plin="
+    $dateiliste_plin
+    robot_codegen_definitions/robot_tree_base_parameter_transformations.mpl
+    robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_pv2.mpl
+    robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_minpar.mpl
+  "
 
   # Zusätzliche Maple-Skripte speziell für dieses System (benutzerdefiniert)
   # Für jede Basis-Methode anhängen.
@@ -163,6 +174,22 @@ do
   done
   wait
   echo "FERTIG mit Dynamik für ${basemeth}"
+
+  erster=1 # Merker für ersten Durchlauf von plin
+  for wsplin in ${dateiliste_plin[@]}
+  do
+    mpldat_full=$repo_pfad/$wsplin
+    filename="${mpldat_full##*/}"
+    dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
+    if [ $erster == 1 ]; then
+      nice -n 10 ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";"
+      erster=0 # nicht parallel, die folgenden Skripte sind hiervon abhängig
+    else # parallel ausführen
+      nice -n 10 ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
+    fi;
+  done
+  wait
+  echo "FERTIG mit Regressorform für ${basemeth}"
 done
 
 # Definitionen des Fixed-Base-Modell wieder laden (für Jacobi-Matrizen und zusätzliche Dateien)
@@ -185,28 +212,6 @@ do
 done
 wait
 echo "FERTIG mit Jacobi-Matrizen"
-
-dateiliste_plin="
-  robot_codegen_energy/robot_chain_fixb_rotmat_energy_regressor.mpl
-  robot_codegen_definitions/robot_tree_base_parameter_transformations.mpl
-  robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_pv2.mpl
-  robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_minpar.mpl
-"
-erster=1 # Merker für ersten Durchlauf von plin
-for wsplin in ${dateiliste_plin[@]}
-do
-  mpldat_full=$repo_pfad/$wsplin
-  filename="${mpldat_full##*/}"
-  dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
-  if [ $erster == 1 ]; then
-    nice -n 10 ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";"
-    erster=0 # nicht parallel, die folgenden Skripte sind hiervon abhängig
-  else # parallel ausführen
-    nice -n 10 ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
-  fi;
-done
-wait
-echo "FERTIG mit Regressorform"
 
 if [ -f $addlistfile ]; then
   for wsadd in ${dateiliste_add[@]}
