@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="18" minor="0"/>
+<Version major="18" minor="2"/>
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true">
 </View-Properties>
@@ -103,7 +103,9 @@ chain -&gt; Berechnung f\303\274r eine serielle Struktur (nicht: Baumstruktur)
 fixb -&gt; fixed base. Kein Floating base Modell. Dort ist diese Form der Minimalparameterform nicht m\303\266glich.</Font>
 rotmat -&gt; Kinematik wird mit Rotationsmatrizen berechnet
 dynamics -&gt; Berechnung der Dynamik
-regressor -&gt; Regressorform (parameterlinear)</Text-field>
+<Font encoding="UTF-8">regressor -&gt; Regressorform (parameterlinear)
+
+Siehe auch: robot_chain_floatb_rotmat_dynamics_regressor.mw. Im Gegensatz dazu werden hier die fixed-Base-Ausdr\303\274cke ohne eine &quot;twist&quot;-Basis-Berechnung \303\274bernommen, die sowieso falsch ist.</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1517" drawlabel="true">
@@ -139,10 +141,20 @@ with(CodeGeneration):
 with(StringTools):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1759" drawlabel="true">
+<Group labelreference="L1775" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Einstellungen f\303\274r Code-Export: Optimierungsgrad (2=h\303\266chster) und Aktivierung jedes Terms.</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1776" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_opt := 2:
-codegen_act := true:</Text-field>
+codeexport_grav := true: 
+codeexport_corvec := true:
+codeexport_cormat := true:
+codeexport_inertia := true:
+codeexport_inertiaD := true:
+codeexport_invdyn := true:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1688" drawlabel="true">
@@ -177,7 +189,23 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Group>
 <Group labelreference="L1702" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tree_floatb_twist_definitions&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tree_floatb_definitions&quot;, robot_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1774" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Mit diesem Arbeitsblatt werden die Regressor-Ausdr\303\274cke f\303\274r Fixed-Base und Floating-Base Modelle generiert. Erkenne welche Basis-Modellierung aktiv ist</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1773" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">if base_method_name=&quot;twist&quot; then # Basis-Methode &quot;twist&quot; wird (hier) nur f\303\274r fixed Base benutzt
+</Font>  expstring:=&quot;fixb&quot;:
+elif base_method_name=&quot;eulangrpy&quot; then 
+  expstring:=&quot;floatb_eulangrpy&quot;:
+else
+<Font encoding="UTF-8">  printf(&quot;Nicht behandelte Basis-Methode: %s\134n&quot;, </Font>base_method_name):
+fi:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1762" drawlabel="true">
@@ -188,14 +216,14 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Group>
 <Group labelreference="L1760" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">regressor_modus := &quot;regressor_minpar&quot;:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">regressor_modus := &quot;regressor&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1686" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if regressor_modus = &quot;regressor_minpar&quot; then
-  read sprintf(&quot;../codeexport/%s/energy_kinetic_fixb_regressor_minpar_maple.m&quot;, robot_name):
-  read sprintf(&quot;../codeexport/%s/energy_potential_fixb_regressor_minpar_maple.m&quot;, robot_name):
+  read sprintf(&quot;../codeexport/%s/energy_kinetic_%s_regressor_minpar_maple.m&quot;, robot_name, expstring):
+  read sprintf(&quot;../codeexport/%s/energy_potential_%s_regressor_minpar_maple.m&quot;, robot_name, expstring):
   t_ges := t_ges_minpar:
   u_ges := u_ges_minpar:
   <Font encoding="UTF-8">printf(&quot;Generiere Minimalparameterregressor der Dynamik f\303\274r %s\134n&quot;, robot_name):</Font>
@@ -205,12 +233,41 @@ end if:</Text-field>
 <Group labelreference="L1761" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if regressor_modus = &quot;regressor&quot; then
-  read sprintf(&quot;../codeexport/%s/energy_kinetic_fixb_regressor_maple.m&quot;, robot_name):
-  read sprintf(&quot;../codeexport/%s/energy_potential_fixb_regressor_maple.m&quot;, robot_name):
+  read sprintf(&quot;../codeexport/%s/energy_kinetic_%s_regressor_maple.m&quot;, robot_name, expstring):
+  read sprintf(&quot;../codeexport/%s/energy_potential_%s_regressor_maple.m&quot;, robot_name, expstring):
   t_ges := t_ges:
   u_ges := u_ges:
   <Font encoding="UTF-8">printf(&quot;Generiere Regressor der Dynamik f\303\274r %s (nicht Minimalparameter)\134n&quot;, robot_name):</Font>
 end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1771" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Schalter zur Auswahl der unterschiedlichen Terme, die exportiert werden sollen. F\303\274r parallele Berechnung interessant.</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1772" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">DynString := &quot;Term:&quot;:
+if codeexport_grav then
+  DynString := sprintf(&quot;%s g&quot;,DynString):
+end if:
+if codeexport_corvec then
+  DynString := sprintf(&quot;%s c&quot;,DynString):
+end if:
+if codeexport_cormat then
+  DynString := sprintf(&quot;%s C&quot;,DynString):
+end if:
+if codeexport_inertia then
+  DynString := sprintf(&quot;%s M&quot;,DynString):
+end if:
+if codeexport_inertiaD then
+  DynString := sprintf(&quot;%s MD&quot;,DynString):
+end if:
+if codeexport_invdyn then
+  DynString := sprintf(&quot;%s tau&quot;,DynString):
+end if:
+<Font encoding="UTF-8">printf(&quot;Generiere Dynamik-Regressor (%s) f\303\274r %s und %s\134n&quot;, </Font>DynString, robot_name, base_method_name):</Text-field>
 </Input>
 </Group>
 </Section>
@@ -259,15 +316,51 @@ save dTdqDdt_s, sprintf(&quot;../codeexport/%s/floatb_lagrange_dTdqDdt_s_%s_mapl
 <Text-field style="Text" layout="Normal">Matlab Export</Text-field>
 </Input>
 </Group>
+<Group labelreference="L1778" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Belastung der Basis (nur Floating Base)</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1779" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_grav and not(base_method_name=&quot;twist&quot;) then
+  MatlabExport(taug_regressor_s(1..6,..), sprintf(&quot;../codeexport/%s/base_gravload_floatb_%s_%s_matlab.m&quot;, robot_name, base_method_name, regressor_modus), codegen_opt):
+end if:</Text-field>
+</Input>
+</Group>
 <Group labelreference="L1691" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal">Belastung der Gelenke</Text-field>
+<Text-field style="Text" layout="Normal">Belastung der Gelenke: Fixed Base</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1673" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(taug_regressor_s(7..NQ,..), sprintf(&quot;../codeexport/%s/gravload_joint_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_grav and base_method_name=&quot;twist&quot; then
+  MatlabExport(taug_regressor_s, sprintf(&quot;../codeexport/%s/joint_gravload_fixb_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
+end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1784" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Belastung der Gelenke: Floating Base (Eingang ist jetzt der Gravitationsvektor im Welt-KS, nicht mehr im Basis-KS)</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1783" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_grav and not(base_method_name=&quot;twist&quot;) then
+  MatlabExport(taug_regressor_s(7..NQ,..), sprintf(&quot;../codeexport/%s/joint_gravload_floatb_%s_%s_matlab.m&quot;, robot_name, base_method_name, regressor_modus), codegen_opt):
+end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1781" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Kompletter Vektor</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1780" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_grav and not(base_method_name=&quot;twist&quot;) then
+  MatlabExport(taug_regressor_s(1..NQ,..), sprintf(&quot;../codeexport/%s/gravload_floatb_%s_%s_matlab.m&quot;, robot_name, base_method_name, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -282,14 +375,18 @@ Siehe: https://de.wikipedia.org/wiki/Symmetrische_Matrix</Text-field>
 </Group>
 <Group labelreference="L1713" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Paramvec_size := ColumnDimension(t_ges):
-tauMMj_regressor_s := dTdqDdt_s(7..NQ,..):
-MMjj_regressor_s := Matrix(NQJ*(NQJ+1)/2, Paramvec_size):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Paramvec_size := ColumnDimension(t_ges):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1714" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal">Berechnung</Text-field>
+<Text-field style="Text" layout="Normal">Berechnung Gelenkmassenmatrix</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1790" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">tauMMj_regressor_s := dTdqDdt_s(7..NQ,..):
+MMjj_regressor_s := Matrix(NQJ*(NQJ+1)/2, Paramvec_size):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1711" drawlabel="true">
@@ -310,13 +407,88 @@ end do:</Text-field>
 </Group>
 <Group labelreference="L1710" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal">Matlab Export</Text-field>
+<Text-field style="Text" layout="Normal">Export Gelenkmassenmatrix</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1712" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(MMjj_regressor_s, sprintf(&quot;../codeexport/%s/inertia_joint_joint_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertia and base_method_name=&quot;twist&quot; then
+  MatlabExport(MMjj_regressor_s, sprintf(&quot;../codeexport/%s/inertia_joint_joint_fixb_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
+end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1787" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Berechnung vollst\303\244ndige Massenmatrix</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1789" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">tauMM_regressor_s := dTdqDdt_s(1..NQ,..):
+MM_regressor_s := Matrix(NQ*(NQ+1)/2, Paramvec_size):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1788" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">i_rr := 0:
+for i to NQ do # Zeilenindex der Massenmatrix
+  for j to NQ do  # Spaltenindex der Massenmatrix
+    if j &gt; i then
+      next: # rechte obere Seite der symmetrischen Matrix. Keine neue Information. Nicht berechnen oder speichern.
+    end if:
+    i_rr := i_rr + 1: # Gehe zeilenweise durch den unteren linken Teil der Massenmatrix (inkl. Diagonale)
+    for k to Paramvec_size do # Spaltenindex der Regressormatrix
+      MM_regressor_s[i_rr, k] := diff(tauMM_regressor_s[i, k], qDD_s[j, 1]):
+    end do:
+  end do:
+end do:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1786" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Export Gesamt-Massenmatrix</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1791" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertia and not(base_method_name=&quot;twist&quot;) then
+  MatlabExport(MM_regressor_s, sprintf(&quot;../codeexport/%s/inertia_floatb_%s_%s_matlab.m&quot;, robot_name, base_method_name, regressor_modus), codegen_opt):
+end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1792" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Gelenk-Basis-Massenmatrix (untere linke Teilmatrix der Gesamt-Massenmatrix</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1801" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MMjb_regressor_s := Matrix(6*NQJ, Paramvec_size):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1804" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Gehe Schleife \303\274ber alle Massenmatrix-Elemente durch und entnehme die passenden Elemente f\303\274r die Teilmatrix)</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1800" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">itmp:=0:
+for i to NQ do
+  for j to NQ do  # Spaltenindex der Massenmatrix
+    if i &gt; 6 and j &lt; 7 then # unterer linker Teil
+      i_MM := <Font encoding="UTF-8">index_symmat2vec(NQ,i,j): # Passender Index f\303\274r zeilenweise ausgew\303\244hlten symmetrischen Teil
+      </Font>itmp := itmp + 1:
+      MMjb_regressor_s[itmp,..] := MM_regressor_s[i_MM,..]:
+    end if:
+  end do:
+end do:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1797" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertia and not(base_method_name=&quot;twist&quot;) then
+  MatlabExport(MMjb_regressor_s, sprintf(&quot;../codeexport/%s/inertia_joint_base_floatb_%s_%s_matlab.m&quot;, robot_name, base_method_name, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -350,7 +522,7 @@ end if:</Text-field>
 </Group>
 <Group labelreference="L1600" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertia and base_method_name=&quot;twist&quot; then
   MatlabExport(MMDjj_regressor_s, sprintf(&quot;../codeexport/%s/inertiaD_joint_joint_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
@@ -388,7 +560,7 @@ end do:</Text-field>
 </Group>
 <Group labelreference="L1718" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_corvec and base_method_name=&quot;twist&quot; then
   MatlabExport(tauC_regressor_s(7..NQ,..), sprintf(&quot;../codeexport/%s/coriolisvec_joint_fixb_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>

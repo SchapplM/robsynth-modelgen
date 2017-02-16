@@ -115,8 +115,18 @@ do
   dateiliste_plin="
     $dateiliste_plin
     robot_codegen_definitions/robot_tree_base_parameter_transformations.mpl
-    robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_pv2.mpl
-    robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_minpar.mpl
+	  robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_minpar_corvec.mpl
+	  robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_minpar_cormat.mpl
+	  robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_minpar_grav.mpl
+	  robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_minpar_inertia.mpl
+	  robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_minpar_inertiaD.mpl
+	  robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_minpar_invdyn.mpl
+	  robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_pv2_corvec.mpl
+	  robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_pv2_cormat.mpl
+	  robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_pv2_grav.mpl
+	  robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_pv2_inertia.mpl
+	  robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_pv2_inertiaD.mpl
+	  robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_pv2_invdyn.mpl
   "
 
   # Zusätzliche Maple-Skripte speziell für dieses System (benutzerdefiniert)

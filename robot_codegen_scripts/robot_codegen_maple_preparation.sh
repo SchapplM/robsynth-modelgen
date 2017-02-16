@@ -43,6 +43,27 @@ cp $repo_pfad/robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regresso
 cp $repo_pfad/robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor.mpl $repo_pfad/robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_pv2.mpl
 sed -i "s/regressor_modus := \"regressor_minpar\":/regressor_modus := \"regressor\":/g" $repo_pfad/robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_pv2.mpl
 
+# Erstelle einzelne Arbeitsblätter für jeden Teil der inversen Dynamik als Regressor
+codeexportswitches=( corvec cormat grav inertia inertiaD invdyn )
+for rm in "minpar" "pv2"
+do
+  echo $rm
+  for ces in "${codeexportswitches[@]}"
+  do
+    mpldat=$repo_pfad/robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_${rm}_${ces}.mpl
+    cp $repo_pfad/robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_${rm}.mpl $mpldat
+		# deaktiviere jede Code-Exportierung
+		for ces2 in "${codeexportswitches[@]}"
+		do
+		  sed -i "s/codeexport_${ces2} := true:/codeexport_${ces2} := false:/g" $mpldat
+    done
+    # Aktivierung der gewünschten Code-Exportierung
+		sed -i "s/codeexport_${ces} := false:/codeexport_${ces} := true:/g" $mpldat
+  done
+done
+
+
+
 # Jacobi-Matrix-Skripte vorbereiten, so dass die Jacobi-Matrix für alle Körper generiert wird.
 for (( ib=1; ib<=$robot_NL; ib++ ))
 do
