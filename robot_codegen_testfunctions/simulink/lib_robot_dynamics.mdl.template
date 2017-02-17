@@ -15703,7 +15703,7 @@ Stateflow {
     eml {
       isEML		      1
       script		      "function taug = gravload(q, ob, g_world, pkin, MPV)\n%#codegen\n\ntauBg_reg = %RN%_grav"
-      "load_base_floatb_eulangrpy_regmin_slag_vp(q, ob, g_world, pkin);\ntauJg_reg = %RN%_gravloadJ_floa"
+      "loadB_floatb_eulangrpy_regmin_slag_vp(q, ob, g_world, pkin);\ntauJg_reg = %RN%_gravloadJ_floa"
       "tb_eulangrpy_regmin_slag_vp(q, ob, g_world, pkin);    \ntaug_reg = [tauBg_reg;tauJg_reg];\ntaug = taug_reg*MPV;\n"
       "\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
