@@ -165,7 +165,7 @@ do
 
     # Gravitationsmoment (Basis)
     quelldat=$repo_pfad/codeexport/${robot_name}/base_gravload_floatb_${basemeth}_${maple_string}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_gravload_base_floatb_${basemeth}_slag_${matlab_string}.m
+    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_gravload_base_floatb_${basemeth}_${matlab_string}_slag_vp.m
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_gravload_base_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -196,9 +196,152 @@ do
     fi
 
 
+
+    # Coriolisvektor (Floating Base, Basis)
+    quelldat=$repo_pfad/codeexport/${robot_name}/coriolisvec_base_floatb_${basemeth}_${maple_string}_matlab.m
+    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_coriolisvec_base_floatb_${basemeth}_${matlab_string}_slag_vp.m
+    if [ -f $quelldat ]; then
+      cat ${tmp_pfad}_head/robot_matlabtmp_coriolisvec_base_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
+      printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
+      if [ $basemeth == "twist" ]; then
+        cat $tmp_pfad/robot_matlabtmp_assert_vB.m >> $zieldat
+      else
+        cat $tmp_pfad/robot_matlabtmp_assert_phiB.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_assert_xDB.m >> $zieldat
+      fi
+      cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+      
+      printf "\n%%%% Variable Initialization" >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
+      if [ $basemeth == "twist" ]; then
+        cat $tmp_pfad/robot_matlabtmp_vB.m >> $zieldat
+      else
+        cat $tmp_pfad/robot_matlabtmp_phiB.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_xDB.m >> $zieldat
+      fi
+      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
+      
+      printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+      cat $quelldat >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0
+    else
+      echo "Code in ${quelldat##*/} nicht gefunden."
+    fi
+
+    # Coriolisvektor (Floating Base, Gelenke)
+    quelldat=$repo_pfad/codeexport/${robot_name}/coriolisvec_joint_floatb_${basemeth}_${maple_string}_matlab.m
+    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_coriolisvec_joint_floatb_${basemeth}_${matlab_string}_slag_vp.m
+    if [ -f $quelldat ]; then
+      cat ${tmp_pfad}_head/robot_matlabtmp_coriolisvec_joint_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
+      printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
+      if [ $basemeth == "twist" ]; then
+        cat $tmp_pfad/robot_matlabtmp_assert_vB.m >> $zieldat
+      else
+        cat $tmp_pfad/robot_matlabtmp_assert_phiB.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_assert_xDB.m >> $zieldat
+      fi
+      cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+      
+      printf "\n%%%% Variable Initialization" >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
+      if [ $basemeth == "twist" ]; then
+        cat $tmp_pfad/robot_matlabtmp_vB.m >> $zieldat
+      else
+        cat $tmp_pfad/robot_matlabtmp_phiB.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_xDB.m >> $zieldat
+      fi
+      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
+      
+      printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+      cat $quelldat >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0
+    else
+      echo "Code in ${quelldat##*/} nicht gefunden."
+    fi
+
+
+    # Coriolisvektor (Floating Base, Gesamt: Basis und Gelenke)
+    quelldat=$repo_pfad/codeexport/${robot_name}/coriolisvec_floatb_${basemeth}_${maple_string}_matlab.m
+    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_coriolisvec_floatb_${basemeth}_${matlab_string}_slag_vp.m
+    if [ -f $quelldat ]; then
+      cat ${tmp_pfad}_head/robot_matlabtmp_coriolisvec_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
+      printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
+      if [ $basemeth == "twist" ]; then
+        cat $tmp_pfad/robot_matlabtmp_assert_vB.m >> $zieldat
+      else
+        cat $tmp_pfad/robot_matlabtmp_assert_phiB.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_assert_xDB.m >> $zieldat
+      fi
+      cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+      
+      printf "\n%%%% Variable Initialization" >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
+      if [ $basemeth == "twist" ]; then
+        cat $tmp_pfad/robot_matlabtmp_vB.m >> $zieldat
+      else
+        cat $tmp_pfad/robot_matlabtmp_phiB.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_xDB.m >> $zieldat
+      fi
+      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
+      
+      printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+      cat $quelldat >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0
+    else
+      echo "Code in ${quelldat##*/} nicht gefunden."
+    fi
+
+
+
+
+    # Coriolismatrix (Floating Base: Gesamt)
+    quelldat=$repo_pfad/codeexport/${robot_name}/coriolismat_floatb_${basemeth}_${maple_string}_matlab.m
+    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_coriolismat_floatb_${basemeth}_${matlab_string}_slag_vp.m
+    if [ -f $quelldat ]; then
+      cat ${tmp_pfad}_head/robot_matlabtmp_coriolismat_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
+      printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
+      if [ $basemeth == "twist" ]; then
+        cat $tmp_pfad/robot_matlabtmp_assert_vB.m >> $zieldat
+      else
+        cat $tmp_pfad/robot_matlabtmp_assert_phiB.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_assert_xDB.m >> $zieldat
+      fi
+      cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+      
+      printf "\n%%%% Variable Initialization" >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
+      if [ $basemeth == "twist" ]; then
+        cat $tmp_pfad/robot_matlabtmp_vB.m >> $zieldat
+      else
+        cat $tmp_pfad/robot_matlabtmp_phiB.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_xDB.m >> $zieldat
+      fi
+      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
+     
+      printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+      cat $quelldat >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat
+    else
+      echo "Code in ${quelldat##*/} nicht gefunden."
+    fi
+
+
+
     # Massenmatrix (Gesamt)
     quelldat=$repo_pfad/codeexport/${robot_name}/inertia_floatb_${basemeth}_${maple_string}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_inertia_floatb_${basemeth}_slag_${matlab_string}.m
+    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_inertia_floatb_${basemeth}_${matlab_string}_slag_vp.m
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_inertia_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -226,7 +369,7 @@ do
 
     # Massenmatrix (Basis-Gelenke)
     quelldat=$repo_pfad/codeexport/${robot_name}/inertia_joint_base_floatb_${basemeth}_${maple_string}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_inertia_joint_base_floatb_${basemeth}_slag_${matlab_string}.m
+    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_inertia_joint_base_floatb_${basemeth}_${matlab_string}_slag_vp.m
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_inertia_joint_base_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -250,6 +393,81 @@ do
       printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
       cat $quelldat >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat
+    else
+      echo "Code in ${quelldat##*/} nicht gefunden."
+    fi
+
+    # Massenmatrix-Zeitableitung (Floating Base: Gesamt)
+    quelldat=$repo_pfad/codeexport/${robot_name}/inertiaD_floatb_${basemeth}_${maple_string}_matlab.m
+    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_inertiaD_floatb_${basemeth}_${matlab_string}_slag_vp.m
+    if [ -f $quelldat ]; then
+      cat ${tmp_pfad}_head/robot_matlabtmp_inertiaD_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
+      printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
+      if [ $basemeth == "twist" ]; then
+        :
+      else
+        cat $tmp_pfad/robot_matlabtmp_assert_phiB.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_assert_xDB.m >> $zieldat
+      fi
+      cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+      
+      printf "\n%%%% Variable Initialization" >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
+      if [ $basemeth == "twist" ]; then
+        :
+      else
+        cat $tmp_pfad/robot_matlabtmp_phiB.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_xDB.m >> $zieldat
+      fi
+      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
+      printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+      cat $quelldat >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0
+    else
+      echo "Code in ${quelldat##*/} nicht gefunden."
+    fi
+
+    # Inverse Dynamik der Gelenke (Floating Base)
+    quelldat=$repo_pfad/codeexport/${robot_name}/invdyn_joint_floatb_${basemeth}_${maple_string}_matlab.m
+    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_invdyn_joint_floatb_${basemeth}_${matlab_string}_slag_vp.m
+    if [ -f $quelldat ]; then
+      cat ${tmp_pfad}_head/robot_matlabtmp_invdyn_joint_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
+      printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qDD.m >> $zieldat
+      if [ $basemeth == "twist" ]; then
+        cat $tmp_pfad/robot_matlabtmp_assert_vB.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_assert_aB.m >> $zieldat
+      else
+        cat $tmp_pfad/robot_matlabtmp_assert_phiB.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_assert_xDB.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_assert_xDDB.m >> $zieldat
+      fi
+      cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+     
+      printf "\n%%%% Variable Initialization" >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qDD.m >> $zieldat
+      if [ $basemeth == "twist" ]; then
+        cat $tmp_pfad/robot_matlabtmp_vB.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_aB.m >> $zieldat
+      else
+        cat $tmp_pfad/robot_matlabtmp_phiB.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_xDB.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_xDDB.m >> $zieldat
+      fi
+      cat $tmp_pfad/robot_matlabtmp_g.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
+      
+      printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+      cat $quelldat >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0
     else
       echo "Code in ${quelldat##*/} nicht gefunden."
     fi
