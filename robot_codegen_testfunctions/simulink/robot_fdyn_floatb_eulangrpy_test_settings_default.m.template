@@ -37,7 +37,7 @@ simin_tau_m = struct('time', 0, ...
     'signals', struct('values', zeros(1,NQJ), 'dimensions', NQJ), ...
     'name', 'tau_m');
 %% Configure Model
-sl_Modellname = '%RN%_fdyn_floatb_eulangrpy_test';
+sl_Modellname = '%RN%_fdyn_floatb_eulangrpy_test_vp1';
 load_system(sl_Modellname)
 configSet = getActiveConfigSet(sl_Modellname);
 set_param(configSet, 'Solver', 'ode4');
