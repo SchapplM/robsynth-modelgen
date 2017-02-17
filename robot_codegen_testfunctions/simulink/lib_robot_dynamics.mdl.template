@@ -14446,9 +14446,7 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function taug = gravload(q, ob, g_world, pkin, m, r_S)\n%#codegen\n\ntaug_base = %RN%_g"
-      "ravload_base_floatb_eulangrpy_slag_vp1(q, ob, g_world, ...\n  pkin, m, r_S);\ntaug_joints = %RN%_gravl"
-      "oad_joint_floatb_eulangrpy_slag_vp1(q, ob, g_world,...\n  pkin, m, r_S);\ntaug = [taug_base; taug_joints];\n\n\n"
+      script		      "function taug = gravload(q, ob, g_world, pkin, m, r_S)\n%#codegen\n\ntaug_base = %RN%_gravloadB_floatb_eulangrpy_slag_vp1(q, ob, g_world, ...\n  pkin, m, r_S);\ntaug_joints = %RN%_gravloadJ_floatb_eulangrpy_slag_vp1(q, ob, g_world,...\n  pkin, m, r_S);\ntaug = [taug_base; taug_joints];\n\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -15705,7 +15703,7 @@ Stateflow {
     eml {
       isEML		      1
       script		      "function taug = gravload(q, ob, g_world, pkin, MPV)\n%#codegen\n\ntauBg_reg = %RN%_grav"
-      "load_base_floatb_eulangrpy_regmin_slag_vp(q, ob, g_world, pkin);\ntauJg_reg = %RN%_gravload_joint_floa"
+      "load_base_floatb_eulangrpy_regmin_slag_vp(q, ob, g_world, pkin);\ntauJg_reg = %RN%_gravloadJ_floa"
       "tb_eulangrpy_regmin_slag_vp(q, ob, g_world, pkin);    \ntaug_reg = [tauBg_reg;tauJg_reg];\ntaug = taug_reg*MPV;\n"
       "\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"

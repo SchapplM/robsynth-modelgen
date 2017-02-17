@@ -132,11 +132,11 @@ for i = 1:n
   R_W_0 = rpy2r(ob(1), ob(2), ob(3));
   g_base = (R_W_0')*g_world;
   % calculate gravitational base load with optimized function
-  tauBg_b_par1 = %RN%_gravload_base_floatb_eulangrpy_slag_vp1(q, ob, g_world, ...
+  tauBg_b_par1 = %RN%_gravloadB_floatb_eulangrpy_slag_vp1(q, ob, g_world, ...
     pkin, m, rSges);
 
   % calculate gravitational base load with base parameter regressor
-  tauBg_b_regmin = %RN%_gravload_base_floatb_eulangrpy_regmin_slag_vp(q, ob, g_world, ...
+  tauBg_b_regmin = %RN%_gravloadB_floatb_eulangrpy_regmin_slag_vp(q, ob, g_world, ...
     pkin);
   tauBg_b_mpv = tauBg_b_regmin*MPV;
   if any( abs(tauBg_b_mpv-tauBg_b_par1) > 1e-12 )
@@ -144,7 +144,7 @@ for i = 1:n
   end
   
   % calculate gravitational base load with inertial parameter regressor
-  tauBg_b_reg2 = %RN%_gravload_base_floatb_eulangrpy_reg2_slag_vp(q, ob, g_world, ...
+  tauBg_b_reg2 = %RN%_gravloadB_floatb_eulangrpy_reg2_slag_vp(q, ob, g_world, ...
     pkin);
   tauBg_b_pv2 = tauBg_b_reg2*PV2floatb;
   if any (abs(tauBg_b_pv2-tauBg_b_par1) > 1e-12 )

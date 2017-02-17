@@ -165,9 +165,9 @@ do
 
     # Gravitationsmoment (Basis)
     quelldat=$repo_pfad/codeexport/${robot_name}/base_gravload_floatb_${basemeth}_${maple_string}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_gravload_base_floatb_${basemeth}_${matlab_string}_slag_vp.m
+    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_gravloadB_floatb_${basemeth}_${matlab_string}_slag_vp.m
     if [ -f $quelldat ]; then
-      cat ${tmp_pfad}_head/robot_matlabtmp_gravload_base_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
+      cat ${tmp_pfad}_head/robot_matlabtmp_gravloadB_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
       if [ $basemeth == "twist" ]; then
@@ -197,9 +197,9 @@ do
 
     # Gravitationsmoment (Gelenke)
     quelldat=$repo_pfad/codeexport/${robot_name}/joint_gravload_floatb_${basemeth}_${maple_string}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_gravload_joint_floatb_${basemeth}_${matlab_string}_slag_vp.m
+    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_gravloadJ_floatb_${basemeth}_${matlab_string}_slag_vp.m
     if [ -f $quelldat ]; then
-      cat ${tmp_pfad}_head/robot_matlabtmp_gravload_joint_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
+      cat ${tmp_pfad}_head/robot_matlabtmp_gravloadJ_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
       if [ $basemeth == "twist" ]; then

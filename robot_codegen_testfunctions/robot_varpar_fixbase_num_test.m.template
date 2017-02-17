@@ -34,7 +34,7 @@ for i = 1:n
   g_base = G(i,:)';
   
   % Gravitation
-  taug_sym = %RN%_gravload_joint_floatb_twist_slag_vp1(qJ, g_base, ...
+  taug_sym = %RN%_gravloadJ_floatb_twist_slag_vp1(qJ, g_base, ...
     pkin, m, rSges);
   taug_num1 = robot_tree_invdyn_floatb_eulangrpy_nnew_vp1(qJ, zeros(NJ,1), zeros(NJ,1), zeros(3,1), zeros(6,1), [-g_base;zeros(3,1)], ...
     alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
@@ -105,9 +105,9 @@ fprintf('Numerische Dynamikfunktionen (Fixed Base) gegen symbolische erfolgreich
 % Berechne Gravitationslast mit unterschiedlichen Methoden:
 % Symbolisch, numerisch, mit inverser Dynamik und mit Spezialfunktione,
 % kompiliert (mex) und normaler Aufruf
-Mex_Erstellen({'%RN%_gravload_joint_floatb_twist_slag_vp1', ...
-  '%RN%_gravload_joint_floatb_twist_slag_vp2', ...
-  '%RN%_gravload_joint_regmin_slag_vp', ...
+Mex_Erstellen({'%RN%_gravloadJ_floatb_twist_slag_vp1', ...
+  '%RN%_gravloadJ_floatb_twist_slag_vp2', ...
+  '%RN%_gravloadJ_regmin_slag_vp', ...
   '%RN%_invdyn_floatb_eulangrpy_nnew_vp1', ...
   '%RN%_gravload_floatb_eulangrpy_nnew_vp1'});
 n = 2000;
@@ -115,39 +115,39 @@ n = 2000;
 t_ber_g = NaN(2,7);
 tic;
 for i = 1:n
-  taug_sym = %RN%_gravload_joint_floatb_twist_slag_vp1(qJ+i*1e-3, g_base, ...
+  taug_sym = %RN%_gravloadJ_floatb_twist_slag_vp1(qJ+i*1e-3, g_base, ...
     pkin, m, rSges);
 end
 t_ber_g(1,1) = toc/n;
 tic;
 for i = 1:n
-  taug_sym = %RN%_gravload_joint_floatb_twist_slag_vp1_mex(qJ+i*1e-3, g_base, ...
+  taug_sym = %RN%_gravloadJ_floatb_twist_slag_vp1_mex(qJ+i*1e-3, g_base, ...
     pkin, m, rSges);
 end
 t_ber_g(2,1) = toc/n;
 tic;
 for i = 1:n
-  taug_sym = %RN%_gravload_joint_floatb_twist_slag_vp2(qJ+i*1e-3, g_base, ...
+  taug_sym = %RN%_gravloadJ_floatb_twist_slag_vp2(qJ+i*1e-3, g_base, ...
     pkin, m, mrSges);
 end
 t_ber_g(1,2) = toc/n;
 tic;
 for i = 1:n
-  taug_sym = %RN%_gravload_joint_floatb_twist_slag_vp2_mex(qJ+i*1e-3, g_base, ...
+  taug_sym = %RN%_gravloadJ_floatb_twist_slag_vp2_mex(qJ+i*1e-3, g_base, ...
     pkin, m, mrSges);
 end
 t_ber_g(2,2) = toc/n;
 tic;
 for i = 1:n
   t_ber_g(2,2) = toc/n;
-    taug_reg = %RN%_gravload_joint_regmin_slag_vp(qJ+i*1e-3, g_base, pkin);
+    taug_reg = %RN%_gravloadJ_regmin_slag_vp(qJ+i*1e-3, g_base, pkin);
     taug_mpv = taug_reg*MPV;
 end
 t_ber_g(1,3) = toc/n;
 tic;
 for i = 1:n
   t_ber_g(2,2) = toc/n;
-    taug_reg = %RN%_gravload_joint_regmin_slag_vp_mex(qJ+i*1e-3, g_base, pkin);
+    taug_reg = %RN%_gravloadJ_regmin_slag_vp_mex(qJ+i*1e-3, g_base, pkin);
     taug_mpv = taug_reg*MPV;
 end
 t_ber_g(2,3) = toc/n;

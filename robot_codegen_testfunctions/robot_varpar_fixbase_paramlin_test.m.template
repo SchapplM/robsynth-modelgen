@@ -125,10 +125,10 @@ for i = 1:n
   q = Q(i,:)';
   g_base = G(i,:)';
   % calculate gravitational load with optimized function
-  taug_func = %RN%_gravload_joint_floatb_twist_slag_vp1(q, g_base, ...
+  taug_func = %RN%_gravloadJ_floatb_twist_slag_vp1(q, g_base, ...
     pkin, m, rSges);
   % calculate gravitational load with base parameter regressor
-  taug_regmin = %RN%_gravload_joint_regmin_slag_vp(q, g_base, ...
+  taug_regmin = %RN%_gravloadJ_regmin_slag_vp(q, g_base, ...
     pkin);
   taug_mpv = taug_regmin*MPV;
   if any( abs(taug_mpv-taug_func) > 1e-12 )
@@ -136,7 +136,7 @@ for i = 1:n
   end
   
   % calculate gravitational load with inertial parameter regressor
-  taug_reg2 = %RN%_gravload_joint_reg2_slag_vp(q, g_base, ...
+  taug_reg2 = %RN%_gravloadJ_reg2_slag_vp(q, g_base, ...
     pkin);
   taug_pv2 = taug_reg2*PV2fixb;
   if any (abs(taug_pv2-taug_func) > 1e-12 )
