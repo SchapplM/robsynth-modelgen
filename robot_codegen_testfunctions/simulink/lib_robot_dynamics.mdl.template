@@ -9080,7 +9080,7 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function taug = coriolis(q, qD, pkin, MPV)\n%#codegen\ntauc_reg = %RN%_coriolisvec_joint"
+      script		      "function taug = coriolis(q, qD, pkin, MPV)\n%#codegen\ntauc_reg = %RN%_coriolisvecJ"
       "_fixb_regmin_slag_vp(q, qD, pkin);\ntaug = tauc_reg*MPV;\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
@@ -10193,8 +10193,7 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function tauc = coriolis(q, qD, pkin, m, r_S, I_S)\n%#codegen\ntauc = %RN%_coriolisvec_j"
-      "oint_fixb_slag_vp1(q, qD, pkin, m, r_S, I_S);\n\n"
+      script		      "function tauc = coriolis(q, qD, pkin, m, r_S, I_S)\n%#codegen\ntauc = %RN%_coriolisvecJ_fixb_slag_vp1(q, qD, pkin, m, r_S, I_S);\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }

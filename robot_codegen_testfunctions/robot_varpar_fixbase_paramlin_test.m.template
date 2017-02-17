@@ -151,10 +151,10 @@ for i = 1:n
   q = Q(i,:)';
   qD = QD(i,:)';
   % calculate coriolis torques with optimized function
-  tauc_func = %RN%_coriolisvec_joint_fixb_slag_vp1(q, qD, ...
+  tauc_func = %RN%_coriolisvecJ_fixb_slag_vp1(q, qD, ...
     pkin, m, rSges, Icges);
   % calculate coriolis torques with base parameter regressor
-  tauc_regmin = %RN%_coriolisvec_joint_fixb_regmin_slag_vp(q, qD, ...
+  tauc_regmin = %RN%_coriolisvecJ_fixb_regmin_slag_vp(q, qD, ...
     pkin);
   tauc_mpv = tauc_regmin*MPV;
   if any (abs(tauc_mpv-tauc_func) > 1e-12 )
@@ -162,7 +162,7 @@ for i = 1:n
   end
   
   % calculate coriolis torques with inertial parameter regressor
-  tauc_reg2 = %RN%_coriolisvec_joint_fixb_reg2_slag_vp(q, qD, ...
+  tauc_reg2 = %RN%_coriolisvecJ_fixb_reg2_slag_vp(q, qD, ...
     pkin);
   tauc_pv2 = tauc_reg2*PV2fixb;
   if any( abs(tauc_pv2-tauc_func) > 1e-12 )
@@ -177,10 +177,10 @@ for i = 1:n
   q = Q(i,:)';
   qD = QD(i,:)';
   % calculate Coriolis-Matrix with optimized function
-  Cq_func = %RN%_coriolismat_joint_fixb_slag_vp1(q, qD, ...
+  Cq_func = %RN%_coriolismatJ_fixb_slag_vp1(q, qD, ...
     pkin, m, rSges, Icges);
   % calculate Coriolis-Matrix with base parameter regressor
-  Cq_regmin = %RN%_coriolismat_joint_fixb_regmin_slag_vp(q, qD, ...
+  Cq_regmin = %RN%_coriolismatJ_fixb_regmin_slag_vp(q, qD, ...
     pkin);
   Cq_mpv_vec = Cq_regmin*MPV;
   Cq_mpv = reshape(Cq_mpv_vec, NQJ, NQJ)';
@@ -189,7 +189,7 @@ for i = 1:n
   end
   
   % calculate Coriolis-Matrix with inertial parameter regressor
-  Cq_reg2 = %RN%_coriolismat_joint_fixb_reg2_slag_vp(q, qD, ...
+  Cq_reg2 = %RN%_coriolismatJ_fixb_reg2_slag_vp(q, qD, ...
     pkin);
   Cq_pv2_vec = Cq_reg2*PV2fixb;
   Cq_pv2 = reshape(Cq_pv2_vec, NQJ, NQJ)';

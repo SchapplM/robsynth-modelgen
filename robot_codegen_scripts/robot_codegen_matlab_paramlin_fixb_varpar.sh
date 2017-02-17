@@ -91,9 +91,9 @@ do
 
   # Coriolis-Vektor
   quelldat=$repo_pfad/codeexport/${robot_name}/coriolisvec_joint_fixb_${maple_string}_matlab.m
-  zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_coriolisvec_joint_fixb_${matlab_string}_slag_vp.m
+  zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_coriolisvecJ_fixb_${matlab_string}_slag_vp.m
   if [ -f $quelldat ]; then
-    cat ${tmp_pfad}_head/robot_matlabtmp_coriolisvec_joint_fixb_${matlab_string}.head.m > $zieldat
+    cat ${tmp_pfad}_head/robot_matlabtmp_coriolisvecJ_fixb_${matlab_string}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
@@ -111,9 +111,9 @@ do
 
   # Coriolis-Matrix
   quelldat=$repo_pfad/codeexport/${robot_name}/coriolismat_joint_fixb_${maple_string}_matlab.m
-  zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_coriolismat_joint_fixb_${matlab_string}_slag_vp.m
+  zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_coriolismatJ_fixb_${matlab_string}_slag_vp.m
   if [ -f $quelldat ]; then
-    cat ${tmp_pfad}_head/robot_matlabtmp_coriolismat_joint_fixb_${matlab_string}.head.m > $zieldat
+    cat ${tmp_pfad}_head/robot_matlabtmp_coriolismatJ_fixb_${matlab_string}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
