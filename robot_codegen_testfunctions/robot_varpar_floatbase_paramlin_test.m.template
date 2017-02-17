@@ -190,10 +190,10 @@ for i = 1:n
   ob = OB(i,:)';
   q = Q(i,:)';
   % calculate inertia with optimized function
-  Mqb_func = %RN%_inertia_joint_base_floatb_eulangrpy_slag_vp1(q, ob, ...
+  Mqb_func = %RN%_inertiaJB_floatb_eulangrpy_slag_vp1(q, ob, ...
     pkin, m, rSges, Icges);
   % calculate inertia with base parameter regressor       
-  Mqb_regmin = %RN%_inertia_joint_base_floatb_eulangrpy_regmin_slag_vp(q, ob, ...
+  Mqb_regmin = %RN%_inertiaJB_floatb_eulangrpy_regmin_slag_vp(q, ob, ...
     pkin);
   Mqb_mpv_vec = Mqb_regmin*MPV;
   Mqb_mpv = reshape(Mqb_mpv_vec, 6, NQJ)';
@@ -201,7 +201,7 @@ for i = 1:n
     error('Floating Base inertia matrix from base parameter vector does not match with direct form.');
   end
   % calculate inertia with inertial parameter regressor
-  Mqb_reg2 = %RN%_inertia_joint_base_floatb_eulangrpy_reg2_slag_vp(q, ob, ...
+  Mqb_reg2 = %RN%_inertiaJB_floatb_eulangrpy_reg2_slag_vp(q, ob, ...
     pkin);
   Mqb_pv2_vec = Mqb_reg2*PV2floatb;
   Mqb_pv2 = reshape(Mqb_pv2_vec, 6, NQJ)';

@@ -105,9 +105,9 @@ do
 
     # Massenmatrix (Gelenke)
     quelldat=$repo_pfad/codeexport/${robot_name}/inertia_joint_joint_floatb_${basemeth}_par${dynpar}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_inertia_joint_slag_vp${dynpar}.m
+    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_inertiaJ_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
-      cat ${tmp_pfad}_head/robot_matlabtmp_inertia_joint_par${dynpar}.head.m > $zieldat
+      cat ${tmp_pfad}_head/robot_matlabtmp_inertiaJ_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
@@ -188,9 +188,9 @@ do
 
     # Massenmatrix-Zeitableitung (Gelenke)
     quelldat=$repo_pfad/codeexport/${robot_name}/inertia_joint_joint_time_derivative_floatb_${basemeth}_par${dynpar}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_inertiaD_joint_slag_vp${dynpar}.m
+    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_inertiaDJ_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
-      cat ${tmp_pfad}_head/robot_matlabtmp_inertiaD_joint_par${dynpar}.head.m > $zieldat
+      cat ${tmp_pfad}_head/robot_matlabtmp_inertiaDJ_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat

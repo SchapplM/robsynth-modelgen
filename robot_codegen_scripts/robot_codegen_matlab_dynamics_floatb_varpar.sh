@@ -525,9 +525,9 @@ do
 
     # Massenmatrix (Basis-Gelenke)
     quelldat=$repo_pfad/codeexport/${robot_name}/inertia_joint_base_floatb_${basemeth}_par${dynpar}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_inertia_joint_base_floatb_${basemeth}_slag_vp${dynpar}.m
+    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_inertiaJB_floatb_${basemeth}_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
-      cat ${tmp_pfad}_head/robot_matlabtmp_inertia_joint_base_floatb_${basemeth}_par${dynpar}.head.m > $zieldat
+      cat ${tmp_pfad}_head/robot_matlabtmp_inertiaJB_floatb_${basemeth}_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
       if [ $basemeth == "twist" ]; then
