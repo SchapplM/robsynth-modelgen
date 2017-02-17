@@ -130,7 +130,7 @@ do
   fi
 
   # Massenmatrix
-  quelldat=$repo_pfad/codeexport/${robot_name}/inertia_joint_joint_${maple_string}_matlab.m
+  quelldat=$repo_pfad/codeexport/${robot_name}/inertia_joint_joint_fixb_${maple_string}_matlab.m
   zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_inertia_joint_${matlab_string}_slag_vp.m
   if [ -f $quelldat ]; then
     cat ${tmp_pfad}_head/robot_matlabtmp_inertia_joint_${matlab_string}.head.m > $zieldat
@@ -148,7 +148,7 @@ do
   fi
 
   # Massenmatrix-Zeitableitung
-  quelldat=$repo_pfad/codeexport/${robot_name}/inertiaD_joint_joint_${maple_string}_matlab.m
+  quelldat=$repo_pfad/codeexport/${robot_name}/inertiaD_joint_joint_fixb_${maple_string}_matlab.m
   zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_inertiaD_joint_${matlab_string}_slag_vp.m
   if [ -f $quelldat ]; then
     cat ${tmp_pfad}_head/robot_matlabtmp_inertiaD_joint_${matlab_string}.head.m > $zieldat
@@ -168,7 +168,7 @@ do
   fi
 
   # Gravitationsmoment
-  quelldat=$repo_pfad/codeexport/${robot_name}/gravload_joint_${maple_string}_matlab.m
+  quelldat=$repo_pfad/codeexport/${robot_name}/joint_gravload_fixb_${maple_string}_matlab.m
   zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_gravload_joint_${matlab_string}_slag_vp.m
   if [ -f $quelldat ]; then
     cat ${tmp_pfad}_head/robot_matlabtmp_gravload_joint_${matlab_string}.head.m > $zieldat
