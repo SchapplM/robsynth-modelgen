@@ -5,8 +5,6 @@
 % Input:
 % q [%NQJ%x1]
 %   Generalized coordinates (joint angles) [rad]
-% qD [%NQJ%x1]
-%   Generalized velocities (joint velocities) [rad/s]
 % pkin [%NKP%x1]
 %   kinematic parameters
 % 
@@ -17,5 +15,4 @@
 
 % %VERSIONINFO%
 
-function MM_reg = %FN%(q, ...
-  pkin)
+function MM_reg = %FN%(q, pkin)

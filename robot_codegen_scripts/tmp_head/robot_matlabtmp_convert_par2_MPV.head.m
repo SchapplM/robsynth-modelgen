@@ -3,7 +3,7 @@
 % Use Code from Maple symbolic Code Generation
 % 
 % Input:
-% a_mdh, d_mdh [%NJ%x1]
+% pkin [%NKP%x1]
 %   kinematic parameters
 % m_num_mdh, mrSges_num_mdh, Ifges_num_mdh [%NL%x1]
 %   dynamic parameters (parameter set 2: first moment and inertia about link frame origin)
