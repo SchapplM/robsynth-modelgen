@@ -7,7 +7,7 @@
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2017-02
 # (c) Institut für Regelungstechnik, Leibniz Universität Hannover
 
-echo "Generiere Matlabfunktionen: Dynamik-Regressor"
+echo "Generiere Matlabfunktionen: Dynamik-Regressor (Floating Base)"
 
 repo_pfad=$(pwd)/..
 tmp_pfad=$repo_pfad/robot_codegen_scripts/tmp
