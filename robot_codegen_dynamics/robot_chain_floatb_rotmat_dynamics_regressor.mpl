@@ -117,13 +117,11 @@ save taug_regressor_s, sprintf("../codeexport/%s/gravload_%s_maple.m", robot_nam
 if codeexport_grav and not(base_method_name="twist") then
   MatlabExport(taug_regressor_s(1..6,..), sprintf("../codeexport/%s/base_gravload_floatb_%s_%s_matlab.m", robot_name, base_method_name, regressor_modus), codegen_opt):
 end if:
-# Belastung der Gelenke: Fixed Base
-if codeexport_grav and base_method_name="twist" then
-  MatlabExport(taug_regressor_s, sprintf("../codeexport/%s/joint_gravload_fixb_%s_matlab.m", robot_name, regressor_modus), codegen_opt):
-end if:
-# Belastung der Gelenke: Floating Base (Eingang ist jetzt der Gravitationsvektor im Welt-KS, nicht mehr im Basis-KS)
-if codeexport_grav and not(base_method_name="twist") then
-  MatlabExport(taug_regressor_s(7..NQ,..), sprintf("../codeexport/%s/joint_gravload_floatb_%s_%s_matlab.m", robot_name, base_method_name, regressor_modus), codegen_opt):
+# Belastung der Gelenke: 
+# Fixed-Base: Gravitationsvektor im Basis-KS
+# Floating Base: Gravitationsvektor im Welt-KS, Basis-Orientierung berücksichtigt
+if codeexport_grav then
+  MatlabExport(taug_regressor_s(7..NQ,..), sprintf("../codeexport/%s/joint_gravload_%s_%s_matlab.m", robot_name, expstring, regressor_modus), codegen_opt):
 end if:
 # Kompletter Vektor
 if codeexport_grav and not(base_method_name="twist") then

@@ -331,27 +331,17 @@ save dTdqDdt_s, sprintf(&quot;../codeexport/%s/floatb_lagrange_dTdqDdt_s_%s_mapl
 end if:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1691" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Belastung der Gelenke: Fixed Base</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1673" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_grav and base_method_name=&quot;twist&quot; then
-  MatlabExport(taug_regressor_s, sprintf(&quot;../codeexport/%s/joint_gravload_fixb_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
-end if:</Text-field>
-</Input>
-</Group>
 <Group labelreference="L1784" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal">Belastung der Gelenke: Floating Base (Eingang ist jetzt der Gravitationsvektor im Welt-KS, nicht mehr im Basis-KS)</Text-field>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Belastung der Gelenke: 
+Fixed-Base: Gravitationsvektor im Basis-KS
+Floating Base: Gravitationsvektor im Welt-KS, Basis-Orientierung ber\303\274cksichtigt</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1783" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_grav and not(base_method_name=&quot;twist&quot;) then
-  MatlabExport(taug_regressor_s(7..NQ,..), sprintf(&quot;../codeexport/%s/joint_gravload_floatb_%s_%s_matlab.m&quot;, robot_name, base_method_name, regressor_modus), codegen_opt):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_grav then
+  MatlabExport(taug_regressor_s(7..NQ,..), sprintf(&quot;../codeexport/%s/joint_gravload_%s_%s_matlab.m&quot;, robot_name, expstring, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
