@@ -213,12 +213,13 @@ fi:</Text-field>
 <Group labelreference="L1762" drawlabel="true">
 <Input>
 <Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Es ist in diesem Arbeitsblatt m\303\266glich, zwei verschiedene Regressoren zu generieren und zu exportieren: Basierend auf Minimalparametern und auf vollem Parametersatz (PV2).</Font></Text-field>
-<Text-field style="Text" layout="Normal">Der Term &quot;regressor&quot; oder &quot;regressor_minpar&quot; ist jeweils in den Dateinamen enthalten</Text-field>
+<Text-field style="Text" layout="Normal">Der Term &quot;regressor&quot; oder &quot;regressor_minpar&quot; ist jeweils in den Dateinamen enthalten.
+Der folgende Befehl muss immer auf &quot;regressor_minpar&quot; gesetzt sein, da diese Zeile durch das Skript robot_codegen_maple_preparation.sh ausgewertet und modifiziert wird.</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1760" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">regressor_modus := &quot;regressor&quot;:</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">regressor_modus := &quot;regressor_minpar&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1686" drawlabel="true">

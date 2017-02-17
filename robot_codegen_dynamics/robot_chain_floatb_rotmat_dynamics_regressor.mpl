@@ -61,8 +61,9 @@ else
   printf("Nicht behandelte Basis-Methode: %s\n", base_method_name):
 fi:
 # Es ist in diesem Arbeitsblatt möglich, zwei verschiedene Regressoren zu generieren und zu exportieren: Basierend auf Minimalparametern und auf vollem Parametersatz (PV2).
-# Der Term "regressor" oder "regressor_minpar" ist jeweils in den Dateinamen enthalten
-regressor_modus := "regressor":
+# Der Term "regressor" oder "regressor_minpar" ist jeweils in den Dateinamen enthalten.
+# Der folgende Befehl muss immer auf "regressor_minpar" gesetzt sein, da diese Zeile durch das Skript robot_codegen_maple_preparation.sh ausgewertet und modifiziert wird.
+regressor_modus := "regressor_minpar":
 if regressor_modus = "regressor_minpar" then
   read sprintf("../codeexport/%s/energy_kinetic_%s_regressor_minpar_maple.m", robot_name, expstring):
   read sprintf("../codeexport/%s/energy_potential_%s_regressor_minpar_maple.m", robot_name, expstring):

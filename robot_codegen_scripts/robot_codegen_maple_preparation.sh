@@ -47,7 +47,6 @@ sed -i "s/regressor_modus := \"regressor_minpar\":/regressor_modus := \"regresso
 codeexportswitches=( corvec cormat grav inertia inertiaD invdyn )
 for rm in "minpar" "pv2"
 do
-  echo $rm
   for ces in "${codeexportswitches[@]}"
   do
     mpldat=$repo_pfad/robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_${rm}_${ces}.mpl
@@ -61,7 +60,6 @@ do
 		sed -i "s/codeexport_${ces} := false:/codeexport_${ces} := true:/g" $mpldat
   done
 done
-
 
 
 # Jacobi-Matrix-Skripte vorbereiten, so dass die Jacobi-Matrix für alle Körper generiert wird.
