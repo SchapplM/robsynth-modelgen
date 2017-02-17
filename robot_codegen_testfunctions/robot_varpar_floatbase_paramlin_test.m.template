@@ -136,7 +136,7 @@ for i = 1:n
     pkin, m, rSges);
 
   % calculate gravitational base load with base parameter regressor
-  tauBg_b_regmin = %RN%_gravload_base_floatb_eulangrpy_slag_regmin(q, ob, g_world, ...
+  tauBg_b_regmin = %RN%_gravload_base_floatb_eulangrpy_regmin_slag_vp(q, ob, g_world, ...
     pkin);
   tauBg_b_mpv = tauBg_b_regmin*MPV;
   if any( abs(tauBg_b_mpv-tauBg_b_par1) > 1e-12 )
@@ -144,7 +144,7 @@ for i = 1:n
   end
   
   % calculate gravitational base load with inertial parameter regressor
-  tauBg_b_reg2 = %RN%_gravload_base_floatb_eulangrpy_slag_reg2(q, ob, g_world, ...
+  tauBg_b_reg2 = %RN%_gravload_base_floatb_eulangrpy_reg2_slag_vp(q, ob, g_world, ...
     pkin);
   tauBg_b_pv2 = tauBg_b_reg2*PV2floatb;
   if any (abs(tauBg_b_pv2-tauBg_b_par1) > 1e-12 )
@@ -166,7 +166,7 @@ for i = 1:n
   M_func = %RN%_inertia_floatb_eulangrpy_slag_vp1(q, ob, ...
     pkin, m, rSges, Icges);
   % calculate inertia with base parameter regressor       
-  M_regmin = %RN%_inertia_floatb_eulangrpy_slag_regmin(q, ob, ...
+  M_regmin = %RN%_inertia_floatb_eulangrpy_regmin_slag_vp(q, ob, ...
     pkin);
   M_mpv_vec = M_regmin*MPV;
   M_mpv = vec2symmat(M_mpv_vec);
@@ -174,7 +174,7 @@ for i = 1:n
     error('Floating Base inertia matrix from base parameter vector does not match with direct form.');
   end
   % calculate inertia with inertial parameter regressor
-  M_reg2 = %RN%_inertia_floatb_eulangrpy_slag_reg2(q, ob, ...
+  M_reg2 = %RN%_inertia_floatb_eulangrpy_reg2_slag_vp(q, ob, ...
     pkin);
   M_pv2_vec = M_reg2*PV2floatb;
   M_pv2 = vec2symmat(M_mpv_vec);
@@ -193,7 +193,7 @@ for i = 1:n
   Mqb_func = %RN%_inertia_joint_base_floatb_eulangrpy_slag_vp1(q, ob, ...
     pkin, m, rSges, Icges);
   % calculate inertia with base parameter regressor       
-  Mqb_regmin = %RN%_inertia_joint_base_floatb_eulangrpy_slag_regmin(q, ob, ...
+  Mqb_regmin = %RN%_inertia_joint_base_floatb_eulangrpy_regmin_slag_vp(q, ob, ...
     pkin);
   Mqb_mpv_vec = Mqb_regmin*MPV;
   Mqb_mpv = reshape(Mqb_mpv_vec, 6, NQJ)';
@@ -201,7 +201,7 @@ for i = 1:n
     error('Floating Base inertia matrix from base parameter vector does not match with direct form.');
   end
   % calculate inertia with inertial parameter regressor
-  Mqb_reg2 = %RN%_inertia_joint_base_floatb_eulangrpy_slag_reg2(q, ob, ...
+  Mqb_reg2 = %RN%_inertia_joint_base_floatb_eulangrpy_reg2_slag_vp(q, ob, ...
     pkin);
   Mqb_pv2_vec = Mqb_reg2*PV2floatb;
   Mqb_pv2 = reshape(Mqb_pv2_vec, 6, NQJ)';
