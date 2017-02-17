@@ -122,6 +122,317 @@ end
 fprintf('Tested potential energy for %d random joint angles for %s\n', ...
   n, robot_name);
 
+
+%% Teste Gravitationsmoment
+for i = 1:n
+  r_W_W_0 = RB(i,:)';
+  ob = OB(i,:)';
+  q = Q(i,:)';
+  g_world = G(i,:)';
+  R_W_0 = rpy2r(ob(1), ob(2), ob(3));
+  g_base = (R_W_0')*g_world;
+  % calculate gravitational base load with optimized function
+  tauBg_b_par1 = %RN%_gravload_base_floatb_eulangrpy_slag_vp1(q, ob, g_world, ...
+    pkin, m, rSges);
+
+  % calculate gravitational base load with base parameter regressor
+  tauBg_b_regmin = %RN%_gravload_base_floatb_eulangrpy_slag_regmin(q, ob, g_world, ...
+    pkin);
+  tauBg_b_mpv = tauBg_b_regmin*MPV;
+  if any( abs(tauBg_b_mpv-tauBg_b_par1) > 1e-12 )
+    error('Gravitation base wrench from base parameter vector does not match with direct form.');
+  end
+  
+  % calculate gravitational base load with inertial parameter regressor
+  tauBg_b_reg2 = %RN%_gravload_base_floatb_eulangrpy_slag_reg2(q, ob, g_world, ...
+    pkin);
+  tauBg_b_pv2 = tauBg_b_reg2*PV2floatb;
+  if any (abs(tauBg_b_pv2-tauBg_b_par1) > 1e-12 )
+    error('Gravitation base wrench from inertial parameter vector does not match with direct form.');
+  end
+end
+
+fprintf('Tested floating base gravitation base wrench for %d random joint angles for %s\n', ...
+  n, robot_name);
+
+
+
+
+%% Teste Massenmatrix (Gesamt)
+for i = 1:n
+  ob = OB(i,:)';
+  q = Q(i,:)';
+  % calculate inertia with optimized function
+  M_func = %RN%_inertia_floatb_eulangrpy_slag_vp1(q, ob, ...
+    pkin, m, rSges, Icges);
+  % calculate inertia with base parameter regressor       
+  M_regmin = %RN%_inertia_floatb_eulangrpy_slag_regmin(q, ob, ...
+    pkin);
+  M_mpv_vec = M_regmin*MPV;
+  M_mpv = vec2symmat(M_mpv_vec);
+  if any( abs(M_func(:)-M_mpv(:)) > 1e-12 )
+    error('Floating Base inertia matrix from base parameter vector does not match with direct form.');
+  end
+  % calculate inertia with inertial parameter regressor
+  M_reg2 = %RN%_inertia_floatb_eulangrpy_slag_reg2(q, ob, ...
+    pkin);
+  M_pv2_vec = M_reg2*PV2floatb;
+  M_pv2 = vec2symmat(M_mpv_vec);
+  if any( abs(M_func(:)-M_pv2(:)) > 1e-12 )
+    error('Floating Base inertia matrix from inertial parameter vector does not match with direct form.');
+  end
+end
+fprintf('Tested Floating Base inertia matrix for %d random joint angles for %s\n', ...
+  n, robot_name);
+
+%% Teste Massenmatrix (Basis-Gelenke)
+for i = 1:n
+  ob = OB(i,:)';
+  q = Q(i,:)';
+  % calculate inertia with optimized function
+  Mqb_func = %RN%_inertia_joint_base_floatb_eulangrpy_slag_vp1(q, ob, ...
+    pkin, m, rSges, Icges);
+  % calculate inertia with base parameter regressor       
+  Mqb_regmin = %RN%_inertia_joint_base_floatb_eulangrpy_slag_regmin(q, ob, ...
+    pkin);
+  Mqb_mpv_vec = Mqb_regmin*MPV;
+  Mqb_mpv = reshape(Mqb_mpv_vec, 6, NQJ)';
+  if any( abs(Mqb_func(:)-Mqb_mpv(:)) > 1e-12 )
+    error('Floating Base inertia matrix from base parameter vector does not match with direct form.');
+  end
+  % calculate inertia with inertial parameter regressor
+  Mqb_reg2 = %RN%_inertia_joint_base_floatb_eulangrpy_slag_reg2(q, ob, ...
+    pkin);
+  Mqb_pv2_vec = Mqb_reg2*PV2floatb;
+  Mqb_pv2 = reshape(Mqb_pv2_vec, 6, NQJ)';
+  if any( abs(Mqb_func(:)-Mqb_pv2(:)) > 1e-12 )
+    error('Floating Base inertia matrix from inertial parameter vector does not match with direct form.');
+  end
+end
+fprintf('Tested Floating Base inertia matrix for %d random joint angles for %s\n', ...
+  n, robot_name);
+
+
+
+%% Teste Massenmatrix-Zeitableitung (Floating-Base Gesamt)
+for i = 1:n
+  q = Q(i,:)';
+  qD = QD(i,:)';
+  qDD = QDD(i,:)';
+  g_world = G(i,:)';
+  V_W_W_0 = VB(i,:)';
+  
+  ob = OB(i,:)';
+  oDb = OBD(i,:)';
+  xDB = [V_W_W_0(1:3); oDb];
+  
+  % calculate inertia time derivative with optimized function
+  MqD_func = %RN%_inertiaD_floatb_eulangrpy_slag_vp1(q, qD, ob, xDB, ...
+    pkin, m, rSges, Icges);
+  % calculate inertia time derivative with base parameter regressor
+  MqD_regmin = %RN%_inertiaD_floatb_eulangrpy_regmin_slag_vp(q, qD, ob, xDB, ...
+    pkin);
+  MqD_mpv_vec = MqD_regmin*MPV;
+  MqD_mpv = vec2symmat(MqD_mpv_vec);
+  if any( abs(MqD_func(:)-MqD_mpv(:)) > 1e-12 )
+    error('Floating Base inertia matrix time derivative from base parameter vector does not match with direct form.');
+  end
+  % calculate inertia time derivative with inertial parameter regressor
+  MqD_reg2 = %RN%_inertiaD_floatb_eulangrpy_reg2_slag_vp(q, qD, ob, xDB, ...
+    pkin);
+  MqD_pv2_vec = MqD_reg2*PV2floatb;
+  MqD_pv2 = vec2symmat(MqD_pv2_vec);
+  if any( abs(MqD_func(:)-MqD_pv2(:)) > 1e-12 )
+    error('Floating Base inertia matrix time derivative from inertial parameter vector does not match with direct form.');
+  end  
+end
+fprintf('Tested Floating Base inertia matrix time derivative for %d random joint angles for %s\n', ...
+  n, robot_name);
+
+%% Teste Coriolis-Vektor (Floating Base Gesamt)
+for i = 1:n
+  q = Q(i,:)';
+  qD = QD(i,:)';
+  qDD = QDD(i,:)';
+  g_world = G(i,:)';
+  V_W_W_0 = VB(i,:)';
+  
+  ob = OB(i,:)';
+  oDb = OBD(i,:)';
+  xDB = [V_W_W_0(1:3); oDb];
+  
+  % calculate coriolis torques with optimized function
+  tauc_func = %RN%_coriolisvec_floatb_eulangrpy_slag_vp1(q, qD, ob, xDB,...
+    pkin, m, rSges, Icges);
+  
+  % calculate coriolis torques with base parameter regressor
+  tauc_regmin = %RN%_coriolisvec_floatb_eulangrpy_regmin_slag_vp(q, qD, ob, xDB,...
+    pkin);
+  tauc_mpv = tauc_regmin*MPV;
+  if any (abs(tauc_mpv-tauc_func) > 1e-12 )
+    error('Coriolis generalized force from base parameter vector does not match with direct form.');
+  end
+  
+  % calculate coriolis torques with inertial parameter regressor
+  tauc_reg2 = %RN%_coriolisvec_floatb_eulangrpy_reg2_slag_vp(q, qD, ob, xDB,...
+    pkin);
+  tauc_pv2 = tauc_reg2*PV2floatb;
+  if any( abs(tauc_pv2-tauc_func) > 1e-12 )
+    error('Coriolis generalized force from inertial parameter vector does not match with direct form.');
+  end
+end
+fprintf('Tested Floating Base Coriolis vector for %d random joint angles for %s\n', ...
+  n, robot_name);
+
+
+%% Teste Coriolis-Vektor (Floating Base: Gelenke)
+for i = 1:n
+  q = Q(i,:)';
+  qD = QD(i,:)';
+  qDD = QDD(i,:)';
+  g_world = G(i,:)';
+  V_W_W_0 = VB(i,:)';
+  
+  ob = OB(i,:)';
+  oDb = OBD(i,:)';
+  xDB = [V_W_W_0(1:3); oDb];
+  
+  % calculate coriolis torques with optimized function
+  tauJc_func = %RN%_coriolisvec_joint_floatb_eulangrpy_slag_vp1(q, qD, ob, xDB,...
+    pkin, m, rSges, Icges);
+  
+  % calculate coriolis torques with base parameter regressor
+  tauJc_regmin = %RN%_coriolisvec_joint_floatb_eulangrpy_regmin_slag_vp(q, qD, ob, xDB,...
+    pkin);
+  tauJc_mpv = tauJc_regmin*MPV;
+  if any (abs(tauJc_mpv-tauJc_func) > 1e-12 )
+    error('Coriolis joint torque from base parameter vector does not match with direct form.');
+  end
+  
+  % calculate coriolis torques with inertial parameter regressor
+  tauJc_reg2 = %RN%_coriolisvec_joint_floatb_eulangrpy_reg2_slag_vp(q, qD, ob, xDB,...
+    pkin);
+  tauJc_pv2 = tauJc_reg2*PV2floatb;
+  if any( abs(tauJc_pv2-tauJc_func) > 1e-12 )
+    error('Coriolis joint torque from inertial parameter vector does not match with direct form.');
+  end
+end
+fprintf('Tested Floating Base Coriolis joint torque vector for %d random joint angles for %s\n', ...
+  n, robot_name);
+
+
+%% Teste Coriolis-Vektor (Floating Base: Basis)
+for i = 1:n
+  q = Q(i,:)';
+  qD = QD(i,:)';
+  qDD = QDD(i,:)';
+  g_world = G(i,:)';
+  V_W_W_0 = VB(i,:)';
+  
+  ob = OB(i,:)';
+  oDb = OBD(i,:)';
+  xDB = [V_W_W_0(1:3); oDb];
+  
+  % calculate coriolis torques with optimized function
+  tauBc_func = %RN%_coriolisvec_base_floatb_eulangrpy_slag_vp1(q, qD, ob, xDB,...
+    pkin, m, rSges, Icges);
+  
+  % calculate coriolis torques with base parameter regressor
+  tauBc_regmin = %RN%_coriolisvec_base_floatb_eulangrpy_regmin_slag_vp(q, qD, ob, xDB,...
+    pkin);
+  tauBc_mpv = tauBc_regmin*MPV;
+  if any (abs(tauBc_mpv-tauBc_func) > 1e-12 )
+    error('Coriolis base wrench from base parameter vector does not match with direct form.');
+  end
+  
+  % calculate coriolis torques with inertial parameter regressor
+  tauBc_reg2 = %RN%_coriolisvec_base_floatb_eulangrpy_reg2_slag_vp(q, qD, ob, xDB,...
+    pkin);
+  tauBc_pv2 = tauBc_reg2*PV2floatb;
+  if any( abs(tauBc_pv2-tauBc_func) > 1e-12 )
+    error('Coriolis base wrench from inertial parameter vector does not match with direct form.');
+  end
+end
+fprintf('Tested Floating Base Coriolis base wrench vector for %d random joint angles for %s\n', ...
+  n, robot_name);
+
+
+
+%% Teste Coriolis-Matrix
+for i = 1:n
+  q = Q(i,:)';
+  qD = QD(i,:)';
+  qDD = QDD(i,:)';
+  g_world = G(i,:)';
+  V_W_W_0 = VB(i,:)';
+  
+  ob = OB(i,:)';
+  oDb = OBD(i,:)';
+  xDB = [V_W_W_0(1:3); oDb];
+  
+  % calculate Coriolis-Matrix with optimized function
+  Cq_func = %RN%_coriolismat_floatb_eulangrpy_slag_vp1(q, qD, ob, xDB, ...
+    pkin, m, rSges, Icges);
+  % calculate Coriolis-Matrix with base parameter regressor
+  Cq_regmin = %RN%_coriolismat_floatb_eulangrpy_regmin_slag_vp(q, qD, ob, xDB, ...
+    pkin);
+  Cq_mpv_vec = Cq_regmin*MPV;
+  Cq_mpv = reshape(Cq_mpv_vec, 6+NQJ, 6+NQJ)';
+  if any( abs(Cq_func(:)-Cq_mpv(:)) > 1e-12 )
+    error('Coriolis matrix from base parameter vector does not match with direct form.');
+  end
+  
+  % calculate Coriolis-Matrix with inertial parameter regressor
+  Cq_reg2 = %RN%_coriolismat_floatb_eulangrpy_reg2_slag_vp(q, qD, ob, xDB, ...
+    pkin);
+  Cq_pv2_vec = Cq_reg2*PV2floatb;
+  Cq_pv2 = reshape(Cq_pv2_vec, 6+NQJ, 6+NQJ)';
+  if any( abs(Cq_func(:)-Cq_pv2(:)) > 1e-12 )
+    error('Coriolis matrix from inertial parameter vector does not match with direct form.');
+  end
+end
+fprintf('Tested Coriolis matrix for %d random joint angles for %s\n', ...
+  n, robot_name);
+
+
+
+%% Teste inverse Dynamik
+for i = 1:n
+  q = Q(i,:)';
+  qD = QD(i,:)';
+  qDD = QDD(i,:)';
+  g_world = G(i,:)';
+  V_W_W_0 = VB(i,:)';
+  A_W_W_0 = AB(i,:)';
+  
+  ob = OB(i,:)';
+  oDb = OBD(i,:)';
+  oDDb = OBDD(i,:)';
+  xDB = [V_W_W_0(1:3); oDb];
+  xDDB = [A_W_W_0(1:3); oDDb];
+
+  % calculate inverse dynamics with optimized function
+  tauJ_func = %RN%_invdyn_joint_floatb_eulangrpy_slag_vp1(q, qD, qDD, ob, xDB, xDDB, g_world, ...
+    pkin, m, rSges, Icges);
+  % calculate inverse dynamics with base parameter regressor
+  tauJ_regmin = %RN%_invdyn_joint_floatb_eulangrpy_regmin_slag_vp(q, qD, qDD, ob, xDB, xDDB, g_world, ...
+    pkin);
+  tauJ_mpv = tauJ_regmin*MPV;
+  if any( abs(tauJ_func-tauJ_mpv) > 1e-12 )
+    error('Inverse dynamics from base parameter vector does not match with direct form.');
+  end
+  % calculate inverse dynamics with inertial parameter regressor
+  tauJ_reg2 = %RN%_invdyn_joint_floatb_eulangrpy_reg2_slag_vp(q, qD, qDD, ob, xDB, xDDB, g_world, ...
+    pkin);
+  tauJ_pv2 = tauJ_reg2*PV2floatb;
+  if any( abs(tauJ_func-tauJ_pv2) > 1e-12 )
+    error('Inverse dynamics from inertial parameter vector does not match with direct form.');
+  end
+end
+fprintf('Tested floating base joint inverse dynamics for %d random joint angles for %s\n', ...
+  n, robot_name);
+
+
 %% Prüfe Minimalparametervektor gegen Matrix mit Inertialparameterzuordnung
 % [Sousa2014] Gl. (38)
 [K, K_d, P_b, P_d] = %RN%_PV2_MPV_transformations_floatb_eulangrpy(pkin);
@@ -137,7 +448,7 @@ Test = abs(K-K_test);
 if any(Test(:)>1e-12)
   error('Test [Sousa2014] Gl. (38) fehlgeschlagen!');
 end
-fprintf('Transformationen des fixb-Minimalparametervektors erfolgreich getestet\n');
+fprintf('Transformationen des floating base-Minimalparametervektors erfolgreich getestet\n');
 
 %% Teste Minimalparameterform gegen numerische Berechnung nach [Gautier1990]
 % Matrix mit Samples der Regressormatrix erstellen ([Gautier1990], Gl. (8))
