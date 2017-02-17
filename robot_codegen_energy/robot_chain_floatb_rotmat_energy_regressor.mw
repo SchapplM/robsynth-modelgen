@@ -89,8 +89,8 @@
         <Metadata-attribute name="Subject" value="&lt;default&gt;"/>
         <Metadata-attribute name="Author" value="&lt;default&gt;"/>
         <Metadata-attribute name="Item List" value="true"/>
-        <Metadata-attribute name="Title" value="&lt;default&gt;"/>
         <Metadata-attribute name="Keywords" value="&lt;default&gt;"/>
+        <Metadata-attribute name="Title" value="&lt;default&gt;"/>
     </Metadata-tag>
 </Metadata-table>
 <Task-table>
@@ -167,7 +167,7 @@ read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
 <Group labelreference="L1769" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:
-<Font encoding="UTF-8">printf(&quot;Generiere Minimalparameterregressor (Floating Base) der Energie f\303\274r %s\134n&quot;, robot_name, codegen_dynpar):</Font></Text-field>
+<Font encoding="UTF-8">printf(&quot;Generiere Minimalparameterregressor (Floating Base %s) der Energie f\303\274r %s\134n&quot;, </Font>base_method_name, robot_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1803" drawlabel="true">
@@ -401,8 +401,8 @@ end if;</Text-field>
 <Text-field style="Heading 3" layout="Heading 3">Markieren von t_mZ, t_YY, t_m, u_mZ, u_YY, u_m_j</Text-field></Title>
 <Group labelreference="L1760" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Anwendung von [HRL_IDR] Regel 3 (S. 5) auf die Geometrievektoren t und u der Energien T und U
-Die Regel bezieht sich auf  K\303\266rper, die durch Drehgelenke bewegt werden. Eintr\303\244ge f\303\274r den Basisk\303\266rper werden daher nicht ge\303\244ndert.
+<Text-field style="Text" layout="Normal">Anwendung von [HRL_IDR] Regel 3 (S. 5) auf die Geometrievektoren t und u der Energien T und U
+<Font encoding="UTF-8">Die Regel bezieht sich auf  K\303\266rper, die durch Drehgelenke bewegt werden. Eintr\303\244ge f\303\274r den Basisk\303\266rper werden daher nicht ge\303\244ndert.
 Die Parameter YY,MZ und M sind immer linear abh\303\244ngig. Die entsprechenden Spalten der Regressormatrizen werden daher zum Entfernen markiert.
 </Font>[GautierKhalil1990], p.369</Text-field>
 </Input>

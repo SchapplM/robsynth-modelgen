@@ -33,7 +33,7 @@ read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s": 
 read "../helper/proc_MatlabExport":
 read "../robot_codegen_definitions/robot_env":
-printf("Generiere Minimalparameterregressor (Floating Base) der Energie für %s\n", robot_name, codegen_dynpar):
+printf("Generiere Minimalparameterregressor (Floating Base %s) der Energie für %s\n", base_method_name, robot_name):
 read sprintf("../codeexport/%s/tree_floatb_definitions", robot_name, base_method_name):
 # Ergebnisse der Energie laden
 read sprintf("../codeexport/%s/energy_potential_floatb_%s_worldframe_par2_maple.m", robot_name, base_method_name):
