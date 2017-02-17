@@ -195,6 +195,37 @@ do
       echo "Code in ${quelldat##*/} nicht gefunden."
     fi
 
+    # Gravitationsmoment (Gelenke)
+    quelldat=$repo_pfad/codeexport/${robot_name}/joint_gravload_floatb_${basemeth}_${maple_string}_matlab.m
+    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_gravload_joint_floatb_${basemeth}_${matlab_string}_slag_vp.m
+    if [ -f $quelldat ]; then
+      cat ${tmp_pfad}_head/robot_matlabtmp_gravload_joint_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
+      printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
+      if [ $basemeth == "twist" ]; then
+        :
+      else
+        cat $tmp_pfad/robot_matlabtmp_assert_phiB.m >> $zieldat
+      fi
+      cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+      
+      printf "\n%%%% Variable Initialization" >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
+      if [ $basemeth == "twist" ]; then
+        :
+      else
+        cat $tmp_pfad/robot_matlabtmp_phiB.m >> $zieldat
+      fi
+      cat $tmp_pfad/robot_matlabtmp_g.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
+      
+      printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+      cat $quelldat >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0
+    else
+      echo "Code in ${quelldat##*/} nicht gefunden."
+    fi
 
 
     # Coriolisvektor (Floating Base, Basis)
