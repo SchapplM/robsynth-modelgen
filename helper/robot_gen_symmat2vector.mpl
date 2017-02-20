@@ -24,7 +24,10 @@ printf("Generiere Symmat2Vector-Funktionen für %s\n", robot_name):
 clear('mv'):
 M_NQ:= vec2symmat(mv, NQ):
 M_NQJ:= vec2symmat(mv, NQJ):
+M_6:= vec2symmat(mv, 6):
 # Warnungen bei Code-Generierung unterdrücken. Die Meldung das der Ausdruck mv() in Matlab nicht bekannt ist, spielt keine Rolle, da diese Variable nach dem Einsetzen des Codes vorher definiert sein wird.
 interface(warnlevel=0):
 MatlabExport(M_NQ, sprintf("../codeexport/%s/vec2symmat_%d_matlab.m", robot_name, NQ), codegen_opt):
 MatlabExport(M_NQJ, sprintf("../codeexport/%s/vec2symmat_%d_matlab.m", robot_name, NQJ), codegen_opt):
+MatlabExport(M_6, sprintf("../codeexport/%s/vec2symmat_%d_matlab.m", robot_name, 6), codegen_opt):
+

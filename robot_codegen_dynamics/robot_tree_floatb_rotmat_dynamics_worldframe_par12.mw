@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="18" minor="0"/>
+<Version major="18" minor="2"/>
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true">
 </View-Properties>
@@ -394,6 +394,27 @@ end do:</Text-field>
   save MMjj_s_vek, filename_tmp:
   read filename_tmp:
   MatlabExport(MMjj_s_vek, sprintf(&quot;../codeexport/%s/inertia_joint_joint_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1710" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal">Basis-Massenmatrix</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1712" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MMbb_s := MM_s(1..6,1..6):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1711" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertia and not(base_method_name=&quot;twist&quot;) then
+  MMbb_s_vek := symmat2vec(MMbb_s):
+  filename_tmp := sprintf(&quot;../codeexport/%s/inertia_base_base_floatb_%s_par%d_maple_symvec.m&quot;, robot_name, base_method_name, codegen_dynpar):
+  save MMbb_s_vek, filename_tmp:
+  read filename_tmp:
+  MatlabExport(MMbb_s_vek, sprintf(&quot;../codeexport/%s/inertia_base_base_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>

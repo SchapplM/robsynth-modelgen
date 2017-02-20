@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="18" minor="0"/>
+<Version major="18" minor="2"/>
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true">
 </View-Properties>
@@ -169,7 +169,8 @@ with(StringTools):</Text-field>
 <Group labelreference="L1709" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">M_NQ:= vec2symmat(mv, NQ):
-M_NQJ:= vec2symmat(mv, NQJ):</Text-field>
+M_NQJ:= vec2symmat(mv, NQJ):
+M_6:= vec2symmat(mv, 6):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1720" drawlabel="true">
@@ -185,7 +186,13 @@ M_NQJ:= vec2symmat(mv, NQJ):</Text-field>
 <Group labelreference="L1715" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(M_NQ, sprintf(&quot;../codeexport/%s/vec2symmat_%d_matlab.m&quot;, robot_name, NQ), codegen_opt):
-MatlabExport(M_NQJ, sprintf(&quot;../codeexport/%s/vec2symmat_%d_matlab.m&quot;, robot_name, NQJ), codegen_opt):</Text-field>
+MatlabExport(M_NQJ, sprintf(&quot;../codeexport/%s/vec2symmat_%d_matlab.m&quot;, robot_name, NQJ), codegen_opt):
+MatlabExport(M_6, sprintf(&quot;../codeexport/%s/vec2symmat_%d_matlab.m&quot;, robot_name, 6), codegen_opt):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1721" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>

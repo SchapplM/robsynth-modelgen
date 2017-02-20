@@ -333,9 +333,9 @@ end if:</Text-field>
 </Group>
 <Group labelreference="L1784" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Belastung der Gelenke: 
+<Text-field style="Text" layout="Normal">Belastung der Gelenke: 
 Fixed-Base: Gravitationsvektor im Basis-KS
-Floating Base: Gravitationsvektor im Welt-KS, Basis-Orientierung ber\303\274cksichtigt</Font></Text-field>
+<Font encoding="UTF-8">Floating Base: Gravitationsvektor im Welt-KS, Basis-Orientierung ber\303\274cksichtigt</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1783" drawlabel="true">
@@ -490,6 +490,43 @@ end do:</Text-field>
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertia and not(base_method_name=&quot;twist&quot;) then
   MatlabExport(MMjb_regressor_s, sprintf(&quot;../codeexport/%s/inertia_joint_base_floatb_%s_%s_matlab.m&quot;, robot_name, base_method_name, regressor_modus), codegen_opt):
+end if:</Text-field>
+</Input>
+</Group>
+</Section>
+<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
+<Text-field style="Heading 2" layout="Heading 2">Basis-Massenmatrix</Text-field></Title>
+<Group labelreference="L1869" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MMbb_regressor_s := Matrix(6*(6+1)/2, Paramvec_size):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1870" drawlabel="true">
+<Input>
+<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Gehe Schleife \303\274ber alle Massenmatrix-Elemente durch und entnehme die passenden Elemente f\303\274r die Teilmatrix)</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1873" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">itmp:=0:
+for i to NQ do
+  for j to NQ do  # Spaltenindex der Massenmatrix
+    if j &gt; i then
+      next: # rechte obere Seite der symmetrischen Matrix. Keine neue Information. Nicht berechnen oder speichern.
+    end if:
+    if i &lt; 7 and j &lt; 7 then # unterer linker Teil
+      i_MM := <Font encoding="UTF-8">index_symmat2vec(NQ,i,j): # Passender Index f\303\274r zeilenweise ausgew\303\244hlten symmetrischen Tei</Font>l (siehe Gesamt-Massenmatrix)
+      itmp := itmp + 1:
+      MMbb_regressor_s[itmp,..] := MM_regressor_s[i_MM,..]:
+    end if:
+  end do:
+end do:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1872" drawlabel="true">
+<Input>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertia and not(base_method_name=&quot;twist&quot;) then
+  MatlabExport(MMbb_regressor_s, sprintf(&quot;../codeexport/%s/inertia_base_base_floatb_%s_%s_matlab.m&quot;, robot_name, base_method_name, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>

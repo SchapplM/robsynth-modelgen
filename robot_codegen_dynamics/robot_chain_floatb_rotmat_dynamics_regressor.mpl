@@ -188,6 +188,25 @@ end do:
 if codeexport_inertia and not(base_method_name="twist") then
   MatlabExport(MMjb_regressor_s, sprintf("../codeexport/%s/inertia_joint_base_floatb_%s_%s_matlab.m", robot_name, base_method_name, regressor_modus), codegen_opt):
 end if:
+# Basis-Massenmatrix
+MMbb_regressor_s := Matrix(6*(6+1)/2, Paramvec_size):
+# Gehe Schleife über alle Massenmatrix-Elemente durch und entnehme die passenden Elemente für die Teilmatrix)
+itmp:=0:
+for i to NQ do
+  for j to NQ do  # Spaltenindex der Massenmatrix
+    if j > i then
+      next: # rechte obere Seite der symmetrischen Matrix. Keine neue Information. Nicht berechnen oder speichern.
+    end if:
+    if i < 7 and j < 7 then # unterer linker Teil
+      i_MM := index_symmat2vec(NQ,i,j): # Passender Index für zeilenweise ausgewählten symmetrischen Teil (siehe Gesamt-Massenmatrix)
+      itmp := itmp + 1:
+      MMbb_regressor_s[itmp,..] := MM_regressor_s[i_MM,..]:
+    end if:
+  end do:
+end do:
+if codeexport_inertia and not(base_method_name="twist") then
+  MatlabExport(MMbb_regressor_s, sprintf("../codeexport/%s/inertia_base_base_floatb_%s_%s_matlab.m", robot_name, base_method_name, regressor_modus), codegen_opt):
+end if:
 # Mass Matrix Time Derivative
 # Gesamt Massenmatrix
 MM_regressor_t := convert_s_t(MM_regressor_s):

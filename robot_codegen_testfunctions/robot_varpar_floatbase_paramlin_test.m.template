@@ -156,8 +156,6 @@ fprintf('Tested floating base gravitation base wrench for %d random joint angles
   n, robot_name);
 
 
-
-
 %% Teste Massenmatrix (Gesamt)
 for i = 1:n
   ob = OB(i,:)';
@@ -182,7 +180,7 @@ for i = 1:n
     error('Floating Base inertia matrix from inertial parameter vector does not match with direct form.');
   end
 end
-fprintf('Tested Floating Base inertia matrix for %d random joint angles for %s\n', ...
+fprintf('Tested Floating Base Total inertia matrix for %d random joint angles for %s\n', ...
   n, robot_name);
 
 %% Teste Massenmatrix (Basis-Gelenke)
@@ -209,11 +207,35 @@ for i = 1:n
     error('Floating Base inertia matrix from inertial parameter vector does not match with direct form.');
   end
 end
-fprintf('Tested Floating Base inertia matrix for %d random joint angles for %s\n', ...
+fprintf('Tested Floating Base Joint-Base inertia matrix for %d random joint angles for %s\n', ...
   n, robot_name);
 
-
-
+%% Teste Massenmatrix (Basis-Basis)
+for i = 1:n
+  ob = OB(i,:)';
+  q = Q(i,:)';
+  % calculate inertia with optimized function
+  Mbb_func = %RN%_inertiaB_floatb_eulangrpy_slag_vp1(q, ob, ...
+    pkin, m, rSges, Icges);
+  % calculate inertia with base parameter regressor       
+  Mbb_regmin = %RN%_inertiaB_floatb_eulangrpy_regmin_slag_vp(q, ob, ...
+    pkin);
+  Mbb_mpv_vec = Mbb_regmin*MPV;
+  Mbb_mpv = vec2symmat(Mbb_mpv_vec);
+  if any( abs(Mbb_func(:)-Mbb_mpv(:)) > 1e-12 )
+    error('Floating Base inertia matrix from base parameter vector does not match with direct form.');
+  end
+  % calculate inertia with inertial parameter regressor
+  Mbb_reg2 = %RN%_inertiaB_floatb_eulangrpy_reg2_slag_vp(q, ob, ...
+    pkin);
+  Mbb_pv2_vec = Mbb_reg2*PV2floatb;
+  Mbb_pv2 = vec2symmat(Mbb_pv2_vec);
+  if any( abs(Mbb_func(:)-Mbb_pv2(:)) > 1e-12 )
+    error('Floating Base inertia matrix from inertial parameter vector does not match with direct form.');
+  end
+end
+fprintf('Tested Floating Base Base-Base inertia matrix for %d random joint angles for %s\n', ...
+  n, robot_name);
 %% Teste Massenmatrix-Zeitableitung (Floating-Base Gesamt)
 for i = 1:n
   q = Q(i,:)';

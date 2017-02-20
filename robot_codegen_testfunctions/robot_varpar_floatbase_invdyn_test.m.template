@@ -130,6 +130,31 @@ end
 fprintf('Tested acceleration torque based on floating base inertia and gravload for %d random joint angles for %s\n', ...
   size(Q, 1), robot_name);
 
+
+
+%% Teste Bestandteile der Massenmatrix
+for i = 1:n
+  ob = OB(i,:)';
+  q = Q(i,:)';
+  % Massenmatrix
+  MM = %RN%_inertia_floatb_eulangrpy_slag_vp1(q, ob, ...
+    pkin, m, rSges, Icges);
+  
+  MMbb = %RN%_inertiaB_floatb_eulangrpy_slag_vp1(q, ob, ...
+    pkin, m, rSges, Icges);
+  test = MM(1:6,1:6) - MMbb;
+  if any(abs(test(:)) > 1e-12)
+    error('base inertia matrix does not match total floating base inertia matrix');
+  end
+  
+  Mjb = %RN%_inertiaJB_floatb_eulangrpy_slag_vp1(q, ob, ...
+    pkin, m, rSges, Icges);
+  test = MM(7:end,1:6) - Mjb;
+  if any(abs(test(:)) > 1e-12)
+    error('joint-base inertia matrix does not match total floating base inertia matrix');
+  end
+end
+
 %% Alle Funktionen mit Parametersatz 2 testen
 for i = 1:n
   q = Q(i,:)';
@@ -203,6 +228,15 @@ for i = 1:n
     pkin, m, mrSges, Ifges);
   if any(abs(MM_par1(:)-MM_par2(:)) > 1e-12)
     error('mass matrix does not match between par1/par2.');
+  end
+
+  
+  MMbb_par1 = %RN%_inertiaB_floatb_eulangrpy_slag_vp1(q, ob, ...
+    pkin, m, rSges, Icges);
+  MMbb_par2 = %RN%_inertiaB_floatb_eulangrpy_slag_vp2(q, ob, ...
+    pkin, m, mrSges, Ifges);
+  if any(abs(MMbb_par1(:)-MMbb_par2(:)) > 1e-12)
+    error('base mass matrix does not match between par1/par2.');
   end
   
   % Massenmatrix-Zeitableitung

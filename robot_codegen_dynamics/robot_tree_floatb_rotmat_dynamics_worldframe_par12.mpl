@@ -145,6 +145,15 @@ if codeexport_inertia then
   read filename_tmp:
   MatlabExport(MMjj_s_vek, sprintf("../codeexport/%s/inertia_joint_joint_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
+# Basis-Massenmatrix
+MMbb_s := MM_s(1..6,1..6):
+if codeexport_inertia and not(base_method_name="twist") then
+  MMbb_s_vek := symmat2vec(MMbb_s):
+  filename_tmp := sprintf("../codeexport/%s/inertia_base_base_floatb_%s_par%d_maple_symvec.m", robot_name, base_method_name, codegen_dynpar):
+  save MMbb_s_vek, filename_tmp:
+  read filename_tmp:
+  MatlabExport(MMbb_s_vek, sprintf("../codeexport/%s/inertia_base_base_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
+end if:
 # Mass Matrix Time Derivative
 # Konvertiere Massenmatrix in zeitabhängige Variablen, um Zeitableitung zu berechnen
 MM_t := convert_s_t(MM_s):
