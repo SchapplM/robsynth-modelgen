@@ -1,4 +1,4 @@
-% Calculate minimal parameter regressor of coriolis matrix for
+% Calculate minimal parameter regressor of coriolis joint torque vector for
 % %RN%
 % Use Code from Maple symbolic Code Generation
 % 
@@ -11,10 +11,10 @@
 %   kinematic parameters
 % 
 % Output:
-% cmat_reg [(%NQJ%*%NQJ)%x%NMPV%]
-%   minimal parameter regressor of coriolis matrix
+% taug_reg [%NQJ%x%NMPVFIXB%]
+%   minimal parameter regressor of coriolis joint torque vector
 
 % %VERSIONINFO%
 
-function cmat_reg = %FN%(q, qD, ...
+function tauc_reg = %FN%(q, qD, ...
   pkin)

@@ -131,7 +131,7 @@ Für die Dynamik in Regressorform müssen zusätzlich folgende Maple-Arbeitsblä
 Dies funktioniert momentan nur für serielle Strukturen und feste Basis.
 
         /robot_codegen_energy/robot_chain_fixb_rotmat_energy_regressor.mw
-        /robot_codegen_dynamics/robot_chain_fixb_rotmat_dynamics_regressor.mw
+        /robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor.mw
 
 #### Generierung von Matlab-Funktionen
 
@@ -155,7 +155,7 @@ Die Tests werden durch Ausführen der erstellten Skripte mit Matlab gestartet:
         robot_codegen_testfunctions/robot_varpar_invdyn_test.m
         robot_codegen_testfunctions/robot_varpar_floatbase_test.m
         robot_codegen_testfunctions/robot_varpar_simulink_test.m
-        robot_codegen_testfunctions/robot_varpar_paramlin_test.m
+        robot_codegen_testfunctions/robot_varpar_fixbase_paramlin_test.m
         robot_codegen_testfunctions/robot_compile_test.m
         robot_codegen_testfunctions/robot_test_everything.m
 
@@ -493,7 +493,7 @@ Positionen (Koordinatensysteme, Schwerpunkten), Geschwindigkeiten
               <-- robot_tree_floatb_definitions
               <-- robot_energy_potential_floatb_worldframe_par1_maple.m
               <-- robot_energy_kinetic_floatb_worldframe_par1_maple.m
-          robot_chain_fixb_rotmat_dynamics_regressor.mw
+          robot_chain_floatb_rotmat_dynamics_regressor.mw
               <-- robot_env
               <-- robot_tree_floatb_definitions
               <-- energy_kinetic_fixb_regressor_minpar_maple.m
@@ -531,7 +531,7 @@ Enthält Variablendefinitionen und -deklarationen
 Textbausteine für Funktionsköpfe:
 
         /robot_codegen_scripts/tmp_head
-          robot_matlabtmp_convert_par2_MPV.head.m
+          robot_matlabtmp_convert_par2_MPV_fixb.head.m
           robot_matlabtmp_coriolisvec_joint_floatb_par1.head.m
           ...
 

@@ -26,7 +26,7 @@ do
   for basemeth in "${basemethodenames[@]}"
   do
     # Coriolisvektor (Floating Base, Basis)
-    zieldat=$repo_pfad/codeexport/${robot_name}/coriolisvec_base_floatb_${basemeth}_par${dynpar}_matlab.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/coriolisvecB_floatb_${basemeth}_par${dynpar}_matlab.m
     if ! [ -f $zieldat ]; then
       echo "${zieldat##*/} existiert nicht. Versuche Zusammenzusetzen."
       # Prüfe, ob alle Einzel-Dateien vorhanden sind

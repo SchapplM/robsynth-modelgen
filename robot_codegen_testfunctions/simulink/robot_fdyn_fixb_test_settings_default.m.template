@@ -14,7 +14,7 @@ robot_name = '%RN%';
 
 %RN%_varpar_testfunctions_parameter
 if strcmp(ParameterModus, 'mp')
-  MPV = %RN%_convert_par2_MPV(pkin, m, mrSges, Ifges);
+  MPV = %RN%_convert_par2_MPV_fixb(pkin, m, mrSges, Ifges);
 end
 DynPar1 = struct('m', m, 'r_S', rSges, 'I_S', Icges);
 

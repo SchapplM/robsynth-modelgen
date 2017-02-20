@@ -11,7 +11,7 @@
 %   kinematic parameters
 % 
 % Output:
-% MMD_reg [((%NQJ%+1)*%NQJ%/2)x%NMPV%]
+% MMD_reg [((%NQJ%+1)*%NQJ%/2)x%NMPVFIXB%]
 %   minimal parameter regressor of inerta matrix time derivative
 %   (only lower left triangular matrix (including diagonal) due to symmetry
 

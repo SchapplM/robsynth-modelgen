@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="18" minor="0"/>
+<Version major="18" minor="2"/>
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true">
 </View-Properties>
@@ -89,8 +89,8 @@
         <Metadata-attribute name="Subject" value="&lt;default&gt;"/>
         <Metadata-attribute name="Author" value="&lt;default&gt;"/>
         <Metadata-attribute name="Item List" value="true"/>
-        <Metadata-attribute name="Keywords" value="&lt;default&gt;"/>
         <Metadata-attribute name="Title" value="&lt;default&gt;"/>
+        <Metadata-attribute name="Keywords" value="&lt;default&gt;"/>
     </Metadata-tag>
 </Metadata-table>
 <Task-table>
@@ -339,16 +339,16 @@ for i to 10*NJ do
        t_ges[1,i] := REMOVE:
        u_ges[1,i] := REMOVE:
 
-       <Font encoding="UTF-8">if `mod`(i, 10) = 1 then XX[trunc((1/10)*i)+1, 1] := 0; printf(&quot;XX%d \134n&quot;, trunc((1/10)*i)+1+1) end if:
-       if `mod`(i, 10) = 2 then XY[trunc((1/10)*i)+1, 1] := 0; printf(&quot;XY%d \134n&quot;, trunc((1/10)*i)+1</Font>+1) end if:
-<Font encoding="UTF-8">       if `mod`(i, 10) = 3 then XZ[trunc((1/10)*i)+1, 1] := 0; printf(&quot;XZ%d \134n&quot;, trunc((1/10)*i)+1</Font>+1) end if:
-<Font encoding="UTF-8">       if `mod`(i, 10) = 4 then YY[trunc((1/10)*i)+1, 1] := 0; printf(&quot;YY%d \134n&quot;, trunc((1/10)*i)+1</Font>+1) end if:
-<Font encoding="UTF-8">       if `mod`(i, 10) = 5 then YZ[trunc((1/10)*i)+1, 1] := 0; printf(&quot;YZ%d \134n&quot;, trunc((1/10)*i)+1</Font>+1) end if:
-<Font encoding="UTF-8">       if `mod`(i, 10) = 6 then ZZ[trunc((1/10)*i)+1, 1] := 0; printf(&quot;ZZ%d \134n&quot;, trunc((1/10)*i)+1</Font>+1) end if:
-<Font encoding="UTF-8">       if `mod`(i, 10) = 7 then mX[trunc((1/10)*i)+1, 1] := 0; printf(&quot;mX%d \134n&quot;, trunc((1/10)*i)+1</Font>+1) end if:
-<Font encoding="UTF-8">       if `mod`(i, 10) = 8 then mY[trunc((1/10)*i)+1, 1] := 0; printf(&quot;mY%d \134n&quot;, trunc((1/10)*i)+1</Font>+1) end if:
-<Font encoding="UTF-8">       if `mod`(i, 10) = 9 then mZ[trunc((1/10)*i)+1, 1] := 0; printf(&quot;mZ%d \134n&quot;, trunc((1/10)*i)+1</Font>+1) end if:
-<Font encoding="UTF-8">       if `mod`(i, 10) = 0 then m[trunc((1/10)*i), 1] := 0;    printf(&quot; m%d \134n&quot;, trunc((1/10)*i</Font>+1))   end if:
+       <Font encoding="UTF-8">if `mod`(i, 10) = 1 then XX[trunc((1/10)*i)+1, 1] := 0; printf(&quot;XX%d \134n&quot;, trunc((1/10)*i)+1): end if:
+       if `mod`(i, 10) = 2 then XY[trunc((1/10)*i)+1, 1] := 0; printf(&quot;XY%d \134n&quot;, trunc((1/10)*i)+1</Font>): end if:
+<Font encoding="UTF-8">       if `mod`(i, 10) = 3 then XZ[trunc((1/10)*i)+1, 1] := 0; printf(&quot;XZ%d \134n&quot;, trunc((1/10)*i)+1</Font>): end if:
+<Font encoding="UTF-8">       if `mod`(i, 10) = 4 then YY[trunc((1/10)*i)+1, 1] := 0; printf(&quot;YY%d \134n&quot;, trunc((1/10)*i)+1</Font>): end if:
+<Font encoding="UTF-8">       if `mod`(i, 10) = 5 then YZ[trunc((1/10)*i)+1, 1] := 0; printf(&quot;YZ%d \134n&quot;, trunc((1/10)*i)+1</Font>): end if:
+<Font encoding="UTF-8">       if `mod`(i, 10) = 6 then ZZ[trunc((1/10)*i)+1, 1] := 0; printf(&quot;ZZ%d \134n&quot;, trunc((1/10)*i)+1</Font>): end if:
+<Font encoding="UTF-8">       if `mod`(i, 10) = 7 then mX[trunc((1/10)*i)+1, 1] := 0; printf(&quot;MX%d \134n&quot;, trunc((1/10)*i)+1</Font>): end if:
+<Font encoding="UTF-8">       if `mod`(i, 10) = 8 then mY[trunc((1/10)*i)+1, 1] := 0; printf(&quot;MY%d \134n&quot;, trunc((1/10)*i)+1</Font>): end if:
+<Font encoding="UTF-8">       if `mod`(i, 10) = 9 then mZ[trunc((1/10)*i)+1, 1] := 0; printf(&quot;MZ%d \134n&quot;, trunc((1/10)*i)+1</Font>): end if:
+<Font encoding="UTF-8">       if `mod`(i, 10) = 0 then m[trunc((1/10)*i), 1] := 0;    printf(&quot; M%d \134n&quot;, trunc((1/10)*i</Font>)):   end if:
   end if:
 end do:</Text-field>
 </Input>
@@ -419,13 +419,13 @@ end do:
 <Text-field style="Heading 3" layout="Heading 3">Export - Minimalparametervektor</Text-field></Title>
 <Group labelreference="L1799" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save Paramvec2, sprintf(&quot;../codeexport/%s/minimal_parameter_vector_maple&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save Paramvec2, sprintf(&quot;../codeexport/%s/minimal_parameter_vector_fixb_maple&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1701" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-   MatlabExport(Paramvec2, sprintf(&quot;../codeexport/%s/minimal_parameter_vector_matlab.m&quot;, robot_name), codegen_opt):
+   MatlabExport(Paramvec2, sprintf(&quot;../codeexport/%s/minimal_parameter_vector_fixb_matlab.m&quot;, robot_name), codegen_opt):
 end if;</Text-field>
 </Input>
 </Group>

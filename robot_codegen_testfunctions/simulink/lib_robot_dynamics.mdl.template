@@ -18,7 +18,7 @@ Library {
       $ObjectID		      2
       $ClassName	      "Simulink.WindowInfo"
       IsActive		      [1]
-      Location		      [65.0, 24.0, 1855.0, 1056.0]
+      Location		      [1969.0, 24.0, 1871.0, 1056.0]
       Object {
 	$PropName		"ModelBrowserInfo"
 	$ObjectID		3
@@ -35,16 +35,28 @@ Library {
 	$ClassName		"Simulink.ExplorerBarInfo"
 	Visible			[1]
       }
-      Object {
-	$PropName		"EditorsInfo"
-	$ObjectID		5
-	$ClassName		"Simulink.EditorInfo"
-	IsActive		[1]
-	ViewObjType		"SimulinkTopLevel"
-	LoadSaveID		"0"
-	Extents			[1799.0, 870.0]
-	ZoomFactor		[1.0]
-	Offset			[0.0, 0.0]
+      Array {
+	Type			"Simulink.EditorInfo"
+	Dimension		2
+	Object {
+	  $ObjectID		  5
+	  IsActive		  [1]
+	  ViewObjType		  "SimulinkTopLevel"
+	  LoadSaveID		  "0"
+	  Extents		  [1835.0, 916.0]
+	  ZoomFactor		  [1.75]
+	  Offset		  [27.023331146465306, 286.38687742605651]
+	}
+	Object {
+	  $ObjectID		  6
+	  IsActive		  [0]
+	  ViewObjType		  "SimulinkSubsys"
+	  LoadSaveID		  "586"
+	  Extents		  [899.0, 888.0]
+	  ZoomFactor		  [1.5]
+	  Offset		  [465.90069270511179, 46.387405905936944]
+	}
+	PropName		"EditorsInfo"
       }
     }
   }
@@ -54,9 +66,9 @@ Library {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "schappler"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Wed Feb 01 19:44:42 2017"
-  RTWModifiedTimeStamp	  407879078
-  ModelVersionFormat	  "1.%<AutoIncrement:171>"
+  LastModifiedDate	  "Fri Feb 17 17:40:19 2017"
+  RTWModifiedTimeStamp	  409253832
+  ModelVersionFormat	  "1.%<AutoIncrement:196>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -137,13 +149,13 @@ Library {
     Type		    "Handle"
     Dimension		    1
     Simulink.ConfigSet {
-      $ObjectID		      6
+      $ObjectID		      7
       Version		      "1.15.0"
       Array {
 	Type			"Handle"
 	Dimension		8
 	Simulink.SolverCC {
-	  $ObjectID		  7
+	  $ObjectID		  8
 	  Version		  "1.15.0"
 	  StartTime		  "0.0"
 	  StopTime		  "10.0"
@@ -178,7 +190,7 @@ Library {
 	  InsertRTBMode		  "Whenever possible"
 	}
 	Simulink.DataIOCC {
-	  $ObjectID		  8
+	  $ObjectID		  9
 	  Version		  "1.15.0"
 	  Decimation		  "1"
 	  ExternalInput		  "[t, u]"
@@ -211,7 +223,7 @@ Library {
 	  Refine		  "1"
 	}
 	Simulink.OptimizationCC {
-	  $ObjectID		  9
+	  $ObjectID		  10
 	  Version		  "1.15.0"
 	  Array {
 	    Type		    "Cell"
@@ -268,7 +280,7 @@ Library {
 	  AccelVerboseBuild	  off
 	}
 	Simulink.DebuggingCC {
-	  $ObjectID		  10
+	  $ObjectID		  11
 	  Version		  "1.15.0"
 	  RTPrefix		  "error"
 	  ConsistencyChecking	  "none"
@@ -357,7 +369,7 @@ Library {
 	  IntegerSaturationMsg	  "warning"
 	}
 	Simulink.HardwareCC {
-	  $ObjectID		  11
+	  $ObjectID		  12
 	  Version		  "1.15.0"
 	  ProdBitPerChar	  8
 	  ProdBitPerShort	  16
@@ -397,7 +409,7 @@ Library {
 	  ProdEqTarget		  on
 	}
 	Simulink.ModelReferenceCC {
-	  $ObjectID		  12
+	  $ObjectID		  13
 	  Version		  "1.15.0"
 	  UpdateModelReferenceTargets "IfOutOfDateOrStructuralChange"
 	  CheckModelReferenceTargetMessage "error"
@@ -412,7 +424,7 @@ Library {
 	  SupportModelReferenceSimTargetCustomCode off
 	}
 	Simulink.SFSimCC {
-	  $ObjectID		  13
+	  $ObjectID		  14
 	  Version		  "1.15.0"
 	  SFSimOverflowDetection  on
 	  SFSimEcho		  on
@@ -425,7 +437,7 @@ Library {
 	}
 	Simulink.RTWCC {
 	  $BackupClass		  "Simulink.RTWCC"
-	  $ObjectID		  14
+	  $ObjectID		  15
 	  Version		  "1.15.0"
 	  Array {
 	    Type		    "Cell"
@@ -505,7 +517,7 @@ Library {
 	    Type		    "Handle"
 	    Dimension		    2
 	    Simulink.CodeAppCC {
-	      $ObjectID		      15
+	      $ObjectID		      16
 	      Version		      "1.15.0"
 	      Array {
 		Type			"Cell"
@@ -577,7 +589,7 @@ Library {
 	    }
 	    Simulink.GRTTargetCC {
 	      $BackupClass	      "Simulink.TargetCC"
-	      $ObjectID		      16
+	      $ObjectID		      17
 	      Version		      "1.15.0"
 	      Array {
 		Type			"Cell"
@@ -906,7 +918,7 @@ Library {
   }
   System {
     Name		    "lib_%RN%_dynamics"
-    Location		    [65, 24, 1920, 1080]
+    Location		    [1969, 24, 3840, 1080]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -918,9 +930,9 @@ Library {
     TiledPaperMargins	    [1.270000, 1.270000, 1.270000, 1.270000]
     TiledPageScale	    1
     ShowPageBoundaries	    off
-    ZoomFactor		    "100"
+    ZoomFactor		    "175"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "516"
+    SIDHighWatermark	    "623"
     Block {
       BlockType		      SubSystem
       Name		      "%RN%_coriolisvec_fixb_mp"
@@ -931,23 +943,23 @@ Library {
       RequestExecContextInheritance off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		17
+	$ObjectID		18
 	$ClassName		"Simulink.Mask"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    18
+	    $ObjectID		    19
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    19
+	    $ObjectID		    20
 	    Type		    "edit"
 	    Name		    "MPV"
-	    Prompt		    "Dynamik-Parameter (Minimalparametervektor)"
+	    Prompt		    "Dynamik-Parameter (Minimalparametervektor fixed-base)"
 	    Value		    "MPV"
 	  }
 	  PropName		  "Parameters"
@@ -955,7 +967,7 @@ Library {
       }
       System {
 	Name			"%RN%_coriolisvec_fixb_mp"
-	Location		[65, 24, 1920, 1080]
+	Location		[1969, 24, 3840, 1080]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -1217,21 +1229,21 @@ Library {
       RequestExecContextInheritance off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		20
+	$ObjectID		21
 	$ClassName		"Simulink.Mask"
 	Initialization		"m = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    21
+	    $ObjectID		    22
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    22
+	    $ObjectID		    23
 	    Type		    "edit"
 	    Name		    "DynPar1"
 	    Prompt		    "Dynamik-Parameter (Parametersatz 1)"
@@ -1566,29 +1578,388 @@ Library {
     }
     Block {
       BlockType		      SubSystem
-      Name		      "%RN%_coriolisvec_floatb_eulangrpy_vp1"
-      SID		      "343"
+      Name		      "%RN%_coriolisvec_floatb_eulangrpy_mp"
+      SID		      "518"
       Ports		      [4, 1]
-      Position		      [950, 402, 1015, 478]
-      ZOrder		      241
+      Position		      [285, 402, 350, 478]
+      ZOrder		      538
       RequestExecContextInheritance off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		23
+	$ObjectID		24
 	$ClassName		"Simulink.Mask"
-	Initialization		"m = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    24
+	    $ObjectID		    25
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    25
+	    $ObjectID		    26
+	    Type		    "edit"
+	    Name		    "MPV"
+	    Prompt		    "Dynamik-Parameter (Minimalparametervektor floating-base)"
+	    Value		    "MPV"
+	  }
+	  PropName		  "Parameters"
+	}
+      }
+      System {
+	Name			"%RN%_coriolisvec_floatb_eulangrpy_mp"
+	Location		[1969, 24, 3840, 1080]
+	Open			off
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"A4"
+	PaperUnits		"centimeters"
+	TiledPaperMargins	[1.270000, 1.270000, 1.270000, 1.270000]
+	TiledPageScale		1
+	ShowPageBoundaries	off
+	ZoomFactor		"100"
+	Block {
+	  BlockType		  Inport
+	  Name			  "qJ"
+	  SID			  "532"
+	  Position		  [20, 18, 50, 32]
+	  ZOrder		  11
+	  IconDisplay		  "Port number"
+	  PortDimensions	  "NQJ"
+	}
+	Block {
+	  BlockType		  Inport
+	  Name			  "qJD"
+	  SID			  "533"
+	  Position		  [40, 103, 70, 117]
+	  ZOrder		  12
+	  Port			  "2"
+	  IconDisplay		  "Port number"
+	  PortDimensions	  "NQJ"
+	}
+	Block {
+	  BlockType		  Inport
+	  Name			  "phi_base"
+	  SID			  "534"
+	  Position		  [40, 163, 70, 177]
+	  ZOrder		  18
+	  Port			  "3"
+	  IconDisplay		  "Port number"
+	  PortDimensions	  "3"
+	}
+	Block {
+	  BlockType		  Inport
+	  Name			  "xD_base"
+	  SID			  "535"
+	  Position		  [25, 283, 55, 297]
+	  ZOrder		  19
+	  Port			  "4"
+	  IconDisplay		  "Port number"
+	  PortDimensions	  "6"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant5"
+	  SID			  "580"
+	  Position		  [5, 452, 70, 468]
+	  ZOrder		  20
+	  Value			  "MPV"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant6"
+	  SID			  "537"
+	  Position		  [15, 372, 65, 388]
+	  ZOrder		  10
+	  Value			  "pkin"
+	}
+	Block {
+	  BlockType		  SubSystem
+	  Name			  "coriolisvec_fcn"
+	  SID			  "540"
+	  Ports			  [6, 1]
+	  Position		  [210, 23, 335, 497]
+	  ZOrder		  1
+	  LibraryVersion	  "1.32"
+	  ErrorFcn		  "Stateflow.Translate.translate"
+	  PermitHierarchicalResolution "ExplicitOnly"
+	  TreatAsAtomicUnit	  on
+	  RequestExecContextInheritance	off
+	  SFBlockType		  "MATLAB Function"
+	  System {
+	    Name		    "coriolisvec_fcn"
+	    Location		    [223, 338, 826, 833]
+	    Open		    off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "A4"
+	    PaperUnits		    "centimeters"
+	    TiledPaperMargins	    [1.270000, 1.270000, 1.270000, 1.270000]
+	    TiledPageScale	    1
+	    ShowPageBoundaries	    off
+	    ZoomFactor		    "100"
+	    SIDHighWatermark	    "82"
+	    Block {
+	      BlockType		      Inport
+	      Name		      "qJ"
+	      SID		      "540::1"
+	      Position		      [20, 101, 40, 119]
+	      ZOrder		      -1
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "qJD"
+	      SID		      "540::19"
+	      Position		      [20, 136, 40, 154]
+	      ZOrder		      10
+	      Port		      "2"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "phi_base"
+	      SID		      "540::77"
+	      Position		      [20, 171, 40, 189]
+	      ZOrder		      29
+	      Port		      "3"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "xD_base"
+	      SID		      "540::78"
+	      Position		      [20, 206, 40, 224]
+	      ZOrder		      30
+	      Port		      "4"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "pkin"
+	      SID		      "540::20"
+	      Position		      [20, 246, 40, 264]
+	      ZOrder		      11
+	      Port		      "5"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "MPV"
+	      SID		      "540::26"
+	      Position		      [20, 281, 40, 299]
+	      ZOrder		      17
+	      Port		      "6"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Demux
+	      Name		      " Demux "
+	      SID		      "540::81"
+	      Ports		      [1, 1]
+	      Position		      [270, 230, 320, 270]
+	      ZOrder		      32
+	      Outputs		      "1"
+	    }
+	    Block {
+	      BlockType		      S-Function
+	      Name		      " SFunction "
+	      SID		      "540::80"
+	      Tag		      "Stateflow S-Function lib_%RN%_dynamics 18"
+	      Ports		      [6, 2]
+	      Position		      [180, 102, 230, 243]
+	      ZOrder		      31
+	      FunctionName	      "sf_sfun"
+	      PortCounts	      "[6 2]"
+	      Port {
+		PortNumber		2
+		Name			"tauc"
+		RTWStorageClass		"Auto"
+		DataLoggingNameMode	"SignalName"
+	      }
+	    }
+	    Block {
+	      BlockType		      Terminator
+	      Name		      " Terminator "
+	      SID		      "540::82"
+	      Position		      [460, 241, 480, 259]
+	      ZOrder		      33
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "tauc"
+	      SID		      "540::5"
+	      Position		      [460, 101, 480, 119]
+	      ZOrder		      -5
+	      IconDisplay	      "Port number"
+	    }
+	    Line {
+	      ZOrder		      33
+	      SrcBlock		      "qJ"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      1
+	    }
+	    Line {
+	      ZOrder		      34
+	      SrcBlock		      "qJD"
+	      SrcPort		      1
+	      Points		      [120, 0]
+	      DstBlock		      " SFunction "
+	      DstPort		      2
+	    }
+	    Line {
+	      ZOrder		      35
+	      SrcBlock		      "phi_base"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      3
+	    }
+	    Line {
+	      ZOrder		      36
+	      SrcBlock		      "xD_base"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      4
+	    }
+	    Line {
+	      ZOrder		      37
+	      SrcBlock		      "pkin"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      5
+	    }
+	    Line {
+	      ZOrder		      38
+	      SrcBlock		      "MPV"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      6
+	    }
+	    Line {
+	      Name		      "tauc"
+	      ZOrder		      39
+	      Labels		      [0, 0]
+	      SrcBlock		      " SFunction "
+	      SrcPort		      2
+	      DstBlock		      "tauc"
+	      DstPort		      1
+	    }
+	    Line {
+	      ZOrder		      40
+	      SrcBlock		      " Demux "
+	      SrcPort		      1
+	      DstBlock		      " Terminator "
+	      DstPort		      1
+	    }
+	    Line {
+	      ZOrder		      41
+	      SrcBlock		      " SFunction "
+	      SrcPort		      1
+	      DstBlock		      " Demux "
+	      DstPort		      1
+	    }
+	  }
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "tau_c"
+	  SID			  "541"
+	  Position		  [530, 235, 545, 265]
+	  ZOrder		  13
+	  NamePlacement		  "alternate"
+	  IconDisplay		  "Port number"
+	  PortDimensions	  "6+NQJ"
+	}
+	Line {
+	  ZOrder		  1
+	  SrcBlock		  "coriolisvec_fcn"
+	  SrcPort		  1
+	  Points		  [93, 0; 0, -10]
+	  DstBlock		  "tau_c"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  2
+	  SrcBlock		  "Constant6"
+	  SrcPort		  1
+	  DstBlock		  "coriolisvec_fcn"
+	  DstPort		  5
+	}
+	Line {
+	  ZOrder		  3
+	  SrcBlock		  "qJD"
+	  SrcPort		  1
+	  Points		  [120, 0]
+	  DstBlock		  "coriolisvec_fcn"
+	  DstPort		  2
+	}
+	Line {
+	  ZOrder		  4
+	  SrcBlock		  "qJ"
+	  SrcPort		  1
+	  Points		  [140, 0]
+	  DstBlock		  "coriolisvec_fcn"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  10
+	  SrcBlock		  "Constant5"
+	  SrcPort		  1
+	  DstBlock		  "coriolisvec_fcn"
+	  DstPort		  6
+	}
+	Line {
+	  ZOrder		  8
+	  SrcBlock		  "phi_base"
+	  SrcPort		  1
+	  Points		  [120, 0]
+	  DstBlock		  "coriolisvec_fcn"
+	  DstPort		  3
+	}
+	Line {
+	  ZOrder		  9
+	  SrcBlock		  "xD_base"
+	  SrcPort		  1
+	  Points		  [80, 0; 0, 10]
+	  DstBlock		  "coriolisvec_fcn"
+	  DstPort		  4
+	}
+      }
+    }
+    Block {
+      BlockType		      SubSystem
+      Name		      "%RN%_coriolisvec_floatb_eulangrpy_vp1"
+      SID		      "343"
+      Ports		      [4, 1]
+      Position		      [940, 402, 1005, 478]
+      ZOrder		      241
+      RequestExecContextInheritance off
+      Object {
+	$PropName		"MaskObject"
+	$ObjectID		27
+	$ClassName		"Simulink.Mask"
+	Initialization		"m = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
+	Array {
+	  Type			  "Simulink.MaskParameter"
+	  Dimension		  2
+	  Object {
+	    $ObjectID		    28
+	    Type		    "edit"
+	    Name		    "pkin"
+	    Prompt		    "Kinematik-Parameter"
+	    Value		    "pkin"
+	  }
+	  Object {
+	    $ObjectID		    29
 	    Type		    "edit"
 	    Name		    "DynPar1"
 	    Prompt		    "Dynamik-Parameter (Parametersatz 1)"
@@ -1599,7 +1970,7 @@ Library {
       }
       System {
 	Name			"%RN%_coriolisvec_floatb_eulangrpy_vp1"
-	Location		[65, 24, 1920, 1080]
+	Location		[1969, 24, 3840, 1080]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -1997,27 +2368,27 @@ Library {
       RequestExecContextInheritance off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		26
+	$ObjectID		30
 	$ClassName		"Simulink.Mask"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  3
 	  Object {
-	    $ObjectID		    27
+	    $ObjectID		    31
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    28
+	    $ObjectID		    32
 	    Type		    "edit"
 	    Name		    "MPV"
-	    Prompt		    "Dynamik-Parameter (Minimalparametervektor)"
+	    Prompt		    "Dynamik-Parameter (Minimalparametervektor fixed-base)"
 	    Value		    "MPV"
 	  }
 	  Object {
-	    $ObjectID		    29
+	    $ObjectID		    33
 	    Type		    "edit"
 	    Name		    "g_base"
 	    Prompt		    "Gravitationsvektor im Basis-KS (g_base)"
@@ -2028,7 +2399,7 @@ Library {
       }
       System {
 	Name			"%RN%_energy_fixb_mp"
-	Location		[65, 24, 1920, 1080]
+	Location		[1969, 24, 3840, 1080]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -2073,7 +2444,7 @@ Library {
 	  Ports			  [2, 1]
 	  Position		  [195, 80, 255, 115]
 	  ZOrder		  239
-	  LibraryVersion	  "1.168"
+	  LibraryVersion	  "1.171"
 	  SourceBlock		  "lib_%RN%_dynamics/%RN%_energykin_fixb_mp"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
@@ -2087,7 +2458,7 @@ Library {
 	  Ports			  [2, 1]
 	  Position		  [195, 172, 250, 203]
 	  ZOrder		  238
-	  LibraryVersion	  "1.168"
+	  LibraryVersion	  "1.171"
 	  SourceBlock		  "lib_%RN%_dynamics/%RN%_energypot_fixb_mp"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
@@ -2170,27 +2541,27 @@ Library {
       RequestExecContextInheritance off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		30
+	$ObjectID		34
 	$ClassName		"Simulink.Mask"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  3
 	  Object {
-	    $ObjectID		    31
+	    $ObjectID		    35
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    32
+	    $ObjectID		    36
 	    Type		    "edit"
 	    Name		    "DynPar1"
 	    Prompt		    "Dynamik-Parameter (Parametersatz 1)"
 	    Value		    "DynPar1"
 	  }
 	  Object {
-	    $ObjectID		    33
+	    $ObjectID		    37
 	    Type		    "edit"
 	    Name		    "g_base"
 	    Prompt		    "Gravitationsvektor im Basis-KS (g_base)"
@@ -2336,35 +2707,276 @@ Library {
     }
     Block {
       BlockType		      SubSystem
-      Name		      "%RN%_energy_floatb_eulangrpy_vp1"
-      SID		      "344"
+      Name		      "%RN%_energy_floatb_eulangrpy_mp"
+      SID		      "519"
       Ports		      [5, 2]
-      Position		      [1160, 512, 1235, 588]
-      ZOrder		      245
+      Position		      [460, 517, 535, 593]
+      ZOrder		      542
       RequestExecContextInheritance off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		34
+	$ObjectID		38
 	$ClassName		"Simulink.Mask"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  3
 	  Object {
-	    $ObjectID		    35
+	    $ObjectID		    39
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    36
+	    $ObjectID		    40
+	    Type		    "edit"
+	    Name		    "MPV"
+	    Prompt		    "Dynamik-Parameter (Minimalparametervektor floating-base)"
+	    Value		    "MPV"
+	  }
+	  Object {
+	    $ObjectID		    41
+	    Type		    "edit"
+	    Name		    "g_world"
+	    Prompt		    "Gravitationsvektor im Welt-KS (g_world)"
+	    Value		    "g_world"
+	  }
+	  PropName		  "Parameters"
+	}
+      }
+      System {
+	Name			"%RN%_energy_floatb_eulangrpy_mp"
+	Location		[1969, 24, 3840, 1080]
+	Open			off
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"A4"
+	PaperUnits		"centimeters"
+	TiledPaperMargins	[1.270000, 1.270000, 1.270000, 1.270000]
+	TiledPageScale		1
+	ShowPageBoundaries	off
+	ZoomFactor		"125"
+	Block {
+	  BlockType		  Inport
+	  Name			  "qJ"
+	  SID			  "569"
+	  Position		  [25, 18, 55, 32]
+	  ZOrder		  231
+	  IconDisplay		  "Port number"
+	  PortDimensions	  "NQJ"
+	}
+	Block {
+	  BlockType		  Inport
+	  Name			  "qJD"
+	  SID			  "570"
+	  Position		  [25, 68, 55, 82]
+	  ZOrder		  233
+	  Port			  "2"
+	  IconDisplay		  "Port number"
+	  PortDimensions	  "NQJ"
+	}
+	Block {
+	  BlockType		  Inport
+	  Name			  "r_base"
+	  SID			  "571"
+	  Position		  [25, 108, 55, 122]
+	  ZOrder		  247
+	  Port			  "3"
+	  IconDisplay		  "Port number"
+	  PortDimensions	  "3"
+	}
+	Block {
+	  BlockType		  Inport
+	  Name			  "phi_base"
+	  SID			  "572"
+	  Position		  [25, 143, 55, 157]
+	  ZOrder		  246
+	  Port			  "4"
+	  IconDisplay		  "Port number"
+	  PortDimensions	  "3"
+	}
+	Block {
+	  BlockType		  Inport
+	  Name			  "xD_base"
+	  SID			  "573"
+	  Position		  [25, 183, 55, 197]
+	  ZOrder		  248
+	  Port			  "5"
+	  IconDisplay		  "Port number"
+	  PortDimensions	  "6"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant"
+	  SID			  "574"
+	  Position		  [30, 305, 85, 335]
+	  ZOrder		  237
+	  Value			  "g_world"
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "%RN%_energykin_floatb_eulangrpy_mp"
+	  SID			  "584"
+	  Ports			  [4, 1]
+	  Position		  [215, 44, 290, 141]
+	  ZOrder		  541
+	  LibraryVersion	  "1.189"
+	  SourceBlock		  "lib_%RN%_dynamics/%RN%_energykin_floatb_eulangrpy_mp"
+	  SourceType		  ""
+	  ContentPreviewEnabled	  off
+	  pkin			  "pkin"
+	  MPV			  "MPV"
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "%RN%_energypot_floatb_eulangrpy_mp"
+	  SID			  "585"
+	  Ports			  [4, 1]
+	  Position		  [210, 172, 290, 298]
+	  ZOrder		  542
+	  LibraryVersion	  "1.189"
+	  SourceBlock		  "lib_%RN%_dynamics/%RN%_energypot_floatb_eulangrpy_mp"
+	  SourceType		  ""
+	  ContentPreviewEnabled	  off
+	  pkin			  "pkin"
+	  MPV			  "MPV"
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "T"
+	  SID			  "577"
+	  Position		  [370, 78, 400, 92]
+	  ZOrder		  235
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "U"
+	  SID			  "578"
+	  Position		  [370, 223, 400, 237]
+	  ZOrder		  236
+	  Port			  "2"
+	  IconDisplay		  "Port number"
+	}
+	Line {
+	  ZOrder		  26
+	  SrcBlock		  "Constant"
+	  SrcPort		  1
+	  Points		  [9, 0; 0, -40]
+	  DstBlock		  "%RN%_energypot_floatb_eulangrpy_mp"
+	  DstPort		  4
+	}
+	Line {
+	  ZOrder		  14
+	  SrcBlock		  "qJD"
+	  SrcPort		  1
+	  Points		  [48, 0; 0, 14; 65, 0; 0, -9]
+	  DstBlock		  "%RN%_energykin_floatb_eulangrpy_mp"
+	  DstPort		  2
+	}
+	Line {
+	  ZOrder		  3
+	  SrcBlock		  "qJ"
+	  SrcPort		  1
+	  Points		  [83, 0; 0, 30]
+	  Branch {
+	    ZOrder		    24
+	    Points		    [0, 20; -28, 0; 0, 115]
+	    DstBlock		    "%RN%_energypot_floatb_eulangrpy_mp"
+	    DstPort		    1
+	  }
+	  Branch {
+	    ZOrder		    13
+	    DstBlock		    "%RN%_energykin_floatb_eulangrpy_mp"
+	    DstPort		    1
+	  }
+	}
+	Line {
+	  ZOrder		  27
+	  SrcBlock		  "%RN%_energypot_floatb_eulangrpy_mp"
+	  SrcPort		  1
+	  Points		  [60, 0]
+	  DstBlock		  "U"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  18
+	  SrcBlock		  "%RN%_energykin_floatb_eulangrpy_mp"
+	  SrcPort		  1
+	  Points		  [43, 0; 0, -10]
+	  DstBlock		  "T"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  8
+	  SrcBlock		  "phi_base"
+	  SrcPort		  1
+	  Points		  [23, 0]
+	  Branch {
+	    ZOrder		    23
+	    Points		    [0, 100]
+	    DstBlock		    "%RN%_energypot_floatb_eulangrpy_mp"
+	    DstPort		    3
+	  }
+	  Branch {
+	    ZOrder		    15
+	    Points		    [0, -10; 2, 0; 0, -35]
+	    DstBlock		    "%RN%_energykin_floatb_eulangrpy_mp"
+	    DstPort		    3
+	  }
+	}
+	Line {
+	  ZOrder		  25
+	  SrcBlock		  "r_base"
+	  SrcPort		  1
+	  Points		  [40, 0; 0, 105]
+	  DstBlock		  "%RN%_energypot_floatb_eulangrpy_mp"
+	  DstPort		  2
+	}
+	Line {
+	  ZOrder		  16
+	  SrcBlock		  "xD_base"
+	  SrcPort		  1
+	  Points		  [33, 0; 0, -60]
+	  DstBlock		  "%RN%_energykin_floatb_eulangrpy_mp"
+	  DstPort		  4
+	}
+      }
+    }
+    Block {
+      BlockType		      SubSystem
+      Name		      "%RN%_energy_floatb_eulangrpy_vp1"
+      SID		      "344"
+      Ports		      [5, 2]
+      Position		      [1150, 512, 1225, 588]
+      ZOrder		      245
+      RequestExecContextInheritance off
+      Object {
+	$PropName		"MaskObject"
+	$ObjectID		42
+	$ClassName		"Simulink.Mask"
+	Array {
+	  Type			  "Simulink.MaskParameter"
+	  Dimension		  3
+	  Object {
+	    $ObjectID		    43
+	    Type		    "edit"
+	    Name		    "pkin"
+	    Prompt		    "Kinematik-Parameter"
+	    Value		    "pkin"
+	  }
+	  Object {
+	    $ObjectID		    44
 	    Type		    "edit"
 	    Name		    "DynPar1"
 	    Prompt		    "Dynamik-Parameter (Parametersatz 1)"
 	    Value		    "DynPar1"
 	  }
 	  Object {
-	    $ObjectID		    37
+	    $ObjectID		    45
 	    Type		    "edit"
 	    Name		    "g_world"
 	    Prompt		    "Gravitationsvektor im Welt-KS (g_world)"
@@ -2584,23 +3196,23 @@ Library {
       RequestExecContextInheritance off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		38
+	$ObjectID		46
 	$ClassName		"Simulink.Mask"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    39
+	    $ObjectID		    47
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    40
+	    $ObjectID		    48
 	    Type		    "edit"
 	    Name		    "MPV"
-	    Prompt		    "Dynamik-Parameter (Minimalparametervektor)"
+	    Prompt		    "Dynamik-Parameter (Minimalparametervektor fixed-base)"
 	    Value		    "MPV"
 	  }
 	  PropName		  "Parameters"
@@ -2869,21 +3481,21 @@ Library {
       RequestExecContextInheritance off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		41
+	$ObjectID		49
 	$ClassName		"Simulink.Mask"
 	Initialization		"m = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    42
+	    $ObjectID		    50
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    43
+	    $ObjectID		    51
 	    Type		    "edit"
 	    Name		    "DynPar1"
 	    Prompt		    "Dynamik-Parameter (Parametersatz 1)"
@@ -3215,29 +3827,383 @@ Library {
     }
     Block {
       BlockType		      SubSystem
-      Name		      "%RN%_energykin_floatb_eulangrpy_vp1"
-      SID		      "345"
+      Name		      "%RN%_energykin_floatb_eulangrpy_mp"
+      SID		      "520"
       Ports		      [4, 1]
-      Position		      [805, 502, 845, 563]
-      ZOrder		      243
+      Position		      [105, 507, 145, 568]
+      ZOrder		      540
       RequestExecContextInheritance off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		44
+	$ObjectID		52
 	$ClassName		"Simulink.Mask"
-	Initialization		"m = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    45
+	    $ObjectID		    53
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    46
+	    $ObjectID		    54
+	    Type		    "edit"
+	    Name		    "MPV"
+	    Prompt		    "Dynamik-Parameter (Minimalparametervektor floating-base)"
+	    Value		    "MPV"
+	  }
+	  PropName		  "Parameters"
+	}
+      }
+      System {
+	Name			"%RN%_energykin_floatb_eulangrpy_mp"
+	Location		[1969, 24, 3840, 1080]
+	Open			off
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"A4"
+	PaperUnits		"centimeters"
+	TiledPaperMargins	[1.270000, 1.270000, 1.270000, 1.270000]
+	TiledPageScale		1
+	ShowPageBoundaries	off
+	ZoomFactor		"100"
+	Block {
+	  BlockType		  Inport
+	  Name			  "qJ"
+	  SID			  "550"
+	  Position		  [30, 38, 60, 52]
+	  ZOrder		  11
+	  IconDisplay		  "Port number"
+	  PortDimensions	  "NQJ"
+	}
+	Block {
+	  BlockType		  Inport
+	  Name			  "qJD"
+	  SID			  "551"
+	  Position		  [30, 123, 60, 137]
+	  ZOrder		  12
+	  Port			  "2"
+	  IconDisplay		  "Port number"
+	  PortDimensions	  "NQJ"
+	}
+	Block {
+	  BlockType		  Inport
+	  Name			  "phi_base"
+	  SID			  "552"
+	  Position		  [30, 208, 60, 222]
+	  ZOrder		  18
+	  Port			  "3"
+	  IconDisplay		  "Port number"
+	  PortDimensions	  "3"
+	}
+	Block {
+	  BlockType		  Inport
+	  Name			  "xD_base"
+	  SID			  "553"
+	  Position		  [30, 293, 60, 307]
+	  ZOrder		  19
+	  Port			  "4"
+	  IconDisplay		  "Port number"
+	  PortDimensions	  "6"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant1"
+	  SID			  "582"
+	  Position		  [20, 462, 85, 478]
+	  ZOrder		  21
+	  Value			  "MPV"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant6"
+	  SID			  "555"
+	  Position		  [20, 377, 70, 393]
+	  ZOrder		  10
+	  Value			  "pkin"
+	}
+	Block {
+	  BlockType		  SubSystem
+	  Name			  "MATLAB Function"
+	  SID			  "558"
+	  Ports			  [6, 1]
+	  Position		  [195, 7, 350, 508]
+	  ZOrder		  1
+	  LibraryVersion	  "1.32"
+	  ErrorFcn		  "Stateflow.Translate.translate"
+	  PermitHierarchicalResolution "ExplicitOnly"
+	  TreatAsAtomicUnit	  on
+	  RequestExecContextInheritance	off
+	  SFBlockType		  "MATLAB Function"
+	  System {
+	    Name		    "MATLAB Function"
+	    Location		    [223, 338, 826, 833]
+	    Open		    off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "A4"
+	    PaperUnits		    "centimeters"
+	    TiledPaperMargins	    [1.270000, 1.270000, 1.270000, 1.270000]
+	    TiledPageScale	    1
+	    ShowPageBoundaries	    off
+	    ZoomFactor		    "100"
+	    SIDHighWatermark	    "56"
+	    Block {
+	      BlockType		      Inport
+	      Name		      "qJ"
+	      SID		      "558::1"
+	      Position		      [20, 101, 40, 119]
+	      ZOrder		      -1
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "qD"
+	      SID		      "558::19"
+	      Position		      [20, 136, 40, 154]
+	      ZOrder		      10
+	      Port		      "2"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "phi_base"
+	      SID		      "558::51"
+	      Position		      [20, 171, 40, 189]
+	      ZOrder		      29
+	      Port		      "3"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "xD_base"
+	      SID		      "558::52"
+	      Position		      [20, 206, 40, 224]
+	      ZOrder		      30
+	      Port		      "4"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "pkin"
+	      SID		      "558::20"
+	      Position		      [20, 246, 40, 264]
+	      ZOrder		      11
+	      Port		      "5"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "MPV"
+	      SID		      "558::26"
+	      Position		      [20, 281, 40, 299]
+	      ZOrder		      17
+	      Port		      "6"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Demux
+	      Name		      " Demux "
+	      SID		      "558::55"
+	      Ports		      [1, 1]
+	      Position		      [270, 230, 320, 270]
+	      ZOrder		      32
+	      Outputs		      "1"
+	    }
+	    Block {
+	      BlockType		      S-Function
+	      Name		      " SFunction "
+	      SID		      "558::54"
+	      Tag		      "Stateflow S-Function lib_%RN%_dynamics 20"
+	      Ports		      [6, 2]
+	      Position		      [180, 102, 230, 243]
+	      ZOrder		      31
+	      FunctionName	      "sf_sfun"
+	      PortCounts	      "[6 2]"
+	      Port {
+		PortNumber		2
+		Name			"T"
+		RTWStorageClass		"Auto"
+		DataLoggingNameMode	"SignalName"
+	      }
+	    }
+	    Block {
+	      BlockType		      Terminator
+	      Name		      " Terminator "
+	      SID		      "558::56"
+	      Position		      [460, 241, 480, 259]
+	      ZOrder		      33
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "T"
+	      SID		      "558::5"
+	      Position		      [460, 101, 480, 119]
+	      ZOrder		      -5
+	      IconDisplay	      "Port number"
+	    }
+	    Line {
+	      ZOrder		      33
+	      SrcBlock		      "qJ"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      1
+	    }
+	    Line {
+	      ZOrder		      34
+	      SrcBlock		      "qD"
+	      SrcPort		      1
+	      Points		      [120, 0]
+	      DstBlock		      " SFunction "
+	      DstPort		      2
+	    }
+	    Line {
+	      ZOrder		      35
+	      SrcBlock		      "phi_base"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      3
+	    }
+	    Line {
+	      ZOrder		      36
+	      SrcBlock		      "xD_base"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      4
+	    }
+	    Line {
+	      ZOrder		      37
+	      SrcBlock		      "pkin"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      5
+	    }
+	    Line {
+	      ZOrder		      38
+	      SrcBlock		      "MPV"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      6
+	    }
+	    Line {
+	      Name		      "T"
+	      ZOrder		      39
+	      Labels		      [0, 0]
+	      SrcBlock		      " SFunction "
+	      SrcPort		      2
+	      DstBlock		      "T"
+	      DstPort		      1
+	    }
+	    Line {
+	      ZOrder		      40
+	      SrcBlock		      " Demux "
+	      SrcPort		      1
+	      DstBlock		      " Terminator "
+	      DstPort		      1
+	    }
+	    Line {
+	      ZOrder		      41
+	      SrcBlock		      " SFunction "
+	      SrcPort		      1
+	      DstBlock		      " Demux "
+	      DstPort		      1
+	    }
+	  }
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "T"
+	  SID			  "559"
+	  Position		  [485, 245, 500, 275]
+	  ZOrder		  13
+	  NamePlacement		  "alternate"
+	  IconDisplay		  "Port number"
+	  PortDimensions	  "1"
+	}
+	Line {
+	  ZOrder		  1
+	  SrcBlock		  "MATLAB Function"
+	  SrcPort		  1
+	  DstBlock		  "T"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  2
+	  SrcBlock		  "Constant6"
+	  SrcPort		  1
+	  DstBlock		  "MATLAB Function"
+	  DstPort		  5
+	}
+	Line {
+	  ZOrder		  3
+	  SrcBlock		  "qJD"
+	  SrcPort		  1
+	  DstBlock		  "MATLAB Function"
+	  DstPort		  2
+	}
+	Line {
+	  ZOrder		  4
+	  SrcBlock		  "qJ"
+	  SrcPort		  1
+	  DstBlock		  "MATLAB Function"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  10
+	  SrcBlock		  "Constant1"
+	  SrcPort		  1
+	  DstBlock		  "MATLAB Function"
+	  DstPort		  6
+	}
+	Line {
+	  ZOrder		  8
+	  SrcBlock		  "phi_base"
+	  SrcPort		  1
+	  DstBlock		  "MATLAB Function"
+	  DstPort		  3
+	}
+	Line {
+	  ZOrder		  9
+	  SrcBlock		  "xD_base"
+	  SrcPort		  1
+	  DstBlock		  "MATLAB Function"
+	  DstPort		  4
+	}
+      }
+    }
+    Block {
+      BlockType		      SubSystem
+      Name		      "%RN%_energykin_floatb_eulangrpy_vp1"
+      SID		      "345"
+      Ports		      [4, 1]
+      Position		      [795, 502, 835, 563]
+      ZOrder		      243
+      RequestExecContextInheritance off
+      Object {
+	$PropName		"MaskObject"
+	$ObjectID		55
+	$ClassName		"Simulink.Mask"
+	Initialization		"m = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
+	Array {
+	  Type			  "Simulink.MaskParameter"
+	  Dimension		  2
+	  Object {
+	    $ObjectID		    56
+	    Type		    "edit"
+	    Name		    "pkin"
+	    Prompt		    "Kinematik-Parameter"
+	    Value		    "pkin"
+	  }
+	  Object {
+	    $ObjectID		    57
 	    Type		    "edit"
 	    Name		    "DynPar1"
 	    Prompt		    "Dynamik-Parameter (Parametersatz 1)"
@@ -3647,23 +4613,23 @@ Library {
       RequestExecContextInheritance off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		47
+	$ObjectID		58
 	$ClassName		"Simulink.Mask"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    48
+	    $ObjectID		    59
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    49
+	    $ObjectID		    60
 	    Type		    "edit"
 	    Name		    "MPV"
-	    Prompt		    "Dynamik-Parameter (Minimalparametervektor)"
+	    Prompt		    "Dynamik-Parameter (Minimalparametervektor fixed-base)"
 	    Value		    "MPV"
 	  }
 	  PropName		  "Parameters"
@@ -3933,21 +4899,21 @@ Library {
       RequestExecContextInheritance off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		50
+	$ObjectID		61
 	$ClassName		"Simulink.Mask"
 	Initialization		"m = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    51
+	    $ObjectID		    62
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    52
+	    $ObjectID		    63
 	    Type		    "edit"
 	    Name		    "DynPar1"
 	    Prompt		    "Dynamik-Parameter (Parametersatz 1)"
@@ -4245,29 +5211,389 @@ Library {
     }
     Block {
       BlockType		      SubSystem
-      Name		      "%RN%_energypot_floatb_eulangrpy_vp1"
-      SID		      "346"
+      Name		      "%RN%_energypot_floatb_eulangrpy_mp"
+      SID		      "521"
       Ports		      [4, 1]
-      Position		      [960, 542, 1000, 603]
-      ZOrder		      244
+      Position		      [295, 517, 335, 578]
+      ZOrder		      541
       RequestExecContextInheritance off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		53
+	$ObjectID		64
 	$ClassName		"Simulink.Mask"
-	Initialization		"m = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    54
+	    $ObjectID		    65
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    55
+	    $ObjectID		    66
+	    Type		    "edit"
+	    Name		    "MPV"
+	    Prompt		    "Dynamik-Parameter (Minimalparametervektor floating-base)"
+	    Value		    "MPV"
+	  }
+	  PropName		  "Parameters"
+	}
+      }
+      System {
+	Name			"%RN%_energypot_floatb_eulangrpy_mp"
+	Location		[1969, 24, 3840, 1080]
+	Open			off
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"A4"
+	PaperUnits		"centimeters"
+	TiledPaperMargins	[1.270000, 1.270000, 1.270000, 1.270000]
+	TiledPageScale		1
+	ShowPageBoundaries	off
+	ZoomFactor		"100"
+	Block {
+	  BlockType		  Inport
+	  Name			  "qJ"
+	  SID			  "560"
+	  Position		  [20, 43, 50, 57]
+	  ZOrder		  11
+	  IconDisplay		  "Port number"
+	  PortDimensions	  "NQJ"
+	}
+	Block {
+	  BlockType		  Inport
+	  Name			  "r_base"
+	  SID			  "561"
+	  Position		  [20, 113, 50, 127]
+	  ZOrder		  17
+	  Port			  "2"
+	  IconDisplay		  "Port number"
+	  PortDimensions	  "3"
+	}
+	Block {
+	  BlockType		  Inport
+	  Name			  "phi_base"
+	  SID			  "562"
+	  Position		  [30, 163, 60, 177]
+	  ZOrder		  18
+	  Port			  "3"
+	  IconDisplay		  "Port number"
+	  PortDimensions	  "3"
+	}
+	Block {
+	  BlockType		  Inport
+	  Name			  "g_world"
+	  SID			  "563"
+	  Position		  [50, 208, 80, 222]
+	  ZOrder		  12
+	  Port			  "4"
+	  IconDisplay		  "Port number"
+	  PortDimensions	  "3"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant5"
+	  SID			  "583"
+	  Position		  [35, 397, 100, 413]
+	  ZOrder		  21
+	  Value			  "MPV"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant6"
+	  SID			  "564"
+	  Position		  [30, 322, 80, 338]
+	  ZOrder		  10
+	  Value			  "pkin"
+	}
+	Block {
+	  BlockType		  SubSystem
+	  Name			  "MATLAB Function"
+	  SID			  "567"
+	  Ports			  [6, 1]
+	  Position		  [225, 26, 390, 454]
+	  ZOrder		  1
+	  LibraryVersion	  "1.32"
+	  ErrorFcn		  "Stateflow.Translate.translate"
+	  PermitHierarchicalResolution "ExplicitOnly"
+	  TreatAsAtomicUnit	  on
+	  RequestExecContextInheritance	off
+	  SFBlockType		  "MATLAB Function"
+	  System {
+	    Name		    "MATLAB Function"
+	    Location		    [223, 338, 826, 833]
+	    Open		    off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "A4"
+	    PaperUnits		    "centimeters"
+	    TiledPaperMargins	    [1.270000, 1.270000, 1.270000, 1.270000]
+	    TiledPageScale	    1
+	    ShowPageBoundaries	    off
+	    ZoomFactor		    "100"
+	    SIDHighWatermark	    "58"
+	    Block {
+	      BlockType		      Inport
+	      Name		      "qJ"
+	      SID		      "567::1"
+	      Position		      [20, 101, 40, 119]
+	      ZOrder		      -1
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "r_base"
+	      SID		      "567::19"
+	      Position		      [20, 136, 40, 154]
+	      ZOrder		      10
+	      Port		      "2"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "phi_base"
+	      SID		      "567::53"
+	      Position		      [20, 171, 40, 189]
+	      ZOrder		      31
+	      Port		      "3"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "g_world"
+	      SID		      "567::54"
+	      Position		      [20, 206, 40, 224]
+	      ZOrder		      32
+	      Port		      "4"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "pkin"
+	      SID		      "567::20"
+	      Position		      [20, 246, 40, 264]
+	      ZOrder		      11
+	      Port		      "5"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "MPV"
+	      SID		      "567::26"
+	      Position		      [20, 281, 40, 299]
+	      ZOrder		      17
+	      Port		      "6"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Demux
+	      Name		      " Demux "
+	      SID		      "567::57"
+	      Ports		      [1, 1]
+	      Position		      [270, 230, 320, 270]
+	      ZOrder		      34
+	      Outputs		      "1"
+	    }
+	    Block {
+	      BlockType		      S-Function
+	      Name		      " SFunction "
+	      SID		      "567::56"
+	      Tag		      "Stateflow S-Function lib_%RN%_dynamics 21"
+	      Ports		      [6, 2]
+	      Position		      [180, 102, 230, 243]
+	      ZOrder		      33
+	      FunctionName	      "sf_sfun"
+	      PortCounts	      "[6 2]"
+	      Port {
+		PortNumber		2
+		Name			"U"
+		RTWStorageClass		"Auto"
+		DataLoggingNameMode	"SignalName"
+	      }
+	    }
+	    Block {
+	      BlockType		      Terminator
+	      Name		      " Terminator "
+	      SID		      "567::58"
+	      Position		      [460, 241, 480, 259]
+	      ZOrder		      35
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "U"
+	      SID		      "567::5"
+	      Position		      [460, 101, 480, 119]
+	      ZOrder		      -5
+	      IconDisplay	      "Port number"
+	    }
+	    Line {
+	      ZOrder		      21
+	      SrcBlock		      "qJ"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      1
+	    }
+	    Line {
+	      ZOrder		      22
+	      SrcBlock		      "r_base"
+	      SrcPort		      1
+	      Points		      [120, 0]
+	      DstBlock		      " SFunction "
+	      DstPort		      2
+	    }
+	    Line {
+	      ZOrder		      23
+	      SrcBlock		      "phi_base"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      3
+	    }
+	    Line {
+	      ZOrder		      24
+	      SrcBlock		      "g_world"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      4
+	    }
+	    Line {
+	      ZOrder		      25
+	      SrcBlock		      "pkin"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      5
+	    }
+	    Line {
+	      ZOrder		      26
+	      SrcBlock		      "MPV"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      6
+	    }
+	    Line {
+	      Name		      "U"
+	      ZOrder		      27
+	      Labels		      [0, 0]
+	      SrcBlock		      " SFunction "
+	      SrcPort		      2
+	      DstBlock		      "U"
+	      DstPort		      1
+	    }
+	    Line {
+	      ZOrder		      28
+	      SrcBlock		      " Demux "
+	      SrcPort		      1
+	      DstBlock		      " Terminator "
+	      DstPort		      1
+	    }
+	    Line {
+	      ZOrder		      29
+	      SrcBlock		      " SFunction "
+	      SrcPort		      1
+	      DstBlock		      " Demux "
+	      DstPort		      1
+	    }
+	  }
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "U"
+	  SID			  "568"
+	  Position		  [515, 200, 530, 230]
+	  ZOrder		  13
+	  NamePlacement		  "alternate"
+	  IconDisplay		  "Port number"
+	}
+	Line {
+	  ZOrder		  1
+	  SrcBlock		  "MATLAB Function"
+	  SrcPort		  1
+	  Points		  [58, 0; 0, -25]
+	  DstBlock		  "U"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  2
+	  SrcBlock		  "Constant6"
+	  SrcPort		  1
+	  Points		  [125, 0]
+	  DstBlock		  "MATLAB Function"
+	  DstPort		  5
+	}
+	Line {
+	  ZOrder		  3
+	  SrcBlock		  "g_world"
+	  SrcPort		  1
+	  Points		  [125, 0]
+	  DstBlock		  "MATLAB Function"
+	  DstPort		  4
+	}
+	Line {
+	  ZOrder		  4
+	  SrcBlock		  "qJ"
+	  SrcPort		  1
+	  Points		  [155, 0]
+	  DstBlock		  "MATLAB Function"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  7
+	  SrcBlock		  "r_base"
+	  SrcPort		  1
+	  Points		  [155, 0]
+	  DstBlock		  "MATLAB Function"
+	  DstPort		  2
+	}
+	Line {
+	  ZOrder		  8
+	  SrcBlock		  "phi_base"
+	  SrcPort		  1
+	  Points		  [145, 0]
+	  DstBlock		  "MATLAB Function"
+	  DstPort		  3
+	}
+	Line {
+	  ZOrder		  9
+	  SrcBlock		  "Constant5"
+	  SrcPort		  1
+	  Points		  [105, 0]
+	  DstBlock		  "MATLAB Function"
+	  DstPort		  6
+	}
+      }
+    }
+    Block {
+      BlockType		      SubSystem
+      Name		      "%RN%_energypot_floatb_eulangrpy_vp1"
+      SID		      "346"
+      Ports		      [4, 1]
+      Position		      [950, 542, 990, 603]
+      ZOrder		      244
+      RequestExecContextInheritance off
+      Object {
+	$PropName		"MaskObject"
+	$ObjectID		67
+	$ClassName		"Simulink.Mask"
+	Initialization		"m = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
+	Array {
+	  Type			  "Simulink.MaskParameter"
+	  Dimension		  2
+	  Object {
+	    $ObjectID		    68
+	    Type		    "edit"
+	    Name		    "pkin"
+	    Prompt		    "Kinematik-Parameter"
+	    Value		    "pkin"
+	  }
+	  Object {
+	    $ObjectID		    69
 	    Type		    "edit"
 	    Name		    "DynPar1"
 	    Prompt		    "Dynamik-Parameter (Parametersatz 1)"
@@ -4639,49 +5965,42 @@ Library {
       Name		      "%RN%_fordyn_fixb_mp"
       SID		      "63"
       Ports		      [1, 3]
-      Position		      [75, 402, 245, 478]
+      Position		      [75, 737, 245, 813]
       ZOrder		      228
       RequestExecContextInheritance off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		56
+	$ObjectID		70
 	$ClassName		"Simulink.Mask"
 	Array {
 	  Type			  "Simulink.MaskParameter"
-	  Dimension		  5
+	  Dimension		  4
 	  Object {
-	    $ObjectID		    57
+	    $ObjectID		    71
 	    Type		    "edit"
 	    Name		    "q_t0"
 	    Prompt		    "q0 (initial pose)"
 	    Value		    "q_t0"
 	  }
 	  Object {
-	    $ObjectID		    58
+	    $ObjectID		    72
 	    Type		    "edit"
 	    Name		    "qD_t0"
 	    Prompt		    "qD0 (initial velocity)"
 	    Value		    "qD_t0"
 	  }
 	  Object {
-	    $ObjectID		    59
+	    $ObjectID		    73
 	    Type		    "edit"
 	    Name		    "g_base"
 	    Prompt		    "g_base"
 	    Value		    "g_base"
 	  }
 	  Object {
-	    $ObjectID		    60
-	    Type		    "edit"
-	    Name		    "pkin"
-	    Prompt		    "Kinematik-Parameter"
-	    Value		    "pkin"
-	  }
-	  Object {
-	    $ObjectID		    61
+	    $ObjectID		    74
 	    Type		    "edit"
 	    Name		    "MPV"
-	    Prompt		    "Dynamik-Parameter (Minimalparametervektor)"
+	    Prompt		    "Dynamik-Parameter (Minimalparametervektor fixed-base)"
 	    Value		    "MPV"
 	  }
 	  PropName		  "Parameters"
@@ -4690,11 +6009,11 @@ Library {
 	  Type			  "Simulink.dialog.Group"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    62
+	    $ObjectID		    75
 	    Prompt		    "%<MaskType>"
 	    Object {
 	      $PropName		      "DialogControls"
-	      $ObjectID		      63
+	      $ObjectID		      76
 	      $ClassName	      "Simulink.dialog.Text"
 	      Prompt		      "%<MaskDescription>"
 	      Name		      "DescTextVar"
@@ -4702,33 +6021,25 @@ Library {
 	    Name		    "DescGroupVar"
 	  }
 	  Object {
-	    $ObjectID		    64
+	    $ObjectID		    77
 	    Prompt		    "Robot Parameters"
 	    Array {
-	      Type		      "Simulink.dialog.parameter.Control"
-	      Dimension		      5
+	      Type		      "Simulink.dialog.parameter.Edit"
+	      Dimension		      4
 	      Object {
-		$ObjectID		65
-		$ClassName		"Simulink.dialog.parameter.Edit"
+		$ObjectID		78
 		Name			"q_t0"
 	      }
 	      Object {
-		$ObjectID		66
-		$ClassName		"Simulink.dialog.parameter.Edit"
+		$ObjectID		79
 		Name			"qD_t0"
 	      }
 	      Object {
-		$ObjectID		67
-		$ClassName		"Simulink.dialog.parameter.Edit"
+		$ObjectID		80
 		Name			"g_base"
 	      }
 	      Object {
-		$ObjectID		68
-		Name			"KinPar_mdh"
-	      }
-	      Object {
-		$ObjectID		69
-		$ClassName		"Simulink.dialog.parameter.Edit"
+		$ObjectID		81
 		Name			"MPV"
 	      }
 	      PropName		      "DialogControls"
@@ -4740,7 +6051,7 @@ Library {
       }
       System {
 	Name			"%RN%_fordyn_fixb_mp"
-	Location		[992, 52, 1919, 1080]
+	Location		[1969, 24, 3840, 1080]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -4858,7 +6169,7 @@ Library {
 	    TiledPageScale	    1
 	    ShowPageBoundaries	    off
 	    ZoomFactor		    "100"
-	    SIDHighWatermark	    "81"
+	    SIDHighWatermark	    "87"
 	    Block {
 	      BlockType		      Inport
 	      Name		      "M"
@@ -4966,7 +6277,7 @@ Library {
 	  ZOrder		  234
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
-	  LibraryVersion	  "1.140"
+	  LibraryVersion	  "1.174"
 	  SourceBlock		  "lib_%RN%_dynamics/%RN%_coriolisvec_fixb_mp"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
@@ -4988,7 +6299,7 @@ Library {
 	  ZOrder		  235
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
-	  LibraryVersion	  "1.140"
+	  LibraryVersion	  "1.174"
 	  SourceBlock		  "lib_%RN%_dynamics/%RN%_gravload_mp"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
@@ -5003,13 +6314,13 @@ Library {
 	}
 	Block {
 	  BlockType		  Reference
-	  Name			  "%RN%_inertia_joint"
+	  Name			  "%RN%_inertiaJ"
 	  SID			  "82"
 	  Ports			  [1, 1]
 	  Position		  [95, 67, 155, 103]
 	  ZOrder		  233
-	  LibraryVersion	  "1.140"
-	  SourceBlock		  "lib_%RN%_dynamics/%RN%_inertia_joint_mp"
+	  LibraryVersion	  "1.174"
+	  SourceBlock		  "lib_%RN%_dynamics/%RN%_inertiaJ_mp"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
 	  pkin			  "pkin"
@@ -5072,7 +6383,7 @@ Library {
 	    ZOrder		    32
 	    Labels		    [2, 1]
 	    Points		    [0, -64; -465, 0]
-	    DstBlock		    "%RN%_inertia_joint"
+	    DstBlock		    "%RN%_inertiaJ"
 	    DstPort		    1
 	  }
 	  Branch {
@@ -5170,7 +6481,7 @@ Library {
 	}
 	Line {
 	  ZOrder		  33
-	  SrcBlock		  "%RN%_inertia_joint"
+	  SrcBlock		  "%RN%_inertiaJ"
 	  SrcPort		  1
 	  DstBlock		  "mFcn_Minv"
 	  DstPort		  1
@@ -5189,46 +6500,39 @@ Library {
       Name		      "%RN%_fordyn_fixb_vp1"
       SID		      "166"
       Ports		      [1, 3]
-      Position		      [320, 397, 490, 473]
+      Position		      [320, 732, 490, 808]
       ZOrder		      239
       RequestExecContextInheritance off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		70
+	$ObjectID		82
 	$ClassName		"Simulink.Mask"
 	Array {
 	  Type			  "Simulink.MaskParameter"
-	  Dimension		  5
+	  Dimension		  4
 	  Object {
-	    $ObjectID		    71
+	    $ObjectID		    83
 	    Type		    "edit"
 	    Name		    "q_t0"
 	    Prompt		    "q0 (initial pose)"
 	    Value		    "q_t0"
 	  }
 	  Object {
-	    $ObjectID		    72
+	    $ObjectID		    84
 	    Type		    "edit"
 	    Name		    "qD_t0"
 	    Prompt		    "qD0 (initial velocity)"
 	    Value		    "qD_t0"
 	  }
 	  Object {
-	    $ObjectID		    73
+	    $ObjectID		    85
 	    Type		    "edit"
 	    Name		    "g_base"
 	    Prompt		    "g_base"
 	    Value		    "g_base"
 	  }
 	  Object {
-	    $ObjectID		    74
-	    Type		    "edit"
-	    Name		    "pkin"
-	    Prompt		    "Kinematik-Parameter"
-	    Value		    "pkin"
-	  }
-	  Object {
-	    $ObjectID		    75
+	    $ObjectID		    86
 	    Type		    "edit"
 	    Name		    "DynPar1"
 	    Prompt		    "Dynamik-Parameter (Parametersatz 1)"
@@ -5240,11 +6544,11 @@ Library {
 	  Type			  "Simulink.dialog.Group"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    76
+	    $ObjectID		    87
 	    Prompt		    "%<MaskType>"
 	    Object {
 	      $PropName		      "DialogControls"
-	      $ObjectID		      77
+	      $ObjectID		      88
 	      $ClassName	      "Simulink.dialog.Text"
 	      Prompt		      "%<MaskDescription>"
 	      Name		      "DescTextVar"
@@ -5252,33 +6556,25 @@ Library {
 	    Name		    "DescGroupVar"
 	  }
 	  Object {
-	    $ObjectID		    78
+	    $ObjectID		    89
 	    Prompt		    "Robot Parameters"
 	    Array {
-	      Type		      "Simulink.dialog.parameter.Control"
-	      Dimension		      5
+	      Type		      "Simulink.dialog.parameter.Edit"
+	      Dimension		      4
 	      Object {
-		$ObjectID		79
-		$ClassName		"Simulink.dialog.parameter.Edit"
+		$ObjectID		90
 		Name			"q_t0"
 	      }
 	      Object {
-		$ObjectID		80
-		$ClassName		"Simulink.dialog.parameter.Edit"
+		$ObjectID		91
 		Name			"qD_t0"
 	      }
 	      Object {
-		$ObjectID		81
-		$ClassName		"Simulink.dialog.parameter.Edit"
+		$ObjectID		92
 		Name			"g_base"
 	      }
 	      Object {
-		$ObjectID		82
-		Name			"KinPar_mdh"
-	      }
-	      Object {
-		$ObjectID		83
-		$ClassName		"Simulink.dialog.parameter.Edit"
+		$ObjectID		93
 		Name			"DynPar1"
 	      }
 	      PropName		      "DialogControls"
@@ -5553,13 +6849,13 @@ Library {
 	}
 	Block {
 	  BlockType		  Reference
-	  Name			  "%RN%_inertia_joint"
+	  Name			  "%RN%_inertiaJ"
 	  SID			  "177"
 	  Ports			  [1, 1]
 	  Position		  [95, 67, 155, 103]
 	  ZOrder		  233
 	  LibraryVersion	  "1.140"
-	  SourceBlock		  "lib_%RN%_dynamics/%RN%_inertia_joint_vp1"
+	  SourceBlock		  "lib_%RN%_dynamics/%RN%_inertiaJ_vp1"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
 	  pkin			  "pkin"
@@ -5622,7 +6918,7 @@ Library {
 	    ZOrder		    4
 	    Labels		    [2, 1]
 	    Points		    [0, -64; -465, 0]
-	    DstBlock		    "%RN%_inertia_joint"
+	    DstBlock		    "%RN%_inertiaJ"
 	    DstPort		    1
 	  }
 	  Branch {
@@ -5720,7 +7016,7 @@ Library {
 	}
 	Line {
 	  ZOrder		  20
-	  SrcBlock		  "%RN%_inertia_joint"
+	  SrcBlock		  "%RN%_inertiaJ"
 	  SrcPort		  1
 	  DstBlock		  "mFcn_Minv"
 	  DstPort		  1
@@ -5736,79 +7032,1406 @@ Library {
     }
     Block {
       BlockType		      SubSystem
-      Name		      "%RN%_fordyn_floatb_eulangrpy_vp1"
-      SID		      "472"
+      Name		      "%RN%_fordyn_floatb_eulangrpy_mp"
+      SID		      "586"
       Ports		      [2, 1]
-      Position		      [75, 527, 245, 603]
-      ZOrder		      536
+      Position		      [75, 852, 245, 928]
+      ZOrder		      543
       RequestExecContextInheritance off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		84
+	$ObjectID		94
 	$ClassName		"Simulink.Mask"
 	Display			"port_label('input', 1, '_{(W)} F^{ext}', 'texmode', 'on')\nport_label('input', 2, '\\tau^{ext}_{J}', 'texm"
 	"ode', 'on')\nport_label('output', 1, 'Rob_Bus')"
 	Array {
 	  Type			  "Simulink.MaskParameter"
-	  Dimension		  9
+	  Dimension		  8
 	  Object {
-	    $ObjectID		    85
+	    $ObjectID		    95
 	    Type		    "edit"
 	    Name		    "r_base_t0"
 	    Prompt		    "r_base_t0 (Basisposition im Welt-KS)"
 	    Value		    "r_base_t0"
 	  }
 	  Object {
-	    $ObjectID		    86
+	    $ObjectID		    96
 	    Type		    "edit"
 	    Name		    "rD_base_t0"
 	    Prompt		    "rD_base_t0"
 	    Value		    "rD_base_t0"
 	  }
 	  Object {
-	    $ObjectID		    87
+	    $ObjectID		    97
 	    Type		    "edit"
 	    Name		    "phi_base_t0"
 	    Prompt		    "phi_base_t0"
 	    Value		    "phi_base_t0"
 	  }
 	  Object {
-	    $ObjectID		    88
+	    $ObjectID		    98
 	    Type		    "edit"
 	    Name		    "phiD_base_t0"
 	    Prompt		    "phiD_base_t0"
 	    Value		    "phiD_base_t0"
 	  }
 	  Object {
-	    $ObjectID		    89
+	    $ObjectID		    99
 	    Type		    "edit"
 	    Name		    "qJ_t0"
 	    Prompt		    "q0 (initial pose)"
 	    Value		    "qJ_t0"
 	  }
 	  Object {
-	    $ObjectID		    90
+	    $ObjectID		    100
 	    Type		    "edit"
 	    Name		    "qJD_t0"
 	    Prompt		    "qD0 (initial velocity)"
 	    Value		    "qJD_t0"
 	  }
 	  Object {
-	    $ObjectID		    91
+	    $ObjectID		    101
 	    Type		    "edit"
 	    Name		    "g_world"
 	    Prompt		    "g_world"
 	    Value		    "g_world"
 	  }
 	  Object {
-	    $ObjectID		    92
+	    $ObjectID		    102
 	    Type		    "edit"
-	    Name		    "pkin"
-	    Prompt		    "Kinematik-Parameter"
-	    Value		    "pkin"
+	    Name		    "MPV"
+	    Prompt		    "Dynamik-Parameter (Minimalparametervektor floating-base)"
+	    Value		    "MPV"
+	  }
+	  PropName		  "Parameters"
+	}
+	Array {
+	  Type			  "Simulink.dialog.Group"
+	  Dimension		  2
+	  Object {
+	    $ObjectID		    103
+	    Prompt		    "%<MaskType>"
+	    Object {
+	      $PropName		      "DialogControls"
+	      $ObjectID		      104
+	      $ClassName	      "Simulink.dialog.Text"
+	      Prompt		      "%<MaskDescription>"
+	      Name		      "DescTextVar"
+	    }
+	    Name		    "DescGroupVar"
 	  }
 	  Object {
-	    $ObjectID		    93
+	    $ObjectID		    105
+	    Prompt		    "Robot Parameters"
+	    Array {
+	      Type		      "Simulink.dialog.parameter.Edit"
+	      Dimension		      8
+	      Object {
+		$ObjectID		106
+		Name			"r_base_t0"
+	      }
+	      Object {
+		$ObjectID		107
+		Name			"rD_base_t0"
+	      }
+	      Object {
+		$ObjectID		108
+		Name			"phi_base_t0"
+	      }
+	      Object {
+		$ObjectID		109
+		Name			"phiD_base_t0"
+	      }
+	      Object {
+		$ObjectID		110
+		Name			"qJ_t0"
+	      }
+	      Object {
+		$ObjectID		111
+		Name			"qJD_t0"
+	      }
+	      Object {
+		$ObjectID		112
+		Name			"g_world"
+	      }
+	      Object {
+		$ObjectID		113
+		Name			"MPV"
+	      }
+	      PropName		      "DialogControls"
+	    }
+	    Name		    "ParameterGroupVar"
+	  }
+	  PropName		  "DialogControls"
+	}
+      }
+      System {
+	Name			"%RN%_fordyn_floatb_eulangrpy_mp"
+	Location		[2904, 52, 3839, 1080]
+	Open			on
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"A4"
+	PaperUnits		"centimeters"
+	TiledPaperMargins	[1.270000, 1.270000, 1.270000, 1.270000]
+	TiledPageScale		1
+	ShowPageBoundaries	off
+	ZoomFactor		"150"
+	Block {
+	  BlockType		  Inport
+	  Name			  "F_ext_W"
+	  SID			  "587"
+	  Position		  [130, 588, 160, 602]
+	  ZOrder		  543
+	  IconDisplay		  "Port number"
+	  PortDimensions	  "6"
+	  Port {
+	    PortNumber		    1
+	    Name		    "tau_ext"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  Inport
+	  Name			  "tau_Jext"
+	  SID			  "588"
+	  Position		  [130, 638, 160, 652]
+	  ZOrder		  62
+	  Port			  "2"
+	  IconDisplay		  "Port number"
+	  PortDimensions	  "NQJ"
+	}
+	Block {
+	  BlockType		  BusCreator
+	  Name			  "Bus\nCreator"
+	  SID			  "589"
+	  Ports			  [13, 1]
+	  Position		  [1675, 9, 1680, 341]
+	  ZOrder		  330
+	  ShowName		  off
+	  Inputs		  "13"
+	  DisplayOption		  "bar"
+	}
+	Block {
+	  BlockType		  BusSelector
+	  Name			  "Bus\nSelector"
+	  SID			  "590"
+	  Ports			  [1, 4]
+	  Position		  [955, 428, 960, 502]
+	  ZOrder		  332
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  ShowName		  off
+	  OutputSignals		  "qJ,qJD,phi_base,xD_base"
+	  Port {
+	    PortNumber		    1
+	    Name		    "<qJ>"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	  Port {
+	    PortNumber		    2
+	    Name		    "<qJD>"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	  Port {
+	    PortNumber		    3
+	    Name		    "<phi_base>"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	  Port {
+	    PortNumber		    4
+	    Name		    "<xD_base>"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  BusSelector
+	  Name			  "Bus\nSelector1"
+	  SID			  "591"
+	  Ports			  [1, 2]
+	  Position		  [955, 535, 960, 575]
+	  ZOrder		  333
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  ShowName		  off
+	  OutputSignals		  "qJ,phi_base"
+	  Port {
+	    PortNumber		    1
+	    Name		    "<qJ>"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	  Port {
+	    PortNumber		    2
+	    Name		    "<phi_base>"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  BusSelector
+	  Name			  "Bus\nSelector2"
+	  SID			  "592"
+	  Ports			  [1, 2]
+	  Position		  [470, 280, 475, 340]
+	  ZOrder		  334
+	  ShowName		  off
+	  OutputSignals		  "qJ,phi_base"
+	  Port {
+	    PortNumber		    1
+	    Name		    "<qJ>"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	  Port {
+	    PortNumber		    2
+	    Name		    "<phi_base>"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  BusSelector
+	  Name			  "Bus\nSelector3"
+	  SID			  "593"
+	  Ports			  [1, 1]
+	  Position		  [70, 512, 75, 538]
+	  ZOrder		  539
+	  ShowName		  off
+	  OutputSignals		  "phi_base"
+	  Port {
+	    PortNumber		    1
+	    Name		    "<phi_base>"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant"
+	  SID			  "594"
+	  Position		  [1290, 570, 1345, 600]
+	  ZOrder		  236
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  Value			  "g_world"
+	}
+	Block {
+	  BlockType		  Demux
+	  Name			  "Demux"
+	  SID			  "595"
+	  Ports			  [1, 3]
+	  Position		  [945, 276, 950, 374]
+	  ZOrder		  290
+	  ShowName		  off
+	  Outputs		  "[3 3 NQJ]"
+	  DisplayOption		  "bar"
+	  Port {
+	    PortNumber		    1
+	    Name		    "rDD_base"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	  Port {
+	    PortNumber		    2
+	    Name		    "phiDD_base"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	  Port {
+	    PortNumber		    3
+	    Name		    "qJDD"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  Demux
+	  Name			  "Demux1"
+	  SID			  "596"
+	  Ports			  [1, 2]
+	  Position		  [230, 567, 235, 623]
+	  ZOrder		  537
+	  ShowName		  off
+	  Outputs		  "[3 3]"
+	  DisplayOption		  "bar"
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "Doppelintegrator_q"
+	  SID			  "597"
+	  Ports			  [1, 2]
+	  Position		  [1005, 392, 1070, 423]
+	  ZOrder		  295
+	  LibraryVersion	  "1.188"
+	  SourceBlock		  "rigid_body_kinematics/Doppelintegrator"
+	  SourceType		  ""
+	  ContentPreviewEnabled	  off
+	  r0			  "qJ_t0"
+	  rD0			  "qJD_t0"
+	  Name_v		  "'q'"
+	  Port {
+	    PortNumber		    1
+	    Name		    "qJ"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	  Port {
+	    PortNumber		    2
+	    Name		    "qJD"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "Doppelintegrator_r"
+	  SID			  "598"
+	  Ports			  [1, 2]
+	  Position		  [1020, 102, 1085, 133]
+	  ZOrder		  294
+	  LibraryVersion	  "1.188"
+	  SourceBlock		  "rigid_body_kinematics/Doppelintegrator"
+	  SourceType		  ""
+	  ContentPreviewEnabled	  off
+	  r0			  "r_base_t0"
+	  rD0			  "rD_base_t0"
+	  Name_v		  "'r'"
+	  Port {
+	    PortNumber		    1
+	    Name		    "r_base"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	  Port {
+	    PortNumber		    2
+	    Name		    "rD_base"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  Integrator
+	  Name			  "Integrator_omegaD"
+	  SID			  "599"
+	  Ports			  [1, 1]
+	  Position		  [1195, 295, 1225, 325]
+	  ZOrder		  325
+	  InitialCondition	  "rpyD2omega(phi_base_t0', phiD_base_t0')"
+	  Port {
+	    PortNumber		    1
+	    Name		    "omega_base"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  Mux
+	  Name			  "Mux"
+	  SID			  "600"
+	  Ports			  [2, 1]
+	  Position		  [1520, 196, 1525, 234]
+	  ZOrder		  331
+	  ShowName		  off
+	  Inputs		  "2"
+	  DisplayOption		  "bar"
+	  Port {
+	    PortNumber		    1
+	    Name		    "xD_base"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  Mux
+	  Name			  "Mux1"
+	  SID			  "601"
+	  Ports			  [3, 1]
+	  Position		  [420, 563, 425, 617]
+	  ZOrder		  542
+	  ShowName		  off
+	  Inputs		  "[3 3 NQJ]"
+	  DisplayOption		  "bar"
+	}
+	Block {
+	  BlockType		  Product
+	  Name			  "Product"
+	  SID			  "602"
+	  Ports			  [2, 1]
+	  Position		  [320, 572, 365, 603]
+	  ZOrder		  540
+	  Multiplication	  "Matrix(*)"
+	  InputSameDT		  off
+	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
+	  RndMeth		  "Floor"
+	  SaturateOnIntegerOverflow off
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "R2rpy"
+	  SID			  "603"
+	  Ports			  [1, 1]
+	  Position		  [1390, 290, 1450, 330]
+	  ZOrder		  338
+	  LibraryVersion	  "1.87"
+	  SourceBlock		  "transformations_lib/R2rpy"
+	  SourceType		  "SubSystem"
+	  ContentPreviewEnabled	  off
+	  Port {
+	    PortNumber		    1
+	    Name		    "phi_base"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  Sum
+	  Name			  "Sum2"
+	  SID			  "604"
+	  Ports			  [2, 1]
+	  Position		  [650, 555, 670, 575]
+	  ZOrder		  45
+	  BlockRotation		  270
+	  ShowName		  off
+	  IconShape		  "round"
+	  Inputs		  "|+-"
+	  InputSameDT		  off
+	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
+	  SaturateOnIntegerOverflow off
+	}
+	Block {
+	  BlockType		  Sum
+	  Name			  "Sum3"
+	  SID			  "605"
+	  Ports			  [2, 1]
+	  Position		  [650, 455, 670, 475]
+	  ZOrder		  46
+	  BlockRotation		  270
+	  ShowName		  off
+	  IconShape		  "round"
+	  Inputs		  "|+-"
+	  InputSameDT		  off
+	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
+	  SaturateOnIntegerOverflow off
+	  Port {
+	    PortNumber		    1
+	    Name		    "tau_acc"
+	    RTWStorageClass	    "Auto"
+	    DataLogging		    on
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  Math
+	  Name			  "Transpose"
+	  SID			  "606"
+	  Ports			  [1, 1]
+	  Position		  [240, 512, 275, 538]
+	  ZOrder		  541
+	  Operator		  "transpose"
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "angvel_int_rotmat"
+	  SID			  "607"
+	  Ports			  [1, 1]
+	  Position		  [1280, 290, 1345, 330]
+	  ZOrder		  544
+	  LibraryVersion	  "1.188"
+	  SourceBlock		  "rigid_body_kinematics/angvel_int_rotmat"
+	  SourceType		  ""
+	  ContentPreviewEnabled	  off
+	  R_0E_t0		  "rpy2r(phi_base_t0(1), phi_base_t0(2), phi_base_t0(3) )"
+	  Port {
+	    PortNumber		    1
+	    Name		    "R_base"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "angvelotrans_rpy"
+	  SID			  "608"
+	  Ports			  [1, 1]
+	  Position		  [130, 515, 190, 535]
+	  ZOrder		  538
+	  LibraryVersion	  "1.87"
+	  SourceBlock		  "transformations_lib/angvelotrans_rpy"
+	  SourceType		  "SubSystem"
+	  ContentPreviewEnabled	  off
+	}
+	Block {
+	  BlockType		  SubSystem
+	  Name			  "mFcn_Minv"
+	  SID			  "609"
+	  Ports			  [2, 1]
+	  Position		  [675, 296, 760, 349]
+	  ZOrder		  144
+	  LibraryVersion	  "1.190"
+	  ErrorFcn		  "Stateflow.Translate.translate"
+	  PermitHierarchicalResolution "ExplicitOnly"
+	  TreatAsAtomicUnit	  on
+	  RequestExecContextInheritance	off
+	  SFBlockType		  "MATLAB Function"
+	  Port {
+	    PortNumber		    1
+	    Name		    "qDD"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	  System {
+	    Name		    "mFcn_Minv"
+	    Location		    [223, 338, 826, 833]
+	    Open		    off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "A4"
+	    PaperUnits		    "centimeters"
+	    TiledPaperMargins	    [1.270000, 1.270000, 1.270000, 1.270000]
+	    TiledPageScale	    1
+	    ShowPageBoundaries	    off
+	    ZoomFactor		    "100"
+	    SIDHighWatermark	    "102"
+	    Block {
+	      BlockType		      Inport
+	      Name		      "M"
+	      SID		      "609::1"
+	      Position		      [20, 101, 40, 119]
+	      ZOrder		      -1
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "tau"
+	      SID		      "609::21"
+	      Position		      [20, 136, 40, 154]
+	      ZOrder		      7
+	      Port		      "2"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Demux
+	      Name		      " Demux "
+	      SID		      "609::101"
+	      Ports		      [1, 1]
+	      Position		      [270, 230, 320, 270]
+	      ZOrder		      45
+	      Outputs		      "1"
+	    }
+	    Block {
+	      BlockType		      S-Function
+	      Name		      " SFunction "
+	      SID		      "609::100"
+	      Tag		      "Stateflow S-Function lib_%RN%_dynamics 22"
+	      Ports		      [2, 2]
+	      Position		      [180, 100, 230, 160]
+	      ZOrder		      44
+	      FunctionName	      "sf_sfun"
+	      PortCounts	      "[2 2]"
+	      Port {
+		PortNumber		2
+		Name			"q_ddot"
+		RTWStorageClass		"Auto"
+		DataLoggingNameMode	"SignalName"
+	      }
+	    }
+	    Block {
+	      BlockType		      Terminator
+	      Name		      " Terminator "
+	      SID		      "609::102"
+	      Position		      [460, 241, 480, 259]
+	      ZOrder		      46
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "q_ddot"
+	      SID		      "609::5"
+	      Position		      [460, 101, 480, 119]
+	      ZOrder		      -5
+	      IconDisplay	      "Port number"
+	    }
+	    Line {
+	      ZOrder		      6
+	      SrcBlock		      "M"
+	      SrcPort		      1
+	      Points		      [120, 0]
+	      DstBlock		      " SFunction "
+	      DstPort		      1
+	    }
+	    Line {
+	      ZOrder		      7
+	      SrcBlock		      "tau"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      2
+	    }
+	    Line {
+	      Name		      "q_ddot"
+	      ZOrder		      8
+	      Labels		      [0, 0]
+	      SrcBlock		      " SFunction "
+	      SrcPort		      2
+	      DstBlock		      "q_ddot"
+	      DstPort		      1
+	    }
+	    Line {
+	      ZOrder		      9
+	      SrcBlock		      " Demux "
+	      SrcPort		      1
+	      DstBlock		      " Terminator "
+	      DstPort		      1
+	    }
+	    Line {
+	      ZOrder		      10
+	      SrcBlock		      " SFunction "
+	      SrcPort		      1
+	      DstBlock		      " Demux "
+	      DstPort		      1
+	    }
+	  }
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "omega2rpyD"
+	  SID			  "610"
+	  Ports			  [2, 1]
+	  Position		  [1075, 229, 1155, 276]
+	  ZOrder		  340
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  LibraryVersion	  "1.87"
+	  SourceBlock		  "transformations_lib/omega2rpyD"
+	  SourceType		  "SubSystem"
+	  ContentPreviewEnabled	  off
+	  Port {
+	    PortNumber		    1
+	    Name		    "phiD_base"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "%RN%_coriolisvec_floatb_eulangrpy_mp"
+	  SID			  "622"
+	  Ports			  [4, 1]
+	  Position		  [735, 427, 800, 503]
+	  ZOrder		  547
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  LibraryVersion	  "1.195"
+	  SourceBlock		  "lib_%RN%_dynamics/%RN%_coriolisvec_floatb_eulangrpy_mp"
+	  SourceType		  ""
+	  ContentPreviewEnabled	  off
+	  pkin			  "pkin"
+	  MPV			  "MPV"
+	  Port {
+	    PortNumber		    1
+	    Name		    "tau_c"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "%RN%_gravload_floatb_eulangrpy_mp"
+	  SID			  "623"
+	  Ports			  [3, 1]
+	  Position		  [730, 535, 805, 595]
+	  ZOrder		  548
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  LibraryVersion	  "1.195"
+	  SourceBlock		  "lib_%RN%_dynamics/%RN%_gravload_floatb_eulangrpy_mp"
+	  SourceType		  ""
+	  ContentPreviewEnabled	  off
+	  pkin			  "pkin"
+	  MPV			  "MPV"
+	  Port {
+	    PortNumber		    1
+	    Name		    "tau_g"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "%RN%_inertia_floatb_eulangrpy_mp"
+	  SID			  "621"
+	  Ports			  [2, 1]
+	  Position		  [580, 280, 620, 340]
+	  ZOrder		  546
+	  LibraryVersion	  "1.195"
+	  SourceBlock		  "lib_%RN%_dynamics/%RN%_inertia_floatb_eulangrpy_mp"
+	  SourceType		  ""
+	  ContentPreviewEnabled	  off
+	  pkin			  "pkin"
+	  MPV			  "MPV"
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "rpyDD2omegaD"
+	  SID			  "614"
+	  Ports			  [3, 1]
+	  Position		  [1050, 287, 1155, 333]
+	  ZOrder		  339
+	  LibraryVersion	  "1.87"
+	  SourceBlock		  "transformations_lib/rpyDD2omegaD"
+	  SourceType		  "SubSystem"
+	  ContentPreviewEnabled	  off
+	  Port {
+	    PortNumber		    1
+	    Name		    "omegaD_base"
+	    PropagatedSignals	    "omegaD"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "Rob_Bus"
+	  SID			  "615"
+	  Position		  [1760, 173, 1790, 187]
+	  ZOrder		  335
+	  IconDisplay		  "Port number"
+	}
+	Line {
+	  ZOrder		  82
+	  SrcBlock		  "Constant"
+	  SrcPort		  1
+	  DstBlock		  "%RN%_gravload_floatb_eulangrpy_mp"
+	  DstPort		  3
+	}
+	Line {
+	  Name			  "tau_ext"
+	  ZOrder		  2
+	  Labels		  [1, 1]
+	  SrcBlock		  "F_ext_W"
+	  SrcPort		  1
+	  DstBlock		  "Demux1"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  73
+	  SrcBlock		  "%RN%_inertia_floatb_eulangrpy_mp"
+	  SrcPort		  1
+	  DstBlock		  "mFcn_Minv"
+	  DstPort		  1
+	}
+	Line {
+	  Name			  "tau_acc"
+	  ZOrder		  4
+	  Labels		  [0, 0]
+	  SrcBlock		  "Sum3"
+	  SrcPort		  1
+	  DstBlock		  "mFcn_Minv"
+	  DstPort		  2
+	}
+	Line {
+	  Name			  "tau_c"
+	  ZOrder		  78
+	  Labels		  [-1, 0]
+	  SrcBlock		  "%RN%_coriolisvec_floatb_eulangrpy_mp"
+	  SrcPort		  1
+	  DstBlock		  "Sum3"
+	  DstPort		  2
+	}
+	Line {
+	  ZOrder		  6
+	  SrcBlock		  "Sum2"
+	  SrcPort		  1
+	  DstBlock		  "Sum3"
+	  DstPort		  1
+	}
+	Line {
+	  Name			  "qDD"
+	  ZOrder		  7
+	  Labels		  [0, 0]
+	  SrcBlock		  "mFcn_Minv"
+	  SrcPort		  1
+	  DstBlock		  "Demux"
+	  DstPort		  1
+	}
+	Line {
+	  Name			  "tau_g"
+	  ZOrder		  79
+	  Labels		  [0, 0]
+	  SrcBlock		  "%RN%_gravload_floatb_eulangrpy_mp"
+	  SrcPort		  1
+	  DstBlock		  "Sum2"
+	  DstPort		  2
+	}
+	Line {
+	  Name			  "rDD_base"
+	  ZOrder		  9
+	  SrcBlock		  "Demux"
+	  SrcPort		  1
+	  Points		  [24, 0; 0, -175]
+	  Branch {
+	    ZOrder		    10
+	    DstBlock		    "Doppelintegrator_r"
+	    DstPort		    1
+	  }
+	  Branch {
+	    ZOrder		    11
+	    Labels		    [2, 1]
+	    Points		    [0, -68; 674, 0; 0, 23]
+	    DstBlock		    "Bus\nCreator"
+	    DstPort		    3
+	  }
+	}
+	Line {
+	  Name			  "qJDD"
+	  ZOrder		  12
+	  SrcBlock		  "Demux"
+	  SrcPort		  3
+	  Points		  [10, 0; 0, 15; 18, 0; 0, 40]
+	  Branch {
+	    ZOrder		    13
+	    Labels		    [2, 1]
+	    Points		    [0, 38; 625, 0; 0, -173]
+	    DstBlock		    "Bus\nCreator"
+	    DstPort		    11
+	  }
+	  Branch {
+	    ZOrder		    14
+	    DstBlock		    "Doppelintegrator_q"
+	    DstPort		    1
+	  }
+	}
+	Line {
+	  Name			  "omegaD_base"
+	  ZOrder		  15
+	  SrcBlock		  "rpyDD2omegaD"
+	  SrcPort		  1
+	  Points		  [0, 0]
+	  Branch {
+	    ZOrder		    16
+	    Labels		    [2, 1]
+	    Points		    [0, 73; 485, 0; 0, -58]
+	    DstBlock		    "Bus\nCreator"
+	    DstPort		    13
+	  }
+	  Branch {
+	    ZOrder		    17
+	    DstBlock		    "Integrator_omegaD"
+	    DstPort		    1
+	  }
+	}
+	Line {
+	  Name			  "omega_base"
+	  ZOrder		  18
+	  SrcBlock		  "Integrator_omegaD"
+	  SrcPort		  1
+	  Points		  [8, 0]
+	  Branch {
+	    ZOrder		    19
+	    Points		    [25, 0]
+	    Branch {
+	      ZOrder		      20
+	      Labels		      [4, 1]
+	      Points		      [0, 62; 237, 0; 0, -72]
+	      DstBlock		      "Bus\nCreator"
+	      DstPort		      12
+	    }
+	    Branch {
+	      ZOrder		      21
+	      DstBlock		      "angvel_int_rotmat"
+	      DstPort		      1
+	    }
+	  }
+	  Branch {
+	    ZOrder		    22
+	    Points		    [0, -45]
+	    DstBlock		    "omega2rpyD"
+	    DstPort		    2
+	  }
+	}
+	Line {
+	  Name			  "phiDD_base"
+	  ZOrder		  23
+	  SrcBlock		  "Demux"
+	  SrcPort		  2
+	  Points		  [56, 0]
+	  Branch {
+	    ZOrder		    24
+	    Labels		    [2, 1]
+	    Points		    [0, -150]
+	    DstBlock		    "Bus\nCreator"
+	    DstPort		    7
+	  }
+	  Branch {
+	    ZOrder		    25
+	    DstBlock		    "rpyDD2omegaD"
+	    DstPort		    3
+	  }
+	}
+	Line {
+	  Name			  "R_base"
+	  ZOrder		  26
+	  SrcBlock		  "angvel_int_rotmat"
+	  SrcPort		  1
+	  Points		  [24, 0]
+	  Branch {
+	    ZOrder		    27
+	    Labels		    [2, 1]
+	    Points		    [0, -44; 255, 0; 0, -166]
+	    DstBlock		    "Bus\nCreator"
+	    DstPort		    4
+	  }
+	  Branch {
+	    ZOrder		    28
+	    DstBlock		    "R2rpy"
+	    DstPort		    1
+	  }
+	}
+	Line {
+	  Name			  "phi_base"
+	  ZOrder		  29
+	  SrcBlock		  "R2rpy"
+	  SrcPort		  1
+	  Points		  [24, 0; 0, -75; -76, 0]
+	  Branch {
+	    ZOrder		    30
+	    Labels		    [2, 1]
+	    Points		    [0, -110]
+	    DstBlock		    "Bus\nCreator"
+	    DstPort		    5
+	  }
+	  Branch {
+	    ZOrder		    31
+	    Points		    [-176, 0]
+	    Branch {
+	      ZOrder		      32
+	      Points		      [0, -26; -187, 0; 0, 86]
+	      DstBlock		      "rpyDD2omegaD"
+	      DstPort		      1
+	    }
+	    Branch {
+	      ZOrder		      33
+	      Points		      [0, 5]
+	      DstBlock		      "omega2rpyD"
+	      DstPort		      1
+	    }
+	  }
+	}
+	Line {
+	  Name			  "phiD_base"
+	  ZOrder		  34
+	  SrcBlock		  "omega2rpyD"
+	  SrcPort		  1
+	  Points		  [-13, 0; 0, -10]
+	  Branch {
+	    ZOrder		    35
+	    Points		    [-66, 0; 0, 65]
+	    DstBlock		    "rpyDD2omegaD"
+	    DstPort		    2
+	  }
+	  Branch {
+	    ZOrder		    36
+	    Labels		    [2, 1]
+	    Points		    [0, -85; 410, 0]
+	    Branch {
+	      ZOrder		      37
+	      Points		      [0, 65]
+	      DstBlock		      "Mux"
+	      DstPort		      2
+	    }
+	    Branch {
+	      ZOrder		      38
+	      Points		      [0, -10]
+	      DstBlock		      "Bus\nCreator"
+	      DstPort		      6
+	    }
+	  }
+	}
+	Line {
+	  Name			  "r_base"
+	  ZOrder		  39
+	  Labels		  [2, 1]
+	  SrcBlock		  "Doppelintegrator_r"
+	  SrcPort		  1
+	  Points		  [254, 0; 0, -85]
+	  DstBlock		  "Bus\nCreator"
+	  DstPort		  1
+	}
+	Line {
+	  Name			  "rD_base"
+	  ZOrder		  40
+	  Labels		  [4, 1]
+	  SrcBlock		  "Doppelintegrator_r"
+	  SrcPort		  2
+	  Points		  [5, 0; 0, 19; 263, 0; 0, -34; 103, 0]
+	  Branch {
+	    ZOrder		    41
+	    Points		    [0, 95]
+	    DstBlock		    "Mux"
+	    DstPort		    1
+	  }
+	  Branch {
+	    ZOrder		    42
+	    Points		    [0, -44; 199, 0]
+	    DstBlock		    "Bus\nCreator"
+	    DstPort		    2
+	  }
+	}
+	Line {
+	  Name			  "xD_base"
+	  ZOrder		  43
+	  Labels		  [2, 1]
+	  SrcBlock		  "Mux"
+	  SrcPort		  1
+	  Points		  [48, 0; 0, -15]
+	  DstBlock		  "Bus\nCreator"
+	  DstPort		  8
+	}
+	Line {
+	  Name			  "qJ"
+	  ZOrder		  44
+	  Labels		  [2, 1]
+	  SrcBlock		  "Doppelintegrator_q"
+	  SrcPort		  1
+	  Points		  [260, 0; 0, 32; 235, 0; 0, -207]
+	  DstBlock		  "Bus\nCreator"
+	  DstPort		  9
+	}
+	Line {
+	  Name			  "qJD"
+	  ZOrder		  45
+	  Labels		  [5, 1]
+	  SrcBlock		  "Doppelintegrator_q"
+	  SrcPort		  2
+	  Points		  [56, 0; 0, 16; 75, 0; 0, 8; 394, 0; 0, -189]
+	  DstBlock		  "Bus\nCreator"
+	  DstPort		  10
+	}
+	Line {
+	  Name			  "<xD_base>"
+	  ZOrder		  77
+	  Labels		  [0, 0]
+	  SrcBlock		  "Bus\nSelector"
+	  SrcPort		  4
+	  DstBlock		  "%RN%_coriolisvec_floatb_eulangrpy_mp"
+	  DstPort		  4
+	}
+	Line {
+	  Name			  "<phi_base>"
+	  ZOrder		  76
+	  Labels		  [0, 0]
+	  SrcBlock		  "Bus\nSelector"
+	  SrcPort		  3
+	  DstBlock		  "%RN%_coriolisvec_floatb_eulangrpy_mp"
+	  DstPort		  3
+	}
+	Line {
+	  Name			  "<qJD>"
+	  ZOrder		  75
+	  Labels		  [0, 0]
+	  SrcBlock		  "Bus\nSelector"
+	  SrcPort		  2
+	  DstBlock		  "%RN%_coriolisvec_floatb_eulangrpy_mp"
+	  DstPort		  2
+	}
+	Line {
+	  Name			  "<qJ>"
+	  ZOrder		  74
+	  Labels		  [0, 0]
+	  SrcBlock		  "Bus\nSelector"
+	  SrcPort		  1
+	  DstBlock		  "%RN%_coriolisvec_floatb_eulangrpy_mp"
+	  DstPort		  1
+	}
+	Line {
+	  Name			  "<qJ>"
+	  ZOrder		  80
+	  Labels		  [0, 0]
+	  SrcBlock		  "Bus\nSelector1"
+	  SrcPort		  1
+	  DstBlock		  "%RN%_gravload_floatb_eulangrpy_mp"
+	  DstPort		  1
+	}
+	Line {
+	  Name			  "<phi_base>"
+	  ZOrder		  81
+	  Labels		  [0, 0]
+	  SrcBlock		  "Bus\nSelector1"
+	  SrcPort		  2
+	  DstBlock		  "%RN%_gravload_floatb_eulangrpy_mp"
+	  DstPort		  2
+	}
+	Line {
+	  Name			  "<qJ>"
+	  ZOrder		  72
+	  Labels		  [0, 0]
+	  SrcBlock		  "Bus\nSelector2"
+	  SrcPort		  1
+	  DstBlock		  "%RN%_inertia_floatb_eulangrpy_mp"
+	  DstPort		  1
+	}
+	Line {
+	  Name			  "<phi_base>"
+	  ZOrder		  71
+	  Labels		  [0, 0]
+	  SrcBlock		  "Bus\nSelector2"
+	  SrcPort		  2
+	  DstBlock		  "%RN%_inertia_floatb_eulangrpy_mp"
+	  DstPort		  2
+	}
+	Line {
+	  ZOrder		  54
+	  SrcBlock		  "Bus\nCreator"
+	  SrcPort		  1
+	  Points		  [9, 0; 0, 5]
+	  Branch {
+	    ZOrder		    55
+	    Points		    [0, 285]
+	    Branch {
+	      ZOrder		      56
+	      Points		      [0, 206; -1239, 0; 0, -195]
+	      Branch {
+		ZOrder			57
+		DstBlock		"Bus\nSelector2"
+		DstPort			1
+	      }
+	      Branch {
+		ZOrder			58
+		Points			[-409, 0; 0, 49]
+		DstBlock		"Bus\nSelector3"
+		DstPort			1
+	      }
+	    }
+	    Branch {
+	      ZOrder		      59
+	      Points		      [-529, 0]
+	      Branch {
+		ZOrder			60
+		Points			[0, 90]
+		DstBlock		"Bus\nSelector1"
+		DstPort			1
+	      }
+	      Branch {
+		ZOrder			61
+		DstBlock		"Bus\nSelector"
+		DstPort			1
+	      }
+	    }
+	  }
+	  Branch {
+	    ZOrder		    62
+	    DstBlock		    "Rob_Bus"
+	    DstPort		    1
+	  }
+	}
+	Line {
+	  ZOrder		  63
+	  SrcBlock		  "Demux1"
+	  SrcPort		  2
+	  Points		  [9, 0; 0, -15]
+	  DstBlock		  "Product"
+	  DstPort		  2
+	}
+	Line {
+	  Name			  "<phi_base>"
+	  ZOrder		  64
+	  Labels		  [0, 0]
+	  SrcBlock		  "Bus\nSelector3"
+	  SrcPort		  1
+	  DstBlock		  "angvelotrans_rpy"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  65
+	  SrcBlock		  "angvelotrans_rpy"
+	  SrcPort		  1
+	  DstBlock		  "Transpose"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  66
+	  SrcBlock		  "Product"
+	  SrcPort		  1
+	  DstBlock		  "Mux1"
+	  DstPort		  2
+	}
+	Line {
+	  ZOrder		  67
+	  SrcBlock		  "Transpose"
+	  SrcPort		  1
+	  Points		  [20, 0; 0, 55]
+	  DstBlock		  "Product"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  68
+	  SrcBlock		  "Demux1"
+	  SrcPort		  1
+	  Points		  [32, 0; 0, -14; 129, 0; 0, 4]
+	  DstBlock		  "Mux1"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  69
+	  SrcBlock		  "tau_Jext"
+	  SrcPort		  1
+	  Points		  [227, 0; 0, -35]
+	  DstBlock		  "Mux1"
+	  DstPort		  3
+	}
+	Line {
+	  ZOrder		  70
+	  SrcBlock		  "Mux1"
+	  SrcPort		  1
+	  DstBlock		  "Sum2"
+	  DstPort		  1
+	}
+	Annotation {
+	  SID			  "620"
+	  Name			  "Integration: Basis-Translation"
+	  Position		  [1001, 66, 1176, 156]
+	  InternalMargins	  [0, 0, 0, 0]
+	  FixedHeight		  on
+	  FixedWidth		  on
+	  ForegroundColor	  "[0.941176, 0.941176, 1.000000]"
+	  DropShadow		  on
+	  AnnotationType	  "area_annotation"
+	  ZOrder		  26
+	  FontSize		  12
+	}
+	Annotation {
+	  SID			  "619"
+	  Name			  "Integration: Gelenkwinkel"
+	  Position		  [981, 370, 1146, 450]
+	  InternalMargins	  [0, 0, 0, 0]
+	  FixedHeight		  on
+	  FixedWidth		  on
+	  ForegroundColor	  "[0.941176, 0.941176, 1.000000]"
+	  DropShadow		  on
+	  AnnotationType	  "area_annotation"
+	  ZOrder		  29
+	  FontSize		  12
+	}
+	Annotation {
+	  SID			  "618"
+	  Name			  "Vorwärtsdynamik"
+	  Position		  [552, 238, 887, 638]
+	  InternalMargins	  [0, 0, 0, 0]
+	  FixedHeight		  on
+	  FixedWidth		  on
+	  ForegroundColor	  "[0.941176, 0.941176, 1.000000]"
+	  DropShadow		  on
+	  AnnotationType	  "area_annotation"
+	  ZOrder		  28
+	  FontSize		  12
+	}
+	Annotation {
+	  SID			  "617"
+	  Name			  "Integration: Basis-Euler-Winkel"
+	  Position		  [986, 181, 1491, 351]
+	  InternalMargins	  [0, 0, 0, 0]
+	  FixedHeight		  on
+	  FixedWidth		  on
+	  ForegroundColor	  "[0.941176, 0.941176, 1.000000]"
+	  DropShadow		  on
+	  AnnotationType	  "area_annotation"
+	  ZOrder		  27
+	  FontSize		  12
+	}
+	Annotation {
+	  SID			  "616"
+	  Name			  "Externe Kräfte: Eingabe von Basiskräften im Welt-KS, Umrechnung der Momente\nin verallgemeinerte Koordi"
+	  "naten (Euler-Winkel)"
+	  Position		  [16, 432, 446, 697]
+	  InternalMargins	  [0, 0, 0, 0]
+	  FixedHeight		  on
+	  FixedWidth		  on
+	  ForegroundColor	  "[0.941176, 0.941176, 1.000000]"
+	  DropShadow		  on
+	  AnnotationType	  "area_annotation"
+	  ZOrder		  30
+	  FontSize		  12
+	}
+      }
+    }
+    Block {
+      BlockType		      SubSystem
+      Name		      "%RN%_fordyn_floatb_eulangrpy_vp1"
+      SID		      "472"
+      Ports		      [2, 1]
+      Position		      [320, 862, 490, 938]
+      ZOrder		      536
+      RequestExecContextInheritance off
+      Object {
+	$PropName		"MaskObject"
+	$ObjectID		114
+	$ClassName		"Simulink.Mask"
+	Display			"port_label('input', 1, '_{(W)} F^{ext}', 'texmode', 'on')\nport_label('input', 2, '\\tau^{ext}_{J}', 'texm"
+	"ode', 'on')\nport_label('output', 1, 'Rob_Bus')"
+	Array {
+	  Type			  "Simulink.MaskParameter"
+	  Dimension		  8
+	  Object {
+	    $ObjectID		    115
+	    Type		    "edit"
+	    Name		    "r_base_t0"
+	    Prompt		    "r_base_t0 (Basisposition im Welt-KS)"
+	    Value		    "r_base_t0"
+	  }
+	  Object {
+	    $ObjectID		    116
+	    Type		    "edit"
+	    Name		    "rD_base_t0"
+	    Prompt		    "rD_base_t0"
+	    Value		    "rD_base_t0"
+	  }
+	  Object {
+	    $ObjectID		    117
+	    Type		    "edit"
+	    Name		    "phi_base_t0"
+	    Prompt		    "phi_base_t0"
+	    Value		    "phi_base_t0"
+	  }
+	  Object {
+	    $ObjectID		    118
+	    Type		    "edit"
+	    Name		    "phiD_base_t0"
+	    Prompt		    "phiD_base_t0"
+	    Value		    "phiD_base_t0"
+	  }
+	  Object {
+	    $ObjectID		    119
+	    Type		    "edit"
+	    Name		    "qJ_t0"
+	    Prompt		    "q0 (initial pose)"
+	    Value		    "qJ_t0"
+	  }
+	  Object {
+	    $ObjectID		    120
+	    Type		    "edit"
+	    Name		    "qJD_t0"
+	    Prompt		    "qD0 (initial velocity)"
+	    Value		    "qJD_t0"
+	  }
+	  Object {
+	    $ObjectID		    121
+	    Type		    "edit"
+	    Name		    "g_world"
+	    Prompt		    "g_world"
+	    Value		    "g_world"
+	  }
+	  Object {
+	    $ObjectID		    122
 	    Type		    "edit"
 	    Name		    "DynPar1"
 	    Prompt		    "Dynamik-Parameter (Parametersatz 1)"
@@ -5820,11 +8443,11 @@ Library {
 	  Type			  "Simulink.dialog.Group"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    94
+	    $ObjectID		    123
 	    Prompt		    "%<MaskType>"
 	    Object {
 	      $PropName		      "DialogControls"
-	      $ObjectID		      95
+	      $ObjectID		      124
 	      $ClassName	      "Simulink.dialog.Text"
 	      Prompt		      "%<MaskDescription>"
 	      Name		      "DescTextVar"
@@ -5832,53 +8455,41 @@ Library {
 	    Name		    "DescGroupVar"
 	  }
 	  Object {
-	    $ObjectID		    96
+	    $ObjectID		    125
 	    Prompt		    "Robot Parameters"
 	    Array {
-	      Type		      "Simulink.dialog.parameter.Control"
-	      Dimension		      9
+	      Type		      "Simulink.dialog.parameter.Edit"
+	      Dimension		      8
 	      Object {
-		$ObjectID		97
-		$ClassName		"Simulink.dialog.parameter.Edit"
+		$ObjectID		126
 		Name			"r_base_t0"
 	      }
 	      Object {
-		$ObjectID		98
-		$ClassName		"Simulink.dialog.parameter.Edit"
+		$ObjectID		127
 		Name			"rD_base_t0"
 	      }
 	      Object {
-		$ObjectID		99
-		$ClassName		"Simulink.dialog.parameter.Edit"
+		$ObjectID		128
 		Name			"phi_base_t0"
 	      }
 	      Object {
-		$ObjectID		100
-		$ClassName		"Simulink.dialog.parameter.Edit"
+		$ObjectID		129
 		Name			"phiD_base_t0"
 	      }
 	      Object {
-		$ObjectID		101
-		$ClassName		"Simulink.dialog.parameter.Edit"
+		$ObjectID		130
 		Name			"qJ_t0"
 	      }
 	      Object {
-		$ObjectID		102
-		$ClassName		"Simulink.dialog.parameter.Edit"
+		$ObjectID		131
 		Name			"qJD_t0"
 	      }
 	      Object {
-		$ObjectID		103
-		$ClassName		"Simulink.dialog.parameter.Edit"
+		$ObjectID		132
 		Name			"g_world"
 	      }
 	      Object {
-		$ObjectID		104
-		Name			"KinPar_mdh"
-	      }
-	      Object {
-		$ObjectID		105
-		$ClassName		"Simulink.dialog.parameter.Edit"
+		$ObjectID		133
 		Name			"DynPar1"
 	      }
 	      PropName		      "DialogControls"
@@ -5890,7 +8501,7 @@ Library {
       }
       System {
 	Name			"%RN%_fordyn_floatb_eulangrpy_vp1"
-	Location		[596, 14, 1511, 994]
+	Location		[1969, 24, 3840, 1080]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -5902,7 +8513,7 @@ Library {
 	TiledPaperMargins	[1.270000, 1.270000, 1.270000, 1.270000]
 	TiledPageScale		1
 	ShowPageBoundaries	off
-	ZoomFactor		"100"
+	ZoomFactor		"101"
 	Block {
 	  BlockType		  Inport
 	  Name			  "F_ext_W"
@@ -6094,7 +8705,7 @@ Library {
 	  Ports			  [1, 2]
 	  Position		  [1005, 392, 1070, 423]
 	  ZOrder		  295
-	  LibraryVersion	  "1.183"
+	  LibraryVersion	  "1.188"
 	  SourceBlock		  "rigid_body_kinematics/Doppelintegrator"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
@@ -6121,7 +8732,7 @@ Library {
 	  Ports			  [1, 2]
 	  Position		  [1020, 102, 1085, 133]
 	  ZOrder		  294
-	  LibraryVersion	  "1.183"
+	  LibraryVersion	  "1.188"
 	  SourceBlock		  "rigid_body_kinematics/Doppelintegrator"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
@@ -6204,7 +8815,7 @@ Library {
 	  Ports			  [1, 1]
 	  Position		  [1390, 290, 1450, 330]
 	  ZOrder		  338
-	  LibraryVersion	  "1.60"
+	  LibraryVersion	  "1.87"
 	  SourceBlock		  "transformations_lib/R2rpy"
 	  SourceType		  "SubSystem"
 	  ContentPreviewEnabled	  off
@@ -6268,7 +8879,7 @@ Library {
 	  Ports			  [1, 1]
 	  Position		  [1280, 290, 1345, 330]
 	  ZOrder		  544
-	  LibraryVersion	  "1.183"
+	  LibraryVersion	  "1.188"
 	  SourceBlock		  "rigid_body_kinematics/angvel_int_rotmat"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
@@ -6287,7 +8898,7 @@ Library {
 	  Ports			  [1, 1]
 	  Position		  [130, 515, 190, 535]
 	  ZOrder		  538
-	  LibraryVersion	  "1.60"
+	  LibraryVersion	  "1.87"
 	  SourceBlock		  "transformations_lib/angvelotrans_rpy"
 	  SourceType		  "SubSystem"
 	  ContentPreviewEnabled	  off
@@ -6434,7 +9045,7 @@ Library {
 	  ZOrder		  340
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
-	  LibraryVersion	  "1.60"
+	  LibraryVersion	  "1.87"
 	  SourceBlock		  "transformations_lib/omega2rpyD"
 	  SourceType		  "SubSystem"
 	  ContentPreviewEnabled	  off
@@ -6454,7 +9065,7 @@ Library {
 	  ZOrder		  545
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
-	  LibraryVersion	  "1.113"
+	  LibraryVersion	  "1.174"
 	  SourceBlock		  "lib_%RN%_dynamics/%RN%_coriolisvec_floatb_eulangrpy_vp1"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
@@ -6476,7 +9087,7 @@ Library {
 	  ZOrder		  536
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
-	  LibraryVersion	  "1.113"
+	  LibraryVersion	  "1.174"
 	  SourceBlock		  "lib_%RN%_dynamics/%RN%_gravload_floatb_eulangrpy_vp1"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
@@ -6496,7 +9107,7 @@ Library {
 	  Ports			  [2, 1]
 	  Position		  [580, 280, 620, 340]
 	  ZOrder		  534
-	  LibraryVersion	  "1.113"
+	  LibraryVersion	  "1.174"
 	  SourceBlock		  "lib_%RN%_dynamics/%RN%_inertia_floatb_eulangrpy_vp1"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
@@ -6510,7 +9121,7 @@ Library {
 	  Ports			  [3, 1]
 	  Position		  [1050, 287, 1155, 333]
 	  ZOrder		  339
-	  LibraryVersion	  "1.60"
+	  LibraryVersion	  "1.87"
 	  SourceBlock		  "transformations_lib/rpyDD2omegaD"
 	  SourceType		  "SubSystem"
 	  ContentPreviewEnabled	  off
@@ -7089,29 +9700,355 @@ Library {
     }
     Block {
       BlockType		      SubSystem
-      Name		      "%RN%_gravload_floatb_eulangrpy_vp1"
-      SID		      "347"
+      Name		      "%RN%_gravload_floatb_eulangrpy_mp"
+      SID		      "522"
       Ports		      [3, 1]
-      Position		      [805, 405, 880, 465]
-      ZOrder		      240
+      Position		      [105, 410, 180, 470]
+      ZOrder		      537
       RequestExecContextInheritance off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		106
+	$ObjectID		134
 	$ClassName		"Simulink.Mask"
-	Initialization		"m = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    107
+	    $ObjectID		    135
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    108
+	    $ObjectID		    136
+	    Type		    "edit"
+	    Name		    "MPV"
+	    Prompt		    "Dynamik-Parameter (Minimalparametervektor floating-base)"
+	    Value		    "MPV"
+	  }
+	  PropName		  "Parameters"
+	}
+      }
+      System {
+	Name			"%RN%_gravload_floatb_eulangrpy_mp"
+	Location		[2904, 52, 3839, 1080]
+	Open			off
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"A4"
+	PaperUnits		"centimeters"
+	TiledPaperMargins	[1.270000, 1.270000, 1.270000, 1.270000]
+	TiledPageScale		1
+	ShowPageBoundaries	off
+	ZoomFactor		"100"
+	Block {
+	  BlockType		  Inport
+	  Name			  "qJ"
+	  SID			  "524"
+	  Position		  [45, 18, 75, 32]
+	  ZOrder		  11
+	  IconDisplay		  "Port number"
+	  PortDimensions	  "NQJ"
+	}
+	Block {
+	  BlockType		  Inport
+	  Name			  "phi_base"
+	  SID			  "525"
+	  Position		  [45, 103, 75, 117]
+	  ZOrder		  15
+	  Port			  "2"
+	  IconDisplay		  "Port number"
+	  PortDimensions	  "3"
+	}
+	Block {
+	  BlockType		  Inport
+	  Name			  "g_world"
+	  SID			  "526"
+	  Position		  [45, 178, 75, 192]
+	  ZOrder		  12
+	  Port			  "3"
+	  IconDisplay		  "Port number"
+	  PortDimensions	  "3"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant1"
+	  SID			  "579"
+	  Position		  [45, 317, 110, 333]
+	  ZOrder		  16
+	  Value			  "MPV"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant6"
+	  SID			  "528"
+	  Position		  [55, 257, 105, 273]
+	  ZOrder		  10
+	  Value			  "pkin"
+	}
+	Block {
+	  BlockType		  SubSystem
+	  Name			  "MATLAB Function"
+	  SID			  "530"
+	  Ports			  [5, 1]
+	  Position		  [250, 10, 390, 430]
+	  ZOrder		  1
+	  LibraryVersion	  "1.32"
+	  ErrorFcn		  "Stateflow.Translate.translate"
+	  PermitHierarchicalResolution "ExplicitOnly"
+	  TreatAsAtomicUnit	  on
+	  RequestExecContextInheritance	off
+	  SFBlockType		  "MATLAB Function"
+	  System {
+	    Name		    "MATLAB Function"
+	    Location		    [223, 338, 826, 833]
+	    Open		    off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "A4"
+	    PaperUnits		    "centimeters"
+	    TiledPaperMargins	    [1.270000, 1.270000, 1.270000, 1.270000]
+	    TiledPageScale	    1
+	    ShowPageBoundaries	    off
+	    ZoomFactor		    "100"
+	    SIDHighWatermark	    "64"
+	    Block {
+	      BlockType		      Inport
+	      Name		      "q"
+	      SID		      "530::1"
+	      Position		      [20, 101, 40, 119]
+	      ZOrder		      -1
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "ob"
+	      SID		      "530::19"
+	      Position		      [20, 136, 40, 154]
+	      ZOrder		      10
+	      Port		      "2"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "g_world"
+	      SID		      "530::60"
+	      Position		      [20, 171, 40, 189]
+	      ZOrder		      25
+	      Port		      "3"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "pkin"
+	      SID		      "530::20"
+	      Position		      [20, 206, 40, 224]
+	      ZOrder		      11
+	      Port		      "4"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "MPV"
+	      SID		      "530::26"
+	      Position		      [20, 246, 40, 264]
+	      ZOrder		      17
+	      Port		      "5"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Demux
+	      Name		      " Demux "
+	      SID		      "530::63"
+	      Ports		      [1, 1]
+	      Position		      [270, 230, 320, 270]
+	      ZOrder		      27
+	      Outputs		      "1"
+	    }
+	    Block {
+	      BlockType		      S-Function
+	      Name		      " SFunction "
+	      SID		      "530::62"
+	      Tag		      "Stateflow S-Function lib_%RN%_dynamics 17"
+	      Ports		      [5, 2]
+	      Position		      [180, 105, 230, 225]
+	      ZOrder		      26
+	      FunctionName	      "sf_sfun"
+	      PortCounts	      "[5 2]"
+	      Port {
+		PortNumber		2
+		Name			"taug"
+		RTWStorageClass		"Auto"
+		DataLoggingNameMode	"SignalName"
+	      }
+	    }
+	    Block {
+	      BlockType		      Terminator
+	      Name		      " Terminator "
+	      SID		      "530::64"
+	      Position		      [460, 241, 480, 259]
+	      ZOrder		      28
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "taug"
+	      SID		      "530::5"
+	      Position		      [460, 101, 480, 119]
+	      ZOrder		      -5
+	      IconDisplay	      "Port number"
+	    }
+	    Line {
+	      ZOrder		      19
+	      SrcBlock		      "q"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      1
+	    }
+	    Line {
+	      ZOrder		      20
+	      SrcBlock		      "ob"
+	      SrcPort		      1
+	      Points		      [120, 0]
+	      DstBlock		      " SFunction "
+	      DstPort		      2
+	    }
+	    Line {
+	      ZOrder		      21
+	      SrcBlock		      "g_world"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      3
+	    }
+	    Line {
+	      ZOrder		      22
+	      SrcBlock		      "pkin"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      4
+	    }
+	    Line {
+	      ZOrder		      23
+	      SrcBlock		      "MPV"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      5
+	    }
+	    Line {
+	      Name		      "taug"
+	      ZOrder		      24
+	      Labels		      [0, 0]
+	      SrcBlock		      " SFunction "
+	      SrcPort		      2
+	      DstBlock		      "taug"
+	      DstPort		      1
+	    }
+	    Line {
+	      ZOrder		      25
+	      SrcBlock		      " Demux "
+	      SrcPort		      1
+	      DstBlock		      " Terminator "
+	      DstPort		      1
+	    }
+	    Line {
+	      ZOrder		      26
+	      SrcBlock		      " SFunction "
+	      SrcPort		      1
+	      DstBlock		      " Demux "
+	      DstPort		      1
+	    }
+	  }
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "tau_g"
+	  SID			  "531"
+	  Position		  [525, 205, 540, 235]
+	  ZOrder		  13
+	  NamePlacement		  "alternate"
+	  IconDisplay		  "Port number"
+	  PortDimensions	  "6+NQJ"
+	}
+	Line {
+	  ZOrder		  1
+	  SrcBlock		  "MATLAB Function"
+	  SrcPort		  1
+	  DstBlock		  "tau_g"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  2
+	  SrcBlock		  "Constant6"
+	  SrcPort		  1
+	  Points		  [125, 0]
+	  DstBlock		  "MATLAB Function"
+	  DstPort		  4
+	}
+	Line {
+	  ZOrder		  3
+	  SrcBlock		  "g_world"
+	  SrcPort		  1
+	  Points		  [155, 0]
+	  DstBlock		  "MATLAB Function"
+	  DstPort		  3
+	}
+	Line {
+	  ZOrder		  4
+	  SrcBlock		  "qJ"
+	  SrcPort		  1
+	  Points		  [155, 0]
+	  DstBlock		  "MATLAB Function"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  8
+	  SrcBlock		  "Constant1"
+	  SrcPort		  1
+	  Points		  [120, 0]
+	  DstBlock		  "MATLAB Function"
+	  DstPort		  5
+	}
+	Line {
+	  ZOrder		  7
+	  SrcBlock		  "phi_base"
+	  SrcPort		  1
+	  Points		  [155, 0]
+	  DstBlock		  "MATLAB Function"
+	  DstPort		  2
+	}
+      }
+    }
+    Block {
+      BlockType		      SubSystem
+      Name		      "%RN%_gravload_floatb_eulangrpy_vp1"
+      SID		      "347"
+      Ports		      [3, 1]
+      Position		      [795, 405, 870, 465]
+      ZOrder		      240
+      RequestExecContextInheritance off
+      Object {
+	$PropName		"MaskObject"
+	$ObjectID		137
+	$ClassName		"Simulink.Mask"
+	Initialization		"m = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
+	Array {
+	  Type			  "Simulink.MaskParameter"
+	  Dimension		  2
+	  Object {
+	    $ObjectID		    138
+	    Type		    "edit"
+	    Name		    "pkin"
+	    Prompt		    "Kinematik-Parameter"
+	    Value		    "pkin"
+	  }
+	  Object {
+	    $ObjectID		    139
 	    Type		    "edit"
 	    Name		    "DynPar1"
 	    Prompt		    "Dynamik-Parameter (Parametersatz 1)"
@@ -7453,23 +10390,23 @@ Library {
       RequestExecContextInheritance off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		109
+	$ObjectID		140
 	$ClassName		"Simulink.Mask"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    110
+	    $ObjectID		    141
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    111
+	    $ObjectID		    142
 	    Type		    "edit"
 	    Name		    "MPV"
-	    Prompt		    "Dynamik-Parameter (Minimalparametervektor)"
+	    Prompt		    "Dynamik-Parameter (Minimalparametervektor fixed-base)"
 	    Value		    "MPV"
 	  }
 	  PropName		  "Parameters"
@@ -7477,7 +10414,7 @@ Library {
       }
       System {
 	Name			"%RN%_gravload_mp"
-	Location		[65, 24, 1920, 1080]
+	Location		[1969, 24, 3840, 1080]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -7737,21 +10674,21 @@ Library {
       RequestExecContextInheritance off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		112
+	$ObjectID		143
 	$ClassName		"Simulink.Mask"
 	Initialization		"\nm = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;\n"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    113
+	    $ObjectID		    144
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    114
+	    $ObjectID		    145
 	    Type		    "edit"
 	    Name		    "DynPar1"
 	    Prompt		    "Dynamik-Parameter (Parametersatz 1)"
@@ -8050,29 +10987,889 @@ Library {
     }
     Block {
       BlockType		      SubSystem
-      Name		      "%RN%_inertia_floatb_eulangrpy_vp1"
-      SID		      "348"
-      Ports		      [2, 1]
-      Position		      [1145, 405, 1185, 465]
-      ZOrder		      242
+      Name		      "%RN%_inertiaJ_mp"
+      SID		      "27"
+      Ports		      [1, 1]
+      Position		      [505, 105, 545, 165]
+      ZOrder		      13
       RequestExecContextInheritance off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		115
+	$ObjectID		146
 	$ClassName		"Simulink.Mask"
-	Initialization		"m = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    116
+	    $ObjectID		    147
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    117
+	    $ObjectID		    148
+	    Type		    "edit"
+	    Name		    "MPV"
+	    Prompt		    "Dynamik-Parameter (Minimalparametervektor fixed-base)"
+	    Value		    "MPV"
+	  }
+	  PropName		  "Parameters"
+	}
+      }
+      System {
+	Name			"%RN%_inertiaJ_mp"
+	Location		[65, 24, 1920, 1080]
+	Open			off
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"A4"
+	PaperUnits		"centimeters"
+	TiledPaperMargins	[1.270000, 1.270000, 1.270000, 1.270000]
+	TiledPageScale		1
+	ShowPageBoundaries	off
+	ZoomFactor		"100"
+	Block {
+	  BlockType		  Inport
+	  Name			  "qJ"
+	  SID			  "28"
+	  Position		  [30, 78, 60, 92]
+	  ZOrder		  11
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant5"
+	  SID			  "35"
+	  Position		  [20, 277, 85, 293]
+	  ZOrder		  7
+	  Value			  "MPV"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant6"
+	  SID			  "36"
+	  Position		  [20, 177, 70, 193]
+	  ZOrder		  10
+	  Value			  "pkin"
+	}
+	Block {
+	  BlockType		  SubSystem
+	  Name			  "inertia_fcn"
+	  SID			  "37"
+	  Ports			  [3, 1]
+	  Position		  [190, 32, 320, 338]
+	  ZOrder		  1
+	  LibraryVersion	  "1.32"
+	  ErrorFcn		  "Stateflow.Translate.translate"
+	  PermitHierarchicalResolution "ExplicitOnly"
+	  TreatAsAtomicUnit	  on
+	  RequestExecContextInheritance	off
+	  SFBlockType		  "MATLAB Function"
+	  System {
+	    Name		    "inertia_fcn"
+	    Location		    [223, 338, 826, 833]
+	    Open		    off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "A4"
+	    PaperUnits		    "centimeters"
+	    TiledPaperMargins	    [1.270000, 1.270000, 1.270000, 1.270000]
+	    TiledPageScale	    1
+	    ShowPageBoundaries	    off
+	    ZoomFactor		    "100"
+	    SIDHighWatermark	    "56"
+	    Block {
+	      BlockType		      Inport
+	      Name		      "q"
+	      SID		      "37::1"
+	      Position		      [20, 101, 40, 119]
+	      ZOrder		      -1
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "pkin"
+	      SID		      "37::20"
+	      Position		      [20, 136, 40, 154]
+	      ZOrder		      11
+	      Port		      "2"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "MPV"
+	      SID		      "37::26"
+	      Position		      [20, 171, 40, 189]
+	      ZOrder		      17
+	      Port		      "3"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Demux
+	      Name		      " Demux "
+	      SID		      "37::31"
+	      Ports		      [1, 1]
+	      Position		      [270, 230, 320, 270]
+	      ZOrder		      22
+	      Outputs		      "1"
+	    }
+	    Block {
+	      BlockType		      S-Function
+	      Name		      " SFunction "
+	      SID		      "37::30"
+	      Tag		      "Stateflow S-Function lib_%RN%_dynamics 3"
+	      Ports		      [3, 2]
+	      Position		      [180, 110, 230, 190]
+	      ZOrder		      21
+	      FunctionName	      "sf_sfun"
+	      PortCounts	      "[3 2]"
+	      Port {
+		PortNumber		2
+		Name			"Mq"
+		RTWStorageClass		"Auto"
+		DataLoggingNameMode	"SignalName"
+	      }
+	    }
+	    Block {
+	      BlockType		      Terminator
+	      Name		      " Terminator "
+	      SID		      "37::32"
+	      Position		      [460, 241, 480, 259]
+	      ZOrder		      23
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "Mq"
+	      SID		      "37::5"
+	      Position		      [460, 101, 480, 119]
+	      ZOrder		      -5
+	      IconDisplay	      "Port number"
+	    }
+	    Line {
+	      ZOrder		      70
+	      SrcBlock		      "q"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      1
+	    }
+	    Line {
+	      ZOrder		      71
+	      SrcBlock		      "pkin"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      2
+	    }
+	    Line {
+	      ZOrder		      72
+	      SrcBlock		      "MPV"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      3
+	    }
+	    Line {
+	      Name		      "Mq"
+	      ZOrder		      73
+	      Labels		      [0, 0]
+	      SrcBlock		      " SFunction "
+	      SrcPort		      2
+	      DstBlock		      "Mq"
+	      DstPort		      1
+	    }
+	    Line {
+	      ZOrder		      74
+	      SrcBlock		      " Demux "
+	      SrcPort		      1
+	      DstBlock		      " Terminator "
+	      DstPort		      1
+	    }
+	    Line {
+	      ZOrder		      75
+	      SrcBlock		      " SFunction "
+	      SrcPort		      1
+	      DstBlock		      " Demux "
+	      DstPort		      1
+	    }
+	  }
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "Mq"
+	  SID			  "38"
+	  Position		  [505, 160, 520, 190]
+	  ZOrder		  13
+	  NamePlacement		  "alternate"
+	  IconDisplay		  "Port number"
+	}
+	Line {
+	  ZOrder		  5
+	  SrcBlock		  "inertia_fcn"
+	  SrcPort		  1
+	  Points		  [0, -10]
+	  DstBlock		  "Mq"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  6
+	  SrcBlock		  "Constant6"
+	  SrcPort		  1
+	  DstBlock		  "inertia_fcn"
+	  DstPort		  2
+	}
+	Line {
+	  ZOrder		  8
+	  SrcBlock		  "qJ"
+	  SrcPort		  1
+	  DstBlock		  "inertia_fcn"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  9
+	  SrcBlock		  "Constant5"
+	  SrcPort		  1
+	  DstBlock		  "inertia_fcn"
+	  DstPort		  3
+	}
+      }
+    }
+    Block {
+      BlockType		      SubSystem
+      Name		      "%RN%_inertiaJ_vp1"
+      SID		      "104"
+      Ports		      [1, 1]
+      Position		      [1135, 105, 1175, 165]
+      ZOrder		      235
+      RequestExecContextInheritance off
+      Object {
+	$PropName		"MaskObject"
+	$ObjectID		149
+	$ClassName		"Simulink.Mask"
+	Initialization		"m = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
+	Array {
+	  Type			  "Simulink.MaskParameter"
+	  Dimension		  2
+	  Object {
+	    $ObjectID		    150
+	    Type		    "edit"
+	    Name		    "pkin"
+	    Prompt		    "Kinematik-Parameter"
+	    Value		    "pkin"
+	  }
+	  Object {
+	    $ObjectID		    151
+	    Type		    "edit"
+	    Name		    "DynPar1"
+	    Prompt		    "Dynamik-Parameter (Parametersatz 1)"
+	    Value		    "DynPar1"
+	  }
+	  PropName		  "Parameters"
+	}
+      }
+      System {
+	Name			"%RN%_inertiaJ_vp1"
+	Location		[65, 24, 1920, 1080]
+	Open			off
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"A4"
+	PaperUnits		"centimeters"
+	TiledPaperMargins	[1.270000, 1.270000, 1.270000, 1.270000]
+	TiledPageScale		1
+	ShowPageBoundaries	off
+	ZoomFactor		"100"
+	Block {
+	  BlockType		  Inport
+	  Name			  "qJ"
+	  SID			  "127"
+	  Position		  [50, 83, 80, 97]
+	  ZOrder		  11
+	  IconDisplay		  "Port number"
+	  PortDimensions	  "NQJ"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant6"
+	  SID			  "134"
+	  Position		  [40, 172, 90, 188]
+	  ZOrder		  10
+	  Value			  "pkin"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant7"
+	  SID			  "334"
+	  Position		  [35, 262, 100, 278]
+	  ZOrder		  15
+	  Value			  "m"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant8"
+	  SID			  "335"
+	  Position		  [35, 352, 100, 368]
+	  ZOrder		  16
+	  Value			  "r_S"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant9"
+	  SID			  "341"
+	  Position		  [40, 442, 105, 458]
+	  ZOrder		  18
+	  Value			  "I_S"
+	}
+	Block {
+	  BlockType		  SubSystem
+	  Name			  "inertiajoint_fcn"
+	  SID			  "135"
+	  Ports			  [5, 1]
+	  Position		  [235, 47, 380, 493]
+	  ZOrder		  1
+	  LibraryVersion	  "1.32"
+	  ErrorFcn		  "Stateflow.Translate.translate"
+	  PermitHierarchicalResolution "ExplicitOnly"
+	  TreatAsAtomicUnit	  on
+	  RequestExecContextInheritance	off
+	  SFBlockType		  "MATLAB Function"
+	  System {
+	    Name		    "inertiajoint_fcn"
+	    Location		    [223, 338, 826, 833]
+	    Open		    off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "A4"
+	    PaperUnits		    "centimeters"
+	    TiledPaperMargins	    [1.270000, 1.270000, 1.270000, 1.270000]
+	    TiledPageScale	    1
+	    ShowPageBoundaries	    off
+	    ZoomFactor		    "100"
+	    SIDHighWatermark	    "62"
+	    Block {
+	      BlockType		      Inport
+	      Name		      "q"
+	      SID		      "135::1"
+	      Position		      [20, 101, 40, 119]
+	      ZOrder		      -1
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "pkin"
+	      SID		      "135::20"
+	      Position		      [20, 136, 40, 154]
+	      ZOrder		      11
+	      Port		      "2"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "m"
+	      SID		      "135::26"
+	      Position		      [20, 171, 40, 189]
+	      ZOrder		      17
+	      Port		      "3"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "r_S"
+	      SID		      "135::60"
+	      Position		      [20, 206, 40, 224]
+	      ZOrder		      27
+	      Port		      "4"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "I_S"
+	      SID		      "135::61"
+	      Position		      [20, 246, 40, 264]
+	      ZOrder		      28
+	      Port		      "5"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Demux
+	      Name		      " Demux "
+	      SID		      "135::46"
+	      Ports		      [1, 1]
+	      Position		      [270, 230, 320, 270]
+	      ZOrder		      25
+	      Outputs		      "1"
+	    }
+	    Block {
+	      BlockType		      S-Function
+	      Name		      " SFunction "
+	      SID		      "135::45"
+	      Tag		      "Stateflow S-Function lib_%RN%_dynamics 8"
+	      Ports		      [5, 2]
+	      Position		      [180, 105, 230, 225]
+	      ZOrder		      24
+	      FunctionName	      "sf_sfun"
+	      PortCounts	      "[5 2]"
+	      Port {
+		PortNumber		2
+		Name			"Mq"
+		RTWStorageClass		"Auto"
+		DataLoggingNameMode	"SignalName"
+	      }
+	    }
+	    Block {
+	      BlockType		      Terminator
+	      Name		      " Terminator "
+	      SID		      "135::47"
+	      Position		      [460, 241, 480, 259]
+	      ZOrder		      26
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "Mq"
+	      SID		      "135::5"
+	      Position		      [460, 101, 480, 119]
+	      ZOrder		      -5
+	      IconDisplay	      "Port number"
+	    }
+	    Line {
+	      ZOrder		      117
+	      SrcBlock		      "q"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      1
+	    }
+	    Line {
+	      ZOrder		      118
+	      SrcBlock		      "pkin"
+	      SrcPort		      1
+	      Points		      [120, 0]
+	      DstBlock		      " SFunction "
+	      DstPort		      2
+	    }
+	    Line {
+	      ZOrder		      119
+	      SrcBlock		      "m"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      3
+	    }
+	    Line {
+	      ZOrder		      120
+	      SrcBlock		      "r_S"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      4
+	    }
+	    Line {
+	      ZOrder		      121
+	      SrcBlock		      "I_S"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      5
+	    }
+	    Line {
+	      Name		      "Mq"
+	      ZOrder		      122
+	      Labels		      [0, 0]
+	      SrcBlock		      " SFunction "
+	      SrcPort		      2
+	      DstBlock		      "Mq"
+	      DstPort		      1
+	    }
+	    Line {
+	      ZOrder		      123
+	      SrcBlock		      " Demux "
+	      SrcPort		      1
+	      DstBlock		      " Terminator "
+	      DstPort		      1
+	    }
+	    Line {
+	      ZOrder		      124
+	      SrcBlock		      " SFunction "
+	      SrcPort		      1
+	      DstBlock		      " Demux "
+	      DstPort		      1
+	    }
+	  }
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "Mq"
+	  SID			  "136"
+	  Position		  [505, 240, 520, 270]
+	  ZOrder		  13
+	  NamePlacement		  "alternate"
+	  IconDisplay		  "Port number"
+	  PortDimensions	  "[NQJ NQJ]"
+	}
+	Line {
+	  ZOrder		  5
+	  SrcBlock		  "inertiajoint_fcn"
+	  SrcPort		  1
+	  Points		  [0, -15]
+	  DstBlock		  "Mq"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  6
+	  SrcBlock		  "Constant6"
+	  SrcPort		  1
+	  DstBlock		  "inertiajoint_fcn"
+	  DstPort		  2
+	}
+	Line {
+	  ZOrder		  7
+	  SrcBlock		  "qJ"
+	  SrcPort		  1
+	  DstBlock		  "inertiajoint_fcn"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  12
+	  SrcBlock		  "Constant7"
+	  SrcPort		  1
+	  DstBlock		  "inertiajoint_fcn"
+	  DstPort		  3
+	}
+	Line {
+	  ZOrder		  13
+	  SrcBlock		  "Constant8"
+	  SrcPort		  1
+	  DstBlock		  "inertiajoint_fcn"
+	  DstPort		  4
+	}
+	Line {
+	  ZOrder		  14
+	  SrcBlock		  "Constant9"
+	  SrcPort		  1
+	  DstBlock		  "inertiajoint_fcn"
+	  DstPort		  5
+	}
+      }
+    }
+    Block {
+      BlockType		      SubSystem
+      Name		      "%RN%_inertia_floatb_eulangrpy_mp"
+      SID		      "523"
+      Ports		      [2, 1]
+      Position		      [475, 405, 515, 465]
+      ZOrder		      539
+      RequestExecContextInheritance off
+      Object {
+	$PropName		"MaskObject"
+	$ObjectID		152
+	$ClassName		"Simulink.Mask"
+	Array {
+	  Type			  "Simulink.MaskParameter"
+	  Dimension		  2
+	  Object {
+	    $ObjectID		    153
+	    Type		    "edit"
+	    Name		    "pkin"
+	    Prompt		    "Kinematik-Parameter"
+	    Value		    "pkin"
+	  }
+	  Object {
+	    $ObjectID		    154
+	    Type		    "edit"
+	    Name		    "MPV"
+	    Prompt		    "Dynamik-Parameter (Minimalparametervektor floating-base)"
+	    Value		    "MPV"
+	  }
+	  PropName		  "Parameters"
+	}
+      }
+      System {
+	Name			"%RN%_inertia_floatb_eulangrpy_mp"
+	Location		[1969, 24, 3840, 1080]
+	Open			off
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"A4"
+	PaperUnits		"centimeters"
+	TiledPaperMargins	[1.270000, 1.270000, 1.270000, 1.270000]
+	TiledPageScale		1
+	ShowPageBoundaries	off
+	ZoomFactor		"100"
+	Block {
+	  BlockType		  Inport
+	  Name			  "qJ"
+	  SID			  "542"
+	  Position		  [65, 78, 95, 92]
+	  ZOrder		  11
+	  IconDisplay		  "Port number"
+	  PortDimensions	  "NQJ"
+	}
+	Block {
+	  BlockType		  Inport
+	  Name			  "phi_base"
+	  SID			  "543"
+	  Position		  [45, 203, 75, 217]
+	  ZOrder		  19
+	  Port			  "2"
+	  IconDisplay		  "Port number"
+	  PortDimensions	  "3"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant5"
+	  SID			  "581"
+	  Position		  [30, 452, 95, 468]
+	  ZOrder		  21
+	  Value			  "MPV"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant6"
+	  SID			  "544"
+	  Position		  [45, 327, 95, 343]
+	  ZOrder		  10
+	  Value			  "pkin"
+	}
+	Block {
+	  BlockType		  SubSystem
+	  Name			  "inertiajoint_fcn"
+	  SID			  "548"
+	  Ports			  [4, 1]
+	  Position		  [220, 17, 370, 528]
+	  ZOrder		  1
+	  LibraryVersion	  "1.32"
+	  ErrorFcn		  "Stateflow.Translate.translate"
+	  PermitHierarchicalResolution "ExplicitOnly"
+	  TreatAsAtomicUnit	  on
+	  RequestExecContextInheritance	off
+	  SFBlockType		  "MATLAB Function"
+	  System {
+	    Name		    "inertiajoint_fcn"
+	    Location		    [223, 338, 826, 833]
+	    Open		    off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "A4"
+	    PaperUnits		    "centimeters"
+	    TiledPaperMargins	    [1.270000, 1.270000, 1.270000, 1.270000]
+	    TiledPageScale	    1
+	    ShowPageBoundaries	    off
+	    ZoomFactor		    "100"
+	    SIDHighWatermark	    "69"
+	    Block {
+	      BlockType		      Inport
+	      Name		      "qJ"
+	      SID		      "548::1"
+	      Position		      [20, 101, 40, 119]
+	      ZOrder		      -1
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "phi_base"
+	      SID		      "548::65"
+	      Position		      [20, 136, 40, 154]
+	      ZOrder		      32
+	      Port		      "2"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "pkin"
+	      SID		      "548::20"
+	      Position		      [20, 171, 40, 189]
+	      ZOrder		      11
+	      Port		      "3"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "MPV"
+	      SID		      "548::26"
+	      Position		      [20, 206, 40, 224]
+	      ZOrder		      17
+	      Port		      "4"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Demux
+	      Name		      " Demux "
+	      SID		      "548::68"
+	      Ports		      [1, 1]
+	      Position		      [270, 230, 320, 270]
+	      ZOrder		      34
+	      Outputs		      "1"
+	    }
+	    Block {
+	      BlockType		      S-Function
+	      Name		      " SFunction "
+	      SID		      "548::67"
+	      Tag		      "Stateflow S-Function lib_%RN%_dynamics 19"
+	      Ports		      [4, 2]
+	      Position		      [180, 107, 230, 208]
+	      ZOrder		      33
+	      FunctionName	      "sf_sfun"
+	      PortCounts	      "[4 2]"
+	      Port {
+		PortNumber		2
+		Name			"Mq"
+		RTWStorageClass		"Auto"
+		DataLoggingNameMode	"SignalName"
+	      }
+	    }
+	    Block {
+	      BlockType		      Terminator
+	      Name		      " Terminator "
+	      SID		      "548::69"
+	      Position		      [460, 241, 480, 259]
+	      ZOrder		      35
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "Mq"
+	      SID		      "548::5"
+	      Position		      [460, 101, 480, 119]
+	      ZOrder		      -5
+	      IconDisplay	      "Port number"
+	    }
+	    Line {
+	      ZOrder		      27
+	      SrcBlock		      "qJ"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      1
+	    }
+	    Line {
+	      ZOrder		      28
+	      SrcBlock		      "phi_base"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      2
+	    }
+	    Line {
+	      ZOrder		      29
+	      SrcBlock		      "pkin"
+	      SrcPort		      1
+	      Points		      [120, 0]
+	      DstBlock		      " SFunction "
+	      DstPort		      3
+	    }
+	    Line {
+	      ZOrder		      30
+	      SrcBlock		      "MPV"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      4
+	    }
+	    Line {
+	      Name		      "Mq"
+	      ZOrder		      31
+	      Labels		      [0, 0]
+	      SrcBlock		      " SFunction "
+	      SrcPort		      2
+	      DstBlock		      "Mq"
+	      DstPort		      1
+	    }
+	    Line {
+	      ZOrder		      32
+	      SrcBlock		      " Demux "
+	      SrcPort		      1
+	      DstBlock		      " Terminator "
+	      DstPort		      1
+	    }
+	    Line {
+	      ZOrder		      33
+	      SrcBlock		      " SFunction "
+	      SrcPort		      1
+	      DstBlock		      " Demux "
+	      DstPort		      1
+	    }
+	  }
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "Mq"
+	  SID			  "549"
+	  Position		  [505, 260, 520, 290]
+	  ZOrder		  13
+	  NamePlacement		  "alternate"
+	  IconDisplay		  "Port number"
+	  PortDimensions	  "[6+NQJ 6+NQJ]"
+	}
+	Line {
+	  ZOrder		  1
+	  SrcBlock		  "inertiajoint_fcn"
+	  SrcPort		  1
+	  DstBlock		  "Mq"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  2
+	  SrcBlock		  "Constant6"
+	  SrcPort		  1
+	  DstBlock		  "inertiajoint_fcn"
+	  DstPort		  3
+	}
+	Line {
+	  ZOrder		  3
+	  SrcBlock		  "qJ"
+	  SrcPort		  1
+	  DstBlock		  "inertiajoint_fcn"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  8
+	  SrcBlock		  "Constant5"
+	  SrcPort		  1
+	  DstBlock		  "inertiajoint_fcn"
+	  DstPort		  4
+	}
+	Line {
+	  ZOrder		  7
+	  SrcBlock		  "phi_base"
+	  SrcPort		  1
+	  DstBlock		  "inertiajoint_fcn"
+	  DstPort		  2
+	}
+      }
+    }
+    Block {
+      BlockType		      SubSystem
+      Name		      "%RN%_inertia_floatb_eulangrpy_vp1"
+      SID		      "348"
+      Ports		      [2, 1]
+      Position		      [1135, 405, 1175, 465]
+      ZOrder		      242
+      RequestExecContextInheritance off
+      Object {
+	$PropName		"MaskObject"
+	$ObjectID		155
+	$ClassName		"Simulink.Mask"
+	Initialization		"m = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
+	Array {
+	  Type			  "Simulink.MaskParameter"
+	  Dimension		  2
+	  Object {
+	    $ObjectID		    156
+	    Type		    "edit"
+	    Name		    "pkin"
+	    Prompt		    "Kinematik-Parameter"
+	    Value		    "pkin"
+	  }
+	  Object {
+	    $ObjectID		    157
 	    Type		    "edit"
 	    Name		    "DynPar1"
 	    Prompt		    "Dynamik-Parameter (Parametersatz 1)"
@@ -8404,589 +12201,17 @@ Library {
 	}
       }
     }
-    Block {
-      BlockType		      SubSystem
-      Name		      "%RN%_inertia_joint_mp"
-      SID		      "27"
-      Ports		      [1, 1]
-      Position		      [505, 105, 545, 165]
-      ZOrder		      13
-      RequestExecContextInheritance off
-      Object {
-	$PropName		"MaskObject"
-	$ObjectID		118
-	$ClassName		"Simulink.Mask"
-	Array {
-	  Type			  "Simulink.MaskParameter"
-	  Dimension		  2
-	  Object {
-	    $ObjectID		    119
-	    Type		    "edit"
-	    Name		    "pkin"
-	    Prompt		    "Kinematik-Parameter"
-	    Value		    "pkin"
-	  }
-	  Object {
-	    $ObjectID		    120
-	    Type		    "edit"
-	    Name		    "MPV"
-	    Prompt		    "Dynamik-Parameter (Minimalparametervektor)"
-	    Value		    "MPV"
-	  }
-	  PropName		  "Parameters"
-	}
-      }
-      System {
-	Name			"%RN%_inertia_joint_mp"
-	Location		[65, 24, 1920, 1080]
-	Open			off
-	ModelBrowserVisibility	off
-	ModelBrowserWidth	200
-	ScreenColor		"white"
-	PaperOrientation	"landscape"
-	PaperPositionMode	"auto"
-	PaperType		"A4"
-	PaperUnits		"centimeters"
-	TiledPaperMargins	[1.270000, 1.270000, 1.270000, 1.270000]
-	TiledPageScale		1
-	ShowPageBoundaries	off
-	ZoomFactor		"100"
-	Block {
-	  BlockType		  Inport
-	  Name			  "qJ"
-	  SID			  "28"
-	  Position		  [30, 78, 60, 92]
-	  ZOrder		  11
-	  IconDisplay		  "Port number"
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "Constant5"
-	  SID			  "35"
-	  Position		  [20, 277, 85, 293]
-	  ZOrder		  7
-	  Value			  "MPV"
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "Constant6"
-	  SID			  "36"
-	  Position		  [20, 177, 70, 193]
-	  ZOrder		  10
-	  Value			  "pkin"
-	}
-	Block {
-	  BlockType		  SubSystem
-	  Name			  "inertia_fcn"
-	  SID			  "37"
-	  Ports			  [3, 1]
-	  Position		  [190, 32, 320, 338]
-	  ZOrder		  1
-	  LibraryVersion	  "1.32"
-	  ErrorFcn		  "Stateflow.Translate.translate"
-	  PermitHierarchicalResolution "ExplicitOnly"
-	  TreatAsAtomicUnit	  on
-	  RequestExecContextInheritance	off
-	  SFBlockType		  "MATLAB Function"
-	  System {
-	    Name		    "inertia_fcn"
-	    Location		    [223, 338, 826, 833]
-	    Open		    off
-	    ModelBrowserVisibility  off
-	    ModelBrowserWidth	    200
-	    ScreenColor		    "white"
-	    PaperOrientation	    "landscape"
-	    PaperPositionMode	    "auto"
-	    PaperType		    "A4"
-	    PaperUnits		    "centimeters"
-	    TiledPaperMargins	    [1.270000, 1.270000, 1.270000, 1.270000]
-	    TiledPageScale	    1
-	    ShowPageBoundaries	    off
-	    ZoomFactor		    "100"
-	    SIDHighWatermark	    "56"
-	    Block {
-	      BlockType		      Inport
-	      Name		      "q"
-	      SID		      "37::1"
-	      Position		      [20, 101, 40, 119]
-	      ZOrder		      -1
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Inport
-	      Name		      "pkin"
-	      SID		      "37::20"
-	      Position		      [20, 136, 40, 154]
-	      ZOrder		      11
-	      Port		      "2"
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Inport
-	      Name		      "MPV"
-	      SID		      "37::26"
-	      Position		      [20, 171, 40, 189]
-	      ZOrder		      17
-	      Port		      "3"
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Demux
-	      Name		      " Demux "
-	      SID		      "37::31"
-	      Ports		      [1, 1]
-	      Position		      [270, 230, 320, 270]
-	      ZOrder		      22
-	      Outputs		      "1"
-	    }
-	    Block {
-	      BlockType		      S-Function
-	      Name		      " SFunction "
-	      SID		      "37::30"
-	      Tag		      "Stateflow S-Function lib_%RN%_dynamics 3"
-	      Ports		      [3, 2]
-	      Position		      [180, 110, 230, 190]
-	      ZOrder		      21
-	      FunctionName	      "sf_sfun"
-	      PortCounts	      "[3 2]"
-	      Port {
-		PortNumber		2
-		Name			"Mq"
-		RTWStorageClass		"Auto"
-		DataLoggingNameMode	"SignalName"
-	      }
-	    }
-	    Block {
-	      BlockType		      Terminator
-	      Name		      " Terminator "
-	      SID		      "37::32"
-	      Position		      [460, 241, 480, 259]
-	      ZOrder		      23
-	    }
-	    Block {
-	      BlockType		      Outport
-	      Name		      "Mq"
-	      SID		      "37::5"
-	      Position		      [460, 101, 480, 119]
-	      ZOrder		      -5
-	      IconDisplay	      "Port number"
-	    }
-	    Line {
-	      ZOrder		      70
-	      SrcBlock		      "q"
-	      SrcPort		      1
-	      DstBlock		      " SFunction "
-	      DstPort		      1
-	    }
-	    Line {
-	      ZOrder		      71
-	      SrcBlock		      "pkin"
-	      SrcPort		      1
-	      DstBlock		      " SFunction "
-	      DstPort		      2
-	    }
-	    Line {
-	      ZOrder		      72
-	      SrcBlock		      "MPV"
-	      SrcPort		      1
-	      DstBlock		      " SFunction "
-	      DstPort		      3
-	    }
-	    Line {
-	      Name		      "Mq"
-	      ZOrder		      73
-	      Labels		      [0, 0]
-	      SrcBlock		      " SFunction "
-	      SrcPort		      2
-	      DstBlock		      "Mq"
-	      DstPort		      1
-	    }
-	    Line {
-	      ZOrder		      74
-	      SrcBlock		      " Demux "
-	      SrcPort		      1
-	      DstBlock		      " Terminator "
-	      DstPort		      1
-	    }
-	    Line {
-	      ZOrder		      75
-	      SrcBlock		      " SFunction "
-	      SrcPort		      1
-	      DstBlock		      " Demux "
-	      DstPort		      1
-	    }
-	  }
-	}
-	Block {
-	  BlockType		  Outport
-	  Name			  "Mq"
-	  SID			  "38"
-	  Position		  [505, 160, 520, 190]
-	  ZOrder		  13
-	  NamePlacement		  "alternate"
-	  IconDisplay		  "Port number"
-	}
-	Line {
-	  ZOrder		  5
-	  SrcBlock		  "inertia_fcn"
-	  SrcPort		  1
-	  Points		  [0, -10]
-	  DstBlock		  "Mq"
-	  DstPort		  1
-	}
-	Line {
-	  ZOrder		  6
-	  SrcBlock		  "Constant6"
-	  SrcPort		  1
-	  DstBlock		  "inertia_fcn"
-	  DstPort		  2
-	}
-	Line {
-	  ZOrder		  8
-	  SrcBlock		  "qJ"
-	  SrcPort		  1
-	  DstBlock		  "inertia_fcn"
-	  DstPort		  1
-	}
-	Line {
-	  ZOrder		  9
-	  SrcBlock		  "Constant5"
-	  SrcPort		  1
-	  DstBlock		  "inertia_fcn"
-	  DstPort		  3
-	}
-      }
-    }
-    Block {
-      BlockType		      SubSystem
-      Name		      "%RN%_inertia_joint_vp1"
-      SID		      "104"
-      Ports		      [1, 1]
-      Position		      [1135, 105, 1175, 165]
-      ZOrder		      235
-      RequestExecContextInheritance off
-      Object {
-	$PropName		"MaskObject"
-	$ObjectID		121
-	$ClassName		"Simulink.Mask"
-	Initialization		"m = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
-	Array {
-	  Type			  "Simulink.MaskParameter"
-	  Dimension		  2
-	  Object {
-	    $ObjectID		    122
-	    Type		    "edit"
-	    Name		    "pkin"
-	    Prompt		    "Kinematik-Parameter"
-	    Value		    "pkin"
-	  }
-	  Object {
-	    $ObjectID		    123
-	    Type		    "edit"
-	    Name		    "DynPar1"
-	    Prompt		    "Dynamik-Parameter (Parametersatz 1)"
-	    Value		    "DynPar1"
-	  }
-	  PropName		  "Parameters"
-	}
-      }
-      System {
-	Name			"%RN%_inertia_joint_vp1"
-	Location		[65, 24, 1920, 1080]
-	Open			off
-	ModelBrowserVisibility	off
-	ModelBrowserWidth	200
-	ScreenColor		"white"
-	PaperOrientation	"landscape"
-	PaperPositionMode	"auto"
-	PaperType		"A4"
-	PaperUnits		"centimeters"
-	TiledPaperMargins	[1.270000, 1.270000, 1.270000, 1.270000]
-	TiledPageScale		1
-	ShowPageBoundaries	off
-	ZoomFactor		"100"
-	Block {
-	  BlockType		  Inport
-	  Name			  "qJ"
-	  SID			  "127"
-	  Position		  [50, 83, 80, 97]
-	  ZOrder		  11
-	  IconDisplay		  "Port number"
-	  PortDimensions	  "NQJ"
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "Constant6"
-	  SID			  "134"
-	  Position		  [40, 172, 90, 188]
-	  ZOrder		  10
-	  Value			  "pkin"
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "Constant7"
-	  SID			  "334"
-	  Position		  [35, 262, 100, 278]
-	  ZOrder		  15
-	  Value			  "m"
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "Constant8"
-	  SID			  "335"
-	  Position		  [35, 352, 100, 368]
-	  ZOrder		  16
-	  Value			  "r_S"
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "Constant9"
-	  SID			  "341"
-	  Position		  [40, 442, 105, 458]
-	  ZOrder		  18
-	  Value			  "I_S"
-	}
-	Block {
-	  BlockType		  SubSystem
-	  Name			  "inertiajoint_fcn"
-	  SID			  "135"
-	  Ports			  [5, 1]
-	  Position		  [235, 47, 380, 493]
-	  ZOrder		  1
-	  LibraryVersion	  "1.32"
-	  ErrorFcn		  "Stateflow.Translate.translate"
-	  PermitHierarchicalResolution "ExplicitOnly"
-	  TreatAsAtomicUnit	  on
-	  RequestExecContextInheritance	off
-	  SFBlockType		  "MATLAB Function"
-	  System {
-	    Name		    "inertiajoint_fcn"
-	    Location		    [223, 338, 826, 833]
-	    Open		    off
-	    ModelBrowserVisibility  off
-	    ModelBrowserWidth	    200
-	    ScreenColor		    "white"
-	    PaperOrientation	    "landscape"
-	    PaperPositionMode	    "auto"
-	    PaperType		    "A4"
-	    PaperUnits		    "centimeters"
-	    TiledPaperMargins	    [1.270000, 1.270000, 1.270000, 1.270000]
-	    TiledPageScale	    1
-	    ShowPageBoundaries	    off
-	    ZoomFactor		    "100"
-	    SIDHighWatermark	    "62"
-	    Block {
-	      BlockType		      Inport
-	      Name		      "q"
-	      SID		      "135::1"
-	      Position		      [20, 101, 40, 119]
-	      ZOrder		      -1
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Inport
-	      Name		      "pkin"
-	      SID		      "135::20"
-	      Position		      [20, 136, 40, 154]
-	      ZOrder		      11
-	      Port		      "2"
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Inport
-	      Name		      "m"
-	      SID		      "135::26"
-	      Position		      [20, 171, 40, 189]
-	      ZOrder		      17
-	      Port		      "3"
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Inport
-	      Name		      "r_S"
-	      SID		      "135::60"
-	      Position		      [20, 206, 40, 224]
-	      ZOrder		      27
-	      Port		      "4"
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Inport
-	      Name		      "I_S"
-	      SID		      "135::61"
-	      Position		      [20, 246, 40, 264]
-	      ZOrder		      28
-	      Port		      "5"
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Demux
-	      Name		      " Demux "
-	      SID		      "135::46"
-	      Ports		      [1, 1]
-	      Position		      [270, 230, 320, 270]
-	      ZOrder		      25
-	      Outputs		      "1"
-	    }
-	    Block {
-	      BlockType		      S-Function
-	      Name		      " SFunction "
-	      SID		      "135::45"
-	      Tag		      "Stateflow S-Function lib_%RN%_dynamics 8"
-	      Ports		      [5, 2]
-	      Position		      [180, 105, 230, 225]
-	      ZOrder		      24
-	      FunctionName	      "sf_sfun"
-	      PortCounts	      "[5 2]"
-	      Port {
-		PortNumber		2
-		Name			"Mq"
-		RTWStorageClass		"Auto"
-		DataLoggingNameMode	"SignalName"
-	      }
-	    }
-	    Block {
-	      BlockType		      Terminator
-	      Name		      " Terminator "
-	      SID		      "135::47"
-	      Position		      [460, 241, 480, 259]
-	      ZOrder		      26
-	    }
-	    Block {
-	      BlockType		      Outport
-	      Name		      "Mq"
-	      SID		      "135::5"
-	      Position		      [460, 101, 480, 119]
-	      ZOrder		      -5
-	      IconDisplay	      "Port number"
-	    }
-	    Line {
-	      ZOrder		      117
-	      SrcBlock		      "q"
-	      SrcPort		      1
-	      DstBlock		      " SFunction "
-	      DstPort		      1
-	    }
-	    Line {
-	      ZOrder		      118
-	      SrcBlock		      "pkin"
-	      SrcPort		      1
-	      Points		      [120, 0]
-	      DstBlock		      " SFunction "
-	      DstPort		      2
-	    }
-	    Line {
-	      ZOrder		      119
-	      SrcBlock		      "m"
-	      SrcPort		      1
-	      DstBlock		      " SFunction "
-	      DstPort		      3
-	    }
-	    Line {
-	      ZOrder		      120
-	      SrcBlock		      "r_S"
-	      SrcPort		      1
-	      DstBlock		      " SFunction "
-	      DstPort		      4
-	    }
-	    Line {
-	      ZOrder		      121
-	      SrcBlock		      "I_S"
-	      SrcPort		      1
-	      DstBlock		      " SFunction "
-	      DstPort		      5
-	    }
-	    Line {
-	      Name		      "Mq"
-	      ZOrder		      122
-	      Labels		      [0, 0]
-	      SrcBlock		      " SFunction "
-	      SrcPort		      2
-	      DstBlock		      "Mq"
-	      DstPort		      1
-	    }
-	    Line {
-	      ZOrder		      123
-	      SrcBlock		      " Demux "
-	      SrcPort		      1
-	      DstBlock		      " Terminator "
-	      DstPort		      1
-	    }
-	    Line {
-	      ZOrder		      124
-	      SrcBlock		      " SFunction "
-	      SrcPort		      1
-	      DstBlock		      " Demux "
-	      DstPort		      1
-	    }
-	  }
-	}
-	Block {
-	  BlockType		  Outport
-	  Name			  "Mq"
-	  SID			  "136"
-	  Position		  [505, 240, 520, 270]
-	  ZOrder		  13
-	  NamePlacement		  "alternate"
-	  IconDisplay		  "Port number"
-	  PortDimensions	  "[NQJ NQJ]"
-	}
-	Line {
-	  ZOrder		  5
-	  SrcBlock		  "inertiajoint_fcn"
-	  SrcPort		  1
-	  Points		  [0, -15]
-	  DstBlock		  "Mq"
-	  DstPort		  1
-	}
-	Line {
-	  ZOrder		  6
-	  SrcBlock		  "Constant6"
-	  SrcPort		  1
-	  DstBlock		  "inertiajoint_fcn"
-	  DstPort		  2
-	}
-	Line {
-	  ZOrder		  7
-	  SrcBlock		  "qJ"
-	  SrcPort		  1
-	  DstBlock		  "inertiajoint_fcn"
-	  DstPort		  1
-	}
-	Line {
-	  ZOrder		  12
-	  SrcBlock		  "Constant7"
-	  SrcPort		  1
-	  DstBlock		  "inertiajoint_fcn"
-	  DstPort		  3
-	}
-	Line {
-	  ZOrder		  13
-	  SrcBlock		  "Constant8"
-	  SrcPort		  1
-	  DstBlock		  "inertiajoint_fcn"
-	  DstPort		  4
-	}
-	Line {
-	  ZOrder		  14
-	  SrcBlock		  "Constant9"
-	  SrcPort		  1
-	  DstBlock		  "inertiajoint_fcn"
-	  DstPort		  5
-	}
-      }
-    }
     Annotation {
       SID		      "87"
       Name		      "Vorwärtsdynamik"
-      Position		      [26, 362, 681, 647]
+      Position		      [26, 697, 681, 982]
       InternalMargins	      [0, 0, 0, 0]
       FixedHeight	      on
       FixedWidth	      on
       ForegroundColor	      "[0.941176, 0.941176, 1.000000]"
       DropShadow	      on
       AnnotationType	      "area_annotation"
-      ZOrder		      128
+      ZOrder		      202
       FontSize		      12
     }
     Annotation {
@@ -8999,7 +12224,7 @@ Library {
       ForegroundColor	      "[0.941176, 0.941176, 1.000000]"
       DropShadow	      on
       AnnotationType	      "area_annotation"
-      ZOrder		      126
+      ZOrder		      198
       FontSize		      12
     }
     Annotation {
@@ -9012,20 +12237,33 @@ Library {
       ForegroundColor	      "[0.941176, 0.941176, 1.000000]"
       DropShadow	      on
       AnnotationType	      "area_annotation"
-      ZOrder		      127
+      ZOrder		      199
       FontSize		      12
     }
     Annotation {
       SID		      "349"
       Name		      "Dynamikfunktionen floating base (Euler-RPY) mit variablen Parametern (Parametersatz 1)"
-      Position		      [740, 369, 1405, 644]
+      Position		      [730, 369, 1395, 644]
       InternalMargins	      [0, 0, 0, 0]
       FixedHeight	      on
       FixedWidth	      on
       ForegroundColor	      "[0.941176, 0.941176, 1.000000]"
       DropShadow	      on
       AnnotationType	      "area_annotation"
-      ZOrder		      129
+      ZOrder		      201
+      FontSize		      12
+    }
+    Annotation {
+      SID		      "517"
+      Name		      "Dynamikfunktionen floating base (Euler-RPY) mit variablen Parametern (MPV)"
+      Position		      [20, 369, 685, 644]
+      InternalMargins	      [0, 0, 0, 0]
+      FixedHeight	      on
+      FixedWidth	      on
+      ForegroundColor	      "[0.941176, 0.941176, 1.000000]"
+      DropShadow	      on
+      AnnotationType	      "area_annotation"
+      ZOrder		      200
       FontSize		      12
     }
   }
@@ -9041,7 +12279,7 @@ Stateflow {
     name		    "lib_%RN%_dynamics"
     created		    "14-Apr-2016 18:44:56"
     isLibrary		    1
-    firstTarget		    197
+    firstTarget		    262
     sfVersion		    80000005
   }
   chart {
@@ -9054,8 +12292,11 @@ Stateflow {
     firstTransition	    10
     firstJunction	    9
     viewObj		    2
+    visible		    1
     machine		    1
     toolbarMode		    LIBRARY_TOOLBAR
+    subviewS {
+    }
     ssIdHighWaterMark	    13
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -9080,8 +12321,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function taug = coriolis(q, qD, pkin, MPV)\n%#codegen\ntauc_reg = %RN%_coriolisvec_joint"
-      "_fixb_regmin_slag_vp(q, qD, pkin);\ntaug = tauc_reg*MPV;\n"
+      script		      "function taug = coriolis(q, qD, pkin, MPV)\n%#codegen\ntauc_reg = %RN%_coriolisvecJ_fix"
+      "b_regmin_slag_vp(q, qD, pkin);\ntaug = tauc_reg*MPV;\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -9239,8 +12480,11 @@ Stateflow {
     firstTransition	    20
     firstJunction	    19
     viewObj		    12
+    visible		    1
     machine		    1
     toolbarMode		    LIBRARY_TOOLBAR
+    subviewS {
+    }
     ssIdHighWaterMark	    13
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -9265,8 +12509,7 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function taug = gravload(q, g_base, pkin, MPV)\n%#codegen\ntaug_reg = %RN%_gravload_join"
-      "t_regmin_slag_vp(q, g_base, pkin);\ntaug = taug_reg*MPV;\n"
+      script		      "function taug = gravload(q, g_base, pkin, MPV)\n%#codegen\ntaug_reg = %RN%_gravloadJ_regmin_slag_vp(q, g_base, pkin);\ntaug = taug_reg*MPV;\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -9416,7 +12659,7 @@ Stateflow {
   }
   chart {
     id			    22
-    name		    "%RN%_inertia_joint_mp/inertia_fcn"
+    name		    "%RN%_inertiaJ_mp/inertia_fcn"
     windowPosition	    [422 539.941 189 413]
     viewLimits		    [0 156.75 0 153.75]
     screen		    [1 1 3600 1200 1.180555555555556]
@@ -9424,11 +12667,8 @@ Stateflow {
     firstTransition	    29
     firstJunction	    28
     viewObj		    22
-    visible		    1
     machine		    1
     toolbarMode		    LIBRARY_TOOLBAR
-    subviewS {
-    }
     ssIdHighWaterMark	    13
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -9453,8 +12693,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function Mq = inertia(q, pkin, MPV)\n%#codegen\nMq_reg = %RN%_inertia_joint_regmin_slag_"
-      "vp(q, pkin);\nMq_mpv_vec = Mq_reg*MPV;\nMq = vec2symmat(Mq_mpv_vec);\n\n"
+      script		      "function Mq = inertia(q, pkin, MPV)\n%#codegen\nMq_reg = %RN%_inertiaJ_regmin_slag_vp(q"
+      ", pkin);\nMq_mpv_vec = Mq_reg*MPV;\nMq = vec2symmat(Mq_mpv_vec);\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -9576,7 +12816,7 @@ Stateflow {
   }
   instance {
     id			    30
-    name		    "%RN%_inertia_joint_mp/inertia_fcn"
+    name		    "%RN%_inertiaJ_mp/inertia_fcn"
     machine		    1
     chart		    22
   }
@@ -9616,8 +12856,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function T = energykin(q, qD, pkin, MPV)\n%#codegen\nt_reg = %RN%_energykin_fixb_regmin_"
-      "slag_vp(q, qD, pkin);\nT = t_reg*MPV;\n"
+      script		      "function T = energykin(q, qD, pkin, MPV)\n%#codegen\nt_reg = %RN%_energykin_fixb_regmin"
+      "_slag_vp(q, qD, pkin);\nT = t_reg*MPV;\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -9801,8 +13041,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function T = energypot(q, g_base, pkin, MPV)\n%#codegen\nt_reg = %RN%_energypot_fixb_reg"
-      "min_slag_vp(q, g_base, pkin);\nT = t_reg*MPV;\n"
+      script		      "function T = energypot(q, g_base, pkin, MPV)\n%#codegen\nt_reg = %RN%_energypot_fixb_re"
+      "gmin_slag_vp(q, g_base, pkin);\nT = t_reg*MPV;\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -9986,8 +13226,7 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function taug = gravload(q, g_base, pkin, m, r_S)\n%#codegen\ntaug = %RN%_gravload_joint"
-      "_floatb_twist_slag_vp1(q, g_base, pkin, m, r_S);\n\n"
+      script		      "function taug = gravload(q, g_base, pkin, m, r_S)\n%#codegen\ntaug = %RN%_gravloadJ_floatb_twist_slag_vp1(q, g_base, pkin, m, r_S);\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -10193,8 +13432,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function tauc = coriolis(q, qD, pkin, m, r_S, I_S)\n%#codegen\ntauc = %RN%_coriolisvec_j"
-      "oint_fixb_slag_vp1(q, qD, pkin, m, r_S, I_S);\n\n"
+      script		      "function tauc = coriolis(q, qD, pkin, m, r_S, I_S)\n%#codegen\ntauc = %RN%_coriolisvecJ"
+      "_fixb_slag_vp1(q, qD, pkin, m, r_S, I_S);\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -10388,7 +13627,7 @@ Stateflow {
   }
   chart {
     id			    74
-    name		    "%RN%_inertia_joint_vp1/inertiajoint_fcn"
+    name		    "%RN%_inertiaJ_vp1/inertiajoint_fcn"
     windowPosition	    [422 539.941 189 413]
     viewLimits		    [0 156.75 0 153.75]
     screen		    [1 1 3600 1200 1.180555555555556]
@@ -10422,8 +13661,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function Mq = inertia(q, pkin, m, r_S, I_S)\n%#codegen\nMq = %RN%_inertia_joint_slag_vp1"
-      "(q, pkin, m, r_S, I_S);\n"
+      script		      "function Mq = inertia(q, pkin, m, r_S, I_S)\n%#codegen\nMq = %RN%_inertiaJ_slag_vp1(q, "
+      "pkin, m, r_S, I_S);\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -10589,7 +13828,7 @@ Stateflow {
   }
   instance {
     id			    84
-    name		    "%RN%_inertia_joint_vp1/inertiajoint_fcn"
+    name		    "%RN%_inertiaJ_vp1/inertiajoint_fcn"
     machine		    1
     chart		    74
   }
@@ -10629,8 +13868,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function T = energykin(q, qD, pkin, m, r_S, I_S)\n%#codegen\nT = %RN%_energykin_fixb_sla"
-      "g_vp1(q, qD, pkin, m, r_S, I_S);\n\n"
+      script		      "function T = energykin(q, qD, pkin, m, r_S, I_S)\n%#codegen\nT = %RN%_energykin_fixb_sl"
+      "ag_vp1(q, qD, pkin, m, r_S, I_S);\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -10858,8 +14097,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function U = energypot(q, g_base, pkin, m, r_S)\n%#codegen\nU = %RN%_energypot_fixb_slag"
-      "_vp1(q, g_base, pkin, m, r_S);\n\n"
+      script		      "function U = energypot(q, g_base, pkin, m, r_S)\n%#codegen\nU = %RN%_energypot_fixb_sla"
+      "g_vp1(q, g_base, pkin, m, r_S);\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -11205,9 +14444,7 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function taug = gravload(q, ob, g_world, pkin, m, r_S)\n%#codegen\n\ntaug_base = %RN%_gr"
-      "avload_base_floatb_eulangrpy_slag_vp1(q, ob, g_world, ...\n  pkin, m, r_S);\ntaug_joints = %RN%_gravloa"
-      "d_joint_floatb_eulangrpy_slag_vp1(q, ob, g_world,...\n  pkin, m, r_S);\ntaug = [taug_base; taug_joints];\n\n\n"
+      script		      "function taug = gravload(q, ob, g_world, pkin, m, r_S)\n%#codegen\n\ntaug_base = %RN%_gravloadB_floatb_eulangrpy_slag_vp1(q, ob, g_world, ...\n  pkin, m, r_S);\ntaug_joints = %RN%_gravloadJ_floatb_eulangrpy_slag_vp1(q, ob, g_world,...\n  pkin, m, r_S);\ntaug = [taug_base; taug_joints];\n\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -11707,8 +14944,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function Mq = inertia(qJ, phi_base, pkin, m, r_S, I_S)\n%#codegen\nMq = %RN%_inertia_flo"
-      "atb_eulangrpy_slag_vp1(qJ, phi_base, ...\n  pkin, m, r_S, I_S);\n"
+      script		      "function Mq = inertia(qJ, phi_base, pkin, m, r_S, I_S)\n%#codegen\nMq = %RN%_inertia_fl"
+      "oatb_eulangrpy_slag_vp1(qJ, phi_base, ...\n  pkin, m, r_S, I_S);\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -12424,24 +15661,26 @@ Stateflow {
   }
   chart {
     id			    181
-    name		    "%RN%_fordyn_floatb_eulangrpy_vp1/mFcn_Minv"
-    windowPosition	    [357.331 483.407 167 391]
+    name		    "%RN%_gravload_floatb_eulangrpy_mp/MATLAB Function"
+    windowPosition	    [422 539.941 189 413]
     viewLimits		    [0 156.75 0 153.75]
-    screen		    [1 1 1280 1024 1.041050272174191]
+    screen		    [1 1 3600 1200 1.180555555555556]
     treeNode		    [0 182 0 0]
-    firstTransition	    187
-    firstJunction	    186
+    firstTransition	    190
+    firstJunction	    189
     viewObj		    181
     machine		    1
     toolbarMode		    LIBRARY_TOOLBAR
-    ssIdHighWaterMark	    6
+    subviewS {
+    }
+    ssIdHighWaterMark	    16
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
     firstData		    183
-    chartFileNumber	    37
+    chartFileNumber	    17
     disableImplicitCasting  1
     eml {
-      name		      "fcn"
+      name		      "gravload"
     }
   }
   state {
@@ -12458,14 +15697,17 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function q_ddot = fcn(M,tau)\n%#codegen\nq_ddot=M\\tau;"
+      script		      "function taug = gravload(q, ob, g_world, pkin, MPV)\n%#codegen\n\ntauBg_reg = %RN%_grav"
+      "loadB_floatb_eulangrpy_regmin_slag_vp(q, ob, g_world, pkin);\ntauJg_reg = %RN%_gravloadJ_floa"
+      "tb_eulangrpy_regmin_slag_vp(q, ob, g_world, pkin);    \ntaug_reg = [tauBg_reg;tauJg_reg];\ntaug = taug_reg*MPV;\n"
+      "\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
   data {
     id			    183
     ssIdNumber		    4
-    name		    "M"
+    name		    "q"
     linkNode		    [181 0 184]
     scope		    INPUT_DATA
     machine		    1
@@ -12484,7 +15726,7 @@ Stateflow {
   data {
     id			    184
     ssIdNumber		    5
-    name		    "q_ddot"
+    name		    "taug"
     linkNode		    [181 183 185]
     scope		    OUTPUT_DATA
     machine		    1
@@ -12504,8 +15746,74 @@ Stateflow {
   data {
     id			    185
     ssIdNumber		    6
-    name		    "tau"
-    linkNode		    [181 184 0]
+    name		    "ob"
+    linkNode		    [181 184 186]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    186
+    ssIdNumber		    15
+    name		    "g_world"
+    linkNode		    [181 185 187]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    187
+    ssIdNumber		    7
+    name		    "pkin"
+    linkNode		    [181 186 188]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    188
+    ssIdNumber		    13
+    name		    "MPV"
+    linkNode		    [181 187 0]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -12524,7 +15832,7 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   junction {
-    id			    186
+    id			    189
     position		    [23.5747 49.5747 7]
     chart		    181
     linkNode		    [181 0 0]
@@ -12533,15 +15841,15 @@ Stateflow {
     type		    CONNECTIVE_JUNCTION
   }
   transition {
-    id			    187
+    id			    190
     labelString		    "{eML_blk_kernel();}"
-    labelPosition	    [32.125 19.875 102.544 14.964]
+    labelPosition	    [28.125 13.875 102.544 14.964]
     fontSize		    12
     src {
       intersection	      [0 0 1 0 23.5747 14.625 0 0]
     }
     dst {
-      id		      186
+      id		      189
       intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
     }
     midPoint		    [23.5747 24.9468]
@@ -12557,56 +15865,59 @@ Stateflow {
     ssIdNumber		    2
   }
   instance {
-    id			    188
-    name		    "%RN%_fordyn_floatb_eulangrpy_vp1/mFcn_Minv"
+    id			    191
+    name		    "%RN%_gravload_floatb_eulangrpy_mp/MATLAB Function"
     machine		    1
     chart		    181
   }
   chart {
-    id			    189
-    name		    "%RN%_fordyn_fixb_mp/mFcn_Minv"
-    windowPosition	    [357.331 483.407 167 391]
+    id			    192
+    name		    "%RN%_coriolisvec_floatb_eulangrpy_mp/coriolisvec_fcn"
+    windowPosition	    [422 539.941 189 413]
     viewLimits		    [0 156.75 0 153.75]
-    screen		    [1 1 1280 1024 1.041050272174191]
-    treeNode		    [0 190 0 0]
-    firstTransition	    195
-    firstJunction	    194
-    viewObj		    189
+    screen		    [1 1 3600 1200 1.180555555555556]
+    treeNode		    [0 193 0 0]
+    firstTransition	    202
+    firstJunction	    201
+    viewObj		    192
     machine		    1
     toolbarMode		    LIBRARY_TOOLBAR
-    ssIdHighWaterMark	    6
+    subviewS {
+    }
+    ssIdHighWaterMark	    18
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
-    firstData		    191
-    chartFileNumber	    38
+    firstData		    194
+    chartFileNumber	    18
     disableImplicitCasting  1
     eml {
-      name		      "fcn"
+      name		      "coriolis"
     }
   }
   state {
-    id			    190
+    id			    193
     labelString		    "eML_blk_kernel()"
     position		    [18 64.5 118 66]
     fontSize		    12
-    chart		    189
-    treeNode		    [189 0 0 0]
+    chart		    192
+    treeNode		    [192 0 0 0]
     superState		    SUBCHART
-    subviewer		    189
+    subviewer		    192
     ssIdNumber		    1
     type		    FUNC_STATE
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function q_ddot = fcn(M,tau)\n%#codegen\nq_ddot=M\\tau;"
+      script		      "function tauc = coriolis(qJ, qJD, phi_base, xD_base, pkin, MPV)\n%#codegen\ntauc_reg = %RN%_coriolisvec_floatb_eulangrpy_regmin_slag_vp(qJ, qJD, ...\n  phi_base, xD_base, pkin);\n\ntauc = tauc_reg*MP"
+      "V;"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
   data {
-    id			    191
+    id			    194
     ssIdNumber		    4
-    name		    "M"
-    linkNode		    [189 0 192]
+    name		    "qJ"
+    linkNode		    [192 0 195]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -12622,10 +15933,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    192
+    id			    195
     ssIdNumber		    5
-    name		    "q_ddot"
-    linkNode		    [189 191 193]
+    name		    "tauc"
+    linkNode		    [192 194 196]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -12642,10 +15953,98 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    193
+    id			    196
     ssIdNumber		    6
-    name		    "tau"
-    linkNode		    [189 192 0]
+    name		    "qJD"
+    linkNode		    [192 195 197]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    197
+    ssIdNumber		    16
+    name		    "phi_base"
+    linkNode		    [192 196 198]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    198
+    ssIdNumber		    17
+    name		    "xD_base"
+    linkNode		    [192 197 199]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    199
+    ssIdNumber		    7
+    name		    "pkin"
+    linkNode		    [192 198 200]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    200
+    ssIdNumber		    13
+    name		    "MPV"
+    linkNode		    [192 199 0]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -12664,31 +16063,31 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   junction {
-    id			    194
+    id			    201
     position		    [23.5747 49.5747 7]
-    chart		    189
-    linkNode		    [189 0 0]
-    subviewer		    189
+    chart		    192
+    linkNode		    [192 0 0]
+    subviewer		    192
     ssIdNumber		    3
     type		    CONNECTIVE_JUNCTION
   }
   transition {
-    id			    195
+    id			    202
     labelString		    "{eML_blk_kernel();}"
-    labelPosition	    [32.125 19.875 102.544 14.964]
+    labelPosition	    [28.125 13.875 102.544 14.964]
     fontSize		    12
     src {
       intersection	      [0 0 1 0 23.5747 14.625 0 0]
     }
     dst {
-      id		      194
+      id		      201
       intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
     }
     midPoint		    [23.5747 24.9468]
-    chart		    189
-    linkNode		    [189 0 0]
+    chart		    192
+    linkNode		    [192 0 0]
     dataLimits		    [21.175 25.975 14.625 42.575]
-    subviewer		    189
+    subviewer		    192
     drawStyle		    SMART
     slide {
       sticky		      BOTH_STICK
@@ -12697,13 +16096,1084 @@ Stateflow {
     ssIdNumber		    2
   }
   instance {
-    id			    196
+    id			    203
+    name		    "%RN%_coriolisvec_floatb_eulangrpy_mp/coriolisvec_fcn"
+    machine		    1
+    chart		    192
+  }
+  chart {
+    id			    204
+    name		    "%RN%_inertia_floatb_eulangrpy_mp/inertiajoint_fcn"
+    windowPosition	    [422 539.941 189 413]
+    viewLimits		    [0 156.75 0 153.75]
+    screen		    [1 1 3600 1200 1.180555555555556]
+    treeNode		    [0 205 0 0]
+    firstTransition	    212
+    firstJunction	    211
+    viewObj		    204
+    visible		    1
+    machine		    1
+    toolbarMode		    LIBRARY_TOOLBAR
+    subviewS {
+    }
+    ssIdHighWaterMark	    17
+    decomposition	    CLUSTER_CHART
+    type		    EML_CHART
+    firstData		    206
+    chartFileNumber	    19
+    disableImplicitCasting  1
+    eml {
+      name		      "inertia"
+    }
+  }
+  state {
+    id			    205
+    labelString		    "eML_blk_kernel()"
+    position		    [18 64.5 118 66]
+    fontSize		    12
+    chart		    204
+    treeNode		    [204 0 0 0]
+    superState		    SUBCHART
+    subviewer		    204
+    ssIdNumber		    1
+    type		    FUNC_STATE
+    decomposition	    CLUSTER_STATE
+    eml {
+      isEML		      1
+      script		      "function Mq = inertia(qJ, phi_base, pkin, MPV)\n%#codegen\nM_regmin = %RN%_inertia_floa"
+      "tb_eulangrpy_regmin_slag_vp(qJ, phi_base, pkin);\nM_mpv_vec = M_regmin*MPV;\nMq = vec2symmat(M_mpv_vec);"
+      editorLayout	      "100 M4x1[10 5 700 500]"
+    }
+  }
+  data {
+    id			    206
+    ssIdNumber		    4
+    name		    "qJ"
+    linkNode		    [204 0 207]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    207
+    ssIdNumber		    16
+    name		    "phi_base"
+    linkNode		    [204 206 208]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    208
+    ssIdNumber		    5
+    name		    "Mq"
+    linkNode		    [204 207 209]
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_NO
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    209
+    ssIdNumber		    7
+    name		    "pkin"
+    linkNode		    [204 208 210]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    210
+    ssIdNumber		    13
+    name		    "MPV"
+    linkNode		    [204 209 0]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  junction {
+    id			    211
+    position		    [23.5747 49.5747 7]
+    chart		    204
+    linkNode		    [204 0 0]
+    subviewer		    204
+    ssIdNumber		    3
+    type		    CONNECTIVE_JUNCTION
+  }
+  transition {
+    id			    212
+    labelString		    "{eML_blk_kernel();}"
+    labelPosition	    [28.125 13.875 102.544 14.964]
+    fontSize		    12
+    src {
+      intersection	      [0 0 1 0 23.5747 14.625 0 0]
+    }
+    dst {
+      id		      211
+      intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
+    }
+    midPoint		    [23.5747 24.9468]
+    chart		    204
+    linkNode		    [204 0 0]
+    dataLimits		    [21.175 25.975 14.625 42.575]
+    subviewer		    204
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    2
+  }
+  instance {
+    id			    213
+    name		    "%RN%_inertia_floatb_eulangrpy_mp/inertiajoint_fcn"
+    machine		    1
+    chart		    204
+  }
+  chart {
+    id			    214
+    name		    "%RN%_energykin_floatb_eulangrpy_mp/MATLAB Function"
+    windowPosition	    [422 539.941 189 413]
+    viewLimits		    [0 156.75 0 153.75]
+    screen		    [1 1 3600 1200 1.180555555555556]
+    treeNode		    [0 215 0 0]
+    firstTransition	    224
+    firstJunction	    223
+    viewObj		    214
+    visible		    1
+    machine		    1
+    toolbarMode		    LIBRARY_TOOLBAR
+    subviewS {
+    }
+    ssIdHighWaterMark	    18
+    decomposition	    CLUSTER_CHART
+    type		    EML_CHART
+    firstData		    216
+    chartFileNumber	    20
+    disableImplicitCasting  1
+    eml {
+      name		      "energykin"
+    }
+  }
+  state {
+    id			    215
+    labelString		    "eML_blk_kernel()"
+    position		    [18 64.5 118 66]
+    fontSize		    12
+    chart		    214
+    treeNode		    [214 0 0 0]
+    superState		    SUBCHART
+    subviewer		    214
+    ssIdNumber		    1
+    type		    FUNC_STATE
+    decomposition	    CLUSTER_STATE
+    eml {
+      isEML		      1
+      script		      "function T = energykin(qJ, qD, phi_base, xD_base,  ...\n  pkin, MPV)\n%#codegen\nT_reg = %RN%_energykin_floatb_eulangrpy_regmin_slag_vp(qJ, qD, phi_base, xD_base, ...\n  pkin);\n\nT = T_reg*MPV;"
+      editorLayout	      "100 M4x1[10 5 700 500]"
+    }
+  }
+  data {
+    id			    216
+    ssIdNumber		    4
+    name		    "qJ"
+    linkNode		    [214 0 217]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    217
+    ssIdNumber		    5
+    name		    "T"
+    linkNode		    [214 216 218]
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_NO
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    218
+    ssIdNumber		    6
+    name		    "qD"
+    linkNode		    [214 217 219]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    219
+    ssIdNumber		    16
+    name		    "phi_base"
+    linkNode		    [214 218 220]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    220
+    ssIdNumber		    17
+    name		    "xD_base"
+    linkNode		    [214 219 221]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    221
+    ssIdNumber		    7
+    name		    "pkin"
+    linkNode		    [214 220 222]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    222
+    ssIdNumber		    13
+    name		    "MPV"
+    linkNode		    [214 221 0]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  junction {
+    id			    223
+    position		    [23.5747 49.5747 7]
+    chart		    214
+    linkNode		    [214 0 0]
+    subviewer		    214
+    ssIdNumber		    3
+    type		    CONNECTIVE_JUNCTION
+  }
+  transition {
+    id			    224
+    labelString		    "{eML_blk_kernel();}"
+    labelPosition	    [28.125 13.875 102.544 14.964]
+    fontSize		    12
+    src {
+      intersection	      [0 0 1 0 23.5747 14.625 0 0]
+    }
+    dst {
+      id		      223
+      intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
+    }
+    midPoint		    [23.5747 24.9468]
+    chart		    214
+    linkNode		    [214 0 0]
+    dataLimits		    [21.175 25.975 14.625 42.575]
+    subviewer		    214
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    2
+  }
+  instance {
+    id			    225
+    name		    "%RN%_energykin_floatb_eulangrpy_mp/MATLAB Function"
+    machine		    1
+    chart		    214
+  }
+  chart {
+    id			    226
+    name		    "%RN%_energypot_floatb_eulangrpy_mp/MATLAB Function"
+    windowPosition	    [422 539.941 189 413]
+    viewLimits		    [0 156.75 0 153.75]
+    screen		    [1 1 3600 1200 1.180555555555556]
+    treeNode		    [0 227 0 0]
+    firstTransition	    236
+    firstJunction	    235
+    viewObj		    226
+    visible		    1
+    machine		    1
+    toolbarMode		    LIBRARY_TOOLBAR
+    subviewS {
+    }
+    ssIdHighWaterMark	    17
+    decomposition	    CLUSTER_CHART
+    type		    EML_CHART
+    firstData		    228
+    chartFileNumber	    21
+    disableImplicitCasting  1
+    eml {
+      name		      "energypot"
+    }
+  }
+  state {
+    id			    227
+    labelString		    "eML_blk_kernel()"
+    position		    [18 64.5 118 66]
+    fontSize		    12
+    chart		    226
+    treeNode		    [226 0 0 0]
+    superState		    SUBCHART
+    subviewer		    226
+    ssIdNumber		    1
+    type		    FUNC_STATE
+    decomposition	    CLUSTER_STATE
+    eml {
+      isEML		      1
+      script		      "function U = energypot(qJ, r_base, phi_base, g_world, ...\n  pkin, MPV)\n%#codegen\nU_reg = %RN%_energypot_floatb_eulangrpy_regmin_slag_vp(qJ, r_base, phi_base, g_world, ...\n  pkin);\nU = U_reg*MPV;"
+      "\n"
+      editorLayout	      "100 M4x1[10 5 700 500]"
+    }
+  }
+  data {
+    id			    228
+    ssIdNumber		    4
+    name		    "qJ"
+    linkNode		    [226 0 229]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    229
+    ssIdNumber		    5
+    name		    "U"
+    linkNode		    [226 228 230]
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_NO
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    230
+    ssIdNumber		    6
+    name		    "r_base"
+    linkNode		    [226 229 231]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    231
+    ssIdNumber		    15
+    name		    "phi_base"
+    linkNode		    [226 230 232]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    232
+    ssIdNumber		    16
+    name		    "g_world"
+    linkNode		    [226 231 233]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    233
+    ssIdNumber		    7
+    name		    "pkin"
+    linkNode		    [226 232 234]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    234
+    ssIdNumber		    13
+    name		    "MPV"
+    linkNode		    [226 233 0]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  junction {
+    id			    235
+    position		    [23.5747 49.5747 7]
+    chart		    226
+    linkNode		    [226 0 0]
+    subviewer		    226
+    ssIdNumber		    3
+    type		    CONNECTIVE_JUNCTION
+  }
+  transition {
+    id			    236
+    labelString		    "{eML_blk_kernel();}"
+    labelPosition	    [28.125 13.875 102.544 14.964]
+    fontSize		    12
+    src {
+      intersection	      [0 0 1 0 23.5747 14.625 0 0]
+    }
+    dst {
+      id		      235
+      intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
+    }
+    midPoint		    [23.5747 24.9468]
+    chart		    226
+    linkNode		    [226 0 0]
+    dataLimits		    [21.175 25.975 14.625 42.575]
+    subviewer		    226
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    2
+  }
+  instance {
+    id			    237
+    name		    "%RN%_energypot_floatb_eulangrpy_mp/MATLAB Function"
+    machine		    1
+    chart		    226
+  }
+  chart {
+    id			    238
+    name		    "%RN%_fordyn_floatb_eulangrpy_mp/mFcn_Minv"
+    windowPosition	    [357.331 483.407 167 391]
+    viewLimits		    [0 156.75 0 153.75]
+    screen		    [1 1 1280 1024 1.041050272174191]
+    treeNode		    [0 239 0 0]
+    firstTransition	    244
+    firstJunction	    243
+    viewObj		    238
+    machine		    1
+    toolbarMode		    LIBRARY_TOOLBAR
+    ssIdHighWaterMark	    6
+    decomposition	    CLUSTER_CHART
+    type		    EML_CHART
+    firstData		    240
+    chartFileNumber	    22
+    disableImplicitCasting  1
+    eml {
+      name		      "fcn"
+    }
+  }
+  state {
+    id			    239
+    labelString		    "eML_blk_kernel()"
+    position		    [18 64.5 118 66]
+    fontSize		    12
+    chart		    238
+    treeNode		    [238 0 0 0]
+    superState		    SUBCHART
+    subviewer		    238
+    ssIdNumber		    1
+    type		    FUNC_STATE
+    decomposition	    CLUSTER_STATE
+    eml {
+      isEML		      1
+      script		      "function q_ddot = fcn(M,tau)\n%#codegen\nq_ddot=M\\tau;"
+      editorLayout	      "100 M4x1[10 5 700 500]"
+    }
+  }
+  data {
+    id			    240
+    ssIdNumber		    4
+    name		    "M"
+    linkNode		    [238 0 241]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    241
+    ssIdNumber		    5
+    name		    "q_ddot"
+    linkNode		    [238 240 242]
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_NO
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    242
+    ssIdNumber		    6
+    name		    "tau"
+    linkNode		    [238 241 0]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  junction {
+    id			    243
+    position		    [23.5747 49.5747 7]
+    chart		    238
+    linkNode		    [238 0 0]
+    subviewer		    238
+    ssIdNumber		    3
+    type		    CONNECTIVE_JUNCTION
+  }
+  transition {
+    id			    244
+    labelString		    "{eML_blk_kernel();}"
+    labelPosition	    [32.125 19.875 102.544 14.964]
+    fontSize		    12
+    src {
+      intersection	      [0 0 1 0 23.5747 14.625 0 0]
+    }
+    dst {
+      id		      243
+      intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
+    }
+    midPoint		    [23.5747 24.9468]
+    chart		    238
+    linkNode		    [238 0 0]
+    dataLimits		    [21.175 25.975 14.625 42.575]
+    subviewer		    238
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    2
+  }
+  instance {
+    id			    245
+    name		    "%RN%_fordyn_floatb_eulangrpy_mp/mFcn_Minv"
+    machine		    1
+    chart		    238
+  }
+  chart {
+    id			    246
+    name		    "%RN%_fordyn_floatb_eulangrpy_vp1/mFcn_Minv"
+    windowPosition	    [357.331 483.407 167 391]
+    viewLimits		    [0 156.75 0 153.75]
+    screen		    [1 1 1280 1024 1.041050272174191]
+    treeNode		    [0 247 0 0]
+    firstTransition	    252
+    firstJunction	    251
+    viewObj		    246
+    machine		    1
+    toolbarMode		    LIBRARY_TOOLBAR
+    ssIdHighWaterMark	    6
+    decomposition	    CLUSTER_CHART
+    type		    EML_CHART
+    firstData		    248
+    chartFileNumber	    37
+    disableImplicitCasting  1
+    eml {
+      name		      "fcn"
+    }
+  }
+  state {
+    id			    247
+    labelString		    "eML_blk_kernel()"
+    position		    [18 64.5 118 66]
+    fontSize		    12
+    chart		    246
+    treeNode		    [246 0 0 0]
+    superState		    SUBCHART
+    subviewer		    246
+    ssIdNumber		    1
+    type		    FUNC_STATE
+    decomposition	    CLUSTER_STATE
+    eml {
+      isEML		      1
+      script		      "function q_ddot = fcn(M,tau)\n%#codegen\nq_ddot=M\\tau;"
+      editorLayout	      "100 M4x1[10 5 700 500]"
+    }
+  }
+  data {
+    id			    248
+    ssIdNumber		    4
+    name		    "M"
+    linkNode		    [246 0 249]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    249
+    ssIdNumber		    5
+    name		    "q_ddot"
+    linkNode		    [246 248 250]
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_NO
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    250
+    ssIdNumber		    6
+    name		    "tau"
+    linkNode		    [246 249 0]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  junction {
+    id			    251
+    position		    [23.5747 49.5747 7]
+    chart		    246
+    linkNode		    [246 0 0]
+    subviewer		    246
+    ssIdNumber		    3
+    type		    CONNECTIVE_JUNCTION
+  }
+  transition {
+    id			    252
+    labelString		    "{eML_blk_kernel();}"
+    labelPosition	    [32.125 19.875 102.544 14.964]
+    fontSize		    12
+    src {
+      intersection	      [0 0 1 0 23.5747 14.625 0 0]
+    }
+    dst {
+      id		      251
+      intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
+    }
+    midPoint		    [23.5747 24.9468]
+    chart		    246
+    linkNode		    [246 0 0]
+    dataLimits		    [21.175 25.975 14.625 42.575]
+    subviewer		    246
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    2
+  }
+  instance {
+    id			    253
+    name		    "%RN%_fordyn_floatb_eulangrpy_vp1/mFcn_Minv"
+    machine		    1
+    chart		    246
+  }
+  chart {
+    id			    254
+    name		    "%RN%_fordyn_fixb_mp/mFcn_Minv"
+    windowPosition	    [357.331 483.407 167 391]
+    viewLimits		    [0 156.75 0 153.75]
+    screen		    [1 1 1280 1024 1.041050272174191]
+    treeNode		    [0 255 0 0]
+    firstTransition	    260
+    firstJunction	    259
+    viewObj		    254
+    machine		    1
+    toolbarMode		    LIBRARY_TOOLBAR
+    ssIdHighWaterMark	    6
+    decomposition	    CLUSTER_CHART
+    type		    EML_CHART
+    firstData		    256
+    chartFileNumber	    38
+    disableImplicitCasting  1
+    eml {
+      name		      "fcn"
+    }
+  }
+  state {
+    id			    255
+    labelString		    "eML_blk_kernel()"
+    position		    [18 64.5 118 66]
+    fontSize		    12
+    chart		    254
+    treeNode		    [254 0 0 0]
+    superState		    SUBCHART
+    subviewer		    254
+    ssIdNumber		    1
+    type		    FUNC_STATE
+    decomposition	    CLUSTER_STATE
+    eml {
+      isEML		      1
+      script		      "function q_ddot = fcn(M,tau)\n%#codegen\nq_ddot=M\\tau;"
+      editorLayout	      "100 M4x1[10 5 700 500]"
+    }
+  }
+  data {
+    id			    256
+    ssIdNumber		    4
+    name		    "M"
+    linkNode		    [254 0 257]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    257
+    ssIdNumber		    5
+    name		    "q_ddot"
+    linkNode		    [254 256 258]
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_NO
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    258
+    ssIdNumber		    6
+    name		    "tau"
+    linkNode		    [254 257 0]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  junction {
+    id			    259
+    position		    [23.5747 49.5747 7]
+    chart		    254
+    linkNode		    [254 0 0]
+    subviewer		    254
+    ssIdNumber		    3
+    type		    CONNECTIVE_JUNCTION
+  }
+  transition {
+    id			    260
+    labelString		    "{eML_blk_kernel();}"
+    labelPosition	    [32.125 19.875 102.544 14.964]
+    fontSize		    12
+    src {
+      intersection	      [0 0 1 0 23.5747 14.625 0 0]
+    }
+    dst {
+      id		      259
+      intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
+    }
+    midPoint		    [23.5747 24.9468]
+    chart		    254
+    linkNode		    [254 0 0]
+    dataLimits		    [21.175 25.975 14.625 42.575]
+    subviewer		    254
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    2
+  }
+  instance {
+    id			    261
     name		    "%RN%_fordyn_fixb_mp/mFcn_Minv"
     machine		    1
-    chart		    189
+    chart		    254
   }
   target {
-    id			    197
+    id			    262
     name		    "sfun"
     description		    "Default Simulink S-Function Target."
     machine		    1

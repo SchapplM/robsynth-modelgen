@@ -29,7 +29,8 @@ sed -i "s/%RN%/$robot_name/g" $mfcndat
 sed -i "s/%NQJ%/$robot_NQJ/g" $mfcndat
 sed -i "s/%NJ%/$robot_NJ/g" $mfcndat
 sed -i "s/%NL%/$robot_NL/g" $mfcndat
-sed -i "s/%NMPV%/$robot_NMPV/g" $mfcndat
+sed -i "s/%NMPVFIXB%/$robot_NMPVFIXB/g" $mfcndat
+sed -i "s/%NMPVFLOATB%/$robot_NMPVFLOATB/g" $mfcndat
 sed -i "s/%FN%/$FN/g" $mfcndat
 sed -i "s/%NKP%/$robot_NKP/g" $mfcndat
 sed -i "s/%NKCP%/$robot_NKCP/g" $mfcndat

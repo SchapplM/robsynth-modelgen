@@ -11,7 +11,7 @@
 %   kinematic parameters
 % 
 % Output:
-% U_reg [1x%NMPV%]
+% U_reg [1x%NMPVFIXB%]
 %   minimal parameter regressor of Potential energy
 
 % %VERSIONINFO%

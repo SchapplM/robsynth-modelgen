@@ -11,7 +11,7 @@
 %   kinematic parameters
 % 
 % Output:
-% T_reg [1x%NMPV%]
+% T_reg [1x%NMPVFIXB%]
 %   minimal parameter regressor of kinetic energy
 
 % %VERSIONINFO%

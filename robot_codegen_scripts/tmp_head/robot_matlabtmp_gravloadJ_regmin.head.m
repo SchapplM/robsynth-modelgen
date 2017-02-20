@@ -11,7 +11,7 @@
 %   kinematic parameters
 % 
 % Output:
-% taug_reg [%NQJ%x%NMPV%]
+% taug_reg [%NQJ%x%NMPVFIXB%]
 %   minimal parameter regressor of gravitation joint torque vector
 
 % %VERSIONINFO%

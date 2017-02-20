@@ -72,40 +72,40 @@ NL := NJ + 1:
 # Mass of each link
 M := Matrix(NL, 1):
 for i from 1 to NL do
-  M[i,1]:=parse(sprintf("M%d", i)):
+  M[i,1]:=parse(sprintf("M%d", i-1)):
 end do:
 # Center of Mass of each link (in link frame)
 r_i_i_Si := Matrix(3, NL):
 for i from 1 to NL do
-  r_i_i_Si[1,i]:=parse(sprintf("SX%d", i)):
-  r_i_i_Si[2,i]:=parse(sprintf("SY%d", i)):
-  r_i_i_Si[3,i]:=parse(sprintf("SZ%d", i)):
+  r_i_i_Si[1,i]:=parse(sprintf("SX%d", i-1)):
+  r_i_i_Si[2,i]:=parse(sprintf("SY%d", i-1)):
+  r_i_i_Si[3,i]:=parse(sprintf("SZ%d", i-1)):
 end do:
 mr_i_i_Si := Matrix(3, NL):
 for i from 1 to NL do
-  mr_i_i_Si[1,i]:=parse(sprintf("MX%d", i)):
-  mr_i_i_Si[2,i]:=parse(sprintf("MY%d", i)):
-  mr_i_i_Si[3,i]:=parse(sprintf("MZ%d", i)):
+  mr_i_i_Si[1,i]:=parse(sprintf("MX%d", i-1)):
+  mr_i_i_Si[2,i]:=parse(sprintf("MY%d", i-1)):
+  mr_i_i_Si[3,i]:=parse(sprintf("MZ%d", i-1)):
 end do:
 # Inertia of each link (about the center of mass, in link frame)
 I_i_Si := Matrix(6, NL):
 for i from 1 to NL do
-  I_i_Si[1,i]:=parse(sprintf("XXC%d", i)):
-  I_i_Si[2,i]:=parse(sprintf("XYC%d", i)):
-  I_i_Si[3,i]:=parse(sprintf("XZC%d", i)):
-  I_i_Si[4,i]:=parse(sprintf("YYC%d", i)):
-  I_i_Si[5,i]:=parse(sprintf("YZC%d", i)):
-  I_i_Si[6,i]:=parse(sprintf("ZZC%d", i)):
+  I_i_Si[1,i]:=parse(sprintf("XXC%d", i-1)):
+  I_i_Si[2,i]:=parse(sprintf("XYC%d", i-1)):
+  I_i_Si[3,i]:=parse(sprintf("XZC%d", i-1)):
+  I_i_Si[4,i]:=parse(sprintf("YYC%d", i-1)):
+  I_i_Si[5,i]:=parse(sprintf("YZC%d", i-1)):
+  I_i_Si[6,i]:=parse(sprintf("ZZC%d", i-1)):
 end do:
 # Inertia of each link (about the origin of body frame, in link frame)
 I_i_i := Matrix(6, NL):
 for i from 1 to NL do
-  I_i_i[1,i]:=parse(sprintf("XX%d", i)):
-  I_i_i[2,i]:=parse(sprintf("XY%d", i)):
-  I_i_i[3,i]:=parse(sprintf("XZ%d", i)):
-  I_i_i[4,i]:=parse(sprintf("YY%d", i)):
-  I_i_i[5,i]:=parse(sprintf("YZ%d", i)):
-  I_i_i[6,i]:=parse(sprintf("ZZ%d", i)):
+  I_i_i[1,i]:=parse(sprintf("XX%d", i-1)):
+  I_i_i[2,i]:=parse(sprintf("XY%d", i-1)):
+  I_i_i[3,i]:=parse(sprintf("XZ%d", i-1)):
+  I_i_i[4,i]:=parse(sprintf("YY%d", i-1)):
+  I_i_i[5,i]:=parse(sprintf("YZ%d", i-1)):
+  I_i_i[6,i]:=parse(sprintf("ZZ%d", i-1)):
 end do:
 # Matrix of link inertial parameters, stacked link parameter vectors
 PV2_mat := Matrix(NL, 10):
@@ -138,4 +138,3 @@ MatlabExport(b, sprintf("../codeexport/%s/parameters_mdh_b.m", robot_name), 2):
 MatlabExport(alpha, sprintf("../codeexport/%s/parameters_mdh_alpha.m", robot_name), 2):
 MatlabExport(beta, sprintf("../codeexport/%s/parameters_mdh_beta.m", robot_name), 2):
 MatlabExport(qoffset, sprintf("../codeexport/%s/parameters_mdh_qoffset.m", robot_name), 2):
-

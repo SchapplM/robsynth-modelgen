@@ -14,7 +14,7 @@ clear
 %RN%_varpar_fixbase_num_test
 
 % Regressorform
-%RN%_varpar_paramlin_test
+%RN%_varpar_fixbase_paramlin_test
 
 % Simulink
 %RN%_fdyn_fixb_test_mp_start

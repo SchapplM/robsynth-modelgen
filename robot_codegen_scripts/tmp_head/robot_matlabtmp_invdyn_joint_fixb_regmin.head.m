@@ -15,7 +15,7 @@
 %   kinematic parameters
 % 
 % Output:
-% tau_reg [%NQJ%x%NMPV%]
+% tau_reg [%NQJ%x%NMPVFIXB%]
 %   minimal parameter regressor of inverse dynamics joint torque vector
 
 % %VERSIONINFO%

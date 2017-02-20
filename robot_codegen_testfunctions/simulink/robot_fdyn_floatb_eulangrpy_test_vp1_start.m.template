@@ -15,6 +15,7 @@ if ~isempty(this_path), cd(this_path); end
 
 %% Init
 % Standard-Einstellungen laden
+ParameterModus = 'vp1';
 %RN%_fdyn_floatb_eulangrpy_test_settings_default
 
 %% modify default settings
@@ -40,9 +41,9 @@ Mq = %RN%_inertia_floatb_eulangrpy_slag_vp1(qJ_t0, phi_base_t0, ...
   pkin, m, rSges, Icges);
 tauc = %RN%_coriolisvec_floatb_eulangrpy_slag_vp1(qJ_t0, qJD_t0, phi_base_t0, xD_base_t0, ...
   pkin, m, rSges, Icges);
-taug_base = %RN%_gravload_base_floatb_eulangrpy_slag_vp1(qJ_t0, phi_base_t0, g_world, ...
+taug_base = %RN%_gravloadB_floatb_eulangrpy_slag_vp1(qJ_t0, phi_base_t0, g_world, ...
   pkin, m, rSges);
-taug_joints = %RN%_gravload_joint_floatb_eulangrpy_slag_vp1(qJ_t0, phi_base_t0, g_world,...
+taug_joints = %RN%_gravloadJ_floatb_eulangrpy_slag_vp1(qJ_t0, phi_base_t0, g_world,...
   pkin, m, rSges);
 taug = [taug_base; taug_joints];
 

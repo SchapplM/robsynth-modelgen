@@ -13,7 +13,8 @@ clear
 %RN%_varpar_floatbase_kinematics_test
 %RN%_varpar_fixbase_invdyn_test
 %RN%_varpar_floatbase_invdyn_test
-%RN%_varpar_paramlin_test
+%RN%_varpar_fixbase_paramlin_test
+%RN%_varpar_floatbase_paramlin_test
 %RN%_varpar_fixbase_num_test
 %RN%_varpar_floatbase_num_test
 %RN%_varpar_simulink_test

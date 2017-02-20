@@ -18,17 +18,17 @@ function H = %FN%(q, pkin, v_mdh, m_num, rSges_num_mdh, Icges_num_mdh)
 %%Coder Information
 %#codegen
 assert(isa(q,'double') && isreal(q) && all(size(q) == [%NJ% 1]), ...
-  'atlas5_wbody_inertia_joint_slag_vp1: q has to be [%NJ%x1] double');
+  'atlas5_wbody_inertiaJ_slag_vp1: q has to be [%NJ%x1] double');
 assert(isa(pkin,'double') && isreal(pkin) && all(size(pkin) == [%NKP% 1]), ...
   '%FN%: Kinematic parameters pkin have to be [%NKP%x1] double');
 assert(isa(v_mdh,'uint8') && all(size(v_mdh) == [%NJ% 1]), ...
   '%RN%_gravload_floatb_eulangrpy_nnew_vp1: v_mdh has to be [%NJ%x1] uint8'); 
 assert(isa(m_num,'double') && isreal(m_num) && all(size(m_num) == [%NL% 1]), ...
-  'atlas5_wbody_inertia_joint_slag_vp1: m_num has to be [%NL%x1] double'); 
+  'atlas5_wbody_inertiaJ_slag_vp1: m_num has to be [%NL%x1] double'); 
 assert(isa(rSges_num_mdh,'double') && isreal(rSges_num_mdh) && all(size(rSges_num_mdh) == [%NL%,3]), ...
-  'atlas5_wbody_inertia_joint_slag_vp1: rSges_num_mdh has to be [%NL%x3] double');
+  'atlas5_wbody_inertiaJ_slag_vp1: rSges_num_mdh has to be [%NL%x3] double');
 assert(isa(Icges_num_mdh,'double') && isreal(Icges_num_mdh) && all(size(Icges_num_mdh) == [%NL% 6]), ...
-  'atlas5_wbody_inertia_joint_slag_vp1: Icges_num_mdh has to be [%NL%x6] double'); 
+  'atlas5_wbody_inertiaJ_slag_vp1: Icges_num_mdh has to be [%NL%x6] double'); 
 
 
 %% Allgemein

@@ -28,9 +28,9 @@ do
 
     # Coriolisvektor (Fixed Base)
     quelldat=$repo_pfad/codeexport/${robot_name}/coriolisvec_joint_fixb_par${dynpar}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_coriolisvec_joint_fixb_slag_vp${dynpar}.m
+    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_coriolisvecJ_fixb_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
-      cat ${tmp_pfad}_head/robot_matlabtmp_coriolisvec_joint_fixb_par${dynpar}.head.m > $zieldat
+      cat ${tmp_pfad}_head/robot_matlabtmp_coriolisvecJ_fixb_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
@@ -66,9 +66,9 @@ do
 
     # Coriolismatrix (Fixed Base)
     quelldat=$repo_pfad/codeexport/${robot_name}/coriolismat_joint_fixb_par${dynpar}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_coriolismat_joint_fixb_slag_vp${dynpar}.m
+    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_coriolismatJ_fixb_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
-      cat ${tmp_pfad}_head/robot_matlabtmp_coriolismat_joint_fixb_par${dynpar}.head.m > $zieldat
+      cat ${tmp_pfad}_head/robot_matlabtmp_coriolismatJ_fixb_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
@@ -105,9 +105,9 @@ do
 
     # Massenmatrix (Gelenke)
     quelldat=$repo_pfad/codeexport/${robot_name}/inertia_joint_joint_floatb_${basemeth}_par${dynpar}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_inertia_joint_slag_vp${dynpar}.m
+    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_inertiaJ_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
-      cat ${tmp_pfad}_head/robot_matlabtmp_inertia_joint_par${dynpar}.head.m > $zieldat
+      cat ${tmp_pfad}_head/robot_matlabtmp_inertiaJ_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
@@ -188,9 +188,9 @@ do
 
     # Massenmatrix-Zeitableitung (Gelenke)
     quelldat=$repo_pfad/codeexport/${robot_name}/inertia_joint_joint_time_derivative_floatb_${basemeth}_par${dynpar}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_inertiaD_joint_slag_vp${dynpar}.m
+    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_inertiaDJ_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
-      cat ${tmp_pfad}_head/robot_matlabtmp_inertiaD_joint_par${dynpar}.head.m > $zieldat
+      cat ${tmp_pfad}_head/robot_matlabtmp_inertiaDJ_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
@@ -251,13 +251,13 @@ do
       cat $tmp_pfad/robot_matlabtmp_g.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat
-      printf "M1=0;%%Masse der Basis nicht relevant.\n" >> $zieldat
+      printf "M0=0;%%Masse der Basis nicht relevant.\n" >> $zieldat
       if [ $dynpar == 1 ]; then
         cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> $zieldat
-        printf "SX1=0;SY1=0;SZ1=0;%%nicht relevant.\n" >> $zieldat
+        printf "SX0=0;SY0=0;SZ0=0;%%Basis-Schwerpunkt nicht relevant.\n" >> $zieldat
       else
         cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> $zieldat
-        printf "MX1=0;MY1=0;MZ1=0;%%nicht relevant.\n" >> $zieldat
+        printf "MX0=0;MY0=0;MZ0=0;%%Basis-1. Moment nicht relevant.\n" >> $zieldat
       fi
       
       printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat

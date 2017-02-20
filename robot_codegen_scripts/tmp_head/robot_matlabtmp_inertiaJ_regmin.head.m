@@ -9,7 +9,7 @@
 %   kinematic parameters
 % 
 % Output:
-% MM_reg [((%NQJ%+1)*%NQJ%/2)x%NMPV%]
+% MM_reg [((%NQJ%+1)*%NQJ%/2)x%NMPVFIXB%]
 %   minimal parameter regressor of joint inertia matrix
 %   (only lower left triangular matrix (including diagonal) due to symmetry
 
