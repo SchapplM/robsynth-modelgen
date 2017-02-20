@@ -18,6 +18,9 @@ if ~isempty(this_path), cd(this_path); end
 ParameterModus = 'vp1';
 %RN%_fdyn_fixb_test_settings_default
 
+% Workspace-Variable löschen, Modell darf nicht davon abhängen
+clear NQJ
+
 %% modify default settings
 
 %% Start Simulation

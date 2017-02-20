@@ -18,7 +18,7 @@ Library {
       $ObjectID		      2
       $ClassName	      "Simulink.WindowInfo"
       IsActive		      [1]
-      Location		      [2348.0, 471.0, 955.0, 548.0]
+      Location		      [666.0, 371.0, 955.0, 548.0]
       Object {
 	$PropName		"ModelBrowserInfo"
 	$ObjectID		3
@@ -41,11 +41,11 @@ Library {
 	Object {
 	  $ObjectID		  5
 	  IsActive		  [1]
-	  ViewObjType		  "SimulinkTopLevel"
-	  LoadSaveID		  "0"
+	  ViewObjType		  "SimulinkSubsys"
+	  LoadSaveID		  "39"
 	  Extents		  [899.0, 360.0]
-	  ZoomFactor		  [1.0]
-	  Offset		  [-61.0, -6.5612223612853882]
+	  ZoomFactor		  [1.25]
+	  Offset		  [0.0, 0.0]
 	}
 	Object {
 	  $ObjectID		  6
@@ -66,9 +66,9 @@ Library {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "schappler"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Mon Feb 20 13:31:59 2017"
-  RTWModifiedTimeStamp	  409498318
-  ModelVersionFormat	  "1.%<AutoIncrement:24>"
+  LastModifiedDate	  "Mon Feb 20 13:42:31 2017"
+  RTWModifiedTimeStamp	  409498950
+  ModelVersionFormat	  "1.%<AutoIncrement:26>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -833,8 +833,8 @@ Library {
   }
   System {
     Name		    "lib_%RN%_kinematics"
-    Location		    [2348, 471, 3303, 1019]
-    Open		    on
+    Location		    [666, 371, 1621, 919]
+    Open		    off
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
     ScreenColor		    "white"
@@ -860,6 +860,7 @@ Library {
 	$PropName		"MaskObject"
 	$ObjectID		18
 	$ClassName		"Simulink.Mask"
+	Initialization		"NQJ=%NQJ%;"
 	Display			"text(0.5,0.8, 'fkine', 'horizontalAlignment', 'center');\ntext(0.5,0.2, sprintf('Link %d', iL), 'horizonta"
 	"lAlignment', 'center');\nport_label('input', 1, 'qJ');\nport_label('output', 1, sprintf('T_0_%d', iL));"
 	IconUnits		"normalized"
@@ -885,7 +886,7 @@ Library {
       }
       System {
 	Name			"%RN%_fkine"
-	Location		[2358, 481, 3293, 981]
+	Location		[666, 371, 1621, 919]
 	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -1116,6 +1117,7 @@ Library {
 	$PropName		"MaskObject"
 	$ObjectID		21
 	$ClassName		"Simulink.Mask"
+	Initialization		"NQJ=%NQJ%;"
 	Display			"text(0.5,0.8, 'Jacobi (geom)\\nfixed-base', 'horizontalAlignment', 'center');\ntext(0.5,0.2, sprintf('Link"
 	" %d', iL), 'horizontalAlignment', 'center');\nport_label('input', 1, 'qJ');\nport_label('output', 1, sprintf('Jg_%d',"
 	" iL));"
@@ -1149,7 +1151,7 @@ Library {
       }
       System {
 	Name			"%RN%_jacobig"
-	Location		[2348, 443, 3303, 991]
+	Location		[666, 371, 1621, 919]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -1169,6 +1171,7 @@ Library {
 	  Position		  [60, 78, 90, 92]
 	  ZOrder		  11
 	  IconDisplay		  "Port number"
+	  PortDimensions	  "NQJ"
 	}
 	Block {
 	  BlockType		  Constant
@@ -1361,6 +1364,13 @@ Library {
 	  ZOrder		  13
 	  NamePlacement		  "alternate"
 	  IconDisplay		  "Port number"
+	  PortDimensions	  "[6 NQJ]"
+	  Object {
+	    $PropName		    "MaskObject"
+	    $ObjectID		    25
+	    $ClassName		    "Simulink.Mask"
+	    Initialization	    "NQJ=%NQJ%;"
+	  }
 	}
 	Line {
 	  ZOrder		  5
@@ -1409,8 +1419,9 @@ Library {
       RequestExecContextInheritance off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		25
+	$ObjectID		26
 	$ClassName		"Simulink.Mask"
+	Initialization		"NQJ=%NQJ%;"
 	Display			"text(0.5,0.8, 'Jacobi (geom)\\nfloating-base', 'horizontalAlignment', 'center');\ntext(0.5,0.2, sprintf('L"
 	"ink %d', iL), 'horizontalAlignment', 'center');\nport_label('input', 1, 'q_J', 'interpreter', 'tex');\nport_label('in"
 	"put', 2, '\\phi_B', 'interpreter', 'tex');\nport_label('output', 1, sprintf('J_{g,%d}', iL), 'interpreter', 'tex');"
@@ -1419,21 +1430,21 @@ Library {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  3
 	  Object {
-	    $ObjectID		    26
+	    $ObjectID		    27
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    27
+	    $ObjectID		    28
 	    Type		    "edit"
 	    Name		    "iL"
 	    Prompt		    "Segment-Nummer"
 	    Value		    "1"
 	  }
 	  Object {
-	    $ObjectID		    28
+	    $ObjectID		    29
 	    Type		    "edit"
 	    Name		    "r_i_i_C"
 	    Prompt		    "Koordinaten zum betrachteten Punkt in Körper-KS: r_i_i_C"
@@ -1444,8 +1455,8 @@ Library {
       }
       System {
 	Name			"%RN%_jacobig_floatb_eulangrpy"
-	Location		[2348, 443, 3303, 991]
-	Open			off
+	Location		[666, 371, 1621, 919]
+	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -1657,7 +1668,7 @@ Library {
 	  Position		  [575, 213, 605, 227]
 	  ZOrder		  28
 	  IconDisplay		  "Port number"
-	  PortDimensions	  "[6 36]"
+	  PortDimensions	  "[6 (NQJ+6)]"
 	}
 	Line {
 	  ZOrder		  5

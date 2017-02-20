@@ -26,6 +26,9 @@ if NJ ~= NQJ
   return
 end
 
+% Workspace-Variable löschen, Modell darf nicht davon abhängen
+clear NQJ
+
 %% modify default settings
 
 %% Start Simulation

@@ -18,7 +18,7 @@ Library {
       $ObjectID		      2
       $ClassName	      "Simulink.WindowInfo"
       IsActive		      [1]
-      Location		      [1969.0, 24.0, 1871.0, 1056.0]
+      Location		      [39.0, -14.0, 1891.0, 1104.0]
       Object {
 	$PropName		"ModelBrowserInfo"
 	$ObjectID		3
@@ -44,8 +44,8 @@ Library {
 	  ViewObjType		  "SimulinkTopLevel"
 	  LoadSaveID		  "0"
 	  Extents		  [1835.0, 916.0]
-	  ZoomFactor		  [1.75]
-	  Offset		  [27.023331146465306, 286.38687742605651]
+	  ZoomFactor		  [0.97261774370208121]
+	  Offset		  [-338.61999907026154, 100.35971293376296]
 	}
 	Object {
 	  $ObjectID		  6
@@ -54,7 +54,7 @@ Library {
 	  LoadSaveID		  "586"
 	  Extents		  [899.0, 888.0]
 	  ZoomFactor		  [1.5]
-	  Offset		  [465.90069270511179, 46.387405905936944]
+	  Offset		  [465.90069270511179, 46.38740590593693]
 	}
 	PropName		"EditorsInfo"
       }
@@ -66,9 +66,9 @@ Library {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "schappler"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Fri Feb 17 17:40:19 2017"
-  RTWModifiedTimeStamp	  409253832
-  ModelVersionFormat	  "1.%<AutoIncrement:196>"
+  LastModifiedDate	  "Mon Feb 20 13:48:27 2017"
+  RTWModifiedTimeStamp	  409499305
+  ModelVersionFormat	  "1.%<AutoIncrement:199>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -918,7 +918,7 @@ Library {
   }
   System {
     Name		    "lib_%RN%_dynamics"
-    Location		    [1969, 24, 3840, 1080]
+    Location		    [39, -14, 1930, 1090]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -930,7 +930,7 @@ Library {
     TiledPaperMargins	    [1.270000, 1.270000, 1.270000, 1.270000]
     TiledPageScale	    1
     ShowPageBoundaries	    off
-    ZoomFactor		    "175"
+    ZoomFactor		    "97"
     ReportName		    "simulink-default.rpt"
     SIDHighWatermark	    "623"
     Block {
@@ -945,6 +945,7 @@ Library {
 	$PropName		"MaskObject"
 	$ObjectID		18
 	$ClassName		"Simulink.Mask"
+	Initialization		"NQJ=%NQJ%;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
@@ -967,7 +968,7 @@ Library {
       }
       System {
 	Name			"%RN%_coriolisvec_fixb_mp"
-	Location		[1969, 24, 3840, 1080]
+	Location		[39, -14, 1930, 1090]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -987,6 +988,7 @@ Library {
 	  Position		  [25, 63, 55, 77]
 	  ZOrder		  11
 	  IconDisplay		  "Port number"
+	  PortDimensions	  "NQJ"
 	}
 	Block {
 	  BlockType		  Inport
@@ -1174,19 +1176,20 @@ Library {
 	}
 	Block {
 	  BlockType		  Outport
-	  Name			  "tau_c"
+	  Name			  "tauJ_c"
 	  SID			  "26"
 	  Position		  [505, 160, 520, 190]
 	  ZOrder		  13
 	  NamePlacement		  "alternate"
 	  IconDisplay		  "Port number"
+	  PortDimensions	  "NQJ"
 	}
 	Line {
 	  ZOrder		  5
 	  SrcBlock		  "coriolisvec_fcn"
 	  SrcPort		  1
 	  Points		  [0, -10]
-	  DstBlock		  "tau_c"
+	  DstBlock		  "tauJ_c"
 	  DstPort		  1
 	}
 	Line {
@@ -1231,7 +1234,7 @@ Library {
 	$PropName		"MaskObject"
 	$ObjectID		21
 	$ClassName		"Simulink.Mask"
-	Initialization		"m = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
+	Initialization		"NQJ=%NQJ%;\nm = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
@@ -1254,7 +1257,7 @@ Library {
       }
       System {
 	Name			"%RN%_coriolisvec_fixb_vp1"
-	Location		[65, 24, 1920, 1080]
+	Location		[39, -14, 1930, 1090]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -1511,7 +1514,7 @@ Library {
 	}
 	Block {
 	  BlockType		  Outport
-	  Name			  "tau_c"
+	  Name			  "tauJ_c"
 	  SID			  "126"
 	  Position		  [515, 195, 530, 225]
 	  ZOrder		  13
@@ -1524,7 +1527,7 @@ Library {
 	  SrcBlock		  "coriolisvec_fcn"
 	  SrcPort		  1
 	  Points		  [0, -10]
-	  DstBlock		  "tau_c"
+	  DstBlock		  "tauJ_c"
 	  DstPort		  1
 	}
 	Line {
@@ -1588,6 +1591,7 @@ Library {
 	$PropName		"MaskObject"
 	$ObjectID		24
 	$ClassName		"Simulink.Mask"
+	Initialization		"NQJ=%NQJ%;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
@@ -1610,7 +1614,7 @@ Library {
       }
       System {
 	Name			"%RN%_coriolisvec_floatb_eulangrpy_mp"
-	Location		[1969, 24, 3840, 1080]
+	Location		[39, -14, 1930, 1090]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -1947,7 +1951,7 @@ Library {
 	$PropName		"MaskObject"
 	$ObjectID		27
 	$ClassName		"Simulink.Mask"
-	Initialization		"m = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
+	Initialization		"NQJ=%NQJ%;\nm = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
@@ -2370,6 +2374,7 @@ Library {
 	$PropName		"MaskObject"
 	$ObjectID		30
 	$ClassName		"Simulink.Mask"
+	Initialization		"NQJ=%NQJ%;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  3
@@ -2399,7 +2404,7 @@ Library {
       }
       System {
 	Name			"%RN%_energy_fixb_mp"
-	Location		[1969, 24, 3840, 1080]
+	Location		[39, -14, 1930, 1090]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -2419,6 +2424,7 @@ Library {
 	  Position		  [25, 18, 55, 32]
 	  ZOrder		  231
 	  IconDisplay		  "Port number"
+	  PortDimensions	  "NQJ"
 	}
 	Block {
 	  BlockType		  Inport
@@ -2428,6 +2434,7 @@ Library {
 	  ZOrder		  233
 	  Port			  "2"
 	  IconDisplay		  "Port number"
+	  PortDimensions	  "NQJ"
 	}
 	Block {
 	  BlockType		  Constant
@@ -2444,7 +2451,7 @@ Library {
 	  Ports			  [2, 1]
 	  Position		  [195, 80, 255, 115]
 	  ZOrder		  239
-	  LibraryVersion	  "1.171"
+	  LibraryVersion	  "1.197"
 	  SourceBlock		  "lib_%RN%_dynamics/%RN%_energykin_fixb_mp"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
@@ -2458,7 +2465,7 @@ Library {
 	  Ports			  [2, 1]
 	  Position		  [195, 172, 250, 203]
 	  ZOrder		  238
-	  LibraryVersion	  "1.171"
+	  LibraryVersion	  "1.197"
 	  SourceBlock		  "lib_%RN%_dynamics/%RN%_energypot_fixb_mp"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
@@ -2472,6 +2479,7 @@ Library {
 	  Position		  [330, 93, 360, 107]
 	  ZOrder		  235
 	  IconDisplay		  "Port number"
+	  PortDimensions	  "1"
 	}
 	Block {
 	  BlockType		  Outport
@@ -2481,6 +2489,7 @@ Library {
 	  ZOrder		  236
 	  Port			  "2"
 	  IconDisplay		  "Port number"
+	  PortDimensions	  "1"
 	}
 	Line {
 	  ZOrder		  11
@@ -2543,6 +2552,7 @@ Library {
 	$PropName		"MaskObject"
 	$ObjectID		34
 	$ClassName		"Simulink.Mask"
+	Initialization		"NQJ=%NQJ%;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  3
@@ -2572,7 +2582,7 @@ Library {
       }
       System {
 	Name			"%RN%_energy_fixb_vp1"
-	Location		[55, -14, 1930, 1090]
+	Location		[39, -14, 1930, 1090]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -2587,20 +2597,22 @@ Library {
 	ZoomFactor		"125"
 	Block {
 	  BlockType		  Inport
-	  Name			  "q"
+	  Name			  "qJ"
 	  SID			  "159"
 	  Position		  [25, 18, 55, 32]
 	  ZOrder		  231
 	  IconDisplay		  "Port number"
+	  PortDimensions	  "NQJ"
 	}
 	Block {
 	  BlockType		  Inport
-	  Name			  "qD"
+	  Name			  "qJD"
 	  SID			  "160"
 	  Position		  [25, 68, 55, 82]
 	  ZOrder		  233
 	  Port			  "2"
 	  IconDisplay		  "Port number"
+	  PortDimensions	  "NQJ"
 	}
 	Block {
 	  BlockType		  Constant
@@ -2617,7 +2629,7 @@ Library {
 	  Ports			  [2, 1]
 	  Position		  [195, 89, 255, 116]
 	  ZOrder		  229
-	  LibraryVersion	  "1.119"
+	  LibraryVersion	  "1.198"
 	  SourceBlock		  "lib_%RN%_dynamics/%RN%_energykin_fixb_vp1"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
@@ -2631,7 +2643,7 @@ Library {
 	  Ports			  [2, 1]
 	  Position		  [195, 177, 255, 208]
 	  ZOrder		  230
-	  LibraryVersion	  "1.119"
+	  LibraryVersion	  "1.198"
 	  SourceBlock		  "lib_%RN%_dynamics/%RN%_energypot_fixb_vp1"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
@@ -2645,6 +2657,7 @@ Library {
 	  Position		  [330, 93, 360, 107]
 	  ZOrder		  235
 	  IconDisplay		  "Port number"
+	  PortDimensions	  "1"
 	}
 	Block {
 	  BlockType		  Outport
@@ -2654,6 +2667,7 @@ Library {
 	  ZOrder		  236
 	  Port			  "2"
 	  IconDisplay		  "Port number"
+	  PortDimensions	  "1"
 	}
 	Line {
 	  ZOrder		  1
@@ -2665,7 +2679,7 @@ Library {
 	}
 	Line {
 	  ZOrder		  2
-	  SrcBlock		  "qD"
+	  SrcBlock		  "qJD"
 	  SrcPort		  1
 	  Points		  [39, 0; 0, 35]
 	  DstBlock		  "%RN%_energykin_fixb"
@@ -2673,7 +2687,7 @@ Library {
 	}
 	Line {
 	  ZOrder		  3
-	  SrcBlock		  "q"
+	  SrcBlock		  "qJ"
 	  SrcPort		  1
 	  Points		  [83, 0; 0, 70]
 	  Branch {
@@ -2717,6 +2731,7 @@ Library {
 	$PropName		"MaskObject"
 	$ObjectID		38
 	$ClassName		"Simulink.Mask"
+	Initialization		"NQJ=%NQJ%;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  3
@@ -2958,6 +2973,7 @@ Library {
 	$PropName		"MaskObject"
 	$ObjectID		42
 	$ClassName		"Simulink.Mask"
+	Initialization		"NQJ=%NQJ%;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  3
@@ -3220,7 +3236,7 @@ Library {
       }
       System {
 	Name			"%RN%_energykin_fixb_mp"
-	Location		[65, 24, 1920, 1080]
+	Location		[39, -14, 1930, 1090]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -3240,6 +3256,7 @@ Library {
 	  Position		  [50, 63, 80, 77]
 	  ZOrder		  11
 	  IconDisplay		  "Port number"
+	  PortDimensions	  "NQJ"
 	}
 	Block {
 	  BlockType		  Inport
@@ -3249,6 +3266,7 @@ Library {
 	  ZOrder		  12
 	  Port			  "2"
 	  IconDisplay		  "Port number"
+	  PortDimensions	  "NQJ"
 	}
 	Block {
 	  BlockType		  Constant
@@ -3433,6 +3451,7 @@ Library {
 	  ZOrder		  13
 	  NamePlacement		  "alternate"
 	  IconDisplay		  "Port number"
+	  PortDimensions	  "1"
 	}
 	Line {
 	  ZOrder		  5
@@ -3483,7 +3502,7 @@ Library {
 	$PropName		"MaskObject"
 	$ObjectID		49
 	$ClassName		"Simulink.Mask"
-	Initialization		"m = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
+	Initialization		"NQJ=%NQJ%;\nm = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
@@ -3837,6 +3856,7 @@ Library {
 	$PropName		"MaskObject"
 	$ObjectID		52
 	$ClassName		"Simulink.Mask"
+	Initialization		"NQJ=%NQJ%;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
@@ -4191,7 +4211,7 @@ Library {
 	$PropName		"MaskObject"
 	$ObjectID		55
 	$ClassName		"Simulink.Mask"
-	Initialization		"m = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
+	Initialization		"NQJ=%NQJ%;\nm = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
@@ -4615,6 +4635,7 @@ Library {
 	$PropName		"MaskObject"
 	$ObjectID		58
 	$ClassName		"Simulink.Mask"
+	Initialization		"NQJ=%NQJ%;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
@@ -4637,7 +4658,7 @@ Library {
       }
       System {
 	Name			"%RN%_energypot_fixb_mp"
-	Location		[65, 24, 1920, 1080]
+	Location		[39, -14, 1930, 1090]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -4657,6 +4678,7 @@ Library {
 	  Position		  [50, 63, 80, 77]
 	  ZOrder		  11
 	  IconDisplay		  "Port number"
+	  PortDimensions	  "NQJ"
 	}
 	Block {
 	  BlockType		  Inport
@@ -4850,6 +4872,7 @@ Library {
 	  ZOrder		  13
 	  NamePlacement		  "alternate"
 	  IconDisplay		  "Port number"
+	  PortDimensions	  "1"
 	}
 	Line {
 	  ZOrder		  5
@@ -4901,7 +4924,7 @@ Library {
 	$PropName		"MaskObject"
 	$ObjectID		61
 	$ClassName		"Simulink.Mask"
-	Initialization		"m = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
+	Initialization		"NQJ=%NQJ%;\nm = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
@@ -4924,7 +4947,7 @@ Library {
       }
       System {
 	Name			"%RN%_energypot_fixb_vp1"
-	Location		[65, 24, 1920, 1080]
+	Location		[39, -14, 1930, 1090]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -4948,7 +4971,7 @@ Library {
 	}
 	Block {
 	  BlockType		  Inport
-	  Name			  "g"
+	  Name			  "g_base"
 	  SID			  "149"
 	  Position		  [55, 123, 85, 137]
 	  ZOrder		  12
@@ -5181,7 +5204,7 @@ Library {
 	}
 	Line {
 	  ZOrder		  7
-	  SrcBlock		  "g"
+	  SrcBlock		  "g_base"
 	  SrcPort		  1
 	  DstBlock		  "MATLAB Function"
 	  DstPort		  2
@@ -5221,6 +5244,7 @@ Library {
 	$PropName		"MaskObject"
 	$ObjectID		64
 	$ClassName		"Simulink.Mask"
+	Initialization		"NQJ=%NQJ%;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
@@ -5581,7 +5605,7 @@ Library {
 	$PropName		"MaskObject"
 	$ObjectID		67
 	$ClassName		"Simulink.Mask"
-	Initialization		"m = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
+	Initialization		"NQJ=%NQJ%;\nm = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
@@ -5972,6 +5996,7 @@ Library {
 	$PropName		"MaskObject"
 	$ObjectID		70
 	$ClassName		"Simulink.Mask"
+	Initialization		"NQJ=%NQJ%;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  4
@@ -6507,6 +6532,7 @@ Library {
 	$PropName		"MaskObject"
 	$ObjectID		82
 	$ClassName		"Simulink.Mask"
+	Initialization		"NQJ=%NQJ%;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  4
@@ -7042,6 +7068,7 @@ Library {
 	$PropName		"MaskObject"
 	$ObjectID		94
 	$ClassName		"Simulink.Mask"
+	Initialization		"NQJ=%NQJ%;"
 	Display			"port_label('input', 1, '_{(W)} F^{ext}', 'texmode', 'on')\nport_label('input', 2, '\\tau^{ext}_{J}', 'texm"
 	"ode', 'on')\nport_label('output', 1, 'Rob_Bus')"
 	Array {
@@ -7167,7 +7194,7 @@ Library {
       }
       System {
 	Name			"%RN%_fordyn_floatb_eulangrpy_mp"
-	Location		[2904, 52, 3839, 1080]
+	Location		[1979, 62, 3830, 1070]
 	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -7731,7 +7758,7 @@ Library {
 	  ZOrder		  547
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
-	  LibraryVersion	  "1.195"
+	  LibraryVersion	  "1.198"
 	  SourceBlock		  "lib_%RN%_dynamics/%RN%_coriolisvec_floatb_eulangrpy_mp"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
@@ -7753,7 +7780,7 @@ Library {
 	  ZOrder		  548
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
-	  LibraryVersion	  "1.195"
+	  LibraryVersion	  "1.198"
 	  SourceBlock		  "lib_%RN%_dynamics/%RN%_gravload_floatb_eulangrpy_mp"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
@@ -7773,7 +7800,7 @@ Library {
 	  Ports			  [2, 1]
 	  Position		  [580, 280, 620, 340]
 	  ZOrder		  546
-	  LibraryVersion	  "1.195"
+	  LibraryVersion	  "1.198"
 	  SourceBlock		  "lib_%RN%_dynamics/%RN%_inertia_floatb_eulangrpy_mp"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
@@ -8369,13 +8396,14 @@ Library {
       Name		      "%RN%_fordyn_floatb_eulangrpy_vp1"
       SID		      "472"
       Ports		      [2, 1]
-      Position		      [320, 862, 490, 938]
+      Position		      [320, 852, 490, 928]
       ZOrder		      536
       RequestExecContextInheritance off
       Object {
 	$PropName		"MaskObject"
 	$ObjectID		114
 	$ClassName		"Simulink.Mask"
+	Initialization		"NQJ=%NQJ%;"
 	Display			"port_label('input', 1, '_{(W)} F^{ext}', 'texmode', 'on')\nport_label('input', 2, '\\tau^{ext}_{J}', 'texm"
 	"ode', 'on')\nport_label('output', 1, 'Rob_Bus')"
 	Array {
@@ -9710,6 +9738,7 @@ Library {
 	$PropName		"MaskObject"
 	$ObjectID		134
 	$ClassName		"Simulink.Mask"
+	Initialization		"NQJ=%NQJ%;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
@@ -9732,7 +9761,7 @@ Library {
       }
       System {
 	Name			"%RN%_gravload_floatb_eulangrpy_mp"
-	Location		[2904, 52, 3839, 1080]
+	Location		[39, -14, 1930, 1090]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -10036,7 +10065,7 @@ Library {
 	$PropName		"MaskObject"
 	$ObjectID		137
 	$ClassName		"Simulink.Mask"
-	Initialization		"m = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
+	Initialization		"NQJ=%NQJ%;\nm = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
@@ -10059,7 +10088,7 @@ Library {
       }
       System {
 	Name			"%RN%_gravload_floatb_eulangrpy_vp1"
-	Location		[65, 24, 1920, 1080]
+	Location		[39, -14, 1930, 1090]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -10392,6 +10421,7 @@ Library {
 	$PropName		"MaskObject"
 	$ObjectID		140
 	$ClassName		"Simulink.Mask"
+	Initialization		"NQJ=%NQJ%;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
@@ -10414,7 +10444,7 @@ Library {
       }
       System {
 	Name			"%RN%_gravload_mp"
-	Location		[1969, 24, 3840, 1080]
+	Location		[39, -14, 1930, 1090]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -10434,6 +10464,7 @@ Library {
 	  Position		  [20, 53, 50, 67]
 	  ZOrder		  11
 	  IconDisplay		  "Port number"
+	  PortDimensions	  "NQJ"
 	}
 	Block {
 	  BlockType		  Inport
@@ -10620,18 +10651,19 @@ Library {
 	}
 	Block {
 	  BlockType		  Outport
-	  Name			  "tau_g"
+	  Name			  "tauJ_g"
 	  SID			  "14"
 	  Position		  [505, 160, 520, 190]
 	  ZOrder		  13
 	  NamePlacement		  "alternate"
 	  IconDisplay		  "Port number"
+	  PortDimensions	  "NQJ"
 	}
 	Line {
 	  ZOrder		  14
 	  SrcBlock		  "gravload_Fcn"
 	  SrcPort		  1
-	  DstBlock		  "tau_g"
+	  DstBlock		  "tauJ_g"
 	  DstPort		  1
 	}
 	Line {
@@ -10676,7 +10708,7 @@ Library {
 	$PropName		"MaskObject"
 	$ObjectID		143
 	$ClassName		"Simulink.Mask"
-	Initialization		"\nm = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;\n"
+	Initialization		"NQJ=%NQJ%;\nm = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;\n"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
@@ -10699,7 +10731,7 @@ Library {
       }
       System {
 	Name			"%RN%_gravload_vp1"
-	Location		[65, 24, 1920, 1080]
+	Location		[39, -14, 1930, 1090]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -10997,6 +11029,7 @@ Library {
 	$PropName		"MaskObject"
 	$ObjectID		146
 	$ClassName		"Simulink.Mask"
+	Initialization		"NQJ=%NQJ%;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
@@ -11019,7 +11052,7 @@ Library {
       }
       System {
 	Name			"%RN%_inertiaJ_mp"
-	Location		[65, 24, 1920, 1080]
+	Location		[39, -14, 1930, 1090]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -11039,6 +11072,7 @@ Library {
 	  Position		  [30, 78, 60, 92]
 	  ZOrder		  11
 	  IconDisplay		  "Port number"
+	  PortDimensions	  "NQJ"
 	}
 	Block {
 	  BlockType		  Constant
@@ -11200,19 +11234,20 @@ Library {
 	}
 	Block {
 	  BlockType		  Outport
-	  Name			  "Mq"
+	  Name			  "M_JJ"
 	  SID			  "38"
 	  Position		  [505, 160, 520, 190]
 	  ZOrder		  13
 	  NamePlacement		  "alternate"
 	  IconDisplay		  "Port number"
+	  PortDimensions	  "[NQJ NQJ]"
 	}
 	Line {
 	  ZOrder		  5
 	  SrcBlock		  "inertia_fcn"
 	  SrcPort		  1
 	  Points		  [0, -10]
-	  DstBlock		  "Mq"
+	  DstBlock		  "M_JJ"
 	  DstPort		  1
 	}
 	Line {
@@ -11250,7 +11285,7 @@ Library {
 	$PropName		"MaskObject"
 	$ObjectID		149
 	$ClassName		"Simulink.Mask"
-	Initialization		"m = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
+	Initialization		"NQJ=%NQJ%;\nm = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
@@ -11273,7 +11308,7 @@ Library {
       }
       System {
 	Name			"%RN%_inertiaJ_vp1"
-	Location		[65, 24, 1920, 1080]
+	Location		[39, -14, 1930, 1090]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -11504,7 +11539,7 @@ Library {
 	}
 	Block {
 	  BlockType		  Outport
-	  Name			  "Mq"
+	  Name			  "M_JJ"
 	  SID			  "136"
 	  Position		  [505, 240, 520, 270]
 	  ZOrder		  13
@@ -11517,7 +11552,7 @@ Library {
 	  SrcBlock		  "inertiajoint_fcn"
 	  SrcPort		  1
 	  Points		  [0, -15]
-	  DstBlock		  "Mq"
+	  DstBlock		  "M_JJ"
 	  DstPort		  1
 	}
 	Line {
@@ -11569,6 +11604,7 @@ Library {
 	$PropName		"MaskObject"
 	$ObjectID		152
 	$ClassName		"Simulink.Mask"
+	Initialization		"NQJ=%NQJ%;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
@@ -11857,7 +11893,7 @@ Library {
 	$PropName		"MaskObject"
 	$ObjectID		155
 	$ClassName		"Simulink.Mask"
-	Initialization		"m = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
+	Initialization		"NQJ=%NQJ%;\nm = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
@@ -12211,7 +12247,7 @@ Library {
       ForegroundColor	      "[0.941176, 0.941176, 1.000000]"
       DropShadow	      on
       AnnotationType	      "area_annotation"
-      ZOrder		      202
+      ZOrder		      207
       FontSize		      12
     }
     Annotation {
@@ -12224,7 +12260,7 @@ Library {
       ForegroundColor	      "[0.941176, 0.941176, 1.000000]"
       DropShadow	      on
       AnnotationType	      "area_annotation"
-      ZOrder		      198
+      ZOrder		      203
       FontSize		      12
     }
     Annotation {
@@ -12237,7 +12273,7 @@ Library {
       ForegroundColor	      "[0.941176, 0.941176, 1.000000]"
       DropShadow	      on
       AnnotationType	      "area_annotation"
-      ZOrder		      199
+      ZOrder		      204
       FontSize		      12
     }
     Annotation {
@@ -12250,7 +12286,7 @@ Library {
       ForegroundColor	      "[0.941176, 0.941176, 1.000000]"
       DropShadow	      on
       AnnotationType	      "area_annotation"
-      ZOrder		      201
+      ZOrder		      206
       FontSize		      12
     }
     Annotation {
@@ -12263,7 +12299,7 @@ Library {
       ForegroundColor	      "[0.941176, 0.941176, 1.000000]"
       DropShadow	      on
       AnnotationType	      "area_annotation"
-      ZOrder		      200
+      ZOrder		      205
       FontSize		      12
     }
   }
@@ -12292,11 +12328,8 @@ Stateflow {
     firstTransition	    10
     firstJunction	    9
     viewObj		    2
-    visible		    1
     machine		    1
     toolbarMode		    LIBRARY_TOOLBAR
-    subviewS {
-    }
     ssIdHighWaterMark	    13
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -12321,8 +12354,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function taug = coriolis(q, qD, pkin, MPV)\n%#codegen\ntauc_reg = %RN%_coriolisvecJ_fix"
-      "b_regmin_slag_vp(q, qD, pkin);\ntaug = tauc_reg*MPV;\n"
+      script		      "function taug = coriolis(q, qD, pkin, MPV)\n%#codegen\ntauc_reg = %RN%_coriolisvecJ_fixb_"
+      "regmin_slag_vp(q, qD, pkin);\ntaug = tauc_reg*MPV;\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -12480,11 +12513,8 @@ Stateflow {
     firstTransition	    20
     firstJunction	    19
     viewObj		    12
-    visible		    1
     machine		    1
     toolbarMode		    LIBRARY_TOOLBAR
-    subviewS {
-    }
     ssIdHighWaterMark	    13
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -12509,7 +12539,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function taug = gravload(q, g_base, pkin, MPV)\n%#codegen\ntaug_reg = %RN%_gravloadJ_regmin_slag_vp(q, g_base, pkin);\ntaug = taug_reg*MPV;\n"
+      script		      "function taug = gravload(q, g_base, pkin, MPV)\n%#codegen\ntaug_reg = %RN%_gravloadJ_regm"
+      "in_slag_vp(q, g_base, pkin);\ntaug = taug_reg*MPV;\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -12693,8 +12724,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function Mq = inertia(q, pkin, MPV)\n%#codegen\nMq_reg = %RN%_inertiaJ_regmin_slag_vp(q"
-      ", pkin);\nMq_mpv_vec = Mq_reg*MPV;\nMq = vec2symmat(Mq_mpv_vec);\n\n"
+      script		      "function Mq = inertia(q, pkin, MPV)\n%#codegen\nMq_reg = %RN%_inertiaJ_regmin_slag_vp(q, "
+      "pkin);\nMq_mpv_vec = Mq_reg*MPV;\nMq = vec2symmat(Mq_mpv_vec);\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -12856,8 +12887,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function T = energykin(q, qD, pkin, MPV)\n%#codegen\nt_reg = %RN%_energykin_fixb_regmin"
-      "_slag_vp(q, qD, pkin);\nT = t_reg*MPV;\n"
+      script		      "function T = energykin(q, qD, pkin, MPV)\n%#codegen\nt_reg = %RN%_energykin_fixb_regmin_s"
+      "lag_vp(q, qD, pkin);\nT = t_reg*MPV;\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -13041,8 +13072,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function T = energypot(q, g_base, pkin, MPV)\n%#codegen\nt_reg = %RN%_energypot_fixb_re"
-      "gmin_slag_vp(q, g_base, pkin);\nT = t_reg*MPV;\n"
+      script		      "function T = energypot(q, g_base, pkin, MPV)\n%#codegen\nt_reg = %RN%_energypot_fixb_regm"
+      "in_slag_vp(q, g_base, pkin);\nT = t_reg*MPV;\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -13226,7 +13257,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function taug = gravload(q, g_base, pkin, m, r_S)\n%#codegen\ntaug = %RN%_gravloadJ_floatb_twist_slag_vp1(q, g_base, pkin, m, r_S);\n\n"
+      script		      "function taug = gravload(q, g_base, pkin, m, r_S)\n%#codegen\ntaug = %RN%_gravloadJ_float"
+      "b_twist_slag_vp1(q, g_base, pkin, m, r_S);\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -13432,8 +13464,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function tauc = coriolis(q, qD, pkin, m, r_S, I_S)\n%#codegen\ntauc = %RN%_coriolisvecJ"
-      "_fixb_slag_vp1(q, qD, pkin, m, r_S, I_S);\n\n"
+      script		      "function tauc = coriolis(q, qD, pkin, m, r_S, I_S)\n%#codegen\ntauc = %RN%_coriolisvecJ_f"
+      "ixb_slag_vp1(q, qD, pkin, m, r_S, I_S);\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -13661,8 +13693,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function Mq = inertia(q, pkin, m, r_S, I_S)\n%#codegen\nMq = %RN%_inertiaJ_slag_vp1(q, "
-      "pkin, m, r_S, I_S);\n"
+      script		      "function Mq = inertia(q, pkin, m, r_S, I_S)\n%#codegen\nMq = %RN%_inertiaJ_slag_vp1(q, pk"
+      "in, m, r_S, I_S);\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -13868,8 +13900,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function T = energykin(q, qD, pkin, m, r_S, I_S)\n%#codegen\nT = %RN%_energykin_fixb_sl"
-      "ag_vp1(q, qD, pkin, m, r_S, I_S);\n\n"
+      script		      "function T = energykin(q, qD, pkin, m, r_S, I_S)\n%#codegen\nT = %RN%_energykin_fixb_slag"
+      "_vp1(q, qD, pkin, m, r_S, I_S);\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -14097,8 +14129,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function U = energypot(q, g_base, pkin, m, r_S)\n%#codegen\nU = %RN%_energypot_fixb_sla"
-      "g_vp1(q, g_base, pkin, m, r_S);\n\n"
+      script		      "function U = energypot(q, g_base, pkin, m, r_S)\n%#codegen\nU = %RN%_energypot_fixb_slag_"
+      "vp1(q, g_base, pkin, m, r_S);\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -14444,7 +14476,9 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function taug = gravload(q, ob, g_world, pkin, m, r_S)\n%#codegen\n\ntaug_base = %RN%_gravloadB_floatb_eulangrpy_slag_vp1(q, ob, g_world, ...\n  pkin, m, r_S);\ntaug_joints = %RN%_gravloadJ_floatb_eulangrpy_slag_vp1(q, ob, g_world,...\n  pkin, m, r_S);\ntaug = [taug_base; taug_joints];\n\n\n"
+      script		      "function taug = gravload(q, ob, g_world, pkin, m, r_S)\n%#codegen\n\ntaug_base = %RN%_gra"
+      "vloadB_floatb_eulangrpy_slag_vp1(q, ob, g_world, ...\n  pkin, m, r_S);\ntaug_joints = %RN%_gravloadJ_flo"
+      "atb_eulangrpy_slag_vp1(q, ob, g_world,...\n  pkin, m, r_S);\ntaug = [taug_base; taug_joints];\n\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -14944,8 +14978,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function Mq = inertia(qJ, phi_base, pkin, m, r_S, I_S)\n%#codegen\nMq = %RN%_inertia_fl"
-      "oatb_eulangrpy_slag_vp1(qJ, phi_base, ...\n  pkin, m, r_S, I_S);\n"
+      script		      "function Mq = inertia(qJ, phi_base, pkin, m, r_S, I_S)\n%#codegen\nMq = %RN%_inertia_floa"
+      "tb_eulangrpy_slag_vp1(qJ, phi_base, ...\n  pkin, m, r_S, I_S);\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -15671,8 +15705,6 @@ Stateflow {
     viewObj		    181
     machine		    1
     toolbarMode		    LIBRARY_TOOLBAR
-    subviewS {
-    }
     ssIdHighWaterMark	    16
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -15697,10 +15729,9 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function taug = gravload(q, ob, g_world, pkin, MPV)\n%#codegen\n\ntauBg_reg = %RN%_grav"
-      "loadB_floatb_eulangrpy_regmin_slag_vp(q, ob, g_world, pkin);\ntauJg_reg = %RN%_gravloadJ_floa"
-      "tb_eulangrpy_regmin_slag_vp(q, ob, g_world, pkin);    \ntaug_reg = [tauBg_reg;tauJg_reg];\ntaug = taug_reg*MPV;\n"
-      "\n\n"
+      script		      "function taug = gravload(q, ob, g_world, pkin, MPV)\n%#codegen\n\ntauBg_reg = %RN%_gravlo"
+      "adB_floatb_eulangrpy_regmin_slag_vp(q, ob, g_world, pkin);\ntauJg_reg = %RN%_gravloadJ_floatb_eulangrpy_"
+      "regmin_slag_vp(q, ob, g_world, pkin);    \ntaug_reg = [tauBg_reg;tauJg_reg];\ntaug = taug_reg*MPV;\n\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -15882,8 +15913,6 @@ Stateflow {
     viewObj		    192
     machine		    1
     toolbarMode		    LIBRARY_TOOLBAR
-    subviewS {
-    }
     ssIdHighWaterMark	    18
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -15908,8 +15937,7 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function tauc = coriolis(qJ, qJD, phi_base, xD_base, pkin, MPV)\n%#codegen\ntauc_reg = %RN%_coriolisvec_floatb_eulangrpy_regmin_slag_vp(qJ, qJD, ...\n  phi_base, xD_base, pkin);\n\ntauc = tauc_reg*MP"
-      "V;"
+      script		      "function tauc = coriolis(qJ, qJD, phi_base, xD_base, pkin, MPV)\n%#codegen\ntauc_reg = %RN%_coriolisvec_floatb_eulangrpy_regmin_slag_vp(qJ, qJD, ...\n  phi_base, xD_base, pkin);\n\ntauc = tauc_reg*MPV;"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -16111,11 +16139,8 @@ Stateflow {
     firstTransition	    212
     firstJunction	    211
     viewObj		    204
-    visible		    1
     machine		    1
     toolbarMode		    LIBRARY_TOOLBAR
-    subviewS {
-    }
     ssIdHighWaterMark	    17
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -16140,8 +16165,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function Mq = inertia(qJ, phi_base, pkin, MPV)\n%#codegen\nM_regmin = %RN%_inertia_floa"
-      "tb_eulangrpy_regmin_slag_vp(qJ, phi_base, pkin);\nM_mpv_vec = M_regmin*MPV;\nMq = vec2symmat(M_mpv_vec);"
+      script		      "function Mq = inertia(qJ, phi_base, pkin, MPV)\n%#codegen\nM_regmin = %RN%_inertia_floatb"
+      "_eulangrpy_regmin_slag_vp(qJ, phi_base, pkin);\nM_mpv_vec = M_regmin*MPV;\nMq = vec2symmat(M_mpv_vec);"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -16299,11 +16324,8 @@ Stateflow {
     firstTransition	    224
     firstJunction	    223
     viewObj		    214
-    visible		    1
     machine		    1
     toolbarMode		    LIBRARY_TOOLBAR
-    subviewS {
-    }
     ssIdHighWaterMark	    18
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -16530,11 +16552,8 @@ Stateflow {
     firstTransition	    236
     firstJunction	    235
     viewObj		    226
-    visible		    1
     machine		    1
     toolbarMode		    LIBRARY_TOOLBAR
-    subviewS {
-    }
     ssIdHighWaterMark	    17
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -16559,8 +16578,7 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function U = energypot(qJ, r_base, phi_base, g_world, ...\n  pkin, MPV)\n%#codegen\nU_reg = %RN%_energypot_floatb_eulangrpy_regmin_slag_vp(qJ, r_base, phi_base, g_world, ...\n  pkin);\nU = U_reg*MPV;"
-      "\n"
+      script		      "function U = energypot(qJ, r_base, phi_base, g_world, ...\n  pkin, MPV)\n%#codegen\nU_reg = %RN%_energypot_floatb_eulangrpy_regmin_slag_vp(qJ, r_base, phi_base, g_world, ...\n  pkin);\nU = U_reg*MPV;\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }

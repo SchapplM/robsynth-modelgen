@@ -18,6 +18,9 @@ if ~isempty(this_path), cd(this_path); end
 ParameterModus = 'mp';
 %RN%_fdyn_floatb_eulangrpy_test_settings_default
 
+% Workspace-Variable löschen, Modell darf nicht davon abhängen
+clear NQJ
+
 %% modify default settings
 
 %% Start Simulation
