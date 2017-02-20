@@ -7,7 +7,7 @@ clear
 clc
 
 %% Init
-testfunctions_path_init
+%RN%_testfunctions_path_init
 compile_path = matlabfcn_path; % aus testfunctions_path_init
 
 %% Loop through files and compile all Matlab Functions

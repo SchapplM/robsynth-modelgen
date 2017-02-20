@@ -20,6 +20,6 @@ clear
 %RN%_fdyn_fixb_test_mp_start
 %RN%_fdyn_fixb_test_vp1_start
 
-robot_compile_test
+%RN%_compile_test
 
 fprintf('Tests der Fixed-Base Funktionen für %RN% abgeschlossen.\n');

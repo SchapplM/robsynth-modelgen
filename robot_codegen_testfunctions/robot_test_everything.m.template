@@ -18,6 +18,6 @@ clear
 %RN%_varpar_fixbase_num_test
 %RN%_varpar_floatbase_num_test
 %RN%_varpar_simulink_test
-robot_compile_test
+%RN%_compile_test
 
 fprintf('Tests aller Funktionen für %RN% abgeschlossen.\n');
