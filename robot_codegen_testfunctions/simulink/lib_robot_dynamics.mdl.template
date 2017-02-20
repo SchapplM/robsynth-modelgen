@@ -12509,8 +12509,7 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function taug = gravload(q, g_base, pkin, MPV)\n%#codegen\ntaug_reg = %RN%_gravload_joi"
-      "nt_regmin_slag_vp(q, g_base, pkin);\ntaug = taug_reg*MPV;\n"
+      script		      "function taug = gravload(q, g_base, pkin, MPV)\n%#codegen\ntaug_reg = %RN%_gravloadJ_regmin_slag_vp(q, g_base, pkin);\ntaug = taug_reg*MPV;\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -13227,8 +13226,7 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function taug = gravload(q, g_base, pkin, m, r_S)\n%#codegen\ntaug = %RN%_gravload_join"
-      "t_floatb_twist_slag_vp1(q, g_base, pkin, m, r_S);\n\n"
+      script		      "function taug = gravload(q, g_base, pkin, m, r_S)\n%#codegen\ntaug = %RN%_gravloadJ_floatb_twist_slag_vp1(q, g_base, pkin, m, r_S);\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -14674,8 +14672,7 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function tauc = coriolis(qJ, qJD, phi_base, xD_base, pkin, m, r_S, I_S)\n%#codegen\ntauc = prothe"
-      "se2doft7_coriolisvec_floatb_eulangrpy_slag_vp1(qJ, qJD, phi_base, xD_base, ...\n  pkin, m, r_S, I_S);\n\n"
+      script		      "function tauc = coriolis(qJ, qJD, phi_base, xD_base, pkin, m, r_S, I_S)\n%#codegen\ntauc = %RN%_coriolisvec_floatb_eulangrpy_slag_vp1(qJ, qJD, phi_base, xD_base, ...\n  pkin, m, r_S, I_S);\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -15176,8 +15173,7 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function U = energypot(qJ, r_base, phi_base, g_world, ...\n  pkin, m, r_S)\n%#codegen\nU = prothe"
-      "se2doft7_energypot_floatb_eulangrpy_slag_vp1(qJ, r_base, phi_base, g_world, ...\n  pkin, m, r_S);\n\n"
+      script		      "function U = energypot(qJ, r_base, phi_base, g_world, ...\n  pkin, m, r_S)\n%#codegen\nU = %RN%_energypot_floatb_eulangrpy_slag_vp1(qJ, r_base, phi_base, g_world, ...\n  pkin, m, r_S);\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -15427,8 +15423,7 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function T = energykin(qJ, qD, phi_base, xD_base,  ...\n  pkin, m, r_S, I_S)\n%#codegen\nT = prot"
-      "hese2doft7_energykin_floatb_eulangrpy_slag_vp1(qJ, qD, phi_base, xD_base, ...\n  pkin, m, r_S, I_S);\n\n"
+      script		      "function T = energykin(qJ, qD, phi_base, xD_base,  ...\n  pkin, m, r_S, I_S)\n%#codegen\nT = %RN%_energykin_floatb_eulangrpy_slag_vp1(qJ, qD, phi_base, xD_base, ...\n  pkin, m, r_S, I_S);\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -15913,8 +15908,7 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function tauc = coriolis(qJ, qJD, phi_base, xD_base, pkin, MPV)\n%#codegen\ntauc_reg = prothese2d"
-      "oft7_coriolisvec_floatb_eulangrpy_regmin_slag_vp(qJ, qJD, ...\n  phi_base, xD_base, pkin);\n\ntauc = tauc_reg*MP"
+      script		      "function tauc = coriolis(qJ, qJD, phi_base, xD_base, pkin, MPV)\n%#codegen\ntauc_reg = %RN%_coriolisvec_floatb_eulangrpy_regmin_slag_vp(qJ, qJD, ...\n  phi_base, xD_base, pkin);\n\ntauc = tauc_reg*MP"
       "V;"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
@@ -16334,8 +16328,7 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function T = energykin(qJ, qD, phi_base, xD_base,  ...\n  pkin, MPV)\n%#codegen\nT_reg = prothese"
-      "2doft7_energykin_floatb_eulangrpy_regmin_slag_vp(qJ, qD, phi_base, xD_base, ...\n  pkin);\n\nT = T_reg*MPV;"
+      script		      "function T = energykin(qJ, qD, phi_base, xD_base,  ...\n  pkin, MPV)\n%#codegen\nT_reg = %RN%_energykin_floatb_eulangrpy_regmin_slag_vp(qJ, qD, phi_base, xD_base, ...\n  pkin);\n\nT = T_reg*MPV;"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -16566,8 +16559,7 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function U = energypot(qJ, r_base, phi_base, g_world, ...\n  pkin, MPV)\n%#codegen\nU_reg = proth"
-      "ese2doft7_energypot_floatb_eulangrpy_regmin_slag_vp(qJ, r_base, phi_base, g_world, ...\n  pkin);\nU = U_reg*MPV;"
+      script		      "function U = energypot(qJ, r_base, phi_base, g_world, ...\n  pkin, MPV)\n%#codegen\nU_reg = %RN%_energypot_floatb_eulangrpy_regmin_slag_vp(qJ, r_base, phi_base, g_world, ...\n  pkin);\nU = U_reg*MPV;"
       "\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }

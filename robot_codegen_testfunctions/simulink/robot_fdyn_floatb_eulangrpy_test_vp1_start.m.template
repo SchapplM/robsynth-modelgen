@@ -15,6 +15,7 @@ if ~isempty(this_path), cd(this_path); end
 
 %% Init
 % Standard-Einstellungen laden
+ParameterModus = 'vp1';
 %RN%_fdyn_floatb_eulangrpy_test_settings_default
 
 %% modify default settings
