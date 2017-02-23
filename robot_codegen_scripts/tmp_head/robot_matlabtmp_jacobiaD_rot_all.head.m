@@ -15,7 +15,7 @@
 %   Generalized velocities (joint velocities) [rad/s]
 % link_index [1x1 uint8]
 %   Index des Segmentes, auf dem der Punkt C liegt.
-%   Wie in %RN%_fkine_fixb_rotmat_mdh_sym_varpar.m
+%   Wie in %RN%_fkine_fixb_rotmat_mdh_sym_varpar.m (1=Basis).
 % a_mdh, d_mdh, q_offset_mdh, ... [%NJ%x1]
 %   kinematic parameters
 % 

@@ -1,4 +1,4 @@
-% Translatorische Teilmatrix der geometrischen Jacobi-Matrix für Segment Nr. %LIJAC% von 
+% Translatorische Teilmatrix der geometrischen Jacobi-Matrix für Segment Nr. %LIJAC% (1=Basis) von 
 % %RN%
 % Use Code from Maple symbolic Code Generation
 % 

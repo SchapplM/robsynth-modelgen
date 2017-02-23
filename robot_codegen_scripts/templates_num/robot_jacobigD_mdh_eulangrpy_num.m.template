@@ -15,7 +15,7 @@
 %   Ortsvektor vom KörperKS-Ursprung zum gesuchten Punkt
 % link_index [1x1 uint8]
 %   Index des Segmentes, auf dem der Punkt C liegt.
-%   Wie in %RN%_fkine_fixb_rotmat_mdh_sym_varpar.m
+%   Wie in %RN%_fkine_fixb_rotmat_mdh_sym_varpar.m (1=Basis).
 % 
 % Output:
 % JgD_C [6x(6+%NJ%)]

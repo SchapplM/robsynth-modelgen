@@ -18,7 +18,7 @@ Library {
       $ObjectID		      2
       $ClassName	      "Simulink.WindowInfo"
       IsActive		      [1]
-      Location		      [666.0, 371.0, 955.0, 548.0]
+      Location		      [666.0, 399.0, 955.0, 548.0]
       Object {
 	$PropName		"ModelBrowserInfo"
 	$ObjectID		3
@@ -43,7 +43,7 @@ Library {
 	  IsActive		  [1]
 	  ViewObjType		  "SimulinkSubsys"
 	  LoadSaveID		  "39"
-	  Extents		  [899.0, 360.0]
+	  Extents		  [919.0, 408.0]
 	  ZoomFactor		  [1.25]
 	  Offset		  [0.0, 0.0]
 	}
@@ -52,7 +52,7 @@ Library {
 	  IsActive		  [0]
 	  ViewObjType		  "SimulinkSubsys"
 	  LoadSaveID		  "1"
-	  Extents		  [899.0, 360.0]
+	  Extents		  [919.0, 408.0]
 	  ZoomFactor		  [0.8]
 	  Offset		  [-103.4375, -13.5]
 	}
@@ -66,9 +66,9 @@ Library {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "schappler"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Mon Feb 20 13:42:31 2017"
-  RTWModifiedTimeStamp	  409498950
-  ModelVersionFormat	  "1.%<AutoIncrement:26>"
+  LastModifiedDate	  "Thu Feb 23 14:51:56 2017"
+  RTWModifiedTimeStamp	  409762313
+  ModelVersionFormat	  "1.%<AutoIncrement:29>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -833,7 +833,7 @@ Library {
   }
   System {
     Name		    "lib_%RN%_kinematics"
-    Location		    [666, 371, 1621, 919]
+    Location		    [666, 399, 1621, 947]
     Open		    off
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -878,15 +878,15 @@ Library {
 	    $ObjectID		    20
 	    Type		    "edit"
 	    Name		    "iL"
-	    Prompt		    "Segment-Nummer"
-	    Value		    "1"
+	    Prompt		    "Segment-Nummer (0=Basis)"
+	    Value		    "0"
 	  }
 	  PropName		  "Parameters"
 	}
       }
       System {
 	Name			"%RN%_fkine"
-	Location		[666, 371, 1621, 919]
+	Location		[666, 399, 1621, 947]
 	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -963,7 +963,7 @@ Library {
 	    }
 	    Block {
 	      BlockType		      Inport
-	      Name		      "iL"
+	      Name		      "iL_MDH"
 	      SID		      "13::19"
 	      Position		      [20, 136, 40, 154]
 	      ZOrder		      10
@@ -1029,7 +1029,7 @@ Library {
 	    }
 	    Line {
 	      ZOrder		      138
-	      SrcBlock		      "iL"
+	      SrcBlock		      "iL_MDH"
 	      SrcPort		      1
 	      DstBlock		      " SFunction "
 	      DstPort		      2
@@ -1136,8 +1136,8 @@ Library {
 	    $ObjectID		    23
 	    Type		    "edit"
 	    Name		    "iL"
-	    Prompt		    "Segment-Nummer"
-	    Value		    "1"
+	    Prompt		    "Segment-Nummer (0=Basis)"
+	    Value		    "0"
 	  }
 	  Object {
 	    $ObjectID		    24
@@ -1151,7 +1151,7 @@ Library {
       }
       System {
 	Name			"%RN%_jacobig"
-	Location		[666, 371, 1621, 919]
+	Location		[666, 399, 1621, 947]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -1440,8 +1440,8 @@ Library {
 	    $ObjectID		    28
 	    Type		    "edit"
 	    Name		    "iL"
-	    Prompt		    "Segment-Nummer"
-	    Value		    "1"
+	    Prompt		    "Segment-Nummer (0=Basis)"
+	    Value		    "0"
 	  }
 	  Object {
 	    $ObjectID		    29
@@ -1455,7 +1455,7 @@ Library {
       }
       System {
 	Name			"%RN%_jacobig_floatb_eulangrpy"
-	Location		[666, 371, 1621, 919]
+	Location		[666, 399, 1621, 947]
 	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -1775,8 +1775,11 @@ Stateflow {
     firstTransition	    10
     firstJunction	    9
     viewObj		    2
+    visible		    1
     machine		    1
     toolbarMode		    LIBRARY_TOOLBAR
+    subviewS {
+    }
     ssIdHighWaterMark	    16
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -1801,8 +1804,9 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function Jg_i = jacobig(qJ, iL, r_i_i_C, pkin)\n%#codegen\nJg_i = %RN%_jacobig_floatb_twi"
-      "st_sym_varpar(qJ, iL, r_i_i_C, pkin);\n\n"
+      script		      "function Jg_i = jacobig(qJ, iL, r_i_i_C, pkin)\n%#codegen\n% Segmentnummer wird in MDH-Notation ü"
+      "bergeben (0=Basis). Die Funktionen\n% nehmen Indizes mit Matlab-Notation entgegen (1=Basis)\nJg_i = %RN%"
+      "_jacobig_floatb_twist_sym_varpar(qJ, iL+1, r_i_i_C, pkin);\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -1960,8 +1964,11 @@ Stateflow {
     firstTransition	    19
     firstJunction	    18
     viewObj		    12
+    visible		    1
     machine		    1
     toolbarMode		    LIBRARY_TOOLBAR
+    subviewS {
+    }
     ssIdHighWaterMark	    16
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -1986,8 +1993,9 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function T_i = fkine(qJ, iL, pkin)\n%#codegen\nT_c_mdh = %RN%_fkine_fixb_rotmat_mdh_sym_v"
-      "arpar(qJ, pkin);\nT_i = T_c_mdh(:,:,iL);\n\n"
+      script		      "function T_i = fkine(qJ, iL_MDH, pkin)\n%#codegen\nT_c_mdh = %RN%_fkine_fixb_rotmat_mdh_s"
+      "ym_varpar(qJ, pkin);\n% Segmentnummer wird in MDH-Notation übergeben (0=Basis). Die Matlab-Arrays\n% fangen bei"
+      " 1 an.\nT_i = T_c_mdh(:,:,iL_MDH+1);\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -2033,7 +2041,7 @@ Stateflow {
   data {
     id			    16
     ssIdNumber		    6
-    name		    "iL"
+    name		    "iL_MDH"
     linkNode		    [12 15 17]
     scope		    INPUT_DATA
     machine		    1
@@ -2123,8 +2131,11 @@ Stateflow {
     firstTransition	    29
     firstJunction	    28
     viewObj		    21
+    visible		    1
     machine		    1
     toolbarMode		    LIBRARY_TOOLBAR
+    subviewS {
+    }
     ssIdHighWaterMark	    10
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -2150,8 +2161,9 @@ Stateflow {
     eml {
       isEML		      1
       script		      "% Floating-Base Jacobimatrix zu beliebigen Punkten\n\nfunction Jg_C = fcn(phi_base, qJ, link_inde"
-      "x, r_i_i_C)\n%% Init\n%#codegen\nJg_C = %RN%_jacobig_mdh_eulangrpy_num(phi_base, qJ, link_index, r_i_i_C"
-      ");"
+      "x, r_i_i_C)\n%% Init\n%#codegen\n% Segmentnummer wird in MDH-Notation übergeben (0=Basis). Die Funktionen\n% ne"
+      "hmen Indizes mit Matlab-Notation entgegen (1=Basis)\nJg_C = %RN%_jacobig_mdh_eulangrpy_num(phi_base, qJ,"
+      " link_index+1, r_i_i_C);"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
