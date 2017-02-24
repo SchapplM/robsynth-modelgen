@@ -37,9 +37,9 @@ sed -i "s/%NKCP%/$robot_NKCP/g" $mfcndat
 
 if [ "$replacelastassignment" != "0" ]; then # vergleiche strings, da das Argument auch leer sein könnte
   # Ersetze Variablennamen des letzten Ergebnisses des generierten Codes
-  # prüfe, welches die Ausgabevariable der Funktion ist
-  varname_fcn=`grep "=" $mfcndat | head -1 | sed 's/function \(.*\)=.*/\1/'`
-  # prüfe, welches die Ausgabevariable des Maple-exportierten Codes ist
+  # prüfe, welches die Ausgabevariable der Funktion ist (steht oben im Funktionskopf)
+  varname_fcn=`grep "function .*=" $mfcndat | sed 's/function \(.*\)=.*/\1/'`
+  # prüfe, welches die Ausgabevariable des Maple-exportierten Codes ist (letzte Zuweisung im Code, ganz unten)
   varname_tmp=`grep "=" $mfcndat | tail -1 | sed 's/\(.*\)=.*/\1/'`
   # Ergänze die Zuweisung der Ausgabevariablen
   if [ "$lastassignmentvector" == "1" ]; then
