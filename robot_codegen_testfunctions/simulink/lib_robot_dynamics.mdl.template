@@ -18,7 +18,7 @@ Library {
       $ObjectID		      2
       $ClassName	      "Simulink.WindowInfo"
       IsActive		      [1]
-      Location		      [39.0, -14.0, 1891.0, 1104.0]
+      Location		      [49.0, 24.0, 1871.0, 1056.0]
       Object {
 	$PropName		"ModelBrowserInfo"
 	$ObjectID		3
@@ -45,7 +45,7 @@ Library {
 	  LoadSaveID		  "0"
 	  Extents		  [1835.0, 916.0]
 	  ZoomFactor		  [0.97261774370208121]
-	  Offset		  [-338.61999907026154, 100.35971293376296]
+	  Offset		  [-338.61999907026154, 100.35971293376298]
 	}
 	Object {
 	  $ObjectID		  6
@@ -66,9 +66,9 @@ Library {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "schappler"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Mon Feb 20 13:48:27 2017"
-  RTWModifiedTimeStamp	  409499305
-  ModelVersionFormat	  "1.%<AutoIncrement:199>"
+  LastModifiedDate	  "Fri Feb 24 11:54:17 2017"
+  RTWModifiedTimeStamp	  409838041
+  ModelVersionFormat	  "1.%<AutoIncrement:201>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -918,7 +918,7 @@ Library {
   }
   System {
     Name		    "lib_%RN%_dynamics"
-    Location		    [39, -14, 1930, 1090]
+    Location		    [49, 24, 1920, 1080]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -5999,7 +5999,7 @@ Library {
 	Initialization		"NQJ=%NQJ%;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
-	  Dimension		  4
+	  Dimension		  5
 	  Object {
 	    $ObjectID		    71
 	    Type		    "edit"
@@ -6024,6 +6024,13 @@ Library {
 	  Object {
 	    $ObjectID		    74
 	    Type		    "edit"
+	    Name		    "pkin"
+	    Prompt		    "Kinematik-Parameter"
+	    Value		    "pkin"
+	  }
+	  Object {
+	    $ObjectID		    75
+	    Type		    "edit"
 	    Name		    "MPV"
 	    Prompt		    "Dynamik-Parameter (Minimalparametervektor fixed-base)"
 	    Value		    "MPV"
@@ -6034,11 +6041,11 @@ Library {
 	  Type			  "Simulink.dialog.Group"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    75
+	    $ObjectID		    76
 	    Prompt		    "%<MaskType>"
 	    Object {
 	      $PropName		      "DialogControls"
-	      $ObjectID		      76
+	      $ObjectID		      77
 	      $ClassName	      "Simulink.dialog.Text"
 	      Prompt		      "%<MaskDescription>"
 	      Name		      "DescTextVar"
@@ -6046,25 +6053,29 @@ Library {
 	    Name		    "DescGroupVar"
 	  }
 	  Object {
-	    $ObjectID		    77
+	    $ObjectID		    78
 	    Prompt		    "Robot Parameters"
 	    Array {
 	      Type		      "Simulink.dialog.parameter.Edit"
-	      Dimension		      4
+	      Dimension		      5
 	      Object {
-		$ObjectID		78
+		$ObjectID		79
 		Name			"q_t0"
 	      }
 	      Object {
-		$ObjectID		79
+		$ObjectID		80
 		Name			"qD_t0"
 	      }
 	      Object {
-		$ObjectID		80
+		$ObjectID		81
 		Name			"g_base"
 	      }
 	      Object {
-		$ObjectID		81
+		$ObjectID		82
+		Name			"pkin"
+	      }
+	      Object {
+		$ObjectID		83
 		Name			"MPV"
 	      }
 	      PropName		      "DialogControls"
@@ -6076,7 +6087,7 @@ Library {
       }
       System {
 	Name			"%RN%_fordyn_fixb_mp"
-	Location		[1969, 24, 3840, 1080]
+	Location		[49, 24, 1920, 1080]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -6159,6 +6170,64 @@ Library {
 	    DataLogging		    on
 	    DataLoggingNameMode	    "SignalName"
 	  }
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "%RN%_coriolisvec_fixb"
+	  SID			  "83"
+	  Ports			  [2, 1]
+	  Position		  [305, 210, 370, 270]
+	  ZOrder		  234
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  LibraryVersion	  "1.199"
+	  SourceBlock		  "lib_%RN%_dynamics/%RN%_coriolisvec_fixb_mp"
+	  SourceType		  ""
+	  ContentPreviewEnabled	  off
+	  pkin			  "pkin"
+	  MPV			  "MPV"
+	  Port {
+	    PortNumber		    1
+	    Name		    "tau_c"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "%RN%_gravload"
+	  SID			  "84"
+	  Ports			  [2, 1]
+	  Position		  [315, 310, 355, 370]
+	  ZOrder		  235
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  LibraryVersion	  "1.199"
+	  SourceBlock		  "lib_%RN%_dynamics/%RN%_gravload_mp"
+	  SourceType		  ""
+	  ContentPreviewEnabled	  off
+	  pkin			  "pkin"
+	  MPV			  "MPV"
+	  Port {
+	    PortNumber		    1
+	    Name		    "tau_g"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "%RN%_inertiaJ"
+	  SID			  "82"
+	  Ports			  [1, 1]
+	  Position		  [95, 67, 155, 103]
+	  ZOrder		  233
+	  LibraryVersion	  "1.199"
+	  SourceBlock		  "lib_%RN%_dynamics/%RN%_inertiaJ_mp"
+	  SourceType		  ""
+	  ContentPreviewEnabled	  off
+	  pkin			  "pkin"
+	  MPV			  "MPV"
 	}
 	Block {
 	  BlockType		  SubSystem
@@ -6292,64 +6361,6 @@ Library {
 	      DstPort		      1
 	    }
 	  }
-	}
-	Block {
-	  BlockType		  Reference
-	  Name			  "%RN%_coriolisvec_fixb"
-	  SID			  "83"
-	  Ports			  [2, 1]
-	  Position		  [305, 210, 370, 270]
-	  ZOrder		  234
-	  BlockMirror		  on
-	  NamePlacement		  "alternate"
-	  LibraryVersion	  "1.174"
-	  SourceBlock		  "lib_%RN%_dynamics/%RN%_coriolisvec_fixb_mp"
-	  SourceType		  ""
-	  ContentPreviewEnabled	  off
-	  pkin			  "pkin"
-	  MPV			  "MPV"
-	  Port {
-	    PortNumber		    1
-	    Name		    "tau_c"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  Reference
-	  Name			  "%RN%_gravload"
-	  SID			  "84"
-	  Ports			  [2, 1]
-	  Position		  [315, 310, 355, 370]
-	  ZOrder		  235
-	  BlockMirror		  on
-	  NamePlacement		  "alternate"
-	  LibraryVersion	  "1.174"
-	  SourceBlock		  "lib_%RN%_dynamics/%RN%_gravload_mp"
-	  SourceType		  ""
-	  ContentPreviewEnabled	  off
-	  pkin			  "pkin"
-	  MPV			  "MPV"
-	  Port {
-	    PortNumber		    1
-	    Name		    "tau_g"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  Reference
-	  Name			  "%RN%_inertiaJ"
-	  SID			  "82"
-	  Ports			  [1, 1]
-	  Position		  [95, 67, 155, 103]
-	  ZOrder		  233
-	  LibraryVersion	  "1.174"
-	  SourceBlock		  "lib_%RN%_dynamics/%RN%_inertiaJ_mp"
-	  SourceType		  ""
-	  ContentPreviewEnabled	  off
-	  pkin			  "pkin"
-	  MPV			  "MPV"
 	}
 	Block {
 	  BlockType		  Outport
@@ -6530,35 +6541,42 @@ Library {
       RequestExecContextInheritance off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		82
+	$ObjectID		84
 	$ClassName		"Simulink.Mask"
 	Initialization		"NQJ=%NQJ%;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
-	  Dimension		  4
+	  Dimension		  5
 	  Object {
-	    $ObjectID		    83
+	    $ObjectID		    85
 	    Type		    "edit"
 	    Name		    "q_t0"
 	    Prompt		    "q0 (initial pose)"
 	    Value		    "q_t0"
 	  }
 	  Object {
-	    $ObjectID		    84
+	    $ObjectID		    86
 	    Type		    "edit"
 	    Name		    "qD_t0"
 	    Prompt		    "qD0 (initial velocity)"
 	    Value		    "qD_t0"
 	  }
 	  Object {
-	    $ObjectID		    85
+	    $ObjectID		    87
 	    Type		    "edit"
 	    Name		    "g_base"
 	    Prompt		    "g_base"
 	    Value		    "g_base"
 	  }
 	  Object {
-	    $ObjectID		    86
+	    $ObjectID		    88
+	    Type		    "edit"
+	    Name		    "pkin"
+	    Prompt		    "Kinematik-Parameter"
+	    Value		    "pkin"
+	  }
+	  Object {
+	    $ObjectID		    89
 	    Type		    "edit"
 	    Name		    "DynPar1"
 	    Prompt		    "Dynamik-Parameter (Parametersatz 1)"
@@ -6570,11 +6588,11 @@ Library {
 	  Type			  "Simulink.dialog.Group"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    87
+	    $ObjectID		    90
 	    Prompt		    "%<MaskType>"
 	    Object {
 	      $PropName		      "DialogControls"
-	      $ObjectID		      88
+	      $ObjectID		      91
 	      $ClassName	      "Simulink.dialog.Text"
 	      Prompt		      "%<MaskDescription>"
 	      Name		      "DescTextVar"
@@ -6582,25 +6600,29 @@ Library {
 	    Name		    "DescGroupVar"
 	  }
 	  Object {
-	    $ObjectID		    89
+	    $ObjectID		    92
 	    Prompt		    "Robot Parameters"
 	    Array {
 	      Type		      "Simulink.dialog.parameter.Edit"
-	      Dimension		      4
+	      Dimension		      5
 	      Object {
-		$ObjectID		90
+		$ObjectID		93
 		Name			"q_t0"
 	      }
 	      Object {
-		$ObjectID		91
+		$ObjectID		94
 		Name			"qD_t0"
 	      }
 	      Object {
-		$ObjectID		92
+		$ObjectID		95
 		Name			"g_base"
 	      }
 	      Object {
-		$ObjectID		93
+		$ObjectID		96
+		Name			"pkin"
+	      }
+	      Object {
+		$ObjectID		97
 		Name			"DynPar1"
 	      }
 	      PropName		      "DialogControls"
@@ -6695,6 +6717,64 @@ Library {
 	    DataLogging		    on
 	    DataLoggingNameMode	    "SignalName"
 	  }
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "%RN%_coriolisvec_fixb"
+	  SID			  "175"
+	  Ports			  [2, 1]
+	  Position		  [305, 210, 370, 270]
+	  ZOrder		  234
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  LibraryVersion	  "1.140"
+	  SourceBlock		  "lib_%RN%_dynamics/%RN%_coriolisvec_fixb_vp1"
+	  SourceType		  ""
+	  ContentPreviewEnabled	  off
+	  pkin			  "pkin"
+	  DynPar1		  "DynPar1"
+	  Port {
+	    PortNumber		    1
+	    Name		    "tau_c"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "%RN%_gravload"
+	  SID			  "176"
+	  Ports			  [2, 1]
+	  Position		  [315, 310, 355, 370]
+	  ZOrder		  235
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  LibraryVersion	  "1.140"
+	  SourceBlock		  "lib_%RN%_dynamics/%RN%_gravload_vp1"
+	  SourceType		  ""
+	  ContentPreviewEnabled	  off
+	  pkin			  "pkin"
+	  DynPar1		  "DynPar1"
+	  Port {
+	    PortNumber		    1
+	    Name		    "tau_g"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "%RN%_inertiaJ"
+	  SID			  "177"
+	  Ports			  [1, 1]
+	  Position		  [95, 67, 155, 103]
+	  ZOrder		  233
+	  LibraryVersion	  "1.140"
+	  SourceBlock		  "lib_%RN%_dynamics/%RN%_inertiaJ_vp1"
+	  SourceType		  ""
+	  ContentPreviewEnabled	  off
+	  pkin			  "pkin"
+	  DynPar1		  "DynPar1"
 	}
 	Block {
 	  BlockType		  SubSystem
@@ -6828,64 +6908,6 @@ Library {
 	      DstPort		      1
 	    }
 	  }
-	}
-	Block {
-	  BlockType		  Reference
-	  Name			  "%RN%_coriolisvec_fixb"
-	  SID			  "175"
-	  Ports			  [2, 1]
-	  Position		  [305, 210, 370, 270]
-	  ZOrder		  234
-	  BlockMirror		  on
-	  NamePlacement		  "alternate"
-	  LibraryVersion	  "1.140"
-	  SourceBlock		  "lib_%RN%_dynamics/%RN%_coriolisvec_fixb_vp1"
-	  SourceType		  ""
-	  ContentPreviewEnabled	  off
-	  pkin			  "pkin"
-	  DynPar1		  "DynPar1"
-	  Port {
-	    PortNumber		    1
-	    Name		    "tau_c"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  Reference
-	  Name			  "%RN%_gravload"
-	  SID			  "176"
-	  Ports			  [2, 1]
-	  Position		  [315, 310, 355, 370]
-	  ZOrder		  235
-	  BlockMirror		  on
-	  NamePlacement		  "alternate"
-	  LibraryVersion	  "1.140"
-	  SourceBlock		  "lib_%RN%_dynamics/%RN%_gravload_vp1"
-	  SourceType		  ""
-	  ContentPreviewEnabled	  off
-	  pkin			  "pkin"
-	  DynPar1		  "DynPar1"
-	  Port {
-	    PortNumber		    1
-	    Name		    "tau_g"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  Reference
-	  Name			  "%RN%_inertiaJ"
-	  SID			  "177"
-	  Ports			  [1, 1]
-	  Position		  [95, 67, 155, 103]
-	  ZOrder		  233
-	  LibraryVersion	  "1.140"
-	  SourceBlock		  "lib_%RN%_dynamics/%RN%_inertiaJ_vp1"
-	  SourceType		  ""
-	  ContentPreviewEnabled	  off
-	  pkin			  "pkin"
-	  DynPar1		  "DynPar1"
 	}
 	Block {
 	  BlockType		  Outport
@@ -7066,65 +7088,72 @@ Library {
       RequestExecContextInheritance off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		94
+	$ObjectID		98
 	$ClassName		"Simulink.Mask"
 	Initialization		"NQJ=%NQJ%;"
 	Display			"port_label('input', 1, '_{(W)} F^{ext}', 'texmode', 'on')\nport_label('input', 2, '\\tau^{ext}_{J}', 'texm"
 	"ode', 'on')\nport_label('output', 1, 'Rob_Bus')"
 	Array {
 	  Type			  "Simulink.MaskParameter"
-	  Dimension		  8
+	  Dimension		  9
 	  Object {
-	    $ObjectID		    95
+	    $ObjectID		    99
 	    Type		    "edit"
 	    Name		    "r_base_t0"
 	    Prompt		    "r_base_t0 (Basisposition im Welt-KS)"
 	    Value		    "r_base_t0"
 	  }
 	  Object {
-	    $ObjectID		    96
+	    $ObjectID		    100
 	    Type		    "edit"
 	    Name		    "rD_base_t0"
 	    Prompt		    "rD_base_t0"
 	    Value		    "rD_base_t0"
 	  }
 	  Object {
-	    $ObjectID		    97
+	    $ObjectID		    101
 	    Type		    "edit"
 	    Name		    "phi_base_t0"
 	    Prompt		    "phi_base_t0"
 	    Value		    "phi_base_t0"
 	  }
 	  Object {
-	    $ObjectID		    98
+	    $ObjectID		    102
 	    Type		    "edit"
 	    Name		    "phiD_base_t0"
 	    Prompt		    "phiD_base_t0"
 	    Value		    "phiD_base_t0"
 	  }
 	  Object {
-	    $ObjectID		    99
+	    $ObjectID		    103
 	    Type		    "edit"
 	    Name		    "qJ_t0"
 	    Prompt		    "q0 (initial pose)"
 	    Value		    "qJ_t0"
 	  }
 	  Object {
-	    $ObjectID		    100
+	    $ObjectID		    104
 	    Type		    "edit"
 	    Name		    "qJD_t0"
 	    Prompt		    "qD0 (initial velocity)"
 	    Value		    "qJD_t0"
 	  }
 	  Object {
-	    $ObjectID		    101
+	    $ObjectID		    105
 	    Type		    "edit"
 	    Name		    "g_world"
 	    Prompt		    "g_world"
 	    Value		    "g_world"
 	  }
 	  Object {
-	    $ObjectID		    102
+	    $ObjectID		    106
+	    Type		    "edit"
+	    Name		    "pkin"
+	    Prompt		    "Kinematik-Parameter"
+	    Value		    "pkin"
+	  }
+	  Object {
+	    $ObjectID		    107
 	    Type		    "edit"
 	    Name		    "MPV"
 	    Prompt		    "Dynamik-Parameter (Minimalparametervektor floating-base)"
@@ -7136,11 +7165,11 @@ Library {
 	  Type			  "Simulink.dialog.Group"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    103
+	    $ObjectID		    108
 	    Prompt		    "%<MaskType>"
 	    Object {
 	      $PropName		      "DialogControls"
-	      $ObjectID		      104
+	      $ObjectID		      109
 	      $ClassName	      "Simulink.dialog.Text"
 	      Prompt		      "%<MaskDescription>"
 	      Name		      "DescTextVar"
@@ -7148,41 +7177,45 @@ Library {
 	    Name		    "DescGroupVar"
 	  }
 	  Object {
-	    $ObjectID		    105
+	    $ObjectID		    110
 	    Prompt		    "Robot Parameters"
 	    Array {
 	      Type		      "Simulink.dialog.parameter.Edit"
-	      Dimension		      8
+	      Dimension		      9
 	      Object {
-		$ObjectID		106
+		$ObjectID		111
 		Name			"r_base_t0"
 	      }
 	      Object {
-		$ObjectID		107
+		$ObjectID		112
 		Name			"rD_base_t0"
 	      }
 	      Object {
-		$ObjectID		108
+		$ObjectID		113
 		Name			"phi_base_t0"
 	      }
 	      Object {
-		$ObjectID		109
+		$ObjectID		114
 		Name			"phiD_base_t0"
 	      }
 	      Object {
-		$ObjectID		110
+		$ObjectID		115
 		Name			"qJ_t0"
 	      }
 	      Object {
-		$ObjectID		111
+		$ObjectID		116
 		Name			"qJD_t0"
 	      }
 	      Object {
-		$ObjectID		112
+		$ObjectID		117
 		Name			"g_world"
 	      }
 	      Object {
-		$ObjectID		113
+		$ObjectID		118
+		Name			"pkin"
+	      }
+	      Object {
+		$ObjectID		119
 		Name			"MPV"
 	      }
 	      PropName		      "DialogControls"
@@ -7194,7 +7227,7 @@ Library {
       }
       System {
 	Name			"%RN%_fordyn_floatb_eulangrpy_mp"
-	Location		[1979, 62, 3830, 1070]
+	Location		[49, 62, 1920, 1118]
 	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -7398,7 +7431,7 @@ Library {
 	  Ports			  [1, 2]
 	  Position		  [1005, 392, 1070, 423]
 	  ZOrder		  295
-	  LibraryVersion	  "1.188"
+	  LibraryVersion	  "1.190"
 	  SourceBlock		  "rigid_body_kinematics/Doppelintegrator"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
@@ -7425,7 +7458,7 @@ Library {
 	  Ports			  [1, 2]
 	  Position		  [1020, 102, 1085, 133]
 	  ZOrder		  294
-	  LibraryVersion	  "1.188"
+	  LibraryVersion	  "1.190"
 	  SourceBlock		  "rigid_body_kinematics/Doppelintegrator"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
@@ -7508,7 +7541,7 @@ Library {
 	  Ports			  [1, 1]
 	  Position		  [1390, 290, 1450, 330]
 	  ZOrder		  338
-	  LibraryVersion	  "1.87"
+	  LibraryVersion	  "1.91"
 	  SourceBlock		  "transformations_lib/R2rpy"
 	  SourceType		  "SubSystem"
 	  ContentPreviewEnabled	  off
@@ -7572,7 +7605,7 @@ Library {
 	  Ports			  [1, 1]
 	  Position		  [1280, 290, 1345, 330]
 	  ZOrder		  544
-	  LibraryVersion	  "1.188"
+	  LibraryVersion	  "1.190"
 	  SourceBlock		  "rigid_body_kinematics/angvel_int_rotmat"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
@@ -7591,10 +7624,68 @@ Library {
 	  Ports			  [1, 1]
 	  Position		  [130, 515, 190, 535]
 	  ZOrder		  538
-	  LibraryVersion	  "1.87"
+	  LibraryVersion	  "1.91"
 	  SourceBlock		  "transformations_lib/angvelotrans_rpy"
 	  SourceType		  "SubSystem"
 	  ContentPreviewEnabled	  off
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "%RN%_coriolisvec_floatb_eulangrpy_mp"
+	  SID			  "622"
+	  Ports			  [4, 1]
+	  Position		  [735, 427, 800, 503]
+	  ZOrder		  547
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  LibraryVersion	  "1.200"
+	  SourceBlock		  "lib_%RN%_dynamics/%RN%_coriolisvec_floatb_eulangrpy_mp"
+	  SourceType		  ""
+	  ContentPreviewEnabled	  off
+	  pkin			  "pkin"
+	  MPV			  "MPV"
+	  Port {
+	    PortNumber		    1
+	    Name		    "tau_c"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "%RN%_gravload_floatb_eulangrpy_mp"
+	  SID			  "623"
+	  Ports			  [3, 1]
+	  Position		  [730, 535, 805, 595]
+	  ZOrder		  548
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  LibraryVersion	  "1.200"
+	  SourceBlock		  "lib_%RN%_dynamics/%RN%_gravload_floatb_eulangrpy_mp"
+	  SourceType		  ""
+	  ContentPreviewEnabled	  off
+	  pkin			  "pkin"
+	  MPV			  "MPV"
+	  Port {
+	    PortNumber		    1
+	    Name		    "tau_g"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "%RN%_inertia_floatb_eulangrpy_mp"
+	  SID			  "621"
+	  Ports			  [2, 1]
+	  Position		  [580, 280, 620, 340]
+	  ZOrder		  546
+	  LibraryVersion	  "1.200"
+	  SourceBlock		  "lib_%RN%_dynamics/%RN%_inertia_floatb_eulangrpy_mp"
+	  SourceType		  ""
+	  ContentPreviewEnabled	  off
+	  pkin			  "pkin"
+	  MPV			  "MPV"
 	}
 	Block {
 	  BlockType		  SubSystem
@@ -7738,7 +7829,7 @@ Library {
 	  ZOrder		  340
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
-	  LibraryVersion	  "1.87"
+	  LibraryVersion	  "1.91"
 	  SourceBlock		  "transformations_lib/omega2rpyD"
 	  SourceType		  "SubSystem"
 	  ContentPreviewEnabled	  off
@@ -7751,70 +7842,12 @@ Library {
 	}
 	Block {
 	  BlockType		  Reference
-	  Name			  "%RN%_coriolisvec_floatb_eulangrpy_mp"
-	  SID			  "622"
-	  Ports			  [4, 1]
-	  Position		  [735, 427, 800, 503]
-	  ZOrder		  547
-	  BlockMirror		  on
-	  NamePlacement		  "alternate"
-	  LibraryVersion	  "1.198"
-	  SourceBlock		  "lib_%RN%_dynamics/%RN%_coriolisvec_floatb_eulangrpy_mp"
-	  SourceType		  ""
-	  ContentPreviewEnabled	  off
-	  pkin			  "pkin"
-	  MPV			  "MPV"
-	  Port {
-	    PortNumber		    1
-	    Name		    "tau_c"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  Reference
-	  Name			  "%RN%_gravload_floatb_eulangrpy_mp"
-	  SID			  "623"
-	  Ports			  [3, 1]
-	  Position		  [730, 535, 805, 595]
-	  ZOrder		  548
-	  BlockMirror		  on
-	  NamePlacement		  "alternate"
-	  LibraryVersion	  "1.198"
-	  SourceBlock		  "lib_%RN%_dynamics/%RN%_gravload_floatb_eulangrpy_mp"
-	  SourceType		  ""
-	  ContentPreviewEnabled	  off
-	  pkin			  "pkin"
-	  MPV			  "MPV"
-	  Port {
-	    PortNumber		    1
-	    Name		    "tau_g"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  Reference
-	  Name			  "%RN%_inertia_floatb_eulangrpy_mp"
-	  SID			  "621"
-	  Ports			  [2, 1]
-	  Position		  [580, 280, 620, 340]
-	  ZOrder		  546
-	  LibraryVersion	  "1.198"
-	  SourceBlock		  "lib_%RN%_dynamics/%RN%_inertia_floatb_eulangrpy_mp"
-	  SourceType		  ""
-	  ContentPreviewEnabled	  off
-	  pkin			  "pkin"
-	  MPV			  "MPV"
-	}
-	Block {
-	  BlockType		  Reference
 	  Name			  "rpyDD2omegaD"
 	  SID			  "614"
 	  Ports			  [3, 1]
 	  Position		  [1050, 287, 1155, 333]
 	  ZOrder		  339
-	  LibraryVersion	  "1.87"
+	  LibraryVersion	  "1.91"
 	  SourceBlock		  "transformations_lib/rpyDD2omegaD"
 	  SourceType		  "SubSystem"
 	  ContentPreviewEnabled	  off
@@ -8401,65 +8434,72 @@ Library {
       RequestExecContextInheritance off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		114
+	$ObjectID		120
 	$ClassName		"Simulink.Mask"
 	Initialization		"NQJ=%NQJ%;"
 	Display			"port_label('input', 1, '_{(W)} F^{ext}', 'texmode', 'on')\nport_label('input', 2, '\\tau^{ext}_{J}', 'texm"
 	"ode', 'on')\nport_label('output', 1, 'Rob_Bus')"
 	Array {
 	  Type			  "Simulink.MaskParameter"
-	  Dimension		  8
+	  Dimension		  9
 	  Object {
-	    $ObjectID		    115
+	    $ObjectID		    121
 	    Type		    "edit"
 	    Name		    "r_base_t0"
 	    Prompt		    "r_base_t0 (Basisposition im Welt-KS)"
 	    Value		    "r_base_t0"
 	  }
 	  Object {
-	    $ObjectID		    116
+	    $ObjectID		    122
 	    Type		    "edit"
 	    Name		    "rD_base_t0"
 	    Prompt		    "rD_base_t0"
 	    Value		    "rD_base_t0"
 	  }
 	  Object {
-	    $ObjectID		    117
+	    $ObjectID		    123
 	    Type		    "edit"
 	    Name		    "phi_base_t0"
 	    Prompt		    "phi_base_t0"
 	    Value		    "phi_base_t0"
 	  }
 	  Object {
-	    $ObjectID		    118
+	    $ObjectID		    124
 	    Type		    "edit"
 	    Name		    "phiD_base_t0"
 	    Prompt		    "phiD_base_t0"
 	    Value		    "phiD_base_t0"
 	  }
 	  Object {
-	    $ObjectID		    119
+	    $ObjectID		    125
 	    Type		    "edit"
 	    Name		    "qJ_t0"
 	    Prompt		    "q0 (initial pose)"
 	    Value		    "qJ_t0"
 	  }
 	  Object {
-	    $ObjectID		    120
+	    $ObjectID		    126
 	    Type		    "edit"
 	    Name		    "qJD_t0"
 	    Prompt		    "qD0 (initial velocity)"
 	    Value		    "qJD_t0"
 	  }
 	  Object {
-	    $ObjectID		    121
+	    $ObjectID		    127
 	    Type		    "edit"
 	    Name		    "g_world"
 	    Prompt		    "g_world"
 	    Value		    "g_world"
 	  }
 	  Object {
-	    $ObjectID		    122
+	    $ObjectID		    128
+	    Type		    "edit"
+	    Name		    "pkin"
+	    Prompt		    "Kinematik-Parameter"
+	    Value		    "pkin"
+	  }
+	  Object {
+	    $ObjectID		    129
 	    Type		    "edit"
 	    Name		    "DynPar1"
 	    Prompt		    "Dynamik-Parameter (Parametersatz 1)"
@@ -8471,11 +8511,11 @@ Library {
 	  Type			  "Simulink.dialog.Group"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    123
+	    $ObjectID		    130
 	    Prompt		    "%<MaskType>"
 	    Object {
 	      $PropName		      "DialogControls"
-	      $ObjectID		      124
+	      $ObjectID		      131
 	      $ClassName	      "Simulink.dialog.Text"
 	      Prompt		      "%<MaskDescription>"
 	      Name		      "DescTextVar"
@@ -8483,41 +8523,45 @@ Library {
 	    Name		    "DescGroupVar"
 	  }
 	  Object {
-	    $ObjectID		    125
+	    $ObjectID		    132
 	    Prompt		    "Robot Parameters"
 	    Array {
 	      Type		      "Simulink.dialog.parameter.Edit"
-	      Dimension		      8
+	      Dimension		      9
 	      Object {
-		$ObjectID		126
+		$ObjectID		133
 		Name			"r_base_t0"
 	      }
 	      Object {
-		$ObjectID		127
+		$ObjectID		134
 		Name			"rD_base_t0"
 	      }
 	      Object {
-		$ObjectID		128
+		$ObjectID		135
 		Name			"phi_base_t0"
 	      }
 	      Object {
-		$ObjectID		129
+		$ObjectID		136
 		Name			"phiD_base_t0"
 	      }
 	      Object {
-		$ObjectID		130
+		$ObjectID		137
 		Name			"qJ_t0"
 	      }
 	      Object {
-		$ObjectID		131
+		$ObjectID		138
 		Name			"qJD_t0"
 	      }
 	      Object {
-		$ObjectID		132
+		$ObjectID		139
 		Name			"g_world"
 	      }
 	      Object {
-		$ObjectID		133
+		$ObjectID		140
+		Name			"pkin"
+	      }
+	      Object {
+		$ObjectID		141
 		Name			"DynPar1"
 	      }
 	      PropName		      "DialogControls"
@@ -8932,6 +8976,64 @@ Library {
 	  ContentPreviewEnabled	  off
 	}
 	Block {
+	  BlockType		  Reference
+	  Name			  "%RN%_coriolisvec_floatb_eulangrpy_vp1"
+	  SID			  "497"
+	  Ports			  [4, 1]
+	  Position		  [735, 427, 800, 503]
+	  ZOrder		  545
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  LibraryVersion	  "1.174"
+	  SourceBlock		  "lib_%RN%_dynamics/%RN%_coriolisvec_floatb_eulangrpy_vp1"
+	  SourceType		  ""
+	  ContentPreviewEnabled	  off
+	  pkin			  "pkin"
+	  DynPar1		  "DynPar1"
+	  Port {
+	    PortNumber		    1
+	    Name		    "tau_c"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "%RN%_gravload_floatb_eulangrpy_vp1"
+	  SID			  "498"
+	  Ports			  [3, 1]
+	  Position		  [725, 535, 800, 595]
+	  ZOrder		  536
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  LibraryVersion	  "1.174"
+	  SourceBlock		  "lib_%RN%_dynamics/%RN%_gravload_floatb_eulangrpy_vp1"
+	  SourceType		  ""
+	  ContentPreviewEnabled	  off
+	  pkin			  "pkin"
+	  DynPar1		  "DynPar1"
+	  Port {
+	    PortNumber		    1
+	    Name		    "tau_g"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "%RN%_inertia_floatb_eulangrpy_vp1"
+	  SID			  "499"
+	  Ports			  [2, 1]
+	  Position		  [580, 280, 620, 340]
+	  ZOrder		  534
+	  LibraryVersion	  "1.174"
+	  SourceBlock		  "lib_%RN%_dynamics/%RN%_inertia_floatb_eulangrpy_vp1"
+	  SourceType		  ""
+	  ContentPreviewEnabled	  off
+	  pkin			  "pkin"
+	  DynPar1		  "DynPar1"
+	}
+	Block {
 	  BlockType		  SubSystem
 	  Name			  "mFcn_Minv"
 	  SID			  "495"
@@ -9083,64 +9185,6 @@ Library {
 	    RTWStorageClass	    "Auto"
 	    DataLoggingNameMode	    "SignalName"
 	  }
-	}
-	Block {
-	  BlockType		  Reference
-	  Name			  "%RN%_coriolisvec_floatb_eulangrpy_vp1"
-	  SID			  "497"
-	  Ports			  [4, 1]
-	  Position		  [735, 427, 800, 503]
-	  ZOrder		  545
-	  BlockMirror		  on
-	  NamePlacement		  "alternate"
-	  LibraryVersion	  "1.174"
-	  SourceBlock		  "lib_%RN%_dynamics/%RN%_coriolisvec_floatb_eulangrpy_vp1"
-	  SourceType		  ""
-	  ContentPreviewEnabled	  off
-	  pkin			  "pkin"
-	  DynPar1		  "DynPar1"
-	  Port {
-	    PortNumber		    1
-	    Name		    "tau_c"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  Reference
-	  Name			  "%RN%_gravload_floatb_eulangrpy_vp1"
-	  SID			  "498"
-	  Ports			  [3, 1]
-	  Position		  [725, 535, 800, 595]
-	  ZOrder		  536
-	  BlockMirror		  on
-	  NamePlacement		  "alternate"
-	  LibraryVersion	  "1.174"
-	  SourceBlock		  "lib_%RN%_dynamics/%RN%_gravload_floatb_eulangrpy_vp1"
-	  SourceType		  ""
-	  ContentPreviewEnabled	  off
-	  pkin			  "pkin"
-	  DynPar1		  "DynPar1"
-	  Port {
-	    PortNumber		    1
-	    Name		    "tau_g"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  Reference
-	  Name			  "%RN%_inertia_floatb_eulangrpy_vp1"
-	  SID			  "499"
-	  Ports			  [2, 1]
-	  Position		  [580, 280, 620, 340]
-	  ZOrder		  534
-	  LibraryVersion	  "1.174"
-	  SourceBlock		  "lib_%RN%_dynamics/%RN%_inertia_floatb_eulangrpy_vp1"
-	  SourceType		  ""
-	  ContentPreviewEnabled	  off
-	  pkin			  "pkin"
-	  DynPar1		  "DynPar1"
 	}
 	Block {
 	  BlockType		  Reference
@@ -9736,21 +9780,21 @@ Library {
       RequestExecContextInheritance off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		134
+	$ObjectID		142
 	$ClassName		"Simulink.Mask"
 	Initialization		"NQJ=%NQJ%;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    135
+	    $ObjectID		    143
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    136
+	    $ObjectID		    144
 	    Type		    "edit"
 	    Name		    "MPV"
 	    Prompt		    "Dynamik-Parameter (Minimalparametervektor floating-base)"
@@ -10063,21 +10107,21 @@ Library {
       RequestExecContextInheritance off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		137
+	$ObjectID		145
 	$ClassName		"Simulink.Mask"
 	Initialization		"NQJ=%NQJ%;\nm = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    138
+	    $ObjectID		    146
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    139
+	    $ObjectID		    147
 	    Type		    "edit"
 	    Name		    "DynPar1"
 	    Prompt		    "Dynamik-Parameter (Parametersatz 1)"
@@ -10419,21 +10463,21 @@ Library {
       RequestExecContextInheritance off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		140
+	$ObjectID		148
 	$ClassName		"Simulink.Mask"
 	Initialization		"NQJ=%NQJ%;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    141
+	    $ObjectID		    149
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    142
+	    $ObjectID		    150
 	    Type		    "edit"
 	    Name		    "MPV"
 	    Prompt		    "Dynamik-Parameter (Minimalparametervektor fixed-base)"
@@ -10706,21 +10750,21 @@ Library {
       RequestExecContextInheritance off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		143
+	$ObjectID		151
 	$ClassName		"Simulink.Mask"
 	Initialization		"NQJ=%NQJ%;\nm = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;\n"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    144
+	    $ObjectID		    152
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    145
+	    $ObjectID		    153
 	    Type		    "edit"
 	    Name		    "DynPar1"
 	    Prompt		    "Dynamik-Parameter (Parametersatz 1)"
@@ -11027,21 +11071,21 @@ Library {
       RequestExecContextInheritance off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		146
+	$ObjectID		154
 	$ClassName		"Simulink.Mask"
 	Initialization		"NQJ=%NQJ%;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    147
+	    $ObjectID		    155
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    148
+	    $ObjectID		    156
 	    Type		    "edit"
 	    Name		    "MPV"
 	    Prompt		    "Dynamik-Parameter (Minimalparametervektor fixed-base)"
@@ -11283,21 +11327,21 @@ Library {
       RequestExecContextInheritance off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		149
+	$ObjectID		157
 	$ClassName		"Simulink.Mask"
 	Initialization		"NQJ=%NQJ%;\nm = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    150
+	    $ObjectID		    158
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    151
+	    $ObjectID		    159
 	    Type		    "edit"
 	    Name		    "DynPar1"
 	    Prompt		    "Dynamik-Parameter (Parametersatz 1)"
@@ -11602,21 +11646,21 @@ Library {
       RequestExecContextInheritance off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		152
+	$ObjectID		160
 	$ClassName		"Simulink.Mask"
 	Initialization		"NQJ=%NQJ%;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    153
+	    $ObjectID		    161
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    154
+	    $ObjectID		    162
 	    Type		    "edit"
 	    Name		    "MPV"
 	    Prompt		    "Dynamik-Parameter (Minimalparametervektor floating-base)"
@@ -11891,21 +11935,21 @@ Library {
       RequestExecContextInheritance off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		155
+	$ObjectID		163
 	$ClassName		"Simulink.Mask"
 	Initialization		"NQJ=%NQJ%;\nm = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    156
+	    $ObjectID		    164
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    157
+	    $ObjectID		    165
 	    Type		    "edit"
 	    Name		    "DynPar1"
 	    Prompt		    "Dynamik-Parameter (Parametersatz 1)"
@@ -12354,8 +12398,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function taug = coriolis(q, qD, pkin, MPV)\n%#codegen\ntauc_reg = %RN%_coriolisvecJ_fixb_"
-      "regmin_slag_vp(q, qD, pkin);\ntaug = tauc_reg*MPV;\n"
+      script		      "function taug = coriolis(q, qD, pkin, MPV)\n%#codegen\ntauc_reg = %RN%_coriolisvecJ_fixb_regmin_"
+      "slag_vp(q, qD, pkin);\ntaug = tauc_reg*MPV;\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -12539,8 +12583,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function taug = gravload(q, g_base, pkin, MPV)\n%#codegen\ntaug_reg = %RN%_gravloadJ_regm"
-      "in_slag_vp(q, g_base, pkin);\ntaug = taug_reg*MPV;\n"
+      script		      "function taug = gravload(q, g_base, pkin, MPV)\n%#codegen\ntaug_reg = %RN%_gravloadJ_regmin_slag"
+      "_vp(q, g_base, pkin);\ntaug = taug_reg*MPV;\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -12724,8 +12768,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function Mq = inertia(q, pkin, MPV)\n%#codegen\nMq_reg = %RN%_inertiaJ_regmin_slag_vp(q, "
-      "pkin);\nMq_mpv_vec = Mq_reg*MPV;\nMq = vec2symmat(Mq_mpv_vec);\n\n"
+      script		      "function Mq = inertia(q, pkin, MPV)\n%#codegen\nMq_reg = %RN%_inertiaJ_regmin_slag_vp(q, pkin);\n"
+      "Mq_mpv_vec = Mq_reg*MPV;\nMq = vec2symmat(Mq_mpv_vec);\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -12887,8 +12931,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function T = energykin(q, qD, pkin, MPV)\n%#codegen\nt_reg = %RN%_energykin_fixb_regmin_s"
-      "lag_vp(q, qD, pkin);\nT = t_reg*MPV;\n"
+      script		      "function T = energykin(q, qD, pkin, MPV)\n%#codegen\nt_reg = %RN%_energykin_fixb_regmin_slag_vp("
+      "q, qD, pkin);\nT = t_reg*MPV;\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -13072,8 +13116,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function T = energypot(q, g_base, pkin, MPV)\n%#codegen\nt_reg = %RN%_energypot_fixb_regm"
-      "in_slag_vp(q, g_base, pkin);\nT = t_reg*MPV;\n"
+      script		      "function T = energypot(q, g_base, pkin, MPV)\n%#codegen\nt_reg = %RN%_energypot_fixb_regmin_slag"
+      "_vp(q, g_base, pkin);\nT = t_reg*MPV;\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -13257,8 +13301,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function taug = gravload(q, g_base, pkin, m, r_S)\n%#codegen\ntaug = %RN%_gravloadJ_float"
-      "b_twist_slag_vp1(q, g_base, pkin, m, r_S);\n\n"
+      script		      "function taug = gravload(q, g_base, pkin, m, r_S)\n%#codegen\ntaug = %RN%_gravloadJ_floatb_twist"
+      "_slag_vp1(q, g_base, pkin, m, r_S);\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -13464,8 +13508,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function tauc = coriolis(q, qD, pkin, m, r_S, I_S)\n%#codegen\ntauc = %RN%_coriolisvecJ_f"
-      "ixb_slag_vp1(q, qD, pkin, m, r_S, I_S);\n\n"
+      script		      "function tauc = coriolis(q, qD, pkin, m, r_S, I_S)\n%#codegen\ntauc = %RN%_coriolisvecJ_fixb_sla"
+      "g_vp1(q, qD, pkin, m, r_S, I_S);\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -13693,8 +13737,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function Mq = inertia(q, pkin, m, r_S, I_S)\n%#codegen\nMq = %RN%_inertiaJ_slag_vp1(q, pk"
-      "in, m, r_S, I_S);\n"
+      script		      "function Mq = inertia(q, pkin, m, r_S, I_S)\n%#codegen\nMq = %RN%_inertiaJ_slag_vp1(q, pkin, m, "
+      "r_S, I_S);\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -13900,8 +13944,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function T = energykin(q, qD, pkin, m, r_S, I_S)\n%#codegen\nT = %RN%_energykin_fixb_slag"
-      "_vp1(q, qD, pkin, m, r_S, I_S);\n\n"
+      script		      "function T = energykin(q, qD, pkin, m, r_S, I_S)\n%#codegen\nT = %RN%_energykin_fixb_slag_vp1(q,"
+      " qD, pkin, m, r_S, I_S);\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -14129,8 +14173,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function U = energypot(q, g_base, pkin, m, r_S)\n%#codegen\nU = %RN%_energypot_fixb_slag_"
-      "vp1(q, g_base, pkin, m, r_S);\n\n"
+      script		      "function U = energypot(q, g_base, pkin, m, r_S)\n%#codegen\nU = %RN%_energypot_fixb_slag_vp1(q, "
+      "g_base, pkin, m, r_S);\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -14476,9 +14520,9 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function taug = gravload(q, ob, g_world, pkin, m, r_S)\n%#codegen\n\ntaug_base = %RN%_gra"
-      "vloadB_floatb_eulangrpy_slag_vp1(q, ob, g_world, ...\n  pkin, m, r_S);\ntaug_joints = %RN%_gravloadJ_flo"
-      "atb_eulangrpy_slag_vp1(q, ob, g_world,...\n  pkin, m, r_S);\ntaug = [taug_base; taug_joints];\n\n\n"
+      script		      "function taug = gravload(q, ob, g_world, pkin, m, r_S)\n%#codegen\n\ntaug_base = %RN%_gravloadB_"
+      "floatb_eulangrpy_slag_vp1(q, ob, g_world, ...\n  pkin, m, r_S);\ntaug_joints = %RN%_gravloadJ_floatb_eulangrpy_"
+      "slag_vp1(q, ob, g_world,...\n  pkin, m, r_S);\ntaug = [taug_base; taug_joints];\n\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -14706,7 +14750,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function tauc = coriolis(qJ, qJD, phi_base, xD_base, pkin, m, r_S, I_S)\n%#codegen\ntauc = %RN%_coriolisvec_floatb_eulangrpy_slag_vp1(qJ, qJD, phi_base, xD_base, ...\n  pkin, m, r_S, I_S);\n\n"
+      script		      "function tauc = coriolis(qJ, qJD, phi_base, xD_base, pkin, m, r_S, I_S)\n%#codegen\ntauc = %RN%_"
+      "coriolisvec_floatb_eulangrpy_slag_vp1(qJ, qJD, phi_base, xD_base, ...\n  pkin, m, r_S, I_S);\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -14978,8 +15023,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function Mq = inertia(qJ, phi_base, pkin, m, r_S, I_S)\n%#codegen\nMq = %RN%_inertia_floa"
-      "tb_eulangrpy_slag_vp1(qJ, phi_base, ...\n  pkin, m, r_S, I_S);\n"
+      script		      "function Mq = inertia(qJ, phi_base, pkin, m, r_S, I_S)\n%#codegen\nMq = %RN%_inertia_floatb_eula"
+      "ngrpy_slag_vp1(qJ, phi_base, ...\n  pkin, m, r_S, I_S);\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -15207,7 +15252,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function U = energypot(qJ, r_base, phi_base, g_world, ...\n  pkin, m, r_S)\n%#codegen\nU = %RN%_energypot_floatb_eulangrpy_slag_vp1(qJ, r_base, phi_base, g_world, ...\n  pkin, m, r_S);\n\n"
+      script		      "function U = energypot(qJ, r_base, phi_base, g_world, ...\n  pkin, m, r_S)\n%#codegen\nU = %RN%_"
+      "energypot_floatb_eulangrpy_slag_vp1(qJ, r_base, phi_base, g_world, ...\n  pkin, m, r_S);\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -15729,9 +15775,9 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function taug = gravload(q, ob, g_world, pkin, MPV)\n%#codegen\n\ntauBg_reg = %RN%_gravlo"
-      "adB_floatb_eulangrpy_regmin_slag_vp(q, ob, g_world, pkin);\ntauJg_reg = %RN%_gravloadJ_floatb_eulangrpy_"
-      "regmin_slag_vp(q, ob, g_world, pkin);    \ntaug_reg = [tauBg_reg;tauJg_reg];\ntaug = taug_reg*MPV;\n\n\n"
+      script		      "function taug = gravload(q, ob, g_world, pkin, MPV)\n%#codegen\n\ntauBg_reg = %RN%_gravloadB_flo"
+      "atb_eulangrpy_regmin_slag_vp(q, ob, g_world, pkin);\ntauJg_reg = %RN%_gravloadJ_floatb_eulangrpy_regmin_slag_vp"
+      "(q, ob, g_world, pkin);    \ntaug_reg = [tauBg_reg;tauJg_reg];\ntaug = taug_reg*MPV;\n\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -15937,7 +15983,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function tauc = coriolis(qJ, qJD, phi_base, xD_base, pkin, MPV)\n%#codegen\ntauc_reg = %RN%_coriolisvec_floatb_eulangrpy_regmin_slag_vp(qJ, qJD, ...\n  phi_base, xD_base, pkin);\n\ntauc = tauc_reg*MPV;"
+      script		      "function tauc = coriolis(qJ, qJD, phi_base, xD_base, pkin, MPV)\n%#codegen\ntauc_reg = %RN%_cori"
+      "olisvec_floatb_eulangrpy_regmin_slag_vp(qJ, qJD, ...\n  phi_base, xD_base, pkin);\n\ntauc = tauc_reg*MPV;"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -16165,8 +16212,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function Mq = inertia(qJ, phi_base, pkin, MPV)\n%#codegen\nM_regmin = %RN%_inertia_floatb"
-      "_eulangrpy_regmin_slag_vp(qJ, phi_base, pkin);\nM_mpv_vec = M_regmin*MPV;\nMq = vec2symmat(M_mpv_vec);"
+      script		      "function Mq = inertia(qJ, phi_base, pkin, MPV)\n%#codegen\nM_regmin = %RN%_inertia_floatb_eulang"
+      "rpy_regmin_slag_vp(qJ, phi_base, pkin);\nM_mpv_vec = M_regmin*MPV;\nMq = vec2symmat(M_mpv_vec);"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -16350,7 +16397,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function T = energykin(qJ, qD, phi_base, xD_base,  ...\n  pkin, MPV)\n%#codegen\nT_reg = %RN%_energykin_floatb_eulangrpy_regmin_slag_vp(qJ, qD, phi_base, xD_base, ...\n  pkin);\n\nT = T_reg*MPV;"
+      script		      "function T = energykin(qJ, qD, phi_base, xD_base,  ...\n  pkin, MPV)\n%#codegen\nT_reg = %RN%_en"
+      "ergykin_floatb_eulangrpy_regmin_slag_vp(qJ, qD, phi_base, xD_base, ...\n  pkin);\n\nT = T_reg*MPV;"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -16578,7 +16626,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function U = energypot(qJ, r_base, phi_base, g_world, ...\n  pkin, MPV)\n%#codegen\nU_reg = %RN%_energypot_floatb_eulangrpy_regmin_slag_vp(qJ, r_base, phi_base, g_world, ...\n  pkin);\nU = U_reg*MPV;\n"
+      script		      "function U = energypot(qJ, r_base, phi_base, g_world, ...\n  pkin, MPV)\n%#codegen\nU_reg = %RN%"
+      "_energypot_floatb_eulangrpy_regmin_slag_vp(qJ, r_base, phi_base, g_world, ...\n  pkin);\nU = U_reg*MPV;\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
