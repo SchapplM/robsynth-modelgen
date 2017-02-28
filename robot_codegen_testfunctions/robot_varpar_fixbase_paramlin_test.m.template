@@ -264,14 +264,14 @@ for i = 1:n
   tau_func = %RN%_invdyn_fixb_slag_vp1(q, qD, qDD, g_base, ...
     pkin, m, rSges, Icges);
   % calculate inverse dynamics with base parameter regressor
-  tau_regmin = %RN%_invdyn_joint_fixb_regmin_slag_vp(q, qD, qDD, g_base, ...
+  tau_regmin = %RN%_invdynJ_fixb_regmin_slag_vp(q, qD, qDD, g_base, ...
     pkin);
   tau_mpv = tau_regmin*MPV;
   if any( abs(tau_func-tau_mpv) > 1e-12 )
     error('Inverse dynamics from base parameter vector does not match with direct form.');
   end
   % calculate inverse dynamics with inertial parameter regressor
-  tau_reg2 = %RN%_invdyn_joint_fixb_reg2_slag_vp(q, qD, qDD, g_base, ...
+  tau_reg2 = %RN%_invdynJ_fixb_reg2_slag_vp(q, qD, qDD, g_base, ...
     pkin);
   tau_pv2 = tau_reg2*PV2fixb;
   if any( abs(tau_func-tau_pv2) > 1e-12 )
@@ -308,7 +308,7 @@ for i = 1:n
   qDD = QDD(i,:)';
   g_base = G(i,:)';
   % [Gautier1990] Gl. (7)
-  tau_reg2 = %RN%_invdyn_joint_fixb_reg2_slag_vp(q, qD, qDD, g_base, ...
+  tau_reg2 = %RN%_invdynJ_fixb_reg2_slag_vp(q, qD, qDD, g_base, ...
     pkin);
   % [Gautier1990] Gl. (8)
   W_g((i-1)*NQJ+1:i*NQJ,:) = tau_reg2;

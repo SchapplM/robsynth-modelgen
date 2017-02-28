@@ -492,9 +492,9 @@ do
 
     # Inverse Dynamik der Gelenke (Floating Base)
     quelldat=$repo_pfad/codeexport/${robot_name}/invdyn_joint_floatb_${basemeth}_${maple_string}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_invdyn_joint_floatb_${basemeth}_${matlab_string}_slag_vp.m
+    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_invdynJ_floatb_${basemeth}_${matlab_string}_slag_vp.m
     if [ -f $quelldat ]; then
-      cat ${tmp_pfad}_head/robot_matlabtmp_invdyn_joint_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
+      cat ${tmp_pfad}_head/robot_matlabtmp_invdynJ_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
