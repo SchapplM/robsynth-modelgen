@@ -133,9 +133,9 @@ for i = 1:n
     error('inertia matrices do not match between par1/par2.');
   end
   % Inverse Dynamics
-  tau_par1 = %RN%_invdyn_fixb_slag_vp1(q, qD, qDD, g_base, ...
+  tau_par1 = %RN%_invdynJ_fixb_slag_vp1(q, qD, qDD, g_base, ...
     pkin, m, rSges, Icges);
-  tau_par2 = %RN%_invdyn_fixb_slag_vp2(q, qD, qDD, g_base, ...
+  tau_par2 = %RN%_invdynJ_fixb_slag_vp2(q, qD, qDD, g_base, ...
     pkin, m, mrSges, Ifges);
   if any(abs(tau_par1-tau_par2) > 1e-12)
     error('inverse dynamics joint torque vectors do not match between par1/par2.');
@@ -167,7 +167,7 @@ for i = 1:n
   qDD = QDD(i,:)';
   g_base = G(i,:)';
   % Gravitation
-  taug_id = %RN%_invdyn_fixb_slag_vp1(q, zeros(NQJ,1), zeros(NQJ,1), g_base, ...
+  taug_id = %RN%_invdynJ_fixb_slag_vp1(q, zeros(NQJ,1), zeros(NQJ,1), g_base, ...
     pkin, m, rSges, Icges);
   taug_sp = %RN%_gravloadJ_floatb_twist_slag_vp1(q, g_base, ...
     pkin, m, rSges);
@@ -178,7 +178,7 @@ for i = 1:n
   end
   
   % Coriolis
-  tauc_id = %RN%_invdyn_fixb_slag_vp1(q, qD, zeros(NQJ,1), zeros(3,1), ...
+  tauc_id = %RN%_invdynJ_fixb_slag_vp1(q, qD, zeros(NQJ,1), zeros(3,1), ...
     pkin, m, rSges, Icges);
   tauc_sp = %RN%_coriolisvecJ_fixb_slag_vp1(q, qD, ...
     pkin, m, rSges, Icges);
@@ -189,7 +189,7 @@ for i = 1:n
   end
   
   % Inertia
-  taua_id = %RN%_invdyn_fixb_slag_vp1(q, zeros(NQJ,1), qDD, zeros(3,1), ...
+  taua_id = %RN%_invdynJ_fixb_slag_vp1(q, zeros(NQJ,1), qDD, zeros(3,1), ...
     pkin, m, rSges, Icges);
   Mq = %RN%_inertiaJ_slag_vp1(q, ...
     pkin, m, rSges, Icges);
@@ -218,7 +218,7 @@ for ii = 1:n
   odefun = @(t, x) ([x(NQJ+1:2*NQJ); -%RN%_inertiaJ_slag_vp1(x(1:NQJ), ...
     pkin, m, rSges, Icges) ...
     \ ...
-    (%RN%_invdyn_fixb_slag_vp1(x(1:NQJ), x(NQJ+1:2*NQJ), zeros(NQJ,1), [0;0;-9.81], pkin, m, rSges, Icges))]);
+    (%RN%_invdynJ_fixb_slag_vp1(x(1:NQJ), x(NQJ+1:2*NQJ), zeros(NQJ,1), [0;0;-9.81], pkin, m, rSges, Icges))]);
   odefun(0, x0); % Testen der Funktion
   % Numerische Integration konfigurieren und durchführen
   options = odeset('MaxStep',1e-3); % mit automatischer Schrittweite ist der Fehler zu groß
@@ -232,7 +232,7 @@ for ii = 1:n
     qD = SolverOutput.y(NQJ+1:2*NQJ,i);
     E(i,1) = %RN%_energykin_fixb_slag_vp1(q, qD, pkin, m, rSges, Icges);
     E(i,2) = %RN%_energypot_fixb_slag_vp1(q, [0;0;-9.81], pkin, m, rSges);
-    tau_Acc(i,:) = %RN%_invdyn_fixb_slag_vp1(q, qD, zeros(NQJ,1), [0;0;-9.81], pkin, m, rSges, Icges)';
+    tau_Acc(i,:) = %RN%_invdynJ_fixb_slag_vp1(q, qD, zeros(NQJ,1), [0;0;-9.81], pkin, m, rSges, Icges)';
   end
   E(:,3) = sum(E(:,1:2),2); % Gesamtenergie
   % Ergebnisse zeichnen

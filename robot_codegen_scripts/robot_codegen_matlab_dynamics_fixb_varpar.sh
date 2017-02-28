@@ -269,9 +269,9 @@ do
 
     # Inverse Dynamik (Fixed Base)
     quelldat=$repo_pfad/codeexport/${robot_name}/invdyn_fixb_par${dynpar}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_invdyn_fixb_slag_vp${dynpar}.m
+    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_invdynJ_fixb_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
-      cat ${tmp_pfad}_head/robot_matlabtmp_invdyn_fixb_par${dynpar}.head.m > $zieldat
+      cat ${tmp_pfad}_head/robot_matlabtmp_invdynJ_fixb_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
