@@ -155,6 +155,44 @@ for i = 1:n
   end
 end
 
+%% Teste Inverse Dynamik
+for i = 1:n
+  q = Q(i,:)';
+  qD = QD(i,:)';
+  qDD = QDD(i,:)';
+  g_world = G(i,:)';
+  V_W_W_0 = VB(i,:)';
+  A_W_W_0 = AB(i,:)';
+  
+  ob = OB(i,:)';
+  oDb = OBD(i,:)';
+  oDDb = OBDD(i,:)';
+  xDB = [V_W_W_0(1:3); oDb];
+  xDDB = [A_W_W_0(1:3); oDDb];
+  
+  % Einzelne Terme der inversen Dynamik aus Funktionen
+  taugB = %RN%_gravloadB_floatb_eulangrpy_slag_vp1(q, ob, g_world, ...
+    pkin, m, rSges);
+  taugJ = %RN%_gravloadJ_floatb_eulangrpy_slag_vp1(q, ob, g_world, ...
+    pkin, m, rSges);
+  MM = %RN%_inertia_floatb_eulangrpy_slag_vp1(q, ob, ...
+    pkin, m, rSges, Icges);
+  tauc_g = %RN%_coriolisvec_floatb_eulangrpy_slag_vp1(q, qD, ob, xDB,...
+    pkin, m, rSges, Icges);
+  % Gesamtfunktion für alle Einflüsse
+  tauB_dir = %RN%_invdynB_floatb_eulangrpy_slag_vp1(q, qD, qDD, ob, xDB, xDDB, g_world, ...
+    pkin, m, rSges, Icges);
+  tauJ_dir = %RN%_invdynJ_floatb_eulangrpy_slag_vp1(q, qD, qDD, ob, xDB, xDDB, g_world, ...
+    pkin, m, rSges, Icges);
+  tau_dir = [tauB_dir;tauJ_dir];
+  % Vergleichen
+  tau_test = [taugB;taugJ] + tauc_g + MM*[xDDB;qDD];
+  if any(abs(tau_dir-tau_test) > 1e-12)
+    error('Inverse Dynamik stimmt nicht zwischen Gesamtausdruck und Einzelausdrücken');
+  end
+end
+fprintf('Inverse Dynamik gegen Einzelausdrücke getestet\n');
+  
 %% Alle Funktionen mit Parametersatz 2 testen
 for i = 1:n
   q = Q(i,:)';
@@ -272,11 +310,18 @@ for i = 1:n
   end 
   
   % Inverse Dynamics
-  tau_par1 = %RN%_invdynJ_floatb_eulangrpy_slag_vp1(q, qD, qDD, ob, xDB, xDDB, g_world, ...
+  tauB_par1 = %RN%_invdynB_floatb_eulangrpy_slag_vp1(q, qD, qDD, ob, xDB, xDDB, g_world, ...
     pkin, m, rSges, Icges);
-  tau_par2 = %RN%_invdynJ_floatb_eulangrpy_slag_vp2(q, qD, qDD, ob, xDB, xDDB, g_world, ...
+  tauB_par2 = %RN%_invdynB_floatb_eulangrpy_slag_vp2(q, qD, qDD, ob, xDB, xDDB, g_world, ...
     pkin, m, mrSges, Ifges);
-  if any(abs(tau_par1-tau_par2) > 1e-12)
+  if any(abs(tauB_par1-tauB_par2) > 1e-12)
+    error('inverse dynamics base force vectors do not match between par1/par2.');
+  end
+  tauJ_par1 = %RN%_invdynJ_floatb_eulangrpy_slag_vp1(q, qD, qDD, ob, xDB, xDDB, g_world, ...
+    pkin, m, rSges, Icges);
+  tauJ_par2 = %RN%_invdynJ_floatb_eulangrpy_slag_vp2(q, qD, qDD, ob, xDB, xDDB, g_world, ...
+    pkin, m, mrSges, Ifges);
+  if any(abs(tauJ_par1-tauJ_par2) > 1e-12)
     error('inverse dynamics joint torque vectors do not match between par1/par2.');
   end
 end

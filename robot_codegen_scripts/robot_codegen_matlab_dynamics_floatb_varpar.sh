@@ -676,11 +676,70 @@ do
       echo "Code in ${quelldat##*/} nicht gefunden."
     fi
 
-    # Inverse Dynamik (Floating Base)
+    # Inverse Dynamik (Gelenke, Floating Base)
     quelldat=$repo_pfad/codeexport/${robot_name}/invdyn_joint_floatb_${basemeth}_par${dynpar}_matlab.m
     zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_invdynJ_floatb_${basemeth}_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_invdynJ_floatb_${basemeth}_par${dynpar}.head.m > $zieldat
+      printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qDD.m >> $zieldat
+      if [ $basemeth == "twist" ]; then
+        cat $tmp_pfad/robot_matlabtmp_assert_vB.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_assert_aB.m >> $zieldat
+      else
+        cat $tmp_pfad/robot_matlabtmp_assert_phiB.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_assert_xDB.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_assert_xDDB.m >> $zieldat
+      fi
+      cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
+      if [ $dynpar == 1 ]; then
+        cat $tmp_pfad/robot_matlabtmp_assert_rcom.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_assert_Ic.m >> $zieldat
+      else
+        cat $tmp_pfad/robot_matlabtmp_assert_mrcom.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_assert_If.m >> $zieldat
+      fi
+      
+      printf "\n%%%% Variable Initialization" >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qDD.m >> $zieldat
+      if [ $basemeth == "twist" ]; then
+        cat $tmp_pfad/robot_matlabtmp_vB.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_aB.m >> $zieldat
+      else
+        cat $tmp_pfad/robot_matlabtmp_phiB.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_xDB.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_xDDB.m >> $zieldat
+      fi
+      cat $tmp_pfad/robot_matlabtmp_g.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat
+      if [ $dynpar == 1 ]; then
+        cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_par_Ic.m >> $zieldat
+      else
+        cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_par_If.m >> $zieldat
+      fi
+      
+      printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+      cat $quelldat >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 1
+    else
+      echo "Code in ${quelldat##*/} nicht gefunden."
+    fi
+    
+    
+    # Inverse Dynamik (Basis, Floating Base)
+    quelldat=$repo_pfad/codeexport/${robot_name}/invdyn_base_floatb_${basemeth}_par${dynpar}_matlab.m
+    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_invdynB_floatb_${basemeth}_slag_vp${dynpar}.m
+    if [ -f $quelldat ]; then
+      cat ${tmp_pfad}_head/robot_matlabtmp_invdynB_floatb_${basemeth}_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
