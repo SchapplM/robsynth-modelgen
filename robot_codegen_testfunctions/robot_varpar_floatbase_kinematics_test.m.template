@@ -36,3 +36,18 @@ end
 
 fprintf('Tested %d configurations for fixed base forward kinematics.\n', n);
 
+%% Symbolisch generierte Jacobi-Matrix gegen numerisch berechnete Funktion
+for i = 1:n
+  for jj = 1:NL
+    ob = OB(i,:)';
+    qJ = Q(i,:)';
+    r_i_i_C = rand(3,1);
+    Jg_num = %RN%_jacobig_mdh_eulangrpy_num(ob, qJ, uint8(jj), r_i_i_C, pkin, v);
+    Jg_sym = %RN%_jacobig_mdh_eulangrpy_sym(ob, qJ, uint8(jj), r_i_i_C, pkin);
+    test = Jg_num-Jg_sym;
+    if any(abs(test(:)) > 1e-6)
+      error('Jacobian does not match between sym and num');
+    end
+  end
+end
+fprintf('Tested %d configurations for floating base Jacobians: sym vs. num.\n', n);
