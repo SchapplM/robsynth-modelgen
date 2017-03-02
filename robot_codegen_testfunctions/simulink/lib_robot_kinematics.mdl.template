@@ -18,7 +18,7 @@ Library {
       $ObjectID		      2
       $ClassName	      "Simulink.WindowInfo"
       IsActive		      [1]
-      Location		      [666.0, 399.0, 955.0, 548.0]
+      Location		      [666.0, 427.0, 955.0, 548.0]
       Object {
 	$PropName		"ModelBrowserInfo"
 	$ObjectID		3
@@ -41,11 +41,11 @@ Library {
 	Object {
 	  $ObjectID		  5
 	  IsActive		  [1]
-	  ViewObjType		  "SimulinkSubsys"
-	  LoadSaveID		  "39"
+	  ViewObjType		  "SimulinkTopLevel"
+	  LoadSaveID		  "0"
 	  Extents		  [919.0, 408.0]
-	  ZoomFactor		  [1.25]
-	  Offset		  [0.0, 0.0]
+	  ZoomFactor		  [1.0]
+	  Offset		  [-123.39612563201706, 26.0]
 	}
 	Object {
 	  $ObjectID		  6
@@ -66,9 +66,9 @@ Library {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "schappler"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Thu Feb 23 14:51:56 2017"
-  RTWModifiedTimeStamp	  409762313
-  ModelVersionFormat	  "1.%<AutoIncrement:29>"
+  LastModifiedDate	  "Thu Mar 02 15:57:05 2017"
+  RTWModifiedTimeStamp	  410371024
+  ModelVersionFormat	  "1.%<AutoIncrement:37>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -833,8 +833,8 @@ Library {
   }
   System {
     Name		    "lib_%RN%_kinematics"
-    Location		    [666, 399, 1621, 947]
-    Open		    off
+    Location		    [666, 427, 1621, 975]
+    Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
     ScreenColor		    "white"
@@ -847,7 +847,7 @@ Library {
     ShowPageBoundaries	    off
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "48"
+    SIDHighWatermark	    "50"
     Block {
       BlockType		      SubSystem
       Name		      "%RN%_fkine"
@@ -1151,7 +1151,7 @@ Library {
       }
       System {
 	Name			"%RN%_jacobig"
-	Location		[666, 399, 1621, 947]
+	Location		[666, 427, 1621, 975]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -1455,8 +1455,8 @@ Library {
       }
       System {
 	Name			"%RN%_jacobig_floatb_eulangrpy"
-	Location		[666, 399, 1621, 947]
-	Open			on
+	Location		[666, 427, 1621, 975]
+	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -1493,7 +1493,7 @@ Library {
 	  SID			  "41"
 	  Position		  [130, 207, 205, 233]
 	  ZOrder		  37
-	  Value			  "uint8(link_index)"
+	  Value			  "uint8(iL)"
 	}
 	Block {
 	  BlockType		  Constant
@@ -1504,10 +1504,18 @@ Library {
 	  Value			  "r_i_i_C"
 	}
 	Block {
+	  BlockType		  Constant
+	  Name			  "Constant6"
+	  SID			  "49"
+	  Position		  [145, 342, 195, 358]
+	  ZOrder		  40
+	  Value			  "pkin"
+	}
+	Block {
 	  BlockType		  SubSystem
 	  Name			  "%RN%_jacobig_floatb_eulangrpy_Fcn"
 	  SID			  "43"
-	  Ports			  [4, 1]
+	  Ports			  [5, 1]
 	  Position		  [370, 163, 485, 277]
 	  ZOrder		  36
 	  LibraryVersion	  "1.271"
@@ -1531,7 +1539,7 @@ Library {
 	    TiledPageScale	    1
 	    ShowPageBoundaries	    off
 	    ZoomFactor		    "100"
-	    SIDHighWatermark	    "59"
+	    SIDHighWatermark	    "61"
 	    Block {
 	      BlockType		      Inport
 	      Name		      "phi_base"
@@ -1568,6 +1576,15 @@ Library {
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
+	      BlockType		      Inport
+	      Name		      "pkin"
+	      SID		      "43::60"
+	      Position		      [20, 246, 40, 264]
+	      ZOrder		      33
+	      Port		      "5"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
 	      BlockType		      Demux
 	      Name		      " Demux "
 	      SID		      "43::57"
@@ -1581,11 +1598,11 @@ Library {
 	      Name		      " SFunction "
 	      SID		      "43::56"
 	      Tag		      "Stateflow S-Function lib_%RN%_kinematics 43"
-	      Ports		      [4, 2]
-	      Position		      [180, 102, 230, 203]
+	      Ports		      [5, 2]
+	      Position		      [180, 110, 230, 230]
 	      ZOrder		      29
 	      FunctionName	      "sf_sfun"
-	      PortCounts	      "[4 2]"
+	      PortCounts	      "[5 2]"
 	      Port {
 		PortNumber		2
 		Name			"Jg_C"
@@ -1609,36 +1626,44 @@ Library {
 	      IconDisplay	      "Port number"
 	    }
 	    Line {
-	      ZOrder		      20
+	      ZOrder		      44
 	      SrcBlock		      "phi_base"
 	      SrcPort		      1
 	      DstBlock		      " SFunction "
 	      DstPort		      1
 	    }
 	    Line {
-	      ZOrder		      21
+	      ZOrder		      45
 	      SrcBlock		      "qJ"
 	      SrcPort		      1
 	      DstBlock		      " SFunction "
 	      DstPort		      2
 	    }
 	    Line {
-	      ZOrder		      22
+	      ZOrder		      46
 	      SrcBlock		      "link_index"
 	      SrcPort		      1
+	      Points		      [120, 0]
 	      DstBlock		      " SFunction "
 	      DstPort		      3
 	    }
 	    Line {
-	      ZOrder		      23
+	      ZOrder		      47
 	      SrcBlock		      "r_i_i_C"
 	      SrcPort		      1
 	      DstBlock		      " SFunction "
 	      DstPort		      4
 	    }
 	    Line {
+	      ZOrder		      48
+	      SrcBlock		      "pkin"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      5
+	    }
+	    Line {
 	      Name		      "Jg_C"
-	      ZOrder		      24
+	      ZOrder		      49
 	      Labels		      [0, 0]
 	      SrcBlock		      " SFunction "
 	      SrcPort		      2
@@ -1646,14 +1671,14 @@ Library {
 	      DstPort		      1
 	    }
 	    Line {
-	      ZOrder		      25
+	      ZOrder		      50
 	      SrcBlock		      " Demux "
 	      SrcPort		      1
 	      DstBlock		      " Terminator "
 	      DstPort		      1
 	    }
 	    Line {
-	      ZOrder		      26
+	      ZOrder		      51
 	      SrcBlock		      " SFunction "
 	      SrcPort		      1
 	      DstBlock		      " Demux "
@@ -1674,7 +1699,7 @@ Library {
 	  ZOrder		  5
 	  SrcBlock		  "phi_base"
 	  SrcPort		  1
-	  Points		  [88, 0; 0, 45]
+	  Points		  [88, 0; 0, 50]
 	  DstBlock		  "%RN%_jacobig_floatb_eulangrpy_Fcn"
 	  DstPort		  1
 	}
@@ -1689,7 +1714,6 @@ Library {
 	  ZOrder		  3
 	  SrcBlock		  "Constant"
 	  SrcPort		  1
-	  Points		  [145, 0]
 	  DstBlock		  "%RN%_jacobig_floatb_eulangrpy_Fcn"
 	  DstPort		  3
 	}
@@ -1697,7 +1721,7 @@ Library {
 	  ZOrder		  4
 	  SrcBlock		  "Constant1"
 	  SrcPort		  1
-	  Points		  [78, 0; 0, -15]
+	  Points		  [78, 0; 0, -40]
 	  DstBlock		  "%RN%_jacobig_floatb_eulangrpy_Fcn"
 	  DstPort		  4
 	}
@@ -1705,15 +1729,23 @@ Library {
 	  ZOrder		  6
 	  SrcBlock		  "qJ"
 	  SrcPort		  1
-	  Points		  [42, 0; 0, 30]
+	  Points		  [42, 0; 0, 25]
 	  DstBlock		  "%RN%_jacobig_floatb_eulangrpy_Fcn"
 	  DstPort		  2
+	}
+	Line {
+	  ZOrder		  10
+	  SrcBlock		  "Constant6"
+	  SrcPort		  1
+	  Points		  [47, 0; 0, -90]
+	  DstBlock		  "%RN%_jacobig_floatb_eulangrpy_Fcn"
+	  DstPort		  5
 	}
 	Annotation {
 	  SID			  "45"
 	  Name			  "Quelle: \n[BouyarmaneKhe2012]: On the dynamics modeling of free-floating-base articulated mechanisms and "
 	  "applications to humanoid whole-body dynamics and control"
-	  Position		  [108, 20, 818, 52]
+	  Position		  [108, 20, 819, 52]
 	  InternalMargins	  [0, 0, 0, 0]
 	  FixedHeight		  off
 	  FixedWidth		  off
@@ -1762,7 +1794,7 @@ Stateflow {
     name		    "lib_%RN%_kinematics"
     created		    "14-Oct-2016 14:07:35"
     isLibrary		    1
-    firstTarget		    31
+    firstTarget		    32
     sfVersion		    80000005
   }
   chart {
@@ -1775,7 +1807,6 @@ Stateflow {
     firstTransition	    10
     firstJunction	    9
     viewObj		    2
-    visible		    1
     machine		    1
     toolbarMode		    LIBRARY_TOOLBAR
     subviewS {
@@ -1964,11 +1995,8 @@ Stateflow {
     firstTransition	    19
     firstJunction	    18
     viewObj		    12
-    visible		    1
     machine		    1
     toolbarMode		    LIBRARY_TOOLBAR
-    subviewS {
-    }
     ssIdHighWaterMark	    16
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -2128,15 +2156,15 @@ Stateflow {
     viewLimits		    [0 156.75 0 153.75]
     screen		    [1 1 3600 1200 1.180555555555556]
     treeNode		    [0 22 0 0]
-    firstTransition	    29
-    firstJunction	    28
+    firstTransition	    30
+    firstJunction	    29
     viewObj		    21
     visible		    1
     machine		    1
     toolbarMode		    LIBRARY_TOOLBAR
     subviewS {
     }
-    ssIdHighWaterMark	    10
+    ssIdHighWaterMark	    12
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
     firstData		    23
@@ -2161,9 +2189,9 @@ Stateflow {
     eml {
       isEML		      1
       script		      "% Floating-Base Jacobimatrix zu beliebigen Punkten\n\nfunction Jg_C = fcn(phi_base, qJ, link_inde"
-      "x, r_i_i_C)\n%% Init\n%#codegen\n% Segmentnummer wird in MDH-Notation übergeben (0=Basis). Die Funktionen\n% ne"
-      "hmen Indizes mit Matlab-Notation entgegen (1=Basis)\nJg_C = %RN%_jacobig_mdh_eulangrpy_num(phi_base, qJ,"
-      " link_index+1, r_i_i_C);"
+      "x, r_i_i_C, pkin)\n%% Init\n%#codegen\n% Segmentnummer wird in MDH-Notation übergeben (0=Basis). Die Funktionen"
+      "\n% nehmen Indizes mit Matlab-Notation entgegen (1=Basis)\nJg_C = %RN%_jacobig_mdh_eulangrpy_sym(phi_bas"
+      "e, qJ, link_index+1, r_i_i_C, pkin);"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -2254,7 +2282,29 @@ Stateflow {
     id			    27
     ssIdNumber		    9
     name		    "r_i_i_C"
-    linkNode		    [21 26 0]
+    linkNode		    [21 26 28]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    28
+    ssIdNumber		    11
+    name		    "pkin"
+    linkNode		    [21 27 0]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -2273,7 +2323,7 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   junction {
-    id			    28
+    id			    29
     position		    [23.5747 49.5747 7]
     chart		    21
     linkNode		    [21 0 0]
@@ -2282,7 +2332,7 @@ Stateflow {
     type		    CONNECTIVE_JUNCTION
   }
   transition {
-    id			    29
+    id			    30
     labelString		    "{eML_blk_kernel();}"
     labelPosition	    [28.125 13.875 102.544 14.964]
     fontSize		    12
@@ -2290,7 +2340,7 @@ Stateflow {
       intersection	      [0 0 1 0 23.5747 14.625 0 0]
     }
     dst {
-      id		      28
+      id		      29
       intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
     }
     midPoint		    [23.5747 24.9468]
@@ -2306,13 +2356,13 @@ Stateflow {
     ssIdNumber		    2
   }
   instance {
-    id			    30
+    id			    31
     name		    "%RN%_jacobig_floatb_eulangrpy/%RN%_jacobig_floatb_eulangrpy_Fcn"
     machine		    1
     chart		    21
   }
   target {
-    id			    31
+    id			    32
     name		    "sfun"
     description		    "Default Simulink S-Function Target."
     machine		    1

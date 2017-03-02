@@ -1,0 +1,36 @@
+% Start kinematics block test model
+% Test auf Kompilierbarkeit der Kinematik-Blöcke in der Bibliothek (kein Funktionstest)
+
+% Moritz Schappler, schappler@irt.uni-hannover.de, 2017-03
+% (c) Institut für Regelungstechnik, Universität Hannover
+
+clear
+clc
+close all
+
+%% Parameter
+%RN%_varpar_testfunctions_parameter
+
+
+%% Modellparameter
+simin_qJ = struct('time', 0, ...
+    'signals', struct('values', zeros(1,NQJ), 'dimensions', NQJ), ...
+    'name', 'tau_ext');
+
+simin_phiB = struct('time', 0, ...
+    'signals', struct('values', zeros(1,3), 'dimensions', 3), ...
+    'name', 'tau_ext');
+
+NL_modell = NL;
+
+% Workspace-Variable löschen, Modell darf nicht davon abhängen
+clear NQJ NJ NL
+
+sl_Modellname = '%RN%_simulink_kinematics_block_test';
+
+%% Start Simulation
+t1 = tic;
+simOut = sim(sl_Modellname, 'StopTime', '5', ...
+  'SimulationMode', 'normal'); % normal
+sl = get_simulink_outputs(simOut, sl_Modellname);
+fprintf('Simulink-Modell berechnet. Rechenzeit: %1.1fs\n', toc(t1));
