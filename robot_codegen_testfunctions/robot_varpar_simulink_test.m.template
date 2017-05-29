@@ -11,4 +11,4 @@ clear
 %RN%_fdyn_fixb_test_vp1_start
 %RN%_fdyn_floatb_eulangrpy_test_vp1_start
 %RN%_fdyn_floatb_eulangrpy_test_mp_start
-%RN%_simulink_kinematics_block_test_start.m
+%RN%_simulink_kinematics_block_test_start
