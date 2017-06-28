@@ -79,7 +79,7 @@ mkdir -p "$repo_pfad/codeexport/testfcn/$robot_name"
 
 # Maple-Definitionen einmal ausführen (damit dort definierte Variablen in Bash übernommen werden)
 pwd_alt=$(pwd)
-cd /opt/maple18/bin
+cd /opt/maple2017/bin
 nice -n 10 ./maple -q  <<< "currentdir(\"$repo_pfad/robot_codegen_definitions\"): read \"robot_tree_floatb_twist_definitions.mpl\";"
 cd $pwd_alt
 
@@ -98,7 +98,7 @@ fi;
 
 # Hilfs-Skripte für die Matlab-Code-Generierung
 pwd_alt=$(pwd)
-cd /opt/maple18/bin
+cd /opt/maple2017/bin
 nice -n 10 ./maple -q  <<< "currentdir(\"$repo_pfad/helper\"): read \"robot_gen_symmat2vector.mpl\";"
 cd $pwd_alt
 

@@ -61,7 +61,7 @@ else
   basemethodenames=( twist eulangrpy )
 fi;
 
-cd /opt/maple18/bin
+cd /opt/maple2017/bin
 
 for basemeth in "${basemethodenames[@]}"
 do

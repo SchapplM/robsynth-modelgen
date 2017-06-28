@@ -140,7 +140,7 @@ if ! [ "$CG_FIXBONLY" == "1" ]; then
 fi; # floatb
 
 # Alle Maple-Dateien der Reihe nach ausführen
-cd /opt/maple18/bin
+cd /opt/maple2017/bin
 for mpldat in $dateiliste_kindyn
 do
   mpldat_full=$repo_pfad/$mpldat

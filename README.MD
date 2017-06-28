@@ -31,7 +31,7 @@ Folgende Schritte müssen durchgeführt werden:
 ## Voraussetzungen <a name="voraussetzungen"></a> 
 
 * Linux-Betriebssystem (für .sh-Skripte in [Alternative 1](#start_alt1)). Ausführung der Maple-Arbeitsblätter in [Alternative 2](#start_alt2) auch unter Windows möglich.
-* Maple muss im Ordner /opt/maple18/ installiert sein (Standard-Ordner bei sudo-Installation unter Linux).
+* Maple muss im Ordner /opt/maple2017/ installiert sein (Standard-Ordner bei sudo-Installation unter Linux).
 * Die IRT-Matlab-Toolbox (git@130.75.135.95:software/matlab) muss im Matlab-Pfad initialisiert sein (Aufruf von irt_tb_init.m im Repo). Damit die Pfadinitialisierung auch im Matlab-Terminalaufruf funktioniert, sollte die startup.m richtig gesetzt sein.
 
 ## Starten der Codeerstellung <a name="codeerstellung"></a> 
