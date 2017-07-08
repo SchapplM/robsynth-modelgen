@@ -24,7 +24,7 @@
 %     and control
 
 % Moritz Schappler, schappler@irt.uni-hannover.de, 2016-06
-% (c) Institut für Regelungstechnik, Leibniz Universität Hannover
+% (C) Institut für Regelungstechnik, Leibniz Universität Hannover
 
 function Jg_C = %FN%(phi_base, qJ, link_index, r_i_i_C, pkin, v_mdh)
 %% Init

@@ -4,7 +4,7 @@
 % [KhalilDombre2002] Modeling, Identification and Control of Robots
 
 % Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
-% (c) Institut für Regelungstechnik, Universität Hannover
+% (C) Institut für Regelungstechnik, Universität Hannover
 
 clc
 clear

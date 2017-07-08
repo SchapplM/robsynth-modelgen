@@ -2,7 +2,7 @@
 % called by %RN%_fdyn_fixb_test_start.m
 
 % Moritz Schappler, schappler@irt.uni-hannover.de, 2016-04
-% (c) Institut für Regelungstechnik, Universität Hannover
+% (C) Institut für Regelungstechnik, Universität Hannover
 
 NQJ = %NQJ%;
 NJ = %NJ%;

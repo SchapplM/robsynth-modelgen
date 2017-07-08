@@ -9,7 +9,7 @@
 # TODO: Prüfung auf unknown beeinflusst nicht die Prüfung auf %arctan
 
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-10
-# (c) Institut für Regelungstechnik, Leibniz Universität Hannover
+# (C) Institut für Regelungstechnik, Leibniz Universität Hannover
 
 # Suche nach dem Term unknown.
 # Wenn in Maple Vektoren oder Matrizen exportiert werden mit Code-Optimierung Stufe 1 (nicht: tryhard), wird keine Gesamt-Variable dafür gebildet.

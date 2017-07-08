@@ -13,7 +13,7 @@
 # 
 # Autor
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-10
-# Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
+# (C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
 # 
 # Sources
 # [Ortmaier2014] Vorlesungsskript Robotik I

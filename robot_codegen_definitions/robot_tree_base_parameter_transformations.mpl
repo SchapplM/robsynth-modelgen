@@ -9,7 +9,7 @@
 # Authors
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-04
 # 
-# Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
+# (C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
 # Quellen
 # [SousaCor2014] Sousa, C. D. and Cortesao, R.: Physical feasibility of robot base inertial parameter identification: A linear matrix inequality approach (2014)
 # Initialisierung

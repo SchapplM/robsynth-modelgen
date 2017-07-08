@@ -2,7 +2,7 @@
 % Test auf Kompilierbarkeit der Kinematik-Blöcke in der Bibliothek (kein Funktionstest)
 
 % Moritz Schappler, schappler@irt.uni-hannover.de, 2017-03
-% (c) Institut für Regelungstechnik, Universität Hannover
+% (C) Institut für Regelungstechnik, Universität Hannover
 
 clear
 clc

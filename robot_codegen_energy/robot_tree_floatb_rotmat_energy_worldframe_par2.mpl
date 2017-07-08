@@ -17,7 +17,7 @@
 # Für die kinetische Energie sollte robot_tree_floatb_twist_rotmat_energy_linkframe_par2.mw genommen werden!
 # Authors
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
-# Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
+# (C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
 # 
 # Sources
 # [GautierKhalil1990] Direct Calculation of Minimum Set of Inertial Parameters of Serial Robots

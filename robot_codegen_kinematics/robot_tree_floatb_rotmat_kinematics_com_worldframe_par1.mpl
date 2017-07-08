@@ -14,7 +14,7 @@
 # Test des exportierten Matlab-Codes erfolgreich (kinetische Energie)
 # Authors
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2014-11
-# Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
+# (C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
 # Sources
 # [GautierKhalil1990] Direct Calculation of Minimum Set of Inertial Parameters of Serial Robots
 # [KhalilDombre2002] Modeling, Identification and Control of Robots

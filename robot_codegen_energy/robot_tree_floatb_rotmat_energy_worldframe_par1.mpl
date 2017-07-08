@@ -12,7 +12,7 @@
 # par1 -> Parametersatz 1 (Schwerpunkt als Parameter: SX,SY,SZ)
 # Authors
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
-# Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
+# (C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
 # 
 # Sources
 # [GautierKhalil1990] Direct Calculation of Minimum Set of Inertial Parameters of Serial Robots

@@ -14,7 +14,7 @@
 # Zusätzlich können kinematische Zwangsbedingungen direkt berücksichtigt werden. Diese sorgen dafür, dass MDH-Winkel durch analytische Ausdrücke verallgemeinerter Koordinaten ersetzt werden.
 # Authors
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
-# Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
+# (C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
 # Sources
 # [KhalilKle1986] Khalil, W. & Kleinfinger, J.: A new geometric notation for open and closed-loop robots (1986)
 # [KhalilDombre2002] Modeling, Identification and Control of Robots

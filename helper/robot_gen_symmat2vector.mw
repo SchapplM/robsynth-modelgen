@@ -103,7 +103,7 @@
 <Input>
 <Text-field style="Heading 2" layout="Heading 2">Autor</Text-field>
 <Text-field style="Normal" layout="Normal">Moritz Schappler, schappler@irt.uni-hannover.de, 2016-12</Text-field>
-<Text-field style="Normal" layout="Normal">Institut fuer Regelungstechnik, Leibniz Universitaet Hannover</Text-field>
+<Text-field style="Normal" layout="Normal">(C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover</Text-field>
 </Input>
 </Group>
 <Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>

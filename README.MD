@@ -5,7 +5,7 @@ Ausgehend von einer kinematischen Beschreibung werden Dynamikfunktionen in Matla
 
 Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
 
-(c) Institut für Regelungstechnik, Universität Hannover
+(C) Institut für Regelungstechnik, Universität Hannover
 
 ## Inhalt
 

@@ -11,7 +11,7 @@
 # [5] Ortmaier: Robotik I Vorlesungsskript
 # 
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-04
-# Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
+# (C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
 interface(warnlevel=0): # Unterdrücke die folgende Warnung.
 restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
 interface(warnlevel=3):

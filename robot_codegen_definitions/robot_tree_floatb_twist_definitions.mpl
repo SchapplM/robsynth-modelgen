@@ -9,7 +9,7 @@
 # [4] Khalil, W. and Kleinfinger, J.-F.: Minimum operations and minimum parameters of the dynamic models of tree structure robots (1987)
 # 
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
-# Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
+# (C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
 interface(warnlevel=0): # Unterdrücke die folgende Warnung.
 restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
 interface(warnlevel=3):

@@ -4,7 +4,7 @@
 % * no joint damping. Check for energy consistency
 
 % Moritz Schappler, schappler@irt.uni-hannover.de, 2016-04
-% (c) Institut für Regelungstechnik, Universität Hannover
+% (C) Institut für Regelungstechnik, Universität Hannover
 
 clear
 clc

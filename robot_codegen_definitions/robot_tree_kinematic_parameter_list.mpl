@@ -6,7 +6,7 @@
 # TODO: Liste mit Kinematikparametern muss immer die selbe Reihenfolge haben. Am besten in der Form a,alpha,qoffset,d,b,beta,kc. Momentan scheint die Reihenfolge zufällig, aber reproduzierbar.
 # 
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2017-02
-# Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
+# (C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
 interface(warnlevel=0): # Unterdrücke die folgende Warnung.
 restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
 interface(warnlevel=3):

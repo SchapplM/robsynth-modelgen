@@ -107,7 +107,7 @@ Quellen:
 [5] Ortmaier: Robotik I Vorlesungsskript
 
 Moritz Schappler, schappler@irt.uni-hannover.de, 2016-04</Text-field>
-<Text-field style="Normal" layout="Normal">Institut fuer Regelungstechnik, Leibniz Universitaet Hannover</Text-field>
+<Text-field style="Normal" layout="Normal">(C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1601" drawlabel="true">

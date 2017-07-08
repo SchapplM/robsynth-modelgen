@@ -12,7 +12,7 @@
 # par12 -> Parametersatz 1 (Schwerpunkt als Parameter: SX,SY,SZ) oder Parametersatz 2 (1. und 2. Moment MX,MY,MZ,...)
 # Autor
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
-# Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
+# (C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
 # Sources
 # [GautierKhalil1990] Direct Calculation of Minimum Set of Inertial Parameters of Serial Robots
 # [KhalilDombre2002] Modeling, Identification and Control of Robots

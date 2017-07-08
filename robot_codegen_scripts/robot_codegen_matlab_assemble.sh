@@ -7,7 +7,7 @@
 # Die einzelnen Dateien für 1x1-Einträge werden hier wieder zusammengefasst.
 
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-05
-# (c) Institut für Regelungstechnik, Leibniz Universität Hannover
+# (C) Institut für Regelungstechnik, Leibniz Universität Hannover
 
 
 echo "Setze Teilausdrücke des exportierten Codes zu vollständigen Ausdrücken zusammen"

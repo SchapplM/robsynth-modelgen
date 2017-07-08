@@ -1,7 +1,7 @@
 % Compile all Functions as mex to check if asserts are correct
 
 % Moritz Schappler, schappler@irt.uni-hannover.de, 2015-01
-% (c) Institut für Regelungstechnik, Universität Hannover
+% (C) Institut für Regelungstechnik, Universität Hannover
 
 clear
 clc

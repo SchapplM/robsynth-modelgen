@@ -12,7 +12,7 @@
 # par2 -> Parametersatz 2 (erstes Moment anstelle von Schwerpunkt als Parameter)
 # Authors
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
-# Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
+# (C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
 # Sources
 # [GautierKhalil1988] A direct determination of minimum inertial parameters of robots
 # [GautierKhalil1990] Direct Calculation of Minimum Set of Inertial Parameters of Serial Robots

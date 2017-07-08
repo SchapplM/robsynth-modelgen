@@ -6,7 +6,7 @@
 # Erfordert installierte Pakete: wmctrl
 
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-05
-# (c) Institut für Regelungstechnik, Leibniz Universität Hannover
+# (C) Institut für Regelungstechnik, Leibniz Universität Hannover
 
 repo_pfad=$(pwd)/../
 echo $repo_pfad

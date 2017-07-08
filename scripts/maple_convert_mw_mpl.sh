@@ -5,7 +5,7 @@
 # TODO: Funktioniert nicht, wenn mpl-Datei schon existiert
 
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-05
-# (c) Institut für Regelungstechnik, Leibniz Universität Hannover
+# (C) Institut für Regelungstechnik, Leibniz Universität Hannover
 
 # Pfad zur mw-Datei
 mw_file=$1

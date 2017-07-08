@@ -8,7 +8,7 @@
 # Dieses Skript im Ordner ausführen, in dem es im Repo liegt
 
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-06
-# (c) Institut für Regelungstechnik, Leibniz Universität Hannover
+# (C) Institut für Regelungstechnik, Leibniz Universität Hannover
 
 echo "Generiere Dynamikfunktion (numerisch)"
 

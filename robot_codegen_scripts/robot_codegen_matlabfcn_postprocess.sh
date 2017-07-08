@@ -9,7 +9,7 @@
 # Dieses Skript im Ordner ausführen, in dem es im Repo liegt
 
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
-# (c) Institut für Regelungstechnik, Leibniz Universität Hannover
+# (C) Institut für Regelungstechnik, Leibniz Universität Hannover
 
 
 repo_pfad=$(pwd)/..
@@ -57,7 +57,7 @@ now="$(date +'%Y-%m-%d %H:%M')"
 printf "%% Datum: $now\n" >> $versionfile
 rev=`git rev-parse HEAD`
 printf "%% Revision: $rev\n" >> $versionfile
-echo "% (c) Institut für Regelungstechnik, Universität Hannover" >> $versionfile
+echo "% (C) Institut für Regelungstechnik, Universität Hannover" >> $versionfile
 
 # TODO: Ersetzungen sauberer
 sed -i "/% %VERSIONINFO%/r $versionfile" $mfcndat

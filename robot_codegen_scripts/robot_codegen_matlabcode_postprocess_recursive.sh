@@ -6,7 +6,7 @@
 
 
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-10
-# (c) Institut für Regelungstechnik, Leibniz Universität Hannover
+# (C) Institut für Regelungstechnik, Leibniz Universität Hannover
 
 if [ "$1" == "" ] || [ ! -d "$1" ]; then
   echo "Eingabeargument \"$1\" ist kein gültiges Verzeichnis."

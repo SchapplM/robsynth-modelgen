@@ -105,7 +105,7 @@ Quellen:
 [4] Khalil, W. and Kleinfinger, J.-F.: Minimum operations and minimum parameters of the dynamic models of tree structure robots (1987)
 
 Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03</Text-field>
-<Text-field style="Normal" layout="Normal">Institut fuer Regelungstechnik, Leibniz Universitaet Hannover</Text-field>
+<Text-field style="Normal" layout="Normal">(C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1601" drawlabel="true">

@@ -116,7 +116,7 @@ baseframe -&gt; Berechnung der Jacobi-Matrix bezogen auf das Basis-Koordinatensy
 <Input>
 <Text-field style="Heading 2" layout="Heading 2">Autor</Text-field>
 <Text-field style="Normal" layout="Normal">Moritz Schappler, schappler@irt.uni-hannover.de, 2016-10</Text-field>
-<Text-field style="Normal" layout="Normal">Institut fuer Regelungstechnik, Leibniz Universitaet Hannover</Text-field>
+<Text-field style="Normal" layout="Normal">(C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover</Text-field>
 <Text-field style="Text" layout="Normal"></Text-field>
 </Input>
 </Group>

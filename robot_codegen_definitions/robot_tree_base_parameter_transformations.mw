@@ -118,7 +118,7 @@ tree -&gt; Berechnung f\303\274r eine allgemeine Baumstruktur (aber bisher nur f
 <Text-field style="Heading 2" layout="Heading 2">Authors</Text-field>
 <Text-field style="Normal" layout="Normal">Moritz Schappler, schappler@irt.uni-hannover.de, 2016-04</Text-field>
 <Text-field style="Normal" layout="Normal"></Text-field>
-<Text-field style="Normal" layout="Normal">Institut fuer Regelungstechnik, Leibniz Universitaet Hannover</Text-field>
+<Text-field style="Normal" layout="Normal">(C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1518" drawlabel="true">

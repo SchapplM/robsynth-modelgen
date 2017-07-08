@@ -102,7 +102,7 @@
 <Font encoding="UTF-8">TODO: Liste mit Kinematikparametern muss immer die selbe Reihenfolge haben. Am besten in der Form a,alpha,qoffset,d,b,beta,kc. Momentan scheint die Reihenfolge zuf\303\244llig, aber reproduzierbar.
 </Font>
 Moritz Schappler, schappler@irt.uni-hannover.de, 2017-02</Text-field>
-<Text-field style="Normal" layout="Normal">Institut fuer Regelungstechnik, Leibniz Universitaet Hannover</Text-field>
+<Text-field style="Normal" layout="Normal">(C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1601" drawlabel="true">

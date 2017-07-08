@@ -122,7 +122,7 @@ regressor -&gt; Regressorform (parameterlinear)</Text-field>
 <Text-field style="Normal" layout="Normal"><Font encoding="UTF-8">Alexander T\303\266dtheide, toedtheide@irt.uni-hannover.de</Font>
 Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03</Text-field>
 <Text-field style="Normal" layout="Normal"></Text-field>
-<Text-field style="Normal" layout="Normal">Institut fuer Regelungstechnik, Leibniz Universitaet Hannover</Text-field>
+<Text-field style="Normal" layout="Normal">(C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1518" drawlabel="true">

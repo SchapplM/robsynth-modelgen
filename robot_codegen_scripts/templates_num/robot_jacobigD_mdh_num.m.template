@@ -22,7 +22,7 @@
 % Berechnungen Moritz Schappler, 21.06.2016
 
 % Moritz Schappler, schappler@irt.uni-hannover.de, 2016-06
-% (c) Institut für Regelungstechnik, Leibniz Universität Hannover
+% (C) Institut für Regelungstechnik, Leibniz Universität Hannover
 
 function JgD_C = %FN%(qJ, qJD, link_index, r_i_i_C, pkin, v_mdh)
 %% Init

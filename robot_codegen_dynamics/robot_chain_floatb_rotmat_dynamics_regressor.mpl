@@ -15,7 +15,7 @@
 # Ursache ist, dass der Parametervektor und damit der Regressor sich zwischen Fixed-Base und Floating-Base unterscheidet und daher ein Ableiten des Fixed-Base falles aus der Floating-Base-Formulierung mit einfacher Basis-Darstellung ("twist") nicht möglich ist.
 # Autor
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
-# Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
+# (C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
 # Sources
 # [GautierKhalil1990] Direct Calculation of Minimum Set of Inertial Parameters of Serial Robots
 # [KhalilDombre2002] Modeling, Identification and Control of Robots

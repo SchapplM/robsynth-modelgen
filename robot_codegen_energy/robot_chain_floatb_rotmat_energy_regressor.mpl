@@ -13,7 +13,7 @@
 # Alexander Tödtheide, toedtheide@irt.uni-hannover.de
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2017-02
 # 
-# Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
+# (C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
 # Quellen
 # [HRL_IDR] Skript Humanoid Robotics Lab - Serial Chain Robot Identification
 # [GautierKhalil1988] A Direct Determination of Minimum Inertial Parameters of Robots

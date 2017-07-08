@@ -13,7 +13,7 @@
 # par1 -> Parametersatz 1 (Schwerpunkt als Parameter: SX,SY,SZ)
 # Authors
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2015-12
-# Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
+# (C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
 # 
 # Sources
 # [SugiharaNakIno2002] Sugihara, T. and Nakamura, Y. and Inoue, H.: Real-time humanoid motion generation through ZMP manipulation based on inverted pendulum control (2002)

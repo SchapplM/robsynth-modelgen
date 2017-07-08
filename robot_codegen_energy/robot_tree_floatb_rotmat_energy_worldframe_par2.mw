@@ -120,7 +120,7 @@ F\303\274r die kinetische Energie sollte robot_tree_floatb_twist_rotmat_energy_l
 <Input>
 <Text-field style="Heading 2" layout="Heading 2">Authors</Text-field>
 <Text-field style="Normal" layout="Normal">Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03</Text-field>
-<Text-field style="Normal" layout="Normal">Institut fuer Regelungstechnik, Leibniz Universitaet Hannover</Text-field>
+<Text-field style="Normal" layout="Normal">(C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover</Text-field>
 <Text-field style="Text" layout="Normal"></Text-field>
 </Input>
 </Group>

@@ -4,7 +4,7 @@
 # Diese Umwandlung verursacht weniger Rechenoperationen als die Verwendung der numerischen Funktion vec2symmat in Matlab, da dort jedes Mal die Indizes beim Zusammenbauen der Matrix getestet werden müssen.
 # Autor
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-12
-# Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
+# (C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
 # Initialization
 restart:
 with(LinearAlgebra):

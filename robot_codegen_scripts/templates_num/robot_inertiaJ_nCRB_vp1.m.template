@@ -12,7 +12,7 @@
 % [Featherstone2008] Roy Featherstone: Rigid Body Dynamics Algorithms (2008)
 
 % Moritz Schappler, schappler@irt.uni-hannover.de, 2016-12
-% (c) Institut für Regelungstechnik, Universität Hannover
+% (C) Institut für Regelungstechnik, Universität Hannover
 
 function H = %FN%(q, pkin, v_mdh, m_num, rSges_num_mdh, Icges_num_mdh)
 %%Coder Information

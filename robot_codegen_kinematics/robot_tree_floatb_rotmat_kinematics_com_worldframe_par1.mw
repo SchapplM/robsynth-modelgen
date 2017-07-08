@@ -127,7 +127,7 @@ par1 -&gt; Parametersatz 1 (Schwerpunkt als Parameter: SX,SY,SZ)</Text-field>
 <Input>
 <Text-field style="Heading 2" layout="Heading 2">Authors</Text-field>
 <Text-field style="Normal" layout="Normal">Moritz Schappler, schappler@irt.uni-hannover.de, 2014-11</Text-field>
-<Text-field style="Normal" layout="Normal">Institut fuer Regelungstechnik, Leibniz Universitaet Hannover</Text-field>
+<Text-field style="Normal" layout="Normal">(C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1508" drawlabel="true">

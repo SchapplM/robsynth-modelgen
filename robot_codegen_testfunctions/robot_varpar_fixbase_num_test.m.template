@@ -5,7 +5,7 @@
 % with fixed base model
 
 % Moritz Schappler, schappler@irt.uni-hannover.de, 2016-06
-% (c) Institut für Regelungstechnik, Universität Hannover
+% (C) Institut für Regelungstechnik, Universität Hannover
 
 clc
 clear
