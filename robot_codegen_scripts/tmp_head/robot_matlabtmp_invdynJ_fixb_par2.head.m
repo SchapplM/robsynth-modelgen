@@ -13,7 +13,7 @@
 %   gravitation vector in mdh base frame [m/s^2]
 % pkin [%NKP%x1]
 %   kinematic parameters
-% m_num_mdh, rSges_num_mdh, Icges_num_mdh [%NL%x1]
+% m_num_mdh, mrSges_num_mdh, Ifges_num_mdh [%NL%x1]
 %   dynamic parameters (parameter set 2: first moment and inertia about link frame origin)
 % 
 % Output:
