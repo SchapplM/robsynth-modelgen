@@ -116,8 +116,10 @@ for i from 1 to NJ do
   # Index des vorherigen Koordinatensystems
   j := v(i)+1:
   Trf_c(1 .. 4, 1 .. 4, i+1) := Multiply(Trf_c(1 .. 4, 1 .. 4, j), Trf(1 .. 4, 1 .. 4, i)):
-end do:
 
+  # Optimierung der Ausdrücke: Sinnvoll bei aufeinanderfolgenden Drehgelenken mit paralleler Drehachse
+  Trf_c(1 .. 4, 1 .. 4, i+1) := combine( Trf_c(1 .. 4, 1 .. 4, i+1) ):
+end do:
 # Export
 # Maple-Export
 save Trf, Trf_c, sprintf("../codeexport/%s/kinematics_floatb_%s_rotmat_maple.m", robot_name, base_method_name):
