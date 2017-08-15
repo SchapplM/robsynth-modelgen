@@ -103,8 +103,8 @@ do
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_energykin_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
         if [ $basemeth == "twist" ]; then
           cat $tmp_pfad/robot_matlabtmp_assert_vB.m >> $zieldat
         else
@@ -113,8 +113,8 @@ do
         fi
       cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       printf "\n%%%% Variable Initialization" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJD.m >> $zieldat
         if [ $basemeth == "twist" ]; then
           cat $tmp_pfad/robot_matlabtmp_vB.m >> $zieldat
         else
@@ -136,7 +136,7 @@ do
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_energypot_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_rB.m >> $zieldat
         if [ $basemeth == "twist" ]; then
           :
@@ -146,7 +146,7 @@ do
       cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       printf "\n%%%% Variable Initialization" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_rB.m >> $zieldat
         if [ $basemeth == "twist" ]; then
           :
@@ -169,7 +169,7 @@ do
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_gravloadB_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       if [ $basemeth == "twist" ]; then
         :
       else
@@ -179,7 +179,7 @@ do
       cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       
       printf "\n%%%% Variable Initialization" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
       if [ $basemeth == "twist" ]; then
         :
       else
@@ -201,7 +201,7 @@ do
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_gravloadJ_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       if [ $basemeth == "twist" ]; then
         :
       else
@@ -211,7 +211,7 @@ do
       cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       
       printf "\n%%%% Variable Initialization" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
       if [ $basemeth == "twist" ]; then
         :
       else
@@ -234,8 +234,8 @@ do
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_coriolisvecB_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
       if [ $basemeth == "twist" ]; then
         cat $tmp_pfad/robot_matlabtmp_assert_vB.m >> $zieldat
       else
@@ -245,8 +245,8 @@ do
       cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       
       printf "\n%%%% Variable Initialization" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJD.m >> $zieldat
       if [ $basemeth == "twist" ]; then
         cat $tmp_pfad/robot_matlabtmp_vB.m >> $zieldat
       else
@@ -268,8 +268,8 @@ do
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_coriolisvecJ_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
       if [ $basemeth == "twist" ]; then
         cat $tmp_pfad/robot_matlabtmp_assert_vB.m >> $zieldat
       else
@@ -279,8 +279,8 @@ do
       cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       
       printf "\n%%%% Variable Initialization" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJD.m >> $zieldat
       if [ $basemeth == "twist" ]; then
         cat $tmp_pfad/robot_matlabtmp_vB.m >> $zieldat
       else
@@ -303,8 +303,8 @@ do
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_coriolisvec_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
       if [ $basemeth == "twist" ]; then
         cat $tmp_pfad/robot_matlabtmp_assert_vB.m >> $zieldat
       else
@@ -314,8 +314,8 @@ do
       cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       
       printf "\n%%%% Variable Initialization" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJD.m >> $zieldat
       if [ $basemeth == "twist" ]; then
         cat $tmp_pfad/robot_matlabtmp_vB.m >> $zieldat
       else
@@ -340,8 +340,8 @@ do
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_coriolismat_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
       if [ $basemeth == "twist" ]; then
         cat $tmp_pfad/robot_matlabtmp_assert_vB.m >> $zieldat
       else
@@ -351,8 +351,8 @@ do
       cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       
       printf "\n%%%% Variable Initialization" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJD.m >> $zieldat
       if [ $basemeth == "twist" ]; then
         cat $tmp_pfad/robot_matlabtmp_vB.m >> $zieldat
       else
@@ -376,7 +376,7 @@ do
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_inertia_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       if [ $basemeth == "twist" ]; then
         :
       else
@@ -384,7 +384,7 @@ do
       fi
       cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       printf "\n%%%% Variable Initialization" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
       if [ $basemeth == "twist" ]; then
         :
       else
@@ -404,7 +404,7 @@ do
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_inertiaJB_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       if [ $basemeth == "twist" ]; then
         :
       else
@@ -413,7 +413,7 @@ do
       cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       
       printf "\n%%%% Variable Initialization" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
       if [ $basemeth == "twist" ]; then
         :
       else
@@ -435,7 +435,7 @@ do
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_inertiaB_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       if [ $basemeth == "twist" ]; then
         :
       else
@@ -443,7 +443,7 @@ do
       fi
       cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       printf "\n%%%% Variable Initialization" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
       if [ $basemeth == "twist" ]; then
         :
       else
@@ -463,8 +463,8 @@ do
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_inertiaD_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
       if [ $basemeth == "twist" ]; then
         :
       else
@@ -474,8 +474,8 @@ do
       cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       
       printf "\n%%%% Variable Initialization" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJD.m >> $zieldat
       if [ $basemeth == "twist" ]; then
         :
       else
@@ -496,9 +496,9 @@ do
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_invdynJ_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_qDD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJDD.m >> $zieldat
       if [ $basemeth == "twist" ]; then
         cat $tmp_pfad/robot_matlabtmp_assert_vB.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_assert_aB.m >> $zieldat
@@ -511,9 +511,9 @@ do
       cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
      
       printf "\n%%%% Variable Initialization" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_qDD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJDD.m >> $zieldat
       if [ $basemeth == "twist" ]; then
         cat $tmp_pfad/robot_matlabtmp_vB.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_aB.m >> $zieldat
@@ -538,9 +538,9 @@ do
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_invdynB_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_qDD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJDD.m >> $zieldat
       if [ $basemeth == "twist" ]; then
         cat $tmp_pfad/robot_matlabtmp_assert_vB.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_assert_aB.m >> $zieldat
@@ -553,9 +553,9 @@ do
       cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
      
       printf "\n%%%% Variable Initialization" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_qDD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJDD.m >> $zieldat
       if [ $basemeth == "twist" ]; then
         cat $tmp_pfad/robot_matlabtmp_vB.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_aB.m >> $zieldat

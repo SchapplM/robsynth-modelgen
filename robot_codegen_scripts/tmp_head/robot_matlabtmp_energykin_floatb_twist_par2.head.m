@@ -18,5 +18,5 @@
 
 % %VERSIONINFO%
 
-function T = %FN%(q, qD, V_base, ...
+function T = %FN%(qJ, qJD, V_base, ...
   pkin, m_num, mrSges_num_mdh, Ifges_num_mdh)

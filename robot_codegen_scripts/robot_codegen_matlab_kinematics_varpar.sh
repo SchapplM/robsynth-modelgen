@@ -21,10 +21,10 @@ zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_fkine_fixb_r
 if [ -f $quelldat ]; then
   cat ${tmp_pfad}_head/robot_matlabtmp_fkine_fixb_rotmat.head.m > $zieldat
   printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-  cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
   echo "%% Variable Initialization" >> $zieldat
-  cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
   printf "rxs_base=0;\nrys_base=0;\nrzs_base=0;\n" >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
   
@@ -47,13 +47,13 @@ zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_fkine_floatb
 if [ -f $quelldat ]; then
   cat ${tmp_pfad}_head/robot_matlabtmp_fkine_floatb_eulangrpy_rotmat.head.m > $zieldat
   printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-  cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_rB.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_phiB.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
 
   echo "%% Variable Initialization" >> $zieldat
-  cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_rB.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_phiB.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
@@ -77,11 +77,11 @@ zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_joint_trafo_
 if [ -f $quelldat ]; then
   cat ${tmp_pfad}_head/robot_matlabtmp_joint_transformation.head.m > $zieldat
   printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-  cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
 
   echo "%% Variable Initialization" >> $zieldat
-  cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
   
   printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
@@ -170,9 +170,9 @@ do
       if [ -f $quelldat ]; then
         cat $headdat > $zieldat
         printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-        cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
         if [ "$input_qD" == "true" ]; then
-          cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
+          cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
         fi
         if [ "$input_r" == "true" ]; then
           printf "assert(isa(r_i_i_C,'double') && isreal(r_i_i_C) && all(size(r_i_i_C) == [3 1]), ..." >> $zieldat
@@ -181,9 +181,9 @@ do
         cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       
         echo "%% Variable Initialization" >> $zieldat
-        cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
         if [ "$input_qD" == "true" ]; then
-          cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
+          cat $tmp_pfad/robot_matlabtmp_qJD.m >> $zieldat
         fi;
         if [ "$input_r" == "true" ]; then
           printf "\npx = r_i_i_C(1);\npy = r_i_i_C(2);\npz = r_i_i_C(3);\n" >> $zieldat
@@ -258,9 +258,9 @@ do
   fi;
   cat $headdat > $zieldat
   printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-  cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
   if [ "$input_qD" == "true" ]; then
-    cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
   fi;
   if [ "$input_r" == "true" ]; then
     printf "assert(isa(r_i_i_C,'double') && isreal(r_i_i_C) && all(size(r_i_i_C) == [3 1]), ..." >> $zieldat
@@ -279,21 +279,21 @@ do
       printf "elseif link_index == ${ib}\n" >> $zieldat
     fi;
     if [ "$jacart" -eq "1" ]; then
-      printf "\tJg=${robot_name}_jacobig_${ib}_floatb_twist_sym_varpar(q, r_i_i_C, pkin);\n" >> $zieldat
+      printf "\tJg=${robot_name}_jacobig_${ib}_floatb_twist_sym_varpar(qJ, r_i_i_C, pkin);\n" >> $zieldat
     elif [ "$jacart" -eq "2" ]; then
-      printf "\tJa=${robot_name}_jacobia_${ib}_floatb_twist_sym_varpar(q, r_i_i_C, pkin);\n" >> $zieldat
+      printf "\tJa=${robot_name}_jacobia_${ib}_floatb_twist_sym_varpar(qJ, r_i_i_C, pkin);\n" >> $zieldat
     elif [ "$jacart" -eq "3" ]; then
-      printf "\tJg_rot=${robot_name}_jacobig_rot_${ib}_floatb_twist_sym_varpar(q, pkin);\n" >> $zieldat
+      printf "\tJg_rot=${robot_name}_jacobig_rot_${ib}_floatb_twist_sym_varpar(qJ, pkin);\n" >> $zieldat
     elif [ "$jacart" -eq "4" ]; then
-      printf "\tJa_rot=${robot_name}_jacobia_rot_${ib}_floatb_twist_sym_varpar(q, pkin);\n" >> $zieldat
+      printf "\tJa_rot=${robot_name}_jacobia_rot_${ib}_floatb_twist_sym_varpar(qJ, pkin);\n" >> $zieldat
     elif [ "$jacart" -eq "5" ]; then
-      printf "\tJgD=${robot_name}_jacobigD_${ib}_floatb_twist_sym_varpar(q, qD, r_i_i_C, pkin);\n" >> $zieldat
+      printf "\tJgD=${robot_name}_jacobigD_${ib}_floatb_twist_sym_varpar(qJ, qJD, r_i_i_C, pkin);\n" >> $zieldat
     elif [ "$jacart" -eq "6" ]; then
-      printf "\tJaD=${robot_name}_jacobiaD_${ib}_floatb_twist_sym_varpar(q, qD, r_i_i_C, pkin);\n" >> $zieldat
+      printf "\tJaD=${robot_name}_jacobiaD_${ib}_floatb_twist_sym_varpar(qJ, qJD, r_i_i_C, pkin);\n" >> $zieldat
     elif [ "$jacart" -eq "7" ]; then
-      printf "\tJgD_rot=${robot_name}_jacobigD_rot_${ib}_floatb_twist_sym_varpar(q, qD, pkin);\n" >> $zieldat
+      printf "\tJgD_rot=${robot_name}_jacobigD_rot_${ib}_floatb_twist_sym_varpar(qJ, qJD, pkin);\n" >> $zieldat
     elif [ "$jacart" -eq "8" ]; then
-      printf "\tJaD_rot=${robot_name}_jacobiaD_rot_${ib}_floatb_twist_sym_varpar(q, qD, pkin);\n" >> $zieldat
+      printf "\tJaD_rot=${robot_name}_jacobiaD_rot_${ib}_floatb_twist_sym_varpar(qJ, qJD, pkin);\n" >> $zieldat
     fi;
   done
   if [ "$jacart" -eq "1" ]; then

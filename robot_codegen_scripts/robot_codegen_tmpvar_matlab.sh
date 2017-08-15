@@ -12,24 +12,24 @@ source $repo_pfad/robot_codegen_definitions/robot_env.sh
 
 # Schnipsel für Matlab-varpar-Dateien vorbereiten
 # Gelenkwinkel
-echo "" > $tmp_pfad/robot_matlabtmp_q.m
+echo "" > $tmp_pfad/robot_matlabtmp_qJ.m
 for (( i=1; i<=$robot_NQJ; i++ ))
 do
-	echo "qJ${i}s = q(${i});" >> $tmp_pfad/robot_matlabtmp_q.m
+	echo "qJ${i}s = qJ(${i});" >> $tmp_pfad/robot_matlabtmp_qJ.m
 done
 
 # Gelenkwinkelgeschwindigkeit
-echo "" > $tmp_pfad/robot_matlabtmp_qD.m
+echo "" > $tmp_pfad/robot_matlabtmp_qJD.m
 for (( i=1; i<=$robot_NQJ; i++ ))
 do
-	echo "qJD${i}s = qD(${i});" >> $tmp_pfad/robot_matlabtmp_qD.m
+	echo "qJD${i}s = qJD(${i});" >> $tmp_pfad/robot_matlabtmp_qJD.m
 done
 
 # Gelenkwinkelbeschleunigung
-echo "" > $tmp_pfad/robot_matlabtmp_qDD.m
+echo "" > $tmp_pfad/robot_matlabtmp_qJDD.m
 for (( i=1; i<=$robot_NQJ; i++ ))
 do
-	echo "qJDD${i}s = qDD(${i});" >> $tmp_pfad/robot_matlabtmp_qDD.m
+	echo "qJDD${i}s = qJDD(${i});" >> $tmp_pfad/robot_matlabtmp_qJDD.m
 done
 
 # Kinematikparameter (alle als Vektor): MDH-Parameter und Parameter für Zwangsbedingungen

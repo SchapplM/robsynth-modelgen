@@ -14,4 +14,4 @@
 
 % %VERSIONINFO%
 
-function MMD_reg = %FN%(q, qD, pkin)
+function MMD_reg = %FN%(qJ, qJD, pkin)

@@ -18,5 +18,5 @@
 
 % %VERSIONINFO%
 
-function JaD_transl = %FN%(q, qD, r_i_i_C, ...
+function JaD_transl = %FN%(qJ, qJD, r_i_i_C, ...
   pkin)

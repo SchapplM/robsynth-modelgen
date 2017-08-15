@@ -16,4 +16,4 @@
 
 % %VERSIONINFO%
 
-function tauJc_reg = %FN%(q, qD, phi_base, xD_base, pkin)
+function tauJc_reg = %FN%(qJ, qJD, phi_base, xD_base, pkin)

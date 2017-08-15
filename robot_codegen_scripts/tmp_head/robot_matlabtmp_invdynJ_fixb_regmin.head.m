@@ -16,5 +16,5 @@
 
 % %VERSIONINFO%
 
-function tau_reg = %FN%(q, qD, qDD, g, ...
+function tau_reg = %FN%(qJ, qJD, qJDD, g, ...
   pkin)

@@ -13,4 +13,4 @@
 
 % %VERSIONINFO%
 
-function tauc_reg = %FN%(q, qD, pkin)
+function tauc_reg = %FN%(qJ, qJD, pkin)

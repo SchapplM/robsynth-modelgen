@@ -24,5 +24,5 @@
 
 % %VERSIONINFO%
 
-function tauB = %FN%(q, qD, qDD, phi_base, xD_base, xDD_base, g, ...
+function tauB = %FN%(qJ, qJD, qJDD, phi_base, xD_base, xDD_base, g, ...
   pkin, m_num, mrSges_num_mdh, Ifges_num_mdh)

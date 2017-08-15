@@ -17,5 +17,5 @@
 
 % %VERSIONINFO%
 
-function Ja_transl = %FN%(q, r_i_i_C, ...
+function Ja_transl = %FN%(qJ, r_i_i_C, ...
   pkin)

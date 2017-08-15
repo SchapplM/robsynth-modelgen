@@ -14,5 +14,5 @@
 
 % %VERSIONINFO%
 
-function U_reg = %FN%(q, g, ...
+function U_reg = %FN%(qJ, g, ...
   pkin)

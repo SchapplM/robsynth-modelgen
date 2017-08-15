@@ -20,5 +20,5 @@
 
 % %VERSIONINFO%
 
-function Cq = %FN%(q, qD, phi_base, xD_base, ...
+function Cq = %FN%(qJ, qJD, phi_base, xD_base, ...
   pkin, m_num, mrSges_num_mdh, Ifges_num_mdh)

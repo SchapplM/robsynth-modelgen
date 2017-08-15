@@ -16,4 +16,4 @@
 
 % %VERSIONINFO%
 
-function T_reg = %FN%(q, qD, phi_base, xD_base, pkin)
+function T_reg = %FN%(qJ, qJD, phi_base, xD_base, pkin)

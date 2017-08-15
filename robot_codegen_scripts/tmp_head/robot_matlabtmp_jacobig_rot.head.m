@@ -16,5 +16,5 @@
 
 % %VERSIONINFO%
 
-function Jg_rot = %FN%(q, ...
+function Jg_rot = %FN%(qJ, ...
   pkin)

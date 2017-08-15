@@ -22,5 +22,5 @@
 
 % %VERSIONINFO%
 
-function JaD_rot = %FN%(q, qD, link_index, ...
+function JaD_rot = %FN%(qJ, qJD, link_index, ...
   pkin)

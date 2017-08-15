@@ -1,2 +1,2 @@
-% qDD [%NQJ%x1]
+% qJDD [%NQJ%x1]
 %   Generalized joint accelerations

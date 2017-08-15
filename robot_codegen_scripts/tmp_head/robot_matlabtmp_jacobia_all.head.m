@@ -23,7 +23,7 @@
 
 % %VERSIONINFO%
 
-function Ja = %FN%(q, link_index, r_i_i_C, ...
+function Ja = %FN%(qJ, link_index, r_i_i_C, ...
   pkin)
 
 

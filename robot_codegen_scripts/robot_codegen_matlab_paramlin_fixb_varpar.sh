@@ -95,12 +95,12 @@ do
   if [ -f $quelldat ]; then
     cat ${tmp_pfad}_head/robot_matlabtmp_coriolisvecJ_fixb_${matlab_string}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-    cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
-    cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
     printf "\n%%%% Variable Initialization" >> $zieldat
-    cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
-    cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_qJD.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
     printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
     cat $quelldat >> $zieldat
@@ -115,12 +115,12 @@ do
   if [ -f $quelldat ]; then
     cat ${tmp_pfad}_head/robot_matlabtmp_coriolismatJ_fixb_${matlab_string}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-    cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
-    cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
     printf "\n%%%% Variable Initialization" >> $zieldat
-    cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
-    cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_qJD.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
     printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
     cat $quelldat >> $zieldat
@@ -135,10 +135,10 @@ do
   if [ -f $quelldat ]; then
     cat ${tmp_pfad}_head/robot_matlabtmp_inertiaJ_${matlab_string}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-    cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
     printf "\n%%%% Variable Initialization" >> $zieldat
-    cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
     printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
     cat $quelldat >> $zieldat
@@ -153,12 +153,12 @@ do
   if [ -f $quelldat ]; then
     cat ${tmp_pfad}_head/robot_matlabtmp_inertiaDJ_${matlab_string}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-    cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
-    cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
     printf "\n%%%% Variable Initialization" >> $zieldat
-    cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
-    cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_qJD.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
     printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
     cat $quelldat >> $zieldat
@@ -173,11 +173,11 @@ do
   if [ -f $quelldat ]; then
     cat ${tmp_pfad}_head/robot_matlabtmp_gravloadJ_${matlab_string}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-    cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
     printf "\n%%%% Variable Initialization" >> $zieldat
-    cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_g.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
     printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
@@ -193,15 +193,15 @@ do
   if [ -f $quelldat ]; then
     cat ${tmp_pfad}_head/robot_matlabtmp_invdynJ_fixb_${matlab_string}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-    cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
-    cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
-    cat $tmp_pfad/robot_matlabtmp_assert_qDD.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_qJDD.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
     printf "\n%%%% Variable Initialization" >> $zieldat
-    cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
-    cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
-    cat $tmp_pfad/robot_matlabtmp_qDD.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_qJD.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_qJDD.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_g.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
     printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
@@ -217,12 +217,12 @@ do
   if [ -f $quelldat ]; then
     cat ${tmp_pfad}_head/robot_matlabtmp_energykin_fixb_${matlab_string}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-    cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
-    cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
     printf "\n%%%% Variable Initialization" >> $zieldat
-    cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
-    cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_qJD.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
     printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
     cat $quelldat >> $zieldat
@@ -238,11 +238,11 @@ do
   if [ -f $quelldat ]; then
     cat ${tmp_pfad}_head/robot_matlabtmp_energypot_fixb_${matlab_string}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-    cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
     printf "\n%%%% Variable Initialization" >> $zieldat
-    cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_g.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
     printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat

@@ -13,4 +13,4 @@
 
 % %VERSIONINFO%
 
-function MM_reg = %FN%(q, phi_base, pkin)
+function MM_reg = %FN%(qJ, phi_base, pkin)

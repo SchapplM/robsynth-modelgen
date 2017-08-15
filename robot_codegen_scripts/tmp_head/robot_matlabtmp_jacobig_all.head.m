@@ -20,7 +20,7 @@
 
 % %VERSIONINFO%
 
-function Jg = %FN%(q, link_index, r_i_i_C, ...
+function Jg = %FN%(qJ, link_index, r_i_i_C, ...
   pkin)
 
 

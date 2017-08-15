@@ -18,5 +18,5 @@
 
 % %VERSIONINFO%
 
-function T_c_mdh = %FN%(q, r_base, phi_base, ...
+function T_c_mdh = %FN%(qJ, r_base, phi_base, ...
   pkin)

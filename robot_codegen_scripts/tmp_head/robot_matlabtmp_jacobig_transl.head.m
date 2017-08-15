@@ -15,5 +15,5 @@
 
 % %VERSIONINFO%
 
-function Jg_transl = %FN%(q, ...
+function Jg_transl = %FN%(qJ, ...
   pkin)

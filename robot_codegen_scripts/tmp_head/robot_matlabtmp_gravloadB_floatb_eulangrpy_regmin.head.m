@@ -16,4 +16,4 @@
 
 % %VERSIONINFO%
 
-function taug_reg = %FN%(q, phi_base, g, pkin)
+function taug_reg = %FN%(qJ, phi_base, g, pkin)

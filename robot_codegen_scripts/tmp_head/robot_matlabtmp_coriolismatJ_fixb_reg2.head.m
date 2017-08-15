@@ -13,4 +13,4 @@
 
 % %VERSIONINFO%
 
-function cmat_reg = %FN%(q, qD, pkin)
+function cmat_reg = %FN%(qJ, qJD, pkin)

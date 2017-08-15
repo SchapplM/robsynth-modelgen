@@ -32,8 +32,8 @@ do
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_coriolisvecJ_fixb_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
       
@@ -45,8 +45,8 @@ do
         cat $tmp_pfad/robot_matlabtmp_assert_If.m >> $zieldat
       fi
       printf "\n%%%% Variable Initialization" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJD.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
@@ -70,8 +70,8 @@ do
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_coriolismatJ_fixb_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
@@ -83,8 +83,8 @@ do
       fi
       
       printf "\n%%%% Variable Initialization" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJD.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
@@ -109,7 +109,7 @@ do
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_inertiaJ_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
@@ -121,7 +121,7 @@ do
       fi
       
       printf "\n%%%% Variable Initialization" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
@@ -154,8 +154,8 @@ do
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_energykin_fixb_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
@@ -167,8 +167,8 @@ do
       fi
       
       printf "\n%%%% Variable Initialization" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJD.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
@@ -192,8 +192,8 @@ do
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_inertiaDJ_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
@@ -205,8 +205,8 @@ do
       fi
       
       printf "\n%%%% Variable Initialization" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJD.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat
       if [ $dynpar == 1 ]; then
@@ -235,7 +235,7 @@ do
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_energypot_fixb_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
@@ -246,7 +246,7 @@ do
       fi
       
       printf "\n%%%% Variable Initialization" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
       printf "rxs_base=0;\nrys_base=0;\nrzs_base=0;\n" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_g.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
@@ -273,9 +273,9 @@ do
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_invdynJ_fixb_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_q.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_qD.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_qDD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJDD.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
@@ -288,9 +288,9 @@ do
       fi
       
       printf "\n%%%% Variable Initialization" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_q.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_qD.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_qDD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_qJDD.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_g.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat

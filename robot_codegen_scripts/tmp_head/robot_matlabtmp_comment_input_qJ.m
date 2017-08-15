@@ -1,2 +1,2 @@
-% q [%NQJ%x1]
+% qJ [%NQJ%x1]
 %   Generalized joint coordinates (joint angles)

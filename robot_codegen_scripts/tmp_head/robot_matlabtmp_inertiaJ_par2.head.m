@@ -15,5 +15,5 @@
 
 % %VERSIONINFO%
 
-function Mq = %FN%(q, ...
+function Mq = %FN%(qJ, ...
   pkin, m_num, mrSges_num_mdh, Ifges_num_mdh)

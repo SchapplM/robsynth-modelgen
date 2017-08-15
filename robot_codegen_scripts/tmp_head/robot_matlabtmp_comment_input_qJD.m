@@ -1,2 +1,2 @@
-% qD [%NQJ%x1]
+% qJD [%NQJ%x1]
 %   Generalized joint velocities

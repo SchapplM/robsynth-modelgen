@@ -21,7 +21,7 @@
 
 % %VERSIONINFO%
 
-function JgD = %FN%(q, qD, link_index, r_i_i_C, ...
+function JgD = %FN%(qJ, qJD, link_index, r_i_i_C, ...
   pkin)
 
 

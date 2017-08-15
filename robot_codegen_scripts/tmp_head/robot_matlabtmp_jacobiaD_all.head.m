@@ -24,7 +24,7 @@
 
 % %VERSIONINFO%
 
-function JaD = %FN%(q, qD, link_index, r_i_i_C, ...
+function JaD = %FN%(qJ, qJD, link_index, r_i_i_C, ...
   pkin)
 
 

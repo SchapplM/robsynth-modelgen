@@ -22,4 +22,4 @@
 
 % %VERSIONINFO%
 
-function tauB_reg = %FN%(q, qD, qDD, phi_base, xD_base, xDD_base, g, pkin)
+function tauB_reg = %FN%(qJ, qJD, qJDD, phi_base, xD_base, xDD_base, g, pkin)

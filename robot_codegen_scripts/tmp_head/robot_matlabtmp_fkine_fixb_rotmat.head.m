@@ -15,4 +15,4 @@
 
 % %VERSIONINFO%
 
-function T_c_mdh = %FN%(q, pkin)
+function T_c_mdh = %FN%(qJ, pkin)
