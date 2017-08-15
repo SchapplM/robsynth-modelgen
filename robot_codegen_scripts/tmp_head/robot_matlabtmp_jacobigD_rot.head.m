@@ -7,12 +7,9 @@
 % 
 % 
 % Input:
-% q [%NQJ%x1]
-%   Generalized coordinates (joint angles) (generalized coordinates) [rad]
-% qD [%NQJ%x1]
-%   Generalized velocities (joint velocities) [rad/s]
-% a_mdh, d_mdh, q_offset_mdh, ... [%NJ%x1]
-%   kinematic parameters
+% %INPUT_Q%
+% %INPUT_QD%
+% %INPUT_PKIN%
 % 
 % Output:
 % JgD_rot [3x%NQJ%]

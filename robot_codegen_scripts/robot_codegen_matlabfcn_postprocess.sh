@@ -23,6 +23,34 @@ lastassignmentvector=$3
 fntmp=$(basename "$mfcndat")
 FN="${fntmp%.*}"
 
+# Setze Beschreibung der Eingabegrößen ein (diese sind für viele Funktionen identisch)
+sed -i "/% %INPUT_M%/r $repo_pfad/robot_codegen_scripts/tmp_head/robot_matlabtmp_comment_input_m.m" $mfcndat
+sed -i "/%INPUT_M%/d" $mfcndat
+sed -i "/% %INPUT_R%/r $repo_pfad/robot_codegen_scripts/tmp_head/robot_matlabtmp_comment_input_r.m" $mfcndat
+sed -i "/%INPUT_R%/d" $mfcndat
+sed -i "/% %INPUT_MR%/r $repo_pfad/robot_codegen_scripts/tmp_head/robot_matlabtmp_comment_input_mr.m" $mfcndat
+sed -i "/%INPUT_MR%/d" $mfcndat
+sed -i "/% %INPUT_IC%/r $repo_pfad/robot_codegen_scripts/tmp_head/robot_matlabtmp_comment_input_Ic.m" $mfcndat
+sed -i "/%INPUT_IC%/d" $mfcndat
+sed -i "/% %INPUT_IF%/r $repo_pfad/robot_codegen_scripts/tmp_head/robot_matlabtmp_comment_input_If.m" $mfcndat
+sed -i "/%INPUT_IF%/d" $mfcndat
+sed -i "/% %INPUT_PKIN%/r $repo_pfad/robot_codegen_scripts/tmp_head/robot_matlabtmp_comment_input_pkin.m" $mfcndat
+sed -i "/%INPUT_PKIN%/d" $mfcndat
+sed -i "/% %INPUT_Q%/r $repo_pfad/robot_codegen_scripts/tmp_head/robot_matlabtmp_comment_input_q.m" $mfcndat
+sed -i "/%INPUT_Q%/d" $mfcndat
+sed -i "/% %INPUT_QD%/r $repo_pfad/robot_codegen_scripts/tmp_head/robot_matlabtmp_comment_input_qD.m" $mfcndat
+sed -i "/%INPUT_QD%/d" $mfcndat
+sed -i "/% %INPUT_QDD%/r $repo_pfad/robot_codegen_scripts/tmp_head/robot_matlabtmp_comment_input_qDD.m" $mfcndat
+sed -i "/%INPUT_QDD%/d" $mfcndat
+sed -i "/% %INPUT_RB%/r $repo_pfad/robot_codegen_scripts/tmp_head/robot_matlabtmp_comment_input_rB.m" $mfcndat
+sed -i "/%INPUT_RB%/d" $mfcndat
+sed -i "/% %INPUT_PHIB%/r $repo_pfad/robot_codegen_scripts/tmp_head/robot_matlabtmp_comment_input_phiB.m" $mfcndat
+sed -i "/%INPUT_PHIB%/d" $mfcndat
+sed -i "/% %INPUT_XDB%/r $repo_pfad/robot_codegen_scripts/tmp_head/robot_matlabtmp_comment_input_xDB.m" $mfcndat
+sed -i "/%INPUT_XDB%/d" $mfcndat
+sed -i "/% %INPUT_XDDB%/r $repo_pfad/robot_codegen_scripts/tmp_head/robot_matlabtmp_comment_input_xDDB.m" $mfcndat
+sed -i "/%INPUT_XDDB%/d" $mfcndat
+
 # Ersetze Platzhalterausdrücke $RN$, $NJ$, $NL$
 # Hier müssen normale und nicht einfache Anführungszeichen für `sed` genommen werden. Sonst wird das $-Zeichen für die Variable als Text interpretiert...
 sed -i "s/%RN%/$robot_name/g" $mfcndat
@@ -59,6 +87,5 @@ rev=`git rev-parse HEAD`
 printf "%% Revision: $rev\n" >> $versionfile
 echo "% (C) Institut für Regelungstechnik, Universität Hannover" >> $versionfile
 
-# TODO: Ersetzungen sauberer
 sed -i "/% %VERSIONINFO%/r $versionfile" $mfcndat
-sed -i "s/%VERSIONINFO%//g" $mfcndat
+sed -i "/%VERSIONINFO%/d" $mfcndat

@@ -9,12 +9,10 @@
 % Winkeldarstellung: RPY-Winkel, rotx(alpha)*roty(beta)*rotz(gamma)
 % 
 % Input:
-% q [%NQJ%x1]
-%   Generalized coordinates (joint angles) (generalized coordinates) [rad]
+% %INPUT_Q%
 % r_i_i_C [3x1]
 %   Ortsvektor vom KörperKS-Ursprung zum gesuchten Punkt
-% pkin [%NKP%x1]
-%   kinematic parameters
+% %INPUT_PKIN%
 % 
 % Output:
 % Ja [6x%NQJ%]

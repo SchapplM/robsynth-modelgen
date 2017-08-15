@@ -3,18 +3,13 @@
 % Use Code from Maple symbolic Code Generation
 % 
 % Input:
-% q [%NQJ%x1]
-%   Generalized coordinates (joint angles) [rad]
-% qD [%NQJ%x1]
-%   Generalized velocities (joint velocities) [rad/s]
-% r_base [3x1]
-%   Base position in world frame
-% phi_base [3x1]
-%   Base orientation in world frame. Expressed with RPY Euler angles (xyz)
-% xD_base [6x1]
-%   time derivative of r_base and phi_base
-% pkin [%NKP%x1]
-%   kinematic parameters
+% %INPUT_Q%
+% %INPUT_QD%
+% %INPUT_PHIB%
+% %INPUT_RB%
+% %INPUT_XDB%
+
+% %INPUT_PKIN%
 % 
 % Output:
 % cmat_reg [((6+%NQJ%)*(6+%NQJ%))x%NMPVFLOATB%]

@@ -6,10 +6,8 @@
 % Endeffektorposition und verallgemeinerten Koordinaten.
 % 
 % Input:
-% q [%NQJ%x1]
-%   Generalized coordinates (joint angles) (generalized coordinates) [rad]
-% a_mdh, d_mdh, q_offset_mdh, ... [%NJ%x1]
-%   kinematic parameters
+% %INPUT_Q%
+% %INPUT_PKIN%
 % 
 % Output:
 % Jg_transl [3x%NQJ%]

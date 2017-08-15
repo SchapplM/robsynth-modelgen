@@ -6,15 +6,13 @@
 % Endeffektorposition und verallgemeinerten Koordinaten.
 % 
 % Input:
-% q [%NQJ%x1]
-%   Generalized coordinates (joint angles) (generalized coordinates) [rad]
+% %INPUT_Q%
 % link_index [1x1 uint8]
 %   Index des Segmentes, auf dem der Punkt C liegt.
 %   Wie in %RN%_fkine_fixb_rotmat_mdh_sym_varpar.m (1=Basis).
 % r_i_i_C [3x1]
 %   Ortsvektor vom KörperKS-Ursprung zum gesuchten Punkt
-% a_mdh, d_mdh, q_offset_mdh, ... [%NJ%x1]
-%   kinematic parameters
+% %INPUT_PKIN%
 % 
 % Output:
 % Jg [6x%NQJ%]

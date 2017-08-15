@@ -3,12 +3,10 @@
 % Use Code from Maple symbolic Code Generation
 % 
 % Input:
-% q [%NQJ%x1]
-%   Generalized coordinates (joint angles) [rad]
+% %INPUT_Q%
 % g [3x1]
 %   gravitation vector in mdh base frame [m/s^2]
-% pkin [%NKP%x1]
-%   kinematic parameters
+% %INPUT_PKIN%
 % 
 % Output:
 % U_reg [1x%NMPVFIXB%]

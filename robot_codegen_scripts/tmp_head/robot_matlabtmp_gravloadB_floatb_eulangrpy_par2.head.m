@@ -3,19 +3,16 @@
 % Use Code from Maple symbolic Code Generation
 % 
 % Input:
-% q [%NQJ%x1]
-%   Generalized coordinates (joint angles) [rad]
-% phi_base [3x1]
-%   Base orientation in world frame. Expressed with RPY Euler angles (xyz)
+% %INPUT_Q%
+% %INPUT_PHIB%
 % g [3x1]
 %   gravitation vector in world frame [m/s^2]
-% pkin [%NKP%x1]
-%   kinematic parameters
-% m_num_mdh, mrSges_num_mdh [%NL%x1]
-%   dynamic parameters
+% %INPUT_PKIN%
+% %INPUT_M%
+% %INPUT_MR%
 % 
 % Output:
-% Fg [6x1]
+% taug [6x1]
 %   base forces required to compensate gravitation load
 
 % %VERSIONINFO%

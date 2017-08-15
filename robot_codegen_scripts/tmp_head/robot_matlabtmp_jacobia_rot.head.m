@@ -9,10 +9,8 @@
 % Winkeldarstellung: RPY-Winkel, rotx(alpha)*roty(beta)*rotz(gamma)
 % 
 % Input:
-% q [%NQJ%x1]
-%   Generalized coordinates (joint angles) (generalized coordinates) [rad]
-% a_mdh, d_mdh, q_offset_mdh, ... [%NJ%x1]
-%   kinematic parameters
+% %INPUT_Q%
+% %INPUT_PKIN%
 % 
 % Output:
 % Ja_rot [3x%NQJ%]

@@ -6,8 +6,7 @@
 % Use Code from Maple symbolic Code Generation
 % 
 % Input:
-% pkin [%NKP%x1]
-%   kinematic parameters
+% %INPUT_PKIN%
 % 
 % Output:
 % K [%NMPVFLOATB%x(%NL%*10)]

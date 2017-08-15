@@ -3,14 +3,12 @@
 % Use Code from Maple symbolic Code Generation
 % 
 % Input:
-% q [%NQJ%x1]
-%   Generalized coordinates (joint angles) [rad]
-% phi_base [3x1]
-%   Base orientation in world frame. Expressed with RPY Euler angles (xyz)
-% pkin [%NKP%x1]
-%   kinematic parameters
-% m_num_mdh, mrSges_num_mdh, Ifges_num_mdh [%NL%x1]
-%   dynamic parameters (parameter set 2: first moment and inertia about link frame origin)
+% %INPUT_Q%
+% %INPUT_PHIB%
+% %INPUT_PKIN%
+% %INPUT_M%
+% %INPUT_MR%
+% %INPUT_IF%
 % 
 % Output:
 % M [(6+%NQJ%)x(6+%NQJ%)]

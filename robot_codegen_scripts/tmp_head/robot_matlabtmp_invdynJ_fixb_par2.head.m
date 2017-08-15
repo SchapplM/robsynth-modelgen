@@ -3,18 +3,15 @@
 % Use Code from Maple symbolic Code Generation
 % 
 % Input:
-% q [%NQJ%x1]
-%   Generalized coordinates (joint angles) [rad]
-% qD [%NQJ%x1]
-%   Generalized velocities (joint velocities) [rad/s]
-% qD [%NQJ%x1]
-%   Generalized accelerations (joint accelerations) [rad/s]
+% %INPUT_Q%
+% %INPUT_QD%
+% %INPUT_QDD%
 % g [3x1]
 %   gravitation vector in mdh base frame [m/s^2]
-% pkin [%NKP%x1]
-%   kinematic parameters
-% m_num_mdh, mrSges_num_mdh, Ifges_num_mdh [%NL%x1]
-%   dynamic parameters (parameter set 2: first moment and inertia about link frame origin)
+% %INPUT_PKIN%
+% %INPUT_M%
+% %INPUT_MR%
+% %INPUT_IF%
 % 
 % Output:
 % tau [%NQJ%x1]

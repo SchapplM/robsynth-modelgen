@@ -3,12 +3,9 @@
 % Use Code from Maple symbolic Code Generation
 % 
 % Input:
-% q [%NQJ%x1]
-%   Generalized coordinates (joint angles) [rad]
-% qD [%NQJ%x1]
-%   Generalized velocities (joint velocities) [rad/s]
-% pkin [%NKP%x1]
-%   kinematic parameters
+% %INPUT_Q%
+% %INPUT_PHIB%
+% %INPUT_PKIN%
 % 
 % Output:
 % MMD_reg [((%NQJ%+1)*%NQJ%/2)x(%NQJ%*10)]

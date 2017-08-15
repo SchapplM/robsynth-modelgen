@@ -6,14 +6,11 @@
 % Endeffektorposition und verallgemeinerten Koordinaten.
 % 
 % Input:
-% q [%NQJ%x1]
-%   Generalized coordinates (joint angles) (generalized coordinates) [rad]
-% qD [%NQJ%x1]
-%   Generalized velocities (joint velocities) [rad/s]
+% %INPUT_Q%
+% %INPUT_QD%
 % r_i_i_C [3x1]
 %   Ortsvektor vom KörperKS-Ursprung zum gesuchten Punkt
-% a_mdh, d_mdh, q_offset_mdh, ... [%NJ%x1]
-%   kinematic parameters
+% %INPUT_PKIN%
 % 
 % Output:
 % JaD_transl [3x%NQJ%]

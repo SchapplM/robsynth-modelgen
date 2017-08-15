@@ -3,14 +3,12 @@
 % Use Code from Maple symbolic Code Generation
 % 
 % Input:
-% q [%NQJ%x1]
-%   Generalized coordinates (joint angles) [rad]
-% qD [%NQJ%x1]
-%   Generalized velocities (joint velocities) [rad/s]
-% pkin [%NKP%x1]
-%   kinematic parameters
-% m_num_mdh, mrSges_num_mdh, Ifges_num_mdh [%NL%x1]
-%   dynamic parameters (parameter set 2: first moment and inertia about link frame origin)
+% %INPUT_Q%
+% %INPUT_PHIB%
+% %INPUT_PKIN%
+% %INPUT_M%
+% %INPUT_MR%
+% %INPUT_IF%
 % 
 % Output:
 % MqD [%NQJ%x%NQJ%]
