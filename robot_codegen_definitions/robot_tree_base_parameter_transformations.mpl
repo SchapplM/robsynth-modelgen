@@ -1,3 +1,4 @@
+
 # Base Parameter Properties for Robot based on MDH frames
 # Einleitung
 # Untersuchung von Eigenschaften der Regressorform und des Minimalparametervektors
@@ -68,8 +69,10 @@ save K, sprintf("../codeexport/%s/PV2_MPV_transformation_linear_dependant_%s_map
 n_b := RowDimension(K):
 n_d := ColumnDimension(K)-RowDimension(K): 
 n := n_b+n_d: # [SousaCor2014] equ. (31)
+;
 P_b := Matrix(n, n_b): # für [SousaCor2014] equ. (33) 
 P_d := Matrix(n, n_d): # für [SousaCor2014] equ. (33)
+;
 for i from 1 to n_b do:
   # gehe alle Zeilen durch und prüfe, ob der MPV nur aus einem Inertialparameter-Eintrag besteht   
   # falls er nicht aus einem Inertialparameter-Eintrag besteht, kommt der Basis-Eintrag nur in dieser Zeile vor.   
@@ -148,9 +151,11 @@ for j from 1 to n do:
     K_d(..,j_Kd) := K(..,j):
   end if:
 end do:
-printf("Inertialparametervektor hat %d linear abhängige und %d linear unabhängige Einträge", n_d, n_b):
+printf("Inertialparametervektor hat %d linear abhängige und %d linear unabhängige Einträge\n", n_d, n_b):
 delta_b := Transpose(P_b) . PV2: # Zur Überprüfung
+;
 delta_d := Transpose(P_d) . PV2: # Zur Überprüfung
+;
 MatlabExport(K_d, sprintf("../codeexport/%s/PV2_MPV_transformation_linear_dependant_%s_matlab.m", robot_name, expstring), 2):
 MatlabExport(P_b, sprintf("../codeexport/%s/PV2_permutation_linear_independant_%s_matlab.m", robot_name, expstring), 2):
 MatlabExport(P_d, sprintf("../codeexport/%s/PV2_permutation_linear_dependant_%s_matlab.m", robot_name, expstring), 2):
