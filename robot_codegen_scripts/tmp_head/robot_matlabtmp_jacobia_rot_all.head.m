@@ -9,7 +9,7 @@
 % Winkeldarstellung: RPY-Winkel, rotx(alpha)*roty(beta)*rotz(gamma)
 % 
 % Input:
-% %INPUT_Q%
+% %INPUT_QJ%
 % link_index [1x1 uint8]
 %   Index des Segmentes, auf dem der Punkt C liegt.
 %   Wie in %RN%_fkine_fixb_rotmat_mdh_sym_varpar.m (1=Basis).

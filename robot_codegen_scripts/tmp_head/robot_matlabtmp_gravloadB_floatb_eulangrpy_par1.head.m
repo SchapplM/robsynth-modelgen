@@ -3,7 +3,7 @@
 % Use Code from Maple symbolic Code Generation
 % 
 % Input:
-% %INPUT_Q%
+% %INPUT_QJ%
 % %INPUT_PHIB%
 % g [3x1]
 %   gravitation vector in world frame [m/s^2]

@@ -3,7 +3,7 @@
 % Use Code from Maple symbolic Code Generation
 % 
 % Input:
-% %INPUT_Q%
+% %INPUT_QJ%
 % %INPUT_PHIB%
 % %INPUT_PKIN%
 % %INPUT_M%

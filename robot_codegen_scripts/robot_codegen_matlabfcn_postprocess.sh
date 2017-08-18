@@ -36,12 +36,12 @@ sed -i "/% %INPUT_IF%/r $repo_pfad/robot_codegen_scripts/tmp_head/robot_matlabtm
 sed -i "/%INPUT_IF%/d" $mfcndat
 sed -i "/% %INPUT_PKIN%/r $repo_pfad/robot_codegen_scripts/tmp_head/robot_matlabtmp_comment_input_pkin.m" $mfcndat
 sed -i "/%INPUT_PKIN%/d" $mfcndat
-sed -i "/% %INPUT_Q%/r $repo_pfad/robot_codegen_scripts/tmp_head/robot_matlabtmp_comment_input_q.m" $mfcndat
-sed -i "/%INPUT_Q%/d" $mfcndat
-sed -i "/% %INPUT_QD%/r $repo_pfad/robot_codegen_scripts/tmp_head/robot_matlabtmp_comment_input_qD.m" $mfcndat
-sed -i "/%INPUT_QD%/d" $mfcndat
-sed -i "/% %INPUT_QDD%/r $repo_pfad/robot_codegen_scripts/tmp_head/robot_matlabtmp_comment_input_qDD.m" $mfcndat
-sed -i "/%INPUT_QDD%/d" $mfcndat
+sed -i "/% %INPUT_QJ%/r $repo_pfad/robot_codegen_scripts/tmp_head/robot_matlabtmp_comment_input_qJ.m" $mfcndat
+sed -i "/%INPUT_QJ%/d" $mfcndat
+sed -i "/% %INPUT_QJD%/r $repo_pfad/robot_codegen_scripts/tmp_head/robot_matlabtmp_comment_input_qJD.m" $mfcndat
+sed -i "/%INPUT_QJD%/d" $mfcndat
+sed -i "/% %INPUT_QJDD%/r $repo_pfad/robot_codegen_scripts/tmp_head/robot_matlabtmp_comment_input_qJDD.m" $mfcndat
+sed -i "/%INPUT_QJDD%/d" $mfcndat
 sed -i "/% %INPUT_RB%/r $repo_pfad/robot_codegen_scripts/tmp_head/robot_matlabtmp_comment_input_rB.m" $mfcndat
 sed -i "/%INPUT_RB%/d" $mfcndat
 sed -i "/% %INPUT_PHIB%/r $repo_pfad/robot_codegen_scripts/tmp_head/robot_matlabtmp_comment_input_phiB.m" $mfcndat

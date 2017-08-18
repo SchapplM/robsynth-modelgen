@@ -3,8 +3,8 @@
 % Use Code from Maple symbolic Code Generation
 % 
 % Input:
-% %INPUT_Q%
-% %INPUT_QD%
+% %INPUT_QJ%
+% %INPUT_QJD%
 % V_base [6x1]
 %   Base Velocity (twist: stacked translational and angular velocity) in base frame
 % %INPUT_PKIN%

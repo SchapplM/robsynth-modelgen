@@ -9,8 +9,8 @@
 % Winkeldarstellung: RPY-Winkel, rotx(alpha)*roty(beta)*rotz(gamma)
 % 
 % Input:
-% %INPUT_Q%
-% %INPUT_QD%
+% %INPUT_QJ%
+% %INPUT_QJD%
 % %INPUT_PKIN%
 % 
 % Output:

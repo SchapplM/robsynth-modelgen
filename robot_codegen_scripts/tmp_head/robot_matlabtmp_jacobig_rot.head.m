@@ -7,7 +7,7 @@
 % 
 % 
 % Input:
-% %INPUT_Q%
+% %INPUT_QJ%
 % %INPUT_PKIN%
 % 
 % Output:

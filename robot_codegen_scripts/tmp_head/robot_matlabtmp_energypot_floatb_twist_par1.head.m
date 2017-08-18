@@ -3,7 +3,7 @@
 % Use Code from Maple symbolic Code Generation
 % 
 % Input:
-% %INPUT_Q%
+% %INPUT_QJ%
 % %INPUT_RB%
 % g [3x1]
 %   gravitation vector in mdh base frame [m/s^2]

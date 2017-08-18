@@ -6,7 +6,7 @@
 % Endeffektorposition und verallgemeinerten Koordinaten.
 % 
 % Input:
-% %INPUT_Q%
+% %INPUT_QJ%
 % %INPUT_PKIN%
 % 
 % Output:

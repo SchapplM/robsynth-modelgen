@@ -6,7 +6,7 @@
 % Endeffektorposition und verallgemeinerten Koordinaten.
 % 
 % Input:
-% %INPUT_Q%
+% %INPUT_QJ%
 % r_i_i_C [3x1]
 %   Ortsvektor vom KörperKS-Ursprung zum gesuchten Punkt
 % %INPUT_PKIN%
