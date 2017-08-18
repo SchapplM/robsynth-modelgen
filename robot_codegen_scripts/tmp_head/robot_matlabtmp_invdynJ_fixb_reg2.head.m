@@ -1,4 +1,4 @@
-% Calculate inertial parameters regressor of coriolis joint torque vector for
+% Calculate inertial parameters regressor of inverse dynamics joint torque vector for
 % %RN%
 % Use Code from Maple symbolic Code Generation
 % 
