@@ -1,36 +1,34 @@
-%% Allgemeine Definitionen
-NQJ = %NQJ%;
-NJ = %NJ%;
-NL = %NL%;
-robot_name = '%RN%';
+%% General Definitions
+NQJ = %NQJ%; % Number of generalized coordinates
+NJ = %NJ%; % number of joints (number of rows in Denavit-Hartenberg table)
+NL = %NL%; % number of links (rigid bodies, including the base)
+robot_name = '%RN%'; % prefix in all function names and simulink models and blocks
 
 %% Parameter definieren
-a = rand(NJ,1);
-alpha = zeros(NJ,1);
-d = rand(NJ,1);
-q_offset = zeros(NJ,1);
-b = zeros(NJ,1);
-beta = zeros(NJ,1);
+% These parameters may be overwritten down in this script
+a = rand(NJ,1); % Kinematic length of MDH notation
+alpha = zeros(NJ,1); % Kinematic angle of MDH notation
+d = rand(NJ,1); % Kinematic length of MDH notation
+q_offset = zeros(NJ,1); % Kinematic angle of MDH notation
+b = zeros(NJ,1); % Kinematic length of MDH notation
+beta = zeros(NJ,1); % Kinematic angle of MDH notation
 
-rSges = rand(NL,3);
-m = rand(NL,1);
-Icges = [rand(NL,3), -rand(NL,3)*0.01];
+rSges = rand(NL,3); % All center of mass coordinates in body frames
+m = rand(NL,1); % masses of all links (are positive due to rand() function)
+Ic_pa = rand(NL,3); % inertia of all links around their center of mass in principal axes
+Icges = NaN(NL,6); % inertial of all links around their center of mass in body frame
+for i = 1:NL
+  R_pa = rpy2r(rand(),rand(),rand()); % random principal axes
+  % inertia tensor in body frame: make sure the eigenvalues are positive and the tensor is positive definite
+  Icges(i,:) = inertiamatrix2vector(R_pa*diag(Ic_pa(i,:))*R_pa');
+end
 
-[mrSges, Ifges] = ...
+[mrSges, ... % first moment of all links (mass times center of mass)
+ Ifges] = ... % second moment of all links (inertia around body frame origins)
   inertial_parameters_convert_par1_par2(rSges, Icges, m);
 
-%% Parameter prüfen
-if any(m) < 0
-  error('Massen sollten positiv sein');
-end
-for i = 2:NL
-  Ic_i = inertiavector2matrix(Icges(i,:));
-  if any(eig(Ic_i) < 0) 
-    error('Trägheitstensor sollte positiv definit sein');
-  end
-end
-
 %% Zufällige Roboterkonfigurationen
+% Werden in den Testfunktionen benutzt
 
 n = 100;
 % Gelenkwinkel und -zeitableitungen
