@@ -2,6 +2,9 @@
 # Speichere die Aktuelle Roboterkonfiguration als Bash-Variable in einer Datei
 # Code-Schnipsel enthalten Variablenzuweisungen
 #
+# Argumente: 
+# "quiet": Keine Textausgabe in Konsole.
+#
 # Dieses Skript im Ordner ausführen, in dem es im Repo liegt
 
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
@@ -21,10 +24,11 @@ robot_NQJ=`grep "NQJ := " $robot_env_pfad | tail -1 | sed 's/.*= \(.*\):/\1/'`
 robot_NJ=`grep "NJ := " $robot_env_pfad | tail -1 | sed 's/.*= \(.*\):/\1/'`
 robot_name=`grep "robot_name := " $robot_env_pfad | tail -1 | sed 's/.*= "\(.*\)":/\1/'`
 
-echo "robot_NQJ=$robot_NQJ"
-echo "robot_NJ=$robot_NJ"
-echo "robot_name=$robot_name"
-
+if [ ! "$1" == "quiet" ]; then
+  echo "robot_NQJ=$robot_NQJ"
+  echo "robot_NJ=$robot_NJ"
+  echo "robot_name=$robot_name"
+fi
 # Speichere die Daten als Shell-Variablen. Die Variablen werden von anderen Skripten mit `robot_codegen_definitions/robot_env.sh` eingebunden.
 echo "robot_NQJ=$robot_NQJ" > $robot_env_pfad.sh
 echo "robot_NJ=$robot_NJ" >> $robot_env_pfad.sh
@@ -38,8 +42,9 @@ else
   robot_NL="UNDEFINED"
 fi;
 echo "robot_NL=$robot_NL" >> $robot_env_pfad.sh
-echo "robot_NL=$robot_NL"
-
+if [ ! "$1" == "quiet" ]; then
+  echo "robot_NL=$robot_NL"
+fi
 # Dimension der Kinematikparameter
 robot_KP_pfad=$repo_pfad/codeexport/${robot_name}/parameter_kin
 if [ -f $robot_KP_pfad ]; then
@@ -50,8 +55,9 @@ else
 fi
 echo "robot_NKP=$robot_NKP" >> $robot_env_pfad.sh
 echo "robot_KP=\"$robot_KP\"" >> $robot_env_pfad.sh
-echo "robot_NKP=$robot_NKP"
-
+if [ ! "$1" == "quiet" ]; then
+  echo "robot_NKP=$robot_NKP"
+fi
 # Variablen für die kinematischen Zwangsbedingungen aus der generierten Definitionsdatei
 robot_kinconstr_exist=1 # Existenz von Zwangsbedingungen prüfen (Vorgabe durch Benutzereingabe)
 if [ -f $robot_def_pfad ]; then
@@ -94,8 +100,9 @@ else
   robot_NMPVFIXB="NOTDEFINED"
 fi
 echo "robot_NMPVFIXB=$robot_NMPVFIXB" >> $robot_env_pfad.sh
-echo "robot_NMPVFIXB=$robot_NMPVFIXB"
-
+if [ ! "$1" == "quiet" ]; then
+  echo "robot_NMPVFIXB=$robot_NMPVFIXB"
+fi
 mpv_floatb_pfad=$repo_pfad/codeexport/${robot_name}/minimal_parameter_vector_floatb_eulangrpy_maple
 if [ -f $mpv_floatb_pfad ]; then
   robot_NMPVFLOATB=`grep "Matrix" $mpv_floatb_pfad | tail -1 | sed 's/.*Matrix[(]\(.*\)/\1/' | sed 's/, 1, .*//'`
@@ -103,5 +110,6 @@ else
   robot_NMPVFLOATB="NOTDEFINED"
 fi
 echo "robot_NMPVFLOATB=$robot_NMPVFLOATB" >> $robot_env_pfad.sh
-echo "robot_NMPVFLOATB=$robot_NMPVFLOATB"
-
+if [ ! "$1" == "quiet" ]; then
+  echo "robot_NMPVFLOATB=$robot_NMPVFLOATB"
+fi
