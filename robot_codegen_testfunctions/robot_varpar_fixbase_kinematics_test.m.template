@@ -83,6 +83,43 @@ for i = 1:size(Q, 1)
 end
 fprintf('Tested Jacobian direct vs adjoint calculation for fixed base.\n');
 
+%% Teste Jacobi-Matrix-Zeitableitung für unterschiedliche Punkte mit der Adjungierten
+for i = 1:size(Q, 1)
+  for j  = 1:NQJ+1 % Jacobi für jeden Körper
+    q = Q(i,:)';
+    qD = QD(i,:)';
+    
+    Tc = %RN%_fkine_fixb_rotmat_mdh_sym_varpar(q, pkin);
+    
+    r_j_Oj_P = rand(3,1); % zufälliger Punkt auf dem Körper
+    
+    % Jacobi- und Zeitableitung zum Punkt aus direkter Berechnung
+    JG_P = %RN%_jacobig_floatb_twist_sym_varpar(q, uint8(j), r_j_Oj_P, pkin);
+    JGD_P = %RN%_jacobigD_floatb_twist_sym_varpar(q, qD, uint8(j), r_j_Oj_P, pkin);
+
+    % Jacobi und -Zeitableitung zum Koordinatenursprung des Körpers
+    JG_Oj = %RN%_jacobig_floatb_twist_sym_varpar(q, uint8(j), zeros(3,1), pkin);
+    JGD_Oj = %RN%_jacobigD_floatb_twist_sym_varpar(q, qD, uint8(j), zeros(3,1), pkin);
+
+    % Jacobi-Zeitableitung zum Punkt berechnet mit Adjunkt-Matrix
+    R_0_j = Tc(1:3,1:3,j);
+    r_0_Oj_P = R_0_j*r_j_Oj_P;
+    A_0_P_Oj = adjoint_jacobian(r_0_Oj_P);
+
+    V_0_i = JG_Oj*qD;
+    omega_0_i = V_0_i(4:6);
+
+    AD_0_P_Oj = adjointD_jacobian(r_j_Oj_P, R_0_j, omega_0_i);
+
+    JGD_P_test = AD_0_P_Oj * JG_Oj + A_0_P_Oj * JGD_Oj;
+
+    if any(abs(JGD_P(:) - JGD_P_test(:)) > 1e-10)
+      error('Berechnung der Jacobi-Matrix-Zeitableitung mit Adjungierten stimmt nicht mit Funktion überein');
+    end
+  end
+end
+fprintf('Tested Jacobian time derivate from direct vs adjoint calculation for fixed base.\n');
+
 %% Test Time Derivate of Jacobian
 if ~KINCONSTR
 Mex_Erstellen({'%RN%_jacobig_mdh_num', '%RN%_jacobigD_mdh_num'});
