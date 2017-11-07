@@ -18,7 +18,7 @@ read "../robot_codegen_definitions/robot_env":
 printf("Generiere Kinematik-Parametervektor für %s\n",robot_name):
 # Parameter der Zwangsbedingungen lesen
 kin_constraints_exist := false:
-constrfile := sprintf("../codeexport/%s/kinematic_constraints_symbols_list_maple", robot_name):
+constrfile := sprintf("../codeexport/%s/tmp/kinematic_constraints_symbols_list_maple", robot_name):
 if FileTools[Exists](constrfile) then
   read constrfile:
   kin_constraints_exist := true:
@@ -55,7 +55,7 @@ printf("Kinematik-Parameter für %s: %dx%d\n", robot_name, RowDimension(pkin), C
 pkin;
 # Ergebnis speichern
 # Für Generierung des Kinematikparametervektors in Matlab
-MatlabExport(pkin, sprintf("../codeexport/%s/parameter_kin_matlab.m", robot_name), 2):
+MatlabExport(pkin, sprintf("../codeexport/%s/tmp/parameter_kin_matlab.m", robot_name), 2):
 # Für schnelle Erkennung der Dimension zum Auslesen durch Bash-Skripte
-save pkin, sprintf("../codeexport/%s/parameter_kin", robot_name):
+save pkin, sprintf("../codeexport/%s/tmp/parameter_kin", robot_name):
 

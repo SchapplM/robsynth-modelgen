@@ -35,7 +35,7 @@ echo "robot_NJ=$robot_NJ" >> $robot_env_pfad.sh
 echo "robot_name=\"$robot_name\"" >> $robot_env_pfad.sh
 
 # Lese weitere Informationen aus der generierten Definitionsdatei
-robot_def_pfad=$repo_pfad/codeexport/${robot_name}/tree_floatb_twist_definitions
+robot_def_pfad=$repo_pfad/codeexport/${robot_name}/tmp/tree_floatb_twist_definitions
 if [ -f $robot_def_pfad ]; then
   robot_NL=`grep "NL := " $robot_def_pfad | tail -1 | sed 's/.*= \(.*\);/\1/'`
 else
@@ -46,7 +46,7 @@ if [ ! "$1" == "quiet" ]; then
   echo "robot_NL=$robot_NL"
 fi
 # Dimension der Kinematikparameter
-robot_KP_pfad=$repo_pfad/codeexport/${robot_name}/parameter_kin
+robot_KP_pfad=$repo_pfad/codeexport/${robot_name}/tmp/parameter_kin
 if [ -f $robot_KP_pfad ]; then
   robot_NKP=`sed -n -e 's/pkin := Matrix(\([[:alnum:]]\+\), 1.*/\1/p' $robot_KP_pfad`
   robot_KP=`tr -d "\n" < $robot_KP_pfad | sed -n -e 's/.*pkin := Matrix(\([[:alnum:]]\+\), 1, \[\[\(.*\)\]\]);/\2/p' | sed 's/,/ /g' | sed 's/\[//g' | sed 's/\]//g'`
@@ -68,7 +68,7 @@ else
   robot_kinconstr_exist=0
 fi;
 
-robot_KCsymb_pfad=$repo_pfad/codeexport/${robot_name}/kinematic_constraints_symbols_list_maple
+robot_KCsymb_pfad=$repo_pfad/codeexport/${robot_name}/tmp/kinematic_constraints_symbols_list_maple
 # robot_NKCP: Anzahl der Parameter der kin. ZB
 # KCP: Leerzeichengetrennte Liste der Parameter der kinematischen Zwangsbedingungen
 if [ $robot_kinconstr_exist == 1 ]; then
@@ -92,7 +92,7 @@ echo "robot_NKCP=$robot_NKCP" >> $robot_env_pfad.sh
 echo "robot_KCP=\"$robot_KCP\"" >> $robot_env_pfad.sh
 
 # Dimension des MPV (aus exportiertem Code)
-mpv_fixb_pfad=$repo_pfad/codeexport/${robot_name}/minimal_parameter_vector_fixb_maple
+mpv_fixb_pfad=$repo_pfad/codeexport/${robot_name}/tmp/minimal_parameter_vector_fixb_maple
 if [ -f $mpv_fixb_pfad ]; then
   # Ersetze Text links und rechts von der Dimension mit nichts.
   robot_NMPVFIXB=`grep "Matrix" $mpv_fixb_pfad | tail -1 | sed 's/.*Matrix[(]\(.*\)/\1/' | sed 's/, 1, .*//'`
@@ -103,7 +103,7 @@ echo "robot_NMPVFIXB=$robot_NMPVFIXB" >> $robot_env_pfad.sh
 if [ ! "$1" == "quiet" ]; then
   echo "robot_NMPVFIXB=$robot_NMPVFIXB"
 fi
-mpv_floatb_pfad=$repo_pfad/codeexport/${robot_name}/minimal_parameter_vector_floatb_eulangrpy_maple
+mpv_floatb_pfad=$repo_pfad/codeexport/${robot_name}/tmp/minimal_parameter_vector_floatb_eulangrpy_maple
 if [ -f $mpv_floatb_pfad ]; then
   robot_NMPVFLOATB=`grep "Matrix" $mpv_floatb_pfad | tail -1 | sed 's/.*Matrix[(]\(.*\)/\1/' | sed 's/, 1, .*//'`
 else

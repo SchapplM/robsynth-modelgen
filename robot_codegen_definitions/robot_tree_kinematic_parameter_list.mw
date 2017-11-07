@@ -148,7 +148,7 @@ restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet
 </Group>
 <Group labelreference="L1721" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">constrfile := sprintf(&quot;../codeexport/%s/kinematic_constraints_symbols_list_maple&quot;, robot_name):
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">constrfile := sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_symbols_list_maple&quot;, robot_name):
 if FileTools[Exists](constrfile) then
   read constrfile:
   kin_constraints_exist := true:
@@ -263,7 +263,7 @@ end do:</Text-field>
 </Group>
 <Group labelreference="L1690" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(pkin, sprintf(&quot;../codeexport/%s/parameter_kin_matlab.m&quot;, robot_name), 2):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(pkin, sprintf(&quot;../codeexport/%s/tmp/parameter_kin_matlab.m&quot;, robot_name), 2):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1709" drawlabel="true">
@@ -273,7 +273,7 @@ end do:</Text-field>
 </Group>
 <Group labelreference="L1717" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save pkin, sprintf(&quot;../codeexport/%s/parameter_kin&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save pkin, sprintf(&quot;../codeexport/%s/tmp/parameter_kin&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1718" drawlabel="true">

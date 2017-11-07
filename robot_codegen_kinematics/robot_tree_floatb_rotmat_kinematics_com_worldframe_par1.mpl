@@ -44,9 +44,9 @@ read "../transformation/proc_transl":
 read "../transformation/proc_trafo_mdh": 
 read "../robot_codegen_definitions/robot_env":
 printf("Generiere Schwerpunktskinematik für %s\n", robot_name):
-read sprintf("../codeexport/%s/tree_floatb_definitions", robot_name):
+read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
 # Ergebnisse der Kinematik laden
-read sprintf("../codeexport/%s/kinematics_floatb_%s_rotmat_maple.m", robot_name, base_method_name):
+read sprintf("../codeexport/%s/tmp/kinematics_floatb_%s_rotmat_maple.m", robot_name, base_method_name):
 Trf := Trf:
 Trf_c := Trf_c:
 # Positions of Center of Mass
@@ -66,11 +66,11 @@ for i to NL do
   printf("Schwerpunktsposition in Weltkoordinaten für Körper %d aufgestellt.\n", i):
 end do:
 # Maple Export
-save mr_W_i_Si, r_W_W_Si, r_W_i_Si, sprintf("../codeexport/%s/kinematics_com_worldframe_floatb_%s_par1_maple.m", robot_name, base_method_name):
+save mr_W_i_Si, r_W_W_Si, r_W_i_Si, sprintf("../codeexport/%s/tmp/kinematics_com_worldframe_floatb_%s_par1_maple.m", robot_name, base_method_name):
 printf("Maple-Ausdrücke exportiert.\n"):
 # Matlab-Export
 if codegen_act then
-  MatlabExport(convert_t_s(r_W_W_Si), sprintf("../codeexport/%s/fkine_com_floatb_%s_matlab.m", robot_name, base_method_name), codegen_opt):
+  MatlabExport(convert_t_s(r_W_W_Si), sprintf("../codeexport/%s/tmp/fkine_com_floatb_%s_matlab.m", robot_name, base_method_name), codegen_opt):
 end if:
 # Calculate CoM of the whole robot
 c:=Vector(3):
@@ -81,8 +81,8 @@ for i from 1 to NL do
 end do:
 c:=c/M_ges:
 # Maple-Export
-save c, sprintf("../codeexport/%s/kinematics_com_total_worldframe_floatb_%s_par1_maple.m", robot_name, base_method_name):
+save c, sprintf("../codeexport/%s/tmp/kinematics_com_total_worldframe_floatb_%s_par1_maple.m", robot_name, base_method_name):
 # Matlab-Export
 if codegen_act then
-  MatlabExport(convert_t_s(c), sprintf("../codeexport/%s/com_total_worldframe_floatb_%s_par1_matlab.m", robot_name, base_method_name), codegen_opt):
+  MatlabExport(convert_t_s(c), sprintf("../codeexport/%s/tmp/com_total_worldframe_floatb_%s_par1_matlab.m", robot_name, base_method_name), codegen_opt):
 end if:

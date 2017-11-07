@@ -26,8 +26,8 @@ do
   do
 
     # Gravitationsmoment (Gelenke)
-    quelldat=$repo_pfad/codeexport/${robot_name}/joint_gravload_floatb_${basemeth}_par${dynpar}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_gravloadJ_floatb_${basemeth}_slag_vp${dynpar}.m
+    quelldat=$repo_pfad/codeexport/${robot_name}/tmp/joint_gravload_floatb_${basemeth}_par${dynpar}_matlab.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_gravloadJ_floatb_${basemeth}_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_gravloadJ_floatb_${basemeth}_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -71,11 +71,11 @@ do
 
     # Kinetische Energie (Floating Base)
     if [ $dynpar == 1 ]; then
-      quelldat=$repo_pfad/codeexport/${robot_name}/energy_kinetic_floatb_${basemeth}_worldframe_par${dynpar}_matlab.m
+      quelldat=$repo_pfad/codeexport/${robot_name}/tmp/energy_kinetic_floatb_${basemeth}_worldframe_par${dynpar}_matlab.m
     else
-      quelldat=$repo_pfad/codeexport/${robot_name}/energy_kinetic_floatb_${basemeth}_linkframe_par${dynpar}_matlab.m
+      quelldat=$repo_pfad/codeexport/${robot_name}/tmp/energy_kinetic_floatb_${basemeth}_linkframe_par${dynpar}_matlab.m
     fi
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_energykin_floatb_${basemeth}_slag_vp${dynpar}.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_energykin_floatb_${basemeth}_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_energykin_floatb_${basemeth}_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -125,8 +125,8 @@ do
     fi
 
     # Potentielle Energie (Floating base)
-    quelldat=$repo_pfad/codeexport/${robot_name}/energy_potential_floatb_${basemeth}_worldframe_par${dynpar}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_energypot_floatb_${basemeth}_slag_vp${dynpar}.m
+    quelldat=$repo_pfad/codeexport/${robot_name}/tmp/energy_potential_floatb_${basemeth}_worldframe_par${dynpar}_matlab.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_energypot_floatb_${basemeth}_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_energypot_floatb_${basemeth}_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -176,8 +176,8 @@ do
   for basemeth in "eulangrpy"
   do
     # Gravitationsmoment (Basis)
-    quelldat=$repo_pfad/codeexport/${robot_name}/base_gravload_floatb_${basemeth}_par${dynpar}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_gravloadB_floatb_${basemeth}_slag_vp${dynpar}.m
+    quelldat=$repo_pfad/codeexport/${robot_name}/tmp/base_gravload_floatb_${basemeth}_par${dynpar}_matlab.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_gravloadB_floatb_${basemeth}_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_gravloadB_floatb_${basemeth}_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -220,8 +220,8 @@ do
     fi
 
     # Coriolisvektor (Floating Base, Basis)
-    quelldat=$repo_pfad/codeexport/${robot_name}/coriolisvec_base_floatb_${basemeth}_par${dynpar}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_coriolisvecB_floatb_${basemeth}_slag_vp${dynpar}.m
+    quelldat=$repo_pfad/codeexport/${robot_name}/tmp/coriolisvec_base_floatb_${basemeth}_par${dynpar}_matlab.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_coriolisvecB_floatb_${basemeth}_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_coriolisvecB_floatb_${basemeth}_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -270,8 +270,8 @@ do
     fi
 
     # Coriolisvektor (Floating Base, Gelenke)
-    quelldat=$repo_pfad/codeexport/${robot_name}/coriolisvec_joint_floatb_${basemeth}_par${dynpar}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_coriolisvecJ_floatb_${basemeth}_slag_vp${dynpar}.m
+    quelldat=$repo_pfad/codeexport/${robot_name}/tmp/coriolisvec_joint_floatb_${basemeth}_par${dynpar}_matlab.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_coriolisvecJ_floatb_${basemeth}_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_coriolisvecJ_floatb_${basemeth}_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -321,8 +321,8 @@ do
 
 
     # Coriolisvektor (Floating Base, Gesamt: Basis und Gelenke)
-    quelldat=$repo_pfad/codeexport/${robot_name}/coriolisvec_floatb_${basemeth}_par${dynpar}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_coriolisvec_floatb_${basemeth}_slag_vp${dynpar}.m
+    quelldat=$repo_pfad/codeexport/${robot_name}/tmp/coriolisvec_floatb_${basemeth}_par${dynpar}_matlab.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_coriolisvec_floatb_${basemeth}_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_coriolisvec_floatb_${basemeth}_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -372,8 +372,8 @@ do
 
 
     # Coriolismatrix (Floating Base: Einfluss auf Gelenke)
-    quelldat=$repo_pfad/codeexport/${robot_name}/coriolismat_joint_floatb_${basemeth}_par${dynpar}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_coriolismatJ_floatb_${basemeth}_slag_vp${dynpar}.m
+    quelldat=$repo_pfad/codeexport/${robot_name}/tmp/coriolismat_joint_floatb_${basemeth}_par${dynpar}_matlab.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_coriolismatJ_floatb_${basemeth}_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_coriolismatJ_floatb_${basemeth}_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -423,8 +423,8 @@ do
 
 
     # Coriolismatrix (Floating Base: Gesamt)
-    quelldat=$repo_pfad/codeexport/${robot_name}/coriolismat_floatb_${basemeth}_par${dynpar}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_coriolismat_floatb_${basemeth}_slag_vp${dynpar}.m
+    quelldat=$repo_pfad/codeexport/${robot_name}/tmp/coriolismat_floatb_${basemeth}_par${dynpar}_matlab.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_coriolismat_floatb_${basemeth}_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_coriolismat_floatb_${basemeth}_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -473,8 +473,8 @@ do
     fi
 
     # Massenmatrix (Gesamt)
-    quelldat=$repo_pfad/codeexport/${robot_name}/inertia_floatb_${basemeth}_par${dynpar}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_inertia_floatb_${basemeth}_slag_vp${dynpar}.m
+    quelldat=$repo_pfad/codeexport/${robot_name}/tmp/inertia_floatb_${basemeth}_par${dynpar}_matlab.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_inertia_floatb_${basemeth}_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_inertia_floatb_${basemeth}_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -517,15 +517,15 @@ do
       varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/' | tr -d '[:space:]'`
       echo "%% Postprocessing: Reshape Output" >> $zieldat
       echo "% From vec2symmat_$((6+robot_NQJ))_matlab.m" >> $zieldat
-      sed "s/mv/$varname_tmp/g" $repo_pfad/codeexport/${robot_name}/vec2symmat_$((6+robot_NQJ))_matlab.m >> $zieldat
+      sed "s/mv/$varname_tmp/g" $repo_pfad/codeexport/${robot_name}/tmp/vec2symmat_$((6+robot_NQJ))_matlab.m >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0
     else
       echo "Code in ${quelldat##*/} nicht gefunden."
     fi
 
     # Massenmatrix (Basis-Gelenke)
-    quelldat=$repo_pfad/codeexport/${robot_name}/inertia_joint_base_floatb_${basemeth}_par${dynpar}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_inertiaJB_floatb_${basemeth}_slag_vp${dynpar}.m
+    quelldat=$repo_pfad/codeexport/${robot_name}/tmp/inertia_joint_base_floatb_${basemeth}_par${dynpar}_matlab.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_inertiaJB_floatb_${basemeth}_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_inertiaJB_floatb_${basemeth}_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -571,8 +571,8 @@ do
 
 
     # Massenmatrix (Basis-Basis)
-    quelldat=$repo_pfad/codeexport/${robot_name}/inertia_base_base_floatb_${basemeth}_par${dynpar}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_inertiaB_floatb_${basemeth}_slag_vp${dynpar}.m
+    quelldat=$repo_pfad/codeexport/${robot_name}/tmp/inertia_base_base_floatb_${basemeth}_par${dynpar}_matlab.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_inertiaB_floatb_${basemeth}_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_inertiaB_floatb_${basemeth}_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -615,15 +615,15 @@ do
       varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/' | tr -d '[:space:]'`
       echo "%% Postprocessing: Reshape Output" >> $zieldat
       echo "% From vec2symmat_6_matlab.m" >> $zieldat
-      sed "s/mv/$varname_tmp/g" $repo_pfad/codeexport/${robot_name}/vec2symmat_6_matlab.m >> $zieldat
+      sed "s/mv/$varname_tmp/g" $repo_pfad/codeexport/${robot_name}/tmp/vec2symmat_6_matlab.m >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0
     else
       echo "Code in ${quelldat##*/} nicht gefunden."
     fi
 
     # Massenmatrix-Zeitableitung (Floating Base: Gesamt)
-    quelldat=$repo_pfad/codeexport/${robot_name}/inertia_time_derivative_floatb_${basemeth}_par${dynpar}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_inertiaD_floatb_${basemeth}_slag_vp${dynpar}.m
+    quelldat=$repo_pfad/codeexport/${robot_name}/tmp/inertia_time_derivative_floatb_${basemeth}_par${dynpar}_matlab.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_inertiaD_floatb_${basemeth}_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_inertiaD_floatb_${basemeth}_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -670,15 +670,15 @@ do
       varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/' | tr -d '[:space:]'`
       echo "%% Postprocessing: Reshape Output" >> $zieldat
       echo "% From vec2symmat_$((6+robot_NQJ))_matlab.m" >> $zieldat
-      sed "s/mv/$varname_tmp/g" $repo_pfad/codeexport/${robot_name}/vec2symmat_$((6+robot_NQJ))_matlab.m >> $zieldat
+      sed "s/mv/$varname_tmp/g" $repo_pfad/codeexport/${robot_name}/tmp/vec2symmat_$((6+robot_NQJ))_matlab.m >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0
     else
       echo "Code in ${quelldat##*/} nicht gefunden."
     fi
 
     # Inverse Dynamik (Gelenke, Floating Base)
-    quelldat=$repo_pfad/codeexport/${robot_name}/invdyn_joint_floatb_${basemeth}_par${dynpar}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_invdynJ_floatb_${basemeth}_slag_vp${dynpar}.m
+    quelldat=$repo_pfad/codeexport/${robot_name}/tmp/invdyn_joint_floatb_${basemeth}_par${dynpar}_matlab.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_invdynJ_floatb_${basemeth}_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_invdynJ_floatb_${basemeth}_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -736,8 +736,8 @@ do
     
     
     # Inverse Dynamik (Basis, Floating Base)
-    quelldat=$repo_pfad/codeexport/${robot_name}/invdyn_base_floatb_${basemeth}_par${dynpar}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_invdynB_floatb_${basemeth}_slag_vp${dynpar}.m
+    quelldat=$repo_pfad/codeexport/${robot_name}/tmp/invdyn_base_floatb_${basemeth}_par${dynpar}_matlab.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_invdynB_floatb_${basemeth}_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_invdynB_floatb_${basemeth}_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat

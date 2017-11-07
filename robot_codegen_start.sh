@@ -74,8 +74,9 @@ cd $repo_pfad/robot_codegen_scripts/
 # Ordner vorbereiten
 source robot_codegen_tmpvar_bash.sh quiet # enthält zunächst unvollständige Definitionen und wird nur für den Roboternamen gebraucht.
 mkdir -p "$repo_pfad/codeexport/$robot_name"
-mkdir -p "$repo_pfad/codeexport/matlabfcn/$robot_name"
-mkdir -p "$repo_pfad/codeexport/testfcn/$robot_name"
+mkdir -p "$repo_pfad/codeexport/$robot_name/tmp"
+mkdir -p "$repo_pfad/codeexport/$robot_name/matlabfcn"
+mkdir -p "$repo_pfad/codeexport/$robot_name/testfcn"
 
 # Maple-Definitionen einmal ausführen (damit dort definierte Variablen in Bash übernommen werden)
 pwd_alt=$(pwd)

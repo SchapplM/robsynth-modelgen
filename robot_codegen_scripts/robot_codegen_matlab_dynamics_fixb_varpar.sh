@@ -27,8 +27,8 @@ do
   do
 
     # Coriolisvektor (Fixed Base)
-    quelldat=$repo_pfad/codeexport/${robot_name}/coriolisvec_joint_fixb_par${dynpar}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_coriolisvecJ_fixb_slag_vp${dynpar}.m
+    quelldat=$repo_pfad/codeexport/${robot_name}/tmp/coriolisvec_joint_fixb_par${dynpar}_matlab.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_coriolisvecJ_fixb_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_coriolisvecJ_fixb_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -65,8 +65,8 @@ do
     fi
 
     # Coriolismatrix (Fixed Base)
-    quelldat=$repo_pfad/codeexport/${robot_name}/coriolismat_joint_fixb_par${dynpar}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_coriolismatJ_fixb_slag_vp${dynpar}.m
+    quelldat=$repo_pfad/codeexport/${robot_name}/tmp/coriolismat_joint_fixb_par${dynpar}_matlab.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_coriolismatJ_fixb_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_coriolismatJ_fixb_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -104,8 +104,8 @@ do
 
 
     # Massenmatrix (Gelenke)
-    quelldat=$repo_pfad/codeexport/${robot_name}/inertia_joint_joint_floatb_${basemeth}_par${dynpar}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_inertiaJ_slag_vp${dynpar}.m
+    quelldat=$repo_pfad/codeexport/${robot_name}/tmp/inertia_joint_joint_floatb_${basemeth}_par${dynpar}_matlab.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_inertiaJ_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_inertiaJ_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -138,7 +138,7 @@ do
       varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/' | tr -d '[:space:]'`
       echo "%% Postprocessing: Reshape Output" >> $zieldat
       echo "% From vec2symmat_${robot_NQJ}_matlab.m" >> $zieldat
-      sed "s/mv/$varname_tmp/g" $repo_pfad/codeexport/${robot_name}/vec2symmat_${robot_NQJ}_matlab.m >> $zieldat
+      sed "s/mv/$varname_tmp/g" $repo_pfad/codeexport/${robot_name}/tmp/vec2symmat_${robot_NQJ}_matlab.m >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0
     else
       echo "Code in ${quelldat##*/} nicht gefunden."
@@ -146,11 +146,11 @@ do
 
     # Kinetische Energie (Fixed Base)
     if [ $dynpar == 1 ]; then
-      quelldat=$repo_pfad/codeexport/${robot_name}/energy_kinetic_fixb_worldframe_par${dynpar}_matlab.m
+      quelldat=$repo_pfad/codeexport/${robot_name}/tmp/energy_kinetic_fixb_worldframe_par${dynpar}_matlab.m
     else
-      quelldat=$repo_pfad/codeexport/${robot_name}/energy_kinetic_fixb_linkframe_par${dynpar}_matlab.m
+      quelldat=$repo_pfad/codeexport/${robot_name}/tmp/energy_kinetic_fixb_linkframe_par${dynpar}_matlab.m
     fi
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_energykin_fixb_slag_vp${dynpar}.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_energykin_fixb_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_energykin_fixb_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -187,8 +187,8 @@ do
     fi
 
     # Massenmatrix-Zeitableitung (Gelenke)
-    quelldat=$repo_pfad/codeexport/${robot_name}/inertia_joint_joint_time_derivative_floatb_${basemeth}_par${dynpar}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_inertiaDJ_slag_vp${dynpar}.m
+    quelldat=$repo_pfad/codeexport/${robot_name}/tmp/inertia_joint_joint_time_derivative_floatb_${basemeth}_par${dynpar}_matlab.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_inertiaDJ_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_inertiaDJ_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -223,15 +223,15 @@ do
       varname_tmp=`grep "=" $zieldat| tail -1 | sed 's/\(.*\)=.*/\1/' | tr -d '[:space:]'`
       echo "%% Postprocessing: Reshape Output" >> $zieldat
       echo "% From vec2symmat_${robot_NQJ}_matlab.m" >> $zieldat
-      sed "s/mv/$varname_tmp/g" $repo_pfad/codeexport/${robot_name}/vec2symmat_${robot_NQJ}_matlab.m >> $zieldat
+      sed "s/mv/$varname_tmp/g" $repo_pfad/codeexport/${robot_name}/tmp/vec2symmat_${robot_NQJ}_matlab.m >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0
     else
       echo "Code in ${quelldat##*/} nicht gefunden."
     fi
 
     # Potentielle Energie (Fixed base)
-    quelldat=$repo_pfad/codeexport/${robot_name}/energy_potential_fixb_worldframe_par${dynpar}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_energypot_fixb_slag_vp${dynpar}.m
+    quelldat=$repo_pfad/codeexport/${robot_name}/tmp/energy_potential_fixb_worldframe_par${dynpar}_matlab.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_energypot_fixb_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_energypot_fixb_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -268,8 +268,8 @@ do
     fi
 
     # Inverse Dynamik (Fixed Base)
-    quelldat=$repo_pfad/codeexport/${robot_name}/invdyn_fixb_par${dynpar}_matlab.m
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_invdynJ_fixb_slag_vp${dynpar}.m
+    quelldat=$repo_pfad/codeexport/${robot_name}/tmp/invdyn_fixb_par${dynpar}_matlab.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_invdynJ_fixb_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
       cat ${tmp_pfad}_head/robot_matlabtmp_invdynJ_fixb_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat

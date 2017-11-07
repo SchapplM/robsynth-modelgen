@@ -15,7 +15,7 @@ tmp_pfad=$repo_pfad/robot_codegen_scripts/tmp
 source robot_codegen_tmpvar_bash.sh
 source $repo_pfad/robot_codegen_definitions/robot_env.sh
 
-testfcn_pfad=$repo_pfad/codeexport/testfcn/$robot_name
+testfcn_pfad=$repo_pfad/codeexport/$robot_name/testfcn
 
 for f in $(find $repo_pfad/robot_codegen_testfunctions -name "*.template")
 do
@@ -73,7 +73,7 @@ elif [ "$robot_kinconstr_exist" == "1" ]; then
     echo "$Kcp = rand(1,1);" >> $zieldat
   done
 fi
-KP_dat2=$repo_pfad/codeexport/${robot_name}/parameter_kin_matlab.m
+KP_dat2=$repo_pfad/codeexport/${robot_name}/tmp/parameter_kin_matlab.m
 if [ -f "$KP_dat2" ]; then
   printf "\n%% Aus ${robot_name}/parameter_kin_matlab.m\n" >> $zieldat
   cat $KP_dat2 >> $zieldat
@@ -89,31 +89,31 @@ fi;
 # Null-Einträge werden automatisch zu Null gesetzt.
 printf "\n\n%%%% MDH-Parametereinträge mit vorgegebenen Werten überschreiben" >> $zieldat
 printf "\n%% Aus ${robot_name}_parameters_mdh_d.m\n" >> $zieldat
-cat $repo_pfad/codeexport/${robot_name}/parameters_mdh_d.m >> $zieldat
+cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_d.m >> $zieldat
 varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
 echo "d_mdh = $varname_tmp;" >> $zieldat
 printf "\n%% Aus ${robot_name}_parameters_mdh_a.m\n" >> $zieldat
-cat $repo_pfad/codeexport/${robot_name}/parameters_mdh_a.m >> $zieldat
+cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_a.m >> $zieldat
 varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
 echo "a_mdh = $varname_tmp;" >> $zieldat
 printf "\n%% Aus ${robot_name}_parameters_mdh_b.m\n" >> $zieldat
-cat $repo_pfad/codeexport/${robot_name}/parameters_mdh_b.m >> $zieldat
+cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_b.m >> $zieldat
 varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
 echo "b_mdh = $varname_tmp;" >> $zieldat
 printf "\n%% Aus ${robot_name}_parameters_mdh_beta.m\n" >> $zieldat
-cat $repo_pfad/codeexport/${robot_name}/parameters_mdh_beta.m >> $zieldat
+cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_beta.m >> $zieldat
 varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
 echo "beta_mdh = $varname_tmp;" >> $zieldat
 printf "\n%% Aus ${robot_name}_parameters_mdh_alpha.m\n" >> $zieldat
-cat $repo_pfad/codeexport/${robot_name}/parameters_mdh_alpha.m >> $zieldat
+cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_alpha.m >> $zieldat
 varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
 echo "alpha_mdh = $varname_tmp;" >> $zieldat
 printf "\n%% Aus ${robot_name}_parameters_mdh_qoffset.m\n" >> $zieldat
-cat $repo_pfad/codeexport/${robot_name}/parameters_mdh_qoffset.m >> $zieldat
+cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_qoffset.m >> $zieldat
 varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
 echo "q_offset_mdh = $varname_tmp;" >> $zieldat
 printf "\n%% Aus ${robot_name}_parameters_mdh_v.m\n" >> $zieldat
-cat $repo_pfad/codeexport/${robot_name}/parameters_mdh_v.m >> $zieldat
+cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_v.m >> $zieldat
 varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
 echo "v_mdh = uint8($varname_tmp);" >> $zieldat
 # Ersetze "_mdh", damit die Variablennamen stimmen
