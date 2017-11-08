@@ -33,15 +33,23 @@ for i = 1:n
   qJDD = QDD(i,:)';
   g_base = G(i,:)';
   
+  % Gelenk-Transformationsmatrizen in Eingabeformat der Modul-Funktion umwandeln
+  T = %RN%_joint_trafo_rotmat_mdh_sym_varpar(qJ, pkin);
+  T_stack = NaN(3*NQJ,4);
+  for ii = 1:NQJ
+      T_stack(3*ii-2:3*ii,:) = T(1:3,:,ii);
+  end
+  RotAx_i = repmat([0;0;1]', NQJ, 1); % MDH: Drehachse ist immer die z-Achse (des gedrehten Körpers)
+  
   % Gravitation
   taug_sym = %RN%_gravloadJ_floatb_twist_slag_vp1(qJ, g_base, ...
     pkin, m, rSges);
-  taug_num1 = robot_tree_invdyn_floatb_eulangrpy_nnew_vp1(qJ, zeros(NJ,1), zeros(NJ,1), zeros(3,1), zeros(6,1), [-g_base;zeros(3,1)], ...
+  taug_num1 = robot_tree_invdyn_floatb_eulangrpy_mdh_nnew_vp1(qJ, zeros(NJ,1), zeros(NJ,1), zeros(3,1), zeros(6,1), [-g_base;zeros(3,1)], ...
     alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
   if any( abs(taug_sym-taug_num1(7:end)) > 1e-10)
     error('Fehler in numerisch berechneter Gravitationslast (Methode 1): Stimmt nicht mit symbolisch berechneter überein.');
   end
-  taug_num2 = robot_tree_gravload_floatb_eulangrpy_nnew_vp1(qJ, zeros(3,1), g_base, ...
+  taug_num2 = robot_tree_gravload_floatb_eulangrpy_mdh_nnew_vp1(qJ, zeros(3,1), g_base, ...
     alpha, a, d, q_offset, b, beta, v, m, rSges);
   if any( abs(taug_sym-taug_num2(7:end)) > 1e-10)
     error('Fehler in numerisch berechneter Gravitationslast (Methode 2): Stimmt nicht mit symbolisch berechneter überein.');
@@ -60,7 +68,7 @@ for i = 1:n
   % Coriolis
   tauc_sym = %RN%_coriolisvecJ_fixb_slag_vp1(qJ, qJD, ...
     pkin, m, rSges, Icges);
-  tauc_num1 = robot_tree_invdyn_floatb_eulangrpy_nnew_vp1(qJ, qJD, zeros(NJ,1), zeros(3,1), zeros(6,1), zeros(6,1), ...
+  tauc_num1 = robot_tree_invdyn_floatb_eulangrpy_mdh_nnew_vp1(qJ, qJD, zeros(NJ,1), zeros(3,1), zeros(6,1), zeros(6,1), ...
     alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
   if any( abs(tauc_sym-tauc_num1(7:end)) > 1e-10)
     error('Fehler in numerisch berechneter Corioliskraft (Methode 1): Stimmt nicht mit symbolisch berechneter überein.');
@@ -70,7 +78,7 @@ for i = 1:n
   if any( abs(tauc_sym-tauc_num2(7:end)) > 1e-10)
     error('Fehler in numerisch berechneter Corioliskraft (Methode 2): Stimmt nicht mit symbolisch berechneter überein.');
   end
-  tauc_num3 = robot_tree_coriolisvec_floatb_eulangrpy_nnew_vp1(qJ, qJD, zeros(3,1), zeros(6,1), ...
+  tauc_num3 = robot_tree_coriolisvec_floatb_eulangrpy_mdh_nnew_vp1(qJ, qJD, zeros(3,1), zeros(6,1), ...
     alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
   if any( abs(tauc_sym-tauc_num3(7:end)) > 1e-10)
     error('Fehler in numerisch berechneter Corioliskraft (Methode 3): Stimmt nicht mit symbolisch berechneter überein.');
@@ -83,7 +91,7 @@ for i = 1:n
   Mq_num2 = NaN(NJ,NJ);
   INJ = eye(NJ);
   for jj = 1:NJ
-    Mq_num1(:,jj) = [zeros(NJ,6), eye(NJ)]*robot_tree_invdyn_floatb_eulangrpy_nnew_vp1  (qJ, zeros(NJ,1), INJ(:,jj), zeros(3,1), zeros(6,1), zeros(6,1) , ...
+    Mq_num1(:,jj) = [zeros(NJ,6), eye(NJ)]*robot_tree_invdyn_floatb_eulangrpy_mdh_nnew_vp1  (qJ, zeros(NJ,1), INJ(:,jj), zeros(3,1), zeros(6,1), zeros(6,1) , ...
       alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
     Mq_num2(:,jj) = [zeros(NJ,6), eye(NJ)]*%RN%_invdyn_floatb_eulangrpy_nnew_vp1(qJ, zeros(NJ,1), INJ(:,jj), zeros(3,1), zeros(6,1), zeros(6,1) , ...
       pkin, v, m, rSges, Icges);
@@ -98,6 +106,10 @@ for i = 1:n
     pkin, v, m, rSges, Icges);
   if any( abs(Mq_num3(:)-Mq_sym(:)) > 1e-10)
     error('Fehler in numerisch berechneter Massenmatrix (Methode 3): Stimmt nicht mit symbolisch berechneter überein.');
+  end
+  Mq_num4 = inertia_nCRB_vp1_m(T_stack, RotAx_i, v, m, rSges, Icges);
+  if any( abs(Mq_num4(:)-Mq_sym(:)) > 1e-10)
+    error('Fehler in numerisch berechneter Massenmatrix (Methode 4): Stimmt nicht mit symbolisch berechneter überein.');
   end
 end
 fprintf('Numerische Dynamikfunktionen (Fixed Base) gegen symbolische erfolgreich getestet\n');
@@ -154,13 +166,13 @@ t_ber_g(2,3) = toc/n;
 
 tic;
 for i = 1:n
-  taug_num1 = robot_tree_invdyn_floatb_eulangrpy_nnew_vp1(qJ+i*1e-3, zeros(NJ,1), zeros(NJ,1), zeros(3,1), zeros(6,1), [-g_base;zeros(3,1)], ...
+  taug_num1 = robot_tree_invdyn_floatb_eulangrpy_mdh_nnew_vp1(qJ+i*1e-3, zeros(NJ,1), zeros(NJ,1), zeros(3,1), zeros(6,1), [-g_base;zeros(3,1)], ...
     alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
 end
 t_ber_g(1,4) = toc/n;
 tic;
 for i = 1:n
-  taug_num2 = robot_tree_gravload_floatb_eulangrpy_nnew_vp1(qJ+i*1e-3, zeros(3,1), g_base, ...
+  taug_num2 = robot_tree_gravload_floatb_eulangrpy_mdh_nnew_vp1(qJ+i*1e-3, zeros(3,1), g_base, ...
     alpha, a, d, q_offset, b, beta, v, m, rSges);
 end
 t_ber_g(1,5) = toc/n;
@@ -249,7 +261,7 @@ end
 t_ber_c(2,3) = toc/n;
 tic;
 for i = 1:n
-  tauc_num1 = robot_tree_invdyn_floatb_eulangrpy_nnew_vp1(qJ+i*1e-3, qJD, zeros(NJ,1), zeros(3,1), zeros(6,1),zeros(6,1), ...
+  tauc_num1 = robot_tree_invdyn_floatb_eulangrpy_mdh_nnew_vp1(qJ+i*1e-3, qJD, zeros(NJ,1), zeros(3,1), zeros(6,1),zeros(6,1), ...
     alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
 end
 t_ber_c(1,4) = toc/n;
@@ -334,7 +346,7 @@ for i = 1:n
   Mq_num1 = NaN(NJ,NJ);
   INJ = eye(NJ);
   for jj = 1:NJ
-    Mq_num1(:,jj) = [zeros(NJ,6), eye(NJ)]*robot_tree_invdyn_floatb_eulangrpy_nnew_vp1  (qJ+1e-3*i, zeros(NJ,1), INJ(:,jj), zeros(3,1), zeros(6,1), zeros(6,1) , ...
+    Mq_num1(:,jj) = [zeros(NJ,6), eye(NJ)]*robot_tree_invdyn_floatb_eulangrpy_mdh_nnew_vp1  (qJ+1e-3*i, zeros(NJ,1), INJ(:,jj), zeros(3,1), zeros(6,1), zeros(6,1) , ...
       alpha, a, d, q_offset, b, beta, v, m, rSges, Icges);
   end
 end
@@ -399,5 +411,4 @@ subplot(2,4,sprc2no(2,4,2,4));
 bar(t_ber_fdyn(2,:)*1e3); 
 set(gca, 'xticklabel', {'s1/s1/s1', 's1/n/s1', 'n/s1'});
 ylabel('t [ms]'); title('fdyn (mex)');
-
 
