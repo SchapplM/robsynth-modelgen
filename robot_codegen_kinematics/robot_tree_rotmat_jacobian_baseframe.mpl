@@ -37,9 +37,9 @@ read sprintf("../transformation/proc_transl", maple_repo_path):
 read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s": 
 read "../robot_codegen_definitions/robot_env":
-read sprintf("../codeexport/%s/tree_floatb_definitions", robot_name):
+read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
 # Ergebnisse der Kinematik laden
-read sprintf("../codeexport/%s/kinematics_floatb_%s_rotmat_maple.m", robot_name, base_method_name):
+read sprintf("../codeexport/%s/tmp/kinematics_floatb_%s_rotmat_maple.m", robot_name, base_method_name):
 Trf := Trf:
 Trf_c := Trf_c:
 # Link-Index, für den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber für beliebige Segmente aufgestellt werden.
@@ -61,17 +61,17 @@ for i from 1 to 3 do
   end do:
 end do:
 # Export
-save b_transl, sprintf("../codeexport/%s/jacobia_transl_%d_maple.m", robot_name, LIJAC):
+save b_transl, sprintf("../codeexport/%s/tmp/jacobia_transl_%d_maple.m", robot_name, LIJAC):
 # Ausdruck muss nochmal geladen werden, ansonsten hängt sich die Code-Optimerung mit "tryhard" auf.
 # TODO: Klären warum das so ist und Problem beheben.
-read sprintf("../codeexport/%s/jacobia_transl_%d_maple.m", robot_name, LIJAC):
+read sprintf("../codeexport/%s/tmp/jacobia_transl_%d_maple.m", robot_name, LIJAC):
 b_transl := b_transl:
 for i from 1 to 3 do
   for j from 1 to NQJ do
-    MatlabExport(b_transl(i,j), sprintf("../codeexport/%s/jacobia_transl_%d_floatb_%s_%d_%d_matlab.m", robot_name, LIJAC, base_method_name, i, j), codegen_opt):
+    MatlabExport(b_transl(i,j), sprintf("../codeexport/%s/tmp/jacobia_transl_%d_floatb_%s_%d_%d_matlab.m", robot_name, LIJAC, base_method_name, i, j), codegen_opt):
   end do:
 end do:
-MatlabExport(b_transl, sprintf("../codeexport/%s/jacobia_transl_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
+MatlabExport(b_transl, sprintf("../codeexport/%s/tmp/jacobia_transl_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
 # Jacobi-Matrix analytisch (Rotatorisch)
 # Ortmaier2014a Gl. (1.15), S.14: Geometrische Zwangsbedingungen in impliziter Form
 # Rotationsdarstellung des Endeffektors in RPY-Winkeln
@@ -93,19 +93,19 @@ for i from 1 to 3 do
   end do:
 end do:
 # Export
-save b_rota, sprintf("../codeexport/%s/jacobia_rot_maple.m", robot_name):
+save b_rota, sprintf("../codeexport/%s/tmp/jacobia_rot_maple.m", robot_name):
 # Ausdruck nochmal laden.
-read sprintf("../codeexport/%s/jacobia_rot_maple.m", robot_name):
+read sprintf("../codeexport/%s/tmp/jacobia_rot_maple.m", robot_name):
 b_rota := b_rota:
 for i from 1 to 3 do
   for j from 1 to NQJ do
-    MatlabExport(b_rota(i,j), sprintf("../codeexport/%s/jacobia_rot_%d_floatb_%s_%d_%d_matlab.m", robot_name, LIJAC, base_method_name, i, j), codegen_opt):
+    MatlabExport(b_rota(i,j), sprintf("../codeexport/%s/tmp/jacobia_rot_%d_floatb_%s_%d_%d_matlab.m", robot_name, LIJAC, base_method_name, i, j), codegen_opt):
   end do:
 end do:
-MatlabExport(b_rota, sprintf("../codeexport/%s/jacobia_rot_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
+MatlabExport(b_rota, sprintf("../codeexport/%s/tmp/jacobia_rot_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
 # Jacobi-Matrix geometrisch (Rotatorisch)
 # Zusammenhang zwischen Geschwindigkeit der verallgemeinerten Koordinaten und Winkelgeschwindigkeit des Endeffektors ausgedrückt im Basis-Koordinatensystems
-read sprintf("../codeexport/%s/velocity_worldframe_floatbase_%s_par1_maple.m", robot_name, base_method_name):
+read sprintf("../codeexport/%s/tmp/velocity_worldframe_floatbase_%s_par1_maple.m", robot_name, base_method_name):
 omega_W_i := omega_W_i:
 omega_EE := Matrix(3,1,<omega_xEE; omega_yEE; omega_zEE>):
 h_rotg := Matrix(omega_W_i(1..3,LIJAC)) - omega_EE:
@@ -121,16 +121,16 @@ for i from 1 to 3 do
 end do:
 B_s := b_rotg:
 # Export
-save b_rotg, sprintf("../codeexport/%s/jacobig_rot_maple.m", robot_name):
+save b_rotg, sprintf("../codeexport/%s/tmp/jacobig_rot_maple.m", robot_name):
 # Ausdruck nochmal laden.
-read sprintf("../codeexport/%s/jacobig_rot_maple.m", robot_name):
+read sprintf("../codeexport/%s/tmp/jacobig_rot_maple.m", robot_name):
 b_rotg := b_rotg:
 for i from 1 to 3 do
   for j from 1 to NQJ do
-    MatlabExport(b_rotg(i,j), sprintf("../codeexport/%s/jacobig_rot_%d_floatb_%s_%d_%d_matlab.m", robot_name, LIJAC, base_method_name, i, j), codegen_opt):
+    MatlabExport(b_rotg(i,j), sprintf("../codeexport/%s/tmp/jacobig_rot_%d_floatb_%s_%d_%d_matlab.m", robot_name, LIJAC, base_method_name, i, j), codegen_opt):
   end do:
 end do:
-MatlabExport(b_rotg, sprintf("../codeexport/%s/jacobig_rot_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
+MatlabExport(b_rotg, sprintf("../codeexport/%s/tmp/jacobig_rot_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
 # Jacobi-Zeitableitung
 JD_rotg_t := diff~(convert_s_t(b_rotg), t):
 JD_rotg_s := convert_t_s(JD_rotg_t):
@@ -138,7 +138,7 @@ JD_rota_t := diff~(convert_s_t(b_rota), t):
 JD_rota_s := convert_t_s(JD_rota_t):
 JD_transla_t := diff~(convert_s_t(b_transl), t):
 JD_transla_s := convert_t_s(JD_transla_t):
-MatlabExport(JD_rotg_s, sprintf("../codeexport/%s/jacobigD_rot_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
-MatlabExport(JD_rota_s, sprintf("../codeexport/%s/jacobiaD_rot_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
-MatlabExport(JD_transla_s, sprintf("../codeexport/%s/jacobiaD_transl_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
+MatlabExport(JD_rotg_s, sprintf("../codeexport/%s/tmp/jacobigD_rot_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
+MatlabExport(JD_rota_s, sprintf("../codeexport/%s/tmp/jacobiaD_rot_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
+MatlabExport(JD_transla_s, sprintf("../codeexport/%s/tmp/jacobiaD_transl_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
 

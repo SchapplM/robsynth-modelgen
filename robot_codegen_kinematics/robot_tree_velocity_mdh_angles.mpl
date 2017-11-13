@@ -36,9 +36,9 @@ read "../helper/proc_convert_t_s":
 read "../helper/proc_MatlabExport":
 read "../robot_codegen_definitions/robot_env":
 printf("Generiere Geschwindigkeit für %s\n", robot_name):
-read sprintf("../codeexport/%s/tree_floatb_definitions", robot_name):
+read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
 # Lade Ausdrücke für kinematische Zwangsbedingungen (Verknüpfung von MDH-Gelenkwinkeln durch verallgemeinerte Koordinaten)
-read sprintf("../codeexport/%s/kinematic_constraints_maple_inert.m", robot_name):
+read sprintf("../codeexport/%s/tmp/kinematic_constraints_maple_inert.m", robot_name):
 # Zeitableitung der Drehwinkel berechnen
 # Ersetze die MDH-Winkel durch verallgemeinerte Koordinaten
 # Falls die Gelenkwinkel nicht direkt mit verallgemeinerten Koordinaten überstimmen (bei Kopplungen, kinematischen Schleifen) steht hier eine längere Berechnung. Ansonsten reicht das triviale Einsetzen:
@@ -57,8 +57,8 @@ for i from 1 to NJ do
 end do:
 # Ausdruck für Zeitableitungen der MDH-Winkel exportieren
 if codegen_act then
-  MatlabExport(convert_t_s(thetaD), sprintf("../codeexport/%s/velocity_mdh_angles_matlab.m", robot_name), codegen_opt):
+  MatlabExport(convert_t_s(thetaD), sprintf("../codeexport/%s/tmp/velocity_mdh_angles_matlab.m", robot_name), codegen_opt):
 end if:
 # Ausdruck für Maple speichern
-save thetaD, sprintf("../codeexport/%s/velocity_mdh_angles_maple.m", robot_name):
+save thetaD, sprintf("../codeexport/%s/tmp/velocity_mdh_angles_maple.m", robot_name):
 

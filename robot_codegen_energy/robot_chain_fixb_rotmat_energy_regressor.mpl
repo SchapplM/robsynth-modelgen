@@ -34,10 +34,10 @@ read "../helper/proc_convert_t_s":
 read "../helper/proc_MatlabExport":
 read "../robot_codegen_definitions/robot_env":
 printf("Generiere Minimalparameterregressor der Energie für %s\n", robot_name, codegen_dynpar):
-read sprintf("../codeexport/%s/tree_floatb_definitions", robot_name, base_method_name):
+read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name, base_method_name):
 # Ergebnisse der Energie laden
-read sprintf("../codeexport/%s/energy_potential_floatb_%s_worldframe_par2_maple.m", robot_name, base_method_name):
-read sprintf("../codeexport/%s/energy_kinetic_floatb_%s_linkframe_par2_maple.m", robot_name, base_method_name):
+read sprintf("../codeexport/%s/tmp/energy_potential_floatb_%s_worldframe_par2_maple.m", robot_name, base_method_name):
+read sprintf("../codeexport/%s/tmp/energy_kinetic_floatb_%s_linkframe_par2_maple.m", robot_name, base_method_name):
 T_floatb := T:
 U_floatb := U_grav:
 # Einfluss der Basis-Geschwindigkeit und -Position entfernen
@@ -59,13 +59,13 @@ for i to 10*NJ do
   u_ges[1,i] := diff(U_fixb,PV2_vec[10+i,1]);
 end do: 
 # Export
-save t_ges, sprintf("../codeexport/%s/energy_kinetic_fixb_regressor_maple.m", robot_name):
-save u_ges, sprintf("../codeexport/%s/energy_potential_fixb_regressor_maple.m", robot_name):
+save t_ges, sprintf("../codeexport/%s/tmp/energy_kinetic_fixb_regressor_maple.m", robot_name):
+save u_ges, sprintf("../codeexport/%s/tmp/energy_potential_fixb_regressor_maple.m", robot_name):
 if codegen_act then
-  MatlabExport(convert_t_s(t_ges), sprintf("../codeexport/%s/energy_kinetic_fixb_regressor_matlab.m", robot_name), codegen_opt):
+  MatlabExport(convert_t_s(t_ges), sprintf("../codeexport/%s/tmp/energy_kinetic_fixb_regressor_matlab.m", robot_name), codegen_opt):
 end if:
 if codegen_act then
-  MatlabExport(convert_t_s(u_ges), sprintf("../codeexport/%s/energy_potential_fixb_regressor_matlab.m", robot_name), codegen_opt):
+  MatlabExport(convert_t_s(u_ges), sprintf("../codeexport/%s/tmp/energy_potential_fixb_regressor_matlab.m", robot_name), codegen_opt):
 end if:
 
 # Parameterminimierung
@@ -169,9 +169,9 @@ for i to MPV_n_max do
 end do: 
 printf("Dimension des Minimalparametervektors: %dx1\n", Paramvec_size):
 # Export - Minimalparametervektor
-save Paramvec2, sprintf("../codeexport/%s/minimal_parameter_vector_fixb_maple", robot_name):
+save Paramvec2, sprintf("../codeexport/%s/tmp/minimal_parameter_vector_fixb_maple", robot_name):
 if codegen_act then
-   MatlabExport(Paramvec2, sprintf("../codeexport/%s/minimal_parameter_vector_fixb_matlab.m", robot_name), codegen_opt):
+   MatlabExport(Paramvec2, sprintf("../codeexport/%s/tmp/minimal_parameter_vector_fixb_matlab.m", robot_name), codegen_opt):
 end if;
 # Minimal geometrievektor t_i und u_i
 # Markieren von t_mZ, t_YY, t_m, u_mZ, u_YY, u_m_j
@@ -211,13 +211,13 @@ for i from 1 to 10*NJ do       #Nullen Zählen
       u_ges_minpar[1,i-p]:=u_ges[1,i]; #Um die Anzahl der im Iterationsschritt gezählten Nullen verschieben
    end if
 end do: 
-save t_ges_minpar, sprintf("../codeexport/%s/energy_kinetic_fixb_regressor_minpar_maple.m", robot_name):
-save u_ges_minpar, sprintf("../codeexport/%s/energy_potential_fixb_regressor_minpar_maple.m", robot_name):
+save t_ges_minpar, sprintf("../codeexport/%s/tmp/energy_kinetic_fixb_regressor_minpar_maple.m", robot_name):
+save u_ges_minpar, sprintf("../codeexport/%s/tmp/energy_potential_fixb_regressor_minpar_maple.m", robot_name):
 # Export
 if codegen_act then
-  MatlabExport(convert_t_s(t_ges_minpar), sprintf("../codeexport/%s/energy_kinetic_fixb_regressor_minpar_matlab.m", robot_name), codegen_opt):
+  MatlabExport(convert_t_s(t_ges_minpar), sprintf("../codeexport/%s/tmp/energy_kinetic_fixb_regressor_minpar_matlab.m", robot_name), codegen_opt):
 end if:
 if codegen_act then
-  MatlabExport(convert_t_s(u_ges_minpar), sprintf("../codeexport/%s/energy_potential_fixb_regressor_minpar_matlab.m", robot_name), codegen_opt):
+  MatlabExport(convert_t_s(u_ges_minpar), sprintf("../codeexport/%s/tmp/energy_potential_fixb_regressor_minpar_matlab.m", robot_name), codegen_opt):
 end if:
 

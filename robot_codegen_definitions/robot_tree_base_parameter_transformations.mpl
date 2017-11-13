@@ -28,14 +28,14 @@ read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s": 
 read "../helper/proc_MatlabExport":
 read "../robot_codegen_definitions/robot_env":
-read sprintf("../codeexport/%s/tree_floatb_definitions", robot_name):
+read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
 # Ergebnisse der Minimalparametergruppierung laden
 if base_method_name="twist" then
-  read sprintf("../codeexport/%s/minimal_parameter_vector_fixb_maple", robot_name):
+  read sprintf("../codeexport/%s/tmp/minimal_parameter_vector_fixb_maple", robot_name):
   expstring:="fixb":
   PV2:=Matrix(PV2_vec[11..10*NL,1]):
 elif base_method_name="eulangrpy" then 
-  read sprintf("../codeexport/%s/minimal_parameter_vector_floatb_eulangrpy_maple", robot_name):
+  read sprintf("../codeexport/%s/tmp/minimal_parameter_vector_floatb_eulangrpy_maple", robot_name):
   expstring:="floatb_eulangrpy":
   PV2:=PV2_vec:
 else
@@ -58,8 +58,8 @@ for i to Paramvec_size do
   end do:
 end do:
 # Export der Umwandlung von Parametersatz 2 nach Minimalparameter (Matrix)
-MatlabExport(K, sprintf("../codeexport/%s/PV2_MPV_transformation_linear_%s_matlab.m", robot_name, expstring), 2):
-save K, sprintf("../codeexport/%s/PV2_MPV_transformation_linear_dependant_%s_maple", robot_name, expstring):
+MatlabExport(K, sprintf("../codeexport/%s/tmp/PV2_MPV_transformation_linear_%s_matlab.m", robot_name, expstring), 2):
+save K, sprintf("../codeexport/%s/tmp/PV2_MPV_transformation_linear_dependant_%s_maple", robot_name, expstring):
 # Aufteilung der Matrixdarstellung in einzelne Teilmatrizen
 # Generate the Matrices required in [SousaCor2014] equ. (33)
 # Wenn ein Inertialparameter zu einer linear unabhängigen Spalte der Regressormatrizen gehört, 
@@ -156,7 +156,7 @@ delta_b := Transpose(P_b) . PV2: # Zur Überprüfung
 ;
 delta_d := Transpose(P_d) . PV2: # Zur Überprüfung
 ;
-MatlabExport(K_d, sprintf("../codeexport/%s/PV2_MPV_transformation_linear_dependant_%s_matlab.m", robot_name, expstring), 2):
-MatlabExport(P_b, sprintf("../codeexport/%s/PV2_permutation_linear_independant_%s_matlab.m", robot_name, expstring), 2):
-MatlabExport(P_d, sprintf("../codeexport/%s/PV2_permutation_linear_dependant_%s_matlab.m", robot_name, expstring), 2):
+MatlabExport(K_d, sprintf("../codeexport/%s/tmp/PV2_MPV_transformation_linear_dependant_%s_matlab.m", robot_name, expstring), 2):
+MatlabExport(P_b, sprintf("../codeexport/%s/tmp/PV2_permutation_linear_independant_%s_matlab.m", robot_name, expstring), 2):
+MatlabExport(P_d, sprintf("../codeexport/%s/tmp/PV2_permutation_linear_dependant_%s_matlab.m", robot_name, expstring), 2):
 

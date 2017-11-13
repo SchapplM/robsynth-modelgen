@@ -145,7 +145,7 @@ with(StringTools):</Text-field>
 </Group>
 <Group labelreference="L1686" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tree_floatb_definitions&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1712" drawlabel="true">
@@ -185,9 +185,9 @@ M_6:= vec2symmat(mv, 6):</Text-field>
 </Group>
 <Group labelreference="L1715" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(M_NQ, sprintf(&quot;../codeexport/%s/vec2symmat_%d_matlab.m&quot;, robot_name, NQ), codegen_opt):
-MatlabExport(M_NQJ, sprintf(&quot;../codeexport/%s/vec2symmat_%d_matlab.m&quot;, robot_name, NQJ), codegen_opt):
-MatlabExport(M_6, sprintf(&quot;../codeexport/%s/vec2symmat_%d_matlab.m&quot;, robot_name, 6), codegen_opt):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(M_NQ, sprintf(&quot;../codeexport/%s/tmp/vec2symmat_%d_matlab.m&quot;, robot_name, NQ), codegen_opt):
+MatlabExport(M_NQJ, sprintf(&quot;../codeexport/%s/tmp/vec2symmat_%d_matlab.m&quot;, robot_name, NQJ), codegen_opt):
+MatlabExport(M_6, sprintf(&quot;../codeexport/%s/tmp/vec2symmat_%d_matlab.m&quot;, robot_name, 6), codegen_opt):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1721" drawlabel="true">

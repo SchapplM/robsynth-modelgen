@@ -34,10 +34,10 @@ read "../helper/proc_convert_t_s":
 read "../helper/proc_MatlabExport":
 read "../robot_codegen_definitions/robot_env":
 printf("Generiere Minimalparameterregressor (Floating Base %s) der Energie für %s\n", base_method_name, robot_name):
-read sprintf("../codeexport/%s/tree_floatb_definitions", robot_name, base_method_name):
+read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name, base_method_name):
 # Ergebnisse der Energie laden
-read sprintf("../codeexport/%s/energy_potential_floatb_%s_worldframe_par2_maple.m", robot_name, base_method_name):
-read sprintf("../codeexport/%s/energy_kinetic_floatb_%s_linkframe_par2_maple.m", robot_name, base_method_name):
+read sprintf("../codeexport/%s/tmp/energy_potential_floatb_%s_worldframe_par2_maple.m", robot_name, base_method_name):
+read sprintf("../codeexport/%s/tmp/energy_kinetic_floatb_%s_linkframe_par2_maple.m", robot_name, base_method_name):
 T_floatb := T:
 U_floatb := U_grav:
 # Die kinetischen und potentiellen Energien aus (2) und (3) stehen ab hier durch T_floatb und U_floatb zur Verfügung. 
@@ -52,13 +52,13 @@ for i to 10*NL do
   u_ges[1,i] := diff(U_floatb,PV2_vec[i,1]);
 end do: 
 # Export
-save t_ges, sprintf("../codeexport/%s/energy_kinetic_floatb_%s_regressor_maple.m", robot_name, base_method_name):
-save u_ges, sprintf("../codeexport/%s/energy_potential_floatb_%s_regressor_maple.m", robot_name, base_method_name):
+save t_ges, sprintf("../codeexport/%s/tmp/energy_kinetic_floatb_%s_regressor_maple.m", robot_name, base_method_name):
+save u_ges, sprintf("../codeexport/%s/tmp/energy_potential_floatb_%s_regressor_maple.m", robot_name, base_method_name):
 if codegen_act then
-  MatlabExport(convert_t_s(t_ges), sprintf("../codeexport/%s/energy_kinetic_floatb_%s_regressor_matlab.m", robot_name, base_method_name), codegen_opt):
+  MatlabExport(convert_t_s(t_ges), sprintf("../codeexport/%s/tmp/energy_kinetic_floatb_%s_regressor_matlab.m", robot_name, base_method_name), codegen_opt):
 end if:
 if codegen_act then
-  MatlabExport(convert_t_s(u_ges), sprintf("../codeexport/%s/energy_potential_floatb_%s_regressor_matlab.m", robot_name, base_method_name), codegen_opt):
+  MatlabExport(convert_t_s(u_ges), sprintf("../codeexport/%s/tmp/energy_potential_floatb_%s_regressor_matlab.m", robot_name, base_method_name), codegen_opt):
 end if:
 # Parameterminimierung
 # Minimalparametervekor
@@ -133,9 +133,9 @@ for i to MPV_n_max do
 end do: 
 printf("Dimension des Minimalparametervektors: %dx1\n", Paramvec_size):
 # Export - Minimalparametervektor
-save Paramvec2, sprintf("../codeexport/%s/minimal_parameter_vector_floatb_%s_maple", robot_name, base_method_name):
+save Paramvec2, sprintf("../codeexport/%s/tmp/minimal_parameter_vector_floatb_%s_maple", robot_name, base_method_name):
 if codegen_act then
-   MatlabExport(Paramvec2, sprintf("../codeexport/%s/minimal_parameter_vector_floatb_%s_matlab.m", robot_name, base_method_name), codegen_opt):
+   MatlabExport(Paramvec2, sprintf("../codeexport/%s/tmp/minimal_parameter_vector_floatb_%s_matlab.m", robot_name, base_method_name), codegen_opt):
 end if;
 # Minimal geometrievektor t_i und u_i
 # Markieren von t_mZ, t_YY, t_m, u_mZ, u_YY, u_m_j
@@ -175,13 +175,13 @@ for i from 1 to 10*NL do       #Nullen Zählen
       u_ges_minpar[1,i-p]:=u_ges[1,i]; #Um die Anzahl der im Iterationsschritt gezählten Nullen verschieben
    end if
 end do: 
-save t_ges_minpar, sprintf("../codeexport/%s/energy_kinetic_floatb_%s_regressor_minpar_maple.m", robot_name, base_method_name):
-save u_ges_minpar, sprintf("../codeexport/%s/energy_potential_floatb_%s_regressor_minpar_maple.m", robot_name, base_method_name):
+save t_ges_minpar, sprintf("../codeexport/%s/tmp/energy_kinetic_floatb_%s_regressor_minpar_maple.m", robot_name, base_method_name):
+save u_ges_minpar, sprintf("../codeexport/%s/tmp/energy_potential_floatb_%s_regressor_minpar_maple.m", robot_name, base_method_name):
 # Export
 if codegen_act then
-  MatlabExport(convert_t_s(t_ges_minpar), sprintf("../codeexport/%s/energy_kinetic_floatb_%s_regressor_minpar_matlab.m", robot_name, base_method_name), codegen_opt):
+  MatlabExport(convert_t_s(t_ges_minpar), sprintf("../codeexport/%s/tmp/energy_kinetic_floatb_%s_regressor_minpar_matlab.m", robot_name, base_method_name), codegen_opt):
 end if:
 if codegen_act then
-  MatlabExport(convert_t_s(u_ges_minpar), sprintf("../codeexport/%s/energy_potential_floatb_%s_regressor_minpar_matlab.m", robot_name, base_method_name), codegen_opt):
+  MatlabExport(convert_t_s(u_ges_minpar), sprintf("../codeexport/%s/tmp/energy_potential_floatb_%s_regressor_minpar_matlab.m", robot_name, base_method_name), codegen_opt):
 end if:
 

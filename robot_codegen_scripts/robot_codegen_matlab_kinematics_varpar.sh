@@ -16,8 +16,8 @@ source robot_codegen_tmpvar_bash.sh
 source $repo_pfad/robot_codegen_definitions/robot_env.sh
 
 # Direkte Kinematik (Ohne Basis-Orientierung oder Höhe)
-quelldat=$repo_pfad/codeexport/${robot_name}/fkine_mdh_floatb_twist_rotmat_matlab.m
-zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_fkine_fixb_rotmat_mdh_sym_varpar.m
+quelldat=$repo_pfad/codeexport/${robot_name}/tmp/fkine_mdh_floatb_twist_rotmat_matlab.m
+zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_fkine_fixb_rotmat_mdh_sym_varpar.m
 if [ -f $quelldat ]; then
   cat ${tmp_pfad}_head/robot_matlabtmp_fkine_fixb_rotmat.head.m > $zieldat
   printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -42,8 +42,8 @@ else
 fi
 
 # Direkte Kinematik (Basis-Orientierung (EulerXYZ) und Position)
-quelldat=$repo_pfad/codeexport/${robot_name}/fkine_mdh_floatb_eulangrpy_rotmat_matlab.m
-zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_fkine_floatb_eulangrpy_rotmat_mdh_sym_varpar.m
+quelldat=$repo_pfad/codeexport/${robot_name}/tmp/fkine_mdh_floatb_eulangrpy_rotmat_matlab.m
+zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_fkine_floatb_eulangrpy_rotmat_mdh_sym_varpar.m
 if [ -f $quelldat ]; then
   cat ${tmp_pfad}_head/robot_matlabtmp_fkine_floatb_eulangrpy_rotmat.head.m > $zieldat
   printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -72,8 +72,8 @@ else
 fi
 
 # Gelenk-Transformationsmatrizen
-quelldat=$repo_pfad/codeexport/${robot_name}/joint_transformation_mdh_rotmat_matlab.m
-zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_joint_trafo_rotmat_mdh_sym_varpar.m
+quelldat=$repo_pfad/codeexport/${robot_name}/tmp/joint_transformation_mdh_rotmat_matlab.m
+zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_joint_trafo_rotmat_mdh_sym_varpar.m
 if [ -f $quelldat ]; then
   cat ${tmp_pfad}_head/robot_matlabtmp_joint_transformation.head.m > $zieldat
   printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -115,44 +115,44 @@ do
   for (( ib=1; ib<=$robot_NL; ib++ ))
   do
     if [ "$jacart" -eq "1" ]; then
-      quelldat=$repo_pfad/codeexport/${robot_name}/jacobia_transl_${ib}_floatb_twist_matlab.m
-      zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_jacobia_transl_${ib}_floatb_twist_sym_varpar.m
+      quelldat=$repo_pfad/codeexport/${robot_name}/tmp/jacobia_transl_${ib}_floatb_twist_matlab.m
+      zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_jacobia_transl_${ib}_floatb_twist_sym_varpar.m
       headdat=${tmp_pfad}_head/robot_matlabtmp_jacobia_transl.head.m
     elif [ "$jacart" -eq "2" ]; then
-      quelldat=$repo_pfad/codeexport/${robot_name}/jacobia_rot_${ib}_floatb_twist_matlab.m
-      zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_jacobia_rot_${ib}_floatb_twist_sym_varpar.m
+      quelldat=$repo_pfad/codeexport/${robot_name}/tmp/jacobia_rot_${ib}_floatb_twist_matlab.m
+      zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_jacobia_rot_${ib}_floatb_twist_sym_varpar.m
       headdat=${tmp_pfad}_head/robot_matlabtmp_jacobia_rot.head.m
     elif [ "$jacart" -eq "3" ]; then
-      quelldat=$repo_pfad/codeexport/${robot_name}/jacobig_rot_${ib}_floatb_twist_matlab.m
-      zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_jacobig_rot_${ib}_floatb_twist_sym_varpar.m
+      quelldat=$repo_pfad/codeexport/${robot_name}/tmp/jacobig_rot_${ib}_floatb_twist_matlab.m
+      zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_jacobig_rot_${ib}_floatb_twist_sym_varpar.m
       headdat=${tmp_pfad}_head/robot_matlabtmp_jacobig_rot.head.m
     elif [ "$jacart" -eq "4" ]; then
-      quelldat=$repo_pfad/codeexport/${robot_name}/jacobiaD_transl_${ib}_floatb_twist_matlab.m
-      zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_jacobiaD_transl_${ib}_floatb_twist_sym_varpar.m
+      quelldat=$repo_pfad/codeexport/${robot_name}/tmp/jacobiaD_transl_${ib}_floatb_twist_matlab.m
+      zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_jacobiaD_transl_${ib}_floatb_twist_sym_varpar.m
       headdat=${tmp_pfad}_head/robot_matlabtmp_jacobiaD_transl.head.m
     elif [ "$jacart" -eq "5" ]; then
-      quelldat=$repo_pfad/codeexport/${robot_name}/jacobiaD_rot_${ib}_floatb_twist_matlab.m
-      zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_jacobiaD_rot_${ib}_floatb_twist_sym_varpar.m
+      quelldat=$repo_pfad/codeexport/${robot_name}/tmp/jacobiaD_rot_${ib}_floatb_twist_matlab.m
+      zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_jacobiaD_rot_${ib}_floatb_twist_sym_varpar.m
       headdat=${tmp_pfad}_head/robot_matlabtmp_jacobiaD_rot.head.m
     elif [ "$jacart" -eq "6" ]; then
-      quelldat=$repo_pfad/codeexport/${robot_name}/jacobigD_rot_${ib}_floatb_twist_matlab.m
-      zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_jacobigD_rot_${ib}_floatb_twist_sym_varpar.m
+      quelldat=$repo_pfad/codeexport/${robot_name}/tmp/jacobigD_rot_${ib}_floatb_twist_matlab.m
+      zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_jacobigD_rot_${ib}_floatb_twist_sym_varpar.m
       headdat=${tmp_pfad}_head/robot_matlabtmp_jacobigD_rot.head.m
     elif [ "$jacart" -eq "7" ]; then
-      quelldat=$repo_pfad/codeexport/${robot_name}/jacobig_${ib}_floatb_twist_matlab.m
-      zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_jacobig_${ib}_floatb_twist_sym_varpar.m
+      quelldat=$repo_pfad/codeexport/${robot_name}/tmp/jacobig_${ib}_floatb_twist_matlab.m
+      zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_jacobig_${ib}_floatb_twist_sym_varpar.m
       headdat=${tmp_pfad}_head/robot_matlabtmp_jacobig.head.m
     elif [ "$jacart" -eq "8" ]; then
-      quelldat=$repo_pfad/codeexport/${robot_name}/jacobia_${ib}_floatb_twist_matlab.m
-      zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_jacobia_${ib}_floatb_twist_sym_varpar.m
+      quelldat=$repo_pfad/codeexport/${robot_name}/tmp/jacobia_${ib}_floatb_twist_matlab.m
+      zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_jacobia_${ib}_floatb_twist_sym_varpar.m
       headdat=${tmp_pfad}_head/robot_matlabtmp_jacobia.head.m
     elif [ "$jacart" -eq "9" ]; then
-      quelldat=$repo_pfad/codeexport/${robot_name}/jacobigD_${ib}_floatb_twist_matlab.m
-      zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_jacobigD_${ib}_floatb_twist_sym_varpar.m
+      quelldat=$repo_pfad/codeexport/${robot_name}/tmp/jacobigD_${ib}_floatb_twist_matlab.m
+      zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_jacobigD_${ib}_floatb_twist_sym_varpar.m
       headdat=${tmp_pfad}_head/robot_matlabtmp_jacobigD.head.m
     elif [ "$jacart" -eq "10" ]; then
-      quelldat=$repo_pfad/codeexport/${robot_name}/jacobiaD_${ib}_floatb_twist_matlab.m
-      zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_jacobiaD_${ib}_floatb_twist_sym_varpar.m
+      quelldat=$repo_pfad/codeexport/${robot_name}/tmp/jacobiaD_${ib}_floatb_twist_matlab.m
+      zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_jacobiaD_${ib}_floatb_twist_sym_varpar.m
       headdat=${tmp_pfad}_head/robot_matlabtmp_jacobiaD.head.m
     fi;
     if [ "$jacart" -eq "4" ] || [ "$jacart" -eq "5" ] || [ "$jacart" -eq "6" ] || [ "$jacart" -gt "8" ]; then # Zeitableitung, Geschwindigkeit ist Eingang
@@ -222,28 +222,28 @@ done
 for (( jacart=1; jacart<=8; jacart++ ))
 do
   if [ "$jacart" -eq "1" ]; then
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_jacobig_floatb_twist_sym_varpar.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_jacobig_floatb_twist_sym_varpar.m
     headdat=${tmp_pfad}_head/robot_matlabtmp_jacobig_all.head.m
   elif [ "$jacart" -eq "2" ]; then
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_jacobia_floatb_twist_sym_varpar.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_jacobia_floatb_twist_sym_varpar.m
     headdat=${tmp_pfad}_head/robot_matlabtmp_jacobia_all.head.m
   elif [ "$jacart" -eq "3" ]; then
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_jacobig_rot_floatb_twist_sym_varpar.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_jacobig_rot_floatb_twist_sym_varpar.m
     headdat=${tmp_pfad}_head/robot_matlabtmp_jacobig_rot_all.head.m
   elif [ "$jacart" -eq "4" ]; then
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_jacobia_rot_floatb_twist_sym_varpar.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_jacobia_rot_floatb_twist_sym_varpar.m
     headdat=${tmp_pfad}_head/robot_matlabtmp_jacobia_rot_all.head.m
   elif [ "$jacart" -eq "5" ]; then
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_jacobigD_floatb_twist_sym_varpar.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_jacobigD_floatb_twist_sym_varpar.m
     headdat=${tmp_pfad}_head/robot_matlabtmp_jacobigD_all.head.m
   elif [ "$jacart" -eq "6" ]; then
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_jacobiaD_floatb_twist_sym_varpar.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_jacobiaD_floatb_twist_sym_varpar.m
     headdat=${tmp_pfad}_head/robot_matlabtmp_jacobiaD_all.head.m
   elif [ "$jacart" -eq "7" ]; then
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_jacobigD_rot_floatb_twist_sym_varpar.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_jacobigD_rot_floatb_twist_sym_varpar.m
     headdat=${tmp_pfad}_head/robot_matlabtmp_jacobigD_rot_all.head.m
   elif [ "$jacart" -eq "8" ]; then
-    zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_jacobiaD_rot_floatb_twist_sym_varpar.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_jacobiaD_rot_floatb_twist_sym_varpar.m
     headdat=${tmp_pfad}_head/robot_matlabtmp_jacobiaD_rot_all.head.m
   fi;
   if [ "$jacart" -gt "4" ]; then # Zeitableitung: Geschwindigkeit als Eingang

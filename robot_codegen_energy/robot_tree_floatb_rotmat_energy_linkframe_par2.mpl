@@ -43,11 +43,11 @@ read "../transformation/proc_transl":
 read "../transformation/proc_trafo_mdh": 
 read "../robot_codegen_definitions/robot_env":
 printf("Generiere Geschwindigkeit für %s\n", robot_name):
-read sprintf("../codeexport/%s/tree_floatb_definitions", robot_name, base_method_name):
+read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name, base_method_name):
 # Ergebnisse der Kinematik laden
-read sprintf("../codeexport/%s/kinematics_floatb_%s_rotmat_maple.m", robot_name, base_method_name):
+read sprintf("../codeexport/%s/tmp/kinematics_floatb_%s_rotmat_maple.m", robot_name, base_method_name):
 Trf_c := Trf_c:
-read sprintf("../codeexport/%s/velocity_linkframe_floatb_%s_maple.m", robot_name, base_method_name):
+read sprintf("../codeexport/%s/tmp/velocity_linkframe_floatb_%s_maple.m", robot_name, base_method_name):
 omega_i_i := omega_i_i: 
 rD_i_i := rD_i_i:
 # Calculate Energy
@@ -65,7 +65,7 @@ for i to NL do
   T := T+T_b[i, 1]:
 end do:
 # Maple Export
-save T, sprintf("../codeexport/%s/energy_kinetic_floatb_%s_linkframe_par2_maple.m", robot_name, base_method_name):
+save T, sprintf("../codeexport/%s/tmp/energy_kinetic_floatb_%s_linkframe_par2_maple.m", robot_name, base_method_name):
 # Potential Energy
 # Berechnung in Welt-KS ist bereits erfolgreich. Wird hier nicht nochmal durchgeführt.
 # siehe robot_tree_floatb_twist_rotmat_energy_baseframe_par2.mw
@@ -79,7 +79,7 @@ for i from 1 to 3 do
   T_s := subs({X_base_s[i,1]=0},T_s):
 end do:
 if codegen_act then
-  MatlabExport(T_s, sprintf("../codeexport/%s/energy_kinetic_floatb_%s_linkframe_par2_matlab.m", robot_name, base_method_name), codegen_opt):
+  MatlabExport(T_s, sprintf("../codeexport/%s/tmp/energy_kinetic_floatb_%s_linkframe_par2_matlab.m", robot_name, base_method_name), codegen_opt):
 end if:
 # Fixed Base
 T_s_fixb:=T_s:
@@ -90,6 +90,6 @@ for i from 1 to 6 do
   T_s_fixb := subs({V_base_s[i,1]=0},T_s_fixb):
 end do:
 if codegen_act then
-  MatlabExport(T_s_fixb, sprintf("../codeexport/%s/energy_kinetic_fixb_linkframe_par2_matlab.m", robot_name), codegen_opt):
+  MatlabExport(T_s_fixb, sprintf("../codeexport/%s/tmp/energy_kinetic_fixb_linkframe_par2_matlab.m", robot_name), codegen_opt):
 end if:
 

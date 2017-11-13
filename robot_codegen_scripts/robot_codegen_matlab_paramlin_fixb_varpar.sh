@@ -18,8 +18,8 @@ source $repo_pfad/robot_codegen_definitions/robot_env.sh
 # Erstelle Matlab-Funktionen der Regressorform
 
 # Minimalparametervektor (Fixed Base)
-quelldat=$repo_pfad/codeexport/${robot_name}/minimal_parameter_vector_fixb_matlab.m
-zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_convert_par2_MPV_fixb.m
+quelldat=$repo_pfad/codeexport/${robot_name}/tmp/minimal_parameter_vector_fixb_matlab.m
+zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_convert_par2_MPV_fixb.m
 if [ -f $quelldat ]; then
   cat ${tmp_pfad}_head/robot_matlabtmp_convert_par2_MPV_fixb.head.m > $zieldat
   printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -44,11 +44,11 @@ else
 fi
 
 # Belegungsmatrix des Minimalparametervektors mit den Inertialparametern (Fixed Base)
-quelldat1=$repo_pfad/codeexport/${robot_name}/PV2_MPV_transformation_linear_fixb_matlab.m
-quelldat2=$repo_pfad/codeexport/${robot_name}/PV2_MPV_transformation_linear_dependant_fixb_matlab.m
-quelldat3=$repo_pfad/codeexport/${robot_name}/PV2_permutation_linear_independant_fixb_matlab.m
-quelldat4=$repo_pfad/codeexport/${robot_name}/PV2_permutation_linear_dependant_fixb_matlab.m
-zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_PV2_MPV_transformations_fixb.m
+quelldat1=$repo_pfad/codeexport/${robot_name}/tmp/PV2_MPV_transformation_linear_fixb_matlab.m
+quelldat2=$repo_pfad/codeexport/${robot_name}/tmp/PV2_MPV_transformation_linear_dependant_fixb_matlab.m
+quelldat3=$repo_pfad/codeexport/${robot_name}/tmp/PV2_permutation_linear_independant_fixb_matlab.m
+quelldat4=$repo_pfad/codeexport/${robot_name}/tmp/PV2_permutation_linear_dependant_fixb_matlab.m
+zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_PV2_MPV_transformations_fixb.m
 if [ -f $quelldat1 ] && [ -f $quelldat2 ] && [ -f $quelldat3 ] && [ -f $quelldat4 ]; then
   cat ${tmp_pfad}_head/robot_matlabtmp_PV2_MPV_transformations_fixb.head.m > $zieldat
   printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -90,8 +90,8 @@ do
   fi
 
   # Coriolis-Vektor
-  quelldat=$repo_pfad/codeexport/${robot_name}/coriolisvec_joint_fixb_${maple_string}_matlab.m
-  zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_coriolisvecJ_fixb_${matlab_string}_slag_vp.m
+  quelldat=$repo_pfad/codeexport/${robot_name}/tmp/coriolisvec_joint_fixb_${maple_string}_matlab.m
+  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_coriolisvecJ_fixb_${matlab_string}_slag_vp.m
   if [ -f $quelldat ]; then
     cat ${tmp_pfad}_head/robot_matlabtmp_coriolisvecJ_fixb_${matlab_string}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -110,8 +110,8 @@ do
   fi
 
   # Coriolis-Matrix
-  quelldat=$repo_pfad/codeexport/${robot_name}/coriolismat_joint_fixb_${maple_string}_matlab.m
-  zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_coriolismatJ_fixb_${matlab_string}_slag_vp.m
+  quelldat=$repo_pfad/codeexport/${robot_name}/tmp/coriolismat_joint_fixb_${maple_string}_matlab.m
+  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_coriolismatJ_fixb_${matlab_string}_slag_vp.m
   if [ -f $quelldat ]; then
     cat ${tmp_pfad}_head/robot_matlabtmp_coriolismatJ_fixb_${matlab_string}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -130,8 +130,8 @@ do
   fi
 
   # Massenmatrix
-  quelldat=$repo_pfad/codeexport/${robot_name}/inertia_joint_joint_fixb_${maple_string}_matlab.m
-  zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_inertiaJ_${matlab_string}_slag_vp.m
+  quelldat=$repo_pfad/codeexport/${robot_name}/tmp/inertia_joint_joint_fixb_${maple_string}_matlab.m
+  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_inertiaJ_${matlab_string}_slag_vp.m
   if [ -f $quelldat ]; then
     cat ${tmp_pfad}_head/robot_matlabtmp_inertiaJ_${matlab_string}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -148,8 +148,8 @@ do
   fi
 
   # Massenmatrix-Zeitableitung
-  quelldat=$repo_pfad/codeexport/${robot_name}/inertiaD_joint_joint_fixb_${maple_string}_matlab.m
-  zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_inertiaDJ_${matlab_string}_slag_vp.m
+  quelldat=$repo_pfad/codeexport/${robot_name}/tmp/inertiaD_joint_joint_fixb_${maple_string}_matlab.m
+  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_inertiaDJ_${matlab_string}_slag_vp.m
   if [ -f $quelldat ]; then
     cat ${tmp_pfad}_head/robot_matlabtmp_inertiaDJ_${matlab_string}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -168,8 +168,8 @@ do
   fi
 
   # Gravitationsmoment
-  quelldat=$repo_pfad/codeexport/${robot_name}/joint_gravload_fixb_${maple_string}_matlab.m
-  zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_gravloadJ_${matlab_string}_slag_vp.m
+  quelldat=$repo_pfad/codeexport/${robot_name}/tmp/joint_gravload_fixb_${maple_string}_matlab.m
+  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_gravloadJ_${matlab_string}_slag_vp.m
   if [ -f $quelldat ]; then
     cat ${tmp_pfad}_head/robot_matlabtmp_gravloadJ_${matlab_string}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -188,8 +188,8 @@ do
   fi
 
   # Inverse Dynamik
-  quelldat=$repo_pfad/codeexport/${robot_name}/invdyn_joint_fixb_${maple_string}_matlab.m
-  zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_invdynJ_fixb_${matlab_string}_slag_vp.m
+  quelldat=$repo_pfad/codeexport/${robot_name}/tmp/invdyn_joint_fixb_${maple_string}_matlab.m
+  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_invdynJ_fixb_${matlab_string}_slag_vp.m
   if [ -f $quelldat ]; then
     cat ${tmp_pfad}_head/robot_matlabtmp_invdynJ_fixb_${matlab_string}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -212,8 +212,8 @@ do
   fi
 
   # Kinetische Energie (Fixed Base)
-  quelldat=$repo_pfad/codeexport/${robot_name}/energy_kinetic_fixb_${maple_string}_matlab.m
-  zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_energykin_fixb_${matlab_string}_slag_vp.m
+  quelldat=$repo_pfad/codeexport/${robot_name}/tmp/energy_kinetic_fixb_${maple_string}_matlab.m
+  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_energykin_fixb_${matlab_string}_slag_vp.m
   if [ -f $quelldat ]; then
     cat ${tmp_pfad}_head/robot_matlabtmp_energykin_fixb_${matlab_string}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -233,8 +233,8 @@ do
 
 
   # Potentielle Energie (Fixed base)
-  quelldat=$repo_pfad/codeexport/${robot_name}/energy_potential_fixb_${maple_string}_matlab.m
-  zieldat=$repo_pfad/codeexport/matlabfcn/${robot_name}/${robot_name}_energypot_fixb_${matlab_string}_slag_vp.m
+  quelldat=$repo_pfad/codeexport/${robot_name}/tmp/energy_potential_fixb_${maple_string}_matlab.m
+  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_energypot_fixb_${matlab_string}_slag_vp.m
   if [ -f $quelldat ]; then
     cat ${tmp_pfad}_head/robot_matlabtmp_energypot_fixb_${matlab_string}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat

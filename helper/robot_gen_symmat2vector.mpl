@@ -17,7 +17,7 @@ codegen_opt := 0:
 read "../helper/proc_MatlabExport":
 read "../helper/proc_vector2symmat":
 read "../robot_codegen_definitions/robot_env":
-read sprintf("../codeexport/%s/tree_floatb_definitions", robot_name):
+read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
 printf("Generiere Symmat2Vector-Funktionen für %s\n", robot_name):
 # Funktion symmat2vector für den Roboter definieren
 # Erstelle eine Dummy-Variable (mv), die als temporäre Variable in Matlab dient (zum Zusammensetzen der Matrix).
@@ -27,7 +27,7 @@ M_NQJ:= vec2symmat(mv, NQJ):
 M_6:= vec2symmat(mv, 6):
 # Warnungen bei Code-Generierung unterdrücken. Die Meldung das der Ausdruck mv() in Matlab nicht bekannt ist, spielt keine Rolle, da diese Variable nach dem Einsetzen des Codes vorher definiert sein wird.
 interface(warnlevel=0):
-MatlabExport(M_NQ, sprintf("../codeexport/%s/vec2symmat_%d_matlab.m", robot_name, NQ), codegen_opt):
-MatlabExport(M_NQJ, sprintf("../codeexport/%s/vec2symmat_%d_matlab.m", robot_name, NQJ), codegen_opt):
-MatlabExport(M_6, sprintf("../codeexport/%s/vec2symmat_%d_matlab.m", robot_name, 6), codegen_opt):
+MatlabExport(M_NQ, sprintf("../codeexport/%s/tmp/vec2symmat_%d_matlab.m", robot_name, NQ), codegen_opt):
+MatlabExport(M_NQJ, sprintf("../codeexport/%s/tmp/vec2symmat_%d_matlab.m", robot_name, NQJ), codegen_opt):
+MatlabExport(M_6, sprintf("../codeexport/%s/tmp/vec2symmat_%d_matlab.m", robot_name, 6), codegen_opt):
 

@@ -26,14 +26,14 @@ do
   for basemeth in "${basemethodenames[@]}"
   do
     # Coriolisvektor (Floating Base, Basis)
-    zieldat=$repo_pfad/codeexport/${robot_name}/coriolisvecB_floatb_${basemeth}_par${dynpar}_matlab.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/tmp/coriolisvecB_floatb_${basemeth}_par${dynpar}_matlab.m
     if ! [ -f $zieldat ]; then
       echo "${zieldat##*/} existiert nicht. Versuche Zusammenzusetzen."
       # Prüfe, ob alle Einzel-Dateien vorhanden sind
       vollst=1
       for (( i=1; i<=6; i++ ))
       do
-        teildat=$repo_pfad/codeexport/${robot_name}/coriolisvec_floatb_${basemeth}_${i}_par${dynpar}_matlab.m
+        teildat=$repo_pfad/codeexport/${robot_name}/tmp/coriolisvec_floatb_${basemeth}_${i}_par${dynpar}_matlab.m
         if ! [ -f $teildat ]; then
           vollst=0
           echo "Code in ${teildat##*/} nicht vorhanden."
@@ -44,7 +44,7 @@ do
       if [ $vollst == 1 ]; then
         touch $zieldat
         for (( i=1; i<=6; i++ )); do
-          teildat=$repo_pfad/codeexport/${robot_name}/coriolisvec_floatb_${basemeth}_${i}_par${dynpar}_matlab.m
+          teildat=$repo_pfad/codeexport/${robot_name}/tmp/coriolisvec_floatb_${basemeth}_${i}_par${dynpar}_matlab.m
           # prüfe, welches die Ausgabevariable des Maple-exportierten Codes ist
           # Nehme nur die ersten 50 Zeichen der letzten Zeile (falls der Code in einer Zeile steht).
           varname_tmp=`cut -c-50 $teildat | grep "=" | tail -1 | sed 's/\(.*\)=.*/\1/'`
@@ -63,14 +63,14 @@ do
     fi
     
     # Coriolis-Matrix (Floating Base)
-    zieldat=$repo_pfad/codeexport/${robot_name}/coriolismat_floatb_${basemeth}_par${dynpar}_matlab.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/tmp/coriolismat_floatb_${basemeth}_par${dynpar}_matlab.m
     if ! [ -f $zieldat ]; then
       echo "${zieldat##*/} existiert nicht. Versuche Zusammenzusetzen."
       # Prüfe, ob alle Einzel-Dateien vorhanden sind
       vollst=1
       for (( i=1; i<=( $(($robot_NJ+6)) ); i++ )) do
       for (( j=1; j<=( $(($robot_NJ+6)) ); j++ )) do
-        teildat=$repo_pfad/codeexport/${robot_name}/coriolismat_floatb_${basemeth}_${i}_${j}_par${dynpar}_matlab.m
+        teildat=$repo_pfad/codeexport/${robot_name}/tmp/coriolismat_floatb_${basemeth}_${i}_${j}_par${dynpar}_matlab.m
         if ! [ -f $teildat ]; then
           vollst=0
           echo "Code in ${teildat##*/} nicht vorhanden."
@@ -83,7 +83,7 @@ do
         printf "\nCq = NaN(%d,%d);\n" "$(($robot_NJ+6))" "$(($robot_NJ+6))" >> $zieldat
         for (( i=1; i<=( $(($robot_NJ+6)) ); i++ )) do
         for (( j=1; j<=( $(($robot_NJ+6)) ); j++ )) do
-          teildat=$repo_pfad/codeexport/${robot_name}/coriolismat_floatb_${basemeth}_${i}_${j}_par${dynpar}_matlab.m
+          teildat=$repo_pfad/codeexport/${robot_name}/tmp/coriolismat_floatb_${basemeth}_${i}_${j}_par${dynpar}_matlab.m
           # prüfe, welches die Ausgabevariable des Maple-exportierten Codes ist
           # Nehme nur die ersten 50 Zeichen der letzten Zeile (falls der Code in einer Zeile steht).
           varname_tmp=`cut -c-50 $teildat | grep "=" | tail -1 | sed 's/\(.*\)=.*/\1/'`
@@ -107,14 +107,14 @@ for (( jacart=1; jacart<=1; jacart++ ))
 do
   for (( ib=1; ib<=$robot_NL; ib++ ))
   do
-    zieldat=$repo_pfad/codeexport/${robot_name}/jacobig_rot_${ib}_floatb_twist_matlab.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/tmp/jacobig_rot_${ib}_floatb_twist_matlab.m
     if ! [ -f $zieldat ]; then
       echo "${zieldat##*/} existiert nicht. Versuche Zusammenzusetzen."
       # Prüfe, ob alle Einzel-Dateien vorhanden sind
       vollst=1
       for (( i=1; i<=3; i++ )) do
       for (( j=1; j<=( $(($robot_NQJ)) ); j++ )) do
-        teildat=$repo_pfad/codeexport/${robot_name}/jacobig_rot_${ib}_floatb_twist_${i}_${j}_matlab.m
+        teildat=$repo_pfad/codeexport/${robot_name}/tmp/jacobig_rot_${ib}_floatb_twist_${i}_${j}_matlab.m
         if ! [ -f $teildat ]; then
           vollst=0
           echo "Code in ${teildat##*/} nicht vorhanden."
@@ -127,7 +127,7 @@ do
         printf "\nJg_rot = NaN(%d,%d);\n" "$(($robot_NL))" "$(($robot_NQJ))" >> $zieldat
         for (( i=1; i<=3; i++ )) do
         for (( j=1; j<=( $(($robot_NQJ)) ); j++ )) do
-          teildat=$repo_pfad/codeexport/${robot_name}/jacobig_rot_${ib}_floatb_twist_${i}_${j}_matlab.m
+          teildat=$repo_pfad/codeexport/${robot_name}/tmp/jacobig_rot_${ib}_floatb_twist_${i}_${j}_matlab.m
           # prüfe, welches die Ausgabevariable des Maple-exportierten Codes ist
           # Nehme nur die ersten 50 Zeichen der letzten Zeile (falls der Code in einer Zeile steht).
           varname_tmp=`cut -c-50 $teildat | grep "=" | tail -1 | sed 's/\(.*\)=.*/\1/'`

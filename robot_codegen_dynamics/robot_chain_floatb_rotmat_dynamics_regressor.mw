@@ -191,7 +191,7 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Group>
 <Group labelreference="L1702" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tree_floatb_definitions&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1774" drawlabel="true">
@@ -225,8 +225,8 @@ Der folgende Befehl muss immer auf &quot;regressor_minpar&quot; gesetzt sein, da
 <Group labelreference="L1686" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if regressor_modus = &quot;regressor_minpar&quot; then
-  read sprintf(&quot;../codeexport/%s/energy_kinetic_%s_regressor_minpar_maple.m&quot;, robot_name, expstring):
-  read sprintf(&quot;../codeexport/%s/energy_potential_%s_regressor_minpar_maple.m&quot;, robot_name, expstring):
+  read sprintf(&quot;../codeexport/%s/tmp/energy_kinetic_%s_regressor_minpar_maple.m&quot;, robot_name, expstring):
+  read sprintf(&quot;../codeexport/%s/tmp/energy_potential_%s_regressor_minpar_maple.m&quot;, robot_name, expstring):
   t_ges := t_ges_minpar:
   u_ges := u_ges_minpar:
   <Font encoding="UTF-8">printf(&quot;Generiere Minimalparameterregressor der Dynamik f\303\274r %s\134n&quot;, robot_name):</Font>
@@ -236,8 +236,8 @@ end if:</Text-field>
 <Group labelreference="L1761" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if regressor_modus = &quot;regressor&quot; then
-  read sprintf(&quot;../codeexport/%s/energy_kinetic_%s_regressor_maple.m&quot;, robot_name, expstring):
-  read sprintf(&quot;../codeexport/%s/energy_potential_%s_regressor_maple.m&quot;, robot_name, expstring):
+  read sprintf(&quot;../codeexport/%s/tmp/energy_kinetic_%s_regressor_maple.m&quot;, robot_name, expstring):
+  read sprintf(&quot;../codeexport/%s/tmp/energy_potential_%s_regressor_maple.m&quot;, robot_name, expstring):
   t_ges := t_ges:
   u_ges := u_ges:
   <Font encoding="UTF-8">printf(&quot;Generiere Regressor der Dynamik f\303\274r %s (nicht Minimalparameter)\134n&quot;, robot_name):</Font>
@@ -286,9 +286,9 @@ dUdq_s := OutputLagrange[3]:</Text-field>
 </Group>
 <Group labelreference="L1629" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save dUdq_s, sprintf(&quot;../codeexport/%s/floatb_lagrange_dUdq_s_%s_maple.m&quot;, robot_name, regressor_modus):
-save dTdq_s, sprintf(&quot;../codeexport/%s/floatb_lagrange_dTdq_s_%s_maple.m&quot;, robot_name, regressor_modus):
-save dTdqDdt_s, sprintf(&quot;../codeexport/%s/floatb_lagrange_dTdqDdt_s_%s_maple.m&quot;, robot_name, regressor_modus):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save dUdq_s, sprintf(&quot;../codeexport/%s/tmp/floatb_lagrange_dUdq_s_%s_maple.m&quot;, robot_name, regressor_modus):
+save dTdq_s, sprintf(&quot;../codeexport/%s/tmp/floatb_lagrange_dTdq_s_%s_maple.m&quot;, robot_name, regressor_modus):
+save dTdqDdt_s, sprintf(&quot;../codeexport/%s/tmp/floatb_lagrange_dTdqDdt_s_%s_maple.m&quot;, robot_name, regressor_modus):</Text-field>
 </Input>
 </Group>
 </Section>
@@ -311,7 +311,7 @@ save dTdqDdt_s, sprintf(&quot;../codeexport/%s/floatb_lagrange_dTdqDdt_s_%s_mapl
 </Group>
 <Group labelreference="L1674" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save taug_regressor_s, sprintf(&quot;../codeexport/%s/gravload_%s_maple.m&quot;, robot_name, regressor_modus):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save taug_regressor_s, sprintf(&quot;../codeexport/%s/tmp/gravload_%s_maple.m&quot;, robot_name, regressor_modus):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1672" drawlabel="true">
@@ -327,7 +327,7 @@ save dTdqDdt_s, sprintf(&quot;../codeexport/%s/floatb_lagrange_dTdqDdt_s_%s_mapl
 <Group labelreference="L1779" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_grav and not(base_method_name=&quot;twist&quot;) then
-  MatlabExport(taug_regressor_s(1..6,..), sprintf(&quot;../codeexport/%s/base_gravload_floatb_%s_%s_matlab.m&quot;, robot_name, base_method_name, regressor_modus), codegen_opt):
+  MatlabExport(taug_regressor_s(1..6,..), sprintf(&quot;../codeexport/%s/tmp/base_gravload_floatb_%s_%s_matlab.m&quot;, robot_name, base_method_name, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -341,7 +341,7 @@ Fixed-Base: Gravitationsvektor im Basis-KS
 <Group labelreference="L1783" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_grav then
-  MatlabExport(taug_regressor_s(7..NQ,..), sprintf(&quot;../codeexport/%s/joint_gravload_%s_%s_matlab.m&quot;, robot_name, expstring, regressor_modus), codegen_opt):
+  MatlabExport(taug_regressor_s(7..NQ,..), sprintf(&quot;../codeexport/%s/tmp/joint_gravload_%s_%s_matlab.m&quot;, robot_name, expstring, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -353,7 +353,7 @@ end if:</Text-field>
 <Group labelreference="L1780" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_grav and not(base_method_name=&quot;twist&quot;) then
-  MatlabExport(taug_regressor_s(1..NQ,..), sprintf(&quot;../codeexport/%s/gravload_floatb_%s_%s_matlab.m&quot;, robot_name, base_method_name, regressor_modus), codegen_opt):
+  MatlabExport(taug_regressor_s(1..NQ,..), sprintf(&quot;../codeexport/%s/tmp/gravload_floatb_%s_%s_matlab.m&quot;, robot_name, base_method_name, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -413,7 +413,7 @@ end do:</Text-field>
 <Group labelreference="L1827" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertia and not(base_method_name=&quot;twist&quot;) then
-  MatlabExport(MM_regressor_s, sprintf(&quot;../codeexport/%s/inertia_floatb_%s_%s_matlab.m&quot;, robot_name, base_method_name, regressor_modus), codegen_opt):
+  MatlabExport(MM_regressor_s, sprintf(&quot;../codeexport/%s/tmp/inertia_floatb_%s_%s_matlab.m&quot;, robot_name, base_method_name, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -450,7 +450,7 @@ end do:</Text-field>
 <Group labelreference="L1832" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertia and base_method_name=&quot;twist&quot; then
-  MatlabExport(MMjj_regressor_s, sprintf(&quot;../codeexport/%s/inertia_joint_joint_%s_%s_matlab.m&quot;, robot_name, expstring, regressor_modus), codegen_opt):
+  MatlabExport(MMjj_regressor_s, sprintf(&quot;../codeexport/%s/tmp/inertia_joint_joint_%s_%s_matlab.m&quot;, robot_name, expstring, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -489,7 +489,7 @@ end do:</Text-field>
 <Group labelreference="L1839" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertia and not(base_method_name=&quot;twist&quot;) then
-  MatlabExport(MMjb_regressor_s, sprintf(&quot;../codeexport/%s/inertia_joint_base_floatb_%s_%s_matlab.m&quot;, robot_name, base_method_name, regressor_modus), codegen_opt):
+  MatlabExport(MMjb_regressor_s, sprintf(&quot;../codeexport/%s/tmp/inertia_joint_base_floatb_%s_%s_matlab.m&quot;, robot_name, base_method_name, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -526,7 +526,7 @@ end do:</Text-field>
 <Group labelreference="L1872" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertia and not(base_method_name=&quot;twist&quot;) then
-  MatlabExport(MMbb_regressor_s, sprintf(&quot;../codeexport/%s/inertia_base_base_floatb_%s_%s_matlab.m&quot;, robot_name, base_method_name, regressor_modus), codegen_opt):
+  MatlabExport(MMbb_regressor_s, sprintf(&quot;../codeexport/%s/tmp/inertia_base_base_floatb_%s_%s_matlab.m&quot;, robot_name, base_method_name, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -549,7 +549,7 @@ MMD_regressor_s := convert_t_s(MMD_regressor_t):</Text-field>
 <Group labelreference="L1813" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertiaD and not(base_method_name=&quot;twist&quot;) then
-  MatlabExport(MMD_regressor_s, sprintf(&quot;../codeexport/%s/inertiaD_floatb_%s_%s_matlab.m&quot;, robot_name, base_method_name, regressor_modus), codegen_opt):
+  MatlabExport(MMD_regressor_s, sprintf(&quot;../codeexport/%s/tmp/inertiaD_floatb_%s_%s_matlab.m&quot;, robot_name, base_method_name, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -568,7 +568,7 @@ MMDjj_regressor_s := convert_t_s(MMDjj_regressor_t):</Text-field>
 <Group labelreference="L1845" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertiaD and base_method_name=&quot;twist&quot; then
-  MatlabExport(MMDjj_regressor_s, sprintf(&quot;../codeexport/%s/inertiaD_joint_joint_%s_%s_matlab.m&quot;, robot_name, expstring, regressor_modus), codegen_opt):
+  MatlabExport(MMDjj_regressor_s, sprintf(&quot;../codeexport/%s/tmp/inertiaD_joint_joint_%s_%s_matlab.m&quot;, robot_name, expstring, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -587,7 +587,7 @@ MMDjb_regressor_s := convert_t_s(MMDjb_regressor_t):</Text-field>
 <Group labelreference="L1806" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertiaD and not(base_method_name=&quot;twist&quot;) then
-  MatlabExport(MMDjb_regressor_s, sprintf(&quot;../codeexport/%s/inertiaD_joint_base_floatb_%s_%s_matlab.m&quot;, robot_name, base_method_name, regressor_modus), codegen_opt):
+  MatlabExport(MMDjb_regressor_s, sprintf(&quot;../codeexport/%s/tmp/inertiaD_joint_base_floatb_%s_%s_matlab.m&quot;, robot_name, base_method_name, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -609,7 +609,7 @@ end do:</Text-field>
 </Group>
 <Group labelreference="L1717" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save tauC_regressor_s, sprintf(&quot;../codeexport/%s/coriolisvec_joint_%s_%s_maple.m&quot;, robot_name, expstring, regressor_modus):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save tauC_regressor_s, sprintf(&quot;../codeexport/%s/tmp/coriolisvec_joint_%s_%s_maple.m&quot;, robot_name, expstring, regressor_modus):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1720" drawlabel="true">
@@ -625,7 +625,7 @@ end do:</Text-field>
 <Group labelreference="L1718" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_corvec then
-  MatlabExport(tauC_regressor_s(7..NQ,..), sprintf(&quot;../codeexport/%s/coriolisvec_joint_%s_%s_matlab.m&quot;, robot_name, expstring, regressor_modus), codegen_opt):
+  MatlabExport(tauC_regressor_s(7..NQ,..), sprintf(&quot;../codeexport/%s/tmp/coriolisvec_joint_%s_%s_matlab.m&quot;, robot_name, expstring, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -637,7 +637,7 @@ end if:</Text-field>
 <Group labelreference="L1847" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_corvec and not(base_method_name=&quot;twist&quot;) then
-  MatlabExport(tauC_regressor_s(1..NQ,..), sprintf(&quot;../codeexport/%s/coriolisvec_%s_%s_matlab.m&quot;, robot_name, expstring, regressor_modus), codegen_opt):
+  MatlabExport(tauC_regressor_s(1..NQ,..), sprintf(&quot;../codeexport/%s/tmp/coriolisvec_%s_%s_matlab.m&quot;, robot_name, expstring, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -649,7 +649,7 @@ end if:</Text-field>
 <Group labelreference="L1849" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_corvec and not(base_method_name=&quot;twist&quot;) then
-  MatlabExport(tauC_regressor_s(1..6,..), sprintf(&quot;../codeexport/%s/coriolisvec_base_%s_%s_matlab.m&quot;, robot_name, expstring, regressor_modus), codegen_opt):
+  MatlabExport(tauC_regressor_s(1..6,..), sprintf(&quot;../codeexport/%s/tmp/coriolisvec_base_%s_%s_matlab.m&quot;, robot_name, expstring, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -717,7 +717,7 @@ end do:</Text-field>
 </Group>
 <Group labelreference="L1857" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save C_regressor_s, sprintf(&quot;../codeexport/%s/coriolismat_%s_%s_maple.m&quot;, robot_name, expstring, regressor_modus):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save C_regressor_s, sprintf(&quot;../codeexport/%s/tmp/coriolismat_%s_%s_maple.m&quot;, robot_name, expstring, regressor_modus):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1859" drawlabel="true">
@@ -728,7 +728,7 @@ end do:</Text-field>
 <Group labelreference="L1850" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_cormat and not(base_method_name=&quot;twist&quot;) then
-  MatlabExport(C_regressor_s, sprintf(&quot;../codeexport/%s/coriolismat_floatb_%s_%s_matlab.m&quot;, robot_name, base_method_name, regressor_modus), codegen_opt):
+  MatlabExport(C_regressor_s, sprintf(&quot;../codeexport/%s/tmp/coriolismat_floatb_%s_%s_matlab.m&quot;, robot_name, base_method_name, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -762,7 +762,7 @@ end do:</Text-field>
 <Group labelreference="L1864" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_cormat and base_method_name=&quot;twist&quot; then
-  MatlabExport(Cjj_regressor_s, sprintf(&quot;../codeexport/%s/coriolismat_joint_fixb_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
+  MatlabExport(Cjj_regressor_s, sprintf(&quot;../codeexport/%s/tmp/coriolismat_joint_fixb_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -782,7 +782,7 @@ end if:</Text-field>
 </Group>
 <Group labelreference="L1755" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save tau_regressor_s, sprintf(&quot;../codeexport/%s/invdyn_%s_%s_maple.m&quot;, robot_name, expstring, regressor_modus):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save tau_regressor_s, sprintf(&quot;../codeexport/%s/tmp/invdyn_%s_%s_maple.m&quot;, robot_name, expstring, regressor_modus):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1753" drawlabel="true">
@@ -793,7 +793,7 @@ end if:</Text-field>
 <Group labelreference="L1865" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_invdyn and not(base_method_name=&quot;twist&quot;) then
-  MatlabExport(tau_regressor_s(1..NQ,..), sprintf(&quot;../codeexport/%s/invdyn_%s_%s_matlab.m&quot;, robot_name, expstring, regressor_modus), codegen_opt):
+  MatlabExport(tau_regressor_s(1..NQ,..), sprintf(&quot;../codeexport/%s/tmp/invdyn_%s_%s_matlab.m&quot;, robot_name, expstring, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -805,7 +805,7 @@ end if:</Text-field>
 <Group labelreference="L1867" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_invdyn and not(base_method_name=&quot;twist&quot;) then
-  MatlabExport(tau_regressor_s(1..6,..), sprintf(&quot;../codeexport/%s/invdyn_base_%s_%s_matlab.m&quot;, robot_name, expstring, regressor_modus), codegen_opt):
+  MatlabExport(tau_regressor_s(1..6,..), sprintf(&quot;../codeexport/%s/tmp/invdyn_base_%s_%s_matlab.m&quot;, robot_name, expstring, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -817,7 +817,7 @@ end if:</Text-field>
 <Group labelreference="L1756" drawlabel="true">
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_invdyn then
-  MatlabExport(tau_regressor_s(7..NQ,..), sprintf(&quot;../codeexport/%s/invdyn_joint_%s_%s_matlab.m&quot;, robot_name, expstring, regressor_modus), codegen_opt):
+  MatlabExport(tau_regressor_s(7..NQ,..), sprintf(&quot;../codeexport/%s/tmp/invdyn_joint_%s_%s_matlab.m&quot;, robot_name, expstring, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
