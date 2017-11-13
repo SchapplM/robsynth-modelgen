@@ -12,11 +12,11 @@ this_path = fileparts( mfilename('fullpath') );
 codeexport_path = fullfile(this_path, '..', '..');
 
 % Verzeichnis mit generierten Matlab-Funktionen hinzufügen
-matlabfcn_path = fullfile(codeexport_path, 'matlabfcn/%RN%');
+matlabfcn_path = fullfile(codeexport_path, '%RN%','matlabfcn');
 addpath(matlabfcn_path);
 
 % Verzeichnis mit generierten Testfunktionen
-testfcn_path = fullfile(codeexport_path, 'testfcn/%RN%');
+testfcn_path = fullfile(codeexport_path, '%RN%','testfcn');
 addpath(testfcn_path);
 
 simulink_path = fullfile(testfcn_path, 'simulink');

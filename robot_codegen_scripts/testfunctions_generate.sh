@@ -28,8 +28,8 @@ do
   tmp="${filename/robot/$robot_name}" # Ersetze Begriff robot mit Roboternamen
   filename_new="${tmp/.template/}" # Endung .template entfernen
   
-  # Neues Verzeichnis generieren: Jetzt im Ordner codeexport/testfcn
-  dir2=`echo "$dir1" | sed "s/robot_codegen_testfunctions/codeexport\/testfcn\/$robot_name/g"`
+  # Neues Verzeichnis generieren: Jetzt im Ordner codeexport/%RN%/testfcn
+  dir2=`echo "$dir1" | sed "s/robot_codegen_testfunctions/codeexport\/$robot_name\/testfcn/g"`
 
   # Datei kopieren
   mkdir -p "$dir2"

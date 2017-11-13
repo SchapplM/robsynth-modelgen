@@ -19,7 +19,7 @@ template_pfad=$repo_pfad/robot_codegen_scripts/templates_num
 source robot_codegen_tmpvar_bash.sh
 source $repo_pfad/robot_codegen_definitions/robot_env.sh
 
-fcn_pfad=$repo_pfad/codeexport/matlabfcn/$robot_name
+fcn_pfad=$repo_pfad/codeexport/$robot_name/matlabfcn
 
 for f in $(find $template_pfad -name "*.template")
 do
