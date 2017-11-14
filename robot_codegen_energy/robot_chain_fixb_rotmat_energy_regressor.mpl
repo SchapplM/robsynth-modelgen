@@ -163,7 +163,6 @@ for i to NJ do
     Paramvec[ii, 1] := ZZ[i, 1]: ii:= ii+1:
     Paramvec[ii, 1] := mX[i, 1]: ii:= ii+1:
     Paramvec[ii, 1] := mY[i, 1]: ii:= ii+1:
-    m[i-1,1] := m[i-1,1]+m[i,1]: ii:= ii+1:
   else: # Schubgelenk (eq. 16)
     Paramvec[ii, 1] := mX[i, 1]: ii:= ii+1:
     Paramvec[ii, 1] := mY[i, 1]: ii:= ii+1:
@@ -210,12 +209,22 @@ for i from 0 to NJ-1 do
     t_ges[1,i*10+ 4]:=REMOVE; # YY
     t_ges[1,i*10+ 9]:=REMOVE; # mZ
     t_ges[1,i*10+10]:=REMOVE; # m
-
-    u_ges[1,i*10+ 4]:=REMOVE;
-    u_ges[1,i*10+ 9]:=REMOVE;
-    u_ges[1,i*10+10]:=REMOVE;
+    u_ges[1,i*10+ 4]:=REMOVE; # YY
+    u_ges[1,i*10+ 9]:=REMOVE; # mZ
+    u_ges[1,i*10+10]:=REMOVE; # m
   else: # Schubgelenk
-    # Nichts tun
+    u_ges[1,i*10+ 1]:=REMOVE; # XX
+    u_ges[1,i*10+ 2]:=REMOVE; # XY
+    u_ges[1,i*10+ 3]:=REMOVE; # XZ
+    u_ges[1,i*10+ 4]:=REMOVE; # YY
+    u_ges[1,i*10+ 5]:=REMOVE; # YZ
+    u_ges[1,i*10+ 6]:=REMOVE; # ZZ
+    t_ges[1,i*10+ 1]:=REMOVE; # XX
+    t_ges[1,i*10+ 2]:=REMOVE; # XY
+    t_ges[1,i*10+ 3]:=REMOVE; # XZ
+    t_ges[1,i*10+ 4]:=REMOVE; # YY
+    t_ges[1,i*10+ 5]:=REMOVE; # YZ
+    t_ges[1,i*10+ 6]:=REMOVE; # ZZ
   end if:
 end do: 
 # Entfernungen von markierten Elementen
