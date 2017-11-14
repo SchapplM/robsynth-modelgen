@@ -1,101 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="18" minor="2"/>
+<Version major="2016" minor="2"/>
 <Label-Scheme value="2" prefix=""/>
-<View-Properties presentation="false" autoexpanding_sections="true">
+<View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false">
 </View-Properties>
-<MapleNet-Properties elisiondigitsbefore="100" labelling="true" indentamount="4" elisiontermsthreshold="10000" ansi="false" errorbreak="1" useclientjvm="true" echo="1" imaginaryunit="I" labelwidth="20" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" contextmenusize="automatic" plotdriver="opengl" elisiondigitsafter="100" plotoutput="terminal" helpbrowser="standard" rtablesize="10" elisiontermsbefore="100" elisiondigitsthreshold="10000" typesetting="standard" plotdevice="inline" verboseproc="1" showassumed="1" quiet="false" errorcursor="false" longdelim="true" plotoptions="" elisiontermsafter="100" screenwidth="79" preplot="" prettyprint="3" displayprecision="-1" screenpixelheight="1080" warnlevel="3" screenheight="25" latexwidth="8.0" postplot="" prompt="&gt; " ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1080" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="standard" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
+<Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="2D Output" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Heading 4" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="true" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Line Printed Output" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Heading 2" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="16" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Maple Output" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="2D Inert Output" background="[255,255,255]" bold="false" executable="true" family="Times New Roman" foreground="[144,144,144]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Heading 3" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="true" opaque="false" readonly="false" size="14" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Diagnostic" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[40,120,40]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Ordered List 1" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Annotation Text" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Maple Input" background="[255,255,255]" bold="true" executable="true" family="Courier New" foreground="[120,0,14]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Text Output" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Ordered List 2" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Ordered List 3" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Ordered List 4" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Ordered List 5" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Author" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Annotation Title" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Caption Reference" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Maple Input Placeholder" background="[255,255,255]" bold="true" executable="true" family="Courier New" foreground="[200,0,200]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="true"/>
-<Font name="Maple Plot" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Code" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[255,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Line Printed Output" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Text Output" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Diagnostic" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[40,120,40]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="2D Inert Output" background="[255,255,255]" bold="false" executable="true" family="Times New Roman" foreground="[144,144,144]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Normal" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Hyperlink" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,128,128]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="true" placeholder="false"/>
-<Font name="Maple Output" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Dash Item" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="2D Math" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Maple Input" background="[255,255,255]" bold="true" executable="true" family="Courier New" foreground="[120,0,14]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="2D Output" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="2D Input" background="[255,255,255]" bold="false" executable="true" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="HyperlinkError" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[255,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="true" placeholder="false"/>
 <Font name="Header and Footer" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="10" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Error" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[255,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Title" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Text" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Bullet Item" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Heading 4" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="true" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Equation Label" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Heading 3" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="true" opaque="false" readonly="false" size="14" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Heading 2" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="16" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="HyperlinkError" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[255,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="true" placeholder="false"/>
+<Font name="Atomic Variable" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[175,0,175]" italic="true" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="HyperlinkWarning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="true" placeholder="false"/>
 <Font name="Dictionary Hyperlink" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[147,0,15]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="true" placeholder="false"/>
-<Font name="Atomic Variable" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[175,0,175]" italic="true" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Caption Text" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="2D Math" background="[255,255,255]" bold="false" executable="true" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Bullet Item" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Maple Plot" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Annotation Text" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="List Item" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Dash Item" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="2D Input" background="[255,255,255]" bold="false" executable="true" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Error" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[255,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Title" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Text" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Normal" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Caption Reference" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Code" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[255,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Maple Input Placeholder" background="[255,255,255]" bold="true" executable="true" family="Courier New" foreground="[200,0,200]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="true"/>
+<Font name="Equation Label" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Author" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Hyperlink" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,128,128]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="true" placeholder="false"/>
+<Font name="Caption Text" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Layout name="Heading 1" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="8" spacebelow="4" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Warning" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Heading 4" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Line Printed Output" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="any" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Heading 2" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="8" spacebelow="2" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Maple Output" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.3" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Heading 3" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Diagnostic" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="any" pagebreak-before="false" initial="0" bulletsuffix=""/>
 <Layout name="Ordered List 1" alignment="left" bullet="numeric" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix=""/>
+<Layout name="Text Output" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="newline" pagebreak-before="false" initial="0" bulletsuffix=""/>
 <Layout name="Ordered List 2" alignment="left" bullet="alphabetic" firstindent="0" leftmargin="36" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix=""/>
 <Layout name="Ordered List 3" alignment="left" bullet="roman" firstindent="0" leftmargin="72" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix=""/>
 <Layout name="Ordered List 4" alignment="left" bullet="ALPHABETIC" firstindent="0" leftmargin="108" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix=""/>
 <Layout name="Ordered List 5" alignment="left" bullet="ROMAN" firstindent="0" leftmargin="144" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix=""/>
-<Layout name="Author" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="8" spacebelow="8" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
-<Layout name="Warning" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
 <Layout name="Annotation Title" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="12" spacebelow="12" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
-<Layout name="Maple Plot" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
-<Layout name="Line Printed Output" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="any" pagebreak-before="false" initial="0" bulletsuffix=""/>
-<Layout name="Text Output" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="newline" pagebreak-before="false" initial="0" bulletsuffix=""/>
-<Layout name="Diagnostic" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="any" pagebreak-before="false" initial="0" bulletsuffix=""/>
-<Layout name="Normal" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
-<Layout name="Maple Output" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.3" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
-<Layout name="Dash Item" alignment="left" bullet="dash" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
 <Layout name="HyperlinkError" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="HyperlinkWarning" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Bullet Item" alignment="left" bullet="dot" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Maple Plot" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="List Item" alignment="left" bullet="indent" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Dash Item" alignment="left" bullet="dash" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
 <Layout name="Error" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
 <Layout name="Title" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="12" spacebelow="12" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
-<Layout name="Heading 1" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="8" spacebelow="4" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
-<Layout name="Bullet Item" alignment="left" bullet="dot" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
-<Layout name="Heading 4" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
-<Layout name="Heading 3" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
-<Layout name="Heading 2" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="8" spacebelow="2" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
-<Layout name="HyperlinkWarning" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
-<Layout name="List Item" alignment="left" bullet="indent" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
-<Pencil-style name="Pencil 5" pen-color="[255,0,0]" pen-height="5.0" pen-width="5.0" pen-opacity="1.0"/>
-<Pencil-style name="Pencil 4" pen-color="[0,0,255]" pen-height="3.0" pen-width="3.0" pen-opacity="1.0"/>
-<Pencil-style name="Pencil 3" pen-color="[0,0,0]" pen-height="3.0" pen-width="3.0" pen-opacity="1.0"/>
-<Pencil-style name="Pencil 2" pen-color="[0,0,255]" pen-height="1.0" pen-width="1.0" pen-opacity="1.0"/>
+<Layout name="Normal" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Author" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="8" spacebelow="8" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
 <Pencil-style name="Pencil 1" pen-color="[0,0,0]" pen-height="1.0" pen-width="1.0" pen-opacity="1.0"/>
-<Highlighter-style name="Highlighter 2" pen-color="[255,204,0]" pen-height="14.0" pen-width="14.0" pen-opacity="0.8"/>
-<Highlighter-style name="Highlighter 1" pen-color="[255,153,255]" pen-height="12.0" pen-width="8.0" pen-opacity="0.8"/>
-<Highlighter-style name="Highlighter 4" pen-color="[0,255,255]" pen-height="32.0" pen-width="32.0" pen-opacity="0.8"/>
-<Highlighter-style name="Highlighter 3" pen-color="[51,255,0]" pen-height="24.0" pen-width="24.0" pen-opacity="0.8"/>
+<Pencil-style name="Pencil 2" pen-color="[0,0,255]" pen-height="1.0" pen-width="1.0" pen-opacity="1.0"/>
+<Pencil-style name="Pencil 3" pen-color="[0,0,0]" pen-height="3.0" pen-width="3.0" pen-opacity="1.0"/>
+<Pencil-style name="Pencil 4" pen-color="[0,0,255]" pen-height="3.0" pen-width="3.0" pen-opacity="1.0"/>
+<Pencil-style name="Pencil 5" pen-color="[255,0,0]" pen-height="5.0" pen-width="5.0" pen-opacity="1.0"/>
 <Highlighter-style name="Highlighter 5" pen-color="[255,255,0]" pen-height="48.0" pen-width="48.0" pen-opacity="0.8"/>
+<Highlighter-style name="Highlighter 3" pen-color="[51,255,0]" pen-height="24.0" pen-width="24.0" pen-opacity="0.8"/>
+<Highlighter-style name="Highlighter 4" pen-color="[0,255,255]" pen-height="32.0" pen-width="32.0" pen-opacity="0.8"/>
+<Highlighter-style name="Highlighter 1" pen-color="[255,153,255]" pen-height="12.0" pen-width="8.0" pen-opacity="0.8"/>
+<Highlighter-style name="Highlighter 2" pen-color="[255,204,0]" pen-height="14.0" pen-width="14.0" pen-opacity="0.8"/>
 </Styles>
+<Startup-Code startupcode=""/>
 <Task-table>
     <Task-category name="&lt;default&gt;"/>
 </Task-table>
 <Task/>
 <Group labelreference="L1" drawlabel="true">
-<Input>
-<Text-field style="Title" layout="Title">Base Parameter Regresor Inverse Dynamics for Robot based on MDH frames</Text-field>
+<Input><Text-field style="Title" layout="Title">Base Parameter Regresor Inverse Dynamics for Robot based on MDH frames</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1518" drawlabel="true">
-<Input>
-<Text-field style="Heading 2" layout="Heading 2">Einleitung</Text-field>
-<Text-field style="Normal" layout="Normal">Berechnung der inversen Dynamik in Regressorform
+<Input><Text-field style="Heading 2" layout="Heading 2">Einleitung</Text-field><Text-field style="Normal" layout="Normal">Berechnung der inversen Dynamik in Regressorform
 
 Dateiname:
 <Font encoding="UTF-8">robot -&gt; Berechnung f\303\274r allgemeinen Roboter
@@ -105,38 +103,28 @@ rotmat -&gt; Kinematik wird mit Rotationsmatrizen berechnet
 dynamics -&gt; Berechnung der Dynamik
 regressor -&gt; Regressorform (parameterlinear)
 
-Siehe auch: robot_chain_floatb_rotmat_dynamics_regressor.mw.</Text-field>
-<Text-field style="Normal" layout="Normal"><Font encoding="UTF-8">Im Gegensatz zu der allgemeinen Dynamik werden hier die fixed-Base-Ausdr\303\274cke ohne eine &quot;twist&quot;-Basis-Berechnung \303\274bernommen.</Font></Text-field>
-<Text-field style="Normal" layout="Normal"><Font encoding="UTF-8">Ursache ist, dass der Parametervektor und damit der Regressor sich zwischen Fixed-Base und Floating-Base unterscheidet und daher ein Ableiten des Fixed-Base falles aus der Floating-Base-Formulierung mit einfacher Basis-Darstellung (&quot;twist&quot;) nicht m\303\266glich ist.</Font></Text-field>
+Siehe auch: robot_chain_floatb_rotmat_dynamics_regressor.mw.</Text-field><Text-field style="Normal" layout="Normal"><Font encoding="UTF-8">Im Gegensatz zu der allgemeinen Dynamik werden hier die fixed-Base-Ausdr\303\274cke ohne eine &quot;twist&quot;-Basis-Berechnung \303\274bernommen.</Font></Text-field><Text-field style="Normal" layout="Normal"><Font encoding="UTF-8">Ursache ist, dass der Parametervektor und damit der Regressor sich zwischen Fixed-Base und Floating-Base unterscheidet und daher ein Ableiten des Fixed-Base falles aus der Floating-Base-Formulierung mit einfacher Basis-Darstellung (&quot;twist&quot;) nicht m\303\266glich ist.</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1517" drawlabel="true">
-<Input>
-<Text-field style="Heading 2" layout="Heading 2">Autor</Text-field>
-<Text-field style="Normal" layout="Normal">Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03</Text-field>
-<Text-field style="Normal" layout="Normal">(C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover</Text-field>
+<Input><Text-field style="Heading 2" layout="Heading 2">Autor</Text-field><Text-field style="Normal" layout="Normal">Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03</Text-field><Text-field style="Normal" layout="Normal">(C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1520" drawlabel="true">
-<Input>
-<Text-field style="Heading 2" layout="Heading 2">Sources</Text-field>
-<Text-field style="Normal" layout="Normal">[GautierKhalil1990] Direct Calculation of Minimum Set of Inertial Parameters of Serial Robots
+<Input><Text-field style="Heading 2" layout="Heading 2">Sources</Text-field><Text-field style="Normal" layout="Normal">[GautierKhalil1990] Direct Calculation of Minimum Set of Inertial Parameters of Serial Robots
 [KhalilDombre2002] Modeling, Identification and Control of Robots
 [Ortmaier2014] Vorlesungsskript Robotik I</Text-field>
 </Input>
 </Group>
-<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 1" layout="Heading 1">Initialization</Text-field></Title>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Initialization</Text-field></Title>
 <Group labelreference="L1767" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">interface(warnlevel=0): # Unterdr\303\274cke die folgende Warnung.
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">interface(warnlevel=0): # Unterdr\303\274cke die folgende Warnung.
 restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet wird.
 </Font>interface(warnlevel=3):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1685" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(LinearAlgebra):
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(LinearAlgebra):
 with(ArrayTools):
 with(codegen):
 with(CodeGeneration):
@@ -144,13 +132,11 @@ with(StringTools):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1775" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Einstellungen f\303\274r Code-Export: Optimierungsgrad (2=h\303\266chster) und Aktivierung jedes Terms.</Font></Text-field>
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Einstellungen f\303\274r Code-Export: Optimierungsgrad (2=h\303\266chster) und Aktivierung jedes Terms.</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1776" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_opt := 2:
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_opt := 2:
 codeexport_grav := true: 
 codeexport_corvec := true:
 codeexport_cormat := true:
@@ -160,21 +146,18 @@ codeexport_invdyn := true:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1688" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_convert_s_t&quot;:
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_convert_s_t&quot;:
 read &quot;../helper/proc_convert_t_s&quot;: 
 read &quot;../helper/proc_MatlabExport&quot;:
 read &quot;../helper/proc_LagrangeN&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1729" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_index_symmat2vector&quot;:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_index_symmat2vector&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1687" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../transformation/proc_rotx&quot;: 
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../transformation/proc_rotx&quot;: 
 read &quot;../transformation/proc_roty&quot;: 
 read &quot;../transformation/proc_rotz&quot;: 
 read &quot;../transformation/proc_trotx&quot;: 
@@ -185,23 +168,19 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Input>
 </Group>
 <Group labelreference="L1684" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1702" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_definitions&quot;, robot_name):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1774" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Mit diesem Arbeitsblatt werden die Regressor-Ausdr\303\274cke f\303\274r Fixed-Base und Floating-Base Modelle generiert. Erkenne welche Basis-Modellierung aktiv ist</Font></Text-field>
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Mit diesem Arbeitsblatt werden die Regressor-Ausdr\303\274cke f\303\274r Fixed-Base und Floating-Base Modelle generiert. Erkenne welche Basis-Modellierung aktiv ist</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1773" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">if base_method_name=&quot;twist&quot; then # Basis-Methode &quot;twist&quot; wird (hier) nur f\303\274r fixed Base benutzt
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">if base_method_name=&quot;twist&quot; then # Basis-Methode &quot;twist&quot; wird (hier) nur f\303\274r fixed Base benutzt
 </Font>  expstring:=&quot;fixb&quot;:
 elif base_method_name=&quot;eulangrpy&quot; then 
   expstring:=&quot;floatb_eulangrpy&quot;:
@@ -211,20 +190,16 @@ fi:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1762" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Es ist in diesem Arbeitsblatt m\303\266glich, zwei verschiedene Regressoren zu generieren und zu exportieren: Basierend auf Minimalparametern und auf vollem Parametersatz (PV2).</Font></Text-field>
-<Text-field style="Text" layout="Normal">Der Term &quot;regressor&quot; oder &quot;regressor_minpar&quot; ist jeweils in den Dateinamen enthalten.
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Es ist in diesem Arbeitsblatt m\303\266glich, zwei verschiedene Regressoren zu generieren und zu exportieren: Basierend auf Minimalparametern und auf vollem Parametersatz (PV2).</Font></Text-field><Text-field style="Text" layout="Normal">Der Term &quot;regressor&quot; oder &quot;regressor_minpar&quot; ist jeweils in den Dateinamen enthalten.
 Der folgende Befehl muss immer auf &quot;regressor_minpar&quot; gesetzt sein, da diese Zeile durch das Skript robot_codegen_maple_preparation.sh ausgewertet und modifiziert wird.</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1760" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">regressor_modus := &quot;regressor_minpar&quot;:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">regressor_modus := &quot;regressor_minpar&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1686" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if regressor_modus = &quot;regressor_minpar&quot; then
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if regressor_modus = &quot;regressor_minpar&quot; then
   read sprintf(&quot;../codeexport/%s/tmp/energy_kinetic_%s_regressor_minpar_maple.m&quot;, robot_name, expstring):
   read sprintf(&quot;../codeexport/%s/tmp/energy_potential_%s_regressor_minpar_maple.m&quot;, robot_name, expstring):
   t_ges := t_ges_minpar:
@@ -234,8 +209,7 @@ end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1761" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if regressor_modus = &quot;regressor&quot; then
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if regressor_modus = &quot;regressor&quot; then
   read sprintf(&quot;../codeexport/%s/tmp/energy_kinetic_%s_regressor_maple.m&quot;, robot_name, expstring):
   read sprintf(&quot;../codeexport/%s/tmp/energy_potential_%s_regressor_maple.m&quot;, robot_name, expstring):
   t_ges := t_ges:
@@ -245,13 +219,11 @@ end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1771" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Schalter zur Auswahl der unterschiedlichen Terme, die exportiert werden sollen. F\303\274r parallele Berechnung interessant.</Font></Text-field>
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Schalter zur Auswahl der unterschiedlichen Terme, die exportiert werden sollen. F\303\274r parallele Berechnung interessant.</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1772" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">DynString := &quot;Term:&quot;:
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">DynString := &quot;Term:&quot;:
 if codeexport_grav then
   DynString := sprintf(&quot;%s g&quot;,DynString):
 end if:
@@ -274,124 +246,101 @@ end if:
 </Input>
 </Group>
 </Section>
-<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 1" layout="Heading 1">Lagrange Formalismus (mit Funktion)</Text-field></Title>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Lagrange Formalismus (mit Funktion)</Text-field></Title>
 <Group labelreference="L1582" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">OutputLagrange := LagrangeN(t_ges, u_ges):
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">OutputLagrange := LagrangeN(t_ges, u_ges):
 dTdqDdt_s := OutputLagrange[1]:
 dTdq_s := OutputLagrange[2]:
 dUdq_s := OutputLagrange[3]:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1629" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save dUdq_s, sprintf(&quot;../codeexport/%s/tmp/floatb_lagrange_dUdq_s_%s_maple.m&quot;, robot_name, regressor_modus):
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save dUdq_s, sprintf(&quot;../codeexport/%s/tmp/floatb_lagrange_dUdq_s_%s_maple.m&quot;, robot_name, regressor_modus):
 save dTdq_s, sprintf(&quot;../codeexport/%s/tmp/floatb_lagrange_dTdq_s_%s_maple.m&quot;, robot_name, regressor_modus):
 save dTdqDdt_s, sprintf(&quot;../codeexport/%s/tmp/floatb_lagrange_dTdqDdt_s_%s_maple.m&quot;, robot_name, regressor_modus):</Text-field>
 </Input>
 </Group>
 </Section>
 <Group labelreference="L967" drawlabel="true">
-<Input>
-<Text-field style="Heading 2" layout="Heading 2">Extraktion einzelner Terme</Text-field>
+<Input><Text-field style="Heading 2" layout="Heading 2">Extraktion einzelner Terme</Text-field>
 </Input>
 </Group>
-<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 1" layout="Heading 1">Gravitational Load</Text-field></Title>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Gravitational Load</Text-field></Title>
 <Group labelreference="L1676" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Generate</Text-field>
+<Input><Text-field style="Text" layout="Normal">Generate</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1675" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">taug_regressor_s := dUdq_s:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">taug_regressor_s := dUdq_s:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1674" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save taug_regressor_s, sprintf(&quot;../codeexport/%s/tmp/gravload_%s_maple.m&quot;, robot_name, regressor_modus):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save taug_regressor_s, sprintf(&quot;../codeexport/%s/tmp/gravload_%s_maple.m&quot;, robot_name, regressor_modus):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1672" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Matlab Export</Text-field>
+<Input><Text-field style="Text" layout="Normal">Matlab Export</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1778" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Belastung der Basis (nur Floating Base)</Text-field>
+<Input><Text-field style="Text" layout="Normal">Belastung der Basis (nur Floating Base)</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1779" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_grav and not(base_method_name=&quot;twist&quot;) then
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_grav and not(base_method_name=&quot;twist&quot;) then
   MatlabExport(taug_regressor_s(1..6,..), sprintf(&quot;../codeexport/%s/tmp/base_gravload_floatb_%s_%s_matlab.m&quot;, robot_name, base_method_name, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1784" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Belastung der Gelenke: 
+<Input><Text-field style="Text" layout="Normal">Belastung der Gelenke: 
 Fixed-Base: Gravitationsvektor im Basis-KS
 <Font encoding="UTF-8">Floating Base: Gravitationsvektor im Welt-KS, Basis-Orientierung ber\303\274cksichtigt</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1783" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_grav then
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_grav then
   MatlabExport(taug_regressor_s(7..NQ,..), sprintf(&quot;../codeexport/%s/tmp/joint_gravload_%s_%s_matlab.m&quot;, robot_name, expstring, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1781" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Kompletter Vektor</Text-field>
+<Input><Text-field style="Text" layout="Normal">Kompletter Vektor</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1780" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_grav and not(base_method_name=&quot;twist&quot;) then
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_grav and not(base_method_name=&quot;twist&quot;) then
   MatlabExport(taug_regressor_s(1..NQ,..), sprintf(&quot;../codeexport/%s/tmp/gravload_floatb_%s_%s_matlab.m&quot;, robot_name, base_method_name, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
 </Section>
-<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 1" layout="Heading 1">Mass Matrix</Text-field></Title>
-<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 2" layout="Heading 2"><Font encoding="UTF-8">Berechnung vollst\303\244ndige Massenmatrix</Font></Text-field></Title>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Mass Matrix</Text-field></Title>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2"><Font encoding="UTF-8">Berechnung vollst\303\244ndige Massenmatrix</Font></Text-field></Title>
 <Group labelreference="L1824" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Generiere die Massenmatrix erst f\303\274r Floating-Base-Komplettsystem, dann entnehme die Teilmatrizen f\303\274r Gelenk-Gelenk, Gelenk-Basis zum separaten Export</Font></Text-field>
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Generiere die Massenmatrix erst f\303\274r Floating-Base-Komplettsystem, dann entnehme die Teilmatrizen f\303\274r Gelenk-Gelenk, Gelenk-Basis zum separaten Export</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1823" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Paramvec_size := ColumnDimension(t_ges):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Paramvec_size := ColumnDimension(t_ges):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1829" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Berechnung vollst\303\244ndige Massenmatrix</Font></Text-field>
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Berechnung vollst\303\244ndige Massenmatrix</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1868" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Initialisiere. Speichere nur den unteren linken Teil der Massenmatrix
+<Input><Text-field style="Text" layout="Normal">Initialisiere. Speichere nur den unteren linken Teil der Massenmatrix
 Siehe: https://de.wikipedia.org/wiki/Symmetrische_Matrix</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1826" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">tauMM_regressor_s := dTdqDdt_s(1..NQ,..):
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tauMM_regressor_s := dTdqDdt_s(1..NQ,..):
 MM_regressor_s := Matrix(NQ*(NQ+1)/2, Paramvec_size):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1828" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">i_rr := 0:
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">i_rr := 0:
 for i to NQ do # Zeilenindex der Massenmatrix
   for j to NQ do  # Spaltenindex der Massenmatrix
     if j &gt; i then
@@ -406,28 +355,23 @@ end do:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1830" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Export Gesamt-Massenmatrix</Text-field>
+<Input><Text-field style="Text" layout="Normal">Export Gesamt-Massenmatrix</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1827" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertia and not(base_method_name=&quot;twist&quot;) then
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertia and not(base_method_name=&quot;twist&quot;) then
   MatlabExport(MM_regressor_s, sprintf(&quot;../codeexport/%s/tmp/inertia_floatb_%s_%s_matlab.m&quot;, robot_name, base_method_name, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
 </Section>
-<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 2" layout="Heading 2">Gelenk-Massenmatrix extrahieren</Text-field></Title>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2">Gelenk-Massenmatrix extrahieren</Text-field></Title>
 <Group labelreference="L1834" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MMjj_regressor_s := Matrix(NQJ*(NQJ+1)/2, Paramvec_size):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MMjj_regressor_s := Matrix(NQJ*(NQJ+1)/2, Paramvec_size):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1835" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">itmp:=0:
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">itmp:=0:
 for i to NQ do
   for j to NQ do  # Spaltenindex der Massenmatrix
     if j &gt; i then
@@ -443,38 +387,31 @@ end do:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1833" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Export Gelenkmassenmatrix</Text-field>
+<Input><Text-field style="Text" layout="Normal">Export Gelenkmassenmatrix</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1832" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertia and base_method_name=&quot;twist&quot; then
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertia and base_method_name=&quot;twist&quot; then
   MatlabExport(MMjj_regressor_s, sprintf(&quot;../codeexport/%s/tmp/inertia_joint_joint_%s_%s_matlab.m&quot;, robot_name, expstring, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
 </Section>
-<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 2" layout="Heading 2">Gelenk-Basis-Massenmatrix</Text-field></Title>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2">Gelenk-Basis-Massenmatrix</Text-field></Title>
 <Group labelreference="L1836" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"> (untere linke Teilmatrix der Gesamt-Massenmatrix)</Text-field>
+<Input><Text-field style="Text" layout="Normal"> (untere linke Teilmatrix der Gesamt-Massenmatrix)</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1838" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MMjb_regressor_s := Matrix(6*NQJ, Paramvec_size):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MMjb_regressor_s := Matrix(6*NQJ, Paramvec_size):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1840" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Gehe Schleife \303\274ber alle Massenmatrix-Elemente durch und entnehme die passenden Elemente f\303\274r die Teilmatrix)</Font></Text-field>
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Gehe Schleife \303\274ber alle Massenmatrix-Elemente durch und entnehme die passenden Elemente f\303\274r die Teilmatrix)</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1841" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">itmp:=0:
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">itmp:=0:
 for i to NQ do
   for j to NQ do  # Spaltenindex der Massenmatrix
     if i &gt; 6 and j &lt; 7 then # unterer linker Teil
@@ -487,28 +424,23 @@ end do:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1839" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertia and not(base_method_name=&quot;twist&quot;) then
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertia and not(base_method_name=&quot;twist&quot;) then
   MatlabExport(MMjb_regressor_s, sprintf(&quot;../codeexport/%s/tmp/inertia_joint_base_floatb_%s_%s_matlab.m&quot;, robot_name, base_method_name, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
 </Section>
-<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 2" layout="Heading 2">Basis-Massenmatrix</Text-field></Title>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2">Basis-Massenmatrix</Text-field></Title>
 <Group labelreference="L1869" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MMbb_regressor_s := Matrix(6*(6+1)/2, Paramvec_size):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MMbb_regressor_s := Matrix(6*(6+1)/2, Paramvec_size):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1870" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Gehe Schleife \303\274ber alle Massenmatrix-Elemente durch und entnehme die passenden Elemente f\303\274r die Teilmatrix)</Font></Text-field>
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Gehe Schleife \303\274ber alle Massenmatrix-Elemente durch und entnehme die passenden Elemente f\303\274r die Teilmatrix)</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1873" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">itmp:=0:
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">itmp:=0:
 for i to NQ do
   for j to NQ do  # Spaltenindex der Massenmatrix
     if j &gt; i then
@@ -524,154 +456,127 @@ end do:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1872" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertia and not(base_method_name=&quot;twist&quot;) then
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertia and not(base_method_name=&quot;twist&quot;) then
   MatlabExport(MMbb_regressor_s, sprintf(&quot;../codeexport/%s/tmp/inertia_base_base_floatb_%s_%s_matlab.m&quot;, robot_name, base_method_name, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
 </Section>
 </Section>
-<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 1" layout="Heading 1">Mass Matrix Time Derivative</Text-field></Title>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Mass Matrix Time Derivative</Text-field></Title>
 <Group labelreference="L1811" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Gesamt Massenmatrix</Text-field>
+<Input><Text-field style="Text" layout="Normal">Gesamt Massenmatrix</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1812" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MM_regressor_t := convert_s_t(MM_regressor_s):
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MM_regressor_t := convert_s_t(MM_regressor_s):
 MMD_regressor_t := diff~(MM_regressor_t, t):
 MMD_regressor_s := convert_t_s(MMD_regressor_t):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1813" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertiaD and not(base_method_name=&quot;twist&quot;) then
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertiaD and not(base_method_name=&quot;twist&quot;) then
   MatlabExport(MMD_regressor_s, sprintf(&quot;../codeexport/%s/tmp/inertiaD_floatb_%s_%s_matlab.m&quot;, robot_name, base_method_name, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1844" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Konvertiere Gelenk-Massenmatrix in zeitabh\303\244ngige Variablen, um Zeitableitung zu berechnen</Font></Text-field>
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Konvertiere Gelenk-Massenmatrix in zeitabh\303\244ngige Variablen, um Zeitableitung zu berechnen</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1843" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MMjj_regressor_t := convert_s_t(MMjj_regressor_s):
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MMjj_regressor_t := convert_s_t(MMjj_regressor_s):
 MMDjj_regressor_t := diff~(MMjj_regressor_t, t):
 MMDjj_regressor_s := convert_t_s(MMDjj_regressor_t):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1845" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertiaD and base_method_name=&quot;twist&quot; then
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertiaD and base_method_name=&quot;twist&quot; then
   MatlabExport(MMDjj_regressor_s, sprintf(&quot;../codeexport/%s/tmp/inertiaD_joint_joint_%s_%s_matlab.m&quot;, robot_name, expstring, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1805" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Gelenk-Basis-Massenmatrix</Text-field>
+<Input><Text-field style="Text" layout="Normal">Gelenk-Basis-Massenmatrix</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1809" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MMjb_regressor_t := convert_s_t(MMjb_regressor_s):
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MMjb_regressor_t := convert_s_t(MMjb_regressor_s):
 MMDjb_regressor_t := diff~(MMjb_regressor_t, t):
 MMDjb_regressor_s := convert_t_s(MMDjb_regressor_t):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1806" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertiaD and not(base_method_name=&quot;twist&quot;) then
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertiaD and not(base_method_name=&quot;twist&quot;) then
   MatlabExport(MMDjb_regressor_s, sprintf(&quot;../codeexport/%s/tmp/inertiaD_joint_base_floatb_%s_%s_matlab.m&quot;, robot_name, base_method_name, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
 </Section>
-<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 1" layout="Heading 1">Coriolis Vector</Text-field></Title>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Coriolis Vector</Text-field></Title>
 <Group labelreference="L1721" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Generieren (gleiches Vorgehen f\303\274r fixed und floating base)</Font></Text-field>
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Generieren (gleiches Vorgehen f\303\274r fixed und floating base)</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1716" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">tauC_regressor_s := dTdqDdt_s-dTdq_s:
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tauC_regressor_s := dTdqDdt_s-dTdq_s:
 for i to NQ do 
   tauC_regressor_s := subs({qDD_s(i, 1) = 0}, tauC_regressor_s):
 end do:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1717" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save tauC_regressor_s, sprintf(&quot;../codeexport/%s/tmp/coriolisvec_joint_%s_%s_maple.m&quot;, robot_name, expstring, regressor_modus):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save tauC_regressor_s, sprintf(&quot;../codeexport/%s/tmp/coriolisvec_joint_%s_%s_maple.m&quot;, robot_name, expstring, regressor_modus):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1720" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Matlab Export</Text-field>
+<Input><Text-field style="Text" layout="Normal">Matlab Export</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1719" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Belastung der Gelenke</Text-field>
+<Input><Text-field style="Text" layout="Normal">Belastung der Gelenke</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1718" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_corvec then
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_corvec then
   MatlabExport(tauC_regressor_s(7..NQ,..), sprintf(&quot;../codeexport/%s/tmp/coriolisvec_joint_%s_%s_matlab.m&quot;, robot_name, expstring, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1846" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Gesamter Vektor f\303\274r Floating Base</Font></Text-field>
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Gesamter Vektor f\303\274r Floating Base</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1847" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_corvec and not(base_method_name=&quot;twist&quot;) then
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_corvec and not(base_method_name=&quot;twist&quot;) then
   MatlabExport(tauC_regressor_s(1..NQ,..), sprintf(&quot;../codeexport/%s/tmp/coriolisvec_%s_%s_matlab.m&quot;, robot_name, expstring, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1848" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Nur Basis-Terme</Text-field>
+<Input><Text-field style="Text" layout="Normal">Nur Basis-Terme</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1849" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_corvec and not(base_method_name=&quot;twist&quot;) then
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_corvec and not(base_method_name=&quot;twist&quot;) then
   MatlabExport(tauC_regressor_s(1..6,..), sprintf(&quot;../codeexport/%s/tmp/coriolisvec_base_%s_%s_matlab.m&quot;, robot_name, expstring, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
 </Section>
-<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 1" layout="Heading 1">Coriolis Matrix</Text-field></Title>
-<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 2" layout="Heading 2">Floating-Base Coriolismatrix (Gesamt)</Text-field></Title>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Coriolis Matrix</Text-field></Title>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2">Floating-Base Coriolismatrix (Gesamt)</Text-field></Title>
 <Group labelreference="L1858" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Calculation with Christoffel Symbol approach
+<Input><Text-field style="Text" layout="Normal">Calculation with Christoffel Symbol approach
 [KhalilDombre2002], equ. (9.7) (p. 195)</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1851" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Funktion zur Anwendung des Algorithmus aus [KhalilDombre2002]:</Text-field>
+<Input><Text-field style="Text" layout="Normal">Funktion zur Anwendung des Algorithmus aus [KhalilDombre2002]:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1855" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">cijk := proc (i::integer, j::integer, k::integer, A, qs)
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">cijk := proc (i::integer, j::integer, k::integer, A, qs)
   local c:
   c := (1/2)*(diff(A[i, j], qs(k, 1)))+(1/2)*(diff(A[i, k], qs(j, 1)))-(1/2)*(diff(A[j, k], qs(i, 1))):
   return c:
@@ -679,23 +584,19 @@ end proc:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1852" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Initialisierung. Speichere die vollst\303\244ndige Coriolismatrix (nicht symmetrisch/schiefsymmetrisch). Unterschied zum Vorgehen bei der Massenmatrix</Font></Text-field>
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Initialisierung. Speichere die vollst\303\244ndige Coriolismatrix (nicht symmetrisch/schiefsymmetrisch). Unterschied zum Vorgehen bei der Massenmatrix</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1856" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">C_regressor_s := Matrix(NQ*NQ, Paramvec_size):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">C_regressor_s := Matrix(NQ*NQ, Paramvec_size):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1853" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Berechnung</Text-field>
+<Input><Text-field style="Text" layout="Normal">Berechnung</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1854" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">i_rr := 0: # Vektor-Index f\303\274r den Regressor der Coriolismatrix (Ausgabe)
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">i_rr := 0: # Vektor-Index f\303\274r den Regressor der Coriolismatrix (Ausgabe)
 </Font>for i to NQ do # Zeilenindex der Coriolismatrix
   for j to NQ do  # Spaltenindex der Coriolismatrix
     i_rr := i_rr + 1: # Gehe zeilenweise durch den unteren linken Teil der Coriolismatrix (inkl. Diagonale)
@@ -716,39 +617,32 @@ end do:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1857" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save C_regressor_s, sprintf(&quot;../codeexport/%s/tmp/coriolismat_%s_%s_maple.m&quot;, robot_name, expstring, regressor_modus):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save C_regressor_s, sprintf(&quot;../codeexport/%s/tmp/coriolismat_%s_%s_maple.m&quot;, robot_name, expstring, regressor_modus):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1859" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Matlab Export: Floating Base Gesamt</Text-field>
+<Input><Text-field style="Text" layout="Normal">Matlab Export: Floating Base Gesamt</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1850" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_cormat and not(base_method_name=&quot;twist&quot;) then
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_cormat and not(base_method_name=&quot;twist&quot;) then
   MatlabExport(C_regressor_s, sprintf(&quot;../codeexport/%s/tmp/coriolismat_floatb_%s_%s_matlab.m&quot;, robot_name, base_method_name, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
 </Section>
-<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 2" layout="Heading 2">Gelenk-Coriolismatrix</Text-field></Title>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2">Gelenk-Coriolismatrix</Text-field></Title>
 <Group labelreference="L1860" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Extrahiere Teilmatrix, die f\303\274r die Gelenkterme (ohne Basiseinfluss) zust\303\244ndig sind</Font></Text-field>
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Extrahiere Teilmatrix, die f\303\274r die Gelenkterme (ohne Basiseinfluss) zust\303\244ndig sind</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1863" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">Cjj_regressor_s := Matrix(NQJ*NQJ, Paramvec_size):
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Cjj_regressor_s := Matrix(NQJ*NQJ, Paramvec_size):
 itmp := 0:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1861" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i to NQ do # Zeilenindex der Coriolismatrix
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i to NQ do # Zeilenindex der Coriolismatrix
   for j to NQ do  # Spaltenindex der Coriolismatrix
     if i &gt; 6 and j &gt; 6 then # unterer rechter Teil
       i_C := (<Font encoding="UTF-8">i-1)*NQ+j: # Passender Index f\303\274r zeilenweise ausgew\303\244hltes Element
@@ -760,70 +654,58 @@ end do:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1864" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_cormat and base_method_name=&quot;twist&quot; then
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_cormat and base_method_name=&quot;twist&quot; then
   MatlabExport(Cjj_regressor_s, sprintf(&quot;../codeexport/%s/tmp/coriolismat_joint_fixb_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
 </Section>
 </Section>
-<Section collapsed="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
-<Text-field style="Heading 1" layout="Heading 1">Inverse Dynamics</Text-field></Title>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Inverse Dynamics</Text-field></Title>
 <Group labelreference="L1754" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Generate</Text-field>
+<Input><Text-field style="Text" layout="Normal">Generate</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1752" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">tau_regressor_s := dTdqDdt_s-dTdq_s+dUdq_s:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tau_regressor_s := dTdqDdt_s-dTdq_s+dUdq_s:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1755" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save tau_regressor_s, sprintf(&quot;../codeexport/%s/tmp/invdyn_%s_%s_maple.m&quot;, robot_name, expstring, regressor_modus):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save tau_regressor_s, sprintf(&quot;../codeexport/%s/tmp/invdyn_%s_%s_maple.m&quot;, robot_name, expstring, regressor_modus):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1753" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Gesamter Vektor (floating base)</Text-field>
+<Input><Text-field style="Text" layout="Normal">Gesamter Vektor (floating base)</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1865" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_invdyn and not(base_method_name=&quot;twist&quot;) then
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_invdyn and not(base_method_name=&quot;twist&quot;) then
   MatlabExport(tau_regressor_s(1..NQ,..), sprintf(&quot;../codeexport/%s/tmp/invdyn_%s_%s_matlab.m&quot;, robot_name, expstring, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1866" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Belastung der Basis (floating base)</Text-field>
+<Input><Text-field style="Text" layout="Normal">Belastung der Basis (floating base)</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1867" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_invdyn and not(base_method_name=&quot;twist&quot;) then
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_invdyn and not(base_method_name=&quot;twist&quot;) then
   MatlabExport(tau_regressor_s(1..6,..), sprintf(&quot;../codeexport/%s/tmp/invdyn_base_%s_%s_matlab.m&quot;, robot_name, expstring, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1757" drawlabel="true">
-<Input>
-<Text-field style="Text" layout="Normal">Belastung der Gelenke</Text-field>
+<Input><Text-field style="Text" layout="Normal">Belastung der Gelenke</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1756" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_invdyn then
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_invdyn then
   MatlabExport(tau_regressor_s(7..NQ,..), sprintf(&quot;../codeexport/%s/tmp/invdyn_joint_%s_%s_matlab.m&quot;, robot_name, expstring, regressor_modus), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1758" drawlabel="true">
-<Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>
