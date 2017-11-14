@@ -37,6 +37,9 @@ end
 fprintf('Tested %d configurations for fixed base forward kinematics.\n', n);
 
 %% Symbolisch generierte Jacobi-Matrix gegen numerisch berechnete Funktion
+if any(sigma)
+  fprintf('Schubgelenke noch nicht implementiert. Überspringe Test.\n');
+else
 for i = 1:n
   for jj = 1:NL
     ob = OB(i,:)';
@@ -49,5 +52,6 @@ for i = 1:n
       error('Jacobian does not match between sym and num');
     end
   end
+end
 end
 fprintf('Tested %d configurations for floating base Jacobians: sym vs. num.\n', n);

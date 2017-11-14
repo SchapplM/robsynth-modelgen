@@ -250,7 +250,7 @@ end:</Text-field>
 Betrachte dazu nur die durch Gelenke angetriebenen K\303\266rper, nicht die Basis</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L1653" drawlabel="true">
+<Group hide-output="false" labelreference="L1653" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NJ do # Gelenke durchgehen
 <Font encoding="UTF-8">  # K\303\266rper der von Gelenkwinkel i bewegt wird: K\303\266rperindex i+1
   # Vorg\303\244ngerk\303\266rper bestimmen
@@ -260,11 +260,19 @@ Betrachte dazu nur die durch Gelenke angetriebenen K\303\266rper, nicht die Basi
   R_j_i := <Font encoding="UTF-8">Trf(1..3,1..3,i): # Rotation vom Vorg\303\244nger-K\303\266rper (j) zu diesem K\303\266rper (i+1)</Font>
   R_i_j := Transpose(R_j_i):
   # [GautierKhalil1988], equ.7: omega_jj aus [GautierKhalil1988] entspricht omega_i_i(1 .. 3, i+1) hier
-  omega_i_i(1 .. 3, i+1) := Multiply(R_i_j,Matrix(3,1,omega_i_i(1 .. 3, j))) + thetaD(i,1)*&lt;0;0;1&gt;:
+  if sigma(i) = 0 then # Drehgelenk
+    omega_i_i(1 .. 3, i+1) := Multiply(R_i_j,Matrix(3,1,omega_i_i(1 .. 3, j))) + thetaD(i,1)*&lt;0;0;1&gt;:
+  else: # Schubgelenk
+    omega_i_i(1 .. 3, i+1) := Multiply(R_i_j,Matrix(3,1,omega_i_i(1 .. 3, j)))
+  end if:
   # Vektor vom Ursprung des vorherigen Koordinatensystems zu diesem KS
   r_j_j_i := Trf(1 .. 3, 4, i):
   # [GautierKhalil1988], equ.8: v_jj aus [GautierKhalil1988] entspricht rD_i_i(1 .. 3, i+1) hier
-  rD_i_i(1 .. 3, i+1) := Multiply( R_i_j, ( rD_i_i(1 .. 3, j) + CrossProduct(omega_i_i(1 .. 3, j), r_j_j_i) ) ):
+  if sigma(i) = 0 then # Drehgelenk
+    rD_i_i(1 .. 3, i+1) := Multiply( R_i_j, ( rD_i_i(1 .. 3, j) + CrossProduct(omega_i_i(1 .. 3, j), r_j_j_i) ) ):
+  else: # Schubgelenk
+    rD_i_i(1 .. 3, i+1) := Matrix(Multiply( R_i_j, ( rD_i_i(1 .. 3, j) + CrossProduct(omega_i_i(1 .. 3, j), r_j_j_i) ) ) ) + Matrix(dD(i,1)*&lt;0;0;1&gt;):
+  end if:
   <Font encoding="UTF-8">printf(&quot;Geschwindigkeit f\303\274r K\303\266rperkoordinatensystem %d aufgestellt. %s\134n&quot;, i</Font>, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
 end do:</Text-field>
 </Input>
@@ -279,6 +287,10 @@ end do:</Text-field>
 <Group labelreference="L1676" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save omega_i_i, rD_i_i, sprintf(&quot;../codeexport/%s/tmp/velocity_linkframe_floatb_%s_maple.m&quot;, robot_name, base_method_name):
 <Font encoding="UTF-8">printf(&quot;Maple-Ausdr\303\274cke exportiert. %s\134n&quot;, </Font>FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1705" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1674" drawlabel="true">

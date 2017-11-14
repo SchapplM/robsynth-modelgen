@@ -1,3 +1,4 @@
+
 # Velocity Calculation for the Robot based on MDH frames
 # Introduction
 # Berechnung der Geschwindigkeit von Koordinatensystemen und Schwerpunkten
@@ -85,17 +86,26 @@ for i from 1 to NJ do # Gelenke durchgehen
   R_j_i := Trf(1..3,1..3,i): # Rotation vom Vorgänger-Körper (j) zu diesem Körper (i+1)
   R_i_j := Transpose(R_j_i):
   # [GautierKhalil1988], equ.7: omega_jj aus [GautierKhalil1988] entspricht omega_i_i(1 .. 3, i+1) hier
-  omega_i_i(1 .. 3, i+1) := Multiply(R_i_j,Matrix(3,1,omega_i_i(1 .. 3, j))) + thetaD(i,1)*<0;0;1>:
+  if sigma(i) = 0 then # Drehgelenk
+    omega_i_i(1 .. 3, i+1) := Multiply(R_i_j,Matrix(3,1,omega_i_i(1 .. 3, j))) + thetaD(i,1)*<0;0;1>:
+  else: # Schubgelenk
+    omega_i_i(1 .. 3, i+1) := Multiply(R_i_j,Matrix(3,1,omega_i_i(1 .. 3, j)))
+  end if:
   # Vektor vom Ursprung des vorherigen Koordinatensystems zu diesem KS
   r_j_j_i := Trf(1 .. 3, 4, i):
   # [GautierKhalil1988], equ.8: v_jj aus [GautierKhalil1988] entspricht rD_i_i(1 .. 3, i+1) hier
-  rD_i_i(1 .. 3, i+1) := Multiply( R_i_j, ( rD_i_i(1 .. 3, j) + CrossProduct(omega_i_i(1 .. 3, j), r_j_j_i) ) ):
+  if sigma(i) = 0 then # Drehgelenk
+    rD_i_i(1 .. 3, i+1) := Multiply( R_i_j, ( rD_i_i(1 .. 3, j) + CrossProduct(omega_i_i(1 .. 3, j), r_j_j_i) ) ):
+  else: # Schubgelenk
+    rD_i_i(1 .. 3, i+1) := Matrix(Multiply( R_i_j, ( rD_i_i(1 .. 3, j) + CrossProduct(omega_i_i(1 .. 3, j), r_j_j_i) ) ) ) + Matrix(dD(i,1)*<0;0;1>):
+  end if:
   printf("Geschwindigkeit für Körperkoordinatensystem %d aufgestellt. %s\n", i, FormatTime("%Y-%m-%d %H:%M:%S")):
 end do:
 # Export
 # Maple Export
 save omega_i_i, rD_i_i, sprintf("../codeexport/%s/tmp/velocity_linkframe_floatb_%s_maple.m", robot_name, base_method_name):
 printf("Maple-Ausdrücke exportiert. %s\n", FormatTime("%Y-%m-%d %H:%M:%S")):
+
 # Matlab Export
 if codegen_act then
   MatlabExport(convert_t_s(omega_i_i), sprintf("../codeexport/%s/tmp/velocity_omegaii_floatb_%s_linkframe_matlab.m", robot_name, base_method_name), codegen_opt):

@@ -1,3 +1,4 @@
+
 # Velocity Calculation for the Robot based on MDH frames
 # Introduction
 # Berechnung der Geschwindigkeit von Koordinatensystemen und Schwerpunkten
@@ -5,12 +6,7 @@
 # Dateiname:
 # robot -> Berechnung für allgemeinen Roboter
 # tree -> Berechnung für eine beliebige Baumstruktur (ohne Schleifen)
-# floatb -> floating base wird durch base twist (Geschwindigkeit der Basis) oder vollständige Orientierung (Euler-Winkel) berücksichtigt
-# rotmat -> Kinematik wird mit Rotationsmatrizen berechnet
-# velocity -> Berechnung der Geschwindigkeit aller Segmente
-# worldframe -> Berechnung der Geschwindigkeit im Welt-KS (KSW)
-# par1 -> Parametersatz 1 (Schwerpunkt als Parameter: SX,SY,SZ)
-
+# velocity_mdh_angles  -> Berechnung der Geschwindigkeit der MDH-Koordinaten (Drehung und Verschiebung in z-Richtung. Diese können zeitabhängig sein.
 # Authors
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
 # (C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
@@ -43,22 +39,27 @@ read sprintf("../codeexport/%s/tmp/kinematic_constraints_maple_inert.m", robot_n
 # Ersetze die MDH-Winkel durch verallgemeinerte Koordinaten
 # Falls die Gelenkwinkel nicht direkt mit verallgemeinerten Koordinaten überstimmen (bei Kopplungen, kinematischen Schleifen) steht hier eine längere Berechnung. Ansonsten reicht das triviale Einsetzen:
 # thetaD := qJD_t:
-# Ersetze die MDH-Winkel durch verallgemeinerte Koordinaten
+# Ersetze die MDH-Drehung und Verschiebung entlang der z-Achse durch verallgemeinerte Koordinaten
 theta_qt := theta:
+d_qt := d:
 for ii from 1 to NJ do
   for jj from 1 to RowDimension(kintmp_qt) do
-    theta_qt(ii, 1) := subs( { kintmp_t(jj, 1) = kintmp_qt(jj, 1) }, theta_qt(ii, 1) ): 
+    theta_qt(ii, 1) := subs( { kintmp_t(jj, 1) = kintmp_qt(jj, 1) }, theta_qt(ii, 1) ):
+    d_qt(ii, 1)     := subs( { kintmp_t(jj, 1) = kintmp_qt(jj, 1) }, d_qt(ii, 1) ): 
   end do:
 end do:
-# Zeitableitung der MDH-Winkel in Abhängigkeit der verallgemeinerten Koordinaten
+# Zeitableitung der MDH-Drehung und Verschiebung entlang der z-Achse in Abhängigkeit der verallgemeinerten Koordinaten
 thetaD := Matrix(NJ, 1):
+dD := Matrix(NJ, 1):
 for i from 1 to NJ do
   thetaD(i,1) := diff(theta_qt(i,1), t):
+  dD(i,1)     := diff(d_qt(i,1), t):
 end do:
 # Ausdruck für Zeitableitungen der MDH-Winkel exportieren
 if codegen_act then
   MatlabExport(convert_t_s(thetaD), sprintf("../codeexport/%s/tmp/velocity_mdh_angles_matlab.m", robot_name), codegen_opt):
+  MatlabExport(convert_t_s(dD), sprintf("../codeexport/%s/tmp/velocity_mdh_deltaz_matlab.m", robot_name), codegen_opt):
 end if:
 # Ausdruck für Maple speichern
-save thetaD, sprintf("../codeexport/%s/tmp/velocity_mdh_angles_maple.m", robot_name):
+save thetaD, dD, sprintf("../codeexport/%s/tmp/velocity_mdh_angles_maple.m", robot_name):
 

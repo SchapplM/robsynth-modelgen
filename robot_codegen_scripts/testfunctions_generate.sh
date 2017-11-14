@@ -96,6 +96,10 @@ printf "\n%% Aus ${robot_name}_parameters_mdh_a.m\n" >> $zieldat
 cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_a.m >> $zieldat
 varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
 echo "a_mdh = $varname_tmp;" >> $zieldat
+printf "\n%% Aus ${robot_name}_parameters_mdh_theta.m\n" >> $zieldat
+cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_theta.m >> $zieldat
+varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
+echo "theta_mdh = $varname_tmp;" >> $zieldat
 printf "\n%% Aus ${robot_name}_parameters_mdh_b.m\n" >> $zieldat
 cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_b.m >> $zieldat
 varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
@@ -116,6 +120,10 @@ printf "\n%% Aus ${robot_name}_parameters_mdh_v.m\n" >> $zieldat
 cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_v.m >> $zieldat
 varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
 echo "v_mdh = uint8($varname_tmp);" >> $zieldat
+printf "\n%% Aus ${robot_name}_parameters_mdh_sigma.m\n" >> $zieldat
+cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_sigma.m >> $zieldat
+varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
+echo "sigma_mdh = $varname_tmp;" >> $zieldat
 # Ersetze "_mdh", damit die Variablennamen stimmen
 sed -i "s/_mdh//g" $zieldat
 

@@ -1,3 +1,4 @@
+
 # Velocity Calculation for the Robot based on MDH frames
 # Introduction
 # Berechnung der Geschwindigkeit von Koordinatensystemen und Schwerpunkten
@@ -81,13 +82,23 @@ for i from 1 to NJ do # Gelenke durchgehen
   # Körper der von Gelenkwinkel i bewegt wird: Index i+1
   # Vorgängerkörper bestimmen
   j := v(i) + 1:
-  # Geschwindigkeit des Vorgängers; Trf_c(...,i+1) enthält z-Achse des Körperkoordinatensystems, das von qi bewegt wird.
-  # [Ortmaier2014] (7.7) (S.115) (dort falsche Indizes für MDH), [KhalilDombre2002] (9.14)
-  omega_W_i(1 .. 3, i+1) := omega_W_i(1 .. 3, j) + thetaD(i,1)*Trf_c(1 .. 3, 3, i+1):
+  if sigma(i) = 0 then # Drehgelenk
+    # Geschwindigkeit des Vorgängers; Trf_c(...,i+1) enthält z-Achse des Körperkoordinatensystems, das von qi bewegt wird.
+    # [Ortmaier2014] (7.7) (S.115) (dort falsche Indizes für MDH), [KhalilDombre2002] (9.14)
+    omega_W_i(1 .. 3, i+1) := omega_W_i(1 .. 3, j) + thetaD(i,1)*Trf_c(1 .. 3, 3, i+1):
+  else: # Schubgelenk
+    # [Ortmaier2014] (7.12) (S.116)
+    omega_W_i(1 .. 3, i+1) := omega_W_i(1 .. 3, j):
+  end if:
   # Vektor vom Ursprung des vorherigen Koordinatensystems zu diesem KS
   r_W_im1_i := -Trf_c(1 .. 3, 4, j) + Trf_c(1 .. 3, 4, i+1):
-  # [Ortmaier2014] (7.9) (S.115), [KhalilDombre2002] (9.15)
-  rD_W_i(1 .. 3, i+1) := rD_W_i(1 .. 3, j) + CrossProduct(omega_W_i(1 .. 3, j), r_W_im1_i):
+  if sigma(i) = 0 then # Drehgelenk
+    # [Ortmaier2014] (7.10) (S.115), [KhalilDombre2002] (9.15)
+    rD_W_i(1 .. 3, i+1) := rD_W_i(1 .. 3, j) + CrossProduct(omega_W_i(1 .. 3, j), r_W_im1_i):
+  else: # Schubgelenk
+    # [Ortmaier2014] (7.15) (S.116), [KhalilDombre2002] (9.15)
+    rD_W_i(1 .. 3, i+1) := rD_W_i(1 .. 3, j) + CrossProduct(omega_W_i(1 .. 3, j), r_W_im1_i) + dD(i,1)*Trf_c(1 .. 3, 3, i+1):
+  end if:
   printf("Geschwindigkeit für Körperkoordinatensystem %d aufgestellt. %s\n", i, FormatTime("%Y-%m-%d %H:%M:%S")):
 end do:
 # Velocities of Center of Mass

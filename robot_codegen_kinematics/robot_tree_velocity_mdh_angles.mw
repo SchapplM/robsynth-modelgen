@@ -108,12 +108,7 @@
 Dateiname:
 <Font encoding="UTF-8">robot -&gt; Berechnung f\303\274r allgemeinen Roboter
 tree -&gt; Berechnung f\303\274r eine beliebige Baumstruktur (ohne Schleifen)
-floatb -&gt; floating base wird durch base twist (Geschwindigkeit der Basis) oder vollst\303\244ndige Orientierung (Euler-Winkel) ber\303\274cksichtigt
-</Font>rotmat -&gt; Kinematik wird mit Rotationsmatrizen berechnet
-velocity -&gt; Berechnung der Geschwindigkeit aller Segmente
-worldframe -&gt; Berechnung der Geschwindigkeit im Welt-KS (KSW)
-par1 -&gt; Parametersatz 1 (Schwerpunkt als Parameter: SX,SY,SZ)
-</Text-field>
+</Font>velocity_mdh_angles <Font encoding="UTF-8"> -&gt; Berechnung der Geschwindigkeit der MDH-Koordinaten (Drehung und Verschiebung in z-Richtung. Diese k\303\266nnen zeitabh\303\244ngig sein.</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1510" drawlabel="true">
@@ -157,6 +152,8 @@ read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:
 <Font encoding="UTF-8">printf(&quot;Generiere Geschwindigkeit f\303\274r %s\134n&quot;, robot_name):</Font></Text-field>
 </Input>
+<Output><Text-field style="Line Printed Output" layout="Line Printed Output"><Font encoding="UTF-8">Generiere Geschwindigkeit f\303\274r prisma_1dof</Font></Text-field>
+</Output>
 </Group>
 <Group labelreference="L1647" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_definitions&quot;, robot_name):</Text-field>
@@ -182,32 +179,36 @@ read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1702" drawlabel="true">
-<Input><Text-field style="Text" layout="Normal">Ersetze die MDH-Winkel durch verallgemeinerte Koordinaten</Text-field>
+<Input><Text-field style="Text" layout="Normal">Ersetze die MDH-Drehung und Verschiebung entlang der z-Achse durch verallgemeinerte Koordinaten</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1703" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">theta_qt := theta:</Text-field>
+<Group hide-output="false" labelreference="L1703" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">theta_qt := theta:
+d_qt := d:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1705" drawlabel="true">
+<Group hide-output="false" labelreference="L1705" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for ii from 1 to NJ do
   for jj from 1 to RowDimension(kintmp_qt) do
-    theta_qt(ii, 1) := subs( { kintmp_t(jj, 1) = kintmp_qt(jj, 1) }, theta_qt(ii, 1) ): 
+    theta_qt(ii, 1) := subs( { kintmp_t(jj, 1) = kintmp_qt(jj, 1) }, theta_qt(ii, 1) ):
+    d_qt(ii, 1)     := subs( { kintmp_t(jj, 1) = kintmp_qt(jj, 1) }, d_qt(ii, 1) ): 
   end do:
 end do:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1704" drawlabel="true">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Zeitableitung der MDH-Winkel in Abh\303\244ngigkeit der verallgemeinerten Koordinaten</Font></Text-field>
+<Input><Text-field style="Text" layout="Normal">Zeitableitung der MDH-Drehung und Verschiebung entlang der z-Achse <Font encoding="UTF-8">in Abh\303\244ngigkeit der verallgemeinerten Koordinaten</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L1701" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">thetaD := Matrix(NJ, 1):</Text-field>
+<Group hide-output="false" labelreference="L1701" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">thetaD := Matrix(NJ, 1):
+dD := Matrix(NJ, 1):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1707" drawlabel="true">
+<Group hide-output="false" labelreference="L1707" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NJ do
   thetaD(i,1) := diff(theta_qt(i,1), t):
+  dD(i,1)     := diff(d_qt(i,1), t):
 end do:</Text-field>
 </Input>
 </Group>
@@ -215,21 +216,25 @@ end do:</Text-field>
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ausdruck f\303\274r Zeitableitungen der MDH-Winkel exportieren</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L1706" drawlabel="true">
+<Group hide-output="false" labelreference="L1706" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
   MatlabExport(convert_t_s(thetaD), sprintf(&quot;../codeexport/%s/tmp/velocity_mdh_angles_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(convert_t_s(dD), sprintf(&quot;../codeexport/%s/tmp/velocity_mdh_deltaz_matlab.m&quot;, robot_name), codegen_opt):
 end if:</Text-field>
 </Input>
+<Output><Text-field style="Line Printed Output" layout="Line Printed Output">Exported Matlab code to ../codeexport/prisma_1dof/tmp/velocity_mdh_angles_matlab.m (CPUTime: 0.02s)
+Exported Matlab code to ../codeexport/prisma_1dof/tmp/velocity_mdh_deltaz_matlab.m (CPUTime: 0.02s)</Text-field>
+</Output>
 </Group>
 <Group labelreference="L1693" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ausdruck f\303\274r Maple speichern</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L1708" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save thetaD, sprintf(&quot;../codeexport/%s/tmp/velocity_mdh_angles_maple.m&quot;, robot_name):</Text-field>
+<Group hide-output="false" labelreference="L1708" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save thetaD, dD, sprintf(&quot;../codeexport/%s/tmp/velocity_mdh_angles_maple.m&quot;, robot_name):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1713" drawlabel="true">
+<Group labelreference="L1715" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>

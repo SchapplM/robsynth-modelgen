@@ -1,3 +1,4 @@
+
 # Base Parameter Energy Regressor for Robot based on MDH frames
 # Einleitung
 # Erstellung einer parameterlinearen und -minimalen Regressorform
@@ -22,6 +23,8 @@
 interface(warnlevel=0): # Unterdrücke die folgende Warnung.
 restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
 interface(warnlevel=3):
+interface(rtablesize=100): # Zur Anzeige von größeren Vektoren
+;
 with(LinearAlgebra):
 with(ArrayTools):
 with(codegen):
@@ -67,7 +70,6 @@ end if:
 if codegen_act then
   MatlabExport(convert_t_s(u_ges), sprintf("../codeexport/%s/tmp/energy_potential_fixb_regressor_matlab.m", robot_name), codegen_opt):
 end if:
-
 # Parameterminimierung
 # Minimalparametervekor
 # Definiere Parametermatrix
@@ -83,19 +85,28 @@ mZ := Matrix(NJ, 1, PV2_mat[2 .. NL, 9]):
 m :=  Matrix(NJ, 1, PV2_mat[2 .. NL, 10]):
 # Rekursive Berechnung der Minimalparameter
 # Rekursive Berechnung der Minimalparameter mit [HRL_IDR] (23), siehe Abbildung 1.
-# [GautierKhalil1990] (eq. 15)
+# [GautierKhalil1990] (eq. 15,16)
 for i from NJ by -1 to 2 do 
-  XX[i,1] := XX[i,1]-YY[i,1]:
-  XX[i-1,1] := d[i,1]^2*m[i,1]+2*d[i,1]*mZ[i,1]+XX[i-1,1]+YY[i,1]: 
-  XY[i-1,1] := XY[i-1,1]+a[i,1]*sin(alpha[i,1])*mZ[i,1]+a[i,1]*d[i,1]*sin(alpha[i,1])*m[i,1]: 
-  XZ[i-1,1] := XZ[i-1,1]-a[i,1]*cos(alpha[i,1])*mZ[i,1]-a[i,1]*d[i,1]*cos(alpha[i,1])*m[i,1]: 
-  YY[i-1,1] := YY[i-1,1]+cos(alpha[i,1])^2*YY[i,1]+2*d[i,1]*cos(alpha[i,1])^2*mZ[i,1]+(a[i,1]^2+d[i,1]^2*cos(alpha[i,1])^2)*m[i,1]:
-  YZ[i-1,1] := YZ[i-1,1]+cos(alpha[i,1])*sin(alpha[i,1])*YY[i,1]+2*d[i,1]*cos(alpha[i,1])*sin(alpha[i,1])*mZ[i,1]+d[i,1]^2*cos(alpha[i,1])*sin(alpha[i,1])*m[i,1]:
-  ZZ[i-1,1] := ZZ[i-1,1]+sin(alpha[i,1])^2*YY[i,1]+2*d[i,1]*sin(alpha[i,1])^2*mZ[i,1]+(a[i,1]^2+d[i,1]^2*sin(alpha[i,1])^2)*m[i,1]:
-  mX[i-1,1] := a[i,1]*m[i,1]+mX[i-1,1]: 
-  mY[i-1,1] := mY[i-1,1]-sin(alpha[i,1])*mZ[i,1]-d[i,1]*sin(alpha[i,1])*m[i,1]:
-  mZ[i-1,1] := mZ[i-1,1]+cos(alpha[i,1])*mZ[i,1]+d[i,1]*cos(alpha[i,1])*m[i,1]:
-  m[i-1,1] := m[i-1,1]+m[i,1]:
+  if sigma[i,1] = 0 then # Drehgelenk (eq. 15)
+    XX[i,1] := XX[i,1]-YY[i,1]:
+    XX[i-1,1] := d[i,1]^2*m[i,1]+2*d[i,1]*mZ[i,1]+XX[i-1,1]+YY[i,1]: 
+    XY[i-1,1] := XY[i-1,1]+a[i,1]*sin(alpha[i,1])*mZ[i,1]+a[i,1]*d[i,1]*sin(alpha[i,1])*m[i,1]: 
+    XZ[i-1,1] := XZ[i-1,1]-a[i,1]*cos(alpha[i,1])*mZ[i,1]-a[i,1]*d[i,1]*cos(alpha[i,1])*m[i,1]: 
+    YY[i-1,1] := YY[i-1,1]+cos(alpha[i,1])^2*YY[i,1]+2*d[i,1]*cos(alpha[i,1])^2*mZ[i,1]+(a[i,1]^2+d[i,1]^2*cos(alpha[i,1])^2)*m[i,1]:
+    YZ[i-1,1] := YZ[i-1,1]+cos(alpha[i,1])*sin(alpha[i,1])*YY[i,1]+2*d[i,1]*cos(alpha[i,1])*sin(alpha[i,1])*mZ[i,1]+d[i,1]^2*cos(alpha[i,1])*sin(alpha[i,1])*m[i,1]:
+    ZZ[i-1,1] := ZZ[i-1,1]+sin(alpha[i,1])^2*YY[i,1]+2*d[i,1]*sin(alpha[i,1])^2*mZ[i,1]+(a[i,1]^2+d[i,1]^2*sin(alpha[i,1])^2)*m[i,1]:
+    mX[i-1,1] := a[i,1]*m[i,1]+mX[i-1,1]: 
+    mY[i-1,1] := mY[i-1,1]-sin(alpha[i,1])*mZ[i,1]-d[i,1]*sin(alpha[i,1])*m[i,1]:
+    mZ[i-1,1] := mZ[i-1,1]+cos(alpha[i,1])*mZ[i,1]+d[i,1]*cos(alpha[i,1])*m[i,1]:
+    m[i-1,1] := m[i-1,1]+m[i,1]:
+  else: # Schubgelenk (eq. 16)
+    XX[i-1,1] := XX[i-1,1]+cos(theta[i,1])^2*XX[i,1]-2*cos(theta[i,1])*sin(theta[i,1])*XY[i,1]+sin(theta[i,1])^2*YY[i,1]: 
+    XY[i-1,1] := XY[i-1,1]+cos(theta[i,1])*sin(theta[i,1])*cos(alpha[i,1])*XX[i,1]+(cos(theta[i,1])^2-sin(theta[i,1])^2)*cos(alpha[i,1])*XY[i,1]-cos(theta[i,1])*sin(alpha[i,1])*XZ[i,1]-cos(theta[i,1])*sin(theta[i,1])*cos(alpha[i,1])*YY[i,1]+sin(theta[i,1])*sin(alpha[i,1])*YZ[i,1]:
+    XZ[i-1,1] := XZ[i-1,1]+cos(theta[i,1])*sin(theta[i,1])*sin(alpha[i,1])*XX[i,1]+(cos(theta[i,1])^2-sin(theta[i,1])^2)*sin(alpha[i,1])*XY[i,1]+cos(theta[i,1])*cos(alpha[i,1])*XZ[i,1]-cos(theta[i,1])*sin(theta[i,1])*sin(alpha[i,1])*YY[i,1]-sin(theta[i,1])*cos(alpha[i,1])*YZ[i,1]:
+    YY[i-1,1] := YY[i-1,1]+sin(theta[i,1])^2*cos(alpha[i,1])^2*XX[i,1]+2*cos(theta[i,1])*sin(theta[i,1])*cos(alpha[i,1])^2*XY[i,1]-2*sin(theta[i,1])*cos(alpha[i,1])^2*YY[i,1]-2*cos(theta[i,1])*cos(alpha[i,1])*sin(alpha[i,1])*YZ[i,1]+sin(alpha[i,1])^2*ZZ[i,1]:
+    YZ[i-1,1] := YZ[i-1,1]+sin(theta[i,1])^2*cos(alpha[i,1])*sin(alpha[i,1])*XX[i,1]+2*cos(theta[i,1])*sin(theta[i,1])*cos(alpha[i,1])*sin(alpha[i,1])*XY[i,1]+sin(theta[i,1])*(cos(alpha[i,1])^2-sin(alpha[i,1])^2)*XZ[i,1]+cos(theta[i,1])^2*cos(alpha[i,1])*sin(alpha[i,1])*YY[i,1]+cos(theta[i,1])*(cos(alpha[i,1])^2-sin(alpha[i,1])^2)*YZ[i,1]-cos(alpha[i,1])*sin(alpha[i,1])*ZZ[i,1]:
+    ZZ[i-1,1] := ZZ[i-1,1]+sin(theta[i,1])^2*sin(alpha[i,1])^2*XX[i,1]+2*cos(theta[i,1])*sin(theta[i,1])*sin(alpha[i,1])^2*XY[i,1]+2*sin(theta[i,1])*cos(alpha[i,1])*sin(alpha[i,1])*XZ[i,1]+cos(theta[i,1])^2*sin(alpha[i,1])^2*YY[i,1]+2*cos(theta[i,1])*cos(alpha[i,1])*sin(alpha[i,1])*YZ[i,1]+cos(alpha[i,1])^2*ZZ[i,1]:
+  end if:
 end do: 
 # Parameter ohne Einfluss "Markieren"
 # Markierung von Parametern ohne Einfluss an Hand von [HRL_IDR] (18)
@@ -133,18 +144,33 @@ for i to 10*NJ do
 end do:
 # Parametervektor in Richtiger Reihenfolge aufstellen und Entfernen von mZ, YY, m
 # Anwendung von [HRL_IDR] Regel 3 (S. 5) auf den Parametervektor
+# Bei Drehgelenken werden die Parameter YY, mZ und m mit denen des folgenden Körpers gruppiert. Bei Schubgelenken werden alle Trägheitsmomente gruppiert (da die Trägheitsmomente keinen Einfluss auf die translatorische Bewegung des Schubgelenkes haben).
 # [GautierKhalil1990] (eq. 18)
-MPV_n_max := 7*NJ: # ignoriere Abzüge in der Formel
+nt:=add(sigma[i,1],i=1..NJ): # Anzahl Translatorische Gelenke
+nr:=NJ-nt: # Anzahl rotatorische Gelenke
+;
+#Anzahl der Einträge im Minimalparametervektor
+MPV_n_max := 7*nr+4*nt: # ignoriere Abzüge in der Formel
+;
 Paramvec := Matrix(MPV_n_max, 1):
-for i to NJ do 
-  Paramvec[7*(i-1)+1, 1] := XX[i, 1]:
-  Paramvec[7*(i-1)+2, 1] := XY[i, 1]:
-  Paramvec[7*(i-1)+3, 1] := XZ[i, 1]:
-  Paramvec[7*(i-1)+4, 1] := YZ[i, 1]:
-  Paramvec[7*(i-1)+5, 1] := ZZ[i, 1]:
-  Paramvec[7*(i-1)+6, 1] := mX[i, 1]:
-  Paramvec[7*(i-1)+7, 1] := mY[i, 1]:
-end do: 
+ii := 1:
+for i to NJ do
+  if sigma[i,1] = 0 then # Drehgelenk (eq. 15)
+    Paramvec[ii, 1] := XX[i, 1]: ii:= ii+1:
+    Paramvec[ii, 1] := XY[i, 1]: ii:= ii+1:
+    Paramvec[ii, 1] := XZ[i, 1]: ii:= ii+1:
+    Paramvec[ii, 1] := YZ[i, 1]: ii:= ii+1:
+    Paramvec[ii, 1] := ZZ[i, 1]: ii:= ii+1:
+    Paramvec[ii, 1] := mX[i, 1]: ii:= ii+1:
+    Paramvec[ii, 1] := mY[i, 1]: ii:= ii+1:
+    m[i-1,1] := m[i-1,1]+m[i,1]: ii:= ii+1:
+  else: # Schubgelenk (eq. 16)
+    Paramvec[ii, 1] := mX[i, 1]: ii:= ii+1:
+    Paramvec[ii, 1] := mY[i, 1]: ii:= ii+1:
+    Paramvec[ii, 1] := mZ[i, 1]: ii:= ii+1:
+    Paramvec[ii, 1] := m[i, 1]:  ii:= ii+1:
+  end if:
+end do:
 # Entfernung von Nullelementen
 # Durch Entfernung der Nullelemente erfolgt 'beta_b' aus [HRL_IDR] (22)
 p := 0:
@@ -168,6 +194,7 @@ for i to MPV_n_max do
   end if:
 end do: 
 printf("Dimension des Minimalparametervektors: %dx1\n", Paramvec_size):
+Paramvec2;
 # Export - Minimalparametervektor
 save Paramvec2, sprintf("../codeexport/%s/tmp/minimal_parameter_vector_fixb_maple", robot_name):
 if codegen_act then
@@ -177,17 +204,19 @@ end if;
 # Markieren von t_mZ, t_YY, t_m, u_mZ, u_YY, u_m_j
 # Anwendung von [HRL_IDR] Regel 3 (S. 5) auf die Geometrievektoren t und u der Energien T und U
 # Der Basis-Körper wird nicht gezählt. Daher ignorieren der ersten zehn Einträge in t_ges
-# [GautierKhalil1990], p.369
+# [GautierKhalil1990], p.369 (rechts: "As a conclusion ..."
 for i from 0 to NJ-1 do 
+  if sigma[i+1,1] = 0 then: # Drehgelenk
+    t_ges[1,i*10+ 4]:=REMOVE; # YY
+    t_ges[1,i*10+ 9]:=REMOVE; # mZ
+    t_ges[1,i*10+10]:=REMOVE; # m
 
-   t_ges[1,i*10+ 4]:=REMOVE;
-   t_ges[1,i*10+ 9]:=REMOVE;
-   t_ges[1,i*10+10]:=REMOVE;
-
-   u_ges[1,i*10+ 4]:=REMOVE;
-   u_ges[1,i*10+ 9]:=REMOVE;
-   u_ges[1,i*10+10]:=REMOVE;
-
+    u_ges[1,i*10+ 4]:=REMOVE;
+    u_ges[1,i*10+ 9]:=REMOVE;
+    u_ges[1,i*10+10]:=REMOVE;
+  else: # Schubgelenk
+    # Nichts tun
+  end if:
 end do: 
 # Entfernungen von markierten Elementen
 # Durch Entfernung der markierten Elemente, äquivalent zum Minimalparametervektor beta_b, haben t und u die gleiche Spaltenanzahl wie 'C_b'.
