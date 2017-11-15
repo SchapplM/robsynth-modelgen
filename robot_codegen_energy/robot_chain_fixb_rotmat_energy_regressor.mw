@@ -233,6 +233,10 @@ end if:</Text-field>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Parameterminimierung</Text-field></Title>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2">Minimalparametervekor</Text-field></Title>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 3" layout="Heading 3">Definiere Parametermatrix</Text-field></Title>
+<Group hide-output="false" labelreference="L1842" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Nehme nur die Inertialparameter der bewegten Segmente, nicht die Basis.</Text-field>
+</Input>
+</Group>
 <Group hide-output="false" labelreference="L1689" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">XX := Matrix(NJ, 1, PV2_mat[2 .. NL, 1]):
 XY := Matrix(NJ, 1, PV2_mat[2 .. NL, 2]):
@@ -254,26 +258,51 @@ m :=  Matrix(NJ, 1, PV2_mat[2 .. NL, 10]):</Text-field>
 </Input>
 </Group>
 <Group hide-output="false" labelreference="L1691" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from NJ by -1 to 2 do 
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from NJ by -1 to 2 do
+  # <Font encoding="UTF-8">printf(&quot;i=%d, sigma=%d\134n&quot;, i, sigma[i,1]):</Font> 
   if sigma[i,1] = 0 then # Drehgelenk (eq. 15)
-    XX[i,1] := XX[i,1]-YY[i,1]:
-    XX[i-1,1] := d[i,1]^2*m[i,1]+2*d[i,1]*mZ[i,1]+XX[i-1,1]+YY[i,1]: 
-    XY[i-1,1] := XY[i-1,1]+a[i,1]*sin(alpha[i,1])*mZ[i,1]+a[i,1]*d[i,1]*sin(alpha[i,1])*m[i,1]: 
-    XZ[i-1,1] := XZ[i-1,1]-a[i,1]*cos(alpha[i,1])*mZ[i,1]-a[i,1]*d[i,1]*cos(alpha[i,1])*m[i,1]: 
-    YY[i-1,1] := YY[i-1,1]+cos(alpha[i,1])^2*YY[i,1]+2*d[i,1]*cos(alpha[i,1])^2*mZ[i,1]+(a[i,1]^2+d[i,1]^2*cos(alpha[i,1])^2)*m[i,1]:
-    YZ[i-1,1] := YZ[i-1,1]+cos(alpha[i,1])*sin(alpha[i,1])*YY[i,1]+2*d[i,1]*cos(alpha[i,1])*sin(alpha[i,1])*mZ[i,1]+d[i,1]^2*cos(alpha[i,1])*sin(alpha[i,1])*m[i,1]:
-    ZZ[i-1,1] := ZZ[i-1,1]+sin(alpha[i,1])^2*YY[i,1]+2*d[i,1]*sin(alpha[i,1])^2*mZ[i,1]+(a[i,1]^2+d[i,1]^2*sin(alpha[i,1])^2)*m[i,1]:
-    mX[i-1,1] := a[i,1]*m[i,1]+mX[i-1,1]: 
-    mY[i-1,1] := mY[i-1,1]-sin(alpha[i,1])*mZ[i,1]-d[i,1]*sin(alpha[i,1])*m[i,1]:
-    mZ[i-1,1] := mZ[i-1,1]+cos(alpha[i,1])*mZ[i,1]+d[i,1]*cos(alpha[i,1])*m[i,1]:
-    m[i-1,1] := m[i-1,1]+m[i,1]:
+    XX[i,  1] := XX[i,  1]-YY[i,1]:
+    XX[i-1,1] := XX[i-1,1] + YY[i,1] + d[i,1]^2*m[i,1]+2*d[i,1]*mZ[i,1]: 
+    XY[i-1,1] := XY[i-1,1] + a[i,1]*sin(alpha[i,1])*mZ[i,1]+a[i,1]*d[i,1]*sin(alpha[i,1])*m[i,1]: 
+    XZ[i-1,1] := XZ[i-1,1] - a[i,1]*cos(alpha[i,1])*mZ[i,1]-a[i,1]*d[i,1]*cos(alpha[i,1])*m[i,1]: 
+    YY[i-1,1] := YY[i-1,1] + cos(alpha[i,1])^2*YY[i,1]+2*d[i,1]*cos(alpha[i,1])^2*mZ[i,1]+(a[i,1]^2+d[i,1]^2*cos(alpha[i,1])^2)*m[i,1]:
+    YZ[i-1,1] := YZ[i-1,1] + cos(alpha[i,1])*sin(alpha[i,1])*YY[i,1]+2*d[i,1]*cos(alpha[i,1])*sin(alpha[i,1])*mZ[i,1]+d[i,1]^2*cos(alpha[i,1])*sin(alpha[i,1])*m[i,1]:
+    ZZ[i-1,1] := ZZ[i-1,1] + sin(alpha[i,1])^2*YY[i,1]+2*d[i,1]*sin(alpha[i,1])^2*mZ[i,1]+(a[i,1]^2+d[i,1]^2*sin(alpha[i,1])^2)*m[i,1]:
+    mX[i-1,1] := mX[i-1,1] + a[i,1]*m[i,1]: 
+    mY[i-1,1] := mY[i-1,1] - sin(alpha[i,1])*mZ[i,1]-d[i,1]*sin(alpha[i,1])*m[i,1]:
+    mZ[i-1,1] := mZ[i-1,1] + cos(alpha[i,1])*mZ[i,1]+d[i,1]*cos(alpha[i,1])*m[i,1]:
+    m[i-1 ,1] := m[i-1 ,1] + m[i,1]:
   else: # Schubgelenk (eq. 16)
-    XX[i-1,1] := XX[i-1,1]+cos(theta[i,1])^2*XX[i,1]-2*cos(theta[i,1])*sin(theta[i,1])*XY[i,1]+sin(theta[i,1])^2*YY[i,1]: 
-    XY[i-1,1] := XY[i-1,1]+cos(theta[i,1])*sin(theta[i,1])*cos(alpha[i,1])*XX[i,1]+(cos(theta[i,1])^2-sin(theta[i,1])^2)*cos(alpha[i,1])*XY[i,1]-cos(theta[i,1])*sin(alpha[i,1])*XZ[i,1]-cos(theta[i,1])*sin(theta[i,1])*cos(alpha[i,1])*YY[i,1]+sin(theta[i,1])*sin(alpha[i,1])*YZ[i,1]:
-    XZ[i-1,1] := XZ[i-1,1]+cos(theta[i,1])*sin(theta[i,1])*sin(alpha[i,1])*XX[i,1]+(cos(theta[i,1])^2-sin(theta[i,1])^2)*sin(alpha[i,1])*XY[i,1]+cos(theta[i,1])*cos(alpha[i,1])*XZ[i,1]-cos(theta[i,1])*sin(theta[i,1])*sin(alpha[i,1])*YY[i,1]-sin(theta[i,1])*cos(alpha[i,1])*YZ[i,1]:
-    YY[i-1,1] := YY[i-1,1]+sin(theta[i,1])^2*cos(alpha[i,1])^2*XX[i,1]+2*cos(theta[i,1])*sin(theta[i,1])*cos(alpha[i,1])^2*XY[i,1]-2*sin(theta[i,1])*cos(alpha[i,1])^2*YY[i,1]-2*cos(theta[i,1])*cos(alpha[i,1])*sin(alpha[i,1])*YZ[i,1]+sin(alpha[i,1])^2*ZZ[i,1]:
-    YZ[i-1,1] := YZ[i-1,1]+sin(theta[i,1])^2*cos(alpha[i,1])*sin(alpha[i,1])*XX[i,1]+2*cos(theta[i,1])*sin(theta[i,1])*cos(alpha[i,1])*sin(alpha[i,1])*XY[i,1]+sin(theta[i,1])*(cos(alpha[i,1])^2-sin(alpha[i,1])^2)*XZ[i,1]+cos(theta[i,1])^2*cos(alpha[i,1])*sin(alpha[i,1])*YY[i,1]+cos(theta[i,1])*(cos(alpha[i,1])^2-sin(alpha[i,1])^2)*YZ[i,1]-cos(alpha[i,1])*sin(alpha[i,1])*ZZ[i,1]:
-    ZZ[i-1,1] := ZZ[i-1,1]+sin(theta[i,1])^2*sin(alpha[i,1])^2*XX[i,1]+2*cos(theta[i,1])*sin(theta[i,1])*sin(alpha[i,1])^2*XY[i,1]+2*sin(theta[i,1])*cos(alpha[i,1])*sin(alpha[i,1])*XZ[i,1]+cos(theta[i,1])^2*sin(alpha[i,1])^2*YY[i,1]+2*cos(theta[i,1])*cos(alpha[i,1])*sin(alpha[i,1])*YZ[i,1]+cos(alpha[i,1])^2*ZZ[i,1]:
+    XX[i-1,1] := XX[i-1,1] + cos(theta[i,1])^2*XX[i,1]
+                           - 2*cos(theta[i,1])*sin(theta[i,1])*XY[i,1]+sin(theta[i,1])^2*YY[i,1]: 
+    XY[i-1,1] := XY[i-1,1] + cos(theta[i,1])*sin(theta[i,1])*cos(alpha[i,1])*XX[i,1]
+                           + (cos(theta[i,1])^2-sin(theta[i,1])^2)*cos(alpha[i,1])*XY[i,1]
+                           - cos(theta[i,1])*sin(alpha[i,1])*XZ[i,1]
+                           - cos(theta[i,1])*sin(theta[i,1])*cos(alpha[i,1])*YY[i,1]
+                           + sin(theta[i,1])*sin(alpha[i,1])*YZ[i,1]:
+    XZ[i-1,1] := XZ[i-1,1] + cos(theta[i,1])*sin(theta[i,1])*sin(alpha[i,1])*XX[i,1]
+                           + (cos(theta[i,1])^2-sin(theta[i,1])^2)*sin(alpha[i,1])*XY[i,1]
+                           + cos(theta[i,1])*cos(alpha[i,1])*XZ[i,1]
+                           - cos(theta[i,1])*sin(theta[i,1])*sin(alpha[i,1])*YY[i,1]
+                           - sin(theta[i,1])*cos(alpha[i,1])*YZ[i,1]:
+    YY[i-1,1] := YY[i-1,1] + sin(theta[i,1])^2*cos(alpha[i,1])^2*XX[i,1]
+                           + 2*cos(theta[i,1])*sin(theta[i,1])*cos(alpha[i,1])^2*XY[i,1]
+                           - 2*sin(theta[i,1])*cos(alpha[i,1])*sin(alpha[i,1])*XZ[i,1]
+                           + cos(theta[i,1])^2*cos(alpha[i,1])^2*YY[i,1]
+                           - 2*cos(theta[i,1])*cos(alpha[i,1])*sin(alpha[i,1])*YZ[i,1]
+                           + sin(alpha[i,1])^2*ZZ[i,1]:
+    YZ[i-1,1] := YZ[i-1,1] + sin(theta[i,1])^2*cos(alpha[i,1])*sin(alpha[i,1])*XX[i,1]
+                           + 2*cos(theta[i,1])*sin(theta[i,1])*cos(alpha[i,1])*sin(alpha[i,1])*XY[i,1]
+                           + sin(theta[i,1])*(cos(alpha[i,1])^2-sin(alpha[i,1])^2)*XZ[i,1]
+                           + cos(theta[i,1])^2*cos(alpha[i,1])*sin(alpha[i,1])*YY[i,1]
+                           + cos(theta[i,1])*(cos(alpha[i,1])^2-sin(alpha[i,1])^2)*YZ[i,1]
+                           - cos(alpha[i,1])*sin(alpha[i,1])*ZZ[i,1]:
+    ZZ[i-1,1] := ZZ[i-1,1] + sin(theta[i,1])^2*sin(alpha[i,1])^2*XX[i,1]
+                           + 2*cos(theta[i,1])*sin(theta[i,1])*sin(alpha[i,1])^2*XY[i,1]
+                           + 2*sin(theta[i,1])*cos(alpha[i,1])*sin(alpha[i,1])*XZ[i,1]
+                           + cos(theta[i,1])^2*sin(alpha[i,1])^2*YY[i,1]
+                           + 2*cos(theta[i,1])*cos(alpha[i,1])*sin(alpha[i,1])*YZ[i,1]
+                           + cos(alpha[i,1])^2*ZZ[i,1]:
   end if:
 end do: </Text-field>
 </Input>
