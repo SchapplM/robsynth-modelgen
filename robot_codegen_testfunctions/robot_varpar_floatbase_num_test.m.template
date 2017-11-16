@@ -25,6 +25,10 @@ end
 
 %% Parameter
 %RN%_varpar_testfunctions_parameter
+if any(sigma)
+  fprintf('Schubgelenke noch nicht implementiert. Überspringe Tests.\n');
+  return
+end
 
 %% Test gegen numerische Funktionen der Floating Base Dynamik
 for i = 1:n
