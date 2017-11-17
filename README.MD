@@ -59,11 +59,12 @@ Für die Variablennamen in robot_env und in [KhalilKle1986](#quellen) gilt folge
 |---|---|---|---|---|
 | a | 3. Spiegelstrich unter Fig. 6 | v | Vorgänger-Index | Trivial bei seriellen Strukturen (Zahlen von 0 bis NJ-1) |
 | gamma | (9) | beta | 1. Rotation um z | Wird nur bei Baumstrukturen benötigt. Bei seriellen Strukturen Null setzen. |
-| epsilon | (9) | b | 2. Translation in z-Richtung | Wird nur bei Baumstrukturen benötigt |
+| epsilon | (9) | b | 2. Translation in z-Richtung | Wird nur bei Baumstrukturen benötigt. Bei seriellen Strukturen Null setzen. |
 | alpha | (7)  | alpha | 3. Rotation um x |   |
 | d | (7) | a | 4. Translation in x-Richtung |   |
 | theta | (7) | qJ+q_offset | 5. Rotation um z | Der konstante Offset auf den zeitabhängigen Gelenkwinkel wird so gewählt, dass die Gesamttransformation passt |
 | r | (7) | d | 6. Translation in z-Richtung |   |
+| sigma | Text unter Fig. 5 | sigma | Art des Gelenks: 0=rotatorisch (revolute, 1dof), 1=translatorisch (prismatic, 1dof) |   |
 
 Nach dem Erstellen dieser Datei werden die Dynamikfunktionen mit Maple generiert, wie im Folgenden beschrieben wird.
 
@@ -272,24 +273,28 @@ Teil 2: Funktionskennung
 * inertia (Massenmatrix)
 * inertiaD (Zeitableitung der Massenmatrix)
 * invdyn (Inverse Dynamik: Gelenkdrehmoment resultierend aus allen dynamischen Einflüssen)
+* jacobig (Geometrische Jacobi-Matrix: Zusammenhang zwischen translatorischer- und Winkelgeschwindigkeit zu den Geschwindigkeiten der verallgemeinerten Koordinaten)
+* jacobigD (Zeitableitung der geometrischen Jacobi-Matrix)
+* jacobia (Analytische Jacobi-Matrix: Statt der Winkelgeschwindigkeit besteht im rotatorischen Teil der Bezug zur Zeitableitung der Orientierungsdarstellung (z.B. Zeitableitung der Euler-Winkel)
+* jacobiaD (Zeitableitung der analytischen Jacobi-Matrix)
 
 Teil 3: Kennung der Kette
 
-* joint (Nur Einfluss auf die Gelenke, nicht Einfluss auf die Basis)
-* joint_base (Einfluss der Basis auf die Gelenke; bei Massenmatrix)
-* base (Nur Einfluss auf die Basis)
+* J ("joint"; Nur Einfluss auf die Gelenke, nicht Einfluss auf die Basis)
+* JB ("joint-base"; Einfluss der Basis auf die Gelenke; bei Massenmatrix)
+* B ("base"; Nur Einfluss auf die Basis)
 
 Teil 4: Modellkennung  <a name="benennung_modell"></a> 
 
 * fixb (Fixed Base Modell: Orientierung, Geschwindigkeit und Beschleunigung der Basis werden nicht berücksichtigt. Impliziert bei einigen Funktionen "joint")
 * floatb_twist  (Floating Base Modell: Geschwindigkeit und Beschleunigung der Basis werden berücksichtigt. Nicht aber die Orientierung)
-* floatb_eulangrpy  (Floating Base Modell: Orientierung (EulerXYZ), und die Zeitableitungen werden für die Basis-Geschwindigkeit und -Beschleunigung verwendet.)
+* floatb_eulangrpy  (Floating Base Modell: Orientierung (EulerXYZ), und die Zeitableitungen der Euler-Winkel werden für die Basis-Geschwindigkeit und -Beschleunigung verwendet.)
 
 Teil 5: Regressorform. 
 Um die gewünschte Größe zu erhalten, muss der ausgegebene Regressorvektor bzw. -Matrix mit dem Parametervektor multipliziert werden.
 
-* regmin (Regressor basierend auf Minimalparametern)
-* reg2 (Regressor basierend auf Parametersatz 2)
+* regmin (Regressor basierend auf Minimalparametern) (siehe [GautierKhalil1990])
+* reg2 (Regressor basierend auf Parametersatz 2) (siehe [GautierKhalil1988], [GautierKhalil1990])
 
 Teil 6: Berechnungskennung
 
@@ -313,13 +318,13 @@ Alle Parameter müssen der Funktion übergeben werden (siehe Funktionsköpfe). I
 
 Teil 9: Kompilierungskennung
 
-* mex (Kompilierte Funktionen (mit Mex_Erstellen) laufen bis zu 10 mal schneller)
+* mex (Kompilierte Funktionen (mit Matlab-Funktion `Mex_Erstellen`) laufen ungefähr 10 mal schneller)
 
 #### Parameter
 
 * Parametersatz 1 (par1). Masse, Schwerpunkt, Trägheitstensor um den Schwerpunkt ("physical parameters")
 * Parametersatz 2 (par2). Masse, Erstes Moment, Trägheitstensor um den Koordinatenursprung ("inertial Parameters")
-* Minimalparametersatz (minpar). Neugruppierung des Parametersatzes 2 ("Minimal parameters")
+* Minimalparametersatz (minpar). Neugruppierung des Parametersatzes 2 ("base parameters"; base bezeichnet hier nicht die Basis des Roboters, sondern die Minimaldarstellung der Parameter im mathematischen Sinne)
 
 ## Globale Variablen in Maple
 
@@ -355,7 +360,7 @@ Verallgemeinerte Koordinaten der Basis
 
 MDH-Parameter
 
-        a, d, alpha, qoffset, b, beta, theta, v
+        a, d, alpha, qoffset, b, beta, theta, v, sigma
 
 Dynamik-Parameter
 
@@ -368,21 +373,24 @@ Bei beweglicher Basis werden je nach vorheriger Definition Dateien mit floatb_tw
 
 Dateien:
 * .mw Maple-Arbeitsblätter
-* .mpl Maple-Text. Enthält die selben Befehle wie die Maple-Arbeitsblätter, aber ohne Formatierung. Wird bei Änderung der Arbeitsblätter angepasst.
-* maple.m Gespeicherte Maple-Ausdrücke (Maple-internes Format)
-* matlab.m Exportierter Matlab-Code
-* proc_... Maple-Prozedur (Reintext, Maple-Eingabeformat)
+* .mpl Maple-Text. Enthält die selben Befehle wie die Maple-Arbeitsblätter, aber ohne Formatierung. Wird bei Änderung der Arbeitsblätter angepasst. Diese Dateien sind notwendig, um die Berechnungen mit Skripten aus der Kommandozeile auszuführen.
+* ..._maple.m Gespeicherte Maple-Ausdrücke (Maple-internes, komprimiertes Format)
+* ..._maple die selben Ausdrücke wie in den _maple.m Dateien, allerdings unkomprimiert (im Maple-Eingabeformat). Dadurch vom Benutzer lesbar, aber bei großen Ausdrücken lange Zeitdauer zum Importieren. Dienen eher der Information des Nutzers.
+* ..._matlab.m Exportierter Matlab-Code
+* proc_... Maple-Prozedur (Funktionsdefinition als Reintext, Maple-Eingabeformat)
 
 ### Ergebnisse der Code-Generierung <a name="ergebnisordner"></a> 
 
-Die Ordner der Code-Generierung werden im Ordner "codeexport" abgelegt.
-Für jedes System werden eigene Unterordner für temporäre Maple- und Matlab-Ausdrücke angelegt, für fertige Matlab-Funktionen ("matlabfcn") und für Testfunktionen ("testfcn").
-Die letztgenannten können danach z.B. in ein eigenes Repo für das untersuchte System kopiert werden.
+Die Ergebnisse der Code-Generierung werden im Ordner "codeexport" abgelegt.
+Für jedes System werden eigene Unterordner für temporäre Maple- und Matlab-Ausdrücke ("tmp"), für fertige Matlab-Funktionen ("matlabfcn") und für Testfunktionen ("testfcn") angelegt.
+Die beiden letztgenannten sollten danach z.B. in ein eigenes Repo für das untersuchte System kopiert werden. Es bietet sich an, die Ordner direkt beizubehalten.
 
         /codeexport/
-          %RN%/
-          matlabfcn/%RN%/
-          testfcn/%RN%/
+          %RN%/tmp/
+          %RN%/matlabfcn/
+          %RN%/testfcn/
+
+Die Ergebnisse der Toolbox können am einfachsten anhand der Modultests im Ordner testfcn überblickt werden.
 
 ### Koordinatentransformation
 
@@ -413,6 +421,10 @@ Der Ordner examples enthält Beispiele für die Datei robot_env
         /codegen_definitions
           examples
           robot_env
+          robot_tree_base_parameter_transformations.mw
+              <-- robot_env
+              <-- minimal_parameter_vector_fixb_maple
+              <-- minimal_parameter_vector_floatb_maple
           robot_tree_floatbase_twist_definitions.mw
               <-- robot_env
               --> robot_tree_floatb_definitions
@@ -482,9 +494,17 @@ Positionen (Koordinatensysteme, Schwerpunkten), Geschwindigkeiten
               <-- robot_tree_floatb_definitions
               <-- robot_energy_potential_floatb_worldframe_par2_maple.m
               <-- robot_energy_kinetic_floatb_linkframe_par2_maple.m
+              --> minimal_parameter_vector_fixb_maple
               --> energy_kinetic_fixb_regressor_minpar_maple.m
               --> energy_potential_fixb_regressor_minpar_maple.m
-
+          robot_chain_floatb_rotmat_energy_regressor.mw
+              <-- robot_env
+              <-- robot_tree_floatb_definitions
+              <-- robot_energy_potential_floatb_worldframe_par2_maple.m
+              <-- robot_energy_kinetic_floatb_linkframe_par2_maple.m
+              --> minimal_parameter_vector_floatb_maple
+              --> energy_kinetic_floatb_regressor_minpar_maple.m
+              --> energy_potential_floatb_regressor_minpar_maple.m
 ### Dynamik
 
         /robot_codegen_dynamics
@@ -539,4 +559,6 @@ Textbausteine für Funktionsköpfe:
 
 * [KhalilKle1986] Khalil, W. and Kleinfinger, J.-F.: A new geometric notation for open and closed-loop robots (1986)
 * [Featherstone2008] Featherstone, R.: Rigid Body Dynamics Algorithms (2008)
+* [GautierKhalil1988] A Direct Determination of Minimum Inertial Parameters of Robots (1988)
+* [GautierKhalil1990] Direct Calculation of Minimum Set of Inertial Parameters of Serial Robots (1990)
 
