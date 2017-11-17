@@ -62,9 +62,9 @@ Für die Variablennamen in robot_env und in [KhalilKle1986](#quellen) gilt folge
 | epsilon | (9) | b | 2. Translation in z-Richtung | Wird nur bei Baumstrukturen benötigt. Bei seriellen Strukturen Null setzen. |
 | alpha | (7)  | alpha | 3. Rotation um x |   |
 | d | (7) | a | 4. Translation in x-Richtung |   |
-| theta | (7) | qJ+q_offset | 5. Rotation um z | Der konstante Offset auf den zeitabhängigen Gelenkwinkel wird so gewählt, dass die Gesamttransformation passt |
+| theta | (7) | theta | 5. Rotation um z | Der konstante Offset auf den bei Drehgelenken zeitabhängigen Gelenkwinkel wird so gewählt, dass die Gesamttransformation passt |
 | r | (7) | d | 6. Translation in z-Richtung |   |
-| sigma | Text unter Fig. 5 | sigma | Art des Gelenks: 0=rotatorisch (revolute, 1dof), 1=translatorisch (prismatic, 1dof) |   |
+| sigma | Text unter Fig. 5 | sigma | Art des Gelenks: 0=rotatorisch (revolute, 1dof), 1=translatorisch (prismatic, 1dof) | Für Gelenke mit sigma=1 muss qJ_t in den Parameter d (Verschiebung in z-Richtung) eingetragen werden, für sigma=0 muss qJ_t in theta stehen (Drehung um die z-Achse) |
 
 Nach dem Erstellen dieser Datei werden die Dynamikfunktionen mit Maple generiert, wie im Folgenden beschrieben wird.
 
