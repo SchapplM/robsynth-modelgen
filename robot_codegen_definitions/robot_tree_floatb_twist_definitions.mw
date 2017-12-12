@@ -383,41 +383,41 @@ end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1638" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(v, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_v.m&quot;, robot_name), 2):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(v, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_v_matlab.m&quot;, robot_name), 2):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1651" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(a, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_a.m&quot;, robot_name), 2):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(a, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_a_matlab.m&quot;, robot_name), 2):</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" hide-output="false" labelreference="L1650" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">d_export := d *~ (1-~sigma):
-MatlabExport(d_export, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_d.m&quot;, robot_name), 2):</Text-field>
+MatlabExport(d_export, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_d_matlab.m&quot;, robot_name), 2):</Text-field>
 </Input>
 </Group>
 <Group hide-output="false" labelreference="L1668" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">theta_export := theta *~ sigma:
-MatlabExport(theta_export, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_theta.m&quot;, robot_name), 2):</Text-field>
+MatlabExport(theta_export, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_theta_matlab.m&quot;, robot_name), 2):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1649" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(b, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_b.m&quot;, robot_name), 2):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(b, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_b_matlab.m&quot;, robot_name), 2):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1645" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(alpha, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_alpha.m&quot;, robot_name), 2):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(alpha, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_alpha_matlab.m&quot;, robot_name), 2):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1646" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(beta, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_beta.m&quot;, robot_name), 2):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(beta, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_beta_matlab.m&quot;, robot_name), 2):</Text-field>
 </Input>
 </Group>
 <Group hide-output="false" labelreference="L1647" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(qoffset, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_qoffset.m&quot;, robot_name), 2):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(qoffset, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_qoffset_matlab.m&quot;, robot_name), 2):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1664" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(sigma, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_sigma.m&quot;, robot_name), 2):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(sigma, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_sigma_matlab.m&quot;, robot_name), 2):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1669" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
