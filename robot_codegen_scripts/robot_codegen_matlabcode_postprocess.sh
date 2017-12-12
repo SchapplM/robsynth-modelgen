@@ -6,13 +6,8 @@
 # Argumente:
 # $1 Zu untersuchende Datei
 
-# TODO: Prüfung auf unknown beeinflusst nicht die Prüfung auf %arctan
-
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-10
 # (C) Institut für Regelungstechnik, Leibniz Universität Hannover
-
-# Suche nach dem Term unknown.
-# Wenn in Maple Vektoren oder Matrizen exportiert werden mit Code-Optimierung Stufe 1 (nicht: tryhard), wird keine Gesamt-Variable dafür gebildet.
 
 matfilepath=$1
 
@@ -21,6 +16,18 @@ if [ "$matfilepath" == "" ] || [ ! -f $matfilepath ]; then
   exit 1
 fi;
 
+################################################
+# Ersetze exportierte Inert-Funktionen aus Maple
+# Bei inert-Funktionen ist dem Funktiosnamen ein "%" vorgesetzt.
+# Diese Funktionen werten einen Ausdruck nicht sofort aus und ermöglichen schnellere Berechnungen.
+teststring=`grep "%arctan" $matfilepath | head -1` || true
+if [ "$teststring" != "" ]; then
+  sed -i "s/%arctan/atan2/g" $matfilepath
+fi;
+
+################################################
+# Suche nach dem Term unknown.
+# Wenn in Maple Vektoren oder Matrizen exportiert werden mit Code-Optimierung Stufe 1 (nicht: tryhard), wird keine Gesamt-Variable dafür gebildet.
 # Prüfe ob Datei schon verarbeitet wurde. Dann steht `unknown=NaN(...)` oben  | head -1
 teststring1=`grep "unknown=NaN" $matfilepath ` || true
 if [ "$teststring1" != "" ]; then
@@ -63,10 +70,3 @@ if [ "$teststring2" != "" ] || [ "$teststring3" != "" ]; then
   echo "unknown = unknown; %#ok<ASGSL> für automatische Verarbeitung" >> $matfilepath
 fi;
 
-# Ersetze exportierte Inert-Funktionen aus Maple
-# Bei inert-Funktionen ist dem Funktiosnamen ein "%" vorgesetzt.
-# Diese Funktionen werten einen Ausdruck nicht sofort aus und ermöglichen schnellere Berechnungen.
-teststring=`grep "%arctan" $matfilepath | head -1` || true
-if [ "$teststring" != "" ]; then
-  sed -i "s/%arctan/atan2/g" $matfilepath
-fi;
