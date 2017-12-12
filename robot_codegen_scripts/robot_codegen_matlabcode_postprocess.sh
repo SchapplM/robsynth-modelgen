@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 # Nachbearbeitung von generiertem Maple-Code für Matlab.
 # Dieses Skript sollte nach dem Maple-Codeexport, aber vor der Matlab-Funktionsgenerierung ausgeführt werden.
 # Wenn in Maple mit MatlabExport Eine Matrix exportiert wird mit Optimierungsgrad 1, wird die Matlab-Variable als "unknown" bezeichnet und die Dimension wird nicht initialisiert. 
@@ -22,22 +22,30 @@ if [ "$matfilepath" == "" ] || [ ! -f $matfilepath ]; then
 fi;
 
 # Prüfe ob Datei schon verarbeitet wurde. Dann steht `unknown=NaN(...)` oben  | head -1
-teststring1=`grep "unknown=NaN" $matfilepath ` 
+teststring1=`grep "unknown=NaN" $matfilepath ` || true
 if [ "$teststring1" != "" ]; then
   # Dieses Skript wurde schon einmal angewendet. Abbruch.
   exit 0;
 fi;
 
 # Prüfe, ob Matrix-Einträge definiert werden
-teststring2=`grep "unknown([0-9]*,[0-9]*)" $matfilepath  | head -1`
-if [ "$teststring2" != "" ]; then
+#cat $matfilepath  | head -1
+#head -1 $matfilepath
+teststring2=`grep "unknown([0-9]*,[0-9]*)" $matfilepath  | head -1` # Für 2D-Format
+teststring3=`grep "unknown([0-9]*)" $matfilepath  | head -1` # Für 1D-Format
+if [ "$teststring2" != "" ] || [ "$teststring3" != "" ]; then
   # Größten Wert herausfinden
   # Siehe http://stackoverflow.com/questions/918886/how-do-i-split-a-string-on-a-delimiter-in-bash
   imax=0
   jmax=0
   # Suche Zuweisungen auf Variable "unknown" (2D-Matrix) und entferne Anfang und Ende des Suchausdrucks im Ergebnis mit sed
-  zeilen=`grep -o "unknown([0-9]*,[0-9]*)" $matfilepath | sed "s/unknown(//g" | sed "s/)//g"`
+  if [ "$teststring2" != "" ]; then # Matrix-Format (i,j)
+    zeilen=`grep -o "unknown([0-9]*,[0-9]*)" $matfilepath | sed "s/unknown(//g" | sed "s/)//g"`
+  else # Vektor-Format (i)
+    zeilen=`grep -o "unknown([0-9]*)" $matfilepath | sed "s/unknown(//g" | sed "s/)//g"`
+  fi
   for zeile in $zeilen; do
+    zeile="$zeile,1" # Zusatz-Dimension anhängen, damit egal ist, ob es 2D- oder 1D-Eingabe ist
     # Zeile ist nun im Format "i,j". Speichere i,j in einem Array
     arrIN=(${zeile//,/ })
     # Prüfe, ob die jeweiligen Dimensionen größer sind als die gespeicherten
@@ -58,7 +66,7 @@ fi;
 # Ersetze exportierte Inert-Funktionen aus Maple
 # Bei inert-Funktionen ist dem Funktiosnamen ein "%" vorgesetzt.
 # Diese Funktionen werten einen Ausdruck nicht sofort aus und ermöglichen schnellere Berechnungen.
-teststring=`grep "%arctan" $matfilepath | head -1`
+teststring=`grep "%arctan" $matfilepath | head -1` || true
 if [ "$teststring" != "" ]; then
   sed -i "s/%arctan/atan2/g" $matfilepath
 fi;
