@@ -11,6 +11,11 @@ NJ = %NJ%;
 NL = %NL%;
 robot_name = '%RN%';
 
+%% Parameter
+%RN%_varpar_testfunctions_parameter
+
+%% Init
+
 % Prüfe, ob kinematische Zwangsbedingungen vorliegen.
 % Dann entfallen die Tests der numerischen Funktionen
 if NJ ~= NQJ
@@ -20,9 +25,9 @@ else
   KINCONSTR = false;  
 end
 
-%% Parameter
-%RN%_varpar_testfunctions_parameter
-
+if any(sigma)
+  fprintf('Einige Tests entfallen aufgrund der Existenz von Schubgelenken\n');
+end
 %% Kinematik gegen Jacobi-Matrix testen (fixed base)
 
 for i = 1:size(Q, 1)
@@ -56,7 +61,8 @@ end
 fprintf('Tested Jacobian (fixed base) against forward kinematics for %d random joint angles.\n', ...
 	size(Q, 1));
  
-%% Teste Jacobi-Matrix für unterschiedliche Punkte mit der adjungierten
+%% Teste Jacobi-Matrix für unterschiedliche Punkte mit der Adjungierten
+if ~KINCONSTR && ~any(sigma)
 for i = 1:size(Q, 1)
   for j  = 1:NQJ+1 % Jacobi für jeden Körper
     q = Q(i,:)';
@@ -82,8 +88,9 @@ for i = 1:size(Q, 1)
   end
 end
 fprintf('Tested Jacobian direct vs adjoint calculation for fixed base.\n');
-
+end
 %% Teste Jacobi-Matrix-Zeitableitung für unterschiedliche Punkte mit der Adjungierten
+if ~KINCONSTR && ~any(sigma)
 for i = 1:size(Q, 1)
   for j  = 1:NQJ+1 % Jacobi für jeden Körper
     q = Q(i,:)';
@@ -119,7 +126,7 @@ for i = 1:size(Q, 1)
   end
 end
 fprintf('Tested Jacobian time derivate from direct vs adjoint calculation for fixed base.\n');
-
+end
 %% Test Time Derivate of Jacobian
 if ~KINCONSTR && ~any(sigma)
 Mex_Erstellen({'%RN%_jacobig_mdh_num', '%RN%_jacobigD_mdh_num'});
@@ -245,3 +252,4 @@ Mex_Erstellen({ '%RN%_jacobigD_rot_floatb_twist_sym_varpar', ...
                 '%RN%_jacobig_rot_floatb_twist_sym_varpar', ...
                 '%RN%_jacobia_rot_floatb_twist_sym_varpar'});
         
+
