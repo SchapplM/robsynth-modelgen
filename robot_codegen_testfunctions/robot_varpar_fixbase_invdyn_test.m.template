@@ -32,7 +32,7 @@ for i = 1:n
 
   % compare both
   Delta = T_func-T_M;
-  if any(abs(Delta) > 1e-10)
+  if any(abs(Delta) > 1e6*eps(T_func))
     error('Kinetic Energy from Mass Matrix does not match with directly calculated. %1.5e', ...
       max(abs(Delta)));
   end
@@ -57,7 +57,7 @@ for i = 1:n
 
   % compare both
   Delta = cq-cq_mat;
-  if any(abs(Delta) > 1e-10)
+  if any( abs(Delta) > 1e6*eps(max(abs(cq))) )
     error('coriolis torques from vector and matrix do not match. %1.5e', ...
       max(abs(Delta)));
   end
@@ -86,7 +86,7 @@ for i = 1:n
   % Test skew symmetry of Test-Matrix
   for ii = 1:NQJ
     for jj = 1:NQJ
-      if abs(Test(ii,jj) + Test(jj,ii)) > 1e-10
+      if abs(Test(ii,jj) + Test(jj,ii)) > 1e6*eps(max(abs(Cq(:))))
         error('Test-Matrix is not skew-symmetric');
       end
     end
@@ -106,7 +106,7 @@ for i = 1:n
     pkin, m, rSges);
   taug_par2 = %RN%_gravloadJ_floatb_twist_slag_vp2(q, g_base, ...
     pkin, m, mrSges);
-  if any(abs(taug_par1 - taug_par2) > 1e-12)
+  if any( abs(taug_par1 - taug_par2) > 1e6*eps(max(abs(taug_par1))) )
     error('gravity torques do not match between par1/par2.');
   end
   % Coriolis
@@ -114,14 +114,14 @@ for i = 1:n
     pkin, m, rSges, Icges);
   tauc_par2 = %RN%_coriolisvecJ_fixb_slag_vp2(q, qD, ...
     pkin, m, mrSges, Ifges);
-  if any(abs(tauc_par1-tauc_par2) > 1e-12)
+  if any( abs(tauc_par1-tauc_par2) > 1e6*eps(max(abs(tauc_par1))) )
     error('coriolis vectors do not match between par1/par2.');
   end
   Cq_par1 = %RN%_coriolismatJ_fixb_slag_vp1(q, qD, ...
     pkin, m, rSges, Icges);
   Cq_par2 = %RN%_coriolismatJ_fixb_slag_vp2(q, qD, ...
     pkin, m, mrSges, Ifges); 
-  if any(abs(Cq_par1(:)-Cq_par2(:)) > 1e-12)
+  if any( abs(Cq_par1(:)-Cq_par2(:)) > 1e6*eps(max(abs(Cq_par1(:)))) )
     error('coriolis matrices do not match between par1/par2.');
   end 
   % Inertia
@@ -129,7 +129,7 @@ for i = 1:n
     pkin, m, rSges, Icges);
   Mq_par2 = %RN%_inertiaJ_slag_vp2(q, ...
     pkin, m, mrSges, Ifges);
-  if any(abs(Mq_par1(:)-Mq_par2(:)) > 1e-12)
+  if any( abs(Mq_par1(:)-Mq_par2(:)) > 1e6*eps(max(abs(Mq_par1(:)))) )
     error('inertia matrices do not match between par1/par2.');
   end
   % Inverse Dynamics
@@ -137,7 +137,7 @@ for i = 1:n
     pkin, m, rSges, Icges);
   tau_par2 = %RN%_invdynJ_fixb_slag_vp2(q, qD, qDD, g_base, ...
     pkin, m, mrSges, Ifges);
-  if any(abs(tau_par1-tau_par2) > 1e-12)
+  if any( abs(tau_par1-tau_par2) > 1e6*eps(max(abs(tau_par1))) )
     error('inverse dynamics joint torque vectors do not match between par1/par2.');
   end
   % Potentielle Energie
@@ -145,7 +145,7 @@ for i = 1:n
     pkin, m, rSges);
   U_par2 = %RN%_energypot_fixb_slag_vp2(q, g_base, ...
     pkin, m, mrSges);
-  if any(abs(U_par1-U_par2) > 1e-12)
+  if any(abs(U_par1-U_par2) > 1e6*eps(U_par1))
     error('Potential energies do not match between par1/par2.');
   end
   % Kinetische Energie
@@ -153,7 +153,7 @@ for i = 1:n
     pkin, m, rSges, Icges);
   T_par2 = %RN%_energykin_fixb_slag_vp2(q, qD, ...
     pkin, m, mrSges, Ifges);
-  if any(abs(T_par1-T_par2) > 1e-12)
+  if any(abs(T_par1-T_par2) > 1e6*eps(T_par1))
     error('Kinetic energies do not match between par1/par2.');
   end
 end
@@ -172,8 +172,8 @@ for i = 1:n
   taug_sp = %RN%_gravloadJ_floatb_twist_slag_vp1(q, g_base, ...
     pkin, m, rSges);
   Delta = taug_id - taug_sp;
-  if any(abs(Delta) > 1e-12)
-    error('gravity torques from inverse dynamics and own function do not match. %1.5e', ...
+  if any(abs(Delta) > 1e6*eps(max(abs(taug_id))) )
+    error('gravity torques from inverse dynamics and dedicated function do not match. %1.5e', ...
       max(abs(Delta)));
   end
   
@@ -183,8 +183,8 @@ for i = 1:n
   tauc_sp = %RN%_coriolisvecJ_fixb_slag_vp1(q, qD, ...
     pkin, m, rSges, Icges);
   Delta = tauc_id - tauc_sp;
-  if any(abs(Delta) > 1e-12)
-    error('Coriolis torques from inverse dynamics and own function do not match. %1.5e', ...
+  if any(abs(Delta) > 1e6*eps(max(abs(tauc_id))) )
+    error('Coriolis torques from inverse dynamics and dedicated function do not match. %1.5e', ...
       max(abs(Delta)));
   end
   
@@ -195,8 +195,8 @@ for i = 1:n
     pkin, m, rSges, Icges);
   taua_sp = Mq*qDD;
   Delta = taua_id - taua_sp;
-  if any(abs(Delta) > 1e-12)
-    error('Inertial torques from inverse dynamics and own function do not match. %1.5e', ...
+  if any(abs(Delta) > 1e6*eps(max(abs(taua_sp))) )
+    error('Inertial torques from inverse dynamics and dedicated function do not match. %1.5e', ...
       max(abs(Delta)));
   end
 end
