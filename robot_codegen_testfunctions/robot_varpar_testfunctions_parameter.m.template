@@ -1,3 +1,17 @@
+% Einstellungen für Modultests von %RN% generieren:
+% Enthält Definitionen für Parameter und zufällige Konfigurationen
+%
+% Ausgabe:
+% TSS
+%   Struktur mit Einstellungen für die Modultests
+
+% %VERSIONINFO%
+
+% Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
+% (C) Institut für Regelungstechnik, Universität Hannover
+
+function TSS = %RN%_varpar_testfunctions_parameter()
+
 %% General Definitions
 NQJ = %NQJ%; % Number of generalized coordinates
 NJ = %NJ%; % number of joints (number of rows in Denavit-Hartenberg table)
@@ -72,3 +86,5 @@ for i = 1:n
     error('Orientierung und Basisgeschwindigkeit stimmen nicht überein');
   end
 end
+
+

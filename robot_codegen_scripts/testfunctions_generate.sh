@@ -127,4 +127,6 @@ echo "sigma_mdh = $varname_tmp;" >> $zieldat
 # Ersetze "_mdh", damit die Variablennamen stimmen
 sed -i "s/_mdh//g" $zieldat
 
-
+# Schreibe Ausgangsvariable (lese Teil aus Vorlage)
+quelldat=$repo_pfad/robot_codegen_testfunctions/robot_varpar_testfunctions_parameter.m.template2
+cat $quelldat >> $zieldat

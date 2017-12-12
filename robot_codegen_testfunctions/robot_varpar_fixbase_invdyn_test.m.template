@@ -3,6 +3,8 @@
 % Quellen:
 % [KhalilDombre2002] Modeling, Identification and Control of Robots
 
+% %VERSIONINFO%
+
 % Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
 % (C) Institut für Regelungstechnik, Universität Hannover
 
@@ -15,7 +17,10 @@ NL = %NL%;
 robot_name = '%RN%';
 
 %% Parameter
-%RN%_varpar_testfunctions_parameter
+TSS = %RN%_varpar_testfunctions_parameter();
+for f = fields(TSS)'
+  eval(sprintf('%s=TSS.%s;',f{1},f{1}));
+end
 % Es werden fixed-base Funktionen getestet. Der Basis-Körper wird also mit
 % NaN belegt und darf keinen Einfluss haben.
 %% Test kinetic Energy

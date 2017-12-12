@@ -9,8 +9,10 @@ clc
 close all
 
 %% Parameter
-%RN%_varpar_testfunctions_parameter
-
+TSS = %RN%_varpar_testfunctions_parameter();
+for f = fields(TSS)'
+  eval(sprintf('%s=TSS.%s;',f{1},f{1}));
+end
 
 %% Modellparameter
 simin_qJ = struct('time', 0, ...

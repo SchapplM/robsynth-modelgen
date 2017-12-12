@@ -4,6 +4,8 @@
 % * numeric robot-specific functions from template of this toolbox (%RN%__...nnew_...)
 % with fixed base model
 
+% %VERSIONINFO%
+
 % Moritz Schappler, schappler@irt.uni-hannover.de, 2016-06
 % (C) Institut für Regelungstechnik, Universität Hannover
 
@@ -24,7 +26,10 @@ if NJ ~= NQJ
 end
 
 %% Parameter
-%RN%_varpar_testfunctions_parameter
+TSS = %RN%_varpar_testfunctions_parameter();
+for f = fields(TSS)'
+  eval(sprintf('%s=TSS.%s;',f{1},f{1}));
+end
 if any(sigma)
   fprintf('Schubgelenke noch nicht implementiert. Überspringe Tests.\n');
   return

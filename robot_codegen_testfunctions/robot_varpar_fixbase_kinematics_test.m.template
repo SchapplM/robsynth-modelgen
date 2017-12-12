@@ -12,7 +12,10 @@ NL = %NL%;
 robot_name = '%RN%';
 
 %% Parameter
-%RN%_varpar_testfunctions_parameter
+TSS = %RN%_varpar_testfunctions_parameter();
+for f = fields(TSS)'
+  eval(sprintf('%s=TSS.%s;',f{1},f{1}));
+end
 
 %% Init
 
