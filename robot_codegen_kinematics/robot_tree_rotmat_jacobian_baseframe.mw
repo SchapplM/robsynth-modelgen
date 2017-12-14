@@ -179,7 +179,7 @@ Trf_c := Trf_c:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2109" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">LIJAC:=NL:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">LIJAC:=5:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2114" drawlabel="true">
@@ -303,12 +303,12 @@ end do:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1738" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save b_rota, sprintf(&quot;../codeexport/%s/tmp/jacobia_rot_maple.m&quot;, robot_name):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save b_rota, sprintf(&quot;../codeexport/%s/tmp/jacobia_rot_%d_maple.m&quot;, robot_name, LIJAC):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2121" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"># Ausdruck nochmal laden.
-read sprintf(&quot;../codeexport/%s/tmp/jacobia_rot_maple.m&quot;, robot_name):
+read sprintf(&quot;../codeexport/%s/tmp/jacobia_rot_%d_maple.m&quot;, robot_name, LIJAC):
 b_rota := b_rota:</Text-field>
 </Input>
 </Group>
@@ -377,12 +377,12 @@ end do:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1755" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save b_rotg, sprintf(&quot;../codeexport/%s/tmp/jacobig_rot_maple.m&quot;, robot_name):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save b_rotg, sprintf(&quot;../codeexport/%s/tmp/jacobig_rot_%d_maple.m&quot;, robot_name, LIJAC):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2120" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"># Ausdruck nochmal laden.
-read sprintf(&quot;../codeexport/%s/tmp/jacobig_rot_maple.m&quot;, robot_name):
+read sprintf(&quot;../codeexport/%s/tmp/jacobig_rot_%d_maple.m&quot;, robot_name, LIJAC):
 b_rotg := b_rotg:</Text-field>
 </Input>
 </Group>
