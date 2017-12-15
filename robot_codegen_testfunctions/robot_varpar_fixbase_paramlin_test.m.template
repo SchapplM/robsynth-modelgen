@@ -76,7 +76,7 @@ for i = 1:n
     t_regmin = %RN%_energykin_fixb_regmin_slag_vp(q, qD, ...
       pkin);
     T_mpv = t_regmin*MPV;
-    if abs(T_mpv-T_func) > 1e6*eps(max(abs([T_pv2;T_func])))
+    if abs(T_mpv-T_func) > 1e6*eps(max(abs([T_mpv;T_func])))
       error('Kinetic Energy from base parameter vector does not match with direct form.');
     end
   end
@@ -109,7 +109,7 @@ for i = 1:n
       pkin);
     U_mpv = u_regmin*MPV;
     U_mpv0 = u_regmin0*MPV;
-    if abs((U_mpv-U_mpv0)-(U_func-U_func0)) > eps(max(abs([U_mpv;U_mpv0;U_func;U_func0])))
+    if abs((U_mpv-U_mpv0)-(U_func-U_func0)) > 1e6*eps(max(abs([U_mpv;U_mpv0;U_func;U_func0])))
       error('Potential Energy from base parameter vector does not match with direct form.');
     end
   end
@@ -340,4 +340,5 @@ plin_num_test_struct = struct('W', W_g, 'PV2', PV2fixb, 'MPV', MPV, ...
 robot_paramlin_test_reg_num(plin_num_test_struct);
 
 fprintf('Symbolisch berechnete Minimalparameterform gegen numerische Form geprüft\n');
+
 
