@@ -179,7 +179,7 @@ Trf_c := Trf_c:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2109" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">LIJAC:=5:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">LIJAC:=NL:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2114" drawlabel="true">
