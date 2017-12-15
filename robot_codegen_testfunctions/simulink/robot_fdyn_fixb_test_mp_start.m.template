@@ -24,6 +24,8 @@ if NJ ~= NQJ
   KINCONSTR = true;
   fprintf('Tests entfallen aufgrund der Existenz kinematischer Zwangsbedingungen\n');
   return
+else
+  KINCONSTR = false;
 end
 
 % Workspace-Variable löschen, Modell darf nicht davon abhängen
