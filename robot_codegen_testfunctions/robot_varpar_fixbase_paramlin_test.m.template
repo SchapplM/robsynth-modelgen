@@ -34,8 +34,15 @@ for f = fields(TSS)'
   eval(sprintf('%s=TSS.%s;',f{1},f{1}));
 end
 
+if any(diff(TSS.v) ~= 1)
+  fprintf('Tests entfallen aufgrund der Baumstruktur (noch nicht implementiert)\n');
+  TREE = 1;
+else
+  TREE = 0;
+end
+
 % Minimalparametervektor
-if ~KINCONSTR
+if ~KINCONSTR && ~TREE
   MPV = %RN%_convert_par2_MPV_fixb(pkin, m, mrSges, Ifges);
 end
 
@@ -71,7 +78,7 @@ for i = 1:n
   T_func = %RN%_energykin_fixb_slag_vp1(q, qD, ...
       pkin, m, rSges, Icges);
   % calculate kinetic energy with optimized function
-  if ~KINCONSTR
+  if ~KINCONSTR && ~TREE
     % calculate kinetic energy with minimal parameter regressor
     t_regmin = %RN%_energykin_fixb_regmin_slag_vp(q, qD, ...
       pkin);
@@ -101,7 +108,7 @@ for i = 1:n
   U_func0 = %RN%_energypot_fixb_slag_vp1(zeros(NQJ,1), g_base, ...
     pkin, m, rSges);
   % calculate potential energy with optimized function
-  if ~KINCONSTR
+  if ~KINCONSTR && ~TREE
     % calculate potential energy with minimal regressor
     u_regmin = %RN%_energypot_fixb_regmin_slag_vp(q, g_base, ...
       pkin);
@@ -135,7 +142,7 @@ for i = 1:n
   taug_func = %RN%_gravloadJ_floatb_twist_slag_vp1(q, g_base, ...
     pkin, m, rSges);
   % calculate gravitational load with optimized function
-  if ~KINCONSTR
+  if ~KINCONSTR && ~TREE
     % calculate gravitational load with base parameter regressor
     taug_regmin = %RN%_gravloadJ_regmin_slag_vp(q, g_base, ...
       pkin);
@@ -162,7 +169,7 @@ for i = 1:n
   tauc_func = %RN%_coriolisvecJ_fixb_slag_vp1(q, qD, ...
     pkin, m, rSges, Icges);
   % calculate coriolis torques with optimized function
-  if ~KINCONSTR
+  if ~KINCONSTR && ~TREE
     % calculate coriolis torques with base parameter regressor
     tauc_regmin = %RN%_coriolisvecJ_fixb_regmin_slag_vp(q, qD, ...
       pkin);
@@ -189,7 +196,7 @@ for i = 1:n
   Cq_func = %RN%_coriolismatJ_fixb_slag_vp1(q, qD, ...
     pkin, m, rSges, Icges);
   % calculate Coriolis-Matrix with optimized function
-  if ~KINCONSTR
+  if ~KINCONSTR && ~TREE
     % calculate Coriolis-Matrix with base parameter regressor
     Cq_regmin = %RN%_coriolismatJ_fixb_regmin_slag_vp(q, qD, ...
       pkin);
@@ -217,7 +224,7 @@ for i = 1:n
   Mq_func = %RN%_inertiaJ_slag_vp1(q, ...
     pkin, m, rSges, Icges);
   % calculate inertia with optimized function
-  if ~KINCONSTR
+  if ~KINCONSTR && ~TREE
     % calculate inertia with base parameter regressor
     Mq_regmin = %RN%_inertiaJ_regmin_slag_vp(q, pkin);
     Mq_mpv_vec = Mq_regmin*MPV;
@@ -244,7 +251,7 @@ for i = 1:n
   MqD_func = %RN%_inertiaDJ_slag_vp1(q, qD, ...
     pkin, m, rSges, Icges);
   % calculate inertia time derivative with optimized function
-  if ~KINCONSTR
+  if ~KINCONSTR && ~TREE
     % calculate inertia time derivative with base parameter regressor
     MqD_regmin = %RN%_inertiaDJ_regmin_slag_vp(q, qD, ...
       pkin);
@@ -274,7 +281,7 @@ for i = 1:n
   tau_func = %RN%_invdynJ_fixb_slag_vp1(q, qD, qDD, g_base, ...
     pkin, m, rSges, Icges);
   % calculate inverse dynamics with optimized function
-  if ~KINCONSTR
+  if ~KINCONSTR && ~TREE
     % calculate inverse dynamics with base parameter regressor
     tau_regmin = %RN%_invdynJ_fixb_regmin_slag_vp(q, qD, qDD, g_base, ...
       pkin);
@@ -294,7 +301,7 @@ end
 fprintf('Tested inverse dynamics for %d random joint angles for %s\n', ...
   n, robot_name);
 
-if KINCONSTR
+if KINCONSTR || TREE
   return %#ok<*UNRCH>
 end
 %% Prüfe Minimalparametervektor gegen Matrix mit Inertialparameterzuordnung
@@ -340,5 +347,6 @@ plin_num_test_struct = struct('W', W_g, 'PV2', PV2fixb, 'MPV', MPV, ...
 robot_paramlin_test_reg_num(plin_num_test_struct);
 
 fprintf('Symbolisch berechnete Minimalparameterform gegen numerische Form geprüft\n');
+
 
 
