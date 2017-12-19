@@ -316,3 +316,62 @@ do
   source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
 done
 
+# Funktionen für kinematische Zwangsbedingungen
+quelldat=$repo_pfad/codeexport/${robot_name}/tmp/kinconstr_expl_matlab.m
+zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_kinconstr_expl_mdh_sym_varpar.m
+if [ -f $quelldat ]; then
+  cat ${tmp_pfad}_head/robot_matlabtmp_kinconstr_expl.head.m > $zieldat
+  printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+
+  echo "%% Variable Initialization" >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
+  
+  printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+  cat $quelldat >> $zieldat
+  source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 1
+else
+  echo "Code in ${quelldat##*/} nicht gefunden."
+fi
+
+quelldat=$repo_pfad/codeexport/${robot_name}/tmp/kinconstr_expl_jacobian_matlab.m
+zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_kinconstr_expl_jacobian_mdh_sym_varpar.m
+if [ -f $quelldat ]; then
+  cat ${tmp_pfad}_head/robot_matlabtmp_kinconstr_expl_jacobian.head.m > $zieldat
+  printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+
+  echo "%% Variable Initialization" >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
+  
+  printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+  cat $quelldat >> $zieldat
+  source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0
+else
+  echo "Code in ${quelldat##*/} nicht gefunden."
+fi
+
+quelldat=$repo_pfad/codeexport/${robot_name}/tmp/kinconstr_expl_jacobianD_matlab.m
+zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_kinconstr_expl_jacobianD_mdh_sym_varpar.m
+if [ -f $quelldat ]; then
+  cat ${tmp_pfad}_head/robot_matlabtmp_kinconstr_expl_jacobianD.head.m > $zieldat
+  printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+
+  echo "%% Variable Initialization" >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_qJD.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
+  
+  printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+  cat $quelldat >> $zieldat
+  source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0
+else
+  echo "Code in ${quelldat##*/} nicht gefunden."
+fi

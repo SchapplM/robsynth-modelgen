@@ -1,0 +1,101 @@
+% Teste Kinematik- und Dynamikfunktionen für %RN% mit und ohne Zwangsbedingungen
+% Rechnet Kinematikterme von der geschlossenen auf die offene Struktur und
+% rechnet Dynamikterme von der offenen auf die geschlossene Struktur um.
+
+% Quellen:
+% [NakamuraGho1989] Nakamura, Yoshihiko and Ghodoussi, Modjtaba: Dynamics computation of closed-link robot mechanisms with nonredundant and redundant actuators (1989)
+% [ParkChoPlo1999] Park, FC and Choi, Jihyeon and Ploen, SR: Symbolic formulation of closed chain dynamics in independent coordinates
+
+% %VERSIONINFO%
+
+% Moritz Schappler, schappler@irt.uni-hannover.de, 2017-12
+% (C) Institut für Regelungstechnik, Universität Hannover
+
+clear
+clc
+
+%% Init
+% Annahme: Roboter "%RN%" ist das System mit Zwangsbedingungen, "%RN%u"
+% ist das gleiche System ohne Zwangsbedinungen ("u"=unconstrained)
+
+TSSc = %RN%_varpar_testfunctions_parameter; % mit Zwangsbedingungen
+TSSo = %RN%u_varpar_testfunctions_parameter; % ohne Zwangsbedingungen
+
+% Dynamikparameter angleichen
+TSSc.m = TSSo.m;
+TSSc.rSges = TSSo.rSges;
+TSSc.Icges = TSSo.Icges;
+TSSc.mrSges = TSSo.mrSges;
+TSSc.Ifges = TSSo.Ifges;
+
+%% Test der Funktionen
+for iq = 1:TSSc.n
+  g = TSSc.G(iq,:)';
+  
+  % Minimalkoordinaten für System mit ZB
+  q1 = TSSc.Q(iq,:)';
+  qD1 = TSSc.QD(iq,:)';
+  qDD1 = TSSc.QDD(iq,:)';
+
+  % Umrechnung von System mit ZB auf offenes System ohne ZB
+  W = %RN%_kinconstr_expl_jacobian_mdh_sym_varpar(q1, TSSc.pkin);
+  WD = %RN%_kinconstr_expl_jacobianD_mdh_sym_varpar(q1, qD1, TSSc.pkin);
+  q = %RN%_kinconstr_expl_mdh_sym_varpar(q1, TSSc.pkin);
+  qD = W*qD1;
+  qDD = W*qDD1 + WD*qD1;
+  
+  % Vergleiche Gelenk-Transformationsmatrizen
+  Tc = %RN%_joint_trafo_rotmat_mdh_sym_varpar(q1, TSSc.pkin);
+  Tu = %RN%u_joint_trafo_rotmat_mdh_sym_varpar(q, TSSo.pkin);
+  for jj = 1:TSSc.NJ 
+    test = Tc(:,:,jj)\Tu(:,:,jj) - eye(4);
+    if any( abs(test(:)) > 1e-10 )
+      [Tc(:,:,jj),Tu(:,:,jj)] %#ok<NOPTS>
+      r2rpy(Tc(1:3,1:3,jj)' * Tu(1:3,1:3,jj))*180/pi %#ok<NOPTS>
+      error('Gelenk-Transformation stimmt nicht');
+    end
+  end
+  % Vergleiche KörperKS-Transformationsmatrizen
+  Tcc = %RN%_fkine_fixb_rotmat_mdh_sym_varpar(q1, TSSc.pkin);
+  Tcu = %RN%u_fkine_fixb_rotmat_mdh_sym_varpar(q, TSSo.pkin);
+  for jj = 1:TSSc.NL % 1=Basis
+    test = Tcc(:,:,jj)\Tcu(:,:,jj) - eye(4);
+    if any( abs(test(:)) > 1e-10 )
+      [Tcc(:,:,jj),Tcu(:,:,jj)] %#ok<NOPTS>
+      r2rpy(Tcc(1:3,1:3,jj)' * Tcu(1:3,1:3,jj))*180/pi %#ok<NOPTS>
+      error('Transformation stimmt nicht');
+    end
+  end
+  % Vergleiche Geschwindigkeit und Jacobi-Matrizen
+  for jj = 1:TSSc.NL % 1=Basis
+    r_i_i_C = rand(3,1); % Jacobi-Matrix für zufälligen Punkt
+    Jgc = %RN%_jacobig_floatb_twist_sym_varpar(q1, uint8(jj), r_i_i_C, TSSc.pkin);
+    Jgo = %RN%u_jacobig_floatb_twist_sym_varpar(q, uint8(jj), r_i_i_C, TSSo.pkin);
+    % Geschwindigkeit des Punktes mit/ohne ZB
+    Vc = Jgc*qD1;
+    Vo = Jgo*qD;
+    if any( abs(Vc-Vo) > 1e-10 )
+      error('Geschwindigkeit/Jacobi-Matrix stimmt nicht');
+    end
+  end
+
+  % Dynamik der offenen Kette
+  tau = %RN%u_invdynJ_fixb_slag_vp1(q, qD, qDD, g, ...
+    TSSo.pkin, TSSo.m, TSSo.rSges, TSSo.Icges);
+  
+  % Dynamik der geschlossenen Kette aus Jacobi (Projektion)
+  % [NakamuraGho1989], Gl. 5
+  tau1 = W' * tau;
+  
+  % Vergleich mit Lösung mit Elimination
+  tau1_test = %RN%_invdynJ_fixb_slag_vp1(q1, qD1, qDD1, g, ...
+    TSSc.pkin, TSSc.m, TSSc.rSges, TSSc.Icges);
+  
+  test = tau1-tau1_test;
+  if any(abs(test(:)) > 1e-10)
+    error('Dynamik mit ZB-Jacobi stimmt nicht mit Dynamik aus Eliminations-Ansatz');
+  end
+
+end
+
+fprintf('Test der Zwangsbedingungen offen/geschlossen für %d Kombinationen erfolgreich\n', TSSc.n);

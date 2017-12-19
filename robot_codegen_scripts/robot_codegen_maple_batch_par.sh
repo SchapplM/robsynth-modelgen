@@ -71,6 +71,7 @@ do
  	if [ -f  $repo_pfad/robot_codegen_constraints/${robot_name}_kinematic_constraints.mpl ]; then
 		dateiliste_kin="$dateiliste_kin
 			robot_codegen_constraints/${robot_name}_kinematic_constraints.mpl
+			robot_codegen_constraints/robot_kinematic_constraints_calculations.mpl
 		"
 	fi;
 	dateiliste_kin="$dateiliste_kin
