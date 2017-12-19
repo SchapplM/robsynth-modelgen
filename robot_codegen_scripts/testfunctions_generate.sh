@@ -64,7 +64,7 @@ cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
 KCP_dat1=$repo_pfad/robot_codegen_constraints/${robot_name}_kinematic_parameter_values.m
 if [ -f $KCP_dat1 ]; then
   printf "\n%%%% Werte für Kinematikparameter direkt eintragen\n" >> $zieldat
-  printf "\n%% Aus ${robot_name}_kinematic_parameter_values.m\n" >> $zieldat
+  printf "\n%% Aus ${robot_name}/kinematic_parameter_values.m\n" >> $zieldat
   cat $KCP_dat1 >> $zieldat
 elif [ "$robot_kinconstr_exist" == "1" ]; then
   # Die einzelnen skalaren Werte für die Kinematik-Zwangsbedingungen müssen zufällig initialisiert werden und in den Kinematikparametervektor eingetragen werden
@@ -88,44 +88,53 @@ fi;
 # So werden nur die Bestandteile übernommen, die Werte enthalten
 # Null-Einträge werden automatisch zu Null gesetzt.
 printf "\n\n%%%% MDH-Parametereinträge mit vorgegebenen Werten überschreiben" >> $zieldat
-printf "\n%% Aus ${robot_name}_parameters_mdh_d_matlab.m\n" >> $zieldat
+printf "\n%% Aus ${robot_name}/parameters_mdh_d_matlab.m\n" >> $zieldat
 cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_d_matlab.m >> $zieldat
 varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
 echo "d_mdh = $varname_tmp;" >> $zieldat
-printf "\n%% Aus ${robot_name}_parameters_mdh_a_matlab.m\n" >> $zieldat
+printf "\n%% Aus ${robot_name}/parameters_mdh_a_matlab.m\n" >> $zieldat
 cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_a_matlab.m >> $zieldat
 varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
 echo "a_mdh = $varname_tmp;" >> $zieldat
-printf "\n%% Aus ${robot_name}_parameters_mdh_theta_matlab.m\n" >> $zieldat
+printf "\n%% Aus ${robot_name}/parameters_mdh_theta_matlab.m\n" >> $zieldat
 cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_theta_matlab.m >> $zieldat
 varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
 echo "theta_mdh = $varname_tmp;" >> $zieldat
-printf "\n%% Aus ${robot_name}_parameters_mdh_b_matlab.m\n" >> $zieldat
+printf "\n%% Aus ${robot_name}/parameters_mdh_b_matlab.m\n" >> $zieldat
 cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_b_matlab.m >> $zieldat
 varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
 echo "b_mdh = $varname_tmp;" >> $zieldat
-printf "\n%% Aus ${robot_name}_parameters_mdh_beta_matlab.m\n" >> $zieldat
+printf "\n%% Aus ${robot_name}/parameters_mdh_beta_matlab.m\n" >> $zieldat
 cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_beta_matlab.m >> $zieldat
 varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
 echo "beta_mdh = $varname_tmp;" >> $zieldat
-printf "\n%% Aus ${robot_name}_parameters_mdh_alpha_matlab.m\n" >> $zieldat
+printf "\n%% Aus ${robot_name}/parameters_mdh_alpha_matlab.m\n" >> $zieldat
 cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_alpha_matlab.m >> $zieldat
 varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
 echo "alpha_mdh = $varname_tmp;" >> $zieldat
-printf "\n%% Aus ${robot_name}_parameters_mdh_qoffset_matlab.m\n" >> $zieldat
+printf "\n%% Aus ${robot_name}/parameters_mdh_qoffset_matlab.m\n" >> $zieldat
 cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_qoffset_matlab.m >> $zieldat
 varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
 echo "q_offset_mdh = $varname_tmp;" >> $zieldat
-printf "\n%% Aus ${robot_name}_parameters_mdh_v_matlab.m\n" >> $zieldat
+printf "\n%% Aus ${robot_name}/parameters_mdh_v_matlab.m\n" >> $zieldat
 cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_v_matlab.m >> $zieldat
 varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
 echo "v_mdh = uint8($varname_tmp);" >> $zieldat
-printf "\n%% Aus ${robot_name}_parameters_mdh_sigma_matlab.m\n" >> $zieldat
+printf "\n%% Aus ${robot_name}/parameters_mdh_sigma_matlab.m\n" >> $zieldat
 cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_sigma_matlab.m >> $zieldat
 varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
 echo "sigma_mdh = $varname_tmp;" >> $zieldat
 # Ersetze "_mdh", damit die Variablennamen stimmen
 sed -i "s/_mdh//g" $zieldat
+
+if [ -f $repo_pfad/codeexport/${robot_name}/tmp/kinconstr_index_dependant_joints_matlab.m ]; then
+  printf "\n%% Aus ${robot_name}/kinconstr_index_dependant_joints_matlab.m\n" >> $zieldat
+  cat $repo_pfad/codeexport/${robot_name}/tmp/kinconstr_index_dependant_joints_matlab.m >> $zieldat
+  varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
+  echo "Ind_depjoints = $varname_tmp;" >> $zieldat
+else
+  echo "Ind_depjoints = false(%NJ%,1);" >> $zieldat
+fi
 
 # Schreibe Ausgangsvariable (lese Teil aus Vorlage)
 quelldat=$repo_pfad/robot_codegen_testfunctions/robot_varpar_testfunctions_parameter.m.template2

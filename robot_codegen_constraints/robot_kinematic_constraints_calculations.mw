@@ -229,24 +229,52 @@ end if:</Text-field>
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Finde und z\303\244hle die Vorkommnisse von kintmp_s in theta_s und d_s. Die Anzahl der abh\303\244ngigen Gelenkvariablen muss mit den definierten Minimalkoordinaten \303\274bereinstimmen, sonst ist das benutzerspezifizierte Modell falsch.</Font></Text-field>
 </Input>
 </Group>
+<Group view="code" labelreference="L2263" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Z\303\244hle, welche Zwangsbedingungen tats\303\244chlich vorkommen</Font></Text-field>
+</Input>
+</Group>
 <Group view="code" hide-output="false" labelreference="L2211" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">kintmp_zaehler := Matrix(RowDimension(kintmp_s),1):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">kintmp_zaehler := Matrix(NSE,1):</Text-field>
 </Input>
 </Group>
 <Group view="code" hide-output="false" labelreference="L2213" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to RowDimension(kintmp_s) do
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NSE do
   if has(has~(&lt;theta_s(1..NJ,1);d_s(1..NJ,1)&gt;, kintmp_s(i,1)), true) then
     kintmp_zaehler(i,1) := 1:
   end if:
 end do:</Text-field>
 </Input>
 </Group>
+<Group view="code" labelreference="L2262" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Z\303\244hle, welche Gelenke abh\303\244ngig sind (durch ZB beschrieben).</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" hide-output="false" labelreference="L2255" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">jv_zaehler := Matrix(NJ,1):</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-output="false" labelreference="L2256" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NJ do
+  if has(has~(theta_s(i,1), kintmp_s), true) or has(has~(d_s(i,1), kintmp_s), true) then
+    jv_zaehler(i,1) := 1:
+  end if:
+end do:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2265" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Anzahl der abh\303\244ngigen Gelenkvariablen (Z\303\244hlmethode: Gelenkkoordinaten durchgehen)</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" hide-output="false" labelreference="L2259" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">NC1 := add(jv_zaehler(n), n = 1 .. NJ):</Text-field>
+</Input>
+</Group>
 <Group view="code" labelreference="L2250" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Anzahl der abh\303\244ngigen Gelenkvariablen</Font></Text-field>
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Anzahl der abh\303\244ngigen Gelenkvariablen (Z\303\244hlmethode: Zwangsbedingungen durchgehen)</Font></Text-field>
 </Input>
 </Group>
 <Group view="code" hide-input="false" hide-output="false" labelreference="L2217" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">NC := add(kintmp_zaehler(n), n = 1 .. NSE):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">NC2 := add(kintmp_zaehler(n), n = 1 .. NSE):</Text-field>
 </Input>
 </Group>
 <Group view="code" hide-output="false" labelreference="L2220" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -254,9 +282,15 @@ end do:</Text-field>
 </Input>
 </Group>
 <Group view="code" hide-output="false" labelreference="L2246" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if NQJ+NC &lt;&gt; NJ then
-  <Font encoding="UTF-8">printf(&quot;Fehler: Anzahl der Zwangsbedingungen %d passt nicht zur Anzahl der Gelenke %d und der Minimalkoordinaten %d\134n&quot;, NC, NJ, NQJ):
-end if:</Font></Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if NQJ+NC1 &lt;&gt; NJ then
+  <Font encoding="UTF-8">printf(&quot;Fehler: Anzahl der Zwangsbedingungen %d (aus Gelenkvariablen) passt nicht zur Anzahl der Gelenke %d und der Minimalkoordinaten %d\134n&quot;, NC1, NJ, NQJ):
+</Font>end if:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2264" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if NQJ+NC2 &lt;&gt; NJ then
+  printf(&quot;Fehler: Anzahl der Zwangsbedingungen %d (aus Verwendung der Zwangsbedingungs-Variablen) <Font encoding="UTF-8">passt nicht zur Anzahl der Gelenke %d und der Minimalkoordinaten %d\134n&quot;, NC2, NJ, NQJ):
+</Font>end if:</Text-field>
 </Input>
 </Group>
 <Group view="code" hide-output="false" labelreference="L2221" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -311,8 +345,8 @@ end do:</Text-field>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1"><Font encoding="UTF-8">Jacobi-Matrix der abh\303\244ngigen Winkel</Font></Text-field></Title>
 <Group labelreference="L2243" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ableitung der Gelenkkoordinaten nach den Minimalkoordinaten.
-Wird ben\303\266tigt, um die Geschwindigkeit der Gelenkkoordinaten der offenen Struktur zu berechnen und um die Momente der offenen Struktur auf die geschlossene Struktur umzurechnen.</Font>
+<Input><Text-field style="Text" layout="Normal">Ableitung der Gelenkkoordinaten nach den Minimalkoordinaten.
+<Font encoding="UTF-8">Wird ben\303\266tigt, um die Geschwindigkeit der Gelenkkoordinaten der offenen Struktur zu berechnen und um die Momente der offenen Struktur auf die geschlossene Struktur umzurechnen.</Font>
 Ist Matrix Phi aus [ParkChoPlo1999]. qJ hier ist qa dort. qr dort entspricht den Koordinaten desselben Systems ohne Zwangsbedingungen.</Text-field><Text-field style="Text" layout="Normal">Entspricht der Matrix W aus [NakamuraGho1989] (nur dass hier die Aufteilung q1,q2 nicht gestapelt in q auftreten muss).</Text-field>
 </Input>
 </Group>
@@ -371,6 +405,7 @@ save PhiD_s, sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_explicit_j
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" hide-output="false" labelreference="L2120" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act = true then
+  MatlabExport(jv_zaehler, sprintf(&quot;../codeexport/%s/tmp/kinconstr_index_dependant_joints_matlab.m&quot;, robot_name), 2):
   MatlabExport(jv_qs, sprintf(&quot;../codeexport/%s/tmp/kinconstr_expl_matlab.m&quot;, robot_name), 2):
   MatlabExport(Phi_s, sprintf(&quot;../codeexport/%s/tmp/kinconstr_expl_jacobian_matlab.m&quot;, robot_name), 2):
   MatlabExport(PhiD_s, sprintf(&quot;../codeexport/%s/tmp/kinconstr_expl_jacobianD_matlab.m&quot;, robot_name), 2):
@@ -381,6 +416,10 @@ end if:</Text-field>
 </Section><Presentation-Block>
 <Group labelreference="L1950" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Fertig\134n&quot;):</Font></Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="presentation" inline-output="false" labelreference="L2267" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Equation executable="true" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYlLUkjbWlHRiQ2I1EhRicvJStleGVjdXRhYmxlR1EmZmFsc2VGJy8lLG1hdGh2YXJpYW50R1Enbm9ybWFsRic=">JSFH</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Worksheet>

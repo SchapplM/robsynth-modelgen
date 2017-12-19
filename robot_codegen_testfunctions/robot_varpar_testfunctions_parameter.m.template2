@@ -4,7 +4,9 @@ TSS = struct('type', 'Test Settings Structure');
 TSS.NQJ = NQJ;
 TSS.NJ = NJ;
 TSS.NL = NL;
-TSS.robot_name = robot_name;
+TSS.Ind_depjoints = logical(Ind_depjoints); % Binärindizes der abhängigen Gelenke
+% Kinematische Zwangsbedingungen
+TSS.NQJ = NQJ;
 % Kinematikparameter
 TSS.a = a;
 TSS.alpha = alpha;

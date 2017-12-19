@@ -64,17 +64,30 @@ theta_s := convert_t_s(theta):
 # Gelenkvariable für Schubgelenke (nach [KhalilKle1986])
 d_s := convert_t_s(d):
 # Finde und zähle die Vorkommnisse von kintmp_s in theta_s und d_s. Die Anzahl der abhängigen Gelenkvariablen muss mit den definierten Minimalkoordinaten übereinstimmen, sonst ist das benutzerspezifizierte Modell falsch.
-kintmp_zaehler := Matrix(RowDimension(kintmp_s),1):
-for i from 1 to RowDimension(kintmp_s) do
+# Zähle, welche Zwangsbedingungen tatsächlich vorkommen
+kintmp_zaehler := Matrix(NSE,1):
+for i from 1 to NSE do
   if has(has~(<theta_s(1..NJ,1);d_s(1..NJ,1)>, kintmp_s(i,1)), true) then
     kintmp_zaehler(i,1) := 1:
   end if:
 end do:
-# Anzahl der abhängigen Gelenkvariablen
-NC := add(kintmp_zaehler(n), n = 1 .. NSE):
+# Zähle, welche Gelenke abhängig sind (durch ZB beschrieben).
+jv_zaehler := Matrix(NJ,1):
+for i from 1 to NJ do
+  if has(has~(theta_s(i,1), kintmp_s), true) or has(has~(d_s(i,1), kintmp_s), true) then
+    jv_zaehler(i,1) := 1:
+  end if:
+end do:
+# Anzahl der abhängigen Gelenkvariablen (Zählmethode: Gelenkkoordinaten durchgehen)
+NC1 := add(jv_zaehler(n), n = 1 .. NJ):
+# Anzahl der abhängigen Gelenkvariablen (Zählmethode: Zwangsbedingungen durchgehen)
+NC2 := add(kintmp_zaehler(n), n = 1 .. NSE):
 # Prüfe, ob Anzahl Zwangsbedingungen zu Anzahl Gelenke und Minimalkoordinaten passt.
-if NQJ+NC <> NJ then
-  printf("Fehler: Anzahl der Zwangsbedingungen %d passt nicht zur Anzahl der Gelenke %d und der Minimalkoordinaten %d\n", NC, NJ, NQJ):
+if NQJ+NC1 <> NJ then
+  printf("Fehler: Anzahl der Zwangsbedingungen %d (aus Gelenkvariablen) passt nicht zur Anzahl der Gelenke %d und der Minimalkoordinaten %d\n", NC1, NJ, NQJ):
+end if:
+if NQJ+NC2 <> NJ then
+  printf("Fehler: Anzahl der Zwangsbedingungen %d (aus Verwendung der Zwangsbedingungs-Variablen) passt nicht zur Anzahl der Gelenke %d und der Minimalkoordinaten %d\n", NC2, NJ, NQJ):
 end if:
 # Indizes der Zwangsbedingungen (in kintmp_s), die wirklich verwendet werden. Wird später nicht mehr benötigt.
 Ind_ZB := Matrix(NC,1):
@@ -125,9 +138,11 @@ save Phi_s, sprintf("../codeexport/%s/tmp/kinematic_constraints_explicit_jacobia
 save PhiD_s, sprintf("../codeexport/%s/tmp/kinematic_constraints_explicit_jacobian_time_derivative_maple.m", robot_name):
 printf("Ausdrücke für Kinematische ZB gespeichert (Maple)\n"):
 if codegen_act = true then
+  MatlabExport(jv_zaehler, sprintf("../codeexport/%s/tmp/kinconstr_index_dependant_joints_matlab.m", robot_name), 2):
   MatlabExport(jv_qs, sprintf("../codeexport/%s/tmp/kinconstr_expl_matlab.m", robot_name), 2):
   MatlabExport(Phi_s, sprintf("../codeexport/%s/tmp/kinconstr_expl_jacobian_matlab.m", robot_name), 2):
   MatlabExport(PhiD_s, sprintf("../codeexport/%s/tmp/kinconstr_expl_jacobianD_matlab.m", robot_name), 2):
   printf("Ausdrücke für Kinematische ZB gespeichert (Matlab)\n"):
 end if:
 printf("Fertig\n"):
+
