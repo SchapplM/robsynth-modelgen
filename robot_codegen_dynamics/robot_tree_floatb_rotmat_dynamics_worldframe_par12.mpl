@@ -1,3 +1,4 @@
+
 # Inverse Dynamics for Robot based on MDH frames
 # Einleitung
 # Berechnung der inversen Dynamik
@@ -116,11 +117,13 @@ end if:
 # Generate
 tauMM_s := dTdqDdt_s:
 MM_s := Matrix(NQ, NQ):
-for i to NQ do 
-  for j to NQ do 
-    MM_s[i, j] := diff(tauMM_s[i, 1], qDD_s[j, 1]):
+if codeexport_inertia or codeexport_inertiaD or codeexport_cormat then
+  for i to NQ do 
+    for j to NQ do 
+      MM_s[i, j] := diff(tauMM_s[i, 1], qDD_s[j, 1]):
+    end do:
   end do:
-end do:
+end if:
 # Matlab Export (nur linke untere Dreiecksmatrix bei vollständigen Matrizen)
 if codeexport_inertia and not(base_method_name="twist") then
   MM_s_vek := symmat2vec(MM_s):
@@ -186,11 +189,15 @@ if codeexport_inertiaD then
   MatlabExport(MMDjj_s_vek, sprintf("../codeexport/%s/tmp/inertia_joint_joint_time_derivative_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
 # Coriolis Vector
-# Generate
-tauCC_s := dTdqDdt_s-dTdq_s:
-for i to NQ do 
-  tauCC_s := subs({qDD_s(i, 1) = 0}, tauCC_s):
-end do:
+# Generiere Coriolis-Vektor aus dem Lagrange-Momenten
+tauCC_s := Matrix(NQ,1): # Platzhalter
+;
+if codeexport_corvec then
+  tauCC_s := dTdqDdt_s-dTdq_s:
+  for i to NQ do 
+    tauCC_s := subs({qDD_s(i, 1) = 0}, tauCC_s):
+  end do:
+end if:
 if codeexport_corvec and not(base_method_name="twist") then
   for i to NQ do 
     MatlabExport(tauCC_s(i), sprintf("../codeexport/%s/tmp/coriolisvec_floatb_%s_%d_par%d_matlab.m", robot_name, base_method_name, i, codegen_dynpar), codegen_opt):
@@ -225,15 +232,17 @@ cijk := proc (i::integer, j::integer, k::integer, A, qs)
   c := (1/2)*(diff(A[i, j], qs(k, 1)))+(1/2)*(diff(A[i, k], qs(j, 1)))-(1/2)*(diff(A[j, k], qs(i, 1))):
   return c:
 end proc:
-Cqs:=Matrix(NQ,NQ): 
-for i  from 1 to NQ do
-  for j from 1 to NQ do
-    Cqs[i,j]:=0:
-    for k from 1 to NQ do
-      Cqs[i,j]:=Cqs[i,j]+cijk(i,j,k,MM_s,q_s)*qD_s[k,1]:
+if codeexport_cormat then
+  Cqs:=Matrix(NQ,NQ): 
+  for i  from 1 to NQ do
+    for j from 1 to NQ do
+      Cqs[i,j]:=0:
+      for k from 1 to NQ do
+        Cqs[i,j]:=Cqs[i,j]+cijk(i,j,k,MM_s,q_s)*qD_s[k,1]:
+      end do:
     end do:
   end do:
-end do:
+end if:
 # Matlab Export: Floating base
 if codeexport_cormat and not(base_method_name="twist") then
   MatlabExport(Cqs[1..NQ,1..NQ], sprintf("../codeexport/%s/tmp/coriolismat_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
@@ -243,17 +252,21 @@ if codeexport_cormat and not(base_method_name="twist") then
 end if:
 # Matlab Export: Fixed base
 Cqs_fixb:=Cqs:
-for i from 1 to NQB do
-  Cqs_fixb := subs({X_base_s[i,1]=0},Cqs_fixb):
-end do:
-for i from 1 to 6 do
-  Cqs_fixb := subs({V_base_s[i,1]=0},Cqs_fixb):
-end do:
+if codeexport_cormat then
+  for i from 1 to NQB do
+    Cqs_fixb := subs({X_base_s[i,1]=0},Cqs_fixb):
+  end do:
+  for i from 1 to 6 do
+    Cqs_fixb := subs({V_base_s[i,1]=0},Cqs_fixb):
+  end do:
+end if:
 if codeexport_cormat then
   MatlabExport(Cqs_fixb[7..NQ,7..NQ], sprintf("../codeexport/%s/tmp/coriolismat_joint_fixb_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt):
 end if:
 # Joint Torques
-tau := dTdqDdt_s-dTdq_s+dUdq_s:
+if codeexport_invdyn then
+  tau := dTdqDdt_s-dTdq_s+dUdq_s:
+end if:
 # Matlab Export: Floating base
 # Berechnung der Basis-Belastung ist für manche Basis-Darstellungen falsch (siehe oben unter Gravitationslast).
 if codeexport_invdyn and not(base_method_name="twist") then
@@ -266,14 +279,16 @@ if codeexport_invdyn and not(base_method_name="twist") then
   MatlabExport(tau[7..NQ], sprintf("../codeexport/%s/tmp/invdyn_joint_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
 # Matlab Export: Fixed base
-taus_fixb:=tau:
-for i from 1 to NQB do
-  taus_fixb := subs({X_base_s[i,1]=0},taus_fixb):
-end do:
-for i from 1 to 6 do
-  taus_fixb := subs({V_base_s[i,1]=0},taus_fixb):
-  taus_fixb := subs({VD_base_s[i,1]=0},taus_fixb):
-end do:
+if codeexport_invdyn then
+  taus_fixb:=tau:
+  for i from 1 to NQB do
+    taus_fixb := subs({X_base_s[i,1]=0},taus_fixb):
+  end do:
+  for i from 1 to 6 do
+    taus_fixb := subs({V_base_s[i,1]=0},taus_fixb):
+    taus_fixb := subs({VD_base_s[i,1]=0},taus_fixb):
+  end do:
+end if:
 if codeexport_invdyn then
   MatlabExport(taus_fixb[7..NQ], sprintf("../codeexport/%s/tmp/invdyn_fixb_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt):
 end if:

@@ -299,14 +299,19 @@ end if:</Text-field>
 <Input><Text-field style="Text" layout="Normal">Generate</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1585" drawlabel="true">
+<Group labelreference="L1713" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tauMM_s := dTdqDdt_s:
-MM_s := Matrix(NQ, NQ):
-for i to NQ do 
-  for j to NQ do 
-    MM_s[i, j] := diff(tauMM_s[i, 1], qDD_s[j, 1]):
+MM_s := Matrix(NQ, NQ):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1585" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertia or codeexport_inertiaD or codeexport_cormat then
+  for i to NQ do 
+    for j to NQ do 
+      MM_s[i, j] := diff(tauMM_s[i, 1], qDD_s[j, 1]):
+    end do:
   end do:
-end do:</Text-field>
+end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1107" drawlabel="true">
@@ -431,14 +436,20 @@ end if:</Text-field>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Coriolis Vector</Text-field></Title>
 <Group labelreference="L1110" drawlabel="true">
-<Input><Text-field style="Text" layout="Normal">Generate</Text-field>
+<Input><Text-field style="Text" layout="Normal">Generiere Coriolis-Vektor aus dem Lagrange-Momenten</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1587" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tauCC_s := dTdqDdt_s-dTdq_s:
-for i to NQ do 
-  tauCC_s := subs({qDD_s(i, 1) = 0}, tauCC_s):
-end do:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tauCC_s := Matrix(NQ,1): # Platzhalter</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1714" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_corvec then
+  tauCC_s := dTdqDdt_s-dTdq_s:
+  for i to NQ do 
+    tauCC_s := subs({qDD_s(i, 1) = 0}, tauCC_s):
+  end do:
+end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1681" drawlabel="true">
@@ -507,15 +518,17 @@ end proc:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1590" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Cqs:=Matrix(NQ,NQ): 
-for i  from 1 to NQ do
-  for j from 1 to NQ do
-    Cqs[i,j]:=0:
-    for k from 1 to NQ do
-      Cqs[i,j]:=Cqs[i,j]+cijk(i,j,k,MM_s,q_s)*qD_s[k,1]:
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_cormat then
+  Cqs:=Matrix(NQ,NQ): 
+  for i  from 1 to NQ do
+    for j from 1 to NQ do
+      Cqs[i,j]:=0:
+      for k from 1 to NQ do
+        Cqs[i,j]:=Cqs[i,j]+cijk(i,j,k,MM_s,q_s)*qD_s[k,1]:
+      end do:
     end do:
   end do:
-end do:</Text-field>
+end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L990" drawlabel="true">
@@ -539,13 +552,18 @@ end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1609" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Cqs_fixb:=Cqs:
-for i from 1 to NQB do
-  Cqs_fixb := subs({X_base_s[i,1]=0},Cqs_fixb):
-end do:
-for i from 1 to 6 do
-  Cqs_fixb := subs({V_base_s[i,1]=0},Cqs_fixb):
-end do:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Cqs_fixb:=Cqs:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1715" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_cormat then
+  for i from 1 to NQB do
+    Cqs_fixb := subs({X_base_s[i,1]=0},Cqs_fixb):
+  end do:
+  for i from 1 to 6 do
+    Cqs_fixb := subs({V_base_s[i,1]=0},Cqs_fixb):
+  end do:
+end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1608" drawlabel="true">
@@ -557,7 +575,9 @@ end if:</Text-field>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Joint Torques</Text-field></Title>
 <Group labelreference="L1592" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tau := dTdqDdt_s-dTdq_s+dUdq_s:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_invdyn then
+  tau := dTdqDdt_s-dTdq_s+dUdq_s:
+end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1611" drawlabel="true">
@@ -588,14 +608,16 @@ end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1613" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">taus_fixb:=tau:
-for i from 1 to NQB do
-  taus_fixb := subs({X_base_s[i,1]=0},taus_fixb):
-end do:
-for i from 1 to 6 do
-  taus_fixb := subs({V_base_s[i,1]=0},taus_fixb):
-  taus_fixb := subs({VD_base_s[i,1]=0},taus_fixb):
-end do:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_invdyn then
+  taus_fixb:=tau:
+  for i from 1 to NQB do
+    taus_fixb := subs({X_base_s[i,1]=0},taus_fixb):
+  end do:
+  for i from 1 to 6 do
+    taus_fixb := subs({V_base_s[i,1]=0},taus_fixb):
+    taus_fixb := subs({VD_base_s[i,1]=0},taus_fixb):
+  end do:
+end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1616" drawlabel="true">
