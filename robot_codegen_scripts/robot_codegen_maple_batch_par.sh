@@ -18,6 +18,7 @@ echo $repo_pfad
 
 
 # Standard-Einstellungen
+CG_MINIMAL=0
 CG_FIXBONLY=0
 CG_FLOATBONLY=0
 
@@ -27,6 +28,9 @@ while [[ $# > 0 ]]
 do
 key="$1"
 case $key in
+    --minimal)
+    CG_MINIMAL=1
+    ;;
     --fixb_only)
     CG_FIXBONLY=1
     ;;
@@ -77,59 +81,82 @@ do
 	dateiliste_kin="$dateiliste_kin
 		robot_codegen_definitions/robot_tree_kinematic_parameter_list.mpl
 	"
-	
 	dateiliste_kin="$dateiliste_kin
 			robot_codegen_kinematics/robot_tree_floatb_rotmat_mdh_kinematics.mpl
-			robot_codegen_kinematics/robot_tree_floatb_rotmat_kinematics_com_worldframe_par1.mpl
 	"
+  if [ "$CG_MINIMAL" == "0" ]; then
+	  dateiliste_kin="$dateiliste_kin
+			  robot_codegen_kinematics/robot_tree_floatb_rotmat_kinematics_com_worldframe_par1.mpl
+	  "
+  fi;
 	dateiliste_mdhvel="
 	    robot_codegen_kinematics/robot_tree_velocity_mdh_angles.mpl
   "
-	dateiliste_vel="
-	    robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_worldframe_par1.mpl
-	    robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_linkframe.mpl
-	"
-	dateiliste_en="
-      robot_codegen_energy/robot_tree_floatb_rotmat_energy_worldframe_par1.mpl
-      robot_codegen_energy/robot_tree_floatb_rotmat_energy_worldframe_par2.mpl
-      robot_codegen_energy/robot_tree_floatb_rotmat_energy_linkframe_par2.mpl
-	"
-	dateiliste_dyn="
-		  robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1_corvec.mpl
-		  robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1_cormat.mpl
-		  robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1_grav.mpl
-		  robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1_inertia.mpl
-		  robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1_inertiaD.mpl
-		  robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1_invdyn.mpl
-		  robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2_corvec.mpl
-		  robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2_cormat.mpl
-		  robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2_grav.mpl
-		  robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2_inertia.mpl
-		  robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2_inertiaD.mpl
-		  robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2_invdyn.mpl
-	"
-  if [ ${basemeth} == "twist" ]; then
-      dateiliste_plin="robot_codegen_energy/robot_chain_fixb_rotmat_energy_regressor.mpl"
+  if [ "$CG_MINIMAL" == "0" ]; then
+	  dateiliste_vel="
+	      robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_worldframe_par1.mpl
+	      robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_linkframe.mpl
+	  "
   else
-      dateiliste_plin="robot_codegen_energy/robot_chain_floatb_rotmat_energy_regressor.mpl"
+	  dateiliste_vel="
+	      robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_linkframe.mpl
+	  "
   fi;
-  dateiliste_plin="
-    $dateiliste_plin
-    robot_codegen_definitions/robot_tree_base_parameter_transformations.mpl
-	  robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_minpar_corvec.mpl
-	  robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_minpar_cormat.mpl
-	  robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_minpar_grav.mpl
-	  robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_minpar_inertia.mpl
-	  robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_minpar_inertiaD.mpl
-	  robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_minpar_invdyn.mpl
-	  robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_pv2_corvec.mpl
-	  robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_pv2_cormat.mpl
-	  robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_pv2_grav.mpl
-	  robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_pv2_inertia.mpl
-	  robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_pv2_inertiaD.mpl
-	  robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_pv2_invdyn.mpl
+  if [ "$CG_MINIMAL" == "0" ]; then
+	  dateiliste_en="
+        robot_codegen_energy/robot_tree_floatb_rotmat_energy_worldframe_par1.mpl
+        robot_codegen_energy/robot_tree_floatb_rotmat_energy_worldframe_par2.mpl
+        robot_codegen_energy/robot_tree_floatb_rotmat_energy_linkframe_par2.mpl
+	  "
+  else
+	  dateiliste_en="
+        robot_codegen_energy/robot_tree_floatb_rotmat_energy_worldframe_par2.mpl
+        robot_codegen_energy/robot_tree_floatb_rotmat_energy_linkframe_par2.mpl
+	  "
+  fi;
+  dateiliste_dyn="
+	    robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2_corvec.mpl
+	    robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2_grav.mpl
+	    robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2_inertia.mpl
   "
+  if [ "$CG_MINIMAL" == "0" ]; then
+    dateiliste_dyn="
+        $dateiliste_dyn
+	      robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1_corvec.mpl
+	      robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1_cormat.mpl
+	      robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1_grav.mpl
+	      robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1_inertia.mpl
+	      robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1_inertiaD.mpl
+	      robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1_invdyn.mpl
+	      robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2_cormat.mpl
+	      robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2_invdyn.mpl
+	      robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2_inertiaD.mpl
+    "
+  fi;
 
+  if [ "$CG_MINIMAL" == "0" ]; then
+    if [ ${basemeth} == "twist" ]; then
+        dateiliste_plin="robot_codegen_energy/robot_chain_fixb_rotmat_energy_regressor.mpl"
+    else
+        dateiliste_plin="robot_codegen_energy/robot_chain_floatb_rotmat_energy_regressor.mpl"
+    fi;
+    dateiliste_plin="
+      $dateiliste_plin
+      robot_codegen_definitions/robot_tree_base_parameter_transformations.mpl
+	    robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_minpar_corvec.mpl
+	    robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_minpar_cormat.mpl
+	    robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_minpar_grav.mpl
+	    robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_minpar_inertia.mpl
+	    robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_minpar_inertiaD.mpl
+	    robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_minpar_invdyn.mpl
+	    robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_pv2_corvec.mpl
+	    robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_pv2_cormat.mpl
+	    robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_pv2_grav.mpl
+	    robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_pv2_inertia.mpl
+	    robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_pv2_inertiaD.mpl
+	    robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_pv2_invdyn.mpl
+    "
+  fi;
   # Zusätzliche Maple-Skripte speziell für dieses System (benutzerdefiniert)
   # Für jede Basis-Methode anhängen.
   addlistfile=$repo_pfad/robot_codegen_additional/scripts/${robot_name}_maple_additional_worksheet_list_${basemeth}

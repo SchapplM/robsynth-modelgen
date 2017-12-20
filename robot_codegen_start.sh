@@ -4,6 +4,8 @@
 # Argumente:
 # -p, --parallel
 #   Parallele Berechnung der Maple-Arbeitsblätter
+# --minimal
+#   Nur die wesentlichen Dynamik- und Kinematikfunktionen erstellen (Kein Regressor, Parametersatz 1)
 # --fixb_only
 #   Nur Berechnung der Fixed-Base Funktionen.
 #
@@ -16,6 +18,7 @@ repo_pfad=$(pwd)
 
 # Standard-Einstellungen
 CG_PARALLEL=0
+CG_MINIMAL=0
 CG_FIXBONLY=0
 CG_FLOATBONLY=0
 
@@ -28,6 +31,7 @@ case $key in
     --help)
     echo "zulässige Parameter sind:"
     echo "-p (--parallel): Parallele Berechnung der Maple-Arbeitsblätter"
+    echo "--minimal: Generie nur die Mindestzahl der notwendigen Funktionen"
     echo "--fixb_only: Nur Berechnung der Fixed-Base-Funktionen (nicht: Floating Base)"
     echo "--floatb_only: Nur Berechnung der Floating-Base-Funktionen (nicht: Fixed Base)"
     echo "Die letzten beiden Optionen sind exklusiv (nur eine ist möglich)"
@@ -35,6 +39,9 @@ case $key in
     ;;
     -p|--parallel)
     CG_PARALLEL=1
+    ;;
+    --minimal)
+    CG_MINIMAL=1
     ;;
     --fixb_only)
     CG_FIXBONLY=1
@@ -52,8 +59,9 @@ shift # past argument or value
 done
 
 echo CG_PARALLEL      = "${CG_PARALLEL}"
+echo CG_MINIMAL       = "${CG_MINIMAL}"
 echo CG_FIXBONLY      = "${CG_FIXBONLY}"
-echo CG_FLOATBONLY      = "${CG_FLOATBONLY}"
+echo CG_FLOATBONLY    = "${CG_FLOATBONLY}"
 
 if [ "$CG_FIXBONLY" == "1" ] && [ "$CG_FLOATBONLY" == "1" ]; then
   echo "Nicht beide Optionen gleichzeitig möglich: fixb_only, floatb_only"
@@ -67,6 +75,9 @@ elif [ "$CG_FLOATBONLY" == "1" ]; then
   CG_BASE_ARGUMENT="--floatb_only"
 else
   CG_BASE_ARGUMENT=""
+fi;
+if [ "$CG_MINIMAL" == "1" ]; then
+  CG_BASE_ARGUMENT="$CG_BASE_ARGUMENT --minimal"
 fi;
 
 cd $repo_pfad/robot_codegen_scripts/
@@ -111,12 +122,15 @@ source $repo_pfad/robot_codegen_scripts/robot_codegen_matlab_varpar.sh
 cd $repo_pfad/robot_codegen_scripts/
 source $repo_pfad/robot_codegen_scripts/testfunctions_generate.sh
 
-# Matlab-Testfunktionen starten
-if [ ! "$CG_FIXBONLY" == "1" ]; then
-  matlab -nodesktop -nosplash -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything');quit;"
+if [ "$CG_MINIMAL" == "0" ]; then
+  # Matlab-Testfunktionen starten
+  if [ ! "$CG_FIXBONLY" == "1" ]; then
+    matlab -nodesktop -nosplash -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything');quit;"
+  else
+    matlab -nodesktop -nosplash -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything_fixbase');quit;"  
+  fi;
+  echo "Funktionsgenerierung abgeschlossen. Alle Tests erfolgreich."
 else
-  matlab -nodesktop -nosplash -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything_fixbase');quit;"  
+  echo "Funktionsgenerierung abgeschlossen. Keine Tests durchgeführt, da nur Minimalversion erstellt wurde."
 fi;
-
-echo "Funktionsgenerierung abgeschlossen. Alle Tests erfolgreich."
 
