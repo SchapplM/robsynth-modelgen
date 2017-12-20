@@ -44,7 +44,7 @@ read "../transformation/proc_trotz":
 read "../transformation/proc_transl": 
 read "../transformation/proc_trafo_mdh": 
 read "../robot_codegen_definitions/robot_env":
-printf("Generiere Geschwindigkeit für %s\n", robot_name):
+printf("Generiere Geschwindigkeit für %s (Herleitung im Körper-KS)\n", robot_name):
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
 # Ergebnisse der Kinematik laden
 read sprintf("../codeexport/%s/tmp/kinematics_floatb_%s_rotmat_maple.m", robot_name, base_method_name):
@@ -99,7 +99,7 @@ for i from 1 to NJ do # Gelenke durchgehen
   else: # Schubgelenk
     rD_i_i(1 .. 3, i+1) := Matrix(Multiply( R_i_j, ( rD_i_i(1 .. 3, j) + CrossProduct(omega_i_i(1 .. 3, j), r_j_j_i) ) ) ) + Matrix(dD(i,1)*<0;0;1>):
   end if:
-  printf("Geschwindigkeit für Körperkoordinatensystem %d aufgestellt. %s\n", i, FormatTime("%Y-%m-%d %H:%M:%S")):
+  printf("Geschwindigkeit für Körperkoordinatensystem %d aufgestellt (Herleitung im Körper-KS). %s\n", i, FormatTime("%Y-%m-%d %H:%M:%S")):
 end do:
 # Export
 # Maple Export

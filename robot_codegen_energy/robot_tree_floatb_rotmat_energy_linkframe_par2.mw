@@ -214,7 +214,7 @@ end do:</Text-field>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2">Potential Energy</Text-field></Title>
 <Group labelreference="L1518" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Berechnung in Welt-KS ist bereits erfolgreich. Wird hier nicht nochmal durchgef\303\274hrt.
-</Font>siehe robot_tree_floatb_twist_rotmat_energy_baseframe_par2.mw</Text-field>
+</Font>siehe robot_tree_floatb_twist_rotmat_energy_worldframe_par2.mw</Text-field>
 </Input>
 </Group>
 </Section>

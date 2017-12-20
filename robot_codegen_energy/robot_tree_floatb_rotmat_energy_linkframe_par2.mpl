@@ -1,3 +1,4 @@
+
 # Energy Calculation for the Robot links based on MDH frames
 # Introduction
 # Berechnung von kinetischer Energie für den Roboter.
@@ -68,7 +69,7 @@ end do:
 save T, sprintf("../codeexport/%s/tmp/energy_kinetic_floatb_%s_linkframe_par2_maple.m", robot_name, base_method_name):
 # Potential Energy
 # Berechnung in Welt-KS ist bereits erfolgreich. Wird hier nicht nochmal durchgeführt.
-# siehe robot_tree_floatb_twist_rotmat_energy_baseframe_par2.mw
+# siehe robot_tree_floatb_twist_rotmat_energy_worldframe_par2.mw
 # Export
 # Matlab Export
 # Floating Base

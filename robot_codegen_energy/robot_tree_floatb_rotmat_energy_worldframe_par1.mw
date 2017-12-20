@@ -164,8 +164,7 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Input>
 </Group>
 <Group labelreference="L1655" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:
-<Font encoding="UTF-8">printf(&quot;Generiere Geschwindigkeit f\303\274r %s\134n&quot;, robot_name):</Font></Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1656" drawlabel="true">
@@ -206,7 +205,7 @@ U_grav := 0:</Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i to NL do 
   U_b[i] := -M[i, 1]*Multiply(Transpose(g_world), r_W_W_Si(1 .. 3, i)):
   U_grav := U_grav+U_b[i, 1]:
-<Font encoding="UTF-8">  printf(&quot;Potentielle Energie aus Gravitation f\303\274r K\303\266rper %d berechnet\134n&quot;, i):
+<Font encoding="UTF-8">  printf(&quot;Potentielle Energie aus Gravitation f\303\274r K\303\266rper %d berechnet (im Welt-KS, Parametersatz 1).\134n&quot;, i):
 </Font>end do:</Text-field>
 </Input>
 </Group>
@@ -240,7 +239,7 @@ for i to NL do
   I_i_W := Multiply(R_W_i, Multiply(I_i_Si_Tensor, Transpose(R_W_i))):
   T_b[i] := (1/2)*M[i, 1]*Multiply(Transpose(rD_W_Si(1 .. 3, i)), rD_W_Si(1 .. 3, i))+(1/2)*Multiply(Transpose(omega_W_i(1 .. 3, i)), Multiply(I_i_W, omega_W_i(1 .. 3, i))):
   T := T+T_b[i, 1]:
-  <Font encoding="UTF-8">printf(&quot;Kinetische Energie f\303\274r K\303\266rper %d berechnet\134n&quot;, i):</Font>
+  <Font encoding="UTF-8">printf(&quot;Kinetische Energie f\303\274r K\303\266rper %d berechnet (im Welt-KS, Parametersatz 1)\134n&quot;, i):</Font>
 end do:</Text-field>
 </Input>
 </Group>

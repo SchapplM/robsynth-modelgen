@@ -1,3 +1,4 @@
+
 # Energy Calculation for Atlas Robot based on MDH frames
 # Introduction
 # Berechnung von potentieller Energie für den Roboter.
@@ -61,7 +62,7 @@ for i to NL do
   r_W_W_i := Matrix(3,1,Trf_c(1 .. 3, 4, i)):
   U_b[i] := -Multiply(Transpose(g_world), M[i, 1]*r_W_W_i+Matrix(3,1,mr_W_i_Si(1 .. 3, i))):
   U_grav := U_grav+U_b[i, 1]:
-  printf("Potentielle Energie aus Gravitation für Körper %d berechnet\n", i):
+  printf("Potentielle Energie aus Gravitation für Körper %d berechnet (im Welt-KS, mit Parametersatz 2).\n", i):
 end do:
 # Maple Export
 save U_grav, sprintf("../codeexport/%s/tmp/energy_potential_floatb_%s_worldframe_par2_maple.m", robot_name, base_method_name):

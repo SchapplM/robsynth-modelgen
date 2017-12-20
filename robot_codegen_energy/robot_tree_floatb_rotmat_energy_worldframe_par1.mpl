@@ -1,3 +1,4 @@
+
 # Energy Calculation for the Robot based on MDH frames
 # Introduction
 # Berechnung von potentieller und kinetischer Energie für den Roboter.
@@ -42,7 +43,6 @@ read "../transformation/proc_trotz":
 read "../transformation/proc_transl": 
 read "../transformation/proc_trafo_mdh": 
 read "../robot_codegen_definitions/robot_env":
-printf("Generiere Geschwindigkeit für %s\n", robot_name):
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
 # Ergebnisse der Kinematik laden (Rotationsmatrizen, Schwerpunktskoordinaten, Geschwindigkeiten)
 read sprintf("../codeexport/%s/tmp/kinematics_floatb_%s_rotmat_maple.m", robot_name, base_method_name):
@@ -61,7 +61,7 @@ U_grav := 0:
 for i to NL do 
   U_b[i] := -M[i, 1]*Multiply(Transpose(g_world), r_W_W_Si(1 .. 3, i)):
   U_grav := U_grav+U_b[i, 1]:
-  printf("Potentielle Energie aus Gravitation für Körper %d berechnet\n", i):
+  printf("Potentielle Energie aus Gravitation für Körper %d berechnet (im Welt-KS, Parametersatz 1).\n", i):
 end do:
 # Maple Export
 save U_grav, sprintf("../codeexport/%s/tmp/energy_potential_floatb_%s_worldframe_par1_maple.m", robot_name, base_method_name):
@@ -79,7 +79,7 @@ for i to NL do
   I_i_W := Multiply(R_W_i, Multiply(I_i_Si_Tensor, Transpose(R_W_i))):
   T_b[i] := (1/2)*M[i, 1]*Multiply(Transpose(rD_W_Si(1 .. 3, i)), rD_W_Si(1 .. 3, i))+(1/2)*Multiply(Transpose(omega_W_i(1 .. 3, i)), Multiply(I_i_W, omega_W_i(1 .. 3, i))):
   T := T+T_b[i, 1]:
-  printf("Kinetische Energie für Körper %d berechnet\n", i):
+  printf("Kinetische Energie für Körper %d berechnet (im Welt-KS, Parametersatz 1)\n", i):
 end do:
 # Maple Export
 save T, sprintf("../codeexport/%s/tmp/energy_kinetic_floatb_%s_worldframe_par1_maple.m", robot_name, base_method_name):
