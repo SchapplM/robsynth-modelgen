@@ -92,8 +92,8 @@ for iq = 1:TSSc.n
   tau1 = W' * tau;
   
   % Vergleich mit Lösung mit Elimination
-  tau1_test = %RN%_invdynJ_fixb_slag_vp1(q1, qD1, qDD1, g, ...
-    TSSc.pkin, TSSc.m, TSSc.rSges, TSSc.Icges);
+  tau1_test = %RN%_invdynJ_fixb_slag_vp2(q1, qD1, qDD1, g, ...
+    TSSc.pkin, TSSc.m, TSSc.mrSges, TSSc.Ifges);
   
   test = tau1-tau1_test;
   if any( abs(test(:)) > 1e6*eps(max(abs(tau1))) )
@@ -156,10 +156,10 @@ for iq = 1:TSSc.n
   qDD2 = M\(Q+Qc);
   
   % Referenzlösung: Beschleunigung des geschlossenen Systems (mit ZB)
-  M1 = %RN%_inertiaJ_slag_vp1(q1, ...
-    TSSc.pkin, TSSc.m, TSSc.rSges, TSSc.Icges);
-  tau1 = %RN%_invdynJ_fixb_slag_vp1(q1, qD1, qD1*0, g, ...
-    TSSc.pkin, TSSc.m, TSSc.rSges, TSSc.Icges);
+  M1 = %RN%_inertiaJ_slag_vp2(q1, ...
+    TSSc.pkin, TSSc.m, TSSc.mrSges, TSSc.Ifges);
+  tau1 = %RN%_invdynJ_fixb_slag_vp2(q1, qD1, qD1*0, g, ...
+    TSSc.pkin, TSSc.m, TSSc.mrSges, TSSc.Ifges);
   qDD1 = M1 \ (-tau1);
   qDD2_test = W*qDD1 + WD*qD1;
   
@@ -170,3 +170,4 @@ for iq = 1:TSSc.n
 end
 
 fprintf('Test der Zwangsbedingungen offen/geschlossen für %d Kombinationen nach [UdwadiaKal1992] erfolgreich\n', TSSc.n);
+
