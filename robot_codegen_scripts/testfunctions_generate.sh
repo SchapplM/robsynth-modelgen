@@ -133,7 +133,7 @@ if [ -f $repo_pfad/codeexport/${robot_name}/tmp/kinconstr_index_dependant_joints
   varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
   echo "Ind_depjoints = $varname_tmp;" >> $zieldat
 else
-  echo "Ind_depjoints = false(%NJ%,1);" >> $zieldat
+  echo "Ind_depjoints = false(NJ,1);" >> $zieldat
 fi
 
 # Schreibe Ausgangsvariable (lese Teil aus Vorlage)
