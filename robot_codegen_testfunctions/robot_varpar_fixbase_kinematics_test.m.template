@@ -193,7 +193,7 @@ for iq = 1:size(Q, 1) % Über Zufallsposen
     JgD_num = %RN%_jacobigD_mdh_num(q, qD, uint8(jb), r_i_i_C, pkin, v);
     JgD_sym = %RN%_jacobigD_floatb_twist_sym_varpar(q, qD, uint8(jb), r_i_i_C, pkin);
     JgD_Delta = JgD_num - JgD_sym;
-    if any(abs (JgD_Delta(:)) > 1e-10) || any(isnan(JgD_Delta(:)))
+    if any( abs (JgD_Delta(:)) > 1e9*eps(1+max(abs(JgD_sym(:)))) ) || any(isnan(JgD_Delta(:)))
       error('Symbolische und numerische Jacobi-Matrix-Zeitableitungen stimmen nicht');
     end
   end
@@ -238,7 +238,7 @@ for iq = 1:size(Q, 1) % Über Zufallsposen
     JgD_rot_test = JD_rpy * Ja_rot + J_rpy * JaD_rot;
     % Vergleiche die auf zwei Wegen berechnete Zeitableitung der geometrischen Jacobi-Matrix
     DiffD = JgD_rot_test - JgD_rot;
-    if any(abs(DiffD(:)) > 1e-10)
+    if any( abs(DiffD(:)) > 1e9*eps(1+max(abs(JgD_rot(:)))) )
       error('Zeitableitung der geometrischen und analytischen Jacobi-Matrizen stimmen nicht überein (Körper %d)', jb);
     end
   end
@@ -255,4 +255,5 @@ Mex_Erstellen({ '%RN%_jacobigD_rot_floatb_twist_sym_varpar', ...
                 '%RN%_jacobig_rot_floatb_twist_sym_varpar', ...
                 '%RN%_jacobia_rot_floatb_twist_sym_varpar'});
         
+
 
