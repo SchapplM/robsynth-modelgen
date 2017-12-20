@@ -11,6 +11,7 @@ echo "Generiere Matlabfunktionen: Dynamik (explizit), fixed-base"
 
 repo_pfad=$(pwd)/..
 tmp_pfad=$repo_pfad/robot_codegen_scripts/tmp
+template_pfad=$repo_pfad/robot_codegen_scripts/templates_sym
 # Initialisiere Variablen
 source robot_codegen_tmpvar_bash.sh
 source $repo_pfad/robot_codegen_definitions/robot_env.sh
@@ -270,23 +271,22 @@ do
     # Inverse Dynamik (Fixed Base)
     quelldat=$repo_pfad/codeexport/${robot_name}/tmp/invdyn_fixb_par${dynpar}_matlab.m
     zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_invdynJ_fixb_slag_vp${dynpar}.m
+    cat ${tmp_pfad}_head/robot_matlabtmp_invdynJ_fixb_par${dynpar}.head.m > $zieldat
+    printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_qJDD.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
+    if [ $dynpar == 1 ]; then
+      cat $tmp_pfad/robot_matlabtmp_assert_rcom.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_Ic.m >> $zieldat
+    else
+      cat $tmp_pfad/robot_matlabtmp_assert_mrcom.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_If.m >> $zieldat
+    fi
     if [ -f $quelldat ]; then
-      cat ${tmp_pfad}_head/robot_matlabtmp_invdynJ_fixb_par${dynpar}.head.m > $zieldat
-      printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_qJDD.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
-      if [ $dynpar == 1 ]; then
-        cat $tmp_pfad/robot_matlabtmp_assert_rcom.m >> $zieldat
-        cat $tmp_pfad/robot_matlabtmp_assert_Ic.m >> $zieldat
-      else
-        cat $tmp_pfad/robot_matlabtmp_assert_mrcom.m >> $zieldat
-        cat $tmp_pfad/robot_matlabtmp_assert_If.m >> $zieldat
-      fi
-      
       printf "\n%%%% Variable Initialization" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_qJD.m >> $zieldat
@@ -301,12 +301,12 @@ do
         cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_par_If.m >> $zieldat
       fi
-      
       printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
       cat $quelldat >> $zieldat
-      source robot_codegen_matlabfcn_postprocess.sh $zieldat
     else
-      echo "Code in ${quelldat##*/} nicht gefunden."
+      echo "Code in ${quelldat##*/} nicht gefunden. Nutze Funktionsaufrufe."
+      cat ${template_pfad}/robot_matlabtmp_invdynJ_fixb_par${dynpar}.m.template >> $zieldat
     fi
+    source robot_codegen_matlabfcn_postprocess.sh $zieldat
   done # floatb_twist/floatb_eulangrpy
 done # par1/par2

@@ -1,0 +1,10 @@
+
+%% Function calls and calculation
+g = %RN%_gravloadJ_floatb_twist_slag_vp2(qJ, g, ...
+  pkin, m_num, mrSges_num_mdh);
+c = %RN%_coriolisvecJ_fixb_slag_vp2(qJ, qJD, ...
+  pkin, m_num, mrSges_num_mdh, Ifges_num_mdh);
+M = %RN%_inertiaJ_slag_vp2(qJ, ...
+    pkin, m_num, mrSges_num_mdh, Ifges_num_mdh);
+tau = g+c+M*qJDD;
+
