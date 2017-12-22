@@ -19,7 +19,7 @@ d3 = 0.0480;
 d7 = 0.2658;
 d8 = 0.0480;
 
-% Parameter für kinematische Zwangsbedingungen (gleiche wie KAS5m5)
+% Parameter für kinematische Zwangsbedingungen (gleiche wie KAS5m3)
 delta10s = atan(20e-3 / 24e-3);
 delta12s = atan(43e-3 / 37e-3);
 delta17s = 110*pi/180;

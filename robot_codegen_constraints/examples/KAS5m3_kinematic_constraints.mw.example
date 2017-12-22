@@ -115,7 +115,7 @@ Eingabe:
 <Font encoding="UTF-8">* enth\303\244lt die Definitionen aller Konstanten und verallgemeinerter Koordinaten</Font>
 
 Ausgabe:
-&quot;../codeexport/%s/kinematic_constraints_maple_inert.m&quot;
+&quot;../codeexport/%s/tmp/kinematic_constraints_maple_inert.m&quot;
 <Font encoding="UTF-8">* Erzeugt die Ausdr\303\274cke f\303\274r Winkel der Parallelstruktur (kintmp), Ersetzungsausdr\303\274cke f\303\274r sin,cos (kintmp_subsexp) und die Federl\303\244nge (lpar) in Abh\303\244ngigkeit der verallgemeinerten Koordinaten.</Font></Text-field>
 </Input>
 </Group>
@@ -191,7 +191,7 @@ read &quot;../helper/proc_intersect_circle&quot;:</Text-field>
 </Group>
 <Group view="code" labelreference="L2111" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tree_floatb_definitions&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L1569" drawlabel="true">
@@ -615,7 +615,7 @@ end if:</Text-field>
 </Group>
 <Group view="code" labelreference="L2029" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save r_3_D_E, sprintf(&quot;../codeexport/%s/kinematic_constraints_r_3_D_E_noopt_debug_maple&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save r_3_D_E, sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_r_3_D_E_noopt_debug_maple&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L2031" drawlabel="true">
@@ -629,7 +629,7 @@ end if:</Text-field>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L2030" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save r_3_D_E, sprintf(&quot;../codeexport/%s/kinematic_constraints_r_3_D_E_opt_debug_maple&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save r_3_D_E, sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_r_3_D_E_opt_debug_maple&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1642" drawlabel="true">
@@ -657,7 +657,7 @@ end if:
 </Group>
 <Group view="code" labelreference="L2026" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save r_3_D_F, sprintf(&quot;../codeexport/%s/kinematic_constraints_r_3_D_F_noopt_debug_maple&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save r_3_D_F, sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_r_3_D_F_noopt_debug_maple&quot;, robot_name):</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group labelreference="L1989" drawlabel="true">
@@ -681,8 +681,8 @@ end if:</Text-field>
 </Group>
 <Group view="code" labelreference="L1719" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save r_3_D_F, sprintf(&quot;../codeexport/%s/kinematic_constraints_r_3_D_F_opt_debug_maple&quot;, robot_name):
-save ReturnValue, r_3_D_F, r_3_F_G3, sprintf(&quot;../codeexport/%s/kinematic_constraints_gamma3_qs_debug_maple&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save r_3_D_F, sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_r_3_D_F_opt_debug_maple&quot;, robot_name):
+save ReturnValue, r_3_D_F, r_3_F_G3, sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_gamma3_qs_debug_maple&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1652" drawlabel="true">
@@ -718,12 +718,12 @@ kintmp_subsexp(8,2) := cos_gamma3_qs:</Text-field>
 </Group>
 <Group view="code" labelreference="L1723" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save ReturnValue, r_3_D_F, r_3_F_G3, gamma3_qs, sprintf(&quot;../codeexport/%s/kinematic_constraints_gamma3_qs_debug_maple&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save ReturnValue, r_3_D_F, r_3_F_G3, gamma3_qs, sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_gamma3_qs_debug_maple&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1934" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kintmp_qs, kintmp_subsexp, sprintf(&quot;../codeexport/%s/kinematic_constraints_maple_debug_nach_gamma3.m&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kintmp_qs, kintmp_subsexp, sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_maple_debug_nach_gamma3.m&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1997" drawlabel="true">
@@ -828,7 +828,7 @@ Siehe auch: KAS5_m3_sym_codegen_kinematic_constraints_hilfsberechnungen.mw</Text
 </Group>
 <Group view="code" labelreference="L1935" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kintmp_qs, kintmp_subsexp, sprintf(&quot;../codeexport/%s/kinematic_constraints_maple_debug_nach_beta2.m&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kintmp_qs, kintmp_subsexp, sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_maple_debug_nach_beta2.m&quot;, robot_name):</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -918,7 +918,7 @@ Dadurch kann Sinus/Cosinus von delta16 direkt genutzt werden und es tritt kein a
 </Group>
 <Group view="code" labelreference="L1936" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kintmp_qs, kintmp_subsexp, sprintf(&quot;../codeexport/%s/kinematic_constraints_maple_debug_nach_delta3.m&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kintmp_qs, kintmp_subsexp, sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_maple_debug_nach_delta3.m&quot;, robot_name):</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -963,7 +963,7 @@ kintmp_subsexp(48,2) := cos_rho3_qs:</Text-field>
 </Group>
 <Group labelreference="L1937" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kintmp_qs, kintmp_subsexp, sprintf(&quot;../codeexport/%s/kinematic_constraints_maple_debug_nach_rho3.m&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kintmp_qs, kintmp_subsexp, sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_maple_debug_nach_rho3.m&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1998" drawlabel="true">
@@ -1057,7 +1057,7 @@ Siehe auch: KAS5_m3_sym_codegen_kinematic_constraints_hilfsberechnungen.mw</Text
 </Group>
 <Group labelreference="L2074" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kintmp_qs, kintmp_subsexp, sprintf(&quot;../codeexport/%s/kinematic_constraints_maple_debug_nach_delta6.m&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kintmp_qs, kintmp_subsexp, sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_maple_debug_nach_delta6.m&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 </Section>
@@ -1314,12 +1314,12 @@ Quelle: http://www.mapleprimes.com/questions/207601-Remove-Assumptions</Text-fie
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L2024" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kintmp_subsexp, sprintf(&quot;../codeexport/%s/kinematic_constraints_kintmp_subsexp_maple&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kintmp_subsexp, sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_kintmp_subsexp_maple&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L2023" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kintmp_subsexp, sprintf(&quot;../codeexport/%s/kinematic_constraints_kintmp_subsexp_maple.m&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kintmp_subsexp, sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_kintmp_subsexp_maple.m&quot;, robot_name):</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L2021" drawlabel="true">
@@ -1331,24 +1331,24 @@ Quelle: http://www.mapleprimes.com/questions/207601-Remove-Assumptions</Text-fie
 <Input>
 <Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to RowDimension(kintmp_s) do
   tmp := kintmp_qs(i):
-  save tmp, sprintf(&quot;../codeexport/%s/kinematic_constraints_maple_inert_kintmpq_%d&quot;, robot_name, i):
-  save tmp, sprintf(&quot;../codeexport/%s/kinematic_constraints_maple_inert_kintmpq_%d.m&quot;, robot_name, i):
+  save tmp, sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_maple_inert_kintmpq_%d&quot;, robot_name, i):
+  save tmp, sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_maple_inert_kintmpq_%d.m&quot;, robot_name, i):
 end do:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1700" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kin_constraints_exist, kintmp_qs, kintmp_qt, lpar_qs, lpar_qt, kintmp_subsexp, sprintf(&quot;../codeexport/%s/kinematic_constraints_maple_inert&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kin_constraints_exist, kintmp_qs, kintmp_qt, lpar_qs, lpar_qt, kintmp_subsexp, sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_maple_inert&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L1734" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kin_constraints_exist, kintmp_qs, kintmp_qt, lpar_qs, lpar_qt, kintmp_subsexp, sprintf(&quot;../codeexport/%s/kinematic_constraints_maple_inert.m&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kin_constraints_exist, kintmp_qs, kintmp_qt, lpar_qs, lpar_qt, kintmp_subsexp, sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_maple_inert.m&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L2025" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kintmp_qs, sprintf(&quot;../codeexport/%s/kinematic_constraints_kintmp_qs_maple_inert&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kintmp_qs, sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_kintmp_qs_maple_inert&quot;, robot_name):</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L2053" drawlabel="true">
@@ -1386,12 +1386,12 @@ end if:</Text-field>
 </Group>
 <Group view="code" labelreference="L2121" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kc_symbols, sprintf(&quot;../codeexport/%s/kinematic_constraints_symbols_list_maple&quot;, robot_name):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">save kc_symbols, sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_symbols_list_maple&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L2128" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(Transpose(kc_symbols), sprintf(&quot;../codeexport/%s/kinematic_constraints_symbols_list_matlab.m&quot;, robot_name), 2):</Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(Transpose(kc_symbols), sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_symbols_list_matlab.m&quot;, robot_name), 2):</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section><Presentation-Block>

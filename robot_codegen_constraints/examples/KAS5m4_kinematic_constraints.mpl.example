@@ -20,7 +20,7 @@
 # * enthält die Definitionen aller Konstanten und verallgemeinerter Koordinaten
 # 
 # Ausgabe:
-# "../codeexport/%s/kinematic_constraints_maple_inert.m"
+# "../codeexport/%s/tmp/kinematic_constraints_maple_inert.m"
 # * Erzeugt die Ausdrücke für Winkel der Parallelstruktur (kintmp), Ersetzungsausdrücke für sin,cos (kintmp_subsexp) und die Federlänge (lpar) in Abhängigkeit der verallgemeinerten Koordinaten.
 # Quellen
 # [1] Wang, Jiegao and Gosselin, ClémentM.: A New Approach for the Dynamic Analysis of Parallel Manipulators (1998)
@@ -47,7 +47,7 @@ read "../robot_codegen_constraints/proc_subs_kintmp_exp":
 read "../helper/proc_intersect_circle":
 with(RealDomain): # Schränkt alle Funktionen auf den reellen Bereich ein. Muss nach Definition von MatlabExport kommen. Sonst geht dieses nicht.
 read "../robot_codegen_definitions/robot_env":
-read sprintf("../codeexport/%s/tree_floatb_definitions", robot_name):
+read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
 # Variable mit Winkeln der Nebenstruktur nur in Abhängigkeit der verallgemeinerten Koordinaten
 kintmp_qs := Matrix(RowDimension(kintmp_s),1):
 # Konstante Winkel bereits hineinschreiben
@@ -196,13 +196,13 @@ else
   R_3_10 := rotz(- delta_qs(16)):
 end if:
 r_3_D_E := R_3_10 . r_10_D_E:
-save r_3_D_E, sprintf("../codeexport/%s/kinematic_constraints_r_3_D_E_noopt_debug_maple", robot_name):
+save r_3_D_E, sprintf("../codeexport/%s/tmp/kinematic_constraints_r_3_D_E_noopt_debug_maple", robot_name):
 if Schalter_Opt(5) = 1 then
   r_3_D_E := simplify(r_3_D_E, trig):
   r_3_D_E := simplify(r_3_D_E):
   r_3_D_E := combine(r_3_D_E, trig):
 end if:
-save r_3_D_E, sprintf("../codeexport/%s/kinematic_constraints_r_3_D_E_opt_debug_maple", robot_name):
+save r_3_D_E, sprintf("../codeexport/%s/tmp/kinematic_constraints_r_3_D_E_opt_debug_maple", robot_name):
 if Schalter_Opt(2) = 1 then
   # Rufe die Kreisschnittpunkt-Funktion mit allgemeinen Werten auf und ersetze das Ergebnis.
   # dies führt zu einer wesentlichen Verringerungen der Rechenzeit, da das Einsetzen und Weiterrechnen der komplizierten Ausdrücke in der Unterfunktion entfällt.
@@ -218,7 +218,7 @@ else
 end if:
 printf("Zweiter Kreisschnittpunkt berechnet. %s. CPU-Zeit bis hier: %1.2fs.\n", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
 r_3_D_F := <ReturnValue(1..2, 2); 0>: # Alternative 2
-save r_3_D_F, sprintf("../codeexport/%s/kinematic_constraints_r_3_D_F_noopt_debug_maple", robot_name):
+save r_3_D_F, sprintf("../codeexport/%s/tmp/kinematic_constraints_r_3_D_F_noopt_debug_maple", robot_name):
 if Schalter_Opt(3) = 1 then
   r_3_D_F := simplify(r_3_D_F, trig):
   r_3_D_F := simplify(r_3_D_F):
@@ -226,8 +226,8 @@ if Schalter_Opt(3) = 1 then
 end if:
 r_3_F_G3 := -r_3_D_F + r_3_D_G3:
 printf("CPU-Zeit bis hier: %1.2fs\n", time()-st):
-save r_3_D_F, sprintf("../codeexport/%s/kinematic_constraints_r_3_D_F_opt_debug_maple", robot_name):
-save ReturnValue, r_3_D_F, r_3_F_G3, sprintf("../codeexport/%s/kinematic_constraints_gamma3_qs_debug_maple", robot_name):
+save r_3_D_F, sprintf("../codeexport/%s/tmp/kinematic_constraints_r_3_D_F_opt_debug_maple", robot_name):
+save ReturnValue, r_3_D_F, r_3_F_G3, sprintf("../codeexport/%s/tmp/kinematic_constraints_gamma3_qs_debug_maple", robot_name):
 # Gl. (m3.6)
 gamma3_qs := %arctan(r_3_F_G3(2,1), -r_3_F_G3(1,1)):
 sin_gamma3_qs := r_3_F_G3(2,1) / l4:
@@ -235,8 +235,8 @@ cos_gamma3_qs := (-r_3_F_G3(1,1)) / l4:
 kintmp_qs(4) := gamma3_qs:
 kintmp_subsexp(7,2) := sin_gamma3_qs:
 kintmp_subsexp(8,2) := cos_gamma3_qs:
-save ReturnValue, r_3_D_F, r_3_F_G3, gamma3_qs, sprintf("../codeexport/%s/kinematic_constraints_gamma3_qs_debug_maple", robot_name):
-save kintmp_qs, kintmp_subsexp, sprintf("../codeexport/%s/kinematic_constraints_maple_debug_nach_gamma3.m", robot_name):
+save ReturnValue, r_3_D_F, r_3_F_G3, gamma3_qs, sprintf("../codeexport/%s/tmp/kinematic_constraints_gamma3_qs_debug_maple", robot_name):
+save kintmp_qs, kintmp_subsexp, sprintf("../codeexport/%s/tmp/kinematic_constraints_maple_debug_nach_gamma3.m", robot_name):
 printf("Winkel gamma3 berechnet. %s. CPU-Zeit bis hier: %1.2fs.\n", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
 # Berechne delta4
 # Gl. (22)
@@ -259,7 +259,7 @@ sin_beta2_qs := sin_d7b2*cos(delta_qs(7)) - cos_d7b2*sin(delta_qs(7)):
 cos_beta2_qs := cos_d7b2*cos(delta_qs(7)) + sin_d7b2*sin(delta_qs(7)):
 kintmp_subsexp(5,2) := sin_beta2_qs:
 kintmp_subsexp(6,2) := cos_beta2_qs:
-save kintmp_qs, kintmp_subsexp, sprintf("../codeexport/%s/kinematic_constraints_maple_debug_nach_beta2.m", robot_name):
+save kintmp_qs, kintmp_subsexp, sprintf("../codeexport/%s/tmp/kinematic_constraints_maple_debug_nach_beta2.m", robot_name):
 # Berechne delta3
 # Gl. (m3.9)
 # Siehe auch: KAS5_m3_sym_codegen_kinematic_constraints_hilfsberechnungen.mw
@@ -279,7 +279,7 @@ sin_delta3_qs := (sin_t8)*(cos_t7) - (cos_t8)*(sin_t7):
 kintmp_qs(8) := delta_qs(3):
 kintmp_subsexp(15,2) := sin_delta3_qs:
 kintmp_subsexp(16,2) := cos_delta3_qs:
-save kintmp_qs, kintmp_subsexp, sprintf("../codeexport/%s/kinematic_constraints_maple_debug_nach_delta3.m", robot_name):
+save kintmp_qs, kintmp_subsexp, sprintf("../codeexport/%s/tmp/kinematic_constraints_maple_debug_nach_delta3.m", robot_name):
 # Berechne delta8
 # Dieser Abschnitt ist der einzige Unterschied zur Berechnung der Parallelkinematik von KAS5_m3.
 # Dort wird rho3 aus konstantem delta8 berechnet.
@@ -294,7 +294,7 @@ sin_delta8_qs := sin(theta3_s+Pi/2)*cos_gamma3_qs - cos(theta3_s+Pi/2)*sin_gamma
 kintmp_qs(13) := delta_qs(8):
 kintmp_subsexp(25,2) := sin_delta8_qs:
 kintmp_subsexp(26,2) := cos_delta8_qs:
-save kintmp_qs, kintmp_subsexp, sprintf("../codeexport/%s/kinematic_constraints_maple_debug_nach_delta8.m", robot_name):
+save kintmp_qs, kintmp_subsexp, sprintf("../codeexport/%s/tmp/kinematic_constraints_maple_debug_nach_delta8.m", robot_name):
 printf("Winkel delta8 berechnet. %s. CPU-Zeit bis hier: %1.2fs.\n", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
 # Berechne delta6
 # Gl. (m3.8)
@@ -314,7 +314,7 @@ cos_delta6_qs := cos_t2*cos_t1 - sin_t2*sin_t1:
 sin_delta6_qs := sin_t2*cos_t1 + cos_t2*sin_t1:
 kintmp_subsexp(21,2) := sin_delta6_qs:
 kintmp_subsexp(22,2) := cos_delta6_qs:
-save kintmp_qs, kintmp_subsexp, sprintf("../codeexport/%s/kinematic_constraints_maple_debug_nach_delta6.m", robot_name):
+save kintmp_qs, kintmp_subsexp, sprintf("../codeexport/%s/tmp/kinematic_constraints_maple_debug_nach_delta6.m", robot_name):
 # Kompensationsfeder
 R_5_6:=rotz(convert_t_s(theta(6))):
 r_6_A_H := <l17; 0; 0>:
@@ -385,17 +385,17 @@ kintmp_subsexp:=subs(S,kintmp_subsexp):
 kintmp_qt := convert_s_t(kintmp_qs):
 lpar_qt := convert_s_t(lpar_qs):
 # Speichere Maple-Ausdruck (Eingabe-Format und internes Format)
-save kintmp_subsexp, sprintf("../codeexport/%s/kinematic_constraints_kintmp_subsexp_maple", robot_name):
-save kintmp_subsexp, sprintf("../codeexport/%s/kinematic_constraints_kintmp_subsexp_maple.m", robot_name):
+save kintmp_subsexp, sprintf("../codeexport/%s/tmp/kinematic_constraints_kintmp_subsexp_maple", robot_name):
+save kintmp_subsexp, sprintf("../codeexport/%s/tmp/kinematic_constraints_kintmp_subsexp_maple.m", robot_name):
 printf("Ausdrücke für kintmp_subsexp gespeichert (Maple). %s. CPU-Zeit bis hier: %1.2fs.\n", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
 for i from 1 to RowDimension(kintmp_s) do
   tmp := kintmp_qs(i):
-  save tmp, sprintf("../codeexport/%s/kinematic_constraints_maple_inert_kintmpq_%d", robot_name, i):
-  save tmp, sprintf("../codeexport/%s/kinematic_constraints_maple_inert_kintmpq_%d.m", robot_name, i):
+  save tmp, sprintf("../codeexport/%s/tmp/kinematic_constraints_maple_inert_kintmpq_%d", robot_name, i):
+  save tmp, sprintf("../codeexport/%s/tmp/kinematic_constraints_maple_inert_kintmpq_%d.m", robot_name, i):
 end do:
-save kintmp_qs, kintmp_qt, kin_constraints_exist, kintmp_subsexp, sprintf("../codeexport/%s/kinematic_constraints_maple_inert", robot_name):
-save kintmp_qs, kintmp_qt, kin_constraints_exist, kintmp_subsexp, sprintf("../codeexport/%s/kinematic_constraints_maple_inert.m", robot_name):
-save kintmp_qs, sprintf("../codeexport/%s/kinematic_constraints_kintmp_qs_maple_inert", robot_name):
+save kintmp_qs, kintmp_qt, kin_constraints_exist, kintmp_subsexp, sprintf("../codeexport/%s/tmp/kinematic_constraints_maple_inert", robot_name):
+save kintmp_qs, kintmp_qt, kin_constraints_exist, kintmp_subsexp, sprintf("../codeexport/%s/tmp/kinematic_constraints_maple_inert.m", robot_name):
+save kintmp_qs, sprintf("../codeexport/%s/tmp/kinematic_constraints_kintmp_qs_maple_inert", robot_name):
 
 # Exportieren des vollständigen Ausdruckes
 if codegen_act then
@@ -405,7 +405,7 @@ printf("Ausdrücke mit Inert-Arctan exportiert (Matlab). %s. CPU-Zeit bis hier: 
 # Liste mit abhängigen konstanten Kinematikparametern erstellen (wichtig für Matlab-Funktionsgenerierung)
 read "../helper/proc_list_constant_expressions";
 kc_symbols := Matrix(list_constant_expressions( kintmp_subsexp(..,2) )):
-save kc_symbols, sprintf("../codeexport/%s/kinematic_constraints_symbols_list_maple", robot_name):
-MatlabExport(Transpose(kc_symbols), sprintf("../codeexport/%s/kinematic_constraints_symbols_list_matlab.m", robot_name), 2):
+save kc_symbols, sprintf("../codeexport/%s/tmp/kinematic_constraints_symbols_list_maple", robot_name):
+MatlabExport(Transpose(kc_symbols), sprintf("../codeexport/%s/tmp/kinematic_constraints_symbols_list_matlab.m", robot_name), 2):
 printf("Fertig. %s. CPU-Zeit bis hier: %1.2fs.\n", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
 

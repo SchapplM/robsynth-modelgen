@@ -1,8 +1,6 @@
 # Beispiel für Codegenerierung:
-# KAS5m4
-#
-# Quellen
-# [KhalilKle1986] Khalil, W. and Kleinfinger, J.-F.: A new geometric notation for open and closed-loop robots (1986)
+# KAS5m6
+# Zum Aufbau des Modells, siehe Dokumentations-Repo. Zur Bedeutung der Eingaben in dieser Datei, siehe Maple-Repo
 
 robot_name := "KAS5m6":
 
@@ -20,6 +18,9 @@ v := Matrix(13,1, <0; 1; 2; 3; 4; 5; 6; 2; 8; 3; 10; 11; 12>):
 
 b := Matrix(13,1):
 beta := Matrix(13,1):
+
+# Nur Drehgelenke
+sigma := Matrix(13,1):
 
 # Allgemeine Winkel
 kintmp_t := Matrix(24, 1, [alpha1(t),beta1(t),beta2(t),gamma3(t),gamma5(t),delta1(t),delta2(t),delta3(t),delta4(t),delta5(t),delta6(t),delta7(t),delta8(t),delta9,delta10,delta11(t),delta12,delta13(t),delta14(t),delta15(t),delta16(t),delta17,delta18,rho3(t)]);

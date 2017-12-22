@@ -1,0 +1,24 @@
+# Beispiel für Codegenerierung:
+# KAS5m6
+# Zum Aufbau des Modells, siehe Dokumentations-Repo. Zur Bedeutung der Eingaben in dieser Datei, siehe Maple-Repo
+
+robot_name := "KAS5m6u":
+
+# Anzahl der verallgemeinerten Gelenkkoordinaten
+NQJ := 13:
+# Anzahl der Gelenke
+NJ := 13:
+
+qoffset := Matrix(13, 1, [-Pi/2, Pi/2, 0, 0, 0, Pi/2, 0, Pi/2, 0, 0, -Pi, 0, Pi]):
+theta := <Matrix(13,1,qJ_t)> + qoffset:
+alpha := Matrix(13, 1, [0, -Pi/2, Pi/2, 0, 0, 0, Pi/2, Pi/2, 0, 0, 0, 0, 0]):
+d := Matrix(13, 1, [d1, d2, d3, 0, 0, 0, d7, d8, 0, 0, 0, 0, 0]):
+a := Matrix(13, 1, [0, 0, 0, a4, a5, a6, 0, 0, a9, a10, a11, a12, 0]):
+v := Matrix(13,1, <0; 1; 2; 3; 4; 5; 6; 2; 8; 3; 10; 11; 12>):
+
+b := Matrix(13,1):
+beta := Matrix(13,1):
+
+# Nur Drehgelenke
+sigma := Matrix(13,1):
+
