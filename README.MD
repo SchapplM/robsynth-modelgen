@@ -164,7 +164,8 @@ Beim Durchlaufen der Tests sollten keine Fehler auftreten.
 
 ### Systeme mit kinematischen Zwangsbedingungen <a name="start_zwangsbed"></a> 
 
-Neben seriellen und verzweigten kinematischen Strukturen, können auch geschlossene Ketten behandelt werden, wenn die daraus resultierenden kinematischen Zwangsbedingungen vollständig eliminiert werden können.
+Neben seriellen und verzweigten kinematischen Strukturen, können auch geschlossene Ketten behandelt werden, wenn die daraus resultierenden kinematischen Zwangsbedingungen vollständig eliminiert werden können. Dies wird z.B. in [NakamuraGho1989](#quellen) und [ParkChoPlo1999](#quellen) beschrieben. In [UdwadiaKal1992](#quellen) und [Docquier2013](#quellen) werden Systeme mit Zwangsbedingungen behandelt, bei der diese nur mit impliziten Gleichungen berücksichtigt werden. Das wird in dieser Toolbox nicht unterstützt.
+
 Die Struktur eines verzweigten Systems wird mit MDH-Parametern in der Datei robot_env eingegeben.
 Einige MDH-Parameter sind nun aber keine verallgemeinerten Koordinaten des Systems mehr, sondern z.B. zeitabhängige Winkel, die von den verallgemeinerten Koordinaten abhängen (beschrieben durch die kinematischen Zwangsbedingungen).
 Folgende Dateien müssen zusätzlich erzeugt werden, damit die Dynamikgleichungen generiert werden können:
@@ -173,7 +174,7 @@ Folgende Dateien müssen zusätzlich erzeugt werden, damit die Dynamikgleichunge
 
 Folgende Ausführungen beziehen sich auf die robot_env:
 
-Maple-Variablen wie __theta__ können nun neben den verallgemeinerten Koordinaten __qJ_t__ auch andere Ausdrücke beinhalten.
+Maple-Variablen wie __theta__ und __d__ können nun neben den verallgemeinerten Koordinaten __qJ_t__ auch andere Ausdrücke beinhalten.
 Diese müssen in zwei zusätzlichen Matrizen __kintmp_t__ und __kintmp_s__ aufgelistet werden.
 In __kintmp_t__ stehen zeitabhängige Größen der Ersetzungsvariablen aus __kintmp_s__.
 *kintmp* steht dabei für temporäre Kinematikparameter. Diese Parameter werden im Folgenden substituiert.
@@ -277,6 +278,8 @@ Teil 2: Funktionskennung
 * jacobigD (Zeitableitung der geometrischen Jacobi-Matrix)
 * jacobia (Analytische Jacobi-Matrix: Statt der Winkelgeschwindigkeit besteht im rotatorischen Teil der Bezug zur Zeitableitung der Orientierungsdarstellung (z.B. Zeitableitung der Euler-Winkel)
 * jacobiaD (Zeitableitung der analytischen Jacobi-Matrix)
+* kinconstr_expl (Explizite Darstellung von kinematischen Zwangsbedingungen)
+* kinconstr_expl_jacobian, kinconstr_expl_jacobianD (Ableitung der kinematischen Zwangsbedingungen nach den verallgemeinerten Koordinaten)
 
 Teil 3: Kennung der Kette
 
@@ -379,6 +382,8 @@ Dateien:
 * ..._matlab.m Exportierter Matlab-Code
 * proc_... Maple-Prozedur (Funktionsdefinition als Reintext, Maple-Eingabeformat)
 
+Ab dem Abschnitt [Definitionen](#ordner_definitionen) entspricht die Reihenfolge der Skripte der Reihenfolge, in der die Skripte ausgeführt werden.
+
 ### Ergebnisse der Code-Generierung <a name="ergebnisordner"></a> 
 
 Die Ergebnisse der Code-Generierung werden im Ordner "codeexport" abgelegt.
@@ -414,9 +419,9 @@ Die Ergebnisse der Toolbox können am einfachsten anhand der Modultests im Ordne
           proc_Lagrange1
           proc_LagrangeN
 
-### Definitionen
+### Definitionen <a name="ordner_definitionen"></a> 
 
-Der Ordner examples enthält Beispiele für die Datei robot_env
+Der Ordner examples enthält Beispiele für die Datei robot_env.
 
         /codegen_definitions
           examples
@@ -435,6 +440,20 @@ Der Ordner examples enthält Beispiele für die Datei robot_env
               --> robot_tree_floatb_definitions
               --> robot_tree_floatb_eulangrpy_definitions
 
+
+### Kinematische Zwangsbedingungen
+
+Die Skripte müssen vom Benutzer erstellt werden, da jedes System unterschiedlich ist.
+Die Skripte müssen mit dem Namen des Roboters anfangen (hier Platzhalter *%RN%*)
+
+        /robot_codegen_constraints
+          %RN%_kinematic_constraints.mw
+              <-- robot_env
+              --> kinematic_constraints_maple_inert
+          robot_kinematic_constraints_calculations.mw
+              <-- robot_env
+              <-- kinematic_constraints_maple_inert
+
 ### Kinematik
 
 Positionen (Koordinatensysteme, Schwerpunkten), Geschwindigkeiten
@@ -443,6 +462,7 @@ Positionen (Koordinatensysteme, Schwerpunkten), Geschwindigkeiten
           robot_tree_floatb_rotmat_mdh_kinematics.mw
               <-- robot_env
               <-- robot_tree_floatb_definitions
+              <-- (kinematic_constraints_maple_inert)
               --> robot_kinematics_rotmat_maple.m
           robot_tree_floatb_rotmat_kinematics_com_par1.mw
               <-- robot_env
@@ -519,19 +539,11 @@ Positionen (Koordinatensysteme, Schwerpunkten), Geschwindigkeiten
               <-- energy_kinetic_fixb_regressor_minpar_maple.m
               <-- energy_potential_fixb_regressor_minpar_maple.m
 
-
-### Kinematische Zwangsbedingungen
-
-Die Skripte müssen vom Benutzer erstellt werden, da jedes System unterschiedlich ist.
-Die Skripte müssen mit dem Namen des Roboters anfangen (hier Platzhalter *%RN%*)
-
-        /robot_codegen_constraints
-          %RN%_kinematic_constraints.mw
-
+              
 ### Zusätzliche Dateien
 
 Die Skripte müssen vom Benutzer erstellt werden, je nach System.
-Siehe Beschreibung in [Zusätzliche Dateien](#start_zusatzdateien)
+Siehe Beschreibung in [Zusätzliche Dateien](#start_zusatzdateien).
 
         /robot_codegen_additional/scripts
           %RN%_codegen_matlab_additional_varpar.sh
@@ -557,8 +569,12 @@ Textbausteine für Funktionsköpfe:
 
 # Quellen <a name="quellen"></a> 
 
-* [KhalilKle1986] Khalil, W. and Kleinfinger, J.-F.: A new geometric notation for open and closed-loop robots (1986)
-* [Featherstone2008] Featherstone, R.: Rigid Body Dynamics Algorithms (2008)
-* [GautierKhalil1988] A Direct Determination of Minimum Inertial Parameters of Robots (1988)
-* [GautierKhalil1990] Direct Calculation of Minimum Set of Inertial Parameters of Serial Robots (1990)
+* [KhalilKle1986] Khalil, W. and Kleinfinger, J.-F.: A new geometric notation for open and closed-loop robots (1986) <a name="KhalilKle1986"></a> 
+* [Featherstone2008] Featherstone, R.: Rigid Body Dynamics Algorithms (2008) <a name="Featherstone2008"></a> 
+* [GautierKhalil1988] A Direct Determination of Minimum Inertial Parameters of Robots (1988) <a name="GautierKhalil1988"></a> 
+* [GautierKhalil1990] Direct Calculation of Minimum Set of Inertial Parameters of Serial Robots (1990) <a name="GautierKhalil1990"></a> 
+* [NakamuraGho1989] Nakamura, Yoshihiko and Ghodoussi, Modjtaba: Dynamics computation of closed-link robot mechanisms with nonredundant and redundant actuators (1989) <a name="NakamuraGho1989"></a> 
+* [ParkChoPlo1999] Park, FC and Choi, Jihyeon and Ploen, SR: Symbolic formulation of closed chain dynamics in independent coordinates <a name="ParkChoPlo1999"></a> 
+* [UdwadiaKal1992] Udwadia, Firdaus E and Kalaba, Robert E: A new perspective on constrained motion (1992)  <a name="UdwadiaKal1992"></a> 
+* [Docquier2013] Docquier, Nicolas and Poncelet, Antoine and Fisette, Paul: ROBOTRAN: a powerful symbolic gnerator of multibody models (2013) <a name="Docquier2013"></a> 
 
