@@ -1,0 +1,14 @@
+# Thor-Roboter (imes)
+
+robot_name := "imesthor":
+NJ := 6:
+NQJ := 6:
+qoffset := Matrix(6,1,[0,-Pi/2,0,0,0,0]):
+alpha := Matrix(6,1,[0,-Pi/2,0,-Pi/2,Pi/2,-Pi/2]):
+d := Matrix(6,1,[l1+l2,0,0,l4+l5,0,l6]):
+a := Matrix(6,1,[0,0,l3,0,0,0]):
+v := Matrix(6,1,[0, 1, 2, 3, 4, 5]):
+b := Matrix(6,1,[0, 0, 0, 0, 0, 0]):
+beta := Matrix(6,1,[0, 0, 0, 0, 0, 0]):
+
+theta := qJ_t+qoffset:
