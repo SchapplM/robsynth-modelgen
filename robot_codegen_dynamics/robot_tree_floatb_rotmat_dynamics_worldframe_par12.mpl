@@ -270,7 +270,7 @@ end if:
 # Matlab Export: Floating base
 # Berechnung der Basis-Belastung ist für manche Basis-Darstellungen falsch (siehe oben unter Gravitationslast).
 if codeexport_invdyn and not(base_method_name="twist") then
-  MatlabExport(tau, sprintf("../codeexport/%s/tmp/invdyn_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), true):
+  MatlabExport(tau, sprintf("../codeexport/%s/tmp/invdyn_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
 if codeexport_invdyn and not(base_method_name="twist") then
   MatlabExport(tau[1..6], sprintf("../codeexport/%s/tmp/invdyn_base_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
