@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="2016" minor="2"/>
+<Version major="2017" minor="3"/>
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1080" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="standard" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="100" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -119,6 +119,10 @@ restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
 </Input>
 </Group>
+<Group labelreference="L1681" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_convert_t_s&quot;:</Text-field>
+</Input>
+</Group>
 <Group labelreference="L1595" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Lese Umgebungsvariable f\303\274r Codegenerierung.</Font></Text-field>
 </Input>
@@ -126,6 +130,27 @@ restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet
 <Group labelreference="L1594" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:
 <Font encoding="UTF-8">printf(&quot;Generiere Parameter f\303\274r %s\134n&quot;,robot_name):</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1671" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">MDH-Tabelle ausgeben</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1674" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">interface(rtablesize=100):</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L1672" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Test := &lt;sigma| beta| b | alpha | a | theta | d | v&gt;:</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L1676" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Test:=&lt;&lt;&quot;sigma&quot;|&quot;beta&quot;|&quot;b&quot;|&quot;alpha&quot;|&quot;a&quot;|&quot;theta&quot;|&quot;d&quot;|&quot;v&quot;&gt;,Test&gt;:</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L1679" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;MDH-Tabelle f\303\274r %s:\134n&quot;, </Font>robot_name):
+Test;</Text-field>
 </Input>
 </Group>
 </Section>
@@ -379,7 +404,9 @@ end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1653" drawlabel="true">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Einzelne DH-Parameter als Matlab-Code exportieren. Damit l\303\244sst sich in Matlab ein passender Parametersatz generieren.</Font></Text-field>
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Einzelne DH-Parameter als Matlab-Code exportieren. Damit l\303\244sst sich in Matlab ein passender Parametersatz generieren.
+Benutze die Funktion convert_t_s, um eventuelle Substitutionsvariablen f\303\274r konstante Gelenkwinkel zu verwenden, da die Matlab-Terme auch mit substituierten Ausdr\303\274cken generiert werden.
+Zur Kennzeichnung von zeitabh\303\244ngigen und konstanten Ausdr\303\274cken kann &quot;delta1(t)&quot;, &quot;delta1&quot; und &quot;delta1s&quot; verwendet werden.</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1638" drawlabel="true">
@@ -387,33 +414,33 @@ end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1651" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(a, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_a_matlab.m&quot;, robot_name), 2):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(convert_t_s(a), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_a_matlab.m&quot;, robot_name), 2):</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" hide-output="false" labelreference="L1650" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">d_export := d *~ (1-~sigma):
-MatlabExport(d_export, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_d_matlab.m&quot;, robot_name), 2):</Text-field>
+MatlabExport(convert_t_s(d_export), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_d_matlab.m&quot;, robot_name), 2):</Text-field>
 </Input>
 </Group>
 <Group hide-output="false" labelreference="L1668" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">theta_export := theta *~ sigma:
-MatlabExport(theta_export, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_theta_matlab.m&quot;, robot_name), 2):</Text-field>
+MatlabExport(convert_t_s(theta_export), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_theta_matlab.m&quot;, robot_name), 2):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1649" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(b, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_b_matlab.m&quot;, robot_name), 2):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(convert_t_s(b), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_b_matlab.m&quot;, robot_name), 2):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1645" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(alpha, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_alpha_matlab.m&quot;, robot_name), 2):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(convert_t_s(alpha), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_alpha_matlab.m&quot;, robot_name), 2):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1646" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(beta, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_beta_matlab.m&quot;, robot_name), 2):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(convert_t_s(beta), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_beta_matlab.m&quot;, robot_name), 2):</Text-field>
 </Input>
 </Group>
 <Group hide-output="false" labelreference="L1647" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(qoffset, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_qoffset_matlab.m&quot;, robot_name), 2):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(convert_t_s(qoffset), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_qoffset_matlab.m&quot;, robot_name), 2):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1664" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">

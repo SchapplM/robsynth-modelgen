@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="2016" minor="2"/>
+<Version major="2017" minor="3"/>
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1080" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="standard" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="100" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -120,6 +120,10 @@ restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
 </Input>
 </Group>
+<Group labelreference="L1731" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_convert_t_s&quot;:</Text-field>
+</Input>
+</Group>
 <Group labelreference="L1595" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Lese Umgebungsvariable f\303\274r Codegenerierung.</Font></Text-field>
 </Input>
@@ -150,7 +154,7 @@ end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1697" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">pkin_tmp1 := &lt;a;alpha;d;qoffset;b;beta&gt;:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">pkin_tmp1 := &lt;a;alpha;d;theta; qoffset;b;beta&gt;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1724" drawlabel="true">
@@ -192,13 +196,16 @@ TODO: Liste mit besserer Reihenfolge (siehe oben)</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1712" drawlabel="true">
-<Input><Text-field style="Text" layout="Normal">Pi aus Liste entfernen (wird im Code sowieso automatisch eingesetzt)</Text-field>
+<Input><Text-field style="Text" layout="Normal">Terme aus Liste entfernen</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1701" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to ColumnDimension(nms) do
-  if nms[i] = Pi then
+  if nms[i] = Pi then # (wird im Code sowieso automatisch eingesetzt)
     next:
+  end if:
+<Font encoding="UTF-8">  if nms[i] = t then # sollte eigentlich gar nicht drin sein k\303\266nnen
+</Font>    next:
   end if:
 <Font encoding="UTF-8">  # Parameter zur Liste hinzuf\303\274gen
 </Font>  kk := kk + 1:
@@ -214,11 +221,23 @@ end do:</Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">pkin := Matrix(pkin_tmp2[1..kk,1],kk,1):</Text-field>
 </Input>
 </Group>
+<Group labelreference="L1729" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Konstante Winkel, die aus MDH-Definition und nicht aus den ZB kommen umwandeln.</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L1733" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">q_s := Matrix(1,1,0): q_t :=q_s:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1730" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">pkin := convert_t_s(pkin):</Text-field>
+</Input>
+</Group>
 <Group labelreference="L1714" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Kinematik-Parameter f\303\274r %s: %dx%d\134n&quot;, robot_name, RowDimension(</Font>pkin), ColumnDimension(pkin)):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1689" drawlabel="true">
+<Group hide-input="false" labelreference="L1689" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">pkin;</Text-field>
 </Input>
 </Group>

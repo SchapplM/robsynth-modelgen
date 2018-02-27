@@ -1,3 +1,4 @@
+
 # Erstelle Liste aller Kinematikparameter
 # Init
 # Dieses Arbeitsblatt erstellt einen Vektor mit allen Kinematikparameter
@@ -11,8 +12,10 @@ interface(warnlevel=0): # Unterdrücke die folgende Warnung.
 restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
 interface(warnlevel=3):
 interface(rtablesize=100): # Damit der ganze Parametervektor ausgegeben werden kann
+;
 with(LinearAlgebra):
 read "../helper/proc_MatlabExport":
+read "../helper/proc_convert_t_s":
 # Lese Umgebungsvariable für Codegenerierung.
 read "../robot_codegen_definitions/robot_env":
 printf("Generiere Kinematik-Parametervektor für %s\n",robot_name):
@@ -25,7 +28,7 @@ if FileTools[Exists](constrfile) then
 end if:
 # Liste der Kinematikparameter erstellen
 # Alle einzelnen MDH-Parametervektoren stapeln
-pkin_tmp1 := <a;alpha;d;qoffset;b;beta>:
+pkin_tmp1 := <a;alpha;d;theta; qoffset;b;beta>:
 # Kinematikparameter für kinematische Zwangsbedingungen hinzufügen (falls vorhanden)
 if kin_constraints_exist then
   pkin_tmp1 := <pkin_tmp1;Transpose(kc_symbols)>:
@@ -40,9 +43,12 @@ nms:=convert(indets(pkin_tmp1,name),list):
 kk := 0:
 # Matrix mit Platz für alle Kinematikparameter (falls alle ungleich Null)
 pkin_tmp2 := Matrix(NJ*6+np_kc,1):
-# Pi aus Liste entfernen (wird im Code sowieso automatisch eingesetzt)
+# Terme aus Liste entfernen
 for i from 1 to ColumnDimension(nms) do
-  if nms[i] = Pi then
+  if nms[i] = Pi then # (wird im Code sowieso automatisch eingesetzt)
+    next:
+  end if:
+  if nms[i] = t then # sollte eigentlich gar nicht drin sein können
     next:
   end if:
   # Parameter zur Liste hinzufügen
@@ -51,6 +57,9 @@ for i from 1 to ColumnDimension(nms) do
 end do:
 # Ausgabevariable belegen
 pkin := Matrix(pkin_tmp2[1..kk,1],kk,1):
+# Konstante Winkel, die aus MDH-Definition und nicht aus den ZB kommen umwandeln.
+q_s := Matrix(1,1,0): q_t :=q_s:
+pkin := convert_t_s(pkin):
 printf("Kinematik-Parameter für %s: %dx%d\n", robot_name, RowDimension(pkin), ColumnDimension(pkin)):
 pkin;
 # Ergebnis speichern
