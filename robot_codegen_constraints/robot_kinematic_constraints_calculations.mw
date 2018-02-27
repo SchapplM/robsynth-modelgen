@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="2016" minor="2"/>
+<Version major="2017" minor="3"/>
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="true" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1080" rtablesize="30" useclientjvm="true" labelwidth="20" postplot="" typesetting="standard" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="30" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -281,14 +281,22 @@ end do:</Text-field>
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Pr\303\274fe, ob Anzahl Zwangsbedingungen zu Anzahl Gelenke und Minimalkoordinaten passt.</Font></Text-field>
 </Input>
 </Group>
+<Group view="code" hide-input="false" labelreference="L2274" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">NVJ := NJ - NL + 1: # Anzahl virtueller Gelenke</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2278" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Es gibt <Font encoding="UTF-8">(NL - 1) durch Gelenke bewegte K\303\266rper, NVJ/2 Koordinatensysteme (hier als &quot;Gelenk&quot; gez\303\244hlt) sind statisch aufgrund der Schleifenschlussbedingungen</Font></Text-field>
+</Input>
+</Group>
 <Group view="code" hide-output="false" labelreference="L2246" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if NQJ+NC1 &lt;&gt; NJ then
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if NQJ+NC1 &lt;&gt; (NL - 1)+NVJ/2 then
   <Font encoding="UTF-8">printf(&quot;Fehler: Anzahl der Zwangsbedingungen %d (aus Gelenkvariablen) passt nicht zur Anzahl der Gelenke %d und der Minimalkoordinaten %d\134n&quot;, NC1, NJ, NQJ):
 </Font>end if:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L2264" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if NQJ+NC2 &lt;&gt; NJ then
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if NQJ+NC2 &lt;&gt; (NL - 1)+NVJ/2 then
   printf(&quot;Fehler: Anzahl der Zwangsbedingungen %d (aus Verwendung der Zwangsbedingungs-Variablen) <Font encoding="UTF-8">passt nicht zur Anzahl der Gelenke %d und der Minimalkoordinaten %d\134n&quot;, NC2, NJ, NQJ):
 </Font>end if:</Text-field>
 </Input>
@@ -416,10 +424,6 @@ end if:</Text-field>
 </Section><Presentation-Block>
 <Group labelreference="L1950" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Fertig\134n&quot;):</Font></Text-field>
-</Input>
-</Group></Presentation-Block><Presentation-Block>
-<Group view="presentation" inline-output="false" labelreference="L2267" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"><Equation executable="true" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYlLUkjbWlHRiQ2I1EhRicvJStleGVjdXRhYmxlR1EmZmFsc2VGJy8lLG1hdGh2YXJpYW50R1Enbm9ybWFsRic=">JSFH</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Worksheet>

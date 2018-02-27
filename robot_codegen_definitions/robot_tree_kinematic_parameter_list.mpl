@@ -37,7 +37,8 @@ else
   np_kc := 0:# Anzahl der Kinematikparameter für die Zwangsbedingungen
 end if:
 # Alle Symbole herausfinden
-# TODO: Liste mit besserer Reihenfolge (siehe oben)
+# Durch den Befehl fallen die vektoriell angesprochenen Gelenkkoordinaten (qJ) weg.
+# TODO: Liste mit besserer Reihenfolge (siehe Dateikopf)
 nms:=convert(indets(pkin_tmp1,name),list):
 # Laufende Nummer für Parameterliste
 kk := 0:
@@ -55,11 +56,15 @@ for i from 1 to ColumnDimension(nms) do
   kk := kk + 1:
   pkin_tmp2[kk,1] := nms[i]:
 end do:
-# Ausgabevariable belegen
-pkin := Matrix(pkin_tmp2[1..kk,1],kk,1):
 # Konstante Winkel, die aus MDH-Definition und nicht aus den ZB kommen umwandeln.
 q_s := Matrix(1,1,0): q_t :=q_s:
-pkin := convert_t_s(pkin):
+pkin_tmp1 := convert_t_s(pkin_tmp1):
+# Konvertierung nochmals durchführen (damit nicht delta8 und delta8s als verschiedene Symbole auftauchen)
+pkin_tmp2 :=convert_t_s(pkin_tmp2):
+# Ausgabevariable belegen
+pkin := Matrix(pkin_tmp2[1..kk,1],kk,1):
+# Symbole nochmals gruppieren
+pkin := Transpose(Matrix(convert(indets(pkin,name),list))):
 printf("Kinematik-Parameter für %s: %dx%d\n", robot_name, RowDimension(pkin), ColumnDimension(pkin)):
 pkin;
 # Ergebnis speichern

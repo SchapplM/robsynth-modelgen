@@ -1,3 +1,4 @@
+
 # Forward Kinematics for Robot based on MDH frames
 # Introduction
 # Direkte Kinematik basierend auf MDH-Parametern berechnen
@@ -72,6 +73,7 @@ end if:
 # Trf is the Matrix of Transformation from i-1 to i
 # Trf_c is the cummulated Matrix of Transformation from 0 to i
 Trf := Matrix(4, 4, NJ): # Diese Initialisierung bringt nichts (initialisiert nur 4x4-Matrix)
+;
 for i from 1 to NJ do 
   Trf(1 .. 4, 1 .. 4, i) := Matrix(4,4):
 end do:
@@ -99,8 +101,8 @@ if kin_constraints_exist = true then:
   printf("Ersetzungen der MDH-Parameter mit Ergebnissen der Parallelstruktur in verallgemeinerten Koordinaten erfolgreich."):
 end if:
 # Calculate Forward Kinematics (Multi-Joint Transformation)
-Trf_c := Matrix(4, 4, NL): # Diese Initialisierung bringt nichts (initialisiert nur 4x4-Matrix)
-for i from 1 to NL do 
+Trf_c := Matrix(4, 4, NJ+1): # Diese Initialisierung bringt nichts (initialisiert nur 4x4-Matrix)
+for i from 1 to NJ+1 do 
   Trf_c(1 .. 4, 1 .. 4, i) := Matrix(4,4):
 end do:
 # Basis-Transformation: Unterschiedliche Darstellungsmethoden. Führen zu unterschiedlichen verallgemeinerten Koordinaten.
@@ -122,8 +124,8 @@ end do:
 # Maple-Export
 save Trf, Trf_c, sprintf("../codeexport/%s/tmp/kinematics_floatb_%s_rotmat_maple.m", robot_name, base_method_name):
 # Export des symbolischen Ausdrucks für alle kumulierten Transformationsmatrizen auf einmal.
-Trf_c_Export := Matrix((NL)*4, 4):
-for i from 1 to NL do 
+Trf_c_Export := Matrix((NJ+1)*4, 4):
+for i from 1 to NJ+1 do 
   Trf_c_Export((i-1)*4+1 .. 4*i, 1..4) := Trf_c(1..4, 1..4, i):
 end do:
 if codegen_act then
@@ -146,7 +148,7 @@ if codegen_act then
   MatlabExport(convert_t_s(Trf_Export_m), sprintf("../codeexport/%s/tmp/joint_transformation_mdh_rotmat_m_matlab.m", robot_name), codegen_opt):
 end if:
 # Export des symbolischen Ausdrucks für jede Transformationsmatrix einzeln
-for i from 1 to NL do
+for i from 1 to NJ+1 do
   if codegen_act then
     MatlabExport(convert_t_s(Trf_c(1 .. 4, 1 .. 4, i)), sprintf("../codeexport/%s/tmp/fkine_%d_floatb_%s_rotmat_matlab.m", robot_name, i, base_method_name), codegen_opt):
   end if:

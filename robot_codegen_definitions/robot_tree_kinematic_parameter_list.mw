@@ -172,10 +172,11 @@ end if:</Text-field>
 </Group>
 <Group labelreference="L1699" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal">Alle Symbole herausfinden
-TODO: Liste mit besserer Reihenfolge (siehe oben)</Text-field>
+Durch den Befehl fallen die vektoriell angesprochenen Gelenkkoordinaten (qJ) weg.
+TODO: Liste mit besserer Reihenfolge (siehe Dateikopf)</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1700" drawlabel="true">
+<Group hide-input="false" labelreference="L1700" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">nms:=convert(indets(pkin_tmp1,name),list):</Text-field>
 </Input>
 </Group>
@@ -213,24 +214,40 @@ TODO: Liste mit besserer Reihenfolge (siehe oben)</Text-field>
 end do:</Text-field>
 </Input>
 </Group>
+<Group labelreference="L1746" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Konstante Winkel, die aus MDH-Definition und nicht aus den ZB kommen umwandeln.</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L1745" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">q_s := Matrix(1,1,0): q_t :=q_s:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1747" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">pkin_tmp1 := convert_t_s(pkin_tmp1):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1744" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Konvertierung nochmals durchf\303\274hren (damit nicht delta8 und delta8s als verschiedene Symbole auftauchen)</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1748" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">pkin_tmp2 :=convert_t_s(pkin_tmp2):</Text-field>
+</Input>
+</Group>
 <Group labelreference="L1687" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal">Ausgabevariable belegen</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1688" drawlabel="true">
+<Group hide-input="false" labelreference="L1688" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">pkin := Matrix(pkin_tmp2[1..kk,1],kk,1):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1729" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal">Konstante Winkel, die aus MDH-Definition und nicht aus den ZB kommen umwandeln.</Text-field>
+<Input><Text-field style="Text" layout="Normal">Symbole nochmals gruppieren</Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L1733" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">q_s := Matrix(1,1,0): q_t :=q_s:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1730" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">pkin := convert_t_s(pkin):</Text-field>
+<Group hide-input="false" labelreference="L1749" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">pkin := Transpose(Matrix(convert(indets(pkin,name),list))):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1714" drawlabel="true">

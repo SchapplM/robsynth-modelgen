@@ -22,8 +22,8 @@ read "../robot_codegen_definitions/robot_env":
 printf("Generiere Parameter für %s\n",robot_name):
 # MDH-Tabelle ausgeben
 interface(rtablesize=100):
-Test := <sigma| beta| b | alpha | a | theta | d | v>:
-Test:=<<"sigma"|"beta"|"b"|"alpha"|"a"|"theta"|"d"|"v">,Test>:
+Test := <<seq(i, i=1..NJ)> | sigma| beta| b | alpha | a | theta | d | v>:
+Test:=<<"i" | "sigma"|"beta"|"b"|"alpha"|"a"|"theta"|"d"|"v">,Test>:
 printf("MDH-Tabelle für %s:\n", robot_name):
 Test;
 # Robotics Definitions
@@ -80,7 +80,13 @@ if type( sigma, 'Matrix') = false then
 end if:
 # Dynamic Parameters
 # Anzahl der Körper (Number of Links):
-NL := NJ + 1:
+if not assigned(NL) then
+  NL := NJ + 1:
+  printf("Variable NL ist nicht gegeben. Insgesamt %d Gelenke. Nehme an, dass jedes Gelenk einem Körper zugeordnet ist (keine Schleifen)", NJ):
+else
+  NVJ := NJ - (NL - 1):
+  printf("Variable NL=%d ist gegeben. Insgesamt %d Gelenke. Davon sind die ersten %d einem Körper zugeordnet und die letzten %d virtuell.\n", NL, NJ, NJ-NVJ, NVJ):
+end if:
 # Mass of each link
 M := Matrix(NL, 1):
 for i from 1 to NL do

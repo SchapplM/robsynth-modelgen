@@ -9,12 +9,14 @@
 % %INPUT_PKIN%
 % 
 % Output:
-% T_c_mdh [4x4x%NL%]
-%   homogenous transformation matrices for each body frame (MDH)
+% T_c_mdh [4x4x(%NJ%+1)]
+%   homogenous transformation matrices for each (body) frame (MDH)
 %   1:  world -> mdh base (link 1)
 %   2:  world -> mdh link 2 (first articulated link)
 %   ...
 %   %NL%:  world -> mdh link (%NL%-1) (last articulated link)
+%   ...
+%   %NJ%+1:  mdh base (link 0) -> mdh frame (%NJ%-1)
 
 % %VERSIONINFO%
 
