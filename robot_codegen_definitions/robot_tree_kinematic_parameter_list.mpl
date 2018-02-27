@@ -65,11 +65,18 @@ pkin_tmp2 :=convert_t_s(pkin_tmp2):
 pkin := Matrix(pkin_tmp2[1..kk,1],kk,1):
 # Symbole nochmals gruppieren
 pkin := Transpose(Matrix(convert(indets(pkin,name),list))):
-printf("Kinematik-Parameter für %s: %dx%d\n", robot_name, RowDimension(pkin), ColumnDimension(pkin)):
-pkin;
 # Ergebnis speichern
 # Für Generierung des Kinematikparametervektors in Matlab
 MatlabExport(pkin, sprintf("../codeexport/%s/tmp/parameter_kin_matlab.m", robot_name), 2):
 # Für schnelle Erkennung der Dimension zum Auslesen durch Bash-Skripte
 save pkin, sprintf("../codeexport/%s/tmp/parameter_kin", robot_name):
+# Ausgabe
+# MDH-Tabelle ausgeben
+interface(rtablesize=100):
+Test := <<seq(i, i=1..NJ)> | sigma| mu| beta| b | alpha | a | theta | d | v>:
+Test:=<<"i" | "sigma" | "mu"|"beta"|"b"|"alpha"|"a"|"theta"|"d"|"v">,Test>:
+printf("MDH-Tabelle für %s:\n", robot_name):
+Test;
+printf("Kinematik-Parameter für %s: %dx%d\n", robot_name, RowDimension(pkin), ColumnDimension(pkin)):
+pkin;
 

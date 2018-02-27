@@ -250,14 +250,6 @@ end do:</Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">pkin := Transpose(Matrix(convert(indets(pkin,name),list))):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1714" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Kinematik-Parameter f\303\274r %s: %dx%d\134n&quot;, robot_name, RowDimension(</Font>pkin), ColumnDimension(pkin)):</Text-field>
-</Input>
-</Group>
-<Group hide-input="false" labelreference="L1689" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">pkin;</Text-field>
-</Input>
-</Group>
 <Group labelreference="L1708" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal">Ergebnis speichern</Text-field>
 </Input>
@@ -278,7 +270,38 @@ end do:</Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save pkin, sprintf(&quot;../codeexport/%s/tmp/parameter_kin&quot;, robot_name):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1718" drawlabel="true">
+</Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Ausgabe</Text-field></Title>
+<Group labelreference="L1760" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">MDH-Tabelle ausgeben</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1758" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">interface(rtablesize=100):</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L1759" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Test := &lt;&lt;seq(i, i=1..NJ)&gt; | sigma| mu| beta| b | alpha | a | theta | d | v&gt;:</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L1757" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Test:=&lt;&lt;&quot;i&quot; | &quot;sigma&quot; | &quot;mu&quot;|&quot;beta&quot;|&quot;b&quot;|&quot;alpha&quot;|&quot;a&quot;|&quot;theta&quot;|&quot;d&quot;|&quot;v&quot;&gt;,Test&gt;:</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L1756" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;MDH-Tabelle f\303\274r %s:\134n&quot;, </Font>robot_name):
+Test;</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1762" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Kinematik-Parameter f\303\274r %s: %dx%d\134n&quot;, robot_name, RowDimension(</Font>pkin), ColumnDimension(pkin)):</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L1763" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">pkin;</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1755" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
