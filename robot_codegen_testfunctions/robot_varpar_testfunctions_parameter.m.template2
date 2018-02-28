@@ -18,6 +18,7 @@ TSS.v = v;
 TSS.pkin = pkin;
 TSS.theta = theta;
 TSS.sigma = sigma;
+TSS.mu = mu;
 % Dynamikparameter
 TSS.m = m;
 TSS.rSges = rSges;

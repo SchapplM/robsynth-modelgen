@@ -59,6 +59,7 @@ printf "\n\n%%%% MDH-Parametereinträge auf Zufallswerte setzen" >> $zieldat
 printf "\n%% Aus robot_matlabtmp_par_mdh.m" >> $zieldat
 cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
 
+
 # Werte für Kinematik-Parametervektor in Parameter-Generierungsskript eintragen
 # Setzt auch Zahlenwerte für die Kinematikparameter der MDH-Notation, falls gegeben.
 KCP_dat1=$repo_pfad/robot_codegen_constraints/${robot_name}_kinematic_parameter_values.m
@@ -124,6 +125,10 @@ printf "\n%% Aus ${robot_name}/parameters_mdh_sigma_matlab.m\n" >> $zieldat
 cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_sigma_matlab.m >> $zieldat
 varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
 echo "sigma_mdh = $varname_tmp;" >> $zieldat
+printf "\n%% Aus ${robot_name}/parameters_mdh_mu_matlab.m\n" >> $zieldat
+cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_mu_matlab.m >> $zieldat
+varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
+echo "mu_mdh = $varname_tmp;" >> $zieldat
 # Ersetze "_mdh", damit die Variablennamen stimmen
 sed -i "s/_mdh//g" $zieldat
 
