@@ -19,6 +19,7 @@ read "../helper/proc_convert_t_s":
 # Lese Umgebungsvariable für Codegenerierung.
 read "../robot_codegen_definitions/robot_env":
 printf("Generiere Kinematik-Parametervektor für %s\n",robot_name):
+read sprintf("../codeexport/%s/tmp/tree_floatb_twist_definitions", robot_name):
 # Parameter der Zwangsbedingungen lesen
 kin_constraints_exist := false:
 constrfile := sprintf("../codeexport/%s/tmp/kinematic_constraints_symbols_list_maple", robot_name):

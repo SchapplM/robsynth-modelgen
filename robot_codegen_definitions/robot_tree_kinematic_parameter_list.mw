@@ -133,6 +133,10 @@ restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet
 <Font encoding="UTF-8">printf(&quot;Generiere Kinematik-Parametervektor f\303\274r %s\134n&quot;,robot_name):</Font></Text-field>
 </Input>
 </Group>
+<Group labelreference="L1765" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_twist_definitions&quot;, robot_name):</Text-field>
+</Input>
+</Group>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Parameter der Zwangsbedingungen lesen</Text-field></Title>
 <Group labelreference="L1719" drawlabel="true">
