@@ -58,7 +58,8 @@ do
         cat $tmp_pfad/robot_matlabtmp_par_If.m >> $zieldat
       fi
       
-      printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+      printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+      sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 1
     else
@@ -96,7 +97,8 @@ do
         cat $tmp_pfad/robot_matlabtmp_par_If.m >> $zieldat
       fi
       
-      printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+      printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+      sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat
     else
@@ -133,7 +135,8 @@ do
         cat $tmp_pfad/robot_matlabtmp_par_If.m >> $zieldat
       fi
       
-      printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+      printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+      sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
       # Benenne die Ergebnisvariable des exportierten Codes um (zusätzlich zu Hilfsskript robot_codegen_matlabfcn_postprocess.sh)
       varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/' | tr -d '[:space:]'`
@@ -180,7 +183,8 @@ do
         cat $tmp_pfad/robot_matlabtmp_par_If.m >> $zieldat
       fi
       
-      printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+      printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+      sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat
     else
@@ -218,7 +222,8 @@ do
         cat $tmp_pfad/robot_matlabtmp_par_If.m >> $zieldat
       fi
       
-      printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+      printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+      sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
       # Benenne die Ergebnisvariable des exportierten Codes um (zusätzlich zu Hilfsskript robot_codegen_matlabfcn_postprocess.sh)
       varname_tmp=`grep "=" $zieldat| tail -1 | sed 's/\(.*\)=.*/\1/' | tr -d '[:space:]'`
@@ -261,7 +266,8 @@ do
         printf "MX0=0;MY0=0;MZ0=0;%%Basis-1. Moment nicht relevant.\n" >> $zieldat
       fi
       
-      printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+      printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+      sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat
     else
@@ -301,7 +307,8 @@ do
         cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_par_If.m >> $zieldat
       fi
-      printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+      printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+      sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
     else
       echo "Code in ${quelldat##*/} nicht gefunden. Nutze Funktionsaufrufe."

@@ -39,7 +39,8 @@ do
     cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_par_If.m >> $zieldat
     
-    printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+    printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+    sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
     cat $quelldat >> $zieldat
     source robot_codegen_matlabfcn_postprocess.sh $zieldat
   else
@@ -61,19 +62,19 @@ do
     echo "%% Variable Initialization" >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
     echo "%% Symbolic Expressions" >> $zieldat
-    printf "%%From ${quelldat1##*/}\n" >> $zieldat
+    printf "%% From ${quelldat1##*/}\n" >> $zieldat
     cat $quelldat1 >> $zieldat
     varname_tmp=`grep "=" $quelldat1 | tail -1 | sed 's/\(.*\)=.*/\1/'`
     echo "K = $varname_tmp;" >> $zieldat
-    printf "%%From ${quelldat2##*/}\n" >> $zieldat
+    printf "%% From ${quelldat2##*/}\n" >> $zieldat
     cat $quelldat2 >> $zieldat
     varname_tmp=`grep "=" $quelldat2 | tail -1 | sed 's/\(.*\)=.*/\1/'`
     echo "K_d = $varname_tmp;" >> $zieldat
-    printf "%%From ${quelldat3##*/}\n" >> $zieldat
+    printf "%% From ${quelldat3##*/}\n" >> $zieldat
     cat $quelldat3 >> $zieldat
     varname_tmp=`grep "=" $quelldat3 | tail -1 | sed 's/\(.*\)=.*/\1/'`
     echo "P_b = $varname_tmp;" >> $zieldat
-    printf "%%From ${quelldat4##*/}\n" >> $zieldat
+    printf "%% From ${quelldat4##*/}\n" >> $zieldat
     cat $quelldat4 >> $zieldat
     varname_tmp=`grep "=" $quelldat4 | tail -1 | sed 's/\(.*\)=.*/\1/'`
     echo "P_d = $varname_tmp;" >> $zieldat
@@ -122,7 +123,8 @@ do
           cat $tmp_pfad/robot_matlabtmp_xDB.m >> $zieldat
         fi
       cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
-      printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+      printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+      sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat
     else
@@ -155,7 +157,8 @@ do
         fi
       cat $tmp_pfad/robot_matlabtmp_g.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
-      printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+      printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+      sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat
     else
@@ -188,7 +191,8 @@ do
       cat $tmp_pfad/robot_matlabtmp_g.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
       
-      printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+      printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+      sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0
     else
@@ -220,7 +224,8 @@ do
       cat $tmp_pfad/robot_matlabtmp_g.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
       
-      printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+      printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+      sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0
     else
@@ -255,7 +260,8 @@ do
       fi
       cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
       
-      printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+      printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+      sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0
     else
@@ -289,7 +295,8 @@ do
       fi
       cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
       
-      printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+      printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+      sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0
     else
@@ -324,7 +331,8 @@ do
       fi
       cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
       
-      printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+      printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+      sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0
     else
@@ -361,7 +369,8 @@ do
       fi
       cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
      
-      printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+      printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+      sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat
     else
@@ -391,7 +400,8 @@ do
         cat $tmp_pfad/robot_matlabtmp_phiB.m >> $zieldat
       fi
       cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
-      printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+      printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+      sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0
     else
@@ -421,7 +431,8 @@ do
       fi
       cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
       
-      printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+      printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+      sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat
     else
@@ -450,7 +461,8 @@ do
         cat $tmp_pfad/robot_matlabtmp_phiB.m >> $zieldat
       fi
       cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
-      printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+      printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+      sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0
     else
@@ -483,7 +495,8 @@ do
         cat $tmp_pfad/robot_matlabtmp_xDB.m >> $zieldat
       fi
       cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
-      printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+      printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+      sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0
     else
@@ -525,7 +538,8 @@ do
       cat $tmp_pfad/robot_matlabtmp_g.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
       
-      printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+      printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+      sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0
     else
@@ -567,7 +581,8 @@ do
       cat $tmp_pfad/robot_matlabtmp_g.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
       
-      printf "\n%%%% Symbolic Calculation\n%%From ${quelldat##*/}\n" >> $zieldat
+      printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+      sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
       source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0
     else

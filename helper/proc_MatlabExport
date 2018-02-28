@@ -1,10 +1,12 @@
-MatlabExport := proc (Term, filepath, optimierung) 
-  local Tmp, fd; 
+MatlabExport := proc (Term, filepath, optimierung)
+  # Exportiert einen Term als Matlab-Code in optimierter Form
+  # Zusatz-Informationen werden in eine Statistik-Datei geschrieben.
+  local Tmp, fd, c1, c2; 
   local filepath_stat, fdstat, starttime:
   filepath_stat := sprintf("%s.stats", filepath):
   starttime:=time(): # CPU-Zeit seit Maple-Start
   fdstat := fopen(filepath_stat,WRITE); 
-  fprintf(fdstat, "TargetFile: %s\n", filepath):
+  # fprintf(fdstat, "TargetFile: %s\n", filepath):
   fprintf(fdstat, "OptimizationMode: %d\n", optimierung):
   fprintf(fdstat, "StartTime: %s\n", StringTools[FormatTime]("%Y-%m-%d %H:%M:%S") ):
   if optimierung = 1 then 
@@ -13,7 +15,9 @@ MatlabExport := proc (Term, filepath, optimierung)
     Tmp := eval([codegen:-optimize](Term,tryhard),pow = `^`);
   else 
     Tmp := Term ;
-  end if; 
+  end if;
+  c1:=cost(Term); # Rechenaufwand vor und nach Optimierung bestimmen
+  c2:=cost(Tmp);
   # Zieldatei löschen
   fd := fopen(filepath,WRITE); 
   fclose(fd); 
@@ -21,6 +25,11 @@ MatlabExport := proc (Term, filepath, optimierung)
   CodeGeneration[Matlab](Tmp,optimize = false,resultname = "res",output = filepath); 
   fprintf(fdstat, "EndTime: %s\n", StringTools[FormatTime]("%Y-%m-%d %H:%M:%S") ):
   fprintf(fdstat, "DurationCPUTime: %1.2fs\n", time()-starttime ): # CPU-Zeit für die Berechnung
+  fprintf(fdstat, "Computational Cost: "):
+  fprintf(fdstat, "add. (%d->%d)", diff(c1, additions), diff(c2, additions)):
+  fprintf(fdstat, ", mult. (%d->%d)", diff(c1, multiplications), diff(c2, multiplications)):
+  fprintf(fdstat, ", fcn. (%d->%d)", diff(c1, functions), diff(c2, functions)):
+  fprintf(fdstat, ", ass. (%d->%d)\n", diff(c1, assignments), diff(c2, assignments)):
   printf("Exported Matlab code to %s (CPUTime: %1.2fs)\n",filepath, time()-starttime) :
   fclose(fdstat); 
 end proc;
