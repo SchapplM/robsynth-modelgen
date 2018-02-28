@@ -140,13 +140,32 @@ restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Parameter der Zwangsbedingungen lesen</Text-field></Title>
 <Group labelreference="L1719" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">kin_constraints_exist := false:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">kin_constraints_exist := false:
+kc_symbols2 := []:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1767" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">F\303\274r explizite Zwangsbedingungen</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1721" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">constrfile := sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_symbols_list_maple&quot;, robot_name):
 if FileTools[Exists](constrfile) then
   read constrfile:
+  kc_symbols2 := kc_symbols:
+  kin_constraints_exist := true:
+end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1764" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Parameter f\303\274r implizite Zwangsbedingungen (dadurch k\303\266nnen auch neue Konstanten hinzugef\303\274gt werden)</Font></Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L1765" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">constrfile := sprintf(&quot;../codeexport/%s/tmp/kinematic_implicit_constraints_symbols_list_maple&quot;, robot_name):
+if FileTools[Exists](constrfile) then
+  read constrfile:
+  kc_symbols2 := &lt;kc_symbols2| kc_symbols&gt;:
   kin_constraints_exist := true:
 end if:</Text-field>
 </Input>
@@ -167,8 +186,8 @@ end if:</Text-field>
 </Group>
 <Group labelreference="L1722" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if kin_constraints_exist then
-  pkin_tmp1 := &lt;pkin_tmp1;Transpose(kc_symbols)&gt;:
-  np_kc := ColumnDimension(kc_symbols):
+  pkin_tmp1 := &lt;pkin_tmp1;Transpose(kc_symbols2)&gt;:
+  np_kc := ColumnDimension(kc_symbols2):
 else
   <Font encoding="UTF-8">np_kc := 0:# Anzahl der Kinematikparameter f\303\274r die Zwangsbedingungen</Font>
 end if:</Text-field>

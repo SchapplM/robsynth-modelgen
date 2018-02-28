@@ -233,6 +233,25 @@ done
 # Definitionen des Fixed-Base-Modell wieder laden (für Jacobi-Matrizen und zusätzliche Dateien)
 nice -n 10 ./maple -q  <<< "currentdir(\"$repo_pfad/robot_codegen_definitions\"): read \"robot_tree_floatb_twist_definitions.mpl\";"
 
+
+# Kinematische Zwangsbedingungen in impliziter Form
+# Werden nach der Kinematik gerechnet. Können also auch hier am Ende kommen
+# Die Ergebnisse werden in der Dynamik nicht weiter benutzt (im Gegensatz zu explizit definierten Zwangsbedingungen, die direkt zur Ersetzung dienen).
+if [ -f  $repo_pfad/robot_codegen_constraints/${robot_name}_kinematic_constraints_implicit.mpl ]; then
+	dateiliste_impconstr="
+		robot_codegen_constraints/${robot_name}_kinematic_constraints_implicit.mpl
+		robot_codegen_constraints/robot_kinematic_constraints_calculations_implicit.mpl
+	"
+  for wsic in ${dateiliste_impconstr[@]}
+  do
+    mpldat_full=$repo_pfad/$wsic
+    filename="${mpldat_full##*/}"
+    dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
+    nice -n 10 ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
+  done
+fi;
+
+
 # Jacobi-Matrizen
 dateiliste_jac=""
 for (( ib=1; ib<=$robot_NL; ib++ ))

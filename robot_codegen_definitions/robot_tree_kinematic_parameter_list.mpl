@@ -22,9 +22,19 @@ printf("Generiere Kinematik-Parametervektor für %s\n",robot_name):
 read sprintf("../codeexport/%s/tmp/tree_floatb_twist_definitions", robot_name):
 # Parameter der Zwangsbedingungen lesen
 kin_constraints_exist := false:
+kc_symbols2 := []:
+# Für explizite Zwangsbedingungen
 constrfile := sprintf("../codeexport/%s/tmp/kinematic_constraints_symbols_list_maple", robot_name):
 if FileTools[Exists](constrfile) then
   read constrfile:
+  kc_symbols2 := kc_symbols:
+  kin_constraints_exist := true:
+end if:
+# Parameter für implizite Zwangsbedingungen (dadurch können auch neue Konstanten hinzugefügt werden)
+constrfile := sprintf("../codeexport/%s/tmp/kinematic_implicit_constraints_symbols_list_maple", robot_name):
+if FileTools[Exists](constrfile) then
+  read constrfile:
+  kc_symbols2 := <kc_symbols2| kc_symbols>:
   kin_constraints_exist := true:
 end if:
 # Liste der Kinematikparameter erstellen
@@ -32,8 +42,8 @@ end if:
 pkin_tmp1 := <a;alpha;d;theta; qoffset;b;beta>:
 # Kinematikparameter für kinematische Zwangsbedingungen hinzufügen (falls vorhanden)
 if kin_constraints_exist then
-  pkin_tmp1 := <pkin_tmp1;Transpose(kc_symbols)>:
-  np_kc := ColumnDimension(kc_symbols):
+  pkin_tmp1 := <pkin_tmp1;Transpose(kc_symbols2)>:
+  np_kc := ColumnDimension(kc_symbols2):
 else
   np_kc := 0:# Anzahl der Kinematikparameter für die Zwangsbedingungen
 end if:
