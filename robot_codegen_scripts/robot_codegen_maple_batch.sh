@@ -81,6 +81,7 @@ if ! [ "$CG_FLOATBONLY" == "1" ]; then
   else
     dateiliste_kindyn="$dateiliste_kindyn
         robot_codegen_kinematics/robot_tree_floatb_rotmat_mdh_kinematics.mpl
+        robot_codegen_kinematics/robot_tree_floatb_rotmat_kinematics_com_worldframe_par1.mpl
         robot_codegen_kinematics/robot_tree_velocity_mdh_angles.mpl
         robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_linkframe.mpl
     "

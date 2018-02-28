@@ -79,16 +79,10 @@ do
 		"
 	fi;
 	dateiliste_kin="$dateiliste_kin
-		robot_codegen_definitions/robot_tree_kinematic_parameter_list.mpl
+		  robot_codegen_definitions/robot_tree_kinematic_parameter_list.mpl
+		  robot_codegen_kinematics/robot_tree_floatb_rotmat_mdh_kinematics.mpl
+		  robot_codegen_kinematics/robot_tree_floatb_rotmat_kinematics_com_worldframe_par1.mpl
 	"
-	dateiliste_kin="$dateiliste_kin
-			robot_codegen_kinematics/robot_tree_floatb_rotmat_mdh_kinematics.mpl
-	"
-  if [ "$CG_MINIMAL" == "0" ]; then
-	  dateiliste_kin="$dateiliste_kin
-			  robot_codegen_kinematics/robot_tree_floatb_rotmat_kinematics_com_worldframe_par1.mpl
-	  "
-  fi;
 	dateiliste_mdhvel="
 	    robot_codegen_kinematics/robot_tree_velocity_mdh_angles.mpl
   "
@@ -173,6 +167,7 @@ do
     mpldat_full=$repo_pfad/$wskin
     filename="${mpldat_full##*/}"
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
+    echo "Starte Maple-Skript $filename"
     nice -n 10 ./maple -q <<< "currentdir(\"$dir\"): read \"$filename\";"
   done
   echo "FERTIG mit Kinematik für ${basemeth}"
@@ -181,6 +176,7 @@ do
     mpldat_full=$repo_pfad/$wsvelm
     filename="${mpldat_full##*/}"
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
+    echo "Starte Maple-Skript $filename"
     nice -n 10 ./maple -q <<< "currentdir(\"$dir\"): read \"$filename\";"
   done
   for wsvel in ${dateiliste_vel[@]}
@@ -188,6 +184,7 @@ do
     mpldat_full=$repo_pfad/$wsvel
     filename="${mpldat_full##*/}"
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
+    echo "Starte Maple-Skript $filename"
     nice -n 10 ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
   done
   wait
@@ -198,6 +195,7 @@ do
     mpldat_full=$repo_pfad/$wsen
     filename="${mpldat_full##*/}"
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
+    echo "Starte Maple-Skript $filename"
     nice -n 10 ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
   done
   wait
@@ -208,6 +206,7 @@ do
     mpldat_full=$repo_pfad/$wsdyn
     filename="${mpldat_full##*/}"
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
+    echo "Starte Maple-Skript $filename"
     nice -n 10 ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
   done
   wait
@@ -220,9 +219,11 @@ do
     filename="${mpldat_full##*/}"
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
     if [ $erster == 1 ]; then
+      echo "Starte Maple-Skript $filename"
       nice -n 10 ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";"
       erster=0 # nicht parallel, die folgenden Skripte sind hiervon abhängig
     else # parallel ausführen
+      echo "Starte Maple-Skript $filename"
       nice -n 10 ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
     fi;
   done
@@ -231,6 +232,7 @@ do
 done
 
 # Definitionen des Fixed-Base-Modell wieder laden (für Jacobi-Matrizen und zusätzliche Dateien)
+echo "Starte Maple-Skript robot_tree_floatb_twist_definitions.mpl"
 nice -n 10 ./maple -q  <<< "currentdir(\"$repo_pfad/robot_codegen_definitions\"): read \"robot_tree_floatb_twist_definitions.mpl\";"
 
 
@@ -247,6 +249,7 @@ if [ -f  $repo_pfad/robot_codegen_constraints/${robot_name}_kinematic_constraint
     mpldat_full=$repo_pfad/$wsic
     filename="${mpldat_full##*/}"
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
+    echo "Starte Maple-Skript $filename"
     nice -n 10 ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
   done
 fi;
@@ -265,6 +268,7 @@ do
   mpldat_full=$repo_pfad/$wsjac
   filename="${mpldat_full##*/}"
   dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
+  echo "Starte Maple-Skript $filename"
   nice -n 10 ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
 done
 wait
@@ -276,6 +280,7 @@ if [ -f $addlistfile ]; then
     mpldat_full=$repo_pfad/$wsadd
     filename="${mpldat_full##*/}"
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
+    echo "Starte Maple-Skript $filename"
     nice -n 10 ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
   done
   echo "Zusätzlichen Dateien gestartet"
