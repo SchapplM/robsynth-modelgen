@@ -356,18 +356,111 @@ save PhipD_s, sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_explicit_
 </Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" hide-output="false" labelreference="L2120" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act = true then
-  MatlabExport(implconstr_s, sprintf(&quot;../codeexport/%s/tmp/kinconstr_impl_matlab.m&quot;, robot_name), 2):
-  MatlabExport(Phia_s, sprintf(&quot;../codeexport/%s/tmp/kinconstr_impl_active_jacobian_matlab.m&quot;, robot_name), 2):
-  MatlabExport(PhiaD_s, sprintf(&quot;../codeexport/%s/tmp/kinconstr_impl_active_jacobianD_matlab.m&quot;, robot_name), 2):
-  MatlabExport(Phip_s, sprintf(&quot;../codeexport/%s/tmp/kinconstr_impl_passive_jacobian_matlab.m&quot;, robot_name), 2):
-  MatlabExport(PhipD_s, sprintf(&quot;../codeexport/%s/tmp/kinconstr_impl_passive_jacobianD_matlab.m&quot;, robot_name), 2):
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
+  MatlabExport(implconstr_s, sprintf(&quot;../codeexport/%s/tmp/kinconstr_impl_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(Phia_s, sprintf(&quot;../codeexport/%s/tmp/kinconstr_impl_active_jacobian_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(PhiaD_s, sprintf(&quot;../codeexport/%s/tmp/kinconstr_impl_active_jacobianD_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(Phip_s, sprintf(&quot;../codeexport/%s/tmp/kinconstr_impl_passive_jacobian_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(PhipD_s, sprintf(&quot;../codeexport/%s/tmp/kinconstr_impl_passive_jacobianD_matlab.m&quot;, robot_name), codegen_opt):
   <Font encoding="UTF-8">printf(&quot;Ausdr\303\274cke f\303\274r </Font>Kinematische ZB<Font encoding="UTF-8"> gespeichert (Matlab)\134n&quot;):</Font>
 end if:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L2313" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group></Presentation-Block>
+</Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Invertierung der Gradientenmatrix</Text-field></Title><Presentation-Block>
+<Group view="presentation" inline-output="false" labelreference="L2315" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Invertiere die Gradientenmatrix bez\303\274glich der passiven Gelenke</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2317" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">n1 := RowDimension(Phip_s):
+n2 := ColumnDimension(Phip_s):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2339" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Erstelle Matrix ppf mit der Form der Gradientmatrix Phip_s</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2316" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">ppf := Matrix(n1,n2,symbol=uu):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2318" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to n1 do
+  for j from 1 to n2 do
+    if Phip_s(i,j) = 0 then
+      ppf(i,j) := 0:
+    end if:
+  end do:
+end do:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2341" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Invertiere die allgemeine Form der Matrix und setze dann die Eintr\303\244ge ein.</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2320" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">invppf := MatrixInverse(ppf):</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2321" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">invpp := invppf:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2322" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to n1 do
+  for j from 1 to n2 do
+    if not Phip_s(i,j) = 0 then
+      invpp := subs({ppf(i,j)=Phip_s(i,j)}, invpp):
+    end if:
+  end do:
+end do:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2323" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save invpp, sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_explicit_passive_jacobian_inv_maple&quot;, robot_name):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2329" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
+  MatlabExport(invppf, sprintf(&quot;../codeexport/%s/tmp/kinconstr_impl_passive_jacobian_inv_matlab.m&quot;, robot_name), codegen_opt):
+end if:</Text-field>
+</Input>
+</Group></Presentation-Block>
+</Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Projektionsmatrix aus impliziter Gradientenmatrix</Text-field></Title><Presentation-Block>
+<Group view="presentation" inline-output="false" labelreference="L2330" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2337" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Form der Projektionsmatrix anschauen</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2335" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">B21f := -invppf.Phia_s:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2338" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Projektionsmatrix berechnen. [Docquier2013], Text nach Gl. 12</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2331" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">B21 := -invpp.Phia_s:</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2334" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save B21, sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_explicit_passive_jacobian_inv_maple&quot;, robot_name):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2333" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
+  MatlabExport(B21, sprintf(&quot;../codeexport/%s/tmp/kinconstr_impl_projection_jacobian_matlab.m&quot;, robot_name), codegen_opt):
+end if:</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section><Presentation-Block>

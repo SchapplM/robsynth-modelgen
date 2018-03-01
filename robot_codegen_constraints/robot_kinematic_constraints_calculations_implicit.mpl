@@ -118,14 +118,51 @@ save PhiaD_s, sprintf("../codeexport/%s/tmp/kinematic_constraints_explicit_activ
 save Phip_s, sprintf("../codeexport/%s/tmp/kinematic_constraints_explicit_passive_jacobian_maple.m", robot_name):
 save PhipD_s, sprintf("../codeexport/%s/tmp/kinematic_constraints_explicit_passive_jacobian_time_derivative_maple.m", robot_name):
 printf("Ausdrücke für Kinematische ZB gespeichert (Maple)\n"):
-if codegen_act = true then
-  MatlabExport(implconstr_s, sprintf("../codeexport/%s/tmp/kinconstr_impl_matlab.m", robot_name), 2):
-  MatlabExport(Phia_s, sprintf("../codeexport/%s/tmp/kinconstr_impl_active_jacobian_matlab.m", robot_name), 2):
-  MatlabExport(PhiaD_s, sprintf("../codeexport/%s/tmp/kinconstr_impl_active_jacobianD_matlab.m", robot_name), 2):
-  MatlabExport(Phip_s, sprintf("../codeexport/%s/tmp/kinconstr_impl_passive_jacobian_matlab.m", robot_name), 2):
-  MatlabExport(PhipD_s, sprintf("../codeexport/%s/tmp/kinconstr_impl_passive_jacobianD_matlab.m", robot_name), 2):
+if codegen_act then
+  MatlabExport(implconstr_s, sprintf("../codeexport/%s/tmp/kinconstr_impl_matlab.m", robot_name), codegen_opt):
+  MatlabExport(Phia_s, sprintf("../codeexport/%s/tmp/kinconstr_impl_active_jacobian_matlab.m", robot_name), codegen_opt):
+  MatlabExport(PhiaD_s, sprintf("../codeexport/%s/tmp/kinconstr_impl_active_jacobianD_matlab.m", robot_name), codegen_opt):
+  MatlabExport(Phip_s, sprintf("../codeexport/%s/tmp/kinconstr_impl_passive_jacobian_matlab.m", robot_name), codegen_opt):
+  MatlabExport(PhipD_s, sprintf("../codeexport/%s/tmp/kinconstr_impl_passive_jacobianD_matlab.m", robot_name), codegen_opt):
   printf("Ausdrücke für Kinematische ZB gespeichert (Matlab)\n"):
 end if:
 
+# Invertierung der Gradientenmatrix
+# Invertiere die Gradientenmatrix bezüglich der passiven Gelenke
+n1 := RowDimension(Phip_s):
+n2 := ColumnDimension(Phip_s):
+# Erstelle Matrix ppf mit der Form der Gradientmatrix Phip_s
+ppf := Matrix(n1,n2,symbol=uu):
+for i from 1 to n1 do
+  for j from 1 to n2 do
+    if Phip_s(i,j) = 0 then
+      ppf(i,j) := 0:
+    end if:
+  end do:
+end do:
+# Invertiere die allgemeine Form der Matrix und setze dann die Einträge ein.
+invppf := MatrixInverse(ppf):
+invpp := invppf:
+for i from 1 to n1 do
+  for j from 1 to n2 do
+    if not Phip_s(i,j) = 0 then
+      invpp := subs({ppf(i,j)=Phip_s(i,j)}, invpp):
+    end if:
+  end do:
+end do:
+save invpp, sprintf("../codeexport/%s/tmp/kinematic_constraints_explicit_passive_jacobian_inv_maple", robot_name):
+if codegen_act then
+  MatlabExport(invppf, sprintf("../codeexport/%s/tmp/kinconstr_impl_passive_jacobian_inv_matlab.m", robot_name), codegen_opt):
+end if:
+# Projektionsmatrix aus impliziter Gradientenmatrix
+# 
+# Form der Projektionsmatrix anschauen
+B21f := -invppf.Phia_s:
+# Projektionsmatrix berechnen. [Docquier2013], Text nach Gl. 12
+B21 := -invpp.Phia_s:
+save B21, sprintf("../codeexport/%s/tmp/kinematic_constraints_explicit_passive_jacobian_inv_maple", robot_name):
+if codegen_act then
+  MatlabExport(B21, sprintf("../codeexport/%s/tmp/kinconstr_impl_projection_jacobian_matlab.m", robot_name), codegen_opt):
+end if:
 printf("Fertig\n"):
 
