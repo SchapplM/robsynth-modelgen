@@ -166,7 +166,7 @@ end if:</Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">constrfile := sprintf(&quot;../codeexport/%s/tmp/kinematic_implicit_constraints_symbols_list_maple&quot;, robot_name):
 if FileTools[Exists](constrfile) then
   read constrfile:
-  print(&quot;Symbole der i<Font encoding="UTF-8">mpliziten Zwangsbedingungen aus %s gelesen.\134n&quot;, </Font>constrfile):
+  printf(&quot;Symbole der i<Font encoding="UTF-8">mpliziten Zwangsbedingungen aus %s gelesen.\134n&quot;, </Font>constrfile):
   kc_symbols2 := &lt;kc_symbols2| kc_symbols&gt;:
   kin_constraints_exist := true:
 end if:</Text-field>
