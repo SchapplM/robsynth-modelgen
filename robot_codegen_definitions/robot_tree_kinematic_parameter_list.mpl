@@ -27,6 +27,7 @@ kc_symbols2 := []:
 constrfile := sprintf("../codeexport/%s/tmp/kinematic_constraints_symbols_list_maple", robot_name):
 if FileTools[Exists](constrfile) then
   read constrfile:
+  printf("Symbole der expliziten Zwangsbedingungen aus %s gelesen.\n", constrfile):
   kc_symbols2 := kc_symbols:
   kin_constraints_exist := true:
 end if:
@@ -34,6 +35,7 @@ end if:
 constrfile := sprintf("../codeexport/%s/tmp/kinematic_implicit_constraints_symbols_list_maple", robot_name):
 if FileTools[Exists](constrfile) then
   read constrfile:
+  print("Symbole der impliziten Zwangsbedingungen aus %s gelesen.\n", constrfile):
   kc_symbols2 := <kc_symbols2| kc_symbols>:
   kin_constraints_exist := true:
 end if:

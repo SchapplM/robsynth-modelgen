@@ -148,10 +148,11 @@ kc_symbols2 := []:</Text-field>
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">F\303\274r explizite Zwangsbedingungen</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L1721" drawlabel="true">
+<Group hide-input="false" labelreference="L1721" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">constrfile := sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_symbols_list_maple&quot;, robot_name):
 if FileTools[Exists](constrfile) then
   read constrfile:
+<Font encoding="UTF-8">  printf(&quot;Symbole der expliziten Zwangsbedingungen aus %s gelesen.\134n&quot;, </Font>constrfile):
   kc_symbols2 := kc_symbols:
   kin_constraints_exist := true:
 end if:</Text-field>
@@ -161,10 +162,11 @@ end if:</Text-field>
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Parameter f\303\274r implizite Zwangsbedingungen (dadurch k\303\266nnen auch neue Konstanten hinzugef\303\274gt werden)</Font></Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L1765" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group hide-input="false" labelreference="L1768" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">constrfile := sprintf(&quot;../codeexport/%s/tmp/kinematic_implicit_constraints_symbols_list_maple&quot;, robot_name):
 if FileTools[Exists](constrfile) then
   read constrfile:
+  print(&quot;Symbole der i<Font encoding="UTF-8">mpliziten Zwangsbedingungen aus %s gelesen.\134n&quot;, </Font>constrfile):
   kc_symbols2 := &lt;kc_symbols2| kc_symbols&gt;:
   kin_constraints_exist := true:
 end if:</Text-field>
