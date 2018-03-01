@@ -192,7 +192,7 @@ dUdq_s := dUdq_s:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1719" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read dTdq_s, sprintf(&quot;../codeexport/%s/tmp/floatb_%s_lagrange_dTdq_s_par%d_maple.m&quot;, robot_name, base_method_name, codegen_dynpar):
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/floatb_%s_lagrange_dTdq_s_par%d_maple.m&quot;, robot_name, base_method_name, codegen_dynpar):
 dTdq_s := dTdq_s:</Text-field>
 </Input>
 </Group>

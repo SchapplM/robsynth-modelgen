@@ -55,7 +55,7 @@ codegen_dynpar := 1:
 # Ergebnisse des Lagrange-Formalismus laden
 read sprintf("../codeexport/%s/tmp/floatb_%s_lagrange_dUdq_s_par%d_maple.m", robot_name, base_method_name, codegen_dynpar):
 dUdq_s := dUdq_s:
-read dTdq_s, sprintf("../codeexport/%s/tmp/floatb_%s_lagrange_dTdq_s_par%d_maple.m", robot_name, base_method_name, codegen_dynpar):
+read sprintf("../codeexport/%s/tmp/floatb_%s_lagrange_dTdq_s_par%d_maple.m", robot_name, base_method_name, codegen_dynpar):
 dTdq_s := dTdq_s:
 read sprintf("../codeexport/%s/tmp/floatb_%s_lagrange_dTdqDdt_s_par%d_maple.m", robot_name, base_method_name, codegen_dynpar):
 dTdqDdt_s := dTdqDdt_s:
