@@ -30,6 +30,7 @@ with(codegen):
 with(CodeGeneration):
 with(StringTools):
 codegen_act := true:
+codegen_debug := true:
 codegen_opt := 2:
 read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s": 
@@ -60,7 +61,7 @@ if kin_constraints_exist = true then:
   kintmp_qs := kintmp_qs: # gelesene Variable sonst nicht sichtbar
   kintmp_qt := kintmp_qt: # gelesene Variable sonst nicht sichtbar
   kintmp_subsexp := kintmp_subsexp:
-  printf("Kinematische Zwangsbedingungen gelesen."):
+  printf("Kinematische Zwangsbedingungen gelesen.\n"):
 else
   kintmp_qs := Matrix(1,1):
   kintmp_qt := Matrix(1,1):
@@ -98,7 +99,7 @@ for i from 1 to NJ do # Index über Transformationsmatrizen aller Körper
   end do:
 end do:
 if kin_constraints_exist = true then:
-  printf("Ersetzungen der MDH-Parameter mit Ergebnissen der Parallelstruktur in verallgemeinerten Koordinaten erfolgreich."):
+  printf("Ersetzungen der MDH-Parameter mit Ergebnissen der Parallelstruktur in verallgemeinerten Koordinaten erfolgreich.\n"):
 end if:
 # Calculate Forward Kinematics (Multi-Joint Transformation)
 Trf_c := Matrix(4, 4, NJ+1): # Diese Initialisierung bringt nichts (initialisiert nur 4x4-Matrix)
@@ -149,7 +150,7 @@ if codegen_act then
 end if:
 # Export des symbolischen Ausdrucks für jede Transformationsmatrix einzeln
 for i from 1 to NJ+1 do
-  if codegen_act then
+  if codegen_act and codegen_debug then
     MatlabExport(convert_t_s(Trf_c(1 .. 4, 1 .. 4, i)), sprintf("../codeexport/%s/tmp/fkine_%d_floatb_%s_rotmat_matlab.m", robot_name, i, base_method_name), codegen_opt):
   end if:
 end do:

@@ -3,6 +3,8 @@
 # Führe so viele Berechnungen wie möglich parallel aus
 #
 # Argumente:
+# --minimal
+#   Berechne nur minimale Anzahl an Funktionen
 # --fixb_only
 #   Nur Berechnung der Fixed-Base Funktionen.
 # --floatb_only
@@ -14,7 +16,7 @@
 # (C) Institut für Regelungstechnik, Leibniz Universität Hannover
 
 repo_pfad=$(pwd)/..
-echo $repo_pfad
+workdir=$repo_pfad/workdir
 
 
 # Standard-Einstellungen
@@ -70,85 +72,81 @@ cd /opt/maple2017/bin
 for basemeth in "${basemethodenames[@]}"
 do
 	dateiliste_kin="
-		  robot_codegen_definitions/robot_tree_floatb_${basemeth}_definitions.mpl
+		  robot_tree_floatb_${basemeth}_definitions.mpl
 	"
- 	if [ -f  $repo_pfad/robot_codegen_constraints/${robot_name}_kinematic_constraints.mpl ]; then
+ 	if [ -f  $repo_pfad/workdir/${robot_name}_kinematic_constraints.mpl ]; then
 		dateiliste_kin="$dateiliste_kin
-			robot_codegen_constraints/${robot_name}_kinematic_constraints.mpl
-			robot_codegen_constraints/robot_kinematic_constraints_calculations.mpl
+			${robot_name}_kinematic_constraints.mpl
+			robot_kinematic_constraints_calculations.mpl
 		"
 	fi;
 	dateiliste_kin="$dateiliste_kin
-		  robot_codegen_definitions/robot_tree_kinematic_parameter_list.mpl
-		  robot_codegen_kinematics/robot_tree_floatb_rotmat_mdh_kinematics.mpl
-		  robot_codegen_kinematics/robot_tree_floatb_rotmat_kinematics_com_worldframe_par1.mpl
+		  robot_tree_kinematic_parameter_list.mpl
+		  robot_tree_floatb_rotmat_mdh_kinematics.mpl
+		  robot_tree_floatb_rotmat_kinematics_com_worldframe_par1.mpl
 	"
 	dateiliste_mdhvel="
-	    robot_codegen_kinematics/robot_tree_velocity_mdh_angles.mpl
+	    robot_tree_velocity_mdh_angles.mpl
   "
-  if [ "$CG_MINIMAL" == "0" ]; then
-	  dateiliste_vel="
-	      robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_worldframe_par1.mpl
-	      robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_linkframe.mpl
-	  "
-  else
-	  dateiliste_vel="
-	      robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_linkframe.mpl
-	  "
-  fi;
+
+  dateiliste_vel="
+      robot_tree_floatb_rotmat_velocity_worldframe_par1.mpl
+      robot_tree_floatb_rotmat_velocity_linkframe.mpl
+  "
+
   if [ "$CG_MINIMAL" == "0" ]; then
 	  dateiliste_en="
-        robot_codegen_energy/robot_tree_floatb_rotmat_energy_worldframe_par1.mpl
-        robot_codegen_energy/robot_tree_floatb_rotmat_energy_worldframe_par2.mpl
-        robot_codegen_energy/robot_tree_floatb_rotmat_energy_linkframe_par2.mpl
+        robot_tree_floatb_rotmat_energy_worldframe_par1.mpl
+        robot_tree_floatb_rotmat_energy_worldframe_par2.mpl
+        robot_tree_floatb_rotmat_energy_linkframe_par2.mpl
 	  "
   else
 	  dateiliste_en="
-        robot_codegen_energy/robot_tree_floatb_rotmat_energy_worldframe_par2.mpl
-        robot_codegen_energy/robot_tree_floatb_rotmat_energy_linkframe_par2.mpl
+        robot_tree_floatb_rotmat_energy_worldframe_par2.mpl
+        robot_tree_floatb_rotmat_energy_linkframe_par2.mpl
 	  "
   fi;
   dateiliste_dyn="
-	    robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2_corvec.mpl
-	    robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2_grav.mpl
-	    robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2_inertia.mpl
+	    robot_tree_floatb_rotmat_dynamics_worldframe_par2_corvec.mpl
+	    robot_tree_floatb_rotmat_dynamics_worldframe_par2_grav.mpl
+	    robot_tree_floatb_rotmat_dynamics_worldframe_par2_inertia.mpl
   "
   if [ "$CG_MINIMAL" == "0" ]; then
     dateiliste_dyn="
         $dateiliste_dyn
-	      robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1_corvec.mpl
-	      robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1_cormat.mpl
-	      robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1_grav.mpl
-	      robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1_inertia.mpl
-	      robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1_inertiaD.mpl
-	      robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par1_invdyn.mpl
-	      robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2_cormat.mpl
-	      robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2_invdyn.mpl
-	      robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par2_inertiaD.mpl
+	      robot_tree_floatb_rotmat_dynamics_worldframe_par1_corvec.mpl
+	      robot_tree_floatb_rotmat_dynamics_worldframe_par1_cormat.mpl
+	      robot_tree_floatb_rotmat_dynamics_worldframe_par1_grav.mpl
+	      robot_tree_floatb_rotmat_dynamics_worldframe_par1_inertia.mpl
+	      robot_tree_floatb_rotmat_dynamics_worldframe_par1_inertiaD.mpl
+	      robot_tree_floatb_rotmat_dynamics_worldframe_par1_invdyn.mpl
+	      robot_tree_floatb_rotmat_dynamics_worldframe_par2_cormat.mpl
+	      robot_tree_floatb_rotmat_dynamics_worldframe_par2_invdyn.mpl
+	      robot_tree_floatb_rotmat_dynamics_worldframe_par2_inertiaD.mpl
     "
   fi;
 
   if [ "$CG_MINIMAL" == "0" ]; then
     if [ ${basemeth} == "twist" ]; then
-        dateiliste_plin="robot_codegen_energy/robot_chain_fixb_rotmat_energy_regressor.mpl"
+        dateiliste_plin="robot_chain_fixb_rotmat_energy_regressor.mpl"
     else
-        dateiliste_plin="robot_codegen_energy/robot_chain_floatb_rotmat_energy_regressor.mpl"
+        dateiliste_plin="robot_chain_floatb_rotmat_energy_regressor.mpl"
     fi;
     dateiliste_plin="
       $dateiliste_plin
-      robot_codegen_definitions/robot_tree_base_parameter_transformations.mpl
-	    robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_minpar_corvec.mpl
-	    robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_minpar_cormat.mpl
-	    robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_minpar_grav.mpl
-	    robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_minpar_inertia.mpl
-	    robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_minpar_inertiaD.mpl
-	    robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_minpar_invdyn.mpl
-	    robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_pv2_corvec.mpl
-	    robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_pv2_cormat.mpl
-	    robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_pv2_grav.mpl
-	    robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_pv2_inertia.mpl
-	    robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_pv2_inertiaD.mpl
-	    robot_codegen_dynamics/robot_chain_floatb_rotmat_dynamics_regressor_pv2_invdyn.mpl
+      robot_tree_base_parameter_transformations.mpl
+	    robot_chain_floatb_rotmat_dynamics_regressor_minpar_corvec.mpl
+	    robot_chain_floatb_rotmat_dynamics_regressor_minpar_cormat.mpl
+	    robot_chain_floatb_rotmat_dynamics_regressor_minpar_grav.mpl
+	    robot_chain_floatb_rotmat_dynamics_regressor_minpar_inertia.mpl
+	    robot_chain_floatb_rotmat_dynamics_regressor_minpar_inertiaD.mpl
+	    robot_chain_floatb_rotmat_dynamics_regressor_minpar_invdyn.mpl
+	    robot_chain_floatb_rotmat_dynamics_regressor_pv2_corvec.mpl
+	    robot_chain_floatb_rotmat_dynamics_regressor_pv2_cormat.mpl
+	    robot_chain_floatb_rotmat_dynamics_regressor_pv2_grav.mpl
+	    robot_chain_floatb_rotmat_dynamics_regressor_pv2_inertia.mpl
+	    robot_chain_floatb_rotmat_dynamics_regressor_pv2_inertiaD.mpl
+	    robot_chain_floatb_rotmat_dynamics_regressor_pv2_invdyn.mpl
     "
   fi;
   # Zusätzliche Maple-Skripte speziell für dieses System (benutzerdefiniert)
@@ -164,7 +162,7 @@ do
   # Alle Arbeitsblätter parallel ausführen, wo dies möglich ist
   for wskin in ${dateiliste_kin[@]}
   do
-    mpldat_full=$repo_pfad/$wskin
+    mpldat_full=$workdir/$wskin
     filename="${mpldat_full##*/}"
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
     echo "Starte Maple-Skript $filename"
@@ -173,7 +171,7 @@ do
   echo "FERTIG mit Kinematik für ${basemeth}"
   for wsvelm in ${dateiliste_mdhvel[@]}
   do
-    mpldat_full=$repo_pfad/$wsvelm
+    mpldat_full=$workdir/$wsvelm
     filename="${mpldat_full##*/}"
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
     echo "Starte Maple-Skript $filename"
@@ -181,7 +179,7 @@ do
   done
   for wsvel in ${dateiliste_vel[@]}
   do
-    mpldat_full=$repo_pfad/$wsvel
+    mpldat_full=$workdir/$wsvel
     filename="${mpldat_full##*/}"
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
     echo "Starte Maple-Skript $filename"
@@ -192,7 +190,7 @@ do
 
   for wsen in ${dateiliste_en[@]}
   do
-    mpldat_full=$repo_pfad/$wsen
+    mpldat_full=$workdir/$wsen
     filename="${mpldat_full##*/}"
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
     echo "Starte Maple-Skript $filename"
@@ -203,7 +201,7 @@ do
 
   for wsdyn in ${dateiliste_dyn[@]}
   do
-    mpldat_full=$repo_pfad/$wsdyn
+    mpldat_full=$workdir/$wsdyn
     filename="${mpldat_full##*/}"
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
     echo "Starte Maple-Skript $filename"
@@ -215,7 +213,7 @@ do
   erster=1 # Merker für ersten Durchlauf von plin
   for wsplin in ${dateiliste_plin[@]}
   do
-    mpldat_full=$repo_pfad/$wsplin
+    mpldat_full=$workdir/$wsplin
     filename="${mpldat_full##*/}"
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
     if [ $erster == 1 ]; then
@@ -233,20 +231,20 @@ done
 
 # Definitionen des Fixed-Base-Modell wieder laden (für Jacobi-Matrizen und zusätzliche Dateien)
 echo "Starte Maple-Skript robot_tree_floatb_twist_definitions.mpl"
-nice -n 10 ./maple -q  <<< "currentdir(\"$repo_pfad/robot_codegen_definitions\"): read \"robot_tree_floatb_twist_definitions.mpl\";"
+nice -n 10 ./maple -q  <<< "currentdir(\"$repo_pfad/workdir\"): read \"robot_tree_floatb_twist_definitions.mpl\";"
 
 
 # Kinematische Zwangsbedingungen in impliziter Form
 # Werden nach der Kinematik gerechnet. Können also auch hier am Ende kommen
 # Die Ergebnisse werden in der Dynamik nicht weiter benutzt (im Gegensatz zu explizit definierten Zwangsbedingungen, die direkt zur Ersetzung dienen).
-if [ -f  $repo_pfad/robot_codegen_constraints/${robot_name}_kinematic_constraints_implicit.mpl ]; then
+if [ -f  $repo_pfad/${robot_name}_kinematic_constraints_implicit.mpl ]; then
 	dateiliste_impconstr="
-		robot_codegen_constraints/${robot_name}_kinematic_constraints_implicit.mpl
-		robot_codegen_constraints/robot_kinematic_constraints_calculations_implicit.mpl
+		${robot_name}_kinematic_constraints_implicit.mpl
+		robot_kinematic_constraints_calculations_implicit.mpl
 	"
   for wsic in ${dateiliste_impconstr[@]}
   do
-    mpldat_full=$repo_pfad/$wsic
+    mpldat_full=$workdir/$wsic
     filename="${mpldat_full##*/}"
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
     echo "Starte Maple-Skript $filename"
@@ -260,12 +258,12 @@ dateiliste_jac=""
 for (( ib=1; ib<=$robot_NL; ib++ ))
 do
   dateiliste_jac="$dateiliste_jac
-        /robot_codegen_kinematics/robot_tree_rotmat_jacobian_baseframe_body${ib}.mpl
+        /robot_tree_rotmat_jacobian_baseframe_body${ib}.mpl
   "
 done
 for wsjac in ${dateiliste_jac[@]}
 do
-  mpldat_full=$repo_pfad/$wsjac
+  mpldat_full=$workdir/$wsjac
   filename="${mpldat_full##*/}"
   dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
   echo "Starte Maple-Skript $filename"
@@ -277,7 +275,7 @@ echo "FERTIG mit Jacobi-Matrizen"
 if [ -f $addlistfile ]; then
   for wsadd in ${dateiliste_add[@]}
   do
-    mpldat_full=$repo_pfad/$wsadd
+    mpldat_full=$workdir/$wsadd
     filename="${mpldat_full##*/}"
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
     echo "Starte Maple-Skript $filename"

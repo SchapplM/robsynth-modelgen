@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="2016" minor="2"/>
+<Version major="2017" minor="3"/>
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1080" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="standard" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -135,6 +135,7 @@ printlevel := 2:</Text-field>
 </Group>
 <Group labelreference="L1647" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_act := true:
+codegen_debug := true:
 codegen_opt := 2:</Text-field>
 </Input>
 </Group><Presentation-Block>
@@ -245,15 +246,19 @@ b_transl := b_transl:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1705" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to 3 do
-  for j from 1 to NQJ do
-    MatlabExport(b_transl(i,j), sprintf(&quot;../codeexport/%s/tmp/jacobia_transl_%d_floatb_%s_%d_%d_matlab.m&quot;, robot_name, LIJAC, base_method_name, i, j), codegen_opt):
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act and codegen_debug then
+  for i from 1 to 3 do
+    for j from 1 to NQJ do
+      MatlabExport(b_transl(i,j), sprintf(&quot;../codeexport/%s/tmp/jacobia_transl_%d_floatb_%s_%d_%d_matlab.m&quot;, robot_name, LIJAC, base_method_name, i, j), codegen_opt):
+    end do:
   end do:
-end do:</Text-field>
+end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1703" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(b_transl, sprintf(&quot;../codeexport/%s/tmp/jacobia_transl_%d_floatb_%s_matlab.m&quot;, robot_name, LIJAC, base_method_name), codegen_opt):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
+  MatlabExport(b_transl, sprintf(&quot;../codeexport/%s/tmp/jacobia_transl_%d_floatb_%s_matlab.m&quot;, robot_name, LIJAC, base_method_name), codegen_opt):
+end if:</Text-field>
 </Input>
 </Group>
 </Section>
@@ -312,16 +317,24 @@ read sprintf(&quot;../codeexport/%s/tmp/jacobia_rot_%d_maple.m&quot;, robot_name
 b_rota := b_rota:</Text-field>
 </Input>
 </Group>
+<Group labelreference="L2124" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Einzelne Ausdr\303\274cke als Code exportieren (falls Gesamtausdruck zu komplex ist)</Font></Text-field>
+</Input>
+</Group>
 <Group labelreference="L1739" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to 3 do
-  for j from 1 to NQJ do
-    MatlabExport(b_rota(i,j), sprintf(&quot;../codeexport/%s/tmp/jacobia_rot_%d_floatb_%s_%d_%d_matlab.m&quot;, robot_name, LIJAC, base_method_name, i, j), codegen_opt):
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act and codegen_debug then
+  for i from 1 to 3 do
+    for j from 1 to NQJ do
+      MatlabExport(b_rota(i,j), sprintf(&quot;../codeexport/%s/tmp/jacobia_rot_%d_floatb_%s_%d_%d_matlab.m&quot;, robot_name, LIJAC, base_method_name, i, j), codegen_opt):
+    end do:
   end do:
-end do:</Text-field>
+end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1737" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(b_rota, sprintf(&quot;../codeexport/%s/tmp/jacobia_rot_%d_floatb_%s_matlab.m&quot;, robot_name, LIJAC, base_method_name), codegen_opt):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
+  MatlabExport(b_rota, sprintf(&quot;../codeexport/%s/tmp/jacobia_rot_%d_floatb_%s_matlab.m&quot;, robot_name, LIJAC, base_method_name), codegen_opt):
+end if:</Text-field>
 </Input>
 </Group>
 </Section>
@@ -387,15 +400,19 @@ b_rotg := b_rotg:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1756" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to 3 do
-  for j from 1 to NQJ do
-    MatlabExport(b_rotg(i,j), sprintf(&quot;../codeexport/%s/tmp/jacobig_rot_%d_floatb_%s_%d_%d_matlab.m&quot;, robot_name, LIJAC, base_method_name, i, j), codegen_opt):
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act and codegen_debug then
+  for i from 1 to 3 do
+    for j from 1 to NQJ do
+      MatlabExport(b_rotg(i,j), sprintf(&quot;../codeexport/%s/tmp/jacobig_rot_%d_floatb_%s_%d_%d_matlab.m&quot;, robot_name, LIJAC, base_method_name, i, j), codegen_opt):
+    end do:
   end do:
-end do:</Text-field>
+end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1754" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(b_rotg, sprintf(&quot;../codeexport/%s/tmp/jacobig_rot_%d_floatb_%s_matlab.m&quot;, robot_name, LIJAC, base_method_name), codegen_opt):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
+  MatlabExport(b_rotg, sprintf(&quot;../codeexport/%s/tmp/jacobig_rot_%d_floatb_%s_matlab.m&quot;, robot_name, LIJAC, base_method_name), codegen_opt):
+end if:</Text-field>
 </Input>
 </Group>
 </Section>
@@ -416,15 +433,21 @@ JD_transla_s := convert_t_s(JD_transla_t):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1780" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(JD_rotg_s, sprintf(&quot;../codeexport/%s/tmp/jacobigD_rot_%d_floatb_%s_matlab.m&quot;, robot_name, LIJAC, base_method_name), codegen_opt):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
+  MatlabExport(JD_rotg_s, sprintf(&quot;../codeexport/%s/tmp/jacobigD_rot_%d_floatb_%s_matlab.m&quot;, robot_name, LIJAC, base_method_name), codegen_opt):
+end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1781" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(JD_rota_s, sprintf(&quot;../codeexport/%s/tmp/jacobiaD_rot_%d_floatb_%s_matlab.m&quot;, robot_name, LIJAC, base_method_name), codegen_opt):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
+  MatlabExport(JD_rota_s, sprintf(&quot;../codeexport/%s/tmp/jacobiaD_rot_%d_floatb_%s_matlab.m&quot;, robot_name, LIJAC, base_method_name), codegen_opt):
+end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1782" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(JD_transla_s, sprintf(&quot;../codeexport/%s/tmp/jacobiaD_transl_%d_floatb_%s_matlab.m&quot;, robot_name, LIJAC, base_method_name), codegen_opt):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
+  MatlabExport(JD_transla_s, sprintf(&quot;../codeexport/%s/tmp/jacobiaD_transl_%d_floatb_%s_matlab.m&quot;, robot_name, LIJAC, base_method_name), codegen_opt):
+end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1783" drawlabel="true">

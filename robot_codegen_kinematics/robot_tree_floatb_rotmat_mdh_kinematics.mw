@@ -132,6 +132,7 @@ with(StringTools):</Text-field>
 </Group>
 <Group labelreference="L1687" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_act := true:
+codegen_debug := true:
 codegen_opt := 2:</Text-field>
 </Input>
 </Group>
@@ -193,8 +194,8 @@ end if:</Text-field>
   kintmp_qs := kintmp_qs: # gelesene Variable sonst nicht sichtbar
   kintmp_qt := kintmp_qt: # gelesene Variable sonst nicht sichtbar
   kintmp_subsexp := kintmp_subsexp:
-  printf(&quot;Kinematische Zwangsbedingungen gelesen.&quot;):
-else
+<Font encoding="UTF-8">  printf(&quot;Kinematische Zwangsbedingungen gelesen.\134n&quot;):
+</Font>else
   kintmp_qs := Matrix(1,1):
   kintmp_qt := Matrix(1,1):
   kintmp_subsexp := Matrix(1,2):
@@ -253,8 +254,8 @@ end do:</Text-field>
 </Group>
 <Group labelreference="L1712" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if kin_constraints_exist = true then:
-  printf(&quot;Ersetzungen der MDH-Parameter mit Ergebnissen der Parallelstruktur in verallgemeinerten Koordinaten erfolgreich.&quot;):
-end if:</Text-field>
+<Font encoding="UTF-8">  printf(&quot;Ersetzungen der MDH-Parameter mit Ergebnissen der Parallelstruktur in verallgemeinerten Koordinaten erfolgreich.\134n&quot;):
+</Font>end if:</Text-field>
 </Input>
 </Group>
 </Section>
@@ -378,7 +379,7 @@ end if:</Text-field>
 </Group>
 <Group labelreference="L1641" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NJ+1 do
-  if codegen_act then
+  if codegen_act and codegen_debug then
     MatlabExport(convert_t_s(Trf_c(1 .. 4, 1 .. 4, i)), sprintf(&quot;../codeexport/%s/tmp/fkine_%d_floatb_%s_rotmat_matlab.m&quot;, robot_name, i, base_method_name), codegen_opt):
   end if:
 end do:</Text-field>

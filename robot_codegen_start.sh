@@ -99,7 +99,7 @@ cd $pwd_alt
 source robot_codegen_tmpvar_bash.sh > /dev/null
 
 # Skripte vorbereiten
-source $repo_pfad/robot_codegen_scripts/robot_codegen_maple_preparation.sh
+source $repo_pfad/robot_codegen_scripts/robot_codegen_maple_preparation.sh $CG_BASE_ARGUMENT
 
 # Maple-Skripte starten
 if [ "$CG_PARALLEL" == "1" ]; then
