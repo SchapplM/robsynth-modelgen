@@ -106,6 +106,15 @@ do
         robot_tree_floatb_rotmat_energy_linkframe_par2.mpl
 	  "
   fi;
+  dateiliste_lag="
+	    robot_tree_floatb_rotmat_lagrange_worldframe_par2.mpl
+  "
+  if [ "$CG_MINIMAL" == "0" ]; then
+    dateiliste_lag="
+        $dateiliste_lag
+	      robot_tree_floatb_rotmat_lagrange_worldframe_par1.mpl
+    "
+  fi;
   dateiliste_dyn="
 	    robot_tree_floatb_rotmat_dynamics_worldframe_par2_corvec.mpl
 	    robot_tree_floatb_rotmat_dynamics_worldframe_par2_grav.mpl
@@ -198,6 +207,17 @@ do
   done
   wait
   echo "FERTIG mit Energie für ${basemeth}"
+
+  for wslag in ${dateiliste_lag[@]}
+  do
+    mpldat_full=$workdir/$wslag
+    filename="${mpldat_full##*/}"
+    dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
+    echo "Starte Maple-Skript $filename"
+    nice -n 10 ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
+  done
+  wait
+  echo "FERTIG mit Lagrange für ${basemeth}"
 
   for wsdyn in ${dateiliste_dyn[@]}
   do

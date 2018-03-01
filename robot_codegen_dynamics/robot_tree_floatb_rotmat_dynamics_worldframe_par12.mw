@@ -147,8 +147,7 @@ codeexport_invdyn := true:</Text-field>
 <Group labelreference="L1688" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_convert_s_t&quot;:
 read &quot;../helper/proc_convert_t_s&quot;: 
-read &quot;../helper/proc_MatlabExport&quot;:
-read &quot;../helper/proc_Lagrange1&quot;:</Text-field>
+read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1708" drawlabel="true">
@@ -184,21 +183,26 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Input>
 </Group>
 <Group labelreference="L1523" drawlabel="true">
-<Input><Text-field style="Text" layout="Normal">Ergebnisse der Energie laden</Text-field>
+<Input><Text-field style="Text" layout="Normal">Ergebnisse des Lagrange-Formalismus laden</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1720" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/floatb_%s_lagrange_dUdq_s_par%d_maple.m&quot;, robot_name, base_method_name, codegen_dynpar):
+dUdq_s := dUdq_s:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1719" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read dTdq_s, sprintf(&quot;../codeexport/%s/tmp/floatb_%s_lagrange_dTdq_s_par%d_maple.m&quot;, robot_name, base_method_name, codegen_dynpar):
+dTdq_s := dTdq_s:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1721" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/floatb_%s_lagrange_dTdqDdt_s_par%d_maple.m&quot;, robot_name, base_method_name, codegen_dynpar):
+dTdqDdt_s := dTdqDdt_s:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1580" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_dynpar = 1 then
-  read sprintf(&quot;../codeexport/%s/tmp/energy_potential_floatb_%s_worldframe_par1_maple.m&quot;, robot_name, base_method_name):
-  read sprintf(&quot;../codeexport/%s/tmp/energy_kinetic_floatb_%s_worldframe_par1_maple.m&quot;, robot_name, base_method_name):
-elif codegen_dynpar = 2 then
-  read sprintf(&quot;../codeexport/%s/tmp/energy_potential_floatb_%s_worldframe_par2_maple.m&quot;, robot_name, base_method_name):
-  read sprintf(&quot;../codeexport/%s/tmp/energy_kinetic_floatb_%s_linkframe_par2_maple.m&quot;, robot_name, base_method_name):
-else
-<Font encoding="UTF-8">  printf(&quot;Dynamikfunktionen nur f\303\274r Parametersatz 1 oder 2 definiert\134n&quot;):
-</Font>end:
-T := T:
-U_grav := U_grav:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1700" drawlabel="true">
@@ -225,25 +229,6 @@ end if:
 </Input>
 </Group>
 </Section>
-<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Lagrange Formalismus (mit Funktion)</Text-field></Title>
-<Group labelreference="L1582" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">OutputLagrange := Lagrange1(T, U_grav, NQ):
-dTdqDdt_s := OutputLagrange[1]:
-dTdq_s := OutputLagrange[2]:
-dUdq_s := OutputLagrange[3]:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1629" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save dUdq_s, sprintf(&quot;../codeexport/%s/tmp/floatb_%s_lagrange_dUdq_s_par%d_maple.m&quot;, robot_name, base_method_name, codegen_dynpar):
-save dTdq_s, sprintf(&quot;../codeexport/%s/tmp/floatb_%s_lagrange_dTdq_s_par%d_maple.m&quot;, robot_name, base_method_name, codegen_dynpar):
-save dTdqDdt_s, sprintf(&quot;../codeexport/%s/tmp/floatb_%s_lagrange_dTdqDdt_s_par%d_maple.m&quot;, robot_name, base_method_name, codegen_dynpar):</Text-field>
-</Input>
-</Group>
-</Section>
-<Group labelreference="L967" drawlabel="true">
-<Input><Text-field style="Heading 2" layout="Heading 2">Extraktion einzelner Terme</Text-field>
-</Input>
-</Group>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Gravitational Load</Text-field></Title>
 <Group labelreference="L1676" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal">Generate</Text-field>

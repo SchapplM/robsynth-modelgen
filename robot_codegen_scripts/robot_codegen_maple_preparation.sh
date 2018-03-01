@@ -83,6 +83,12 @@ if [ "$CG_MINIMAL" == "1" ]; then
   done
 fi
 
+
+# Lagrange-Skripte für Parametersätze 1 und 2 vorbereiten
+cp $repo_pfad/workdir/robot_tree_floatb_rotmat_lagrange_worldframe_par12.mpl $repo_pfad/workdir/robot_tree_floatb_rotmat_lagrange_worldframe_par1.mpl
+cp $repo_pfad/workdir/robot_tree_floatb_rotmat_lagrange_worldframe_par12.mpl $repo_pfad/workdir/robot_tree_floatb_rotmat_lagrange_worldframe_par2.mpl
+sed -i "s/codegen_dynpar := 1:/codegen_dynpar := 2:/g" $repo_pfad/workdir/robot_tree_floatb_rotmat_lagrange_worldframe_par2.mpl
+
 # Dynamik-Skripte für Parametersätze 1 und 2 vorbereiten
 cp $repo_pfad/workdir/robot_tree_floatb_rotmat_dynamics_worldframe_par12.mpl $repo_pfad/workdir/robot_tree_floatb_rotmat_dynamics_worldframe_par1.mpl
 cp $repo_pfad/workdir/robot_tree_floatb_rotmat_dynamics_worldframe_par12.mpl $repo_pfad/workdir/robot_tree_floatb_rotmat_dynamics_worldframe_par2.mpl

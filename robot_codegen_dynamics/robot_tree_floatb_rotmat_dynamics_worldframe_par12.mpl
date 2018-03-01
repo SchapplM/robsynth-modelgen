@@ -38,7 +38,6 @@ codeexport_invdyn := true:
 read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s": 
 read "../helper/proc_MatlabExport":
-read "../helper/proc_Lagrange1":
 read "../helper/proc_index_symmat2vector":
 read "../helper/proc_symmat2vector":
 read "../transformation/proc_rotx": 
@@ -53,18 +52,14 @@ read "../robot_codegen_definitions/robot_env":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
 # Kennung des Parametersatzes, für den die Dynamikfunktionen erstellt werden sollen.
 codegen_dynpar := 1:
-# Ergebnisse der Energie laden
-if codegen_dynpar = 1 then
-  read sprintf("../codeexport/%s/tmp/energy_potential_floatb_%s_worldframe_par1_maple.m", robot_name, base_method_name):
-  read sprintf("../codeexport/%s/tmp/energy_kinetic_floatb_%s_worldframe_par1_maple.m", robot_name, base_method_name):
-elif codegen_dynpar = 2 then
-  read sprintf("../codeexport/%s/tmp/energy_potential_floatb_%s_worldframe_par2_maple.m", robot_name, base_method_name):
-  read sprintf("../codeexport/%s/tmp/energy_kinetic_floatb_%s_linkframe_par2_maple.m", robot_name, base_method_name):
-else
-  printf("Dynamikfunktionen nur für Parametersatz 1 oder 2 definiert\n"):
-end:
-T := T:
-U_grav := U_grav:
+# Ergebnisse des Lagrange-Formalismus laden
+read sprintf("../codeexport/%s/tmp/floatb_%s_lagrange_dUdq_s_par%d_maple.m", robot_name, base_method_name, codegen_dynpar):
+dUdq_s := dUdq_s:
+read dTdq_s, sprintf("../codeexport/%s/tmp/floatb_%s_lagrange_dTdq_s_par%d_maple.m", robot_name, base_method_name, codegen_dynpar):
+dTdq_s := dTdq_s:
+read sprintf("../codeexport/%s/tmp/floatb_%s_lagrange_dTdqDdt_s_par%d_maple.m", robot_name, base_method_name, codegen_dynpar):
+dTdqDdt_s := dTdqDdt_s:
+
 DynString := "Term:":
 if codeexport_grav then
   DynString := sprintf("%s g",DynString):
@@ -85,15 +80,6 @@ if codeexport_invdyn then
   DynString := sprintf("%s tau",DynString):
 end if:
 printf("Generiere Dynamik (%s) für %s mit Parametersatz %d und %s\n", DynString, robot_name, codegen_dynpar, base_method_name):
-# Lagrange Formalismus (mit Funktion)
-OutputLagrange := Lagrange1(T, U_grav, NQ):
-dTdqDdt_s := OutputLagrange[1]:
-dTdq_s := OutputLagrange[2]:
-dUdq_s := OutputLagrange[3]:
-save dUdq_s, sprintf("../codeexport/%s/tmp/floatb_%s_lagrange_dUdq_s_par%d_maple.m", robot_name, base_method_name, codegen_dynpar):
-save dTdq_s, sprintf("../codeexport/%s/tmp/floatb_%s_lagrange_dTdq_s_par%d_maple.m", robot_name, base_method_name, codegen_dynpar):
-save dTdqDdt_s, sprintf("../codeexport/%s/tmp/floatb_%s_lagrange_dTdqDdt_s_par%d_maple.m", robot_name, base_method_name, codegen_dynpar):
-# Extraktion einzelner Terme
 # Gravitational Load
 # Generate
 taug_s := dUdq_s:
