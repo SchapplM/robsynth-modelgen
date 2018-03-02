@@ -1,0 +1,36 @@
+# Beispiel für Codegenerierung:
+# KAS5m7u (System mit impliziten kinematischen Zwangsbedingungen)
+
+robot_name := "KAS5m7u":
+
+# Anzahl der verallgemeinerten Gelenkkoordinaten
+NQJ := 13:
+# Anzahl der Gelenke
+NJ := 21:
+# Anzahl der Körper (mit Basis)
+NL := 16:
+
+qoffset := Matrix(21, 1, [-Pi/2, Pi/2, 0, 0, 0, Pi/2, 0, Pi/2, 0, 0, Pi, -Pi/2, -Pi/2, 3*Pi/2, 0, 0, Pi/2, 0, 0, 0]):
+theta := <qJ_t(1); qJ_t(2); qJ_t(3); qJ_t(4,1); qJ_t(5,1); qJ_t(6); qJ_t(7,1); delta8; qJ_t(8,1); qJ_t(9,1); qJ_t(10,1); qJ_t(11,1); delta17; qJ_t(12,1); 0; -delta14(t); beta2(t); delta21(t); 0; 0; 0>  + qoffset:
+alpha := Matrix(21, 1, [0, -Pi/2, Pi/2, 0, 0, 0, Pi/2, Pi/2, 0, 0, 0, 0, 0, 0, Pi/2, 0, 0, 0, 0, 0, -Pi/2]):
+d := Matrix(21, 1, [l1, l2, l3, 0, 0, 0, l15, l3, 0, 0, 0, 0, 0, 0, qJ_t(13,1), 0, 0, 0, 0, 0, 0]):
+a := Matrix(21, 1, [0, 0, 0, l5, l11, l12, 0, 0, -l4, l6, l22, l11, 0, l14, 0, l21, l14, l23, l20, l13, 0]):
+v := Matrix(21,1, <0; 1; 2; 3; 4; 5; 6; 2; 8; 3; 10; 4; 12; 13; 14; 10; 13; 6; 9; 11; 15>):
+
+b := Matrix(21,1):
+beta := Matrix(21,1):
+beta(16,1) := delta9:
+beta(18,1) := -Pi/2-delta20:
+
+# Fast nur Drehgelenke
+sigma := Matrix(21,1):
+sigma(15,1):=1:
+
+# Nehme alle Gelenke als aktiv an, die Minimalkoordinaten sind. Egal ob später im Konzept aktuiert oder nicht.
+mu := Matrix(21,1):
+mu([1, 2, 4, 5, 7],1):=1:
+
+# Ausdrücke für die Winkel der Schnittgelenke.
+# Nehme delta18 zusätzlich mit auf, da dieser Winkel in den impliziten Zwangsbedingungen benutzt wird.
+kintmp_t := Matrix(4, 1, [beta2(t), delta14(t), delta18, delta21(t)]);
+kintmp_s := Matrix(4, 1, [beta2s, delta14s, delta18, delta21s]);
