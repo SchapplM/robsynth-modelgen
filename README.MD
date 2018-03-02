@@ -1,7 +1,11 @@
 # IRT-Maple-Toolbox
 
 Die IRT-Maple-Toolbox enthält Maple-Arbeitsblätter zur Generierung von Dynamikfunktionen für Roboter.
-Ausgehend von einer kinematischen Beschreibung werden Dynamikfunktionen in Matlab weitestgehend automatisch generiert.
+Ausgehend von einer kinematischen Beschreibung werden Dynamikfunktionen für Matlab/Simulink weitestgehend automatisch generiert.
+
+Diese Anleitung enthält eine Übersicht über die Bedienung und die Funktionsweise der Toolbox. Detailierte Informationen sollten immer der Implementierung entnommen werden.
+
+Die theoretischen Hintergründe der einzelnen Schritte können der angegebenen Literatur und insbesondere den Kommentaren in den Maple-Arbeitsblättern und den Matlab-Testskripten entnommen werden.
 
 Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
 
@@ -45,15 +49,10 @@ Die MDH-Parameter (modifizierte Denavit-Hartenberg Parameter nach [KhalilKle1986
         robot_codegen_definitions/robot_env
 
 Diese ist eine Maple-Eingabedatei und definiert Maple-Variablen, die in allen Maple-Arbeitsblättern verwendet werden. Als Vorlage können die Dateien im Verzeichnis robot_codegen_definitions/examples dienen.
-Zu beachten ist, dass in die Maple-Vektoren am einfachsten nur symbolische Ausdrücke eingesetzt werden sollten, die so heißen, wie das Vektorelement selbst. Also __a1__, __a2__ in __a__, __d1__, __d2__ in __d__, __qoffset3__, __qoffset4__ in __qoffset__ und so weiter. Zusätzlich können Nullen und Winkelangaben ("__Pi__", großgeschrieben) eingesetzt werden (vereinfacht die Ergebnisse).
-Sollen die Geometrieparameter anders benannt sein (z.B. __l1__, __l2__), dann sind die Hinweise aus dem Abschnitt [Werte für Kinematikparameter](#werte_kinematikparameter) zu beachten.
-Andere Variablennamen werden bei der Generierung von Matlab-Funktionen nicht erkannt. Beispiel:
-
-        qoffset := Matrix(7,1,[0, -(1/2)*Pi, qoffset3, qoffset4, 0, 0, 0]):
 
 Die Variablen "robot_name" (Präfix für alle Dateien und Funktionsnamen) und "NJ" (Anzahl der Gelenke) müssen an den Roboter angepasst werden.
 
-Für die Variablennamen in robot_env und in [KhalilKle1986](#quellen) gilt folgender Zusammenhang. Die Reihenfolge der Transformationen entspricht der Reihenfolge der Tabellenzeilen.
+Für die Variablennamen in robot_env und in [KhalilKle1986](#quellen)/[BriotKha2015](#quellen) gilt folgender Zusammenhang. Die Reihenfolge der Transformationen entspricht der Reihenfolge der Tabellenzeilen.
 
 | [KhalilKle1986](#quellen) | Vorkommnis | robot_env | Beschreibung  | Anmerkung |
 |---|---|---|---|---|
@@ -65,6 +64,9 @@ Für die Variablennamen in robot_env und in [KhalilKle1986](#quellen) gilt folge
 | theta | (7) | theta | 5. Rotation um z | Der konstante Offset auf den bei Drehgelenken zeitabhängigen Gelenkwinkel wird so gewählt, dass die Gesamttransformation passt |
 | r | (7) | d | 6. Translation in z-Richtung |   |
 | sigma | Text unter Fig. 5 | sigma | Art des Gelenks: 0=rotatorisch (revolute, 1dof), 1=translatorisch (prismatic, 1dof) | Für Gelenke mit sigma=1 muss qJ_t in den Parameter d (Verschiebung in z-Richtung) eingetragen werden, für sigma=0 muss qJ_t in theta stehen (Drehung um die z-Achse) |
+| mu | in [BriotKha2015](#quellen) | mu | Aktuierung (0=passiv,1=aktiv) | Ist nur für implizite Zwangsbed. wichtig |
+
+Eine Auflistung aller Variablen ist im Abschnitt [Definitionen](#ordner_definitionen) gegeben
 
 Nach dem Erstellen dieser Datei werden die Dynamikfunktionen mit Maple generiert, wie im Folgenden beschrieben wird.
 
@@ -80,7 +82,11 @@ Folgende Argumente sind möglich:
 
         -p, --parallel
 
-* Nur Berechnung der Fixed-Base Funktionen (kürzere Berechnung)
+* Minimale Anzahl der generierten Matlabfunktionen (nur g(q), c(q,qD), M(q)):
+
+        --minimal
+
+* Nur Berechnung der Fixed-Base Funktionen (kürzere Berechnung, sinnvoll wenn Floating-Base-Modell nicht relevant ist)
  
         --fixb_only
 
@@ -121,7 +127,8 @@ Für die Erstellung von Ausdrücken für die Dynamik in expliziter Form (nicht: 
         /robot_codegen_energy/robot_tree_floatb_rotmat_energy_worldframe_par1.mw
         /robot_codegen_energy/robot_tree_floatb_rotmat_energy_worldframe_par2.mw
         /robot_codegen_energy/robot_tree_floatb_rotmat_energy_linkframe_par2.mw
-
+        
+        /robot_codegen_dynamics/robot_tree_floatb_rotmat_lagrange_worldframe_par12.mw
         /robot_codegen_dynamics/robot_tree_floatb_rotmat_dynamics_worldframe_par12.mw
 
 Zur Erstellung der Dynamik mit Parametersatz par2 muss die entsprechende Variable im Kopfteil von robot_tree_floatb_rotmat_dynamics_worldframe_par12.mw geändert werden. Ansonsten müssen keine Eingaben vorgenommen werden. 
@@ -174,10 +181,10 @@ Folgende Dateien müssen zusätzlich erzeugt werden, damit die Dynamikgleichunge
 
 Folgende Ausführungen beziehen sich auf die robot_env:
 
-Maple-Variablen wie __theta__ und __d__ können nun neben den verallgemeinerten Koordinaten __qJ_t__ auch andere Ausdrücke beinhalten.
+Maple-Variablen wie __theta__ und __d__ können nun neben den verallgemeinerten Koordinaten __qJ_t__ auch andere zeitabhängige Ausdrücke beinhalten.
 Diese müssen in zwei zusätzlichen Matrizen __kintmp_t__ und __kintmp_s__ aufgelistet werden.
 In __kintmp_t__ stehen zeitabhängige Größen der Ersetzungsvariablen aus __kintmp_s__.
-*kintmp* steht dabei für temporäre Kinematikparameter. Diese Parameter werden im Folgenden substituiert.
+*kintmp* steht dabei für temporäre Kinematikparameter. Diese Parameter werden im Folgenden substituiert. Konstante Kinematikparameter müssen nicht extra aufgelistet werden.
 
 #### Kinematische Zwangsbedingungen
 
@@ -191,7 +198,7 @@ Diese Ausdrücke setzen für die Kinematikzwischengrößen aus __kintmp_s__ Ausd
 __kintmp_subsexp__ enthält dabei Ausdrücke für Sinus und Cosinus der Parameter aus __kintmp_s__.
 __kintmp_qs__ und __kintmp_qt__ enthalten Ausdrücke direkt für __kintmp_s__ und __kintmp_t__.
 Die Verwendung von __kintmp_subsexp__ kann rechentechnische günstiger sein, da z.B. in Rotationsmatrizen oft nur Sinus und Cosinus eines MDH-Winkels auftreten, diese werden direkt ersetzt.
-Andernfalls wäre die Berechnung Sinus(Arctan(...)) notwendig.
+Andernfalls wäre die Berechnung sinus(arctan(...)) notwendig.
 
 #### Werte für die Kinematische Parameter <a name="werte_kinematikparameter"></a> 
 
@@ -203,7 +210,7 @@ Die Konstanten müssen in der Datei
 eingetragen sein und Variablen initialisieren, die den gleichen Namen haben, wie die in __%RN%_kinematic_constraints.mpl__ verwendeten Konstanten.
 Z. B. __l1__, __l2__, ... für konstante Längen.
 Falls in der Definitionsdatei robot_env auch bereits andere Konstanten als __a1__, ... definiert wurden sind diese hier auch zu definieren.
-Die Parameter können im Allgemeinen nicht zufällig zum Testen gewählt werden, da sonst die kinematischen Zwangsbedingungen verletzt werden.
+Falls kinematische Zwangsbedingungen existieren, können die Parameter im Allgemeinen nicht zufällig zum Testen gewählt werden, da sonst die kinematischen Zwangsbedingungen verletzt werden.
 
 #### Beispiele
 
@@ -248,7 +255,7 @@ Art der Berücksichtigung der Basis
 
         floatb/fixb
 
-Berechnung der Kinematik
+Berechnung der Kinematik als Basis für weitere Berechnungen. Bisher ist nur die Methode rotmat implementiert.
 
         rotmat/quat
 
@@ -279,7 +286,10 @@ Teil 2: Funktionskennung
 * jacobia (Analytische Jacobi-Matrix: Statt der Winkelgeschwindigkeit besteht im rotatorischen Teil der Bezug zur Zeitableitung der Orientierungsdarstellung (z.B. Zeitableitung der Euler-Winkel)
 * jacobiaD (Zeitableitung der analytischen Jacobi-Matrix)
 * kinconstr_expl (Explizite Darstellung von kinematischen Zwangsbedingungen)
-* kinconstr_expl_jacobian, kinconstr_expl_jacobianD (Ableitung der kinematischen Zwangsbedingungen nach den verallgemeinerten Koordinaten)
+* kinconstr_expl_jacobian, kinconstr_expl_jacobianD (Ableitung der expliziten Form der kinematischen Zwangsbedingungen nach den verallgemeinerten Koordinaten)
+* kinconstr_impl (Implizite Darstellung von kinematischen Zwangsbedingungen). Diese Funktion dient nur der Kontrolle und muss immer Null sein
+* kinconstr_impl_act_jacobian, kinconstr_impl_act_jacobianD (Ableitung der impliziten Form der kinematischen Zwangsbedingungen nach den Koordinaten der aktiven Gelenke)
+* kinconstr_impl_pas_jacobian, kinconstr_impl_pas_jacobianD (Ableitung der impliziten Form der kinematischen Zwangsbedingungen nach den Koordinaten der passiven Gelenke)
 
 Teil 3: Kennung der Kette
 
@@ -323,6 +333,16 @@ Teil 9: Kompilierungskennung
 
 * mex (Kompilierte Funktionen (mit Matlab-Funktion `Mex_Erstellen`) laufen ungefähr 10 mal schneller)
 
+Beispiele:
+* lwr4p_gravloadJ_floatb_twist_slag_vp1
+* lwr4p_energykin_floatb_twist_slag_vp2
+* lwr4p_inertiaJ_regmin_slag_vp
+* lwr4p_invdynJ_fixb_slag_vp2
+* lwr4p_jacobiaD_floatb_twist_sym_varpar
+* lwr4p_coriolismatJ_fixb_slag_vp1
+* lwr4p_invdyn_floatb_eulangrpy_nnew_vp1
+* lwr4p_energypot_fixb_reg2_slag_vp
+
 #### Parameter
 
 * Parametersatz 1 (par1). Masse, Schwerpunkt, Trägheitstensor um den Schwerpunkt ("physical parameters")
@@ -363,7 +383,7 @@ Verallgemeinerte Koordinaten der Basis
 
 MDH-Parameter
 
-        a, d, alpha, qoffset, b, beta, theta, v, sigma
+        a, d, alpha, qoffset, b, beta, theta, v, sigma, mu
 
 Dynamik-Parameter
 
@@ -440,11 +460,35 @@ Der Ordner examples enthält Beispiele für die Datei robot_env.
               --> robot_tree_floatb_definitions
               --> robot_tree_floatb_eulangrpy_definitions
 
+In der Datei robot_env können folgende Variablen definiert werden:
 
-### Kinematische Zwangsbedingungen
+* __NJ__: Anzahl der Gelenke. Dazu zählen auch virtuelle Gelenke und konstante Transformationen, die einen eigenen Eintrag in der MDH-Tabelle haben.
+* __NQJ__: Anzahl der Minimalkoordinaten. Bei Systeme ohne Zwangsbedingungen gleich __NJ__ zu setzen
+* __NL__: Anzahl der Körper (Optional). Falls (implizit definierte) Zwangsbedingungen vorliegen, werden mehr Koordinatensysteme definiert als Körper vorhanden sind. Siehe [KhalilBen1995](#quellen), [BriotKha2015](#quellen). Die Basis wird als Körper mitgezählt.
+* __qoffset__, __theta__, __alpha__, __d__, __a__, __v__, __b__, __beta__. MDH-Parameter (siehe oben)
+* __sigma__, __mu__ (optional): Eigenschaften der Gelenke. Falls nicht gesetzt, werden die Gelenke als rotatorisch und aktuiert angenommen.
+* __kintmp_t__, __kintmp_s__ (optional): Zusätzliche zeitabhängige Winkel für kinematische Zwangsbedingungen (die keine Minimalkoordinaten sind).
 
-Die Skripte müssen vom Benutzer erstellt werden, da jedes System unterschiedlich ist.
-Die Skripte müssen mit dem Namen des Roboters anfangen (hier Platzhalter *%RN%*)
+Die Datei stellt eine Maple-Eingabe dar. Die Variablen müssen daher mit "__:=__" definiert werden und jede Zeile mit "__:__" abgeschlossen werden.
+Da die Definitionen in jedem Maple-Arbeitsblatt am Ende der Initialisierung geladen werden, ist es möglich, hier Standardeinstellungen zu überschreiben, wie z.B. durch die Definition der Variablen
+* __codegen_opt__: Der Grad der Code-Optimierung für den Export lässt sich steuern und die Rechenzeit der Generierung damit erhöhen (Standardmäßig auf 2, geringere Optimierung mit 1 oder 0).
+
+Zu beachten ist, dass in die Maple-Vektoren am einfachsten nur symbolische Ausdrücke eingesetzt werden sollten, die so heißen, wie das Vektorelement selbst. Also __a1__, __a2__ in __a__, __d1__, __d2__ in __d__, __qoffset3__, __qoffset4__ in __qoffset__ und so weiter. Zusätzlich können Nullen und Winkelangaben ("__Pi__", großgeschrieben) eingesetzt werden (vereinfacht die Ergebnisse).
+Sollen die Geometrieparameter anders benannt sein (z.B. __l1__, __l2__), dann sind die Hinweise aus dem Abschnitt [Werte für Kinematikparameter](#werte_kinematikparameter) zu beachten.
+Dabei muss prinzipiell darauf geachtet werden, dass keine Variablen doppelt benannt sind, z.B. eine Länge __d__, die genauso heißt wie der Vektor mit allen MDH-Längen __d__.
+
+Positivbeispiel für die Definition:
+
+        d := Matrix(7,1,[l1,0,l2,0,l3,0,0]):
+        qoffset := Matrix(7,1,[0, -(1/2)*Pi, qoffset3, qoffset4, 0, 0, 0]):
+
+
+### Explizite kinematische Zwangsbedingungen
+
+Die Skripte für *explizite* kinematische Zwangsbedingungen müssen vom Benutzer erstellt werden, da jedes System unterschiedlich ist.
+Roboterspezifische Skripte müssen mit dem Namen des Roboters anfangen (hier Platzhalter *%RN%*).
+Allgemeine Berechnungen basierend auf den Zwangsbedingungen werden anschließend durchgeführt.
+Die Skripte dienen dazu, abhängige Variablen direkt zu eliminieren, damit der Lagrange-Formalismus in den unabhängigen Koordinaten gerechnet werden kann. Es ist auch möglich, implizite kinematische Zwangsbedingungen zu definieren. Siehe dazu weiter unten.
 
         /robot_codegen_constraints
           %RN%_kinematic_constraints.mw
@@ -456,7 +500,7 @@ Die Skripte müssen mit dem Namen des Roboters anfangen (hier Platzhalter *%RN%*
 
 ### Kinematik
 
-Positionen (Koordinatensysteme, Schwerpunkten), Geschwindigkeiten
+Positionen (Koordinatensysteme, Schwerpunkten), Geschwindigkeiten, Jacobi-Matrizen. Siehe Kapitel Kinematik und Jacobi-Matrix in [OrtmaierRobI](#quellen).
 
         /robot_codegen_kinematics
           robot_tree_floatb_rotmat_mdh_kinematics.mw
@@ -485,8 +529,27 @@ Positionen (Koordinatensysteme, Schwerpunkten), Geschwindigkeiten
               <-- robot_tree_floatb_definitions
               <-- robot_kinematics_rotmat_maple.m
               <-- robot_velocity_worldframe_floatb_twist_maple.m
+              
+### Implizite kinematische Zwangsbedingungen
 
+Die Skripte für *implizite* kinematische Zwangsbedingungen müssen ebenfalls vom Benutzer erstellt werden. Für die impliziten Zwangsbedingungen werden die Ergebnisse der Kinematik benutzt, z.B. um vektorielle Schleifen zu schließen. Die roboterspezifischen Skripte müssen ebenfalls mit dem Namen des Roboters anfangen (Platzhalter *%RN%*).
+Anschließend erfolgt wie bei den expliziten Zwangsbedingungen eine allgemeine Berechnungn z.B. für Gradientmatrizen aus den Zwangsbedingungen.
+Implizite Zwangsbedingungen sollten nur für die Modelle der offenen Baumstruktur angegeben werden.
+Siehe dazu auch [KhalilBen1995](#quellen), [Docquier2013](#quellen), [DoThanhKotHeiOrt2009b](#quellen)
+
+        /robot_codegen_constraints
+          %RN%_kinematic_constraints_implicit.mw
+              <-- robot_env
+              <-- robot_kinematics_rotmat_maple.m
+              --> kinematic_constraints_implicit_maple.m
+          robot_kinematic_constraints_calculations_implicit.mw
+              <-- robot_env
+              <-- robot_tree_floatb_definitions
+              <-- kinematic_constraints_implicit_maple.m
+              
 ### Energie
+
+Berechnet die Energie des Systems mit unterschiedlichen Darstellungsweisen. Siehe Kapitel Dynamik in [OrtmaierRobI](#quellen) und [KhalilDom2002](#quellen).
 
         /robot_codegen_energy
           robot_tree_floatb_rotmat_energy_worldframe_par1
@@ -527,12 +590,19 @@ Positionen (Koordinatensysteme, Schwerpunkten), Geschwindigkeiten
               --> energy_potential_floatb_regressor_minpar_maple.m
 ### Dynamik
 
+Berechnet die Dynamik nach dem Lagrange-Formalismus. Siehe Kapitel Dynamik in [OrtmaierRobI](#quellen). Zur Berechnung der Regressorform siehe [KhalilDom2002](#quellen).
+
         /robot_codegen_dynamics
           robot_tree_floatb_rotmat_dynamics_worldframe_par12.mw
               <-- robot_env
               <-- robot_tree_floatb_definitions
               <-- robot_energy_potential_floatb_worldframe_par1_maple.m
               <-- robot_energy_kinetic_floatb_worldframe_par1_maple.m
+              --> robot_lagrange_..._maple.m
+          robot_tree_floatb_rotmat_dynamics_worldframe_par12.mw
+              <-- robot_env
+              <-- robot_tree_floatb_definitions
+              <-- robot_lagrange_..._maple.m
           robot_chain_floatb_rotmat_dynamics_regressor.mw
               <-- robot_env
               <-- robot_tree_floatb_definitions
@@ -577,4 +647,8 @@ Textbausteine für Funktionsköpfe:
 * [ParkChoPlo1999] Park, FC and Choi, Jihyeon and Ploen, SR: Symbolic formulation of closed chain dynamics in independent coordinates <a name="ParkChoPlo1999"></a> 
 * [UdwadiaKal1992] Udwadia, Firdaus E and Kalaba, Robert E: A new perspective on constrained motion (1992)  <a name="UdwadiaKal1992"></a> 
 * [Docquier2013] Docquier, Nicolas and Poncelet, Antoine and Fisette, Paul: ROBOTRAN: a powerful symbolic gnerator of multibody models (2013) <a name="Docquier2013"></a> 
-
+* [DoThanhKotHeiOrt2009b] Do Thanh, Trung and Kotlarski, Jens and Heimann, Bodo and Ortmaier, Tobias: On the inverse dynamics problem of general parallel robots (2009)
+* [OrtmaierRobI] Ortmaier, Tobias: Skript zur Vorlesung Robotik I
+* [KhalilBen1995] Khalil and Bennis: Symbolic calculation of the base inertial parameters of closed-loop robots (1995)
+* [BriotKha2015] Briot, Sébastien and Khalil, Wisama: Dynamics of Parallel Robots (2015)
+* [KhalilDom2002] W. Khalil and E. Dombre: Modeling, Identification and Control of Robots (2002)
