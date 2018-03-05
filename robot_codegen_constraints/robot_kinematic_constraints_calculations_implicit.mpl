@@ -9,6 +9,8 @@
 # kinematic_constraints_calculations_implicit -> Berechnungen bezüglich implizit definierter kinematischer Zwangsbedingungen
 # Quellen
 # [Docquier2013] Docquier, Nicolas and Poncelet, Antoine and Fisette, Paul: ROBOTRAN: a powerful symbolic gnerator of multibody models (2013)
+# [DoThanhKotHeiOrt2009b] Do Thanh et al.: On the inverse dynamics problem of general parallel robots (2009)
+# [ParkChoPlo1999] Park, FC and Choi, Jihyeon and Ploen, SR: Symbolic formulation of closed chain dynamics in independent coordinates
 # Autor
 # Moritz Schappler, schappler@imes.uni-hannover.de, 2018-02
 # Institut fuer Mechatronische Systeme, Leibniz Universitaet Hannover
@@ -81,7 +83,7 @@ printf("Indizes der %d passiven Gelenke:\n", NPJ);
 Transpose(IndPass);
 # Jacobi-Matrix der Impliziten Zwangsbedingungen in Abhängigkeit der unabhängigen Koordinaten
 # 
-# Entspricht J1 in [Docquier2013] 
+# Entspricht J1 in [Docquier2013], A in [ParkChoPlo1999]
 Phia_s := Matrix(NIZB, NAJ):
 # Jacobi-Matrix berechnen
 for i from 1 to NIZB do
@@ -92,7 +94,7 @@ for i from 1 to NIZB do
 end do:
 # Jacobi-Matrix der Impliziten Zwangsbedingungen in Abhängigkeit der abhängigen Koordinaten
 # 
-# Entspricht J2 in [Docquier2013] 
+# Entspricht J2 in [Docquier2013], P in [ParkChoPlo1999]
 Phip_s := Matrix(NIZB, NPJ):
 # Jacobi-Matrix berechnen
 for i from 1 to NIZB do
@@ -141,28 +143,37 @@ for i from 1 to n1 do
   end do:
 end do:
 # Invertiere die allgemeine Form der Matrix und setze dann die Einträge ein.
-invppf := MatrixInverse(ppf):
-invpp := invppf:
+InvPhip_sf := MatrixInverse(ppf):
+InvPhip_s := InvPhip_sf:
 for i from 1 to n1 do
   for j from 1 to n2 do
     if not Phip_s(i,j) = 0 then
-      invpp := subs({ppf(i,j)=Phip_s(i,j)}, invpp):
+      InvPhip_s := subs({ppf(i,j)=Phip_s(i,j)}, InvPhip_s):
     end if:
   end do:
 end do:
-save invpp, sprintf("../codeexport/%s/tmp/kinematic_constraints_explicit_passive_jacobian_inv_maple", robot_name):
+save InvPhip_s, sprintf("../codeexport/%s/tmp/kinematic_constraints_explicit_passive_jacobian_inv_maple", robot_name):
 if codegen_act then
-  MatlabExport(invppf, sprintf("../codeexport/%s/tmp/kinconstr_impl_passive_jacobian_inv_matlab.m", robot_name), codegen_opt):
+  MatlabExport(InvPhip_sf, sprintf("../codeexport/%s/tmp/kinconstr_impl_passive_jacobian_inv_matlab.m", robot_name), codegen_opt):
 end if:
 # Projektionsmatrix aus impliziter Gradientenmatrix
 # 
 # Form der Projektionsmatrix anschauen
-B21f := -invppf.Phia_s:
+B21f := -InvPhip_sf.Phia_s:
 # Projektionsmatrix berechnen. [Docquier2013], Text nach Gl. 12
-B21 := -invpp.Phia_s:
-save B21, sprintf("../codeexport/%s/tmp/kinematic_constraints_explicit_passive_jacobian_inv_maple", robot_name):
+B21 := -InvPhip_s.Phia_s:
+save B21, sprintf("../codeexport/%s/tmp/kinconstr_impl_projection_jacobian_maple", robot_name):
 if codegen_act then
   MatlabExport(B21, sprintf("../codeexport/%s/tmp/kinconstr_impl_projection_jacobian_matlab.m", robot_name), codegen_opt):
 end if:
+# Zeitableitung der Projektionsmatrix
+# [ParkChoPlo1999], Text nach Gl. 73
+# [DoThanhKotHeiOrt2009b], Gl. 20
+B21D := (InvPhip_s . PhipD_s . InvPhip_s . Phia_s ) + (-InvPhip_s.PhiaD_s):
+save B21D, sprintf("../codeexport/%s/tmp/kinconstr_impl_projection_jacobian_derivative_maple", robot_name):
+if codegen_act then
+  MatlabExport(B21D, sprintf("../codeexport/%s/tmp/kinconstr_impl_projection_jacobian_derivative_matlab.m", robot_name), codegen_opt):
+end if:
+
 printf("Fertig\n"):
 
