@@ -50,7 +50,7 @@ read "../transformation/proc_transl":
 read "../transformation/proc_trafo_mdh": 
 read "../robot_codegen_definitions/robot_env":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
-# Kennung des Parametersatzes, für den die Dynamikfunktionen erstellt werden sollen.
+# Kennung des Parametersatzes, für den die Dynamikfunktionen erstellt werden sollen. Muss im Repo und in der mpl-Datei auf 1 gelassen werden, da die folgende Zeile mit einem Skript verarbeitet wird.
 codegen_dynpar := 1:
 # Ergebnisse des Lagrange-Formalismus laden
 read sprintf("../codeexport/%s/tmp/floatb_%s_lagrange_dUdq_s_par%d_maple.m", robot_name, base_method_name, codegen_dynpar):

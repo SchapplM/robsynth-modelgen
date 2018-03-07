@@ -43,8 +43,8 @@ read "../transformation/proc_transl":
 read "../transformation/proc_trafo_mdh": 
 read "../robot_codegen_definitions/robot_env":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
-# Kennung des Parametersatzes, für den die Dynamikfunktionen erstellt werden sollen.
-codegen_dynpar := 2:
+# Kennung des Parametersatzes, für den die Dynamikfunktionen erstellt werden sollen. Muss im Repo und in der mpl-Datei auf 1 gelassen werden, da die folgende Zeile mit einem Skript verarbeitet wird.
+codegen_dynpar := 1:
 # Ergebnisse der Energie laden
 if codegen_dynpar = 1 then
   read sprintf("../codeexport/%s/tmp/energy_potential_floatb_%s_worldframe_par1_maple.m", robot_name, base_method_name):

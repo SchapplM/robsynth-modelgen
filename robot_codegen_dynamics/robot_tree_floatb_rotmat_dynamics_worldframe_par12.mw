@@ -175,7 +175,7 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Input>
 </Group>
 <Group labelreference="L1697" drawlabel="true">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Kennung des Parametersatzes, f\303\274r den die Dynamikfunktionen erstellt werden sollen.</Font></Text-field>
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Kennung des Parametersatzes, f\303\274r den die Dynamikfunktionen erstellt werden sollen. Muss im Repo und in der mpl-Datei auf 1 gelassen werden, da die folgende Zeile mit einem Skript verarbeitet wird.</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1696" drawlabel="true">
