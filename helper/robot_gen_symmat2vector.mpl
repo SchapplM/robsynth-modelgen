@@ -1,3 +1,4 @@
+
 # Konvertierung Vektor zu symmetrischer Matrix
 # Einleitung
 # Generiere die Umwandlung von Vektor mit oberem rechten Teil einer Symmetrischen Matrix zur Matrix selbst für die Dimensionen des Roboters.
@@ -6,7 +7,9 @@
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-12
 # (C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
 # Initialization
-restart:
+interface(warnlevel=0): # Unterdrücke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
+interface(warnlevel=3):
 with(LinearAlgebra):
 with(ArrayTools):
 with(codegen):
