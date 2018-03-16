@@ -39,6 +39,10 @@ do
   source robot_codegen_matlabfcn_postprocess.sh $dir2/$filename_new 0
 done
 
+# Simulink-Umgebung in einen eigenen Ordner in der Hauptebene kopieren
+rm -rf $dir2/../simulink/* # Zielordner für Simulink-Dateien
+mv $dir2/simulink $dir2/../
+
 # Parameter-Generierungsskript anpassen
 zieldat=$testfcn_pfad/${robot_name}_varpar_testfunctions_parameter.m
 
