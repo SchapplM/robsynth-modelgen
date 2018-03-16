@@ -35,7 +35,7 @@ for p = {compile_path}
     % einzelne Datei kompilieren
     [~,filebasename,~]=fileparts(files(i).name);
     
-    Fehler = Mex_Erstellen({filebasename}, false, false, false);
+    Fehler = matlabfcn2mex({filebasename}, false, false, false);
 
     if Fehler
       error('Fehler');

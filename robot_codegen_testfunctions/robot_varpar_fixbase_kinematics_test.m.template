@@ -56,7 +56,7 @@ for i = 1:size(Q, 1)
     Error_cart = x2_fkine(1:3) - x2_jacob(1:3);
     if any(abs(Error_cart) > 1e-10)
       error('Jacobian does not match with forward kinematics. Error = [%s]. Deltaq%d', ...
-        dispparam(Error_cart', '%.5e'), j);
+        disp_array(Error_cart', '%.5e'), j);
     end
 
   end
@@ -132,7 +132,7 @@ fprintf('Tested Jacobian time derivate from direct vs adjoint calculation for fi
 end
 %% Test Time Derivate of Jacobian
 if ~KINCONSTR && ~any(sigma)
-Mex_Erstellen({'%RN%_jacobig_mdh_num', '%RN%_jacobigD_mdh_num'});
+matlabfcn2mex({'%RN%_jacobig_mdh_num', '%RN%_jacobigD_mdh_num'});
 for kk = 1:NJ % Test for linear joint trajectory
   n = 1e5; % little steps -> small error
   Q_traj = zeros(n,NJ);
@@ -215,8 +215,8 @@ for iq = 1:size(Q, 1) % Über Zufallsposen
     T_jb = Tc_mdh(:,:,jb);
 
     % Winkelkonvention und Umrechnungsfaktor
-    rpy = r2rpy(t2r(T_jb))';
-    J_rpy = rpy2jac(rpy(1), rpy(2), rpy(3));
+    rpy = r2rpy(t2r(T_jb));
+    J_rpy = angvelotrans_rpy(rpy);
 
     % Umrechnung der analytischen in die geometrische Jacobi-Matrix
     % [1], S. 52, Gl. (4.25)
@@ -246,7 +246,7 @@ end
 fprintf('Erfolgreich analytische gegen geometrische Jacobi-Matrix (Rotationsteil) getestet (und Zeitableitung).\n');
 
 %% Kompiliere alle Jacobi-bezogenen Funktionen
-Mex_Erstellen({ '%RN%_jacobigD_rot_floatb_twist_sym_varpar', ...
+matlabfcn2mex({ '%RN%_jacobigD_rot_floatb_twist_sym_varpar', ...
                 '%RN%_jacobiaD_rot_floatb_twist_sym_varpar', ...
                 '%RN%_jacobigD_floatb_twist_sym_varpar', ...
                 '%RN%_jacobiaD_floatb_twist_sym_varpar', ...

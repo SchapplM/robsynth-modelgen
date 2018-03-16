@@ -32,7 +32,7 @@ for i = 1:n
   A_W_W_0 = AB(i,:)';
   
   % Winkelgeschwindigkeit in RPY-Winkel-Zeitableitung umwandeln
-  T_basevel = rpy2jac(ob(1), ob(2), ob(3));
+  T_basevel = angvelotrans_rpy(ob);
   oDb = OBD(i,:)';
   oDDb = OBDD(i,:)';
   
@@ -44,7 +44,7 @@ for i = 1:n
   
   % Gravitationsvektor ins Basis-KS drehen
   g_world = G(i,:)';
-  R_W_0 = rpy2r(ob(1), ob(2), ob(3));
+  R_W_0 = rpy2r(ob);
   g_base = (R_W_0')*g_world;
   
   % Basis-Position und -Geschwindigkeit ins Basis-KS drehen (wird für
@@ -119,7 +119,7 @@ for i = 1:n
   q = Q(i,:)';
   qD = QD(i,:)';
   g_world = G(i,:)';
-  R_W_0 = rpy2r(ob(1), ob(2), ob(3));
+  R_W_0 = rpy2r(ob);
   g_base = (R_W_0')*g_world;
   % Drehmoment aus Gravitation im Vergleich mit Drehmoment aus
   % Basis-Beschleunigung
@@ -376,7 +376,7 @@ for i = 1:n
 
   % Zusammenhang zwischen Kräften und Geschwindigkeiten im Welt-KS und in
   % Euler-Winkeln
-  T_basevel = rpy2jac(ob(1), ob(2), ob(3));
+  T_basevel = angvelotrans_rpy(ob);
   
   % wandle das Basismoment um die Koordinatenachsen in ein Moment um die
   % Eulerwinkel um
@@ -384,7 +384,7 @@ for i = 1:n
   e_eulxyz =  Fg_base_num_rot - Fg_base_sym;
   if any( abs(e_eulxyz) > 1e6*eps(max(Fg_base_num_rot)) )
     error('Gravitationslast der Basis stimmt nicht in Euler-Winkeln. Fehler: [%s]', ...
-      dispparam(e_eulxyz', '%1.5f'));
+      disp_array(e_eulxyz', '%1.5f'));
   end
   
   % wandle das Basismoment entlang der Eulerwinkel in ein Moment um die

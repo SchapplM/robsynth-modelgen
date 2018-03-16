@@ -7432,7 +7432,7 @@ Library {
 	  Position		  [1005, 392, 1070, 423]
 	  ZOrder		  295
 	  LibraryVersion	  "1.190"
-	  SourceBlock		  "rigid_body_kinematics/Doppelintegrator"
+	  SourceBlock		  "lib_rigid_body_kinematics/Doppelintegrator"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
 	  r0			  "qJ_t0"
@@ -7459,7 +7459,7 @@ Library {
 	  Position		  [1020, 102, 1085, 133]
 	  ZOrder		  294
 	  LibraryVersion	  "1.190"
-	  SourceBlock		  "rigid_body_kinematics/Doppelintegrator"
+	  SourceBlock		  "lib_rigid_body_kinematics/Doppelintegrator"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
 	  r0			  "r_base_t0"
@@ -7485,7 +7485,7 @@ Library {
 	  Ports			  [1, 1]
 	  Position		  [1195, 295, 1225, 325]
 	  ZOrder		  325
-	  InitialCondition	  "rpyD2omega(phi_base_t0', phiD_base_t0')"
+	  InitialCondition	  "rpyD2omega(phi_base_t0, phiD_base_t0)"
 	  Port {
 	    PortNumber		    1
 	    Name		    "omega_base"
@@ -7542,7 +7542,7 @@ Library {
 	  Position		  [1390, 290, 1450, 330]
 	  ZOrder		  338
 	  LibraryVersion	  "1.91"
-	  SourceBlock		  "transformations_lib/R2rpy"
+	  SourceBlock		  "lib_transformations/R2rpy"
 	  SourceType		  "SubSystem"
 	  ContentPreviewEnabled	  off
 	  Port {
@@ -7606,10 +7606,10 @@ Library {
 	  Position		  [1280, 290, 1345, 330]
 	  ZOrder		  544
 	  LibraryVersion	  "1.190"
-	  SourceBlock		  "rigid_body_kinematics/angvel_int_rotmat"
+	  SourceBlock		  "lib_rigid_body_kinematics/angvel_int_rotmat"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
-	  R_0E_t0		  "rpy2r(phi_base_t0(1), phi_base_t0(2), phi_base_t0(3) )"
+	  R_0E_t0		  "rpy2r(phi_base_t0)"
 	  Port {
 	    PortNumber		    1
 	    Name		    "R_base"
@@ -7625,7 +7625,7 @@ Library {
 	  Position		  [130, 515, 190, 535]
 	  ZOrder		  538
 	  LibraryVersion	  "1.91"
-	  SourceBlock		  "transformations_lib/angvelotrans_rpy"
+	  SourceBlock		  "lib_transformations/angvelotrans_rpy"
 	  SourceType		  "SubSystem"
 	  ContentPreviewEnabled	  off
 	}
@@ -7830,7 +7830,7 @@ Library {
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
 	  LibraryVersion	  "1.91"
-	  SourceBlock		  "transformations_lib/omega2rpyD"
+	  SourceBlock		  "lib_transformations/omega2rpyD"
 	  SourceType		  "SubSystem"
 	  ContentPreviewEnabled	  off
 	  Port {
@@ -7848,7 +7848,7 @@ Library {
 	  Position		  [1050, 287, 1155, 333]
 	  ZOrder		  339
 	  LibraryVersion	  "1.91"
-	  SourceBlock		  "transformations_lib/rpyDD2omegaD"
+	  SourceBlock		  "lib_transformations/rpyDD2omegaD"
 	  SourceType		  "SubSystem"
 	  ContentPreviewEnabled	  off
 	  Port {
@@ -8778,7 +8778,7 @@ Library {
 	  Position		  [1005, 392, 1070, 423]
 	  ZOrder		  295
 	  LibraryVersion	  "1.188"
-	  SourceBlock		  "rigid_body_kinematics/Doppelintegrator"
+	  SourceBlock		  "lib_rigid_body_kinematics/Doppelintegrator"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
 	  r0			  "qJ_t0"
@@ -8805,7 +8805,7 @@ Library {
 	  Position		  [1020, 102, 1085, 133]
 	  ZOrder		  294
 	  LibraryVersion	  "1.188"
-	  SourceBlock		  "rigid_body_kinematics/Doppelintegrator"
+	  SourceBlock		  "lib_rigid_body_kinematics/Doppelintegrator"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
 	  r0			  "r_base_t0"
@@ -8831,7 +8831,7 @@ Library {
 	  Ports			  [1, 1]
 	  Position		  [1195, 295, 1225, 325]
 	  ZOrder		  325
-	  InitialCondition	  "rpyD2omega(phi_base_t0', phiD_base_t0')"
+	  InitialCondition	  "rpyD2omega(phi_base_t0, phiD_base_t0)"
 	  Port {
 	    PortNumber		    1
 	    Name		    "omega_base"
@@ -8888,7 +8888,7 @@ Library {
 	  Position		  [1390, 290, 1450, 330]
 	  ZOrder		  338
 	  LibraryVersion	  "1.87"
-	  SourceBlock		  "transformations_lib/R2rpy"
+	  SourceBlock		  "lib_transformations/R2rpy"
 	  SourceType		  "SubSystem"
 	  ContentPreviewEnabled	  off
 	  Port {
@@ -8952,10 +8952,10 @@ Library {
 	  Position		  [1280, 290, 1345, 330]
 	  ZOrder		  544
 	  LibraryVersion	  "1.188"
-	  SourceBlock		  "rigid_body_kinematics/angvel_int_rotmat"
+	  SourceBlock		  "lib_rigid_body_kinematics/angvel_int_rotmat"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
-	  R_0E_t0		  "rpy2r(phi_base_t0(1), phi_base_t0(2), phi_base_t0(3) )"
+	  R_0E_t0		  "rpy2r(phi_base_t0)"
 	  Port {
 	    PortNumber		    1
 	    Name		    "R_base"
@@ -8971,7 +8971,7 @@ Library {
 	  Position		  [130, 515, 190, 535]
 	  ZOrder		  538
 	  LibraryVersion	  "1.87"
-	  SourceBlock		  "transformations_lib/angvelotrans_rpy"
+	  SourceBlock		  "lib_transformations/angvelotrans_rpy"
 	  SourceType		  "SubSystem"
 	  ContentPreviewEnabled	  off
 	}
@@ -9176,7 +9176,7 @@ Library {
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
 	  LibraryVersion	  "1.87"
-	  SourceBlock		  "transformations_lib/omega2rpyD"
+	  SourceBlock		  "lib_transformations/omega2rpyD"
 	  SourceType		  "SubSystem"
 	  ContentPreviewEnabled	  off
 	  Port {
@@ -9194,7 +9194,7 @@ Library {
 	  Position		  [1050, 287, 1155, 333]
 	  ZOrder		  339
 	  LibraryVersion	  "1.87"
-	  SourceBlock		  "transformations_lib/rpyDD2omegaD"
+	  SourceBlock		  "lib_transformations/rpyDD2omegaD"
 	  SourceType		  "SubSystem"
 	  ContentPreviewEnabled	  off
 	  Port {

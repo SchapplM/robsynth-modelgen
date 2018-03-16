@@ -94,7 +94,7 @@ for i = 1:n
   ob = OB(i,:)';
   q = Q(i,:)';
   g_world = G(i,:)';
-  R_W_0 = rpy2r(ob(1), ob(2), ob(3));
+  R_W_0 = rpy2r(ob);
   g_base = (R_W_0')*g_world;
   % calculate potential energy with optimized function
   U_func = %RN%_energypot_floatb_eulangrpy_slag_vp1(q, r_W_W_0, ob, g_world, ...
@@ -134,7 +134,7 @@ for i = 1:n
   ob = OB(i,:)';
   q = Q(i,:)';
   g_world = G(i,:)';
-  R_W_0 = rpy2r(ob(1), ob(2), ob(3));
+  R_W_0 = rpy2r(ob);
   g_base = (R_W_0')*g_world;
   % calculate gravitational base load with optimized function
   tauBg_b_par1 = %RN%_gravloadB_floatb_eulangrpy_slag_vp1(q, ob, g_world, ...
