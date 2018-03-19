@@ -1,15 +1,21 @@
-# IRT-Maple-Toolbox
+# Maple-Toolbox: Dynamik für serielle und hybride Roboter
 
-Die IRT-Maple-Toolbox enthält Maple-Arbeitsblätter zur Generierung von Dynamikfunktionen für Roboter.
+Diese Toolbox enthält Maple-Arbeitsblätter zur Generierung von Dynamikfunktionen für Roboter.
 Ausgehend von einer kinematischen Beschreibung werden Dynamikfunktionen für Matlab/Simulink weitestgehend automatisch generiert.
+
+Unterstützte Systemtypen sind:
+* Serielle Roboter
+* Hybride Roboter (seriell mit paralleler Teilstruktur)
+* Roboter mit bewegter Basis
 
 Diese Anleitung enthält eine Übersicht über die Bedienung und die Funktionsweise der Toolbox. Detailierte Informationen sollten immer der Implementierung entnommen werden.
 
 Die theoretischen Hintergründe der einzelnen Schritte können der angegebenen Literatur und insbesondere den Kommentaren in den Maple-Arbeitsblättern und den Matlab-Testskripten entnommen werden.
 
-Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
-
-(C) Institut für Regelungstechnik, Universität Hannover
+Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03  
+(C) Institut für Regelungstechnik, Universität Hannover  
+Moritz Schappler, schappler@imes.uni-hannover.de, 2018-03  
+(C) Institut für mechatronische Systeme, Universität Hannover
 
 ## Inhalt
 
@@ -36,7 +42,7 @@ Folgende Schritte müssen durchgeführt werden:
 
 * Linux-Betriebssystem (für .sh-Skripte in [Alternative 1](#start_alt1)). Ausführung der Maple-Arbeitsblätter in [Alternative 2](#start_alt2) auch unter Windows möglich.
 * Maple muss im Ordner /opt/maple2017/ installiert sein (Standard-Ordner bei sudo-Installation unter Linux).
-* Die IRT-Matlab-Toolbox (git@130.75.135.95:software/matlab) muss im Matlab-Pfad initialisiert sein (Aufruf von irt_tb_init.m im Repo). Damit die Pfadinitialisierung auch im Matlab-Terminalaufruf funktioniert, sollte die startup.m richtig gesetzt sein.
+* Die allgemeine Matlab-Toolbox (Repo `matlab-tools`) muss im Matlab-Pfad initialisiert sein (Aufruf von matlab_tools_path_init.m im Repo). Damit die Pfadinitialisierung auch im Matlab-Terminalaufruf funktioniert, sollte die startup.m richtig gesetzt sein.
 
 ## Starten der Codeerstellung <a name="codeerstellung"></a> 
 
@@ -44,7 +50,7 @@ Der vollständige Ablauf zur Generierung von Matlab-Dynamikfunktionen wird in di
 
 ### Vorbereitung <a name="start_vorbereitung"></a> 
 
-Die MDH-Parameter (modifizierte Denavit-Hartenberg Parameter nach [KhalilKle1986](#quellen)) müssen in die Umgebungsvariablendatei robot_env im Verzeichnis robot_codegen_definitions eingetragen werden.
+Die MDH-Parameter des Roboters (modifizierte Denavit-Hartenberg Parameter nach [KhalilKle1986](#quellen)) müssen in die Umgebungsvariablendatei robot_env im Verzeichnis robot_codegen_definitions eingetragen werden.
 ```
 robot_codegen_definitions/robot_env
 ```
@@ -170,7 +176,7 @@ Beim Durchlaufen der Tests sollten keine Fehler auftreten.
 
 ### Systeme mit kinematischen Zwangsbedingungen <a name="start_zwangsbed"></a> 
 
-Neben seriellen und verzweigten kinematischen Strukturen, können auch geschlossene Ketten behandelt werden, wenn die daraus resultierenden kinematischen Zwangsbedingungen vollständig eliminiert werden können. Dies wird z.B. in [NakamuraGho1989](#quellen) und [ParkChoPlo1999](#quellen) beschrieben. In [UdwadiaKal1992](#quellen) und [Docquier2013](#quellen) werden Systeme mit Zwangsbedingungen behandelt, bei der diese nur mit impliziten Gleichungen berücksichtigt werden. Das wird in dieser Toolbox nicht unterstützt.
+Neben seriellen und verzweigten kinematischen Strukturen, können auch geschlossene Ketten behandelt werden, wenn die daraus resultierenden kinematischen Zwangsbedingungen vollständig eliminiert werden können. Dies wird z.B. in [NakamuraGho1989](#quellen) beschrieben. In [UdwadiaKal1992](#quellen), [ParkChoPlo1999](#quellen) und [Docquier2013](#quellen) werden Systeme mit Zwangsbedingungen behandelt, bei der diese nur mit impliziten Gleichungen berücksichtigt werden. Das wird in dieser Toolbox teilweise unterstützt.
 
 Die Struktur eines verzweigten Systems wird mit MDH-Parametern in der Datei robot_env eingegeben.
 Einige MDH-Parameter sind nun aber keine verallgemeinerten Koordinaten des Systems mehr, sondern z.B. zeitabhängige Winkel, die von den verallgemeinerten Koordinaten abhängen (beschrieben durch die kinematischen Zwangsbedingungen).
@@ -408,15 +414,18 @@ Ab dem Abschnitt [Definitionen](#ordner_definitionen) entspricht die Reihenfolge
 ### Ergebnisse der Code-Generierung <a name="ergebnisordner"></a> 
 
 Die Ergebnisse der Code-Generierung werden im Ordner "codeexport" abgelegt.
-Für jedes System werden eigene Unterordner für temporäre Maple- und Matlab-Ausdrücke ("tmp"), für fertige Matlab-Funktionen ("matlabfcn") und für Testfunktionen ("testfcn") angelegt.
-Die beiden letztgenannten sollten danach z.B. in ein eigenes Repo für das untersuchte System kopiert werden. Es bietet sich an, die Ordner direkt beizubehalten.
+Für jedes System werden eigene Unterordner für temporäre Maple- und Matlab-Ausdrücke ("tmp"), für fertige Matlab-Funktionen ("matlabfcn"), für Simulink-Modelle und -Bibliotheken ("simulink") und für Testfunktionen ("testfcn") angelegt.
+Die letzteren drei sollten danach z.B. in ein eigenes Repo für das untersuchte System kopiert werden. Es bietet sich an, die Ordner direkt beizubehalten.
 ```
 /codeexport/
   %RN%/tmp/
   %RN%/matlabfcn/
+  %RN%/simulink/
   %RN%/testfcn/
 ```
 Die Ergebnisse der Toolbox können am einfachsten anhand der Modultests im Ordner testfcn überblickt werden.
+
+Ergebnisdateien sollten nicht händisch bearbeitet werden, damit die Änderungen bei einer erneuten Generierung nicht überschrieben werden.
 
 ### Koordinatentransformation
 ```
