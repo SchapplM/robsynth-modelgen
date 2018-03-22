@@ -233,25 +233,22 @@ end do:</Text-field>
 <Group labelreference="L1714" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Substituiere allgemeine Ausdr\303\274cke der Winkel der Parallelstruktur mit kinematischen Zwangsbedingungen in Abh\303\244ngigkeit der Haupt-Gelenkwinkel</Font></Text-field>
 </Input>
-</Group>
-<Group labelreference="L1713" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">for i from 1 to NJ do # Index \303\274ber Transformationsmatrizen aller K\303\266rper
+</Group><CodeEditor-ExecGroup view="presentation" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="1584" pixel-height="288" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">for i from 1 to NJ do # Index \303\274ber Transformationsmatrizen aller K\303\266rper
   for ix from 1 to 4 do # Index \303\274ber Zeilen der Transformationsmatrizen
-</Font>    for iy from 1 to 4 do<Font encoding="UTF-8"> # Index \303\274ber Spalten der Transformationsmatrizen
-</Font>      # Substituiere Zeitvariablen
+    for iy from 1 to 4 do # Index \303\274ber Spalten der Transformationsmatrizen
+      # Substituiere Zeitvariablen
       Trf(ix, iy, i) := convert_t_s( Trf(ix, iy, i) ):
-<Font encoding="UTF-8">      # Substituiere sin und cos der Winkel (einfachere Ausdr\303\274cke)
-</Font>      Trf(ix, iy, i) := subs_kintmp_exp(Trf(ix, iy, i)):
-<Font encoding="UTF-8">      # Substituiere die verbleibenden Winkel direkt (einige Winkel sind nicht in den Ersetzungsausdr\303\274cken enthalten, da sie keine problematischen arctan-Ausdr\303\274cke enthalten.
-</Font>      for jj from 1 to RowDimension(kintmp_qt) do<Font encoding="UTF-8"> # Index \303\274ber zu ersetzende Winkel
-</Font>        Trf(ix, iy, i) := subs( { kintmp_s(jj, 1) = kintmp_qs(jj, 1) }, Trf(ix, iy, i) ): 
+      # Substituiere sin und cos der Winkel (einfachere Ausdr\303\274cke)
+      Trf(ix, iy, i) := subs_kintmp_exp(Trf(ix, iy, i)):
+      # Substituiere die verbleibenden Winkel direkt (einige Winkel sind nicht in den Ersetzungsausdr\303\274cken enthalten, da sie keine problematischen arctan-Ausdr\303\274cke enthalten.
+      for jj from 1 to RowDimension(kintmp_qt) do # Index \303\274ber zu ersetzende Winkel
+        Trf(ix, iy, i) := subs( { kintmp_s(jj, 1) = kintmp_qs(jj, 1) }, Trf(ix, iy, i) ): 
       end do:
       Trf(ix, iy, i) := convert_s_t( Trf(ix, iy, i) ):
     end do:
   end do:
-end do:</Text-field>
-</Input>
-</Group>
+end do:
+</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L1712" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if kin_constraints_exist = true then:
 <Font encoding="UTF-8">  printf(&quot;Ersetzungen der MDH-Parameter mit Ergebnissen der Parallelstruktur in verallgemeinerten Koordinaten erfolgreich.\134n&quot;):

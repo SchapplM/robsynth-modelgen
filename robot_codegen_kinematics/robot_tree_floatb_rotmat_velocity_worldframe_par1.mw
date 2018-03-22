@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="2016" minor="2"/>
+<Version major="2017" minor="3"/>
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1080" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="standard" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -248,23 +248,17 @@ end:</Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Nutze die Methode %s f\303\274r die Basis-Drehgeschwindigkeit\134n&quot;, </Font>base_method_name):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1691" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
-</Input>
-</Group>
 <Group labelreference="L1657" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Erh\303\266he die Geschwindigkeit jedes K\303\266rpers
 Betrachte dazu nur die durch Gelenke angetriebenen K\303\266rper, nicht die Basis</Font></Text-field>
 </Input>
-</Group>
-<Group labelreference="L1653" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NJ do # Gelenke durchgehen
-<Font encoding="UTF-8">  # K\303\266rper der von Gelenkwinkel i bewegt wird: Index i+1
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L2" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="1251" pixel-height="432" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">for i from 1 to NJ do # Gelenke durchgehen
+  # K\303\266rper der von Gelenkwinkel i bewegt wird: Index i+1
   # Vorg\303\244ngerk\303\266rper bestimmen
-</Font>  j := v(i) + 1:
+  j := v(i) + 1:
   if sigma(i) = 0 then # Drehgelenk
-<Font encoding="UTF-8">    # Geschwindigkeit des Vorg\303\244ngers; Trf_c(...,i+1) enth\303\244lt z-Achse des K\303\266rperkoordinatensystems, das von qi bewegt wird.</Font>
-    # <Font encoding="UTF-8">[Ortmaier2014] (7.7) (S.115) (dort falsche Indizes f\303\274r MDH), </Font>[KhalilDombre2002] (9.14)
+    # Geschwindigkeit des Vorg\303\244ngers; Trf_c(...,i+1) enth\303\244lt z-Achse des K\303\266rperkoordinatensystems, das von qi bewegt wird.
+    # [Ortmaier2014] (7.7) (S.115) (dort falsche Indizes f\303\274r MDH), [KhalilDombre2002] (9.14)
     omega_W_i(1 .. 3, i+1) := omega_W_i(1 .. 3, j) + thetaD(i,1)*Trf_c(1 .. 3, 3, i+1):
   else: # Schubgelenk
     # [Ortmaier2014] (7.12) (S.116)
@@ -279,10 +273,9 @@ Betrachte dazu nur die durch Gelenke angetriebenen K\303\266rper, nicht die Basi
     # [Ortmaier2014] (7.15) (S.116), [KhalilDombre2002] (9.15)
     rD_W_i(1 .. 3, i+1) := rD_W_i(1 .. 3, j) + CrossProduct(omega_W_i(1 .. 3, j), r_W_im1_i) + dD(i,1)*Trf_c(1 .. 3, 3, i+1):
   end if:
-  <Font encoding="UTF-8">printf(&quot;Geschwindigkeit f\303\274r K\303\266rperkoordinatensystem %d aufgestellt (Herleitung im Welt-KS). %s\134n&quot;, i</Font>, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
-end do:</Text-field>
-</Input>
-</Group>
+  printf(&quot;Geschwindigkeit f\303\274r K\303\266rperkoordinatensystem %d aufgestellt (Herleitung im Welt-KS). %s\134n&quot;, i, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+end do:
+</EC-CodeEditor></CodeEditor-ExecGroup>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2">Velocities of Center of Mass</Text-field></Title>
 <Group labelreference="L1660" drawlabel="true">

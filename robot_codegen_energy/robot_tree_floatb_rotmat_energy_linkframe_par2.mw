@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="2016" minor="2"/>
+<Version major="2017" minor="3"/>
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1080" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="standard" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -188,9 +188,7 @@ rD_i_i := rD_i_i:</Text-field>
 <Input><Text-field style="Text" layout="Normal">[GautierKhalil1988], equ.6
 <Font encoding="UTF-8">Hier wird der Tr\303\244gheitstensor um den Koordinatenursprung gew\303\244hlt, und nicht um den Schwerpunkt!</Font></Text-field>
 </Input>
-</Group>
-<Group labelreference="L1557" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">T_b := Matrix(NL, 1):
+</Group><CodeEditor-ExecGroup view="presentation" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="1656" pixel-height="200" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">T_b := Matrix(NL, 1):
 T := 0:
 for i to NL do 
   I_i_i_tensor := Matrix([[I_i_i[1, i], I_i_i[2, i], I_i_i[3, i]], [I_i_i[2, i], I_i_i[4, i], I_i_i[5, i]], [I_i_i[3, i], I_i_i[5, i], I_i_i[6, i]]]):
@@ -198,9 +196,8 @@ for i to NL do
   T_b_trans := (1/2)*M[i, 1]*Multiply(Transpose(rD_i_i(1 .. 3, i)), rD_i_i(1 .. 3, i))+Multiply(Transpose(rD_i_i(1 .. 3, i)), CrossProduct(omega_i_i(1 .. 3, i), mr_i_i_Si(1 .. 3, i))):
   T_b[i, 1] := T_b_rot+T_b_trans:
   T := T+T_b[i, 1]:
-end do:</Text-field>
-</Input>
-</Group>
+end do:
+</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L1705" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal">Maple Export</Text-field>
 </Input>
