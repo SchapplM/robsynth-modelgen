@@ -80,7 +80,7 @@ end if:
 # Anzahl der Körper (Number of Links):
 if not assigned(NL) then
   NL := NJ + 1:
-  printf("Variable NL ist nicht gegeben. Insgesamt %d Gelenke. Nehme an, dass jedes Gelenk einem Körper zugeordnet ist (keine Schleifen)", NJ):
+  printf("Variable NL ist nicht gegeben. Insgesamt %d Gelenke. Nehme an, dass jedes Gelenk einem Körper zugeordnet ist (keine Schleifen)\n", NJ):
 else
   NVJ := NJ - (NL - 1):
   printf("Variable NL=%d ist gegeben. Insgesamt %d Gelenke. Davon sind die ersten %d einem Körper zugeordnet und die letzten %d virtuell.\n", NL, NJ, NJ-NVJ, NVJ):

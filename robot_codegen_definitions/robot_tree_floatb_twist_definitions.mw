@@ -277,11 +277,11 @@ end if:</Text-field>
 <Group hide-input="false" labelreference="L1683" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if not assigned(NL) then
   NL := NJ + 1:
-  <Font encoding="UTF-8">printf(&quot;Variable NL ist nicht gegeben. Insgesamt %d Gelenke. Nehme an, dass jedes Gelenk einem K\303\266rper zugeordnet ist (keine Schleifen)&quot;, NJ):</Font>
+  <Font encoding="UTF-8">printf(&quot;Variable NL ist nicht gegeben. Insgesamt %d Gelenke. Nehme an, dass jedes Gelenk einem K\303\266rper zugeordnet ist (keine Schleifen)\134n&quot;, NJ):</Font>
 else
-  NVJ := NJ - (NL - 1):<Font encoding="UTF-8">
-  printf(&quot;Variable NL=%d ist gegeben. Insgesamt %d Gelenke. Davon sind die ersten %d einem K\303\266rper zugeordnet und die letzten %d virtuell.\134n&quot;, NL, NJ, NJ-NVJ, NVJ):
-end if:</Font></Text-field>
+  NVJ := NJ - (NL - 1):
+<Font encoding="UTF-8">  printf(&quot;Variable NL=%d ist gegeben. Insgesamt %d Gelenke. Davon sind die ersten %d einem K\303\266rper zugeordnet und die letzten %d virtuell.\134n&quot;, NL, NJ, NJ-NVJ, NVJ):
+</Font>end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1597" drawlabel="true">
