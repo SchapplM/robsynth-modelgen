@@ -11,7 +11,7 @@
 this_path = fileparts( mfilename('fullpath') );
 % In diesem Pfad liegen die Ordner matlabfcn, testfcn und simulink,
 % die die entsprechenden Dateien der generierten Umgebung des Roboters beinhalten
-main_path_robot = fullfile(this_path, '..');
+main_path_robot = clean_absolute_path(fullfile(this_path, '..'));
 
 % Verzeichnis mit generierten Matlab-Funktionen hinzufügen
 matlabfcn_path = fullfile(main_path_robot, 'matlabfcn');
