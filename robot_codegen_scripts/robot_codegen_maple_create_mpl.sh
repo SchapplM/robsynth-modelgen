@@ -3,7 +3,7 @@
 # Dieser Vorgang muss nur bei Änderung eines Arbeitsblatts ausgeführt werden.
 #
 # Dieses Skript im Ordner ausführen, in dem es im Repo liegt
-# Erfordert installierte Pakete: wmctrl
+# Erfordert installierte Pakete: wmctrl xautomation
 
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-05
 # (C) Institut für Regelungstechnik, Leibniz Universität Hannover

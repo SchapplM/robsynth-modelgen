@@ -1,8 +1,6 @@
 #!/bin/bash 
 # Konvertiere ein Maple-Worksheet in eine mpl Datei
 # Argument: Pfad zur ws-Datei
-#
-# TODO: Funktioniert nicht, wenn mpl-Datei schon existiert
 
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-05
 # (C) Institut für Regelungstechnik, Leibniz Universität Hannover
@@ -42,7 +40,7 @@ sleep 1
 xte 'keyup Control_L'
 sleep 1
 
-# Alte mpl-Datei löschen
+# Alte mpl-Datei löschen (Überschreiben-Dialog in Maple nicht möglich, da Befehle blind eingegeben werden und die Datei eventuell nicht existiert).
 rm -f $mpl_file
 
 # Graphisches Maple starten (wird zum neu abspeichern benötigt)
@@ -71,9 +69,11 @@ sleep 1
 xte 'keydown V' 
 xte 'keyup V' 'keyup Control_L'
 
-# Endung auswählen
+# Endung auswählen (Reihenfolge ist abhängig von Maple-Version. Hier für Maple 2017).
 sleep 1
 xte 'key Tab'
+xte 'key Down'
+xte 'key Down'
 xte 'key Down'
 xte 'key Down'
 xte 'key Down'
