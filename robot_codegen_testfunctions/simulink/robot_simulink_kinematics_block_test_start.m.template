@@ -1,5 +1,5 @@
 % Start kinematics block test model
-% Test auf Kompilierbarkeit der Kinematik-Blöcke in der Bibliothek (kein Funktionstest)
+% Test auf Kompilierbarkeit der Kinematik-Blöcke in der Bibliothek
 
 % Moritz Schappler, schappler@irt.uni-hannover.de, 2017-03
 % (C) Institut für Regelungstechnik, Universität Hannover
@@ -15,12 +15,15 @@ for f = fields(TSS)'
 end
 
 %% Modellparameter
-simin_qJ = struct('time', 0, ...
-    'signals', struct('values', zeros(1,NQJ), 'dimensions', NQJ), ...
+Ts = 5e-2; % Abtastzeit der Eingabedaten
+t = (0:Ts:(n-1)*Ts)'; % Zeit-Stützstellen für Eingabedaten
+
+simin_qJ = struct('time', t, ...
+    'signals', struct('values', Q, 'dimensions', NQJ), ...
     'name', 'tau_ext');
 
-simin_phiB = struct('time', 0, ...
-    'signals', struct('values', zeros(1,3), 'dimensions', 3), ...
+simin_phiB = struct('time', t, ...
+    'signals', struct('values', OB, 'dimensions', 3), ...
     'name', 'tau_ext');
 
 NL_modell = NL;
@@ -36,3 +39,36 @@ simOut = sim(sl_Modellname, 'StopTime', '5', ...
   'SimulationMode', 'normal'); % normal
 sl = get_simulink_outputs(simOut, sl_Modellname);
 fprintf('Simulink-Modell berechnet. Rechenzeit: %1.1fs\n', toc(t1));
+
+%% Ergebnisse auswerten
+for i = 1:length(t)
+  q = Q(i,:)';
+  phiB = OB(i,:)';
+  
+  % Ergebnisse aus Simulink-Daten extrahieren
+  [~,i_sl] = min(abs(sl.t-t(i))); % Finde Index der Simulink Ergebnisse
+  T_0_n_sl = sl.T_0_n(:,:,i_sl);
+  Jg_n_sl = sl.Jg_n(:,:,i_sl);
+  Jg_n_sl_floatb = sl.Jg_floatb_n(:,:,i_sl);
+  
+  % Vergleiche Simulink-Ergebnisse mit Matlab-Skript-Ergebnissen
+  T_0_ml = bsp_3T1R_fkine_fixb_rotmat_mdh_sym_varpar(q, pkin);
+  
+  test1 = T_0_ml(:,:,NL_modell)-T_0_n_sl;
+  if any(abs(test1(:)) > 1e-10)
+    error('Kinematik stimmt nicht zwischen Simulink und Matlab');
+  end
+  
+  Jg_n_ml = bsp_3T1R_jacobig_floatb_twist_sym_varpar(q, uint8(NL_modell-1), zeros(3,1), pkin);
+  test2 = Jg_n_ml-Jg_n_sl;
+  if any(abs(test2(:)) > 1e-10)
+    error('Jacobi-Matrix stimmt nicht zwischen Simulink und Matlab');
+  end
+  
+  Jg_n_ml_floatb = bsp_3T1R_jacobig_mdh_eulangrpy_sym(phiB, q, uint8(NL_modell-1), zeros(3,1), pkin);
+  test3 = Jg_n_ml_floatb-Jg_n_sl_floatb;
+  if any(abs(test3(:)) > 1e-10)
+    error('Floating-Base-Jacobi-Matrix stimmt nicht zwischen Simulink und Matlab');
+  end
+end
+fprintf('Ergebnisse aus Simulink-Blöcken validiert\n');
