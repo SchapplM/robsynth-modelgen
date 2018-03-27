@@ -135,7 +135,9 @@ with(StringTools):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1701" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_opt := 2:
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">#codegen_act := true: # noch nicht implementiert
+codegen_debug := false:
+codegen_opt := 2:
 codeexport_grav := true: 
 codeexport_corvec := true:
 codeexport_cormat := true:
@@ -438,7 +440,8 @@ end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1681" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_corvec and not(base_method_name=&quot;twist&quot;) then
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"># Einzelne Komponenten exportieren (falls der ganze Vektor zu lange dauert).
+if codeexport_corvec and not(base_method_name=&quot;twist&quot;) and codegen_debug then
   for i to NQ do 
     MatlabExport(tauCC_s(i), sprintf(&quot;../codeexport/%s/tmp/coriolisvec_floatb_%s_%d_par%d_matlab.m&quot;, robot_name, base_method_name, i, codegen_dynpar), codegen_opt):
   end do:

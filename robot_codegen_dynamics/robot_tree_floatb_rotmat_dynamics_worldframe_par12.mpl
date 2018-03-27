@@ -28,6 +28,8 @@ with(codegen):
 with(CodeGeneration):
 with(StringTools):
 # Einstellungen für Code-Export: Optimierungsgrad (2=höchster) und Aktivierung jedes Terms.
+#codegen_act := true: # noch nicht implementiert
+codegen_debug := false:
 codegen_opt := 2:
 codeexport_grav := true: 
 codeexport_corvec := true:
@@ -184,7 +186,8 @@ if codeexport_corvec then
     tauCC_s := subs({qDD_s(i, 1) = 0}, tauCC_s):
   end do:
 end if:
-if codeexport_corvec and not(base_method_name="twist") then
+# Einzelne Komponenten exportieren (falls der ganze Vektor zu lange dauert).
+if codeexport_corvec and not(base_method_name="twist") and codegen_debug then
   for i to NQ do 
     MatlabExport(tauCC_s(i), sprintf("../codeexport/%s/tmp/coriolisvec_floatb_%s_%d_par%d_matlab.m", robot_name, base_method_name, i, codegen_dynpar), codegen_opt):
   end do:
