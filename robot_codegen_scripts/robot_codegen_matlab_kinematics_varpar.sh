@@ -115,7 +115,7 @@ fi
 
 for (( jacart=1; jacart<=10; jacart++ ))
 do
-  for (( ib=1; ib<=$robot_NL; ib++ ))
+  for (( ib=0; ib<$robot_NL; ib++ ))
   do
     if [ "$jacart" -eq "1" ]; then
       quelldat=$repo_pfad/codeexport/${robot_name}/tmp/jacobia_transl_${ib}_floatb_twist_matlab.m
@@ -275,9 +275,9 @@ do
   cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
 
   echo "%% Function calls" >> $zieldat
-  for (( ib=1; ib<=$robot_NL; ib++ ))
+  for (( ib=0; ib<$robot_NL; ib++ ))
   do
-    if [ "$ib" -eq "1" ]; then
+    if [ "$ib" -eq "0" ]; then
       printf "if link_index == ${ib}\n" >> $zieldat
     else
       printf "elseif link_index == ${ib}\n" >> $zieldat

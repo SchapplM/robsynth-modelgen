@@ -1,3 +1,4 @@
+
 # Center of Mass Calculation for the Robot based on MDH frames
 # Introduction
 # Berechnung der Schwerpunkts-Kinematik (Positionen)
@@ -63,7 +64,7 @@ for i to NL do
   r_W_i_Si(1 .. 3, i) :=  Multiply(Matrix(Trf_c(1 .. 3, 1 .. 3, i)), r_i_i_Si(1 .. 3, i)):
   mr_W_i_Si(1 .. 3, i) := Multiply(Matrix(Trf_c(1 .. 3, 1 .. 3, i)), mr_i_i_Si(1 .. 3, i)):
   r_W_W_Si(1 .. 3, i) :=  Matrix(Trf_c(1 .. 3, 4, i)) + Matrix(r_W_i_Si(1 .. 3, i)):
-  printf("Schwerpunktsposition in Weltkoordinaten für Körper %d aufgestellt.\n", i):
+  printf("Schwerpunktsposition in Weltkoordinaten für Körper %d aufgestellt.\n", i-1):#0=Basis
 end do:
 # Maple Export
 save mr_W_i_Si, r_W_W_Si, r_W_i_Si, sprintf("../codeexport/%s/tmp/kinematics_com_worldframe_floatb_%s_par1_maple.m", robot_name, base_method_name):

@@ -9,8 +9,8 @@
 % r_i_i_C [3x1]
 %   Ortsvektor vom KörperKS-Ursprung zum gesuchten Punkt
 % link_index [1x1 uint8]
-%   Index des Segmentes, auf dem der Punkt C liegt.
-%   Wie in %RN%_fkine_fixb_rotmat_mdh_sym_varpar.m (1=Basis).
+%   Index des Segmentes, auf dem der Punkt C liegt. (0=Basis).
+%   Siehe auch: %RN%_fkine_fixb_rotmat_mdh_sym_varpar.m
 % 
 % Output:
 % Jg_C [6x(6+%NJ%)]
@@ -44,7 +44,7 @@ assert(isa(v_mdh,'uint8') && all(size(v_mdh) == [%NJ% 1]), ...
 
 %% Kinematik berechnen
 T_c_mdh = %RN%_fkine_fixb_rotmat_mdh_sym_varpar(qJ, pkin);
-T_B_i = T_c_mdh(:,:,link_index);
+T_B_i = T_c_mdh(:,:,link_index+1);
 % Vektor von der Basis (B) zum Punkt C (auf Körper i)
 r_B_B_C = T_B_i(1:3,4) + T_B_i(1:3,1:3) * r_i_i_C; % r_B_B_i + R_B_i_C
 

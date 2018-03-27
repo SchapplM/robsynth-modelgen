@@ -82,7 +82,7 @@ if ! [ "$CG_FLOATBONLY" == "1" ]; then
 
 
   # Jacobi-Matrizen
-  for (( ib=1; ib<=$robot_NL; ib++ ))
+  for (( ib=0; ib<$robot_NL; ib++ ))
   do
     dateiliste_kindyn="$dateiliste_kindyn
           robot_tree_rotmat_jacobian_baseframe_body${ib}.mpl

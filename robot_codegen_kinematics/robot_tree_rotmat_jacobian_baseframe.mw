@@ -135,7 +135,7 @@ printlevel := 2:</Text-field>
 </Group>
 <Group labelreference="L1647" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_act := true:
-codegen_debug := true:
+codegen_debug := false:
 codegen_opt := 2:</Text-field>
 </Input>
 </Group><Presentation-Block>
@@ -176,11 +176,11 @@ Trf_c := Trf_c:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2110" drawlabel="true">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Link-Index, f\303\274r den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber f\303\274r beliebige Segmente aufgestellt werden.</Font></Text-field>
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Link-Index, f\303\274r den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber f\303\274r beliebige Segmente aufgestellt werden. (0=Basis)</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L2109" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">LIJAC:=NL:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">LIJAC:=NL-1:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2114" drawlabel="true">
@@ -203,7 +203,7 @@ Trf_c := Trf_c:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2111" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">T_p := Trf_c(1 .. 4, 1..4, LIJAC) . transl(&lt;px;py;pz&gt;):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">T_p := Trf_c(1 .. 4, 1..4, LIJAC+1) . transl(&lt;px;py;pz&gt;):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2113" drawlabel="true">
@@ -356,7 +356,7 @@ end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1770" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">h_rotg := Matrix(omega_W_i(1..3,LIJAC)) - omega_EE:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">h_rotg := Matrix(omega_W_i(1..3,LIJAC+1)) - omega_EE:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1750" drawlabel="true">

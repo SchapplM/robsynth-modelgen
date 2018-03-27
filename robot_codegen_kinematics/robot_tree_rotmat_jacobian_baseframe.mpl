@@ -30,7 +30,7 @@ with(CodeGeneration):
 with(StringTools):
 printlevel := 2:
 codegen_act := true:
-codegen_debug := true:
+codegen_debug := false:
 codegen_opt := 2:
 # Funktionen aus IRT-Maple-Repo
 read sprintf("../helper/proc_MatlabExport", maple_repo_path):
@@ -44,15 +44,15 @@ read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
 read sprintf("../codeexport/%s/tmp/kinematics_floatb_%s_rotmat_maple.m", robot_name, base_method_name):
 Trf := Trf:
 Trf_c := Trf_c:
-# Link-Index, für den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber für beliebige Segmente aufgestellt werden.
-LIJAC:=NL:
+# Link-Index, für den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber für beliebige Segmente aufgestellt werden. (0=Basis)
+LIJAC:=NL-1:
 printf("Generiere Jacobi-Matrix für %s (Körper %d)\n", robot_name, LIJAC):
 # Jacobi-Matrix analytisch (Translatorisch)
 # Ortmaier2014a Gl. (1.15), S.14: Geometrische Zwangsbedingungen in impliziter Form
 # Gleichung enthält verallgemeinerte Koordinaten und Endeffektorposition und ergibt Null.
 x_EE := Matrix(3,1,<r_xEE; r_yEE; r_zEE>):
 # Transformationsmatrix von der Basis zum gegebenen Punkt auf dem Körper. Die Koordinaten px,py,pz für den Punkt werden später eingesetzt.
-T_p := Trf_c(1 .. 4, 1..4, LIJAC) . transl(<px;py;pz>):
+T_p := Trf_c(1 .. 4, 1..4, LIJAC+1) . transl(<px;py;pz>):
 h_transl := Matrix(T_p(1..3,4)) - x_EE:
 h_transl_s :=convert_t_s(h_transl):
 # Jacobi-Matrix der inversen Kinematik
@@ -119,7 +119,7 @@ end if:
 read sprintf("../codeexport/%s/tmp/velocity_worldframe_floatbase_%s_par1_maple.m", robot_name, base_method_name):
 omega_W_i := omega_W_i:
 omega_EE := Matrix(3,1,<omega_xEE; omega_yEE; omega_zEE>):
-h_rotg := Matrix(omega_W_i(1..3,LIJAC)) - omega_EE:
+h_rotg := Matrix(omega_W_i(1..3,LIJAC+1)) - omega_EE:
 h_rotg_s :=convert_t_s(h_rotg):
 # Jacobi-Matrix der inversen Kinematik
 # Leite die Winkelgeschwindigkeiten des Endeffektors nach den Gelenkwinkelgeschwindigkeiten ab.

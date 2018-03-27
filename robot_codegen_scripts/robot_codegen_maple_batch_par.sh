@@ -275,7 +275,7 @@ fi;
 
 # Jacobi-Matrizen
 dateiliste_jac=""
-for (( ib=1; ib<=$robot_NL; ib++ ))
+for (( ib=0; ib<$robot_NL; ib++ ))
 do
   dateiliste_jac="$dateiliste_jac
         /robot_tree_rotmat_jacobian_baseframe_body${ib}.mpl

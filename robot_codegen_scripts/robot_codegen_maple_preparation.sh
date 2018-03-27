@@ -136,12 +136,12 @@ do
 done
 
 # Jacobi-Matrix-Skripte vorbereiten, so dass die Jacobi-Matrix für alle Körper generiert wird.
-for (( ib=1; ib<=$robot_NL; ib++ ))
+for (( ib=0; ib<$robot_NL; ib++ ))
 do
   mpldat=$repo_pfad/workdir/robot_tree_rotmat_jacobian_baseframe_body${ib}.mpl
   cp $repo_pfad/workdir/robot_tree_rotmat_jacobian_baseframe.mpl $mpldat
   # Die Jacobi-Matrix für den aktuellen Körper erstellen
-  sed -i "s/LIJAC:=NL:/LIJAC:=${ib}:/g" $mpldat
+  sed -i "s/LIJAC:=NL-1:/LIJAC:=${ib}:/g" $mpldat
 done
 
 echo "Maple-Skripte zur Stapelverarbeitung vorbereitet."

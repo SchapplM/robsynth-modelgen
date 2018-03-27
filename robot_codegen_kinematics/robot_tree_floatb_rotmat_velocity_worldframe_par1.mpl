@@ -75,7 +75,6 @@ if base_method_name = "eulangrpy" then:
   omega_W_i(1..3,1) := T_basevel . V_base_t(4..6,1):
 end:
 printf("Nutze die Methode %s für die Basis-Drehgeschwindigkeit\n", base_method_name):
-
 # Erhöhe die Geschwindigkeit jedes Körpers
 # Betrachte dazu nur die durch Gelenke angetriebenen Körper, nicht die Basis
 for i from 1 to NJ do # Gelenke durchgehen
@@ -99,14 +98,14 @@ for i from 1 to NJ do # Gelenke durchgehen
     # [Ortmaier2014] (7.15) (S.116), [KhalilDombre2002] (9.15)
     rD_W_i(1 .. 3, i+1) := rD_W_i(1 .. 3, j) + CrossProduct(omega_W_i(1 .. 3, j), r_W_im1_i) + dD(i,1)*Trf_c(1 .. 3, 3, i+1):
   end if:
-  printf("Geschwindigkeit für Körperkoordinatensystem %d aufgestellt (Herleitung im Welt-KS). %s\n", i, FormatTime("%Y-%m-%d %H:%M:%S")):
+  printf("Geschwindigkeit für Körperkoordinatensystem %d aufgestellt (Herleitung im Welt-KS). %s\n", i-1, FormatTime("%Y-%m-%d %H:%M:%S")):#0=Basis
 end do:
 # Velocities of Center of Mass
 rD_W_Si := Matrix(3, NL):
 for i to NL do
   # [Ortmaier2014] (7.17) (S.118), [KhalilDombre2002] (9.15)
   rD_W_Si(1 .. 3, i) := Matrix(rD_W_i(1 .. 3, i)) + Matrix(CrossProduct(omega_W_i(1 .. 3, i), r_W_i_Si(1 .. 3, i))):
-  printf("Geschwindigkeit für Körperschwerpunkt %d aufgestellt. %s\n", i, FormatTime("%Y-%m-%d %H:%M:%S")):
+  printf("Geschwindigkeit für Körperschwerpunkt %d aufgestellt. %s\n", i-1, FormatTime("%Y-%m-%d %H:%M:%S")):#0=Basis
 end do:
 # Maple Export
 save omega_W_i, rD_W_i, rD_W_Si, sprintf("../codeexport/%s/tmp/velocity_worldframe_floatbase_%s_par1_maple.m", robot_name, base_method_name):

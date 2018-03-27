@@ -7,8 +7,8 @@
 % r_i_i_C [3x1]
 %   Ortsvektor vom KörperKS-Ursprung zum gesuchten Punkt
 % link_index [1x1 uint8]
-%   Index des Segmentes, auf dem der Punkt C liegt.
-%   Wie in %RN%_fkine_fixb_rotmat_mdh_sym_varpar.m (1=Basis).
+%   Index des Segmentes, auf dem der Punkt C liegt. (0=Basis).
+%   Siehe auch: %RN%_fkine_fixb_rotmat_mdh_sym_varpar.m
 % 
 % Output:
 % Jg_C [6x%NJ%]
@@ -38,40 +38,40 @@ assert(isa(v_mdh,'uint8') && all(size(v_mdh) == [%NJ% 1]), ...
 % Einfluss.
 Jg_C = zeros(6,%NJ%);
 
-if link_index == 1
+if link_index == 0
   % Die Gelenkwinkel haben keinen Einfluss auf die Basis
   return;
 end
 
 %% Kinematik berechnen
 T_c_mdh = %RN%_fkine_fixb_rotmat_mdh_sym_varpar(qJ, pkin);
-T_0_i = T_c_mdh(:,:,link_index);
+T_0_i = T_c_mdh(:,:,link_index+1);
 R_0_i = t2r(T_0_i);
 r_0_i_C = (R_0_i) * (r_i_i_C);
 
 j = link_index;
 for tmp = 1:%NJ%
   % Vorgänger-Index
-  k = v_mdh(j-1); % Diese Indizes haben die Basis als 0.
+  k = v_mdh(j);
   
   % Drehachse des Gelenks, das diesen Körper bewegt ist die z-Achse dieses
   % Körpers (bei DH-Notation ist es der vorherige, hier MDH-Notation).
-  ax = T_c_mdh(1:3,3,j);
+  ax = T_c_mdh(1:3,3,j+1);
   jr = ax;
   
   % Vektor vom Gelenk zum Punkt
-  r_0_j_i = -T_c_mdh(1:3,4,j) + T_0_i(1:3,4);
+  r_0_j_i = -T_c_mdh(1:3,4,j+1) + T_0_i(1:3,4);
   r_0_j_C = r_0_j_i + r_0_i_C;
   
   % Hebelarm vom Gelenk zum Punkt
   jt = cross(ax, r_0_j_C);
   
   % Spalte der Jacobi-Matrix eintragen
-  Jg_C(:,j-1) = [jt; jr];
+  Jg_C(:,j) = [jt; jr];
   
   % Indizes tauschen: Kinematische Kette weiter Richtung Basis entlanggehen
-  j = k+1; % Index mit Basis als 1
-  if j == 1
+  j = k;
+  if j == 0
     % An Basis angekommen
     return;
   end

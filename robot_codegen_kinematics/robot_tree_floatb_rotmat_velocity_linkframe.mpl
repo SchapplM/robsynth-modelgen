@@ -99,7 +99,7 @@ for i from 1 to NJ do # Gelenke durchgehen
   else: # Schubgelenk
     rD_i_i(1 .. 3, i+1) := Matrix(Multiply( R_i_j, ( rD_i_i(1 .. 3, j) + CrossProduct(omega_i_i(1 .. 3, j), r_j_j_i) ) ) ) + Matrix(dD(i,1)*<0;0;1>):
   end if:
-  printf("Geschwindigkeit für Körperkoordinatensystem %d aufgestellt (Herleitung im Körper-KS). %s\n", i, FormatTime("%Y-%m-%d %H:%M:%S")):
+  printf("Geschwindigkeit für Körperkoordinatensystem %d aufgestellt (Herleitung im Körper-KS). %s\n", i-1, FormatTime("%Y-%m-%d %H:%M:%S")): #0=Basis
 end do:
 # Export
 # Maple Export

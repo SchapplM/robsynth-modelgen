@@ -9,8 +9,8 @@
 % Input:
 % %INPUT_QJ%
 % link_index [1x1 uint8]
-%   Index des Segmentes, auf dem der Punkt C liegt.
-%   Wie in %RN%_fkine_fixb_rotmat_mdh_sym_varpar.m (1=Basis).
+%   Index des Segmentes, auf dem der Punkt C liegt. (0=Basis).
+%   Siehe auch: bsp_3T1R_fkine_fixb_rotmat_mdh_sym_varpar.m
 % %INPUT_PKIN%
 % 
 % Output:
@@ -19,5 +19,4 @@
 
 % %VERSIONINFO%
 
-function Jg_rot = %FN%(qJ, link_index, ...
-  pkin)
+function Jg_rot = %FN%(qJ, link_index, pkin)

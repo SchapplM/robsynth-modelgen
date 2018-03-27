@@ -45,7 +45,7 @@ for i = 1:size(Q, 1)
     xDelta_fkine = Tc_2(1:3,4,end) - Tc_1(1:3,4,end);
 
     % differential kinematics from Jacobian function
-    JG = %RN%_jacobig_floatb_twist_sym_varpar(q, uint8(NJ+1), zeros(3,1), pkin);
+    JG = %RN%_jacobig_floatb_twist_sym_varpar(q, uint8(NJ), zeros(3,1), pkin);
     xDelta_jacob = JG*qDelta;
 
     x1_fkine = Tc_1(1:3,4,end);
@@ -67,7 +67,7 @@ fprintf('Tested Jacobian (fixed base) against forward kinematics for %d random j
 %% Teste Jacobi-Matrix für unterschiedliche Punkte mit der Adjungierten
 if ~KINCONSTR && ~any(sigma)
 for i = 1:size(Q, 1)
-  for j  = 1:NQJ+1 % Jacobi für jeden Körper
+  for j  = 0:NQJ % Jacobi für jeden Körper
     q = Q(i,:)';
     Tc = %RN%_fkine_fixb_rotmat_mdh_sym_varpar(q, pkin);
     
@@ -80,7 +80,7 @@ for i = 1:size(Q, 1)
     JG_Oj = %RN%_jacobig_floatb_twist_sym_varpar(q, uint8(j), zeros(3,1), pkin);
     
     % Jacobi zum Punkt berechnet mit Adjunkt-Matrix
-    R_0_j = Tc(1:3,1:3,j);
+    R_0_j = Tc(1:3,1:3,j+1);
     r_0_Oj_P = R_0_j*r_j_Oj_P;
     A_0_P_Oj = adjoint_jacobian(r_0_Oj_P);
     JG_P_test = A_0_P_Oj * JG_Oj;
@@ -95,7 +95,7 @@ end
 %% Teste Jacobi-Matrix-Zeitableitung für unterschiedliche Punkte mit der Adjungierten
 if ~KINCONSTR && ~any(sigma)
 for i = 1:size(Q, 1)
-  for j  = 1:NQJ+1 % Jacobi für jeden Körper
+  for j  = 0:NQJ % Jacobi für jeden Körper
     q = Q(i,:)';
     qD = QD(i,:)';
     
@@ -112,7 +112,7 @@ for i = 1:size(Q, 1)
     JGD_Oj = %RN%_jacobigD_floatb_twist_sym_varpar(q, qD, uint8(j), zeros(3,1), pkin);
 
     % Jacobi-Zeitableitung zum Punkt berechnet mit Adjunkt-Matrix
-    R_0_j = Tc(1:3,1:3,j);
+    R_0_j = Tc(1:3,1:3,j+1);
     r_0_Oj_P = R_0_j*r_j_Oj_P;
     A_0_P_Oj = adjoint_jacobian(r_0_Oj_P);
 
@@ -151,9 +151,9 @@ for kk = 1:NJ % Test for linear joint trajectory
     q = Q_traj(i,:)';
     qD = QD_traj(i,:)';     
     % calculate jacobian time derivate with two methods
-    JG = %RN%_jacobig_mdh_num_mex(q, uint8(NJ+1), zeros(3,1), pkin, v);
+    JG = %RN%_jacobig_mdh_num_mex(q, uint8(NJ), zeros(3,1), pkin, v);
     JGD_num1 = (JG - JG_vorher) / dT;
-    JGD_num2 =  %RN%_jacobigD_mdh_num_mex(q, qD, uint8(NJ+1), zeros(3,1), pkin, v);
+    JGD_num2 =  %RN%_jacobigD_mdh_num_mex(q, qD, uint8(NJ), zeros(3,1), pkin, v);
 
     % calculate error
     if i > 2
@@ -178,7 +178,7 @@ end
 %% Symbolische gegen numerische (geometrische) Jacobi-Matrix testen
 if ~KINCONSTR && ~any(sigma)
 for iq = 1:size(Q, 1) % Über Zufallsposen
-  for jb  = 1:NL % Über alle Körper
+  for jb  = 0:NL-1 % Über alle Körper
     r_i_i_C = rand(3,1);
     q = Q(iq,:)';
     qD = QD(iq,:)';
@@ -203,7 +203,7 @@ end
 
 %% Analytische gegen Geometrische Jacobi-Matrix testen
 for iq = 1:size(Q, 1) % Über Zufallsposen
-  for jb  = 1:NL % Über alle Körper
+  for jb  = 0:NL-1 % Über alle Körper
     q = Q(iq,:)';
     qD = Q(iq,:)';    
     Jg_rot = %RN%_jacobig_rot_floatb_twist_sym_varpar(q, uint8(jb), pkin);
@@ -212,7 +212,7 @@ for iq = 1:size(Q, 1) % Über Zufallsposen
     % direkte Kinematik (mit gleichem Modell berechnet. Gleichheit der
     % Modelle wird in anderer Testfunktion  verifiziert)
     Tc_mdh = %RN%_fkine_fixb_rotmat_mdh_sym_varpar(q, pkin);
-    T_jb = Tc_mdh(:,:,jb);
+    T_jb = Tc_mdh(:,:,jb+1);
 
     % Winkelkonvention und Umrechnungsfaktor
     rpy = r2rpy(t2r(T_jb));

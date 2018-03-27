@@ -249,7 +249,7 @@ end:</Text-field>
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Erh\303\266he die Geschwindigkeit jedes K\303\266rpers
 Betrachte dazu nur die durch Gelenke angetriebenen K\303\266rper, nicht die Basis</Font></Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L2" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="1341" pixel-height="450" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">for i from 1 to NJ do # Gelenke durchgehen
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L2" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="1350" pixel-height="450" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">for i from 1 to NJ do # Gelenke durchgehen
   # K\303\266rper der von Gelenkwinkel i bewegt wird: K\303\266rperindex i+1
   # Vorg\303\244ngerk\303\266rper bestimmen
   j := v(i) + 1:
@@ -271,7 +271,7 @@ Betrachte dazu nur die durch Gelenke angetriebenen K\303\266rper, nicht die Basi
   else: # Schubgelenk
     rD_i_i(1 .. 3, i+1) := Matrix(Multiply( R_i_j, ( rD_i_i(1 .. 3, j) + CrossProduct(omega_i_i(1 .. 3, j), r_j_j_i) ) ) ) + Matrix(dD(i,1)*&lt;0;0;1&gt;):
   end if:
-  printf(&quot;Geschwindigkeit f\303\274r K\303\266rperkoordinatensystem %d aufgestellt (Herleitung im K\303\266rper-KS). %s\134n&quot;, i, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+  printf(&quot;Geschwindigkeit f\303\274r K\303\266rperkoordinatensystem %d aufgestellt (Herleitung im K\303\266rper-KS). %s\134n&quot;, i-1, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)): #0=Basis
 end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 </Section>
 </Section>

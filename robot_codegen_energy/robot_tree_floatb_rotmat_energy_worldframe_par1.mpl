@@ -61,7 +61,7 @@ U_grav := 0:
 for i to NL do 
   U_b[i] := -M[i, 1]*Multiply(Transpose(g_world), r_W_W_Si(1 .. 3, i)):
   U_grav := U_grav+U_b[i, 1]:
-  printf("Potentielle Energie aus Gravitation für Körper %d berechnet (im Welt-KS, Parametersatz 1).\n", i):
+  printf("Potentielle Energie aus Gravitation für Körper %d berechnet (im Welt-KS, Parametersatz 1).\n", i-1): #0=Basis
 end do:
 # Maple Export
 save U_grav, sprintf("../codeexport/%s/tmp/energy_potential_floatb_%s_worldframe_par1_maple.m", robot_name, base_method_name):
@@ -79,7 +79,7 @@ for i to NL do
   I_i_W := Multiply(R_W_i, Multiply(I_i_Si_Tensor, Transpose(R_W_i))):
   T_b[i] := (1/2)*M[i, 1]*Multiply(Transpose(rD_W_Si(1 .. 3, i)), rD_W_Si(1 .. 3, i))+(1/2)*Multiply(Transpose(omega_W_i(1 .. 3, i)), Multiply(I_i_W, omega_W_i(1 .. 3, i))):
   T := T+T_b[i, 1]:
-  printf("Kinetische Energie für Körper %d berechnet (im Welt-KS, Parametersatz 1)\n", i):
+  printf("Kinetische Energie für Körper %d berechnet (im Welt-KS, Parametersatz 1)\n", i-1):#0=Basis
 end do:
 # Maple Export
 save T, sprintf("../codeexport/%s/tmp/energy_kinetic_floatb_%s_worldframe_par1_maple.m", robot_name, base_method_name):

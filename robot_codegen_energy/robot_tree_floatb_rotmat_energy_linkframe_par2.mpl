@@ -63,6 +63,7 @@ for i to NL do
   T_b_trans := (1/2)*M[i, 1]*Multiply(Transpose(rD_i_i(1 .. 3, i)), rD_i_i(1 .. 3, i))+Multiply(Transpose(rD_i_i(1 .. 3, i)), CrossProduct(omega_i_i(1 .. 3, i), mr_i_i_Si(1 .. 3, i))):
   T_b[i, 1] := T_b_rot+T_b_trans:
   T := T+T_b[i, 1]:
+  printf("Kinetische Energie aus Gravitation für Körper %d berechnet (im Körper-KS, mit Parametersatz 2).\n", i-1):#0=Basis
 end do:
 # Maple Export
 save T, sprintf("../codeexport/%s/tmp/energy_kinetic_floatb_%s_linkframe_par2_maple.m", robot_name, base_method_name):

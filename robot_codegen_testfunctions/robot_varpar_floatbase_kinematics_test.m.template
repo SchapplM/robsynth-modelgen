@@ -46,7 +46,7 @@ if any(sigma)
   fprintf('Schubgelenke noch nicht implementiert. Überspringe Test.\n');
 else
 for i = 1:n
-  for jj = 1:NL
+  for jj = 0:NL-1
     ob = OB(i,:)';
     qJ = Q(i,:)';
     r_i_i_C = rand(3,1);

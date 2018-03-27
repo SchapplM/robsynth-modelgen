@@ -1835,9 +1835,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function Jg_i = jacobig(qJ, iL, r_i_i_C, pkin)\n%#codegen\n% Segmentnummer wird in MDH-Notation ü"
-      "bergeben (0=Basis). Die Funktionen\n% nehmen Indizes mit Matlab-Notation entgegen (1=Basis)\nJg_i = %RN%"
-      "_jacobig_floatb_twist_sym_varpar(qJ, iL+1, r_i_i_C, pkin);\n\n"
+      script		      "function Jg_i = jacobig(qJ, iL, r_i_i_C, pkin)\n%#codegen\n% Segmentnummer wird in MDH-Notation übergeben (0=Basis).\nJg_i = %RN%"
+      "_jacobig_floatb_twist_sym_varpar(qJ, iL, r_i_i_C, pkin);\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -2189,9 +2188,8 @@ Stateflow {
     eml {
       isEML		      1
       script		      "% Floating-Base Jacobimatrix zu beliebigen Punkten\n\nfunction Jg_C = fcn(phi_base, qJ, link_inde"
-      "x, r_i_i_C, pkin)\n%% Init\n%#codegen\n% Segmentnummer wird in MDH-Notation übergeben (0=Basis). Die Funktionen"
-      "\n% nehmen Indizes mit Matlab-Notation entgegen (1=Basis)\nJg_C = %RN%_jacobig_mdh_eulangrpy_sym(phi_bas"
-      "e, qJ, link_index+1, r_i_i_C, pkin);"
+      "x, r_i_i_C, pkin)\n%% Init\n%#codegen\n% Segmentnummer wird in MDH-Notation übergeben (0=Basis).\nJg_C = %RN%_jacobig_mdh_eulangrpy_sym(phi_bas"
+      "e, qJ, link_index, r_i_i_C, pkin);"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
