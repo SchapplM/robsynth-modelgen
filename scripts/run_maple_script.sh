@@ -25,5 +25,5 @@ maple_exc="${MAPLE_BIN##*/}" # Dateiname
 # Diese Vorgehensweise ist notwendig, wenn Windows-Maple über ein Bash-Skript aus dem Windows-Subsystem für Linux ausgeführt wird.
 pwd_alt=$(pwd)
 cd "$mpl_dir"
-nice -n 10 "$maple_path/$maple_exc" -q  <<< "currentdir(); read \"$mpl_file\";"
+nice -n 10 "$maple_path/$maple_exc" -q  <<< "read \"$mpl_file\";"
 cd $pwd_alt
