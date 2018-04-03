@@ -40,8 +40,8 @@ Folgende Schritte müssen durchgeführt werden:
 
 ## Voraussetzungen <a name="voraussetzungen"></a> 
 
-* Linux-Betriebssystem (für .sh-Skripte in [Alternative 1](#start_alt1)). Ausführung der Maple-Arbeitsblätter in [Alternative 2](#start_alt2) auch unter Windows möglich.
-* Maple muss im Ordner /opt/maple2017/ installiert sein (Standard-Ordner bei sudo-Installation unter Linux).
+* Betriebssystem: Linux oder Windows mit [Windows-Linux-Subsystem](https://docs.microsoft.com/en-us/windows/wsl/install-win10) (für .sh-Skripte in [Alternative 1](#start_alt1)). Die Ausführung der Maple-Arbeitsblätter in [Alternative 2](#start_alt2) ist aber auch unter Windows ohne Linux-Subsystem möglich.
+* Maple muss installiert sein (aktuelle Version: Maple 2017)
 * Die allgemeine Matlab-Toolbox (Repo `matlab-tools`) muss im Matlab-Pfad initialisiert sein (Aufruf von matlab_tools_path_init.m im Repo). Damit die Pfadinitialisierung auch im Matlab-Terminalaufruf funktioniert, sollte die startup.m richtig gesetzt sein.
 
 ## Starten der Codeerstellung <a name="codeerstellung"></a> 
@@ -77,6 +77,21 @@ Eine Auflistung aller Variablen ist im Abschnitt [Definitionen](#ordner_definiti
 Nach dem Erstellen dieser Datei werden die Dynamikfunktionen mit Maple generiert, wie im Folgenden beschrieben wird.
 
 ### Alternative 1: Automatisches Generieren aller Dateien <a name="start_alt1"></a> 
+
+#### Unter Linux (z.B. Ubuntu)
+
+Der Aufruf des Start-Skriptes erfolgt in der Konsole.
+Falls nicht Maple 2017 im Standard-Pfad `/opt/maple2017/bin/maple` verwendet wird, kann der Pfad  mit `export MAPLE_BIN=/opt/maple2017/bin/maple` angegeben werden.
+
+#### Unter Windows (Windows-Linux-Subsystem)
+
+Der Start erfolgt mit der Linux-Konsole des "Windows Linux Subsystem". Es kann der Pfad zur Windows-Installation von Maple angegeben werden. Maple muss nicht im Linux-Subsystem installiert werden. 
+
+```bash
+export MAPLE_BIN="/mnt/c/Program Files/Maple 2017/bin.X86_64_WINDOWS/cmaple.exe"
+```
+
+#### Vorgehensweise
 
 Mit folgendem Aufruf werden alle Maple-Ausdrücke erzeugt und Matlab-Funktionen exportiert (wie unter Alternative 2 beschrieben).
 ```bash
