@@ -40,8 +40,8 @@ do
 done
 
 # Simulink-Umgebung in einen eigenen Ordner in der Hauptebene kopieren
-rm -rf $dir2/../simulink/* # Zielordner für Simulink-Dateien
-mv $dir2/simulink $dir2/../
+rm -rf $testfcn_pfad/../simulink/* # Zielordner für Simulink-Dateien
+mv $testfcn_pfad/simulink $testfcn_pfad/../
 
 # Parameter-Generierungsskript anpassen
 zieldat=$testfcn_pfad/${robot_name}_varpar_testfunctions_parameter.m
