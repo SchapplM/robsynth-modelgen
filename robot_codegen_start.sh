@@ -90,10 +90,7 @@ mkdir -p "$repo_pfad/codeexport/$robot_name/matlabfcn"
 mkdir -p "$repo_pfad/codeexport/$robot_name/testfcn"
 
 # Maple-Definitionen einmal ausführen (damit dort definierte Variablen in Bash übernommen werden)
-pwd_alt=$(pwd)
-cd /opt/maple2017/bin
-nice -n 10 ./maple -q  <<< "currentdir(\"$repo_pfad/robot_codegen_definitions\"): read \"robot_tree_floatb_twist_definitions.mpl\";"
-cd $pwd_alt
+$repo_pfad/scripts/run_maple_script.sh $repo_pfad/robot_codegen_definitions/robot_tree_floatb_twist_definitions.mpl
 
 # Umgebungsvariablen vorbereiten (jetzt enthalten sie die vollen MDH-Informationen (Name, Dimensionen)
 source robot_codegen_tmpvar_bash.sh > /dev/null
@@ -109,10 +106,7 @@ else
 fi;
 
 # Hilfs-Skripte für die Matlab-Code-Generierung
-pwd_alt=$(pwd)
-cd /opt/maple2017/bin
-nice -n 10 ./maple -q  <<< "currentdir(\"$repo_pfad/helper\"): read \"robot_gen_symmat2vector.mpl\";"
-cd $pwd_alt
+$repo_pfad/scripts/run_maple_script.sh $repo_pfad/helper/robot_gen_symmat2vector.mpl
 
 # Matlab-Funktionen generieren
 cd $repo_pfad/robot_codegen_scripts/

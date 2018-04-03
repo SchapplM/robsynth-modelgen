@@ -36,7 +36,9 @@ echo "robot_name=\"$robot_name\"" >> $robot_env_pfad.sh
 
 # Lese weitere Informationen aus der generierten Definitionsdatei
 robot_def_pfad=$repo_pfad/codeexport/${robot_name}/tmp/tree_floatb_twist_definitions
+# Windows-Zeilenenden entfernen (treten auf, wenn Maple über Windows-Linux-Subsystem gestartet wird)
 if [ -f $robot_def_pfad ]; then
+  sed -i 's/\r//g' $robot_def_pfad
   robot_NL=`grep "NL := " $robot_def_pfad | tail -1 | sed 's/.*= \(.*\);/\1/'`
 else
   robot_NL="UNDEFINED"
@@ -48,6 +50,7 @@ fi
 # Dimension der Kinematikparameter
 robot_KP_pfad=$repo_pfad/codeexport/${robot_name}/tmp/parameter_kin
 if [ -f $robot_KP_pfad ]; then
+  sed -i 's/\r//g' $robot_KP_pfad # Zeilenenden
   robot_NKP=`sed -n -e 's/pkin := Matrix(\([[:alnum:]]\+\), 1.*/\1/p' $robot_KP_pfad`
   robot_KP=`tr -d "\n" < $robot_KP_pfad | sed -n -e 's/.*pkin := Matrix(\([[:alnum:]]\+\), 1, \[\[\(.*\)\]\]);/\2/p' | sed 's/,/ /g' | sed 's/\[//g' | sed 's/\]//g'`
 else
@@ -75,6 +78,7 @@ if [ $robot_kinconstr_exist == 1 ]; then
   # Vom Benutzer sind Symbole für kinematisch Zwangsbedingungen in den MDH-Parametern vorgegeben worden
   # Suche die Liste der Ausdrücke, die von Maple dazu generiert wurden
   if [ -f $robot_KCsymb_pfad ]; then
+    sed -i 's/\r//g' $robot_KCsymb_pfad # Zeilenenden
     robot_NKCP=`sed -n -e 's/kc_symbols := Matrix(1, \([[:alnum:]]\+\).*/\1/p' $robot_KCsymb_pfad`
     robot_KCP=`tr -d "\n" < $robot_KCsymb_pfad | sed -n -e 's/.*kc_symbols := Matrix(1, \([[:alnum:]]\+\), \[\[\(.*\)\]\]);/\2/p' | sed 's/,/ /g'`
   else
@@ -94,6 +98,7 @@ echo "robot_KCP=\"$robot_KCP\"" >> $robot_env_pfad.sh
 # Dimension des MPV (aus exportiertem Code)
 mpv_fixb_pfad=$repo_pfad/codeexport/${robot_name}/tmp/minimal_parameter_vector_fixb_maple
 if [ -f $mpv_fixb_pfad ]; then
+  sed -i 's/\r//g' $mpv_fixb_pfad # Zeilenenden
   # Ersetze Text links und rechts von der Dimension mit nichts.
   robot_NMPVFIXB=`grep "Matrix" $mpv_fixb_pfad | tail -1 | sed 's/.*Matrix[(]\(.*\)/\1/' | sed 's/, 1, .*//'`
 else
@@ -105,6 +110,7 @@ if [ ! "$1" == "quiet" ]; then
 fi
 mpv_floatb_pfad=$repo_pfad/codeexport/${robot_name}/tmp/minimal_parameter_vector_floatb_eulangrpy_maple
 if [ -f $mpv_floatb_pfad ]; then
+  sed -i 's/\r//g' $mpv_floatb_pfad # Zeilenenden
   robot_NMPVFLOATB=`grep "Matrix" $mpv_floatb_pfad | tail -1 | sed 's/.*Matrix[(]\(.*\)/\1/' | sed 's/, 1, .*//'`
 else
   robot_NMPVFLOATB="NOTDEFINED"

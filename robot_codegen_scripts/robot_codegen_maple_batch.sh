@@ -188,7 +188,6 @@ if [ -f  $repo_pfad/${robot_name}_kinematic_constraints_implicit.mpl ]; then
 fi;
 
 # Alle Maple-Dateien der Reihe nach ausführen
-cd /opt/maple2017/bin
 for mpldat in $dateiliste_kindyn
 do
   mpldat_full=$repo_pfad/workdir/$mpldat
@@ -197,5 +196,5 @@ do
 
   # Maple im Kommandozeilenmodus starten (vorher ins richtige Verzeichnis wechseln)
   echo "Starte Maple-Skript $filename"
-  nice -n 10 ./maple -q <<< "currentdir(\"$dir\"): interface(quiet=true): read \"$filename\":"
+  $repo_pfad/scripts/run_maple_script.sh $mpldat_full
 done

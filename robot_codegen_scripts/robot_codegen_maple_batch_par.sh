@@ -67,8 +67,6 @@ else
   basemethodenames=( twist eulangrpy )
 fi;
 
-cd /opt/maple2017/bin
-
 for basemeth in "${basemethodenames[@]}"
 do
 	dateiliste_kin="
@@ -175,7 +173,7 @@ do
     filename="${mpldat_full##*/}"
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
     echo "Starte Maple-Skript $filename"
-    nice -n 10 ./maple -q <<< "currentdir(\"$dir\"): read \"$filename\";"
+    $repo_pfad/scripts/run_maple_script.sh $dir/$filename
   done
   echo "FERTIG mit Kinematik für ${basemeth}"
   for wsvelm in ${dateiliste_mdhvel[@]}
@@ -184,7 +182,7 @@ do
     filename="${mpldat_full##*/}"
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
     echo "Starte Maple-Skript $filename"
-    nice -n 10 ./maple -q <<< "currentdir(\"$dir\"): read \"$filename\";"
+    $repo_pfad/scripts/run_maple_script.sh $dir/$filename
   done
   for wsvel in ${dateiliste_vel[@]}
   do
@@ -192,7 +190,7 @@ do
     filename="${mpldat_full##*/}"
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
     echo "Starte Maple-Skript $filename"
-    nice -n 10 ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
+    $repo_pfad/scripts/run_maple_script.sh $dir/$filename &
   done
   wait
   echo "FERTIG mit Geschwindigkeit für ${basemeth}"
@@ -203,7 +201,7 @@ do
     filename="${mpldat_full##*/}"
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
     echo "Starte Maple-Skript $filename"
-    nice -n 10 ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
+    $repo_pfad/scripts/run_maple_script.sh $dir/$filename &
   done
   wait
   echo "FERTIG mit Energie für ${basemeth}"
@@ -214,7 +212,7 @@ do
     filename="${mpldat_full##*/}"
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
     echo "Starte Maple-Skript $filename"
-    nice -n 10 ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
+    $repo_pfad/scripts/run_maple_script.sh $dir/$filename &
   done
   wait
   echo "FERTIG mit Lagrange für ${basemeth}"
@@ -225,7 +223,7 @@ do
     filename="${mpldat_full##*/}"
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
     echo "Starte Maple-Skript $filename"
-    nice -n 10 ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
+    $repo_pfad/scripts/run_maple_script.sh $dir/$filename &
   done
   wait
   echo "FERTIG mit Dynamik für ${basemeth}"
@@ -238,11 +236,11 @@ do
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
     if [ $erster == 1 ]; then
       echo "Starte Maple-Skript $filename"
-      nice -n 10 ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";"
+      $repo_pfad/scripts/run_maple_script.sh $dir/$filename
       erster=0 # nicht parallel, die folgenden Skripte sind hiervon abhängig
     else # parallel ausführen
       echo "Starte Maple-Skript $filename"
-      nice -n 10 ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
+      $repo_pfad/scripts/run_maple_script.sh $dir/$filename &
     fi;
   done
   wait
@@ -251,8 +249,7 @@ done
 
 # Definitionen des Fixed-Base-Modell wieder laden (für Jacobi-Matrizen und zusätzliche Dateien)
 echo "Starte Maple-Skript robot_tree_floatb_twist_definitions.mpl"
-nice -n 10 ./maple -q  <<< "currentdir(\"$repo_pfad/workdir\"): read \"robot_tree_floatb_twist_definitions.mpl\";"
-
+$repo_pfad/scripts/run_maple_script.sh $repo_pfad/workdir/robot_tree_floatb_twist_definitions.mpl
 
 # Kinematische Zwangsbedingungen in impliziter Form
 # Werden nach der Kinematik gerechnet. Können also auch hier am Ende kommen
@@ -268,7 +265,7 @@ if [ -f  $repo_pfad/${robot_name}_kinematic_constraints_implicit.mpl ]; then
     filename="${mpldat_full##*/}"
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
     echo "Starte Maple-Skript $filename"
-    nice -n 10 ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
+    $repo_pfad/scripts/run_maple_script.sh $dir/$filename &
   done
 fi;
 
@@ -287,7 +284,7 @@ do
   filename="${mpldat_full##*/}"
   dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
   echo "Starte Maple-Skript $filename"
-  nice -n 10 ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
+  $repo_pfad/scripts/run_maple_script.sh $dir/$filename &
 done
 wait
 echo "FERTIG mit Jacobi-Matrizen"
@@ -299,7 +296,7 @@ if [ -f $addlistfile ]; then
     filename="${mpldat_full##*/}"
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
     echo "Starte Maple-Skript $filename"
-    nice -n 10 ./maple -q  <<< "currentdir(\"$dir\"): read \"$filename\";" &
+    $repo_pfad/scripts/run_maple_script.sh $dir/$filename &
   done
   echo "Zusätzlichen Dateien gestartet"
 fi;
