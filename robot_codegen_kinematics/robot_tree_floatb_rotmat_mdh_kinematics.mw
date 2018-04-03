@@ -132,8 +132,17 @@ with(StringTools):</Text-field>
 </Group>
 <Group labelreference="L1687" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_act := true:
-codegen_debug := true:
+codegen_debug := false:
 codegen_opt := 2:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1766" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Code-Optimierung f\303\274r die Kinematik (zusammenfassung paralleler Achsen).</Font></Text-field><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ist f\303\274r einige Systeme vorteilhaft (serielle Ketten mit parallelen Achsen), f\303\274r andere nicht (z.B. Baumstrukturen mit parallelen Achsen. Hier kann die Code-Optimierung mehr aus nicht trigonometrisch optimierten Termen herausholen).
+Die Terme werden aber auf jeden Fall \303\274bersichtlicher.</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1765" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_kinematics_opt := true:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1583" drawlabel="true">
@@ -263,8 +272,8 @@ end do:
 </Group>
 <Group labelreference="L1705" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NJ+1 do 
-  Trf_c(1 .. 4, 1 .. 4, i) := Matrix(4,4):
-end do:</Text-field>
+<Font encoding="UTF-8">  Trf_c(1 .. 4, 1 .. 4, i) := Matrix(4,4): # Vollst\303\244ndige Initialisierung
+</Font>end do:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1711" drawlabel="true">
@@ -289,13 +298,65 @@ end:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1708" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NJ do 
-  # Index des vorherigen Koordinatensystems
-  j := v(i)+1:
-  Trf_c(1 .. 4, 1 .. 4, i+1) := Multiply(Trf_c(1 .. 4, 1 .. 4, j), Trf(1 .. 4, 1 .. 4, i)):
-end do:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
+<Group labelreference="L1727" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Einfache Kinematik: Multiplikation an vorherige Transformationsmatrix</Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="837" pixel-height="200" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">if not(codegen_kinematics_opt) then
+  for i from 1 to NJ do 
+    # Index des vorherigen Koordinatensystems
+    j := v(i)+1:
+    Trf_c(1 .. 4, 1 .. 4, i+1) := Multiply(Trf_c(1 .. 4, 1 .. 4, j), Trf(1 .. 4, 1 .. 4, i)):
+  end do:
+end if:</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L1759" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">#Trf_c_orig := copy(Trf_c): # Debug-Ausdruck zum Vergleich der obigen mit der unteren Methode</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1730" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Optimierung der Terme: Summentheorem f\303\274r Drehungen um aufeinanderfolgende Achsen.
+Bei Verwendung dieser Optimierung funktioniert die Substitution mit trigonometrischen Ausdr\303\274cken von abh\303\244ngigen Gelenken eventuell anders.
+Die Funktionsweise kann mit aktivierten print-Befehlen nachvollzogen werden.</Font></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" hide-input="false" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion3" expanded="true" visible="true" pixel-width="1170" pixel-height="702" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">if codegen_kinematics_opt then
+  for i from 1 to NJ do
+    #printf(&quot;----------------------\134ni=%d\134n&quot;,i):
+    # Bestimme Vorw\303\244rtskinematik f\303\274r das Koordinatensystem i (0=Basis)
+    # Gehe solande r\303\274ckw\303\244rts, wie die Gelenkachsen parallel sind
+    j := i: # Lauf-Index \303\274ber Vorg\303\244nger-Elemente (0=Basis)
+    j2 := 0:# Index des Segmentes (0=Basis), das vor der Kette von parallelen Achsen ist
+    Trf_tmp := IdentityMatrix(4,4); # Transformation von diesem Segment zum aktuellen
+    Kette_akt := []:
+    #printf(&quot;Trf_tmp neu initialisiert:\134n&quot;):
+    #print(Trf_tmp);
+    for k from 1 to NJ do # Schleife mit Dummy-L\303\244nge. Wird abgebrochen, falls beendet.
+    	 #printf(&quot;j=%d\134n&quot;,j):
+    	 Kette_akt := [j, op(Kette_akt)]:
+      Trf_tmp := simplify(combine( Matrix(Trf(1 .. 4, 1 .. 4, j) . Trf_tmp) )): # Additionstheorem f\303\274r Drehung um parallele Achsen
+    	 #printf(&quot;Trf_tmp aktualisiert mit Trf %d. Aktuelle Kette: %s\134n&quot;, j, convert(Kette_akt, string)):
+    	 #print(Trf_tmp);
+      if not(alpha(j) = 0) then
+        # Die vorherige Achse ist nicht parallel zu dieser
+        # Weitere Vereinfachungen ergeben keinen Sinn
+        j2 := v(j):
+        #printf(&quot;alpha ungleich null. Abbruch j2=%d.\134n&quot;, j2):
+        break:
+      #else
+      #  printf(&quot;alpha ist Null. Vorherige Achse ist parallel\134n&quot;):
+      end if:
+      if v(j) = 0 then
+        break: # Vorg\303\244nger ist Basis. Keine weitere Untersuchung
+      end if:
+      #printf(&quot;v(%d)=%d\134n&quot;, j, v(j)):
+      j := v(j): # Nehme das Vorg\303\244nger-Segment
+    end do:
+    Trf_c(1 .. 4, 1 .. 4, i+1) := Matrix(Trf_c(1 .. 4, 1 .. 4, j2+1)) . Trf_tmp:
+    #printf(&quot;Trf_tmp an Trf_c angeh\303\244ngt (Eintrag zu K\303\266rper %d. %d -&gt; %d mit Kette %s)\134n&quot;, i, j2, i, convert(Kette_akt, string)):
+    #print(Trf_c(1 .. 4, 1 .. 4, i+1)):
+  end do;
+end if;</EC-CodeEditor></CodeEditor-ExecGroup>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Export</Text-field></Title>
 <Group labelreference="L1588" drawlabel="true">

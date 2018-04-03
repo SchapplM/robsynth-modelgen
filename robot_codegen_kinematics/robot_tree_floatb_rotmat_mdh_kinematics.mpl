@@ -30,8 +30,12 @@ with(codegen):
 with(CodeGeneration):
 with(StringTools):
 codegen_act := true:
-codegen_debug := true:
+codegen_debug := false:
 codegen_opt := 2:
+# Code-Optimierung für die Kinematik (zusammenfassung paralleler Achsen).
+# Ist für einige Systeme vorteilhaft (serielle Ketten mit parallelen Achsen), für andere nicht (z.B. Baumstrukturen mit parallelen Achsen. Hier kann die Code-Optimierung mehr aus nicht trigonometrisch optimierten Termen herausholen).
+# Die Terme werden aber auf jeden Fall übersichtlicher.
+codegen_kinematics_opt := true:
 read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s": 
 read "../helper/proc_MatlabExport":
@@ -104,7 +108,7 @@ end if:
 # Calculate Forward Kinematics (Multi-Joint Transformation)
 Trf_c := Matrix(4, 4, NJ+1): # Diese Initialisierung bringt nichts (initialisiert nur 4x4-Matrix)
 for i from 1 to NJ+1 do 
-  Trf_c(1 .. 4, 1 .. 4, i) := Matrix(4,4):
+  Trf_c(1 .. 4, 1 .. 4, i) := Matrix(4,4): # Vollständige Initialisierung
 end do:
 # Basis-Transformation: Unterschiedliche Darstellungsmethoden. Führen zu unterschiedlichen verallgemeinerten Koordinaten.
 if base_method_name = "twist" then:
@@ -115,12 +119,57 @@ if base_method_name = "eulangrpy" then:
 end:
 printf("Nutze die Methode %s für die Basis-Orientierung\n", base_method_name):
 # Kinematik aller Körper mit MDH-Ansatz Bestimmen. [KhalilKle1986].
-for i from 1 to NJ do 
-  # Index des vorherigen Koordinatensystems
-  j := v(i)+1:
-  Trf_c(1 .. 4, 1 .. 4, i+1) := Multiply(Trf_c(1 .. 4, 1 .. 4, j), Trf(1 .. 4, 1 .. 4, i)):
-end do:
 
+# Einfache Kinematik: Multiplikation an vorherige Transformationsmatrix
+if not(codegen_kinematics_opt) then
+  for i from 1 to NJ do 
+    # Index des vorherigen Koordinatensystems
+    j := v(i)+1:
+    Trf_c(1 .. 4, 1 .. 4, i+1) := Multiply(Trf_c(1 .. 4, 1 .. 4, j), Trf(1 .. 4, 1 .. 4, i)):
+  end do:
+end if:
+#Trf_c_orig := copy(Trf_c): # Debug-Ausdruck zum Vergleich der obigen mit der unteren Methode
+;
+# Optimierung der Terme: Summentheorem für Drehungen um aufeinanderfolgende Achsen.
+# Bei Verwendung dieser Optimierung funktioniert die Substitution mit trigonometrischen Ausdrücken von abhängigen Gelenken eventuell anders.
+# Die Funktionsweise kann mit aktivierten print-Befehlen nachvollzogen werden.
+if codegen_kinematics_opt then
+  for i from 1 to NJ do
+    #printf("----------------------\ni=%d\n",i):
+    # Bestimme Vorwärtskinematik für das Koordinatensystem i (0=Basis)
+    # Gehe solande rückwärts, wie die Gelenkachsen parallel sind
+    j := i: # Lauf-Index über Vorgänger-Elemente (0=Basis)
+    j2 := 0:# Index des Segmentes (0=Basis), das vor der Kette von parallelen Achsen ist
+    Trf_tmp := IdentityMatrix(4,4); # Transformation von diesem Segment zum aktuellen
+    Kette_akt := []:
+    #printf("Trf_tmp neu initialisiert:\n"):
+    #print(Trf_tmp);
+    for k from 1 to NJ do # Schleife mit Dummy-Länge. Wird abgebrochen, falls beendet.
+    	 #printf("j=%d\n",j):
+    	 Kette_akt := [j, op(Kette_akt)]:
+      Trf_tmp := simplify(combine( Matrix(Trf(1 .. 4, 1 .. 4, j) . Trf_tmp) )): # Additionstheorem für Drehung um parallele Achsen
+    	 #printf("Trf_tmp aktualisiert mit Trf %d. Aktuelle Kette: %s\n", j, convert(Kette_akt, string)):
+    	 #print(Trf_tmp);
+      if not(alpha(j) = 0) then
+        # Die vorherige Achse ist nicht parallel zu dieser
+        # Weitere Vereinfachungen ergeben keinen Sinn
+        j2 := v(j):
+        #printf("alpha ungleich null. Abbruch j2=%d.\n", j2):
+        break:
+      #else
+      #  printf("alpha ist Null. Vorherige Achse ist parallel\n"):
+      end if:
+      if v(j) = 0 then
+        break: # Vorgänger ist Basis. Keine weitere Untersuchung
+      end if:
+      #printf("v(%d)=%d\n", j, v(j)):
+      j := v(j): # Nehme das Vorgänger-Segment
+    end do:
+    Trf_c(1 .. 4, 1 .. 4, i+1) := Matrix(Trf_c(1 .. 4, 1 .. 4, j2+1)) . Trf_tmp:
+    #printf("Trf_tmp an Trf_c angehängt (Eintrag zu Körper %d. %d -> %d mit Kette %s)\n", i, j2, i, convert(Kette_akt, string)):
+    #print(Trf_c(1 .. 4, 1 .. 4, i+1)):
+  end do;
+end if;
 # Export
 # Maple-Export
 save Trf, Trf_c, sprintf("../codeexport/%s/tmp/kinematics_floatb_%s_rotmat_maple.m", robot_name, base_method_name):
