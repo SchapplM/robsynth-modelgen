@@ -57,18 +57,20 @@ for i = 1:NJ
   PV2fixb(10*i) = m(i+1);
 end
 
+% Liste der Namen der Dynamikparameter. Basis wird hier nicht betrachtet 
+% (Index "0"), aber bei den Körpern NL mitgezählt.
 PV2_Names = cell(10*NL,1);
-for i = 1:NL
-  PV2_Names{10*(i-1)+ 1} = sprintf('XX%d',i-1);
-  PV2_Names{10*(i-1)+ 2} = sprintf('XY%d',i-1);
-  PV2_Names{10*(i-1)+ 3} = sprintf('XZ%d',i-1);
-  PV2_Names{10*(i-1)+ 4} = sprintf('YY%d',i-1);
-  PV2_Names{10*(i-1)+ 5} = sprintf('YZ%d',i-1);
-  PV2_Names{10*(i-1)+ 6} = sprintf('ZZ%d',i-1);
-  PV2_Names{10*(i-1)+ 7} = sprintf('MX%d',i-1);
-  PV2_Names{10*(i-1)+ 8} = sprintf('MY%d',i-1);
-  PV2_Names{10*(i-1)+ 9} = sprintf('MZ%d',i-1);
-  PV2_Names{10*(i-1)+10} = sprintf('M%d', i-1);
+for i = 1:NL-1
+  PV2_Names{10*(i-1)+ 1} = sprintf('XX%d',i);
+  PV2_Names{10*(i-1)+ 2} = sprintf('XY%d',i);
+  PV2_Names{10*(i-1)+ 3} = sprintf('XZ%d',i);
+  PV2_Names{10*(i-1)+ 4} = sprintf('YY%d',i);
+  PV2_Names{10*(i-1)+ 5} = sprintf('YZ%d',i);
+  PV2_Names{10*(i-1)+ 6} = sprintf('ZZ%d',i);
+  PV2_Names{10*(i-1)+ 7} = sprintf('MX%d',i);
+  PV2_Names{10*(i-1)+ 8} = sprintf('MY%d',i);
+  PV2_Names{10*(i-1)+ 9} = sprintf('MZ%d',i);
+  PV2_Names{10*(i-1)+10} = sprintf('M%d', i);
 end
 
 %% Test kinetic Energy
