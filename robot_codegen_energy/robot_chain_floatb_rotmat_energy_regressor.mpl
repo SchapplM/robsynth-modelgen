@@ -6,7 +6,7 @@
 # Dateiname:
 # robot -> Berechnung für allgemeinen Roboter
 # chain -> Berechnung für eine serielle Struktur (nicht: Baumstruktur)
-# floatb -> fixed base. Kein Floating base Modell. Dort ist diese Form der Minimalparameterform nicht möglich.
+# floatb -> floating base. Zusätzliche Betrachtung der Dynamikparameter der Basis.
 # rotmat -> Kinematik wird mit Rotationsmatrizen berechnet
 # energy -> Berechnung der Energie
 # regressor -> Regressorform (parameterlinear)
@@ -19,6 +19,7 @@
 # [HRL_IDR] Skript Humanoid Robotics Lab - Serial Chain Robot Identification
 # [GautierKhalil1988] A Direct Determination of Minimum Inertial Parameters of Robots
 # [GautierKhalil1990] Direct Calculation of Minimum Set of Inertial Parameters of Serial Robots
+# [Gautier1990] M. Gautier: Numerical calculation of the base inertial parameters of robots
 # Initialisierung
 interface(warnlevel=0): # Unterdrücke die folgende Warnung.
 restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
@@ -78,7 +79,9 @@ mZ := Matrix(NL, 1, PV2_mat[1 .. NL, 9]):
 m :=  Matrix(NL, 1, PV2_mat[1 .. NL, 10]):
 # Rekursive Berechnung der Minimalparameter
 # Rekursive Berechnung der Minimalparameter mit [HRL_IDR] (23), siehe Abbildung 1.
-# [GautierKhalil1990] (eq. 15)
+# [GautierKhalil1990] (eq. 15, 16)
+# Die Sonderfälle (eq. 19, 20) für parallele oder senkrechte Schubachsen scheinen für Floating-Base-Modelle nicht zu gelten, da die dadurch gruppierten Dynamikparameter auf die Basis einen voneinander unabhängigen Einfluss haben.
+# Festgestellt durch Vergleich mit numerischer Berechnung der Minimalparameter nach [Gautier1990]
 for i from NL by -1 to 2 do 
   j := i-1: # Laufvariable für die MDH-Kinematikparameter (Inertialparameter von Segment 0 fangen auch bei 1 an).
   # printf("i=%d, j=%d, sigma=%d\n", i, j, sigma[j,1]):
@@ -126,6 +129,7 @@ for i from NL by -1 to 2 do
                            + cos(theta[j,1])^2*sin(alpha[j,1])^2*YY[i,1]
                            + 2*cos(theta[j,1])*cos(alpha[j,1])*sin(alpha[j,1])*YZ[i,1]
                            + cos(alpha[j,1])^2*ZZ[i,1]:
+    # Keine Sonderregeln (eq. 19,20)
   end if:
 end do:
 # Parameter ohne Einfluss "Markieren"
@@ -152,6 +156,7 @@ for i from 1 to NJ do
     Paramvec[ii, 1] := mX[i+1, 1]: ii:= ii+1:
     Paramvec[ii, 1] := mY[i+1, 1]: ii:= ii+1:
   else: # Schubgelenk (eq. 16)
+    # Keine Sonderregeln (eq. 19,20)
     Paramvec[ii, 1] := mX[i+1, 1]: ii:= ii+1:
     Paramvec[ii, 1] := mY[i+1, 1]: ii:= ii+1:
     Paramvec[ii, 1] := mZ[i+1, 1]: ii:= ii+1:
@@ -228,7 +233,6 @@ size_Matrix:=10*NL-p:
 t_ges_minpar:=Matrix(1,size_Matrix):
 u_ges_minpar:=Matrix(1,size_Matrix):
 printf("Dimension der Minimalparameter-Regressormatrix: 1x%d\n", size_Matrix):
-
 p:=0:
 for i from 1 to 10*NL do       #Nullen Zählen     
    if t_ges[1,i]=REMOVE and u_ges[1,i]=REMOVE then       

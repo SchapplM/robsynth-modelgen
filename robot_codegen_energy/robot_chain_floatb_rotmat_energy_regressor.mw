@@ -4,7 +4,7 @@
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="100" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -107,7 +107,7 @@
 Dateiname:
 <Font encoding="UTF-8">robot -&gt; Berechnung f\303\274r allgemeinen Roboter
 chain -&gt; Berechnung f\303\274r eine serielle Struktur (nicht: Baumstruktur)
-floatb -&gt; fixed base. Kein Floating base Modell. Dort ist diese Form der Minimalparameterform nicht m\303\266glich.
+floatb -&gt; floating base. Zus\303\244tzliche Betrachtung der Dynamikparameter der Basis.
 </Font>rotmat -&gt; Kinematik wird mit Rotationsmatrizen berechnet
 energy -&gt; Berechnung der Energie
 regressor -&gt; Regressorform (parameterlinear)</Text-field>
@@ -119,7 +119,8 @@ Moritz Schappler, schappler@irt.uni-hannover.de, 2017-02</Text-field><Text-field
 </Input>
 </Group>
 <Group hide-output="false" labelreference="L1518" drawlabel="true">
-<Input><Text-field style="Heading 2" layout="Heading 2">Quellen</Text-field><Text-field style="Normal" layout="Normal">[HRL_IDR] Skript Humanoid Robotics Lab - Serial Chain Robot Identification</Text-field><Text-field style="Normal" layout="Normal">[GautierKhalil1988] A Direct Determination of Minimum Inertial Parameters of Robots</Text-field><Text-field style="Normal" layout="Normal">[GautierKhalil1990] Direct Calculation of Minimum Set of Inertial Parameters of Serial Robots</Text-field>
+<Input><Text-field style="Heading 2" layout="Heading 2">Quellen</Text-field><Text-field style="Normal" layout="Normal">[HRL_IDR] Skript Humanoid Robotics Lab - Serial Chain Robot Identification</Text-field><Text-field style="Normal" layout="Normal">[GautierKhalil1988] A Direct Determination of Minimum Inertial Parameters of Robots</Text-field><Text-field style="Normal" layout="Normal">[GautierKhalil1990] Direct Calculation of Minimum Set of Inertial Parameters of Serial Robots
+[Gautier1990] M. Gautier: Numerical calculation of the base inertial parameters of robots</Text-field>
 </Input>
 </Group>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Initialisierung</Text-field></Title>
@@ -219,7 +220,7 @@ end if:</Text-field>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Parameterminimierung</Text-field></Title>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2">Minimalparametervekor</Text-field></Title>
-<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 3" layout="Heading 3">Definiere Parametermatrix</Text-field></Title><CodeEditor-ExecGroup view="presentation" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion8" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">XX := Matrix(NL, 1, PV2_mat[1 .. NL, 1]):
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 3" layout="Heading 3">Definiere Parametermatrix</Text-field></Title><CodeEditor-ExecGroup view="presentation" labelreference="L2" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion8" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">XX := Matrix(NL, 1, PV2_mat[1 .. NL, 1]):
 XY := Matrix(NL, 1, PV2_mat[1 .. NL, 2]):
 XZ := Matrix(NL, 1, PV2_mat[1 .. NL, 3]):
 YY := Matrix(NL, 1, PV2_mat[1 .. NL, 4]):
@@ -233,9 +234,11 @@ m :=  Matrix(NL, 1, PV2_mat[1 .. NL, 10]):</EC-CodeEditor></CodeEditor-ExecGroup
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 3" layout="Heading 3">Rekursive Berechnung der Minimalparameter</Text-field></Title>
 <Group hide-output="false" labelreference="L1688" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal">Rekursive Berechnung der Minimalparameter mit [HRL_IDR] (23), siehe Abbildung 1.
-[GautierKhalil1990] (eq. 15)</Text-field>
+<Font encoding="UTF-8">[GautierKhalil1990] (eq. 15, 16)
+Die Sonderf\303\244lle (eq. 19, 20) f\303\274r parallele oder senkrechte Schubachsen scheinen f\303\274r Floating-Base-Modelle nicht zu gelten, da die dadurch gruppierten Dynamikparameter auf die Basis einen voneinander unabh\303\244ngigen Einfluss haben.
+Festgestellt durch Vergleich mit numerischer Berechnung der Minimalparameter nach [</Font>Gautier1990]</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L2" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="1494" pixel-height="900" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">for i from NL by -1 to 2 do 
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1834" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="1494" pixel-height="1116" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">for i from NL by -1 to 2 do 
   j := i-1: # Laufvariable f\303\274r die MDH-Kinematikparameter (Inertialparameter von Segment 0 fangen auch bei 1 an).
   # printf(&quot;i=%d, j=%d, sigma=%d\134n&quot;, i, j, sigma[j,1]):
   if sigma[j,1] = 0 then # Drehgelenk (eq. 15)
@@ -282,6 +285,7 @@ m :=  Matrix(NL, 1, PV2_mat[1 .. NL, 10]):</EC-CodeEditor></CodeEditor-ExecGroup
                            + cos(theta[j,1])^2*sin(alpha[j,1])^2*YY[i,1]
                            + 2*cos(theta[j,1])*cos(alpha[j,1])*sin(alpha[j,1])*YZ[i,1]
                            + cos(alpha[j,1])^2*ZZ[i,1]:
+    # Keine Sonderregeln (eq. 19,20)
   end if:
 end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 </Section>
@@ -314,7 +318,7 @@ Paramvec := Matrix(MPV_n_max, 1):</Text-field>
 <Group labelreference="L1830" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Paramvec(1..10,1) := &lt;XX[1,1],XY[1,1],XZ[1,1],YY[1,1],YZ[1,1],ZZ[1,1],mX[1,1],mY[1,1],mZ[1,1],m[1,1]&gt;:</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L4" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="594" pixel-height="342" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true"># Formel f\303\274r Parameter, die durch Gelenke bewegt werden, anwenden
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L4" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="594" pixel-height="360" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true"># Formel f\303\274r Parameter, die durch Gelenke bewegt werden, anwenden
 ii := 11: # Indizes 1..10 f\303\274r Basis s.o.
 for i from 1 to NJ do
   if sigma[i,1] = 0 then # Drehgelenk (eq. 15)
@@ -326,6 +330,7 @@ for i from 1 to NJ do
     Paramvec[ii, 1] := mX[i+1, 1]: ii:= ii+1:
     Paramvec[ii, 1] := mY[i+1, 1]: ii:= ii+1:
   else: # Schubgelenk (eq. 16)
+    # Keine Sonderregeln (eq. 19,20)
     Paramvec[ii, 1] := mX[i+1, 1]: ii:= ii+1:
     Paramvec[ii, 1] := mY[i+1, 1]: ii:= ii+1:
     Paramvec[ii, 1] := mZ[i+1, 1]: ii:= ii+1:
@@ -379,7 +384,7 @@ end if;</Text-field>
 Die Parameter YY,MZ und M sind immer linear abh\303\244ngig. Die entsprechenden Spalten der Regressormatrizen werden daher zum Entfernen markiert.
 </Font>[GautierKhalil1990], p.369</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L10" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion4" expanded="true" visible="true" pixel-width="500" pixel-height="450" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">for i from 1 to NL-1 do
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L10" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion4" expanded="true" visible="true" pixel-width="954" pixel-height="594" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">for i from 1 to NL-1 do
   if sigma[i,1] = 0 then: # Drehgelenk
     t_ges[1,i*10+ 4]:=REMOVE; #YY
     t_ges[1,i*10+ 9]:=REMOVE; #MZ
