@@ -80,12 +80,13 @@ fi
 # Versionsinformationen einfügen an vorgesehene Stelle
 # TODO: Versionsdatei nicht jedes Mal neu erzeugen (zu viele Schreibzugriffe)
 versionfile=$repo_pfad/robot_codegen_scripts/tmp/version_info.head.m
-echo "% Quelle: IRT-Maple-Repo" > $versionfile
+echo "% Quelle: HybrDyn-Toolbox (ehem. IRT-Maple-Toolbox)" > $versionfile
 now="$(date +'%Y-%m-%d %H:%M')"
 printf "%% Datum: $now\n" >> $versionfile
 rev=`git rev-parse HEAD`
 printf "%% Revision: $rev\n" >> $versionfile
-echo "% (C) Institut für Regelungstechnik, Universität Hannover" >> $versionfile
+echo "% Moritz Schappler, moritz.schappler@imes.uni-hannover.de" >> $versionfile
+echo "% (C) Institut für mechatronische Systeme, Universität Hannover" >> $versionfile
 
 sed -i "/% %VERSIONINFO%/r $versionfile" $mfcndat
 sed -i "/%VERSIONINFO%/d" $mfcndat
