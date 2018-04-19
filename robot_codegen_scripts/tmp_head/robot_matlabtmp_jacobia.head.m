@@ -1,19 +1,19 @@
-% Analytischen Jacobi-Matrix für Segment Nr. %LIJAC% (1=Basis) von
+% Analytischen Jacobi-Matrix für Segment Nr. %LIJAC% (0=Basis) von
 % %RN%
 % Use Code from Maple symbolic Code Generation
-% 
+%
 % analytische Jacobi-Matrix: Differentieller Zusammenhang zwischen
 % Endeffektorposition und verallgemeinerten Koordinaten.
 % Zeitableitung der Winkeldarstellung des Endeffektors in Basis-Koordinaten
-% 
+%
 % Winkeldarstellung: RPY-Winkel, rotx(alpha)*roty(beta)*rotz(gamma)
-% 
+%
 % Input:
 % %INPUT_QJ%
 % r_i_i_C [3x1]
 %   Ortsvektor vom KörperKS-Ursprung zum gesuchten Punkt
 % %INPUT_PKIN%
-% 
+%
 % Output:
 % Ja [6x%NQJ%]
 %   Analytischen Jacobi-Matrix
