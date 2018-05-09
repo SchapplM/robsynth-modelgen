@@ -120,10 +120,6 @@ with(StringTools):</Text-field>
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Einstellungen f\303\274r Code-Export: Optimierungsgrad (2=h\303\266chster) und Aktivierung jedes Terms.</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L1701" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_opt := 0:</Text-field>
-</Input>
-</Group>
 <Group labelreference="L1688" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
 </Input>
@@ -142,6 +138,10 @@ with(StringTools):</Text-field>
 </Group>
 <Group labelreference="L1712" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Generiere Symmat2Vector-Funktionen f\303\274r %s\134n&quot;, </Font>robot_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1723" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">codegen_opt := 0: # Soll nicht von Einstellung in robot_env \303\274berschrieben werden.</Font></Text-field>
 </Input>
 </Group>
 </Section>

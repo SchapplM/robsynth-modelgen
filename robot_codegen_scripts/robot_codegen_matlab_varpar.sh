@@ -18,6 +18,7 @@ source $repo_pfad/robot_codegen_definitions/robot_env.sh
 # Erstelle Matlab-Hilfsdateien
 source robot_codegen_tmpvar_matlab.sh
 source robot_codegen_assert_matlab.sh
+source robot_codegen_matlab_preparation.sh
 
 # Korrigiere mit Maple generierte Matlab-Code-Dateien
 ./robot_codegen_matlabcode_postprocess_recursive.sh $repo_pfad/codeexport/$robot_name/tmp

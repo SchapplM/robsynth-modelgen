@@ -16,12 +16,13 @@ with(codegen):
 with(CodeGeneration):
 with(StringTools):
 # Einstellungen für Code-Export: Optimierungsgrad (2=höchster) und Aktivierung jedes Terms.
-codegen_opt := 0:
 read "../helper/proc_MatlabExport":
 read "../helper/proc_vector2symmat":
 read "../robot_codegen_definitions/robot_env":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
 printf("Generiere Symmat2Vector-Funktionen für %s\n", robot_name):
+codegen_opt := 0: # Soll nicht von Einstellung in robot_env überschrieben werden.
+;
 # Funktion symmat2vector für den Roboter definieren
 # Erstelle eine Dummy-Variable (mv), die als temporäre Variable in Matlab dient (zum Zusammensetzen der Matrix).
 clear('mv'):
