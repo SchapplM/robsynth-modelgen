@@ -25,6 +25,16 @@ if [ "$teststring" != "" ]; then
   sed -i "s/%arctan/atan2/g" $matfilepath
 fi;
 
+###############################################
+# Ändere die Art der Matrix-Exportierung
+# Im exportierten Code (von Matrizen) stehen keine Kommas zwischen den Spalteneinträgen.
+# Das verschlechtert die Lesbarkeit und ist mit anderen Programmen nicht kompatibel (z.B. Lenze m2xml). Füge die Kommas hinzu.
+if [ "`grep '\[' $matfilepath | grep '\([0-9a-zA-Z]\)\s\([-]*[0-9a-zA-Z]\)' | wc -l`" -gt "0" ]; then
+  for i in {1..2}; do # zwei mal durchführen (rechter Teil des Ausdrucks kann linker Teil des nächsten sein)
+    sed -i '/\[/ s/\([0-9a-zA-Z]\)\s\([-]*[0-9a-zA-Z]\)/\1, \2/g' $matfilepath
+  done
+fi
+
 ################################################
 # Suche nach dem Term unknown.
 # Wenn in Maple Vektoren oder Matrizen exportiert werden mit Code-Optimierung Stufe 1 (nicht: tryhard), wird keine Gesamt-Variable dafür gebildet.
