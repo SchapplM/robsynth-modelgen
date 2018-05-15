@@ -42,7 +42,7 @@ Folgende Schritte müssen durchgeführt werden:
 
 * Betriebssystem: Linux oder Windows mit [Windows-Linux-Subsystem](https://docs.microsoft.com/en-us/windows/wsl/install-win10) (für .sh-Skripte in [Alternative 1](#start_alt1)). Die Ausführung der Maple-Arbeitsblätter in [Alternative 2](#start_alt2) ist aber auch unter Windows ohne Linux-Subsystem möglich.
 * Maple muss installiert sein (aktuelle Version: Maple 2017)
-* Die allgemeine Matlab-Toolbox (Repo `matlab-tools`) muss im Matlab-Pfad initialisiert sein (Aufruf von matlab_tools_path_init.m im Repo). Damit die Pfadinitialisierung auch im Matlab-Terminalaufruf funktioniert, sollte die startup.m richtig gesetzt sein.
+* Die allgemeine Matlab-Toolbox (Repo `imes-matlab`) und die Matlab-Robotik-Toolbox (Repo `imes-robotics-matlab`) müssen im Matlab-Pfad initialisiert sein (Aufruf der entsprechenden `..._path_init.m` in den jeweiligen Repos). Damit die Pfadinitialisierung auch im Matlab-Terminalaufruf funktioniert, sollte die startup.m richtig gesetzt sein.
 
 ## Starten der Codeerstellung <a name="codeerstellung"></a> 
 
