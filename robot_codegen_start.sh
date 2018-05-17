@@ -84,6 +84,7 @@ cd $repo_pfad/robot_codegen_scripts/
 
 # Ordner vorbereiten
 source robot_codegen_tmpvar_bash.sh quiet # enthält zunächst unvollständige Definitionen und wird nur für den Roboternamen gebraucht.
+mkdir -p "$repo_pfad/workdir/tmp"
 mkdir -p "$repo_pfad/codeexport/$robot_name"
 mkdir -p "$repo_pfad/codeexport/$robot_name/tmp"
 mkdir -p "$repo_pfad/codeexport/$robot_name/matlabfcn"

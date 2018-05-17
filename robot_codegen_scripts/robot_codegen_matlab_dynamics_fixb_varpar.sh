@@ -10,7 +10,8 @@
 echo "Generiere Matlabfunktionen: Dynamik (explizit), fixed-base"
 
 repo_pfad=$(pwd)/..
-tmp_pfad=$repo_pfad/robot_codegen_scripts/tmp
+tmp_pfad=$repo_pfad/workdir/tmp
+head_pfad=$repo_pfad/robot_codegen_scripts/tmp_head
 template_pfad=$repo_pfad/robot_codegen_scripts/templates_sym
 # Initialisiere Variablen
 source robot_codegen_tmpvar_bash.sh
@@ -31,7 +32,7 @@ do
     quelldat=$repo_pfad/codeexport/${robot_name}/tmp/coriolisvec_joint_fixb_par${dynpar}_matlab.m
     zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_coriolisvecJ_fixb_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
-      cat ${tmp_pfad}_head/robot_matlabtmp_coriolisvecJ_fixb_par${dynpar}.head.m > $zieldat
+      cat $head_pfad/robot_matlabtmp_coriolisvecJ_fixb_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
@@ -45,23 +46,23 @@ do
         cat $tmp_pfad/robot_matlabtmp_assert_mrcom.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_assert_If.m >> $zieldat
       fi
-      printf "\n%%%% Variable Initialization" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_qJD.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat
+      printf "\n%%%% Variable Initialization" > ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_qJ.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_qJD.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_par_m.m >> ${quelldat}.subsvar
       if [ $dynpar == 1 ]; then
-        cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> $zieldat
-        cat $tmp_pfad/robot_matlabtmp_par_Ic.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> ${quelldat}.subsvar
+        cat $tmp_pfad/robot_matlabtmp_par_Ic.m >> ${quelldat}.subsvar
       else
-        cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> $zieldat
-        cat $tmp_pfad/robot_matlabtmp_par_If.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> ${quelldat}.subsvar
+        cat $tmp_pfad/robot_matlabtmp_par_If.m >> ${quelldat}.subsvar
       fi
       
       printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
       sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
-      source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 1
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 1 ${quelldat}.subsvar
     else
       echo "Code in ${quelldat##*/} nicht gefunden."
     fi
@@ -70,7 +71,7 @@ do
     quelldat=$repo_pfad/codeexport/${robot_name}/tmp/coriolismat_joint_fixb_par${dynpar}_matlab.m
     zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_coriolismatJ_fixb_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
-      cat ${tmp_pfad}_head/robot_matlabtmp_coriolismatJ_fixb_par${dynpar}.head.m > $zieldat
+      cat $head_pfad/robot_matlabtmp_coriolismatJ_fixb_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
@@ -84,23 +85,23 @@ do
         cat $tmp_pfad/robot_matlabtmp_assert_If.m >> $zieldat
       fi
       
-      printf "\n%%%% Variable Initialization" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_qJD.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat
+      printf "\n%%%% Variable Initialization" > ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_qJ.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_qJD.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_par_m.m >> ${quelldat}.subsvar
       if [ $dynpar == 1 ]; then
-        cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> $zieldat
-        cat $tmp_pfad/robot_matlabtmp_par_Ic.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> ${quelldat}.subsvar
+        cat $tmp_pfad/robot_matlabtmp_par_Ic.m >> ${quelldat}.subsvar
       else
-        cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> $zieldat
-        cat $tmp_pfad/robot_matlabtmp_par_If.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> ${quelldat}.subsvar
+        cat $tmp_pfad/robot_matlabtmp_par_If.m >> ${quelldat}.subsvar
       fi
       
       printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
       sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
-      source robot_codegen_matlabfcn_postprocess.sh $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
     else
       echo "Code in ${quelldat##*/} nicht gefunden."
     fi
@@ -110,7 +111,7 @@ do
     quelldat=$repo_pfad/codeexport/${robot_name}/tmp/inertia_joint_joint_floatb_${basemeth}_par${dynpar}_matlab.m
     zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_inertiaJ_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
-      cat ${tmp_pfad}_head/robot_matlabtmp_inertiaJ_par${dynpar}.head.m > $zieldat
+      cat $head_pfad/robot_matlabtmp_inertiaJ_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
@@ -123,16 +124,16 @@ do
         cat $tmp_pfad/robot_matlabtmp_assert_If.m >> $zieldat
       fi
       
-      printf "\n%%%% Variable Initialization" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat
+      printf "\n%%%% Variable Initialization" > ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_qJ.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_par_m.m >> ${quelldat}.subsvar
       if [ $dynpar == 1 ]; then
-        cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> $zieldat
-        cat $tmp_pfad/robot_matlabtmp_par_Ic.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> ${quelldat}.subsvar
+        cat $tmp_pfad/robot_matlabtmp_par_Ic.m >> ${quelldat}.subsvar
       else
-        cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> $zieldat
-        cat $tmp_pfad/robot_matlabtmp_par_If.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> ${quelldat}.subsvar
+        cat $tmp_pfad/robot_matlabtmp_par_If.m >> ${quelldat}.subsvar
       fi
       
       printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
@@ -143,7 +144,7 @@ do
       echo "%% Postprocessing: Reshape Output" >> $zieldat
       echo "% From vec2symmat_${robot_NQJ}_matlab.m" >> $zieldat
       sed "s/mv/$varname_tmp/g" $repo_pfad/codeexport/${robot_name}/tmp/vec2symmat_${robot_NQJ}_matlab.m >> $zieldat
-      source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
     else
       echo "Code in ${quelldat##*/} nicht gefunden."
     fi
@@ -156,7 +157,7 @@ do
     fi
     zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_energykin_fixb_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
-      cat ${tmp_pfad}_head/robot_matlabtmp_energykin_fixb_par${dynpar}.head.m > $zieldat
+      cat $head_pfad/robot_matlabtmp_energykin_fixb_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
@@ -170,23 +171,23 @@ do
         cat $tmp_pfad/robot_matlabtmp_assert_If.m >> $zieldat
       fi
       
-      printf "\n%%%% Variable Initialization" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_qJD.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat
+      printf "\n%%%% Variable Initialization" > ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_qJ.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_qJD.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_par_m.m >> ${quelldat}.subsvar
       if [ $dynpar == 1 ]; then
-        cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> $zieldat
-        cat $tmp_pfad/robot_matlabtmp_par_Ic.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> ${quelldat}.subsvar
+        cat $tmp_pfad/robot_matlabtmp_par_Ic.m >> ${quelldat}.subsvar
       else
-        cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> $zieldat
-        cat $tmp_pfad/robot_matlabtmp_par_If.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> ${quelldat}.subsvar
+        cat $tmp_pfad/robot_matlabtmp_par_If.m >> ${quelldat}.subsvar
       fi
       
       printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
       sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
-      source robot_codegen_matlabfcn_postprocess.sh $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
     else
       echo "Code in ${quelldat##*/} nicht gefunden."
     fi
@@ -195,7 +196,7 @@ do
     quelldat=$repo_pfad/codeexport/${robot_name}/tmp/inertia_joint_joint_time_derivative_floatb_${basemeth}_par${dynpar}_matlab.m
     zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_inertiaDJ_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
-      cat ${tmp_pfad}_head/robot_matlabtmp_inertiaDJ_par${dynpar}.head.m > $zieldat
+      cat $head_pfad/robot_matlabtmp_inertiaDJ_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
@@ -209,17 +210,17 @@ do
         cat $tmp_pfad/robot_matlabtmp_assert_If.m >> $zieldat
       fi
       
-      printf "\n%%%% Variable Initialization" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_qJD.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat
+      printf "\n%%%% Variable Initialization" > ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_qJ.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_qJD.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_par_m.m >> ${quelldat}.subsvar
       if [ $dynpar == 1 ]; then
-        cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> $zieldat
-        cat $tmp_pfad/robot_matlabtmp_par_Ic.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> ${quelldat}.subsvar
+        cat $tmp_pfad/robot_matlabtmp_par_Ic.m >> ${quelldat}.subsvar
       else
-        cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> $zieldat
-        cat $tmp_pfad/robot_matlabtmp_par_If.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> ${quelldat}.subsvar
+        cat $tmp_pfad/robot_matlabtmp_par_If.m >> ${quelldat}.subsvar
       fi
       
       printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
@@ -230,7 +231,7 @@ do
       echo "%% Postprocessing: Reshape Output" >> $zieldat
       echo "% From vec2symmat_${robot_NQJ}_matlab.m" >> $zieldat
       sed "s/mv/$varname_tmp/g" $repo_pfad/codeexport/${robot_name}/tmp/vec2symmat_${robot_NQJ}_matlab.m >> $zieldat
-      source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
     else
       echo "Code in ${quelldat##*/} nicht gefunden."
     fi
@@ -239,7 +240,7 @@ do
     quelldat=$repo_pfad/codeexport/${robot_name}/tmp/energy_potential_fixb_worldframe_par${dynpar}_matlab.m
     zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_energypot_fixb_slag_vp${dynpar}.m
     if [ -f $quelldat ]; then
-      cat ${tmp_pfad}_head/robot_matlabtmp_energypot_fixb_par${dynpar}.head.m > $zieldat
+      cat $head_pfad/robot_matlabtmp_energypot_fixb_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
@@ -251,25 +252,25 @@ do
         cat $tmp_pfad/robot_matlabtmp_assert_mrcom.m >> $zieldat
       fi
       
-      printf "\n%%%% Variable Initialization" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
-      printf "rxs_base=0;\nrys_base=0;\nrzs_base=0;\n" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_g.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat
-      printf "M0=0;%%Masse der Basis nicht relevant.\n" >> $zieldat
+      printf "\n%%%% Variable Initialization" > ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_qJ.m >> ${quelldat}.subsvar
+      printf "rxs_base=0;\nrys_base=0;\nrzs_base=0;\n" >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_g.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_par_m.m >> ${quelldat}.subsvar
+      printf "M0=0;%%Masse der Basis nicht relevant.\n" >> ${quelldat}.subsvar
       if [ $dynpar == 1 ]; then
-        cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> $zieldat
-        printf "SX0=0;SY0=0;SZ0=0;%%Basis-Schwerpunkt nicht relevant.\n" >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> ${quelldat}.subsvar
+        printf "SX0=0;SY0=0;SZ0=0;%%Basis-Schwerpunkt nicht relevant.\n" >> ${quelldat}.subsvar
       else
-        cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> $zieldat
-        printf "MX0=0;MY0=0;MZ0=0;%%Basis-1. Moment nicht relevant.\n" >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> ${quelldat}.subsvar
+        printf "MX0=0;MY0=0;MZ0=0;%%Basis-1. Moment nicht relevant.\n" >> ${quelldat}.subsvar
       fi
       
       printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
       sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
-      source robot_codegen_matlabfcn_postprocess.sh $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
     else
       echo "Code in ${quelldat##*/} nicht gefunden."
     fi
@@ -277,7 +278,7 @@ do
     # Inverse Dynamik (Fixed Base)
     quelldat=$repo_pfad/codeexport/${robot_name}/tmp/invdyn_fixb_par${dynpar}_matlab.m
     zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_invdynJ_fixb_slag_vp${dynpar}.m
-    cat ${tmp_pfad}_head/robot_matlabtmp_invdynJ_fixb_par${dynpar}.head.m > $zieldat
+    cat $head_pfad/robot_matlabtmp_invdynJ_fixb_par${dynpar}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
@@ -293,19 +294,19 @@ do
       cat $tmp_pfad/robot_matlabtmp_assert_If.m >> $zieldat
     fi
     if [ -f $quelldat ]; then
-      printf "\n%%%% Variable Initialization" >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_qJ.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_qJD.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_qJDD.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_g.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
-      cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat
+      printf "\n%%%% Variable Initialization" > ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_qJ.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_qJD.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_qJDD.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_g.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_par_m.m >> ${quelldat}.subsvar
       if [ $dynpar == 1 ]; then
-        cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> $zieldat
-        cat $tmp_pfad/robot_matlabtmp_par_Ic.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> ${quelldat}.subsvar
+        cat $tmp_pfad/robot_matlabtmp_par_Ic.m >> ${quelldat}.subsvar
       else
-        cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> $zieldat
-        cat $tmp_pfad/robot_matlabtmp_par_If.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> ${quelldat}.subsvar
+        cat $tmp_pfad/robot_matlabtmp_par_If.m >> ${quelldat}.subsvar
       fi
       printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
       sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
@@ -314,6 +315,6 @@ do
       echo "Code in ${quelldat##*/} nicht gefunden. Nutze Funktionsaufrufe."
       cat ${template_pfad}/robot_matlabtmp_invdynJ_fixb_par${dynpar}.m.template >> $zieldat
     fi
-    source robot_codegen_matlabfcn_postprocess.sh $zieldat
+    source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
   done # floatb_twist/floatb_eulangrpy
 done # par1/par2

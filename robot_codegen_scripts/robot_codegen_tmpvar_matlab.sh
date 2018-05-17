@@ -7,7 +7,7 @@
 # (C) Institut für Regelungstechnik, Leibniz Universität Hannover
 
 repo_pfad=$(pwd)/../
-tmp_pfad=$repo_pfad/robot_codegen_scripts/tmp
+tmp_pfad=$repo_pfad/workdir/tmp
 source $repo_pfad/robot_codegen_definitions/robot_env.sh
 
 # Schnipsel für Matlab-varpar-Dateien vorbereiten
@@ -173,4 +173,9 @@ echo "alphaDDx_base = xDD_base(4);" >> $tmp_pfad/robot_matlabtmp_xDDB.m
 echo "betaDDy_base = xDD_base(5);" >> $tmp_pfad/robot_matlabtmp_xDDB.m
 echo "gammaDDz_base = xDD_base(6);" >> $tmp_pfad/robot_matlabtmp_xDDB.m
 
-
+# Alle Code-Schnipsel für Variablendefinitionen in eine Datei schreiben
+zd=$tmp_pfad/robot_matlabtmp_all.m
+echo "" > $zd
+for f in `find $tmp_pfad -name "robot_matlabtmp_*.m" ! -name "robot_matlabtmp_all.m"`; do
+  cat $f >> $zd
+done

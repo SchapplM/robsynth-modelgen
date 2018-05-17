@@ -9,7 +9,7 @@
 echo "Generiere Testskripte für Matlabfunktionen"
 
 repo_pfad=$(pwd)/..
-tmp_pfad=$repo_pfad/robot_codegen_scripts/tmp
+tmp_pfad=$repo_pfad/workdir/tmp
 
 # Initialisiere Variablen
 source robot_codegen_tmpvar_bash.sh
