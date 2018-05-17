@@ -28,12 +28,12 @@ if [ -f $quelldat ]; then
   cat $tmp_pfad/robot_matlabtmp_qJ.m >> ${quelldat}.subsvar
   printf "rxs_base = 0;\nrys_base = 0;\nrzs_base = 0;\n" >> ${quelldat}.subsvar
   cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
-  
+
   printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
   sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
   cat $quelldat >> $zieldat
   # Benenne die Ergebnisvariable des exportierten Codes um (zusätzlich zu Hilfsskript robot_codegen_matlabfcn_postprocess.sh)
-  varname_tmp=`grep "=" $zieldat| tail -1 | sed 's/\(.*\)=.*/\1/'`
+  varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat`
   echo "T_ges = $varname_tmp;" >> $zieldat
   echo "%% Postprocessing: Reshape Output" >> $zieldat
   printf "%% Convert Maple format (2-dimensional tensor) to Matlab format (3-dimensional tensor)\n" >> $zieldat
@@ -59,12 +59,12 @@ if [ -f $quelldat ]; then
   cat $tmp_pfad/robot_matlabtmp_rB.m >> ${quelldat}.subsvar
   cat $tmp_pfad/robot_matlabtmp_phiB.m >> ${quelldat}.subsvar
   cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
-  
+
   printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
   sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
   cat $quelldat >> $zieldat
   # Benenne die Ergebnisvariable des exportierten Codes um (zusätzlich zu Hilfsskript robot_codegen_matlabfcn_postprocess.sh)
-  varname_tmp=`grep "=" $zieldat| tail -1 | sed 's/\(.*\)=.*/\1/'`
+  varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat`
   echo "T_ges = $varname_tmp;" >> $zieldat
   echo "%% Postprocessing: Reshape Output" >> $zieldat
   printf "%% Convert Maple format (2-dimensional tensor) to Matlab format (3-dimensional tensor)\n" >> $zieldat
@@ -86,12 +86,12 @@ if [ -f $quelldat ]; then
   echo "%% Variable Initialization" > ${quelldat}.subsvar
   cat $tmp_pfad/robot_matlabtmp_qJ.m >> ${quelldat}.subsvar
   cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
-  
+
   printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
   sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
   cat $quelldat >> $zieldat
   # Benenne die Ergebnisvariable des exportierten Codes um (zusätzlich zu Hilfsskript robot_codegen_matlabfcn_postprocess.sh)
-  varname_tmp=`grep "=" $zieldat| tail -1 | sed 's/\(.*\)=.*/\1/'`
+  varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat`
   echo "T_ges = $varname_tmp;" >> $zieldat
   echo "%% Postprocessing: Reshape Output" >> $zieldat
   printf "%% Convert Maple format (2-dimensional tensor) to Matlab format (3-dimensional tensor)\n" >> $zieldat
@@ -183,7 +183,7 @@ do
           printf "\n\t'%%FN%%: Position vector r_i_i_C has to be [3x1] double');\n" >> $zieldat
         fi
         cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
-      
+
         echo "%% Variable Initialization" > ${quelldat}.subsvar
         cat $tmp_pfad/robot_matlabtmp_qJ.m >> ${quelldat}.subsvar
         if [ "$input_qD" == "true" ]; then
@@ -193,7 +193,7 @@ do
           printf "\npx = r_i_i_C(1);\npy = r_i_i_C(2);\npz = r_i_i_C(3);\n" >> ${quelldat}.subsvar
         fi;
         cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
-        
+
         printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
         sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
         cat $quelldat >> $zieldat
@@ -208,7 +208,7 @@ do
       source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
     else
       source robot_codegen_matlabfcn_postprocess.sh $zieldat 0 0 ${quelldat}.subsvar
-	fi;
+  fi;
     # Markierung ersetzen mit Segmentnummer der Jacobi-Matrix
     sed -i "s/%LIJAC%/${ib}/g" $zieldat
   done
@@ -333,7 +333,7 @@ if [ -f $quelldat ]; then
   echo "%% Variable Initialization" > ${quelldat}.subsvar
   cat $tmp_pfad/robot_matlabtmp_qJ.m >> ${quelldat}.subsvar
   cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
-  
+
   printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
   sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
   cat $quelldat >> $zieldat
@@ -353,7 +353,7 @@ if [ -f $quelldat ]; then
   echo "%% Variable Initialization" > ${quelldat}.subsvar
   cat $tmp_pfad/robot_matlabtmp_qJ.m >> ${quelldat}.subsvar
   cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
-  
+
   printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
   sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
   cat $quelldat >> $zieldat
@@ -375,7 +375,7 @@ if [ -f $quelldat ]; then
   cat $tmp_pfad/robot_matlabtmp_qJ.m >> ${quelldat}.subsvar
   cat $tmp_pfad/robot_matlabtmp_qJD.m >> ${quelldat}.subsvar
   cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
-  
+
   printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
   sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
   cat $quelldat >> $zieldat
@@ -398,7 +398,7 @@ if [ -f $quelldat ]; then
   echo "%% Variable Initialization" > ${quelldat}.subsvar
   cat $tmp_pfad/robot_matlabtmp_qJ.m >> ${quelldat}.subsvar
   cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
-  
+
   printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
   sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
   cat $quelldat >> $zieldat
@@ -418,7 +418,7 @@ if [ -f $quelldat ]; then
   echo "%% Variable Initialization" > ${quelldat}.subsvar
   cat $tmp_pfad/robot_matlabtmp_qJ.m >> ${quelldat}.subsvar
   cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
-  
+
   printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
   sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
   cat $quelldat >> $zieldat
@@ -440,7 +440,7 @@ if [ -f $quelldat ]; then
   cat $tmp_pfad/robot_matlabtmp_qJ.m >> ${quelldat}.subsvar
   cat $tmp_pfad/robot_matlabtmp_qJD.m >> ${quelldat}.subsvar
   cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
-  
+
   printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
   sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
   cat $quelldat >> $zieldat
@@ -460,7 +460,7 @@ if [ -f $quelldat ]; then
   echo "%% Variable Initialization" > ${quelldat}.subsvar
   cat $tmp_pfad/robot_matlabtmp_qJ.m >> ${quelldat}.subsvar
   cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
-  
+
   printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
   sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
   cat $quelldat >> $zieldat
@@ -482,7 +482,7 @@ if [ -f $quelldat ]; then
   cat $tmp_pfad/robot_matlabtmp_qJ.m >> ${quelldat}.subsvar
   cat $tmp_pfad/robot_matlabtmp_qJD.m >> ${quelldat}.subsvar
   cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
-  
+
   printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
   sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
   cat $quelldat >> $zieldat

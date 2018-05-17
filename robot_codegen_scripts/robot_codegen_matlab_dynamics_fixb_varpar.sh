@@ -140,7 +140,7 @@ do
       sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
       # Benenne die Ergebnisvariable des exportierten Codes um (zusätzlich zu Hilfsskript robot_codegen_matlabfcn_postprocess.sh)
-      varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/' | tr -d '[:space:]'`
+      varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat | tr -d '[:space:]'`
       echo "%% Postprocessing: Reshape Output" >> $zieldat
       echo "% From vec2symmat_${robot_NQJ}_matlab.m" >> $zieldat
       sed "s/mv/$varname_tmp/g" $repo_pfad/codeexport/${robot_name}/tmp/vec2symmat_${robot_NQJ}_matlab.m >> $zieldat
@@ -227,7 +227,7 @@ do
       sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
       # Benenne die Ergebnisvariable des exportierten Codes um (zusätzlich zu Hilfsskript robot_codegen_matlabfcn_postprocess.sh)
-      varname_tmp=`grep "=" $zieldat| tail -1 | sed 's/\(.*\)=.*/\1/' | tr -d '[:space:]'`
+      varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat`
       echo "%% Postprocessing: Reshape Output" >> $zieldat
       echo "% From vec2symmat_${robot_NQJ}_matlab.m" >> $zieldat
       sed "s/mv/$varname_tmp/g" $repo_pfad/codeexport/${robot_name}/tmp/vec2symmat_${robot_NQJ}_matlab.m >> $zieldat

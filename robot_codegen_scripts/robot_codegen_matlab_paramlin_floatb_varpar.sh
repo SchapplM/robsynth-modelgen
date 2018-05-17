@@ -65,19 +65,19 @@ do
     echo "%% Symbolic Expressions" >> $zieldat
     printf "%% From ${quelldat1##*/}\n" >> $zieldat
     cat $quelldat1 >> $zieldat
-    varname_tmp=`grep "=" $quelldat1 | tail -1 | sed 's/\(.*\)=.*/\1/'`
+    varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $quelldat1`
     echo "K = $varname_tmp;" >> $zieldat
     printf "%% From ${quelldat2##*/}\n" >> $zieldat
     cat $quelldat2 >> $zieldat
-    varname_tmp=`grep "=" $quelldat2 | tail -1 | sed 's/\(.*\)=.*/\1/'`
+    varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $quelldat2`
     echo "K_d = $varname_tmp;" >> $zieldat
     printf "%% From ${quelldat3##*/}\n" >> $zieldat
     cat $quelldat3 >> $zieldat
-    varname_tmp=`grep "=" $quelldat3 | tail -1 | sed 's/\(.*\)=.*/\1/'`
+    varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $quelldat3`
     echo "P_b = $varname_tmp;" >> $zieldat
     printf "%% From ${quelldat4##*/}\n" >> $zieldat
     cat $quelldat4 >> $zieldat
-    varname_tmp=`grep "=" $quelldat4 | tail -1 | sed 's/\(.*\)=.*/\1/'`
+    varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $quelldat4`
     echo "P_d = $varname_tmp;" >> $zieldat
     source robot_codegen_matlabfcn_postprocess.sh $zieldat 0 0 ${quelldat}.subsvar
   else

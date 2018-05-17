@@ -36,7 +36,7 @@ if [ -f $quelldat ]; then
   cat $tmp_pfad/robot_matlabtmp_par_m.m >> ${quelldat}.subsvar
   cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> ${quelldat}.subsvar
   cat $tmp_pfad/robot_matlabtmp_par_If.m >> ${quelldat}.subsvar
-  
+
   printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
   cat $quelldat >> $zieldat
   source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
@@ -59,19 +59,19 @@ if [ -f $quelldat1 ] && [ -f $quelldat2 ] && [ -f $quelldat3 ] && [ -f $quelldat
   echo "%% Symbolic Expressions" >> $zieldat
   printf "%% From ${quelldat1##*/}\n" >> $zieldat
   cat $quelldat1 >> $zieldat
-  varname_tmp=`grep "=" $quelldat1 | tail -1 | sed 's/\(.*\)=.*/\1/'`
+  varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $quelldat1`
   echo "K = $varname_tmp;" >> $zieldat
   printf "%% From ${quelldat2##*/}\n" >> $zieldat
   cat $quelldat2 >> $zieldat
-  varname_tmp=`grep "=" $quelldat2 | tail -1 | sed 's/\(.*\)=.*/\1/'`
+  varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $quelldat2`
   echo "K_d = $varname_tmp;" >> $zieldat
   printf "%% From ${quelldat3##*/}\n" >> $zieldat
   cat $quelldat3 >> $zieldat
-  varname_tmp=`grep "=" $quelldat3 | tail -1 | sed 's/\(.*\)=.*/\1/'`
+  varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $quelldat3`
   echo "P_b = $varname_tmp;" >> $zieldat
   printf "%% From ${quelldat4##*/}\n" >> $zieldat
   cat $quelldat4 >> $zieldat
-  varname_tmp=`grep "=" $quelldat4 | tail -1 | sed 's/\(.*\)=.*/\1/'`
+  varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $quelldat4`
   echo "P_d = $varname_tmp;" >> $zieldat
   source robot_codegen_matlabfcn_postprocess.sh $zieldat 0 0 ${quelldat}.subsvar
 else
@@ -86,8 +86,8 @@ do
     maple_string="regressor_minpar"
     matlab_string="regmin"
   else
-    maple_string="regressor" 
-    matlab_string="reg2" 
+    maple_string="regressor"
+    matlab_string="reg2"
   fi
 
   # Coriolis-Vektor

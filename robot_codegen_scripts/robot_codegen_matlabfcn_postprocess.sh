@@ -82,8 +82,9 @@ if [ "$replacelastassignment" != "0" ]; then # vergleiche strings, da das Argume
   # Ersetze Variablennamen des letzten Ergebnisses des generierten Codes
   # prüfe, welches die Ausgabevariable der Funktion ist (steht oben im Funktionskopf)
   varname_fcn=`grep "function .*=" $mfcndat | sed 's/function \(.*\)=.*/\1/'`
-  # prüfe, welches die Ausgabevariable des Maple-exportierten Codes ist (letzte Zuweisung im Code, ganz unten)
-  varname_tmp=`grep "=" $mfcndat | tail -1 | sed 's/\(.*\)=.*/\1/'`
+  # prüfe, welches die Ausgabevariable des Maple-exportierten Codes ist (letzte Zuweisung im Code, ganz unten).
+  # Die Variable kann entweder direkt, oder indiziert vor dem Gleichheitszeichen stehen.
+  varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $mfcndat`
   # Ergänze die Zuweisung der Ausgabevariablen
   if [ "$lastassignmentvector" == "1" ]; then
     echo "$varname_fcn = $varname_tmp(:);" >> $mfcndat
