@@ -77,6 +77,9 @@ sed -i "s/%NMPVFLOATB%/$robot_NMPVFLOATB/g" $mfcndat
 sed -i "s/%FN%/$FN/g" $mfcndat
 sed -i "s/%NKP%/$robot_NKP/g" $mfcndat
 sed -i "s/%NKCP%/$robot_NKCP/g" $mfcndat
+kpstring="pkin=[$(echo "$robot_KP" | sed "s/ /,/g")]';"
+sed -i "s/%KPDEF%/$kpstring/g" $mfcndat
+
 
 if [ "$replacelastassignment" != "0" ]; then # vergleiche strings, da das Argument auch leer sein könnte
   # Ersetze Variablennamen des letzten Ergebnisses des generierten Codes
@@ -105,7 +108,8 @@ if [ "$subsvardat" != "" ] && [ -f "$subsvardat" ]; then
     NEWEXP=$(echo $l | cut -f2 -d\|)
     # Ersetze den Ausdruck nur im Matlab-Code und nur für Variablen (nicht überall im Text)
     # (die Variablen werden im Quelltext immer von Zeichen begrenzt, die kein Teil des Variablennamens sein können.)
-    sed -i "s/\([^a-zA-Z0-9_]\)$OLDEXP\([^a-zA-Z0-9_]\)/\1$NEWEXP\2/g" $mfcndat
+    # Keine Ersetzung in Kommentarzeilen
+    sed -i "/^%/! s/\([^a-zA-Z0-9_]\)$OLDEXP\([^a-zA-Z0-9_]\)/\1$NEWEXP\2/g" $mfcndat
   done
   IFS=$OLDIFS
 fi
