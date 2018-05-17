@@ -14,6 +14,8 @@
 
 
 repo_pfad=$(pwd)/..
+tmp_pfad=$repo_pfad/workdir/tmp
+tmp_head_pfad=$repo_pfad/robot_codegen_scripts/tmp_head
 source $repo_pfad/robot_codegen_definitions/robot_env.sh
 
 mfcndat=$1 # Dateipfad als Übergabeargument
@@ -37,31 +39,31 @@ fntmp=$(basename "$mfcndat")
 FN="${fntmp%.*}"
 
 # Setze Beschreibung der Eingabegrößen ein (diese sind für viele Funktionen identisch)
-sed -i "/% %INPUT_M%/r $repo_pfad/workdir/tmp/robot_matlabtmp_comment_input_m.m" $mfcndat
+sed -i "/% %INPUT_M%/r $tmp_head_pfad/robot_matlabtmp_comment_input_m.m" $mfcndat
 sed -i "/%INPUT_M%/d" $mfcndat
-sed -i "/% %INPUT_R%/r $repo_pfad/workdir/tmp/robot_matlabtmp_comment_input_r.m" $mfcndat
+sed -i "/% %INPUT_R%/r $tmp_head_pfad/robot_matlabtmp_comment_input_r.m" $mfcndat
 sed -i "/%INPUT_R%/d" $mfcndat
-sed -i "/% %INPUT_MR%/r $repo_pfad/workdir/tmp/robot_matlabtmp_comment_input_mr.m" $mfcndat
+sed -i "/% %INPUT_MR%/r $tmp_head_pfad/robot_matlabtmp_comment_input_mr.m" $mfcndat
 sed -i "/%INPUT_MR%/d" $mfcndat
-sed -i "/% %INPUT_IC%/r $repo_pfad/workdir/tmp/robot_matlabtmp_comment_input_Ic.m" $mfcndat
+sed -i "/% %INPUT_IC%/r $tmp_head_pfad/robot_matlabtmp_comment_input_Ic.m" $mfcndat
 sed -i "/%INPUT_IC%/d" $mfcndat
-sed -i "/% %INPUT_IF%/r $repo_pfad/workdir/tmp/robot_matlabtmp_comment_input_If.m" $mfcndat
+sed -i "/% %INPUT_IF%/r $tmp_head_pfad/robot_matlabtmp_comment_input_If.m" $mfcndat
 sed -i "/%INPUT_IF%/d" $mfcndat
-sed -i "/% %INPUT_PKIN%/r $repo_pfad/workdir/tmp/robot_matlabtmp_comment_input_pkin.m" $mfcndat
+sed -i "/% %INPUT_PKIN%/r $tmp_head_pfad/robot_matlabtmp_comment_input_pkin.m" $mfcndat
 sed -i "/%INPUT_PKIN%/d" $mfcndat
-sed -i "/% %INPUT_QJ%/r $repo_pfad/workdir/tmp/robot_matlabtmp_comment_input_qJ.m" $mfcndat
+sed -i "/% %INPUT_QJ%/r $tmp_head_pfad/robot_matlabtmp_comment_input_qJ.m" $mfcndat
 sed -i "/%INPUT_QJ%/d" $mfcndat
-sed -i "/% %INPUT_QJD%/r $repo_pfad/workdir/tmp/robot_matlabtmp_comment_input_qJD.m" $mfcndat
+sed -i "/% %INPUT_QJD%/r $tmp_head_pfad/robot_matlabtmp_comment_input_qJD.m" $mfcndat
 sed -i "/%INPUT_QJD%/d" $mfcndat
-sed -i "/% %INPUT_QJDD%/r $repo_pfad/workdir/tmp/robot_matlabtmp_comment_input_qJDD.m" $mfcndat
+sed -i "/% %INPUT_QJDD%/r $tmp_head_pfad/robot_matlabtmp_comment_input_qJDD.m" $mfcndat
 sed -i "/%INPUT_QJDD%/d" $mfcndat
-sed -i "/% %INPUT_RB%/r $repo_pfad/workdir/tmp/robot_matlabtmp_comment_input_rB.m" $mfcndat
+sed -i "/% %INPUT_RB%/r $tmp_head_pfad/robot_matlabtmp_comment_input_rB.m" $mfcndat
 sed -i "/%INPUT_RB%/d" $mfcndat
-sed -i "/% %INPUT_PHIB%/r $repo_pfad/workdir/tmp/robot_matlabtmp_comment_input_phiB.m" $mfcndat
+sed -i "/% %INPUT_PHIB%/r $tmp_head_pfad/robot_matlabtmp_comment_input_phiB.m" $mfcndat
 sed -i "/%INPUT_PHIB%/d" $mfcndat
-sed -i "/% %INPUT_XDB%/r $repo_pfad/workdir/tmp/robot_matlabtmp_comment_input_xDB.m" $mfcndat
+sed -i "/% %INPUT_XDB%/r $tmp_head_pfad/robot_matlabtmp_comment_input_xDB.m" $mfcndat
 sed -i "/%INPUT_XDB%/d" $mfcndat
-sed -i "/% %INPUT_XDDB%/r $repo_pfad/workdir/tmp/robot_matlabtmp_comment_input_xDDB.m" $mfcndat
+sed -i "/% %INPUT_XDDB%/r $tmp_head_pfad/robot_matlabtmp_comment_input_xDDB.m" $mfcndat
 sed -i "/%INPUT_XDDB%/d" $mfcndat
 
 # Ersetze Platzhalterausdrücke $RN$, $NJ$, $NL$
@@ -109,7 +111,7 @@ fi
 
 # Versionsinformationen einfügen an vorgesehene Stelle
 # TODO: Versionsdatei nicht jedes Mal neu erzeugen (zu viele Schreibzugriffe)
-versionfile=$repo_pfad/workdir/tmp/version_info.head.m
+versionfile=$tmp_pfad/version_info.head.m
 echo "% Quelle: HybrDyn-Toolbox (ehem. IRT-Maple-Toolbox)" > $versionfile
 now="$(date +'%Y-%m-%d %H:%M')"
 printf "%% Datum: $now\n" >> $versionfile
