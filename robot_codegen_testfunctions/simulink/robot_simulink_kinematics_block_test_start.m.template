@@ -52,20 +52,20 @@ for i = 1:length(t)
   Jg_n_sl_floatb = sl.Jg_floatb_n(:,:,i_sl);
   
   % Vergleiche Simulink-Ergebnisse mit Matlab-Skript-Ergebnissen
-  T_0_ml = bsp_3T1R_fkine_fixb_rotmat_mdh_sym_varpar(q, pkin);
+  T_0_ml = %RN%_fkine_fixb_rotmat_mdh_sym_varpar(q, pkin);
   
   test1 = T_0_ml(:,:,NL_modell)-T_0_n_sl;
   if any(abs(test1(:)) > 1e-10)
     error('Kinematik stimmt nicht zwischen Simulink und Matlab');
   end
   
-  Jg_n_ml = bsp_3T1R_jacobig_floatb_twist_sym_varpar(q, uint8(NL_modell-1), zeros(3,1), pkin);
+  Jg_n_ml = %RN%_jacobig_floatb_twist_sym_varpar(q, uint8(NL_modell-1), zeros(3,1), pkin);
   test2 = Jg_n_ml-Jg_n_sl;
   if any(abs(test2(:)) > 1e-10)
     error('Jacobi-Matrix stimmt nicht zwischen Simulink und Matlab');
   end
   
-  Jg_n_ml_floatb = bsp_3T1R_jacobig_mdh_eulangrpy_sym(phiB, q, uint8(NL_modell-1), zeros(3,1), pkin);
+  Jg_n_ml_floatb = %RN%_jacobig_mdh_eulangrpy_sym(phiB, q, uint8(NL_modell-1), zeros(3,1), pkin);
   test3 = Jg_n_ml_floatb-Jg_n_sl_floatb;
   if any(abs(test3(:)) > 1e-10)
     error('Floating-Base-Jacobi-Matrix stimmt nicht zwischen Simulink und Matlab');
