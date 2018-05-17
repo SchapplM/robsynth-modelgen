@@ -17,4 +17,4 @@
 % %VERSIONINFO%
 
 function T = %FN%(qJ, qJD, ...
-  pkin, m_num, mrSges_num_mdh, Ifges_num_mdh)
+  pkin, m, mrSges, Ifges)

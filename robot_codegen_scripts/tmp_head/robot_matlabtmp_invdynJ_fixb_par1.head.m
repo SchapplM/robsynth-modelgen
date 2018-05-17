@@ -20,4 +20,4 @@
 % %VERSIONINFO%
 
 function tau = %FN%(qJ, qJD, qJDD, g, ...
-  pkin, m_num, rSges_num_mdh, Icges_num_mdh)
+  pkin, m, rSges, Icges)

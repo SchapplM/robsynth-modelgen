@@ -17,4 +17,4 @@
 % %VERSIONINFO%
 
 function taug = %FN%(qJ, g, ...
-  pkin, m_num, mrSges_num_mdh)
+  pkin, m, mrSges)
