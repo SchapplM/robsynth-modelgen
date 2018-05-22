@@ -1,0 +1,69 @@
+
+# Kinematik-Berechnung 3. Arm KAS7
+# Beschreibung
+# Modell m1: Das untere Ellenbogengelenk wird durch ein Zahnrad mit dem vorherigen Gelenk bewegt.
+# 
+# Zu Geometrie und Winkeln, siehe Bild (Unterlagen)
+# 
+# Berechne alle notwendigen Winkel in kintmp in Abhängigkeit konstanter Größen und der verallgemeinerten Koordinaten
+# 
+# Hinweise:
+# Der Befehl arctan hat die Funktionalität von atan2
+# 
+# Eingabe:
+# "../codeexport/KAS7m1_definitions"
+# * enthält die Definitionen aller Konstanten und verallgemeinerter Koordinaten
+# 
+# Ausgabe:
+# "../codeexport/%s/tmp/kinematic_constraints_maple_inert.m"
+# * Erzeugt die Ausdrücke für Winkel der Parallelstruktur (kintmp), Ersetzungsausdrücke für sin,cos (kintmp_subsexp) und die Federlänge (lpar) in Abhängigkeit der verallgemeinerten Koordinaten.
+# Quellen
+# 
+# Autor
+# Moritz Schappler, schappler@irt.uni-hannover.de, 2016-04
+# Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
+# Initialisierung
+interface(warnlevel=0): # Unterdrücke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
+interface(warnlevel=3):
+kin_constraints_exist := true: # Für Speicherung
+;
+with(StringTools): # Für Zeitausgabe
+with(LinearAlgebra):
+with(codegen):
+with(CodeGeneration):
+codegen_act := true:
+codegen_opt := 2: # Hoher Optimierungsgrad.
+;
+read "../helper/proc_MatlabExport":
+read "../helper/proc_convert_s_t":
+read "../helper/proc_convert_t_s":
+with(RealDomain): # Schränkt alle Funktionen auf den reellen Bereich ein. Muss nach Definition von MatlabExport kommen. Sonst geht dieses nicht.
+;
+read "../robot_codegen_definitions/robot_env":
+read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
+# Variable mit Winkeln der Zwangsbedingungen nur in Abhängigkeit der verallgemeinerten Koordinaten
+kintmp_qs := Matrix(RowDimension(kintmp_s),1):
+# Ersetzungsausdrücke definieren.
+# Speichere Sinus und Cosinus der Winkel direkt ab. Für dieses System ist das eigentlich nicht notwendig. Erstelle Variable, da sie von den Skripten erwartet wird
+kintmp_subsexp := Matrix(2*RowDimension(kintmp_s),2):
+# Zahnrad Abwälzbedingung (rho5)
+# Siehe Aufzeichnungen vom 2.2.2017
+rho5_qs := lv * convert_t_s(theta(4)) - delta1:
+kintmp_qs(1) := rho5_qs:
+# Exportiere Code für folgende Skripte
+kintmp_qt := convert_s_t(kintmp_qs):
+# Speichere Maple-Ausdruck (Eingabe-Format und internes Format)
+save kintmp_subsexp, sprintf("../codeexport/%s/tmp/kinematic_constraints_kintmp_subsexp_maple", robot_name):
+save kintmp_subsexp, sprintf("../codeexport/%s/tmp/kinematic_constraints_kintmp_subsexp_maple.m", robot_name):
+printf("Ausdrücke für kintmp_subsexp gespeichert (Maple)\n"):
+save kintmp_qs, kintmp_qt, kin_constraints_exist, kintmp_subsexp, sprintf("../codeexport/%s/tmp/kinematic_constraints_maple_inert", robot_name):
+save kintmp_qs, kintmp_qt, kin_constraints_exist, kintmp_subsexp, sprintf("../codeexport/%s/tmp/kinematic_constraints_maple_inert.m", robot_name):
+save kintmp_qs, sprintf("../codeexport/%s/tmp/kinematic_constraints_kintmp_qs_maple_inert", robot_name):
+# Liste mit abhängigen konstanten Kinematikparametern erstellen (wichtig für Matlab-Funktionsgenerierung)
+read "../helper/proc_list_constant_expressions";
+kc_symbols := Matrix(list_constant_expressions( kintmp_qs )):
+save kc_symbols, sprintf("../codeexport/%s/tmp/kinematic_constraints_symbols_list_maple", robot_name):
+MatlabExport(Transpose(kc_symbols), sprintf("../codeexport/%s/tmp/kinematic_constraints_symbols_list_matlab.m", robot_name), 2):
+printf("Fertig\n"):
+

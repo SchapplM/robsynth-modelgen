@@ -1,0 +1,27 @@
+# MDH-Definition für
+# KAS7m1
+# Zum Aufbau des Modells, siehe Dokumentations-Repo. Zur Bedeutung der Eingaben in dieser Datei, siehe Maple-Repo
+
+robot_name := "KAS7m1":
+
+# Anzahl der verallgemeinerten Gelenkkoordinaten
+NQJ := 4:
+# Anzahl der Gelenke
+NJ := 5:
+
+qoffset := Matrix(NJ, 1, [-Pi/2, Pi/2, 0, 0, 0]):
+theta := <Matrix(4,1,qJ_t); kintmp_t(1,1)> + qoffset:
+alpha := Matrix(NJ, 1, [0, -Pi/2, Pi/2, 0, 0]):
+d := Matrix(NJ, 1, [l1, l2, l3, 0, 0]):
+a := Matrix(NJ, 1, [0, 0, 0, l4, l5]):
+v := Matrix(NJ,1, <0; 1; 2; 3; 4>):
+
+b := Matrix(NJ,1):
+beta := Matrix(NJ,1):
+
+# Nur Drehgelenke
+sigma := Matrix(NJ,1):
+
+# Allgemeine Winkel
+kintmp_t := Matrix(1, 1, [rho5(t)]);
+kintmp_s := Matrix(1, 1, [rho5s]);

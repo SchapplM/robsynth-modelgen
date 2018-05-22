@@ -1,0 +1,12 @@
+% Parameter für MDH-Notation
+% Werte abgemessen am 3.2.2017
+l1 = 100e-3;
+l2 = 160e-3;
+l3 = 10e-3;
+l4 = 277e-3;
+l5 = 31e-3;
+
+% Parameter für kinematische Zwangsbedingungen
+lv = 1;
+delta1 = 3*pi/180; % Damit es ungleich Null ist und Fehler erkannt werden
+
