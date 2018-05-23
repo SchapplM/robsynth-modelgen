@@ -133,13 +133,17 @@ Nicht zulässig: Humanoide Roboter
 ```
 /robot_codegen_definitions/robot_tree_floatb_twist_definitions.mw
 ```
-Die Basisorientierung wird mit Euler-Winkeln in der RPY-Konvention beschrieben (aufeinanderfolgende Drehungen um die mitgedrehte x-, y- und z-Achse).
+Die Basisorientierung wird mit Euler-Winkeln in der RPY-Konvention beschrieben (aufeinanderfolgende Drehungen um die mitgedrehte x-, y- und z-Achse). Für Systeme mit bewegter Basis sind daher _stattdessen_ folgende Definitionen zu laden:
 ```
 /robot_codegen_definitions/robot_tree_floatb_twist_definitions.mw
 /robot_codegen_definitions/robot_tree_floatb_eulangrpy_definitions.mw
 ```
 Für die Erstellung von Ausdrücken für die Dynamik in expliziter Form (nicht: Regressorform) müssen die Maple-Arbeitsblätter in folgender Reihenfolge gestartet werden:
 ```
+/robot_codegen_definitionsrobot_tree_kinematic_parameter_list.mw
+
+(/robot_codegen_constraints/%RN%_kinematic_constraints.mw)
+
 /robot_codegen_kinematics/robot_tree_floatb_rotmat_mdh_kinematics.mw
 /robot_codegen_kinematics/robot_tree_floatb_rotmat_kinematics_com_worldframe_par1.mw
 /robot_codegen_kinematics/robot_tree_floatb_rotmat_velocity_worldframe_par1.mw
