@@ -248,33 +248,12 @@ qDD_s:= Matrix(NQ,1, &lt;VD_base_s, qJDD_s&gt;):</Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">theta := value(theta):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1665" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal">Gelenktyp (Revolute oder Prismatic). Sollte in der Definition festgelegt sein. Falls nicht, wird alles auf Revolute gesetzt</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1666" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if type( sigma, 'Matrix') = false then
-  sigma := Matrix(NJ,1):
-end if:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1687" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal">Aktuierung (1=aktiv, 0=passiv). Sollte in der Definition festgelegt sein. Falls nicht, wird alles auf Aktiv gesetzt</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1686" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if type( mu, 'Matrix') = false then
-  mu := Matrix(NJ,1):
-end if:</Text-field>
-</Input>
-</Group>
-</Section>
-<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2">Dynamic Parameters</Text-field></Title>
-<Group labelreference="L1630" drawlabel="true">
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2">Standard-Werte festlegen</Text-field></Title>
+<Group labelreference="L1706" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Anzahl der K\303\266rper (Number of Links):</Font></Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L1683" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group hide-input="false" labelreference="L1707" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if not assigned(NL) then
   NL := NJ + 1:
   <Font encoding="UTF-8">printf(&quot;Variable NL ist nicht gegeben. Insgesamt %d Gelenke. Nehme an, dass jedes Gelenk einem K\303\266rper zugeordnet ist (keine Schleifen)\134n&quot;, NJ):</Font>
@@ -284,6 +263,55 @@ else
 </Font>end if:</Text-field>
 </Input>
 </Group>
+<Group labelreference="L1698" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Gelenktyp (Revolute oder Prismatic). Sollte in der Definition festgelegt sein. Falls nicht, wird alles auf Revolute gesetzt</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1700" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if not assigned(sigma) then
+  sigma := Matrix(NJ,1):
+end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1699" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Aktuierung (1=aktiv, 0=passiv). Sollte in der Definition festgelegt sein. Falls nicht, wird alles auf Aktiv gesetzt</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1701" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if not assigned(mu) then
+  mu := Matrix(NJ,1):
+end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1697" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Segmentreihenfolge der Roboterstruktur. Sollte in der Definition festgelegt sein. Falls nicht, wird eine serielle Kette angenommen</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1702" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if not assigned(v) then
+  v := Matrix(NL-1,1,i-&gt;i-1):
+end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1708" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Parameter f\303\274r Baumstruktur</Font>. Sollte in der Definition festgelegt sein. Falls nicht, wird eine serielle Kette angenommen</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1709" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if not assigned(b) then
+  b := Matrix(NJ,1):
+end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1710" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if not assigned(beta) then
+  beta := Matrix(NJ,1):
+end if:</Text-field>
+</Input>
+</Group>
+</Section>
+</Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2">Dynamic Parameters</Text-field></Title>
 <Group labelreference="L1597" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal">Mass of each link</Text-field>
 </Input>

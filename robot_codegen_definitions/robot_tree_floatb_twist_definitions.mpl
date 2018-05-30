@@ -68,15 +68,7 @@ qDD_t:= Matrix(NQ,1, <VD_base_t, qJDD_t>):
 qDD_s:= Matrix(NQ,1, <VD_base_s, qJDD_s>):
 # MDH-Gelenkwinkel neu speichern (Definition der verallg. Koordinaten war dort noch nicht bekannt
 theta := value(theta):
-# Gelenktyp (Revolute oder Prismatic). Sollte in der Definition festgelegt sein. Falls nicht, wird alles auf Revolute gesetzt
-if type( sigma, 'Matrix') = false then
-  sigma := Matrix(NJ,1):
-end if:
-# Aktuierung (1=aktiv, 0=passiv). Sollte in der Definition festgelegt sein. Falls nicht, wird alles auf Aktiv gesetzt
-if type( mu, 'Matrix') = false then
-  mu := Matrix(NJ,1):
-end if:
-# Dynamic Parameters
+# Standard-Werte festlegen
 # Anzahl der Körper (Number of Links):
 if not assigned(NL) then
   NL := NJ + 1:
@@ -85,6 +77,26 @@ else
   NVJ := NJ - (NL - 1):
   printf("Variable NL=%d ist gegeben. Insgesamt %d Gelenke. Davon sind die ersten %d einem Körper zugeordnet und die letzten %d virtuell.\n", NL, NJ, NJ-NVJ, NVJ):
 end if:
+# Gelenktyp (Revolute oder Prismatic). Sollte in der Definition festgelegt sein. Falls nicht, wird alles auf Revolute gesetzt
+if not assigned(sigma) then
+  sigma := Matrix(NJ,1):
+end if:
+# Aktuierung (1=aktiv, 0=passiv). Sollte in der Definition festgelegt sein. Falls nicht, wird alles auf Aktiv gesetzt
+if not assigned(mu) then
+  mu := Matrix(NJ,1):
+end if:
+# Segmentreihenfolge der Roboterstruktur. Sollte in der Definition festgelegt sein. Falls nicht, wird eine serielle Kette angenommen
+if not assigned(v) then
+  v := Matrix(NL-1,1,i->i-1):
+end if:
+# Parameter für Baumstruktur. Sollte in der Definition festgelegt sein. Falls nicht, wird eine serielle Kette angenommen
+if not assigned(b) then
+  b := Matrix(NJ,1):
+end if:
+if not assigned(beta) then
+  beta := Matrix(NJ,1):
+end if:
+# Dynamic Parameters
 # Mass of each link
 M := Matrix(NL, 1):
 for i from 1 to NL do
