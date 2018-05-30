@@ -91,6 +91,8 @@ Der Start erfolgt mit der Linux-Konsole des "Windows Linux Subsystem". Es kann d
 export MAPLE_BIN="/mnt/c/Program Files/Maple 2017/bin.X86_64_WINDOWS/cmaple.exe"
 ```
 
+Alternativ kann auch die "Git Bash" verwendet werden, die automatisch mit installiert wird, wenn man Git unter Windows installiert. Die Pfade unterscheiden sich dann leicht (`/c/...` statt `/mnt/c/...`).
+
 #### Vorgehensweise
 
 Mit folgendem Aufruf werden alle Maple-Ausdrücke erzeugt und Matlab-Funktionen exportiert (wie unter Alternative 2 beschrieben).
