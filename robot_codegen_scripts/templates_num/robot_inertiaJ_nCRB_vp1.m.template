@@ -10,26 +10,28 @@
 % 
 % Sources:
 % [Featherstone2008] Roy Featherstone: Rigid Body Dynamics Algorithms (2008)
+%
+% TODO: Funktioniert noch nicht für Schubgelenke
 
 % Moritz Schappler, schappler@irt.uni-hannover.de, 2016-12
 % (C) Institut für Regelungstechnik, Universität Hannover
 
-function H = %FN%(q, pkin, v_mdh, m_num, rSges_num_mdh, Icges_num_mdh)
+function H = %FN%(q, pkin, m_num, rSges_num_mdh, Icges_num_mdh)
 %%Coder Information
 %#codegen
 assert(isa(q,'double') && isreal(q) && all(size(q) == [%NJ% 1]), ...
-  'atlas5_wbody_inertiaJ_slag_vp1: q has to be [%NJ%x1] double');
+  '%FN%: q has to be [%NJ%x1] double');
 assert(isa(pkin,'double') && isreal(pkin) && all(size(pkin) == [%NKP% 1]), ...
   '%FN%: Kinematic parameters pkin have to be [%NKP%x1] double');
-assert(isa(v_mdh,'uint8') && all(size(v_mdh) == [%NJ% 1]), ...
-  '%RN%_gravload_floatb_eulangrpy_nnew_vp1: v_mdh has to be [%NJ%x1] uint8'); 
 assert(isa(m_num,'double') && isreal(m_num) && all(size(m_num) == [%NL% 1]), ...
-  'atlas5_wbody_inertiaJ_slag_vp1: m_num has to be [%NL%x1] double'); 
+  '%FN%: m_num has to be [%NL%x1] double'); 
 assert(isa(rSges_num_mdh,'double') && isreal(rSges_num_mdh) && all(size(rSges_num_mdh) == [%NL%,3]), ...
-  'atlas5_wbody_inertiaJ_slag_vp1: rSges_num_mdh has to be [%NL%x3] double');
+  '%FN%: rSges_num_mdh has to be [%NL%x3] double');
 assert(isa(Icges_num_mdh,'double') && isreal(Icges_num_mdh) && all(size(Icges_num_mdh) == [%NL% 6]), ...
-  'atlas5_wbody_inertiaJ_slag_vp1: Icges_num_mdh has to be [%NL%x6] double'); 
+  '%FN%: Icges_num_mdh has to be [%NL%x6] double'); 
 
+%% Init
+[v_mdh, sigma] = %RN%_structural_kinematic_parameters();
 
 %% Allgemein
 % Vorgänger-Segmente der Gelenke, [Featherstone2008] S. 71
@@ -108,8 +110,11 @@ for i = %NJ%:-1:1 % Wird die Schleife mit uint8 definiert, funktioniert der gene
 
   % [Featherstone2008] T6.2, Line 9
   % F = I_i_c*S_i;
-  F = I_i_c(:,3); % ausnutzen, dass S_i vorgegeben ist
-  
+  if sigma(i) == 0
+    F = I_i_c(:,3); % ausnutzen, dass S_i vorgegeben ist
+  else
+    F = I_i_c(:,6); % TODO: Ergebnis noch falsch.
+  end
   % [Featherstone2008] T6.2, Line 10
   % H(i,i) = S_i' * F; % Diagonalelement der Massenmatrix
   H(i,i) = F(3); % ausnutzen, dass S_i vorgegeben ist
@@ -143,7 +148,11 @@ for i = %NJ%:-1:1 % Wird die Schleife mit uint8 definiert, funktioniert der gene
     % [Featherstone2008] T6.2, Line 14
     j = (lambda(j)); % Kette weiter nach hinten durchgehen (bis zur Basis)
 
-    S_j = [0; 0; 1; 0; 0; 0];% Siehe [Featherstone2008] Gl. (3.33), Example 3.2
+    if sigma(i) == 0
+      S_j = [0; 0; 1; 0; 0; 0];% Siehe [Featherstone2008] Gl. (3.33), Example 3.2
+    else
+      S_j = [0; 0; 0; 0; 0; 1]; % TODO: Ergebnis noch falsch.
+    end
     % [Featherstone2008] T6.2, Line 15
     H(i,j) = F' * S_j;
     % [Featherstone2008] T6.2, Line 16

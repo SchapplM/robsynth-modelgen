@@ -22,7 +22,7 @@
 % See also:
 % IRT-Matlab-Toolbox: dynamics/robot_tree_invdyn_floatb_eulangrpy_nnew_vp1.m
 
-function tau_g = %FN%(q, phi_base, g_world, pkin, v_mdh, m_num, rSges_num_mdh)
+function tau_g = %FN%(q, phi_base, g_world, pkin, m_num, rSges_num_mdh)
 
 %%Coder Information
 %#codegen
@@ -34,8 +34,6 @@ assert(isa(g_world,'double') && isreal(g_world) && all(size(g_world) == [3 1]), 
   '%FN%: g_world has to be [3x1] double');
 assert(isa(pkin,'double') && isreal(pkin) && all(size(pkin) == [%NKP% 1]), ...
   '%FN%: Kinematic parameters pkin have to be [%NKP%x1] double');
-assert(isa(v_mdh,'uint8') && all(size(v_mdh) == [%NJ% 1]), ...
-  '%FN%: v_mdh has to be [%NJ%x1] uint8'); 
 assert(isa(m_num,'double') && isreal(m_num) && all(size(m_num) == [%NL% 1]), ...
   '%FN%: m_num has to be [%NL%x1] double'); 
 assert(isa(rSges_num_mdh,'double') && isreal(rSges_num_mdh) && all(size(rSges_num_mdh) == [%NL%,3]), ...
@@ -46,6 +44,7 @@ tau_J = NaN(%NJ%,1);
 R_W_0 = rpy2r(phi_base);
 T_basevel = angvelotrans_rpy(phi_base);
 vD_i_i_ges = NaN(3,%NL%);
+[v_mdh, sigma] = %RN%_structural_kinematic_parameters();
 
 %% Vorwärts-Iteration
 % Positionen. Berechne symbolisch (effizienter).
@@ -111,7 +110,11 @@ end
 
 %% Projektion auf die Gelenke
 for i = 2:%NL%
-  tau_J(i-1) = [0 0 1] * n_i_i_ges(:,i);
+  if sigma(i-1) == 0 % Drehgelenk
+    tau_J(i-1) = [0 0 1] * n_i_i_ges(:,i);
+  else % Schubgelenk
+    tau_J(i-1) = [0 0 1] * f_i_i_ges(:,i);
+  end
 end
 
 %% Basis-Kraft
