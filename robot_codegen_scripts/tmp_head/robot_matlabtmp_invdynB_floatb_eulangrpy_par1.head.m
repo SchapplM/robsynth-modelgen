@@ -25,4 +25,4 @@
 % %VERSIONINFO%
 
 function tauB = %FN%(qJ, qJD, qJDD, phi_base, xD_base, xDD_base, g, ...
-  pkin, m_num, rSges_num_mdh, Icges_num_mdh)
+  pkin, m, rSges, Icges)

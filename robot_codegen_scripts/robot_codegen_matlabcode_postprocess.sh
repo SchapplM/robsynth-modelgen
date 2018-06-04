@@ -76,7 +76,5 @@ if [ "$teststring2" != "" ] || [ "$teststring3" != "" ]; then
   # Initialisieren die Variable "unknown" am Anfang
   # Siehe http://superuser.com/questions/246837/how-do-i-add-text-to-the-beginning-of-a-file-in-bash/246841
   sed -i "1s/^/unknown=NaN($imax,$jmax);\n/" $matfilepath
-  # Nochmaliges Setzen der Variable "unknown" am Ende (damit Variablenname von Skript robot_codegen_matlabfcn_postprocess.sh erkannt wird)
-  echo "unknown = unknown; %#ok<ASGSL> für automatische Verarbeitung" >> $matfilepath
 fi;
 

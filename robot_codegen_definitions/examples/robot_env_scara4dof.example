@@ -1,0 +1,19 @@
+# Beispiel für Codegenerierung:
+# SCARA (4DOF)
+
+robot_name := "SCARA4DOF":
+
+NJ := 4:
+NQJ := 4:
+
+qoffset := Matrix(4,1,[0,0,0,0]):
+alpha := Matrix(4,1,[0,0,Pi,Pi]):
+a := Matrix(4,1,[0, L1, L2, 0]):
+
+d := Matrix(4,1,[0,0,qJ_t(3),0]):
+theta := Matrix(4,1,[qJ_t(1), qJ_t(2), 0, qJ_t(4)]):
+
+v := Matrix(4,1,[0, 1, 2, 3]):
+b := Matrix(4,1,[0, 0, 0, 0]):
+beta := Matrix(4,1,[0, 0, 0, 0]):
+sigma := Matrix(4,1,[0, 0, 1, 0]):

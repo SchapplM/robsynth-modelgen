@@ -9,7 +9,7 @@
 echo "Generiere Testskripte für Matlabfunktionen"
 
 repo_pfad=$(pwd)/..
-tmp_pfad=$repo_pfad/robot_codegen_scripts/tmp
+tmp_pfad=$repo_pfad/workdir/tmp
 
 # Initialisiere Variablen
 source robot_codegen_tmpvar_bash.sh
@@ -82,7 +82,7 @@ KP_dat2=$repo_pfad/codeexport/${robot_name}/tmp/parameter_kin_matlab.m
 if [ -f "$KP_dat2" ]; then
   printf "\n%% Aus ${robot_name}/parameter_kin_matlab.m\n" >> $zieldat
   cat $KP_dat2 >> $zieldat
-  varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
+  varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat`
   echo "pkin = $varname_tmp;" >> $zieldat
 else
   echo "Kinematik-Parametervektor in $KP_dat2 nicht gefunden"
@@ -95,43 +95,43 @@ fi;
 printf "\n\n%%%% MDH-Parametereinträge mit vorgegebenen Werten überschreiben" >> $zieldat
 printf "\n%% Aus ${robot_name}/parameters_mdh_d_matlab.m\n" >> $zieldat
 cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_d_matlab.m >> $zieldat
-varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
+varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat`
 echo "d_mdh = $varname_tmp;" >> $zieldat
 printf "\n%% Aus ${robot_name}/parameters_mdh_a_matlab.m\n" >> $zieldat
 cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_a_matlab.m >> $zieldat
-varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
+varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat`
 echo "a_mdh = $varname_tmp;" >> $zieldat
 printf "\n%% Aus ${robot_name}/parameters_mdh_theta_matlab.m\n" >> $zieldat
 cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_theta_matlab.m >> $zieldat
-varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
+varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat`
 echo "theta_mdh = $varname_tmp;" >> $zieldat
 printf "\n%% Aus ${robot_name}/parameters_mdh_b_matlab.m\n" >> $zieldat
 cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_b_matlab.m >> $zieldat
-varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
+varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat`
 echo "b_mdh = $varname_tmp;" >> $zieldat
 printf "\n%% Aus ${robot_name}/parameters_mdh_beta_matlab.m\n" >> $zieldat
 cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_beta_matlab.m >> $zieldat
-varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
+varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat`
 echo "beta_mdh = $varname_tmp;" >> $zieldat
 printf "\n%% Aus ${robot_name}/parameters_mdh_alpha_matlab.m\n" >> $zieldat
 cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_alpha_matlab.m >> $zieldat
-varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
+varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat`
 echo "alpha_mdh = $varname_tmp;" >> $zieldat
 printf "\n%% Aus ${robot_name}/parameters_mdh_qoffset_matlab.m\n" >> $zieldat
 cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_qoffset_matlab.m >> $zieldat
-varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
+varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat`
 echo "q_offset_mdh = $varname_tmp;" >> $zieldat
 printf "\n%% Aus ${robot_name}/parameters_mdh_v_matlab.m\n" >> $zieldat
 cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_v_matlab.m >> $zieldat
-varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
+varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat`
 echo "v_mdh = uint8($varname_tmp);" >> $zieldat
 printf "\n%% Aus ${robot_name}/parameters_mdh_sigma_matlab.m\n" >> $zieldat
 cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_sigma_matlab.m >> $zieldat
-varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
+varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat`
 echo "sigma_mdh = $varname_tmp;" >> $zieldat
 printf "\n%% Aus ${robot_name}/parameters_mdh_mu_matlab.m\n" >> $zieldat
 cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_mu_matlab.m >> $zieldat
-varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
+varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat`
 echo "mu_mdh = $varname_tmp;" >> $zieldat
 # Ersetze "_mdh", damit die Variablennamen stimmen
 sed -i "s/_mdh//g" $zieldat
@@ -139,7 +139,7 @@ sed -i "s/_mdh//g" $zieldat
 if [ -f $repo_pfad/codeexport/${robot_name}/tmp/kinconstr_index_dependant_joints_matlab.m ]; then
   printf "\n%% Aus ${robot_name}/kinconstr_index_dependant_joints_matlab.m\n" >> $zieldat
   cat $repo_pfad/codeexport/${robot_name}/tmp/kinconstr_index_dependant_joints_matlab.m >> $zieldat
-  varname_tmp=`grep "=" $zieldat | tail -1 | sed 's/\(.*\)=.*/\1/'`
+  varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat`
   echo "Ind_depjoints = $varname_tmp;" >> $zieldat
 else
   echo "Ind_depjoints = false(NJ,1);" >> $zieldat

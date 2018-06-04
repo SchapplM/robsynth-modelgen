@@ -13,7 +13,7 @@
 echo "Setze Teilausdrücke des exportierten Codes zu vollständigen Ausdrücken zusammen"
 
 repo_pfad=$(pwd)/..
-tmp_pfad=$repo_pfad/robot_codegen_scripts/tmp
+tmp_pfad=$repo_pfad/workdir/tmp
 # Initialisiere Variablen
 source robot_codegen_tmpvar_bash.sh
 source $repo_pfad/robot_codegen_definitions/robot_env.sh
@@ -47,7 +47,7 @@ do
           teildat=$repo_pfad/codeexport/${robot_name}/tmp/coriolisvec_floatb_${basemeth}_${i}_par${dynpar}_matlab.m
           # prüfe, welches die Ausgabevariable des Maple-exportierten Codes ist
           # Nehme nur die ersten 50 Zeichen der letzten Zeile (falls der Code in einer Zeile steht).
-          varname_tmp=`cut -c-50 $teildat | grep "=" | tail -1 | sed 's/\(.*\)=.*/\1/'`
+          varname_tmp=`cut -c-50 $teildat | $repo_pfad/scripts/get_last_variable_name.sh`
           # Quelltext aus Teil-Datei hineinkopieren
           printf "\n\n%% from ${teildat##*/}\n" >> $zieldat
           cat $teildat >> $zieldat
@@ -61,7 +61,7 @@ do
     else
       echo "${zieldat##*/} existiert. Kein Zusammensetzen notwendig."
     fi
-    
+
     # Coriolis-Matrix (Floating Base)
     zieldat=$repo_pfad/codeexport/${robot_name}/tmp/coriolismat_floatb_${basemeth}_par${dynpar}_matlab.m
     if ! [ -f $zieldat ]; then
@@ -86,7 +86,7 @@ do
           teildat=$repo_pfad/codeexport/${robot_name}/tmp/coriolismat_floatb_${basemeth}_${i}_${j}_par${dynpar}_matlab.m
           # prüfe, welches die Ausgabevariable des Maple-exportierten Codes ist
           # Nehme nur die ersten 50 Zeichen der letzten Zeile (falls der Code in einer Zeile steht).
-          varname_tmp=`cut -c-50 $teildat | grep "=" | tail -1 | sed 's/\(.*\)=.*/\1/'`
+          varname_tmp=`cut -c-50 $teildat | $repo_pfad/scripts/get_last_variable_name.sh`
           # Quelltext aus Teil-Datei hineinkopieren
           printf "\n\n%% from ${teildat##*/}\n" >> $zieldat
           cat $teildat >> $zieldat
@@ -130,7 +130,7 @@ do
           teildat=$repo_pfad/codeexport/${robot_name}/tmp/jacobig_rot_${ib}_floatb_twist_${i}_${j}_matlab.m
           # prüfe, welches die Ausgabevariable des Maple-exportierten Codes ist
           # Nehme nur die ersten 50 Zeichen der letzten Zeile (falls der Code in einer Zeile steht).
-          varname_tmp=`cut -c-50 $teildat | grep "=" | tail -1 | sed 's/\(.*\)=.*/\1/'`
+          varname_tmp=`cut -c-50 $teildat | $repo_pfad/scripts/get_last_variable_name.sh`
           # Quelltext aus Teil-Datei hineinkopieren
           printf "\n\n%% from ${teildat##*/}\n" >> $zieldat
           cat $teildat >> $zieldat

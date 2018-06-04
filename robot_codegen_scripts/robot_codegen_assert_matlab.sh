@@ -8,7 +8,7 @@
 # (C) Institut für Regelungstechnik, Leibniz Universität Hannover
 
 repo_pfad=$(pwd)/../
-tmp_pfad=$repo_pfad/robot_codegen_scripts/tmp/
+tmp_pfad=$repo_pfad/workdir/tmp
 source $repo_pfad/robot_codegen_definitions/robot_env.sh
 
 # Schnipsel für Matlab-varpar-Dateien vorbereiten
@@ -41,16 +41,16 @@ echo "assert(isa(pkin,'double') && isreal(pkin) && all(size(pkin) == [$robot_NKP
   '%FN%: pkin has to be [${robot_NKP}x1] double');" > $tmp_pfad/robot_matlabtmp_assert_KP.m
 
 # Dynamikparameter
-echo "assert(isa(rSges_num_mdh,'double') && isreal(rSges_num_mdh) && all(size(rSges_num_mdh) == [$robot_NL,3]), ...
-  '%FN%: rSges_num_mdh has to be [${robot_NL}x3] double');" > $tmp_pfad/robot_matlabtmp_assert_rcom.m
-echo "assert(isa(mrSges_num_mdh,'double') && isreal(mrSges_num_mdh) && all(size(mrSges_num_mdh) == [$robot_NL,3]), ...
-  '%FN%: mrSges_num_mdh has to be [${robot_NL}x3] double');" > $tmp_pfad/robot_matlabtmp_assert_mrcom.m
-echo "assert(isa(m_num,'double') && isreal(m_num) && all(size(m_num) == [$robot_NL 1]), ...
-  '%FN%: m_num has to be [${robot_NL}x1] double'); " > $tmp_pfad/robot_matlabtmp_assert_m.m
-echo "assert(isa(Icges_num_mdh,'double') && isreal(Icges_num_mdh) && all(size(Icges_num_mdh) == [$robot_NL 6]), ...
-  '%FN%: Icges_num_mdh has to be [${robot_NL}x6] double'); " > $tmp_pfad/robot_matlabtmp_assert_Ic.m
-echo "assert(isa(Ifges_num_mdh,'double') && isreal(Ifges_num_mdh) && all(size(Ifges_num_mdh) == [$robot_NL 6]), ...
-  '%FN%: Ifges_num_mdh has to be [${robot_NL}x6] double'); " > $tmp_pfad/robot_matlabtmp_assert_If.m
+echo "assert(isa(rSges,'double') && isreal(rSges) && all(size(rSges) == [$robot_NL,3]), ...
+  '%FN%: rSges has to be [${robot_NL}x3] double');" > $tmp_pfad/robot_matlabtmp_assert_rcom.m
+echo "assert(isa(mrSges,'double') && isreal(mrSges) && all(size(mrSges) == [$robot_NL,3]), ...
+  '%FN%: mrSges has to be [${robot_NL}x3] double');" > $tmp_pfad/robot_matlabtmp_assert_mrcom.m
+echo "assert(isa(m,'double') && isreal(m) && all(size(m) == [$robot_NL 1]), ...
+  '%FN%: m has to be [${robot_NL}x1] double'); " > $tmp_pfad/robot_matlabtmp_assert_m.m
+echo "assert(isa(Icges,'double') && isreal(Icges) && all(size(Icges) == [$robot_NL 6]), ...
+  '%FN%: Icges has to be [${robot_NL}x6] double'); " > $tmp_pfad/robot_matlabtmp_assert_Ic.m
+echo "assert(isa(Ifges,'double') && isreal(Ifges) && all(size(Ifges) == [$robot_NL 6]), ...
+  '%FN%: Ifges has to be [${robot_NL}x6] double'); " > $tmp_pfad/robot_matlabtmp_assert_If.m
 
 # Kinematische Zwangsbedingungen
 if [ $robot_kinconstr_exist == 1 ]; then

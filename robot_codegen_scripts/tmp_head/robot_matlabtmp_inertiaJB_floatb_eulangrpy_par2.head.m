@@ -17,4 +17,4 @@
 % %VERSIONINFO%
 
 function Mqb = %FN%(qJ, phi_base, ...
-  pkin, m_num, mrSges_num_mdh, Ifges_num_mdh)
+  pkin, m, mrSges, Ifges)

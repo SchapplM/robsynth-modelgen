@@ -19,4 +19,4 @@
 % %VERSIONINFO%
 
 function U = %FN%(qJ, r_base, phi_base, g, ...
-  pkin, m_num, rSges_num_mdh)
+  pkin, m, rSges)

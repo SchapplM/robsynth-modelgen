@@ -17,4 +17,4 @@
 % %VERSIONINFO%
 
 function Mb = %FN%(qJ, phi_base, ...
-  pkin, m_num, rSges_num_mdh, Icges_num_mdh)
+  pkin, m, rSges, Icges)
