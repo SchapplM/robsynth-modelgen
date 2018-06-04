@@ -1,0 +1,14 @@
+% Return Structural Kinematic Parameters of the Robot 
+% %RN%
+%
+% Output:
+% v_mdh [%NJ%x1]
+%   Vorgänger-Indizes (0=Basis)
+% sigma_mdh [%NJ%x1]
+%   Dregelenk = 0, Schubgelenk = 1
+% mu_mdh [%NJ%x1]
+%   Aktives Gelenk = 1, Passiv = 0
+
+% %VERSIONINFO%
+
+function [v_mdh, sigma_mdh, mu_mdh] = %FN%()
