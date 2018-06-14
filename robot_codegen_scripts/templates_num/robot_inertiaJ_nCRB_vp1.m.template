@@ -1,5 +1,5 @@
 % Calculate joint inertia based on Composite Rigid Body Algorithm (CRBA) from [Featherstone2008]
-% 
+%
 % Input:
 % q [1x%NJ%]
 %   Joint Angles [rad]
@@ -7,7 +7,7 @@
 %   kinematic parameters
 % m_num_mdh [%NL%x1], rSges_num_mdh [%NL%x3], Icges_num_mdh [%NL%x6]
 %   dynamic parameters
-% 
+%
 % Sources:
 % [Featherstone2008] Roy Featherstone: Rigid Body Dynamics Algorithms (2008)
 %
@@ -19,16 +19,17 @@
 function H = %FN%(q, pkin, m_num, rSges_num_mdh, Icges_num_mdh)
 %%Coder Information
 %#codegen
-assert(isa(q,'double') && isreal(q) && all(size(q) == [%NJ% 1]), ...
-  '%FN%: q has to be [%NJ%x1] double');
-assert(isa(pkin,'double') && isreal(pkin) && all(size(pkin) == [%NKP% 1]), ...
-  '%FN%: Kinematic parameters pkin have to be [%NKP%x1] double');
-assert(isa(m_num,'double') && isreal(m_num) && all(size(m_num) == [%NL% 1]), ...
-  '%FN%: m_num has to be [%NL%x1] double'); 
-assert(isa(rSges_num_mdh,'double') && isreal(rSges_num_mdh) && all(size(rSges_num_mdh) == [%NL%,3]), ...
-  '%FN%: rSges_num_mdh has to be [%NL%x3] double');
-assert(isa(Icges_num_mdh,'double') && isreal(Icges_num_mdh) && all(size(Icges_num_mdh) == [%NL% 6]), ...
-  '%FN%: Icges_num_mdh has to be [%NL%x6] double'); 
+%#cgargs {zeros(%NQJ%,1),zeros(%NKP%,1),zeros(%NL%,1),zeros(%NL%,3),zeros(%NL%,6)}
+assert(isreal(q) && all(size(q) == [%NJ% 1]), ...
+  '%FN%: q has to be [%NJ%x1] (double)');
+assert(isreal(pkin) && all(size(pkin) == [%NKP% 1]), ...
+  '%FN%: Kinematic parameters pkin have to be [%NKP%x1] (double)');
+assert(isreal(m_num) && all(size(m_num) == [%NL% 1]), ...
+  '%FN%: m_num has to be [%NL%x1] (double)');
+assert(isreal(rSges_num_mdh) && all(size(rSges_num_mdh) == [%NL%,3]), ...
+  '%FN%: rSges_num_mdh has to be [%NL%x3] (double)');
+assert(isreal(Icges_num_mdh) && all(size(Icges_num_mdh) == [%NL% 6]), ...
+  '%FN%: Icges_num_mdh has to be [%NL%x6] (double)');
 
 %% Init
 [v_mdh, sigma] = %RN%_structural_kinematic_parameters();
@@ -73,7 +74,7 @@ for i = %NJ%:-1:1 % Wird die Schleife mit uint8 definiert, funktioniert der gene
   % R_i_li = R_0_i' * R_0_li;
   % r_i_i_li = R_0_i' * r_0_i_li;
   % r_0_i_li = -T_c_mdh(1:3,4,i+1) + T_c_mdh(1:3,4,lambda(i)+1);
-  
+
   % Alt. 2. Berechnung mit direkten Transformationsmatrizen (schneller):
   % Transformation von diesem zum Vorgänger
   R_i_li = T_mdh(1:3,1:3,i)';
@@ -87,7 +88,7 @@ for i = %NJ%:-1:1 % Wird die Schleife mit uint8 definiert, funktioniert der gene
   %   E = R_B_A = R_li_i = R_i_li'
   %  Gl. (2.26)
   X_i_li = [R_i_li, zeros(3,3);skew(r_i_i_li)*R_i_li , R_i_li];
-  
+
   I_i_c = reshape(I_c_ges(i,:), 6, 6);
 
   % Komposit-Matrix aufbauen
@@ -96,7 +97,7 @@ for i = %NJ%:-1:1 % Wird die Schleife mit uint8 definiert, funktioniert der gene
 
     % [Featherstone2008] T6.2, Line 7 (s steht für Stern)
     % [Featherstone2008] Gl. (2.25) (S. 22, Formelzeichen A,B,r,E s.o.)
-    X_li_i_s = [R_i_li(1:3,1:3)', -R_i_li(1:3,1:3)'*skew(r_i_i_li); zeros(3,3), R_i_li(1:3,1:3)']; 
+    X_li_i_s = [R_i_li(1:3,1:3)', -R_i_li(1:3,1:3)'*skew(r_i_i_li); zeros(3,3), R_i_li(1:3,1:3)'];
     % Transformiere die Trägheit des aktuellen Körpers i in die
     % Koordinaten des Vorgängers und füge zu dessen Komposit-Trägheit
     % hinzu
@@ -127,20 +128,20 @@ for i = %NJ%:-1:1 % Wird die Schleife mit uint8 definiert, funktioniert der gene
     % Alt. 1. Berechnung mit kumulativen Transformationsmatrizen (intuitiver):
     % R_0_j = T_c_mdh(1:3,1:3,j+1);
     % R_0_lj = T_c_mdh(1:3,1:3,lambda(j)+1);
-    % R_j_lj = R_0_j' * R_0_lj;    
+    % R_j_lj = R_0_j' * R_0_lj;
     % r_0_j_lj = -T_c_mdh(1:3,4,j+1) + T_c_mdh(1:3,4,lambda(j)+1);
     % r_j_j_lj_test = R_0_j' * r_0_j_lj;
-    
+
     % Alt. 2. Berechnung mit direkten Transformationsmatrizen (schneller):
     R_j_lj = T_mdh(1:3,1:3,j)';
     r_j_j_lj = -R_j_lj*T_mdh(1:3,4,j);
-    
+
     % [Featherstone2008], S. 22
     %   A = j
     %   B = lj
     %   r = r_A_A_B = r_j_j_lj
     %   E = R_B_A = R_lj_j = R_j_lj'
-    %  Gl. (2.25): X_B_A_s = X_lj_j_s       
+    %  Gl. (2.25): X_B_A_s = X_lj_j_s
     X_lj_j_s = [R_j_lj(1:3,1:3)', -R_j_lj(1:3,1:3)'*skew(r_j_j_lj); zeros(3,3), R_j_lj(1:3,1:3)'];
 
     % [Featherstone2008] T6.2, Line 13

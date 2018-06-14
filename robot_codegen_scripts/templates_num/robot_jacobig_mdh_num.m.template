@@ -1,6 +1,6 @@
-% Gelenk-Jacobimatrix zu beliebigen Punkten eines Körpers für 
+% Gelenk-Jacobimatrix zu beliebigen Punkten eines Körpers für
 % %RN%
-% 
+%
 % Input:
 % qJ [1x%NJ%]
 %   Joint Angles [rad]
@@ -9,11 +9,11 @@
 % link_index [1x1 uint8]
 %   Index des Segmentes, auf dem der Punkt C liegt. (0=Basis).
 %   Siehe auch: %RN%_fkine_fixb_rotmat_mdh_sym_varpar.m
-% 
+%
 % Output:
 % Jg_C [6x%NJ%]
 %   geometric body jacobian for the defined point
-% 
+%
 % Quellen:
 % [1] Ortmaier: Robotik I Skript
 
@@ -23,16 +23,17 @@
 function Jg_C = %FN%(qJ, link_index, r_i_i_C, pkin, v_mdh)
 %% Init
 %#codegen
-assert(isa(qJ,'double') && isreal(qJ) && all(size(qJ) == [%NJ% 1]), ...
-  '%FN%: Joint angles qJ have to be [%NJ%x1] double');
+%#cgargs {zeros(%NQJ%,1),uint8(zeros(1,1)),zeros(3,1),zeros(%NKP%,1),uint8(zeros(%NJ%,1))}
+assert(isreal(qJ) && all(size(qJ) == [%NJ% 1]), ...
+  '%FN%: Joint angles qJ have to be [%NJ%x1] (double)');
 assert(isa(link_index,'uint8') && all(size(link_index) == [1 1]), ...
   '%FN%: link_index has to be [1x1] uint8');
-assert(isa(r_i_i_C,'double') && isreal(r_i_i_C) && all(size(r_i_i_C) == [3 1]), ...
-  '%FN%: Position vector r_i_i_C has to be [3x1] double');
-assert(isa(pkin,'double') && isreal(pkin) && all(size(pkin) == [%NKP% 1]), ...
-  '%FN%: Kinematic parameters pkin have to be [%NKP%x1] double');
+assert(isreal(r_i_i_C) && all(size(r_i_i_C) == [3 1]), ...
+  '%FN%: Position vector r_i_i_C has to be [3x1] (double)');
+assert(isreal(pkin) && all(size(pkin) == [%NKP% 1]), ...
+  '%FN%: Kinematic parameters pkin have to be [%NKP%x1] (double)');
 assert(isa(v_mdh,'uint8') && all(size(v_mdh) == [%NJ% 1]), ...
-  '%FN%: v_mdh has to be [%NJ%x1] uint8'); 
+  '%FN%: v_mdh has to be [%NJ%x1] uint8');
 
 % Initialisierung. Alle Spalten die nicht gesetzt werden haben keinen
 % Einfluss.
@@ -53,22 +54,22 @@ j = link_index;
 for tmp = 1:%NJ%
   % Vorgänger-Index
   k = v_mdh(j);
-  
+
   % Drehachse des Gelenks, das diesen Körper bewegt ist die z-Achse dieses
   % Körpers (bei DH-Notation ist es der vorherige, hier MDH-Notation).
   ax = T_c_mdh(1:3,3,j+1);
   jr = ax;
-  
+
   % Vektor vom Gelenk zum Punkt
   r_0_j_i = -T_c_mdh(1:3,4,j+1) + T_0_i(1:3,4);
   r_0_j_C = r_0_j_i + r_0_i_C;
-  
+
   % Hebelarm vom Gelenk zum Punkt
   jt = cross(ax, r_0_j_C);
-  
+
   % Spalte der Jacobi-Matrix eintragen
   Jg_C(:,j) = [jt; jr];
-  
+
   % Indizes tauschen: Kinematische Kette weiter Richtung Basis entlanggehen
   j = k;
   if j == 0

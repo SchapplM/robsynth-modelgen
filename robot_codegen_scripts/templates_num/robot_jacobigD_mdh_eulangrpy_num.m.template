@@ -1,7 +1,7 @@
 % Jacobimatrix-Zeitableitung zu beliebigen Punkten eines Körpers für
 % %RN%
 % Floating-Base-Notation: Jacobi-Matrix bezogen auf Basis und Gelenke
-% 
+%
 % Input:
 % phi_base [3x1]
 %   Base orientation in world frame. Expressed with RPY Euler angles (xyz)
@@ -16,12 +16,12 @@
 % link_index [1x1 uint8]
 %   Index des Segmentes, auf dem der Punkt C liegt. (0=Basis).
 %   Siehe auch: %RN%_fkine_fixb_rotmat_mdh_sym_varpar.m
-% 
+%
 % Output:
 % JgD_C [6x(6+%NJ%)]
 %   time derivative of geometric body jacobian for the defined point with respect to
 %   generalized coordinates:
-% 
+%
 % Quellen:
 % [1] Aufzeichnungen Schappler (vom 22.06.2016)
 % [2] BouyarmaneKhe2012: On the dynamics modeling of free-floating-base
@@ -35,22 +35,24 @@ function JgD_C = %RN%_jacobigD_mdh_eulangrpy_num(phi_base, phiD_base, qJ, qJD, l
   pkin, v_mdh)
 %% Init
 %#codegen
-assert(isa(phi_base,'double') && isreal(phi_base) && all(size(phi_base) == [3 1]), ...
-  '%FN%: Base RPY angles have to be [3x1] double');
-assert(isa(phiD_base,'double') && isreal(phiD_base) && all(size(phiD_base) == [3 1]), ...
-  '%FN%: Base RPY angles time derivatives have to be [3x1] double');
-assert(isa(qJ,'double') && isreal(qJ) && all(size(qJ) == [%NJ% 1]), ...
-  '%FN%: Joint angles qJ have to be [%NJ%x1] double');
-assert(isa(qJD,'double') && isreal(qJD) && all(size(qJD) == [%NJ% 1]), ...
-  '%FN%: Joint velocities qJD have to be [%NJ%x1] double');
+%#cgargs {zeros(3,1),zeros(3,1),zeros(%NQJ%,1),zeros(%NQJ%,1),
+%#cgargs  uint8(zeros(1,1)),zeros(3,1),zeros(%NKP%,1),uint8(zeros(%NJ%,1))}
+assert(isreal(phi_base) && all(size(phi_base) == [3 1]), ...
+  '%FN%: Base RPY angles have to be [3x1] (double)');
+assert(isreal(phiD_base) && all(size(phiD_base) == [3 1]), ...
+  '%FN%: Base RPY angles time derivatives have to be [3x1] (double)');
+assert(isreal(qJ) && all(size(qJ) == [%NJ% 1]), ...
+  '%FN%: Joint angles qJ have to be [%NJ%x1] (double)');
+assert(isreal(qJD) && all(size(qJD) == [%NJ% 1]), ...
+  '%FN%: Joint velocities qJD have to be [%NJ%x1] (double)');
 assert(isa(link_index,'uint8') && all(size(link_index) == [1 1]), ...
-  '%FN%: link_index has to be [1x1] uint8'); 
-assert(isa(r_i_i_C,'double') && isreal(r_i_i_C) && all(size(r_i_i_C) == [3 1]), ...
-  '%FN%: Position vector r_i_i_C has to be [3x1] double');
-assert(isa(pkin,'double') && isreal(pkin) && all(size(pkin) == [%NKP% 1]), ...
-  '%FN%: Kinematic parameters pkin have to be [%NKP%x1] double');
+  '%FN%: link_index has to be [1x1] uint8');
+assert(isreal(r_i_i_C) && all(size(r_i_i_C) == [3 1]), ...
+  '%FN%: Position vector r_i_i_C has to be [3x1] (double)');
+assert(isreal(pkin) && all(size(pkin) == [%NKP% 1]), ...
+  '%FN%: Kinematic parameters pkin have to be [%NKP%x1] (double)');
 assert(isa(v_mdh,'uint8') && all(size(v_mdh) == [%NJ% 1]), ...
-  '%FN%: v_mdh has to be [%NJ%x1] uint8'); 
+  '%FN%: v_mdh has to be [%NJ%x1] uint8');
 
 %% Kinematik berechnen
 T_c_mdh = %RN%_fkine_fixb_rotmat_mdh_sym_varpar(qJ, pkin);

@@ -1,6 +1,6 @@
-% Jacobimatrix zu beliebigen Punkten eines Körpers für 
+% Jacobimatrix zu beliebigen Punkten eines Körpers für
 % %RN%
-% 
+%
 % Input:
 % phi_base [3x1]
 %   Base orientation in world frame. Expressed with RPY Euler angles (xyz)
@@ -11,12 +11,12 @@
 % link_index [1x1 uint8]
 %   Index des Segmentes, auf dem der Punkt C liegt. (0=Basis).
 %   Siehe auch: %RN%_fkine_fixb_rotmat_mdh_sym_varpar.m
-% 
+%
 % Output:
 % Jg_C [6x(6+%NJ%)]
 %   geometric body jacobian for the defined point with respect to
 %   generalized coordinates:
-% 
+%
 % Quellen:
 % [1] Aufzeichnungen Schappler (vom 10.06.2016)
 % [2] BouyarmaneKhe2012: On the dynamics modeling of free-floating-base
@@ -31,16 +31,17 @@
 function Jg_C = %FN%(phi_base, qJ, link_index, r_i_i_C, pkin)
 %% Init
 %#codegen
-assert(isa(phi_base,'double') && isreal(phi_base) && all(size(phi_base) == [3 1]), ...
-  '%FN%: Base RPY angles have to be [3x1] double');
-assert(isa(qJ,'double') && isreal(qJ) && all(size(qJ) == [%NJ% 1]), ...
-  '%FN%: Joint angles qJ have to be [%NJ%x1] double');
-assert(isa(r_i_i_C,'double') && isreal(r_i_i_C) && all(size(r_i_i_C) == [3 1]), ...
-  '%FN%: Position vector r_i_i_C has to be [3x1] double');
+%#cgargs {zeros(3,1),zeros(%NQJ%,1),uint8(zeros(1,1)),zeros(3,1),zeros(%NKP%,1)}
+assert(isreal(phi_base) && all(size(phi_base) == [3 1]), ...
+  '%FN%: Base RPY angles have to be [3x1] (double)');
+assert(isreal(qJ) && all(size(qJ) == [%NJ% 1]), ...
+  '%FN%: Joint angles qJ have to be [%NJ%x1] (double)');
+assert(isreal(r_i_i_C) && all(size(r_i_i_C) == [3 1]), ...
+  '%FN%: Position vector r_i_i_C has to be [3x1] (double)');
 assert(isa(link_index,'uint8') && all(size(link_index) == [1 1]), ...
-  '%FN%: link_index has to be [1x1] uint8'); 
-assert(isa(pkin,'double') && isreal(pkin) && all(size(pkin) == [%NKP% 1]), ...
-  '%FN%: Kinematic parameters pkin have to be [%NKP%x1] double');
+  '%FN%: link_index has to be [1x1] uint8');
+assert(isreal(pkin) && all(size(pkin) == [%NKP% 1]), ...
+  '%FN%: Kinematic parameters pkin have to be [%NKP%x1] (double)');
 
 %% Kinematik berechnen
 T_c_mdh = %RN%_fkine_fixb_rotmat_mdh_sym_varpar(qJ, pkin);
