@@ -32,22 +32,22 @@ tmp=`echo $tmp | grep -oP '\(\K[^\)]+'`
 
 # Ersetze die Variablennamen mit der Beispielzuweisung (Nullen der richtigen Dimension)
 DIMLIST="
-qJ|${robot_NQJ},1
-qJD|${robot_NQJ},1
-qJDD|${robot_NQJ},1
-g|3,1
-r_base|3,1
-phi_base|3,1
-V_base|6,1
-A_base|6,1
-xD_base|6,1
-xDD_base|6,1
-pkin|${robot_NKP},1
-m|${robot_NL},1
-rSges|${robot_NL},3
-mrSges|${robot_NL},3
-Icges|${robot_NL},6
-Ifges|${robot_NL},6"
+qJ|zeros(${robot_NQJ},1)
+qJD|zeros(${robot_NQJ},1)
+qJDD|zeros(${robot_NQJ},1)
+g|zeros(3,1)
+r_base|zeros(3,1)
+phi_base|zeros(3,1)
+V_base|zeros(6,1)
+A_base|zeros(6,1)
+xD_base|zeros(6,1)
+xDD_base|zeros(6,1)
+pkin|zeros(${robot_NKP},1)
+m|zeros(${robot_NL},1)
+rSges|zeros(${robot_NL},3)
+mrSges|zeros(${robot_NL},3)
+Icges|zeros(${robot_NL},6)
+Ifges|zeros(${robot_NL},6)"
 
 # zusätzliche Ausdrücke anhängen
 extraargs=${extraargs//;/$'\n'}
@@ -63,7 +63,7 @@ tmp=",$tmp,"
 for dz in $DIMLIST; do
   dz=`echo $dz | sed "s/ //g"`
   vn=$(echo $dz | cut -f1 -d\|)
-  d="zeros($(echo $dz | cut -f2 -d\|))"
+  d=$(echo $dz | cut -f2 -d\|)
   #echo "$vn -> $d"
   # Finde den Namen der Übergabevariablen (umschlossen von >=0 Nicht-Alphanumerischen Zeichen) und ersetze ihn durch den cgargs-Platzhalter
   tmp=`echo $tmp | sed "s/\([^a-zA-Z0-9]\)$vn\([^a-zA-Z0-9]\)/\1$d\2/"`

@@ -181,7 +181,7 @@ do
         cat $headdat > $zieldat
         printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
         source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
-        source $repo_pfad/scripts/set_inputdim_line.sh $zieldat "r_i_i_C|3,1;"
+        source $repo_pfad/scripts/set_inputdim_line.sh $zieldat "r_i_i_C|zeros(3,1)"
         cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
         if [ "$input_qD" == "true" ]; then
           cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
@@ -272,7 +272,7 @@ do
   cat $headdat > $zieldat
   printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
   source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
-  source $repo_pfad/scripts/set_inputdim_line.sh $zieldat "r_i_i_C|3,1;link_index|1,1"
+  source $repo_pfad/scripts/set_inputdim_line.sh $zieldat "r_i_i_C|zeros(3,1);link_index|uint8(0)"
   cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
   if [ "$input_qD" == "true" ]; then
     cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
