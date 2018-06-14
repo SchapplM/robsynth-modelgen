@@ -34,6 +34,8 @@ do
     if [ -f $quelldat ]; then
       cat $head_pfad/robot_matlabtmp_coriolisvecJ_fixb_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
@@ -73,6 +75,8 @@ do
     if [ -f $quelldat ]; then
       cat $head_pfad/robot_matlabtmp_coriolismatJ_fixb_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
@@ -113,6 +117,8 @@ do
     if [ -f $quelldat ]; then
       cat $head_pfad/robot_matlabtmp_inertiaJ_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
@@ -159,6 +165,8 @@ do
     if [ -f $quelldat ]; then
       cat $head_pfad/robot_matlabtmp_energykin_fixb_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
@@ -198,6 +206,8 @@ do
     if [ -f $quelldat ]; then
       cat $head_pfad/robot_matlabtmp_inertiaDJ_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
@@ -242,6 +252,8 @@ do
     if [ -f $quelldat ]; then
       cat $head_pfad/robot_matlabtmp_energypot_fixb_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
@@ -280,6 +292,8 @@ do
     zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_invdynJ_fixb_slag_vp${dynpar}.m
     cat $head_pfad/robot_matlabtmp_invdynJ_fixb_par${dynpar}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+    source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+    source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_qJDD.m >> $zieldat

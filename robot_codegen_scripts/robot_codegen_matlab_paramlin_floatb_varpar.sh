@@ -27,6 +27,8 @@ do
   if [ -f $quelldat ]; then
     cat $head_pfad/robot_matlabtmp_convert_par2_MPV_floatb_${basemeth}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+    source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+    source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_mrcom.m >> $zieldat
@@ -59,6 +61,8 @@ do
   if [ -f $quelldat1 ] && [ -f $quelldat2 ] && [ -f $quelldat3 ] && [ -f $quelldat4 ]; then
     cat $head_pfad/robot_matlabtmp_PV2_MPV_transformations_floatb_${basemeth}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+    source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+    source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
     echo "%% Variable Initialization" > ${quelldat}.subsvar
     cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
@@ -105,6 +109,8 @@ do
     if [ -f $quelldat ]; then
       cat $head_pfad/robot_matlabtmp_energykin_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
         if [ $basemeth == "twist" ]; then
@@ -139,6 +145,8 @@ do
     if [ -f $quelldat ]; then
       cat $head_pfad/robot_matlabtmp_energypot_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_rB.m >> $zieldat
         if [ $basemeth == "twist" ]; then
@@ -173,6 +181,8 @@ do
     if [ -f $quelldat ]; then
       cat $head_pfad/robot_matlabtmp_gravloadB_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       if [ $basemeth == "twist" ]; then
         :
@@ -206,6 +216,8 @@ do
     if [ -f $quelldat ]; then
       cat $head_pfad/robot_matlabtmp_gravloadJ_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       if [ $basemeth == "twist" ]; then
         :
@@ -240,6 +252,8 @@ do
     if [ -f $quelldat ]; then
       cat $head_pfad/robot_matlabtmp_coriolisvecB_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
       if [ $basemeth == "twist" ]; then
@@ -275,6 +289,8 @@ do
     if [ -f $quelldat ]; then
       cat $head_pfad/robot_matlabtmp_coriolisvecJ_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
       if [ $basemeth == "twist" ]; then
@@ -311,6 +327,8 @@ do
     if [ -f $quelldat ]; then
       cat $head_pfad/robot_matlabtmp_coriolisvec_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
       if [ $basemeth == "twist" ]; then
@@ -349,6 +367,8 @@ do
     if [ -f $quelldat ]; then
       cat $head_pfad/robot_matlabtmp_coriolismat_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
       if [ $basemeth == "twist" ]; then
@@ -386,6 +406,8 @@ do
     if [ -f $quelldat ]; then
       cat $head_pfad/robot_matlabtmp_inertia_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       if [ $basemeth == "twist" ]; then
         :
@@ -415,6 +437,8 @@ do
     if [ -f $quelldat ]; then
       cat $head_pfad/robot_matlabtmp_inertiaJB_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       if [ $basemeth == "twist" ]; then
         :
@@ -447,6 +471,8 @@ do
     if [ -f $quelldat ]; then
       cat $head_pfad/robot_matlabtmp_inertiaB_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       if [ $basemeth == "twist" ]; then
         :
@@ -476,6 +502,8 @@ do
     if [ -f $quelldat ]; then
       cat $head_pfad/robot_matlabtmp_inertiaD_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
       if [ $basemeth == "twist" ]; then
@@ -510,6 +538,8 @@ do
     if [ -f $quelldat ]; then
       cat $head_pfad/robot_matlabtmp_invdynJ_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJDD.m >> $zieldat
@@ -553,6 +583,8 @@ do
     if [ -f $quelldat ]; then
       cat $head_pfad/robot_matlabtmp_invdynB_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJDD.m >> $zieldat
