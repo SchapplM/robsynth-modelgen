@@ -7,40 +7,8 @@ clear
 clc
 
 %% Init
-%RN%_testfunctions_path_init
-compile_path = matlabfcn_path; % aus testfunctions_path_init
+%RN%_testfunctions_path_init % erzeugt matlabfcn_path.m
 
-%% Loop through files and compile all Matlab Functions
-for p = {compile_path}
-  % suche m-Dateien
-  files = dir(fullfile(p{1}, '*.m'));
-  for i = 1:length(files)
-    fprintf('%03d: %s\n', i, files(i).name);
-    % Prüfe ob Datei "%#codegen" enthält
-    fid = fopen(fullfile(p{1}, files(i).name),'r');
-    tline = fgetl(fid);
-    codegen_set = false;
-    while ischar(tline)
-      if strfind(tline, '%#codegen')
-        codegen_set = true;
-        break;
-      end
-      tline = fgetl(fid);
-    end
-    fclose(fid);
-    if ~codegen_set
-      fprintf('No %%#codegen - tag in file. Skip.\n');
-      continue
-    end
-    % einzelne Datei kompilieren
-    [~,filebasename,~]=fileparts(files(i).name);
-    
-    Fehler = matlabfcn2mex({filebasename}, false, false, false);
-
-    if Fehler
-      error('Fehler');
-    end
-  end
-end
+mex_all_matlabfcn_in_dir(matlabfcn_path, 1);
 
 fprintf('Alle m-Funktionen als mex kompiliert!\n');
