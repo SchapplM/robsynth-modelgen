@@ -71,11 +71,11 @@ if [ -f $KCP_dat1 ]; then
   printf "\n%%%% Werte für Kinematikparameter direkt eintragen\n" >> $zieldat
   printf "\n%% Aus ${robot_name}/kinematic_parameter_values.m\n" >> $zieldat
   cat $KCP_dat1 >> $zieldat
-elif [ "$robot_kinconstr_exist" == "1" ]; then
-  # Die einzelnen skalaren Werte für die Kinematik-Zwangsbedingungen müssen zufällig initialisiert werden und in den Kinematikparametervektor eingetragen werden
-  printf "\n%%%% Zufällige Werte für Kinematikparameter der Zwangsbedingungen\n" >> $zieldat
-  for Kcp in $robot_KCP; do
-    echo "$Kcp = rand(1,1);" >> $zieldat
+else
+  # Zufällige Werte für Kinematikparameter
+  printf "\n%%%% Zufällige Werte für Kinematikparameter\n" >> $zieldat
+  for Kp in $robot_KP; do
+    echo "$Kp = rand(1,1);" >> $zieldat
   done
 fi
 KP_dat2=$repo_pfad/codeexport/${robot_name}/tmp/parameter_kin_matlab.m
