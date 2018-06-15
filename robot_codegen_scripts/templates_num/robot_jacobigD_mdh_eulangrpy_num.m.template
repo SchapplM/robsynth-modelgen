@@ -3,19 +3,18 @@
 % Floating-Base-Notation: Jacobi-Matrix bezogen auf Basis und Gelenke
 %
 % Input:
-% phi_base [3x1]
-%   Base orientation in world frame. Expressed with RPY Euler angles (xyz)
-% phiD_base [3x1]
-%   Time derivative of phi_base. Not: angular velocity of the base
+% %INPUT_PHIB%
+% %INPUT_PHIBD%
 % qJ [%NJ%x1]
 %   Joint Angles [rad]
 % qJD [%NJ%x1]
 %   Joint Velocities [rad/s]
-% r_i_i_C [3x1]
-%   Ortsvektor vom KörperKS-Ursprung zum gesuchten Punkt
 % link_index [1x1 uint8]
 %   Index des Segmentes, auf dem der Punkt C liegt. (0=Basis).
 %   Siehe auch: %RN%_fkine_fixb_rotmat_mdh_sym_varpar.m
+% r_i_i_C [3x1]
+%   Ortsvektor vom KörperKS-Ursprung zum gesuchten Punkt
+% %INPUT_PKIN%
 %
 % Output:
 % JgD_C [6x(6+%NJ%)]
@@ -33,11 +32,11 @@
 % (C) Institut für Regelungstechnik, Leibniz Universität Hannover
 
 function JgD_C = %RN%_jacobigD_mdh_eulangrpy_num(phi_base, phiD_base, qJ, qJD, link_index, r_i_i_C, ...
-  pkin, v_mdh)
+  pkin)
 %% Init
 %#codegen
 %#cgargs {zeros(3,1),zeros(3,1),zeros(%NQJ%,1),zeros(%NQJ%,1),
-%#cgargs  uint8(zeros(1,1)),zeros(3,1),zeros(%NKP%,1),uint8(zeros(%NJ%,1))}
+%#cgargs  uint8(zeros(1,1)),zeros(3,1),zeros(%NKP%,1)}
 assert(isreal(phi_base) && all(size(phi_base) == [3 1]), ...
   '%FN%: Base RPY angles have to be [3x1] (double)');
 assert(isreal(phiD_base) && all(size(phiD_base) == [3 1]), ...
@@ -52,11 +51,14 @@ assert(isreal(r_i_i_C) && all(size(r_i_i_C) == [3 1]), ...
   '%FN%: Position vector r_i_i_C has to be [3x1] (double)');
 assert(isreal(pkin) && all(size(pkin) == [%NKP% 1]), ...
   '%FN%: Kinematic parameters pkin have to be [%NKP%x1] (double)');
-assert(isa(v_mdh,'uint8') && all(size(v_mdh) == [%NJ% 1]), ...
-  '%FN%: v_mdh has to be [%NJ%x1] uint8');
+
+if link_index > %NL%-1
+  error('Index exceeds number of bodies');
+end
 
 %% Kinematik berechnen
 T_c_mdh = %RN%_fkine_fixb_rotmat_mdh_sym_varpar(qJ, pkin);
+v_mdh = %RN%_structural_kinematic_parameters();
 T_B_i = T_c_mdh(:,:,link_index+1);
 % Vektor von der Basis (B) zum Punkt C (auf Körper i)
 r_B_B_C = T_B_i(1:3,4) + T_B_i(1:3,1:3) * r_i_i_C; % r_B_B_i + R_B_i_C
@@ -72,8 +74,8 @@ TD_angvel = angvelotrans_rpyD(phi_base, phiD_base);
 omega_W_B = T_angvel*phiD_base;
 
 %% Gelenk-Jacobi-Matrix
-Jg_JC_B = %RN%_jacobig_mdh_num(qJ, link_index, r_i_i_C, pkin, v_mdh);
-JgD_JC_B = %RN%_jacobigD_mdh_num(qJ, qJD, link_index, r_i_i_C, pkin, v_mdh);
+Jg_JC_B = %RN%_jacobig_mdh_num(qJ, link_index, r_i_i_C, pkin);
+JgD_JC_B = %RN%_jacobigD_mdh_num(qJ, qJD, link_index, r_i_i_C, pkin);
 % Rotation ins Welt-KS und Zeitableitung der Rotation
 JgD_JTC = skew(omega_W_B)*R_W_B*Jg_JC_B(1:3,:) + R_W_B*JgD_JC_B(1:3,:);
 JgD_JRC = skew(omega_W_B)*R_W_B*Jg_JC_B(4:6,:) + R_W_B*JgD_JC_B(4:6,:);

@@ -3,10 +3,10 @@
 % Input:
 % q [%NJ%x1]
 %   Joint Angles [rad]
-% pkin [%NKP%x1], v_mdh [%NJ%x1]
-%   kinematic parameters
-% m_num_mdh [%NL%x1], rSges_num_mdh [%NL%x3], Icges_num_mdh [%NL%x6]
-%   dynamic parameters
+% %INPUT_PKIN%
+% %INPUT_M%
+% %INPUT_R%
+% %INPUT_IC%
 %
 % Output:
 % H [%NJ%x%NJ%]

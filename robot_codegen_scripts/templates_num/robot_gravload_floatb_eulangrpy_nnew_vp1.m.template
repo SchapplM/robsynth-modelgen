@@ -5,14 +5,12 @@
 % Input:
 % q [%NJ%x1]
 %   Joint Angles [rad]
-% phi_base [3x1]
-%   Base orientation in world frame. Expressed with RPY Euler angles (xyz)
+% %INPUT_PHIB%
 % g_world [3x1]
 %   gravitation vector in world frame [m/s^2]
-% pkin [%NKP%x1]
-%   kinematic parameters
-% m_num_mdh [%NL%x1], rSges_num_mdh [%NL%x3]
-%   dynamic parameters (parameter set 1: center of mass in link frame)
+% %INPUT_PKIN%
+% %INPUT_M%
+% %INPUT_R%
 %
 % Output:
 % tau_g [(6+%NJ%)x1]
@@ -41,6 +39,9 @@ assert(isreal(m_num) && all(size(m_num) == [%NL% 1]), ...
   '%FN%: m_num has to be [%NL%x1] (double)');
 assert(isreal(rSges_num_mdh) && all(size(rSges_num_mdh) == [%NL%,3]), ...
   '%FN%: rSges_num_mdh has to be [%NL%x3] (double)');
+if link_index > %NL%-1
+  error('Index exceeds number of bodies');
+end
 
 %% Init
 tau_J = NaN(%NJ%,1);

@@ -151,9 +151,9 @@ for kk = 1:NJ % Test for linear joint trajectory
     q = Q_traj(i,:)';
     qD = QD_traj(i,:)';     
     % calculate jacobian time derivate with two methods
-    JG = %RN%_jacobig_mdh_num_mex(q, uint8(NJ), zeros(3,1), pkin, v);
+    JG = %RN%_jacobig_mdh_num_mex(q, uint8(NJ), zeros(3,1), pkin);
     JGD_num1 = (JG - JG_vorher) / dT;
-    JGD_num2 =  %RN%_jacobigD_mdh_num_mex(q, qD, uint8(NJ), zeros(3,1), pkin, v);
+    JGD_num2 =  %RN%_jacobigD_mdh_num_mex(q, qD, uint8(NJ), zeros(3,1), pkin);
 
     % calculate error
     if i > 2
@@ -182,7 +182,7 @@ for iq = 1:size(Q, 1) % Über Zufallsposen
     r_i_i_C = rand(3,1);
     q = Q(iq,:)';
     qD = QD(iq,:)';
-    Jg_num = %RN%_jacobig_mdh_num(q, uint8(jb), r_i_i_C, pkin, v);
+    Jg_num = %RN%_jacobig_mdh_num(q, uint8(jb), r_i_i_C, pkin);
     Jg_sym = %RN%_jacobig_floatb_twist_sym_varpar(q, uint8(jb), r_i_i_C, pkin);
     
     Jg_Delta = Jg_num - Jg_sym;
@@ -190,7 +190,7 @@ for iq = 1:size(Q, 1) % Über Zufallsposen
       error('iq=%d, jb=%d: Symbolische und numerische Jacobi-Matrizen stimmen nicht', iq, jb);
     end
     
-    JgD_num = %RN%_jacobigD_mdh_num(q, qD, uint8(jb), r_i_i_C, pkin, v);
+    JgD_num = %RN%_jacobigD_mdh_num(q, qD, uint8(jb), r_i_i_C, pkin);
     JgD_sym = %RN%_jacobigD_floatb_twist_sym_varpar(q, qD, uint8(jb), r_i_i_C, pkin);
     JgD_Delta = JgD_num - JgD_sym;
     if any( abs (JgD_Delta(:)) > 1e9*eps(1+max(abs(JgD_sym(:)))) ) || any(isnan(JgD_Delta(:)))

@@ -6,11 +6,12 @@
 %   Joint Angles [rad]
 % qJD [1x%NJ%]
 %   Joint Velocities [rad/s]
-% r_i_i_C [3x1]
-%   Ortsvektor vom KörperKS-Ursprung zum gesuchten Punkt
 % link_index [1x1 uint8]
 %   Index des Segmentes, auf dem der Punkt C liegt. (0=Basis).
 %   Siehe auch: %RN%_fkine_fixb_rotmat_mdh_sym_varpar.m
+% r_i_i_C [3x1]
+%   Ortsvektor vom KörperKS-Ursprung zum gesuchten Punkt
+% %INPUT_PKIN%
 %
 % Output:
 % JgD_C [6x%NJ%]
@@ -25,10 +26,10 @@
 % Moritz Schappler, schappler@irt.uni-hannover.de, 2016-06
 % (C) Institut für Regelungstechnik, Leibniz Universität Hannover
 
-function JgD_C = %FN%(qJ, qJD, link_index, r_i_i_C, pkin, v_mdh)
+function JgD_C = %FN%(qJ, qJD, link_index, r_i_i_C, pkin)
 %% Init
 %#codegen
-%#cgargs {zeros(%NQJ%,1),zeros(%NQJ%,1),uint8(zeros(1,1)),zeros(3,1),zeros(%NKP%,1),uint8(zeros(%NJ%,1))}
+%#cgargs {zeros(%NQJ%,1),zeros(%NQJ%,1),uint8(zeros(1,1)),zeros(3,1),zeros(%NKP%,1)}
 assert(isreal(qJ) && all(size(qJ) == [%NJ% 1]), ...
   '%FN%: Joint angles qJ have to be [%NJ%x1] (double)');
 assert(isreal(qJD) && all(size(qJD) == [%NJ% 1]), ...
@@ -39,8 +40,6 @@ assert(isa(link_index,'uint8') && all(size(link_index) == [1 1]), ...
   '%FN%: link_index has to be [1x1] uint8');
 assert(isreal(pkin) && all(size(pkin) == [%NKP% 1]), ...
   '%FN%: Kinematic parameters pkin have to be [%NKP%x1] (double)');
-assert(isa(v_mdh,'uint8') && all(size(v_mdh) == [%NJ% 1]), ...
-  '%FN%: v_mdh has to be [%NJ%x1] uint8');
 
 % Initialisierung. Alle Spalten die nicht gesetzt werden haben keinen
 % Einfluss.
@@ -54,12 +53,13 @@ end
 %% Kinematik berechnen
 % direkte Kinematik
 T_c_mdh = %RN%_fkine_fixb_rotmat_mdh_sym_varpar(qJ, pkin);
+v_mdh = %RN%_structural_kinematic_parameters();
 T_0_i = T_c_mdh(:,:,link_index+1);
 R_0_i = t2r(T_0_i);
 r_0_i_C = (R_0_i) * (r_i_i_C);
 
 % Geschwindigkeit des Punktes C
-Jg_C = %RN%_jacobig_mdh_num(qJ, link_index, r_i_i_C, pkin, v_mdh);
+Jg_C = %RN%_jacobig_mdh_num(qJ, link_index, r_i_i_C, pkin);
 V_C = Jg_C*qJD;
 rD_0_0_C = V_C(1:3);
 
@@ -69,7 +69,7 @@ for tmp = 1:%NJ% % Schleife mit Dummy-Variable begrenzt maximale Anzahl an Durch
   k = v_mdh(j);
 
   % Geschwindigkeit des Körpers j
-  Jg_j = %RN%_jacobig_mdh_num(qJ, j, zeros(3,1), pkin, v_mdh);
+  Jg_j = %RN%_jacobig_mdh_num(qJ, j, zeros(3,1), pkin);
   V_j = Jg_j*qJD;
   rD_0_0_j = V_j(1:3);
   omega_j = V_j(4:6);

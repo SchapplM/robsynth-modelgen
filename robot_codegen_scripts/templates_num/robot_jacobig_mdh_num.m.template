@@ -4,11 +4,12 @@
 % Input:
 % qJ [%NJ%x1]
 %   Joint Angles [rad]
-% r_i_i_C [3x1]
-%   Ortsvektor vom KörperKS-Ursprung zum gesuchten Punkt
 % link_index [1x1 uint8]
 %   Index des Segmentes, auf dem der Punkt C liegt. (0=Basis).
 %   Siehe auch: %RN%_fkine_fixb_rotmat_mdh_sym_varpar.m
+% r_i_i_C [3x1]
+%   Ortsvektor vom KörperKS-Ursprung zum gesuchten Punkt
+% %INPUT_PKIN%
 %
 % Output:
 % Jg_C [6x%NJ%]
@@ -21,10 +22,10 @@
 % Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
 % (C) Institut für Regelungstechnik, Leibniz Universität Hannover
 
-function Jg_C = %FN%(qJ, link_index, r_i_i_C, pkin, v_mdh)
+function Jg_C = %FN%(qJ, link_index, r_i_i_C, pkin)
 %% Init
 %#codegen
-%#cgargs {zeros(%NQJ%,1),uint8(zeros(1,1)),zeros(3,1),zeros(%NKP%,1),uint8(zeros(%NJ%,1))}
+%#cgargs {zeros(%NQJ%,1),uint8(zeros(1,1)),zeros(3,1),zeros(%NKP%,1)}
 assert(isreal(qJ) && all(size(qJ) == [%NJ% 1]), ...
   '%FN%: Joint angles qJ have to be [%NJ%x1] (double)');
 assert(isa(link_index,'uint8') && all(size(link_index) == [1 1]), ...
@@ -33,8 +34,10 @@ assert(isreal(r_i_i_C) && all(size(r_i_i_C) == [3 1]), ...
   '%FN%: Position vector r_i_i_C has to be [3x1] (double)');
 assert(isreal(pkin) && all(size(pkin) == [%NKP% 1]), ...
   '%FN%: Kinematic parameters pkin have to be [%NKP%x1] (double)');
-assert(isa(v_mdh,'uint8') && all(size(v_mdh) == [%NJ% 1]), ...
-  '%FN%: v_mdh has to be [%NJ%x1] uint8');
+
+if link_index > %NL%-1
+  error('Index exceeds number of bodies');
+end
 
 % Initialisierung. Alle Spalten die nicht gesetzt werden haben keinen
 % Einfluss.
@@ -47,6 +50,7 @@ end
 
 %% Kinematik berechnen
 T_c_mdh = %RN%_fkine_fixb_rotmat_mdh_sym_varpar(qJ, pkin);
+v_mdh = %RN%_structural_kinematic_parameters();
 T_0_i = T_c_mdh(:,:,link_index+1);
 R_0_i = t2r(T_0_i);
 r_0_i_C = (R_0_i) * (r_i_i_C);
