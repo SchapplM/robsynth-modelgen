@@ -61,6 +61,8 @@ sed -i "/% %INPUT_RB%/r $tmp_head_pfad/robot_matlabtmp_comment_input_rB.m" $mfcn
 sed -i "/%INPUT_RB%/d" $mfcndat
 sed -i "/% %INPUT_PHIB%/r $tmp_head_pfad/robot_matlabtmp_comment_input_phiB.m" $mfcndat
 sed -i "/%INPUT_PHIB%/d" $mfcndat
+sed -i "/% %INPUT_PHIBD%/r $tmp_head_pfad/robot_matlabtmp_comment_input_phiBD.m" $mfcndat
+sed -i "/%INPUT_PHIBD%/d" $mfcndat
 sed -i "/% %INPUT_XDB%/r $tmp_head_pfad/robot_matlabtmp_comment_input_xDB.m" $mfcndat
 sed -i "/%INPUT_XDB%/d" $mfcndat
 sed -i "/% %INPUT_XDDB%/r $tmp_head_pfad/robot_matlabtmp_comment_input_xDDB.m" $mfcndat
