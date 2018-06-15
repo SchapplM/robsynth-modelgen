@@ -2,7 +2,7 @@
 % %RN%
 %
 % Input:
-% qJ [1x%NJ%]
+% qJ [%NJ%x1]
 %   Joint Angles [rad]
 % r_i_i_C [3x1]
 %   Ortsvektor vom KörperKS-Ursprung zum gesuchten Punkt
@@ -17,6 +17,7 @@
 % Quellen:
 % [1] Ortmaier: Robotik I Skript
 
+% %VERSIONINFO%
 % Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
 % (C) Institut für Regelungstechnik, Leibniz Universität Hannover
 

@@ -1,18 +1,23 @@
 % Calculate joint inertia based on Composite Rigid Body Algorithm (CRBA) from [Featherstone2008]
 %
 % Input:
-% q [1x%NJ%]
+% q [%NJ%x1]
 %   Joint Angles [rad]
 % pkin [%NKP%x1], v_mdh [%NJ%x1]
 %   kinematic parameters
 % m_num_mdh [%NL%x1], rSges_num_mdh [%NL%x3], Icges_num_mdh [%NL%x6]
 %   dynamic parameters
 %
+% Output:
+% H [%NJ%x%NJ%]
+%   Inertia Matrix
+%
 % Sources:
 % [Featherstone2008] Roy Featherstone: Rigid Body Dynamics Algorithms (2008)
-%
+
 % TODO: Funktioniert noch nicht für Schubgelenke
 
+% %VERSIONINFO%
 % Moritz Schappler, schappler@irt.uni-hannover.de, 2016-12
 % (C) Institut für Regelungstechnik, Universität Hannover
 

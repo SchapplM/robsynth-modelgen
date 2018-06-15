@@ -20,7 +20,9 @@
 %   Base moments in generalized coordinates (Euler-RPY)
 %
 % See also:
-% IRT-Matlab-Toolbox: dynamics/robot_tree_invdyn_floatb_eulangrpy_nnew_vp1.m
+% IMES-Robotik-Toolbox: dynamics/robot_tree_invdyn_floatb_eulangrpy_nnew_vp1.m
+
+% %VERSIONINFO%
 
 function tau_g = %FN%(q, phi_base, g_world, pkin, m_num, rSges_num_mdh)
 
