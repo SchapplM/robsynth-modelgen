@@ -39,9 +39,6 @@ assert(isreal(m_num) && all(size(m_num) == [%NL% 1]), ...
   '%FN%: m_num has to be [%NL%x1] (double)');
 assert(isreal(rSges_num_mdh) && all(size(rSges_num_mdh) == [%NL%,3]), ...
   '%FN%: rSges_num_mdh has to be [%NL%x3] (double)');
-if link_index > %NL%-1
-  error('Index exceeds number of bodies');
-end
 
 %% Init
 tau_J = NaN(%NJ%,1);
