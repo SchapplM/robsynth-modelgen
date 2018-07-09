@@ -277,6 +277,7 @@ if codeexport_invdyn then
     taus_fixb := subs({V_base_s[i,1]=0},taus_fixb):
     taus_fixb := subs({VD_base_s[i,1]=0},taus_fixb):
   end do:
+  save taus_fixb, sprintf("../codeexport/%s/tmp/invdyn_fixb_par%d_maple.m", robot_name, codegen_dynpar):
 end if:
 if codeexport_invdyn then
   MatlabExport(taus_fixb[7..NQ], sprintf("../codeexport/%s/tmp/invdyn_fixb_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt):
