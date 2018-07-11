@@ -30,7 +30,7 @@
 function Jg_C = %FN%(phi_base, qJ, link_index, r_i_i_C, pkin)
 %% Init
 %#codegen
-%#cgargs {zeros(3,1),zeros(%NQJ%,1),uint8(zeros(1,1)),zeros(3,1),zeros(%NKP%,1)}
+%$cgargs {zeros(3,1),zeros(%NQJ%,1),uint8(zeros(1,1)),zeros(3,1),zeros(%NKP%,1)}
 assert(isreal(phi_base) && all(size(phi_base) == [3 1]), ...
   '%FN%: Base RPY angles have to be [3x1] (double)');
 assert(isreal(qJ) && all(size(qJ) == [%NJ% 1]), ...

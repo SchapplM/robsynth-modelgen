@@ -2,7 +2,7 @@
 #
 # Schreibe eine Hilfszeile für die Code-Generierung in eine Matlab-Funktion.
 # Die Hilfszeile enthält Informationen über die Dimension der Eingabeargumente
-# (Marker %#cgargs, der von matlabfcn2mex.m benutzt wird.
+# (Marker %$cgargs, der von matlabfcn2mex.m benutzt wird.
 # Dieses Skript wird auf Funktionen angewendet, die nur den Funktionskopf beinhalten.
 #
 # Dieses Skript muss gesourced werden und in der Toolbox-Umgebung aufgerufen werden
@@ -73,4 +73,4 @@ done
 tmp=`echo $tmp | sed "s/^,//" | sed "s/,$//" | sed "s/ //g"`
 
 # Kommentar in die Zieldatei einsetzen
-echo "%#cgargs {$tmp}" >> $f
+echo "%\$cgargs {$tmp}" >> $f

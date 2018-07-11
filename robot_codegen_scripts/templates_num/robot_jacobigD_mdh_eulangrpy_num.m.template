@@ -35,8 +35,8 @@ function JgD_C = %RN%_jacobigD_mdh_eulangrpy_num(phi_base, phiD_base, qJ, qJD, l
   pkin)
 %% Init
 %#codegen
-%#cgargs {zeros(3,1),zeros(3,1),zeros(%NQJ%,1),zeros(%NQJ%,1),
-%#cgargs  uint8(zeros(1,1)),zeros(3,1),zeros(%NKP%,1)}
+%$cgargs {zeros(3,1),zeros(3,1),zeros(%NQJ%,1),zeros(%NQJ%,1),
+%$cgargs  uint8(zeros(1,1)),zeros(3,1),zeros(%NKP%,1)}
 assert(isreal(phi_base) && all(size(phi_base) == [3 1]), ...
   '%FN%: Base RPY angles have to be [3x1] (double)');
 assert(isreal(phiD_base) && all(size(phiD_base) == [3 1]), ...

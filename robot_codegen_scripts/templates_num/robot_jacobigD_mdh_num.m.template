@@ -29,7 +29,7 @@
 function JgD_C = %FN%(qJ, qJD, link_index, r_i_i_C, pkin)
 %% Init
 %#codegen
-%#cgargs {zeros(%NQJ%,1),zeros(%NQJ%,1),uint8(zeros(1,1)),zeros(3,1),zeros(%NKP%,1)}
+%$cgargs {zeros(%NQJ%,1),zeros(%NQJ%,1),uint8(zeros(1,1)),zeros(3,1),zeros(%NKP%,1)}
 assert(isreal(qJ) && all(size(qJ) == [%NJ% 1]), ...
   '%FN%: Joint angles qJ have to be [%NJ%x1] (double)');
 assert(isreal(qJD) && all(size(qJD) == [%NJ% 1]), ...

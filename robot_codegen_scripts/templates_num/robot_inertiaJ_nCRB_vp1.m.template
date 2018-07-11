@@ -24,7 +24,7 @@
 function H = %FN%(q, pkin, m_num, rSges_num_mdh, Icges_num_mdh)
 %%Coder Information
 %#codegen
-%#cgargs {zeros(%NQJ%,1),zeros(%NKP%,1),zeros(%NL%,1),zeros(%NL%,3),zeros(%NL%,6)}
+%$cgargs {zeros(%NQJ%,1),zeros(%NKP%,1),zeros(%NL%,1),zeros(%NL%,3),zeros(%NL%,6)}
 assert(isreal(q) && all(size(q) == [%NJ% 1]), ...
   '%FN%: q has to be [%NJ%x1] (double)');
 assert(isreal(pkin) && all(size(pkin) == [%NKP% 1]), ...
