@@ -135,17 +135,21 @@ for i from NJ by -1 to 2 do
     # Sonderfall parallele Achsen (eq. 19)
     if sin(alpha[i,1]) = 0 then
       ZZ[i-1,1] := ZZ[i-1,1] + 2*a[i,1]*cos(theta[i,1])*mX[i,1] - 2*a[i,1]*sin(theta[i,1])*mY[i,1]:
+      # TODO: Wird ZZ hier nicht doppelt regruppiert?
       mX[i-1,1] := mX[i-1,1] + cos(theta[i,1])*mX[i,1] - sin(theta[i,1])*mY[i,1]:
       mY[i-1,1] := mY[i-1,1] + sin(theta[i,1])*cos(alpha[i,1])*mX[i,1] + cos(theta[i,1])*cos(alpha[i,1])*mY[i,1]:
     end if:
     # Sonderfall senkrechte Achsen (eq. 20)
     if cos(alpha[i,1]) = 0 then
-      YY[i-1,1] := YY[i-1,1] + 2*a[i,1]*cos(theta[i,1])*mX[i,1] - 2*a[i,1]*sin(theta[i,1])*mY[i,1]:
-      mX[i-1,1] := mX[i-1,1] + cos(theta[i,1])*mX[i,1] - sin(theta[i,1])*mY[i,1]:
-      mZ[i-1,1] := mZ[i-1,1] + sin(alpha[i,1])*sin(theta[i,1])*mX[i,1] + sin(alpha[i,1])*cos(theta[i,1])*mY[i,1]:
+      # YY[i-1,1] := YY[i-1,1] + 2*a[i,1]*cos(theta[i,1])*mX[i,1] - 2*a[i,1]*sin(theta[i,1])*mY[i,1]:
+      # TODO: Wird YY hier nicht doppelt regruppiert?
+      # mX[i-1,1] := mX[i-1,1] + cos(theta[i,1])*mX[i,1] - sin(theta[i,1])*mY[i,1]:
+      # mZ[i-1,1] := mZ[i-1,1] + sin(alpha[i,1])*sin(theta[i,1])*mX[i,1] + sin(alpha[i,1])*cos(theta[i,1])*mY[i,1]:
+      # funktioniert irgendwie noch nicht. TODO!
     end if:
   end if:
 end do: 
+
 # Parameter ohne Einfluss "Markieren"
 # Markierung von Parametern ohne Einfluss an Hand von [HRL_IDR] (18)
 printf("The following parameters don't have any effect:\n"):
@@ -202,10 +206,16 @@ for i to NJ do
     Paramvec[ii, 1] := mX[i, 1]: ii:= ii+1:
     Paramvec[ii, 1] := mY[i, 1]: ii:= ii+1:
   else: # Schubgelenk (eq. 16)
-    if not sin(alpha[i,1]) = 0 and not cos(alpha[i,1]) = 0 then
-      # Sonderregel (eq. 19-20). Parameter wurden mit denen der Basisnäheren Achse zusammengelegt und werden hier nicht betrachtet.
+    if not sin(alpha[i,1]) = 0 then
+      # Sonderregel senkrechte Achsen
+      # [GautierKhalil1990] (eq. 19). Parameter wurden mit denen der Basisnäheren Achse zusammengelegt und werden hier nicht betrachtet.
       Paramvec[ii, 1] := mX[i, 1]: ii:= ii+1:
       Paramvec[ii, 1] := mY[i, 1]: ii:= ii+1:
+    end if:
+    if not cos(alpha[i,1]) = 0 then
+      # Sonderregel parallele Achsen
+      # [GautierKhalil1990] (eq. 20).
+      # funktioniert irgendwie noch nicht. TODO!
     end if:
     Paramvec[ii, 1] := mZ[i, 1]: ii:= ii+1:
     Paramvec[ii, 1] := m[i, 1]:  ii:= ii+1:
@@ -265,12 +275,17 @@ for i from 0 to NJ-1 do
     t_ges[1,i*10+ 4]:=REMOVE; # YY
     t_ges[1,i*10+ 5]:=REMOVE; # YZ
     t_ges[1,i*10+ 6]:=REMOVE; # ZZ
-    if sin(alpha[i+1,1]) = 0 or cos(alpha[i+1,1]) = 0 then
-      # Sonderregel (eq. 19-20). Parameter zusammengelegt in Parametervektor. Werden daher hier entfernt.
-      u_ges[1,i*10+ 7]:=REMOVE; # mX
-      u_ges[1,i*10+ 8]:=REMOVE; # mY
-      t_ges[1,i*10+ 7]:=REMOVE; # mX
-      t_ges[1,i*10+ 8]:=REMOVE; # mY
+    if sin(alpha[i+1,1]) = 0 then
+      # Sonderregel senkrechte Achsen
+      # [GautierKhalil1990] (eq. 19). Parameter zusammengelegt in Parametervektor. Werden daher hier entfernt.
+     u_ges[1,i*10+ 7]:=REMOVE; # mX
+     u_ges[1,i*10+ 8]:=REMOVE; # mY
+     t_ges[1,i*10+ 7]:=REMOVE; # mX
+     t_ges[1,i*10+ 8]:=REMOVE; # mY
+    end if:
+    if cos(alpha[i+1,1]) = 0 then
+      # Sonderregel parallele Achsen
+      # [GautierKhalil1990] (eq. 20). 
     end if:
   end if:
 end do: 
@@ -304,3 +319,4 @@ end if:
 if codegen_act then
   MatlabExport(convert_t_s(u_ges_minpar), sprintf("../codeexport/%s/tmp/energy_potential_fixb_regressor_minpar_matlab.m", robot_name), codegen_opt):
 end if:
+
