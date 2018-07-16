@@ -188,7 +188,7 @@ for i = 1:n
   tauc_sp = %RN%_coriolisvecJ_fixb_slag_vp1(q, qD, ...
     pkin, m, rSges, Icges);
   Delta = tauc_id - tauc_sp;
-  if any(abs(Delta) > 1e6*eps(max(abs(tauc_id))) )
+  if any(abs(Delta) > 1e6*eps(1+max(abs([tauc_id;tauc_sp]))) )
     error('Coriolis torques from inverse dynamics and dedicated function do not match. %1.5e', ...
       max(abs(Delta)));
   end

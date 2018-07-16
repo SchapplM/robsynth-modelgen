@@ -176,7 +176,7 @@ for i = 1:n
     tauc_regmin = %RN%_coriolisvecJ_fixb_regmin_slag_vp(q, qD, ...
       pkin);
     tauc_mpv = tauc_regmin*MPV;
-    if any (abs(tauc_mpv-tauc_func) > 1e6*eps(max(abs(tauc_func))))
+    if any (abs(tauc_mpv-tauc_func) > 1e6*eps(1+max(abs([tauc_mpv;tauc_func]))))
       error('Coriolis joint torque from base parameter vector does not match with direct form.');
     end
   end
@@ -184,7 +184,7 @@ for i = 1:n
   tauc_reg2 = %RN%_coriolisvecJ_fixb_reg2_slag_vp(q, qD, ...
     pkin);
   tauc_pv2 = tauc_reg2*PV2fixb;
-  if any( abs(tauc_pv2-tauc_func) > 1e6*eps(max(abs(tauc_func))) )
+  if any( abs(tauc_pv2-tauc_func) > 1e6*eps(1+max(abs([tauc_pv2;tauc_func]))) )
     error('Coriolis joint torque from inertial parameter vector does not match with direct form.');
   end
 end
