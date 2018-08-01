@@ -23,7 +23,7 @@ Moritz Schappler, schappler@imes.uni-hannover.de, 2018-03
   * [Vorbereitung](#start_vorbereitung)
   * [Alternative 1](#start_alt1)
   * [Alternative 2](#start_alt2)
-  * [Kinematische Zwangsbedingungen](#start_zwangsbed)
+  * [Kinematische Zwangsbedingungen](#start_zwangsbed_expl)
   * [Einbinden Zusätzlicher Dateien](#start_zusatzdateien)
 * [Benennungsschema der Dateien](#benennung)
 * [Ordnerstruktur](#ordnerstruktur)
@@ -69,7 +69,7 @@ Für die Variablennamen in robot_env und in [KhalilKle1986](#quellen)/[BriotKha2
 | d | (7) | a | 4. Translation in x-Richtung |   |
 | theta | (7) | theta | 5. Rotation um z | Der konstante Offset auf den bei Drehgelenken zeitabhängigen Gelenkwinkel wird so gewählt, dass die Gesamttransformation passt |
 | r | (7) | d | 6. Translation in z-Richtung |   |
-| sigma | Text unter Fig. 5 | sigma | Art des Gelenks: 0=rotatorisch (revolute, 1dof), 1=translatorisch (prismatic, 1dof) | Für Gelenke mit sigma=1 muss qJ_t in den Parameter d (Verschiebung in z-Richtung) eingetragen werden, für sigma=0 muss qJ_t in theta stehen (Drehung um die z-Achse) |
+| sigma | Text unter Fig. 5 | sigma | Art des Gelenks: 0=rotatorisch (revolute, 1dof), 1=translatorisch (prismatic, 1dof), 2=konstante Transformation | Für Gelenke mit sigma=1 muss qJ_t in den Parameter d (Verschiebung in z-Richtung) eingetragen werden, für sigma=0 muss qJ_t in theta stehen (Drehung um die z-Achse) |
 | mu | in [BriotKha2015](#quellen) | mu | Aktuierung (0=passiv,1=aktiv) | Ist nur für implizite Zwangsbed. wichtig |
 
 Eine Auflistung aller Variablen ist im Abschnitt [Definitionen](#ordner_definitionen) gegeben
@@ -195,9 +195,9 @@ robot_codegen_testfunctions/robot_test_everything.m
 ```
 Beim Durchlaufen der Tests sollten keine Fehler auftreten.
 
-### Systeme mit kinematischen Zwangsbedingungen <a name="start_zwangsbed"></a> 
+### Systeme mit kinematischen Zwangsbedingungen (Explizite Darstellung) <a name="start_zwangsbed_expl"></a> 
 
-Neben seriellen und verzweigten kinematischen Strukturen, können auch geschlossene Ketten behandelt werden, wenn die daraus resultierenden kinematischen Zwangsbedingungen vollständig eliminiert werden können. Dies wird z.B. in [NakamuraGho1989](#quellen) beschrieben. In [UdwadiaKal1992](#quellen), [ParkChoPlo1999](#quellen) und [Docquier2013](#quellen) werden Systeme mit Zwangsbedingungen behandelt, bei der diese nur mit impliziten Gleichungen berücksichtigt werden. Das wird in dieser Toolbox teilweise unterstützt.
+Neben seriellen und verzweigten kinematischen Strukturen, können auch geschlossene Ketten behandelt werden, wenn die daraus resultierenden kinematischen Zwangsbedingungen vollständig eliminiert werden können. Dies wird z.B. in [NakamuraGho1989](#quellen) beschrieben. In [UdwadiaKal1992](#quellen), [ParkChoPlo1999](#quellen) und [Docquier2013](#quellen) werden Systeme mit Zwangsbedingungen behandelt, bei der diese nur mit impliziten Gleichungen berücksichtigt werden. Das wird in dieser Toolbox teilweise unterstützt und im nächsten Teilkapitel beschrieben.
 
 Die Struktur eines verzweigten Systems wird mit MDH-Parametern in der Datei robot_env eingegeben.
 Einige MDH-Parameter sind nun aber keine verallgemeinerten Koordinaten des Systems mehr, sondern z.B. zeitabhängige Winkel, die von den verallgemeinerten Koordinaten abhängen (beschrieben durch die kinematischen Zwangsbedingungen).
@@ -214,7 +214,7 @@ In __kintmp_t__ stehen zeitabhängige Größen der Ersetzungsvariablen aus __kin
 
 #### Kinematische Zwangsbedingungen
 
-Ein Maple-Arbeitsblatt mit den kinematischen Zwangsbedingungen muss erstellt werden:
+Ein Maple-Arbeitsblatt mit den kinematischen Zwangsbedingungen in expliziter Form muss erstellt werden:
 ```
 robot_codegen_constraints/%RN%_kinematic_constraints.mpl
 robot_codegen_constraints/%RN%_kinematic_constraints.mw
@@ -240,7 +240,32 @@ Falls kinematische Zwangsbedingungen existieren, können die Parameter im Allgem
 
 #### Beispiele
 
-Beispiele für die Implementierung von Zwangsbedingungen finden sich in den Dateien für *KAS5m3* bis *KAS5m6* (Kraftassistenzsystem 3. Arm).
+Beispiele für die Implementierung von Zwangsbedingungen in expliziter Form finden sich in den Dateien für *KAS5m3* bis *KAS5m6* (Kraftassistenzsystem 3. Arm).
+
+#### Tests
+
+Da Systeme mit kinematischen Zwangsbedingungen sich stark unterscheiden können, gibt es (noch) keinen automatischen Test. Es wird das Testskript "%RN%_test_constr_dynamics.m" automatisch generiert, das als Basis für eigene Tests dienen kann.
+
+### Systeme mit kinematischen Zwangsbedingungen (implizite Darstellung) <a name="start_zwangsbed_impl"></a> 
+
+Zur Darstellung der Zwangsbedingungen in impliziter Form muss ein Arbeitsblatt mit diesen Zwangsbedingungen für den untersuchten Roboter erstellt werden:
+
+```
+robot_codegen_constraints/%RN%_kinematic_constraints_implicit.mpl
+robot_codegen_constraints/%RN%_kinematic_constraints_implicit.mw
+```
+
+Eine automatische Erkennung der Zwangsbedingungen ist noch nicht implementiert.
+Damit die automatische Erkennung der Zwangsbedingungen in Zukunft funktioniert, sollte das Modell bereits die entsprechenden Konventionen befolgen, die auch in [KhalilCre1997](#quellen) für Symoro+ genannt werden und auch für openSYMORO [KhalilVijKhoMuk2014](#quellen) gelten:
+* die Transformationen in der MDH-Tabelle enthalten reale Gelenke, Schnittgelenke und virtuelle Schnitt-Koordinatensysteme (in dieser Reihenfolge)
+* die Schnitt-KS stehen immer am Ende und sind der Reihe nach automatisch den Schnittgelenken von davor zugeordnet.
+* Es müssen also die Anzahl der Körper **NL** und die Anzahl der Gelenke **NJ** entsprechend angepasst werden.
+
+Für jede Roboterdefinition ("robot_env") sollten entweder implizite, oder explizite Zwangsbedingungen definiert werden. Beides zusammen ist in der Regel nicht sinnvoll, auch wenn es prinzipiell möglich ist.
+
+#### Beispiele
+
+Beispiele für die Implementierung von Zwangsbedingungen in impliziter Form finden sich in den Dateien für *KAS5m7u* (Kraftassistenzsystem 3. Arm). Die Endung "u" hinter dem Roboter bezeichnet das System ohne Zwangsbedingungen "u", dass zunächst aufgestellt wird.
 
 ### Weitergehendes Arbeiten
 
@@ -475,7 +500,7 @@ Ergebnisdateien sollten nicht händisch bearbeitet werden, damit die Änderungen
 Der Ordner examples enthält Beispiele für die Datei robot_env.
 ```
 /codegen_definitions
-  examples
+  examples/
   robot_env
   robot_tree_base_parameter_transformations.mw
       <-- robot_env
@@ -520,8 +545,10 @@ Die Skripte für *explizite* kinematische Zwangsbedingungen müssen vom Benutzer
 Roboterspezifische Skripte müssen mit dem Namen des Roboters anfangen (hier Platzhalter *%RN%*).
 Allgemeine Berechnungen basierend auf den Zwangsbedingungen werden anschließend durchgeführt.
 Die Skripte dienen dazu, abhängige Variablen direkt zu eliminieren, damit der Lagrange-Formalismus in den unabhängigen Koordinaten gerechnet werden kann. Es ist auch möglich, implizite kinematische Zwangsbedingungen zu definieren. Siehe dazu weiter unten.
+Der Ordner examples enthält Beispiele für die Datei %RN%_kinematic_constraints.mw.
 ```
 /robot_codegen_constraints
+  examples/
   %RN%_kinematic_constraints.mw
       <-- robot_env
       --> kinematic_constraints_maple_inert
@@ -564,11 +591,14 @@ Positionen (Koordinatensysteme, Schwerpunkten), Geschwindigkeiten, Jacobi-Matriz
 ### Implizite kinematische Zwangsbedingungen
 
 Die Skripte für *implizite* kinematische Zwangsbedingungen müssen ebenfalls vom Benutzer erstellt werden. Für die impliziten Zwangsbedingungen werden die Ergebnisse der Kinematik benutzt, z.B. um vektorielle Schleifen zu schließen. Die roboterspezifischen Skripte müssen ebenfalls mit dem Namen des Roboters anfangen (Platzhalter *%RN%*).
-Anschließend erfolgt wie bei den expliziten Zwangsbedingungen eine allgemeine Berechnungn z.B. für Gradientmatrizen aus den Zwangsbedingungen.
+Anschließend erfolgt wie bei den expliziten Zwangsbedingungen eine allgemeine Berechnungen z.B. für Gradientmatrizen aus den Zwangsbedingungen.
 Implizite Zwangsbedingungen sollten nur für die Modelle der offenen Baumstruktur angegeben werden.
 Siehe dazu auch [KhalilBen1995](#quellen), [Docquier2013](#quellen), [DoThanhKotHeiOrt2009b](#quellen)
+Der Ordner examples enthält Beispiele für die Datei %RN%_kinematic_constraints_implicit.mw.
+
 ```
 /robot_codegen_constraints
+  examples/
   %RN%_kinematic_constraints_implicit.mw
       <-- robot_env
       <-- robot_kinematics_rotmat_maple.m
@@ -673,16 +703,18 @@ Textbausteine für Funktionsköpfe:
 ```
 # Quellen <a name="quellen"></a> 
 
-* [KhalilKle1986] Khalil, W. and Kleinfinger, J.-F.: A new geometric notation for open and closed-loop robots (1986) <a name="KhalilKle1986"></a> 
-* [Featherstone2008] Featherstone, R.: Rigid Body Dynamics Algorithms (2008) <a name="Featherstone2008"></a> 
-* [GautierKhalil1988] A Direct Determination of Minimum Inertial Parameters of Robots (1988) <a name="GautierKhalil1988"></a> 
-* [GautierKhalil1990] Direct Calculation of Minimum Set of Inertial Parameters of Serial Robots (1990) <a name="GautierKhalil1990"></a> 
-* [NakamuraGho1989] Nakamura, Yoshihiko and Ghodoussi, Modjtaba: Dynamics computation of closed-link robot mechanisms with nonredundant and redundant actuators (1989) <a name="NakamuraGho1989"></a> 
-* [ParkChoPlo1999] Park, FC and Choi, Jihyeon and Ploen, SR: Symbolic formulation of closed chain dynamics in independent coordinates <a name="ParkChoPlo1999"></a> 
-* [UdwadiaKal1992] Udwadia, Firdaus E and Kalaba, Robert E: A new perspective on constrained motion (1992)  <a name="UdwadiaKal1992"></a> 
-* [Docquier2013] Docquier, Nicolas and Poncelet, Antoine and Fisette, Paul: ROBOTRAN: a powerful symbolic gnerator of multibody models (2013) <a name="Docquier2013"></a> 
-* [DoThanhKotHeiOrt2009b] Do Thanh, Trung and Kotlarski, Jens and Heimann, Bodo and Ortmaier, Tobias: On the inverse dynamics problem of general parallel robots (2009)
-* [OrtmaierRobI] Ortmaier, Tobias: Skript zur Vorlesung Robotik I
-* [KhalilBen1995] Khalil and Bennis: Symbolic calculation of the base inertial parameters of closed-loop robots (1995)
-* [BriotKha2015] Briot, Sébastien and Khalil, Wisama: Dynamics of Parallel Robots (2015)
-* [KhalilDom2002] W. Khalil and E. Dombre: Modeling, Identification and Control of Robots (2002)
+* [KhalilKle1986] Khalil, W. and Kleinfinger, J.-F.: "A new geometric notation for open and closed-loop robots" (1986) <a name="KhalilKle1986"></a> 
+* [Featherstone2008] Featherstone, R.: "Rigid Body Dynamics Algorithms" (2008) <a name="Featherstone2008"></a> 
+* [GautierKhalil1988] "A Direct Determination of Minimum Inertial Parameters of Robots" (1988) <a name="GautierKhalil1988"></a> 
+* [GautierKhalil1990] "Direct Calculation of Minimum Set of Inertial Parameters of Serial Robots" (1990) <a name="GautierKhalil1990"></a> 
+* [NakamuraGho1989] Nakamura, Yoshihiko and Ghodoussi, Modjtaba: "Dynamics computation of closed-link robot mechanisms with nonredundant and redundant actuators" (1989) <a name="NakamuraGho1989"></a> 
+* [ParkChoPlo1999] Park, FC and Choi, Jihyeon and Ploen, SR: "Symbolic formulation of closed chain dynamics in independent coordinates" <a name="ParkChoPlo1999"></a> 
+* [UdwadiaKal1992] Udwadia, Firdaus E and Kalaba, Robert E: "A new perspective on constrained motion" (1992)  <a name="UdwadiaKal1992"></a> 
+* [Docquier2013] Docquier, Nicolas and Poncelet, Antoine and Fisette, Paul: "ROBOTRAN: a powerful symbolic gnerator of multibody models" (2013) <a name="Docquier2013"></a> 
+* [DoThanhKotHeiOrt2009b] Do Thanh, Trung and Kotlarski, Jens and Heimann, Bodo and Ortmaier, Tobias: "On the inverse dynamics problem of general parallel robots" (2009)
+* [OrtmaierRobI] Ortmaier, Tobias: "Skript zur Vorlesung Robotik I"
+* [KhalilBen1995] Khalil and Bennis: "Symbolic calculation of the base inertial parameters of closed-loop robots" (1995)
+* [BriotKha2015] Briot, Sébastien and Khalil, Wisama: "Dynamics of Parallel Robots" (2015)
+* [KhalilDom2002] W. Khalil and E. Dombre: "Modeling, Identification and Control of Robots" (2002)
+* [KhalilCre1997] Khalil, Wisama and Creusot, Denis: "SYMORO : A system for the symbolic modelling of robots" (1997)
+* [KhalilVijKhoMuk2014] Khalil, W. and Vijayalingam, A. and Khomutenko, B. and Mukhanov, I. and Lemoine, P. and Ecorchard, G.: "OpenSYMORO: An open-source software package for Symbolic Modelling of Robots" (2014)
