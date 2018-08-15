@@ -1,0 +1,9 @@
+skew2vec := proc(A)
+  local v,N:
+  N := RowDimension(A):
+  v := Matrix(N,1):
+  v(3) := -A(1,2):
+  v(2) := A(1,3):
+  v(1) := -A(2,3):
+  return v:
+end proc:
