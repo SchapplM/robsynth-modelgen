@@ -254,7 +254,7 @@ $repo_pfad/scripts/run_maple_script.sh $repo_pfad/workdir/robot_tree_floatb_twis
 # Kinematische Zwangsbedingungen in impliziter Form
 # Werden nach der Kinematik gerechnet. Können also auch hier am Ende kommen
 # Die Ergebnisse werden in der Dynamik nicht weiter benutzt (im Gegensatz zu explizit definierten Zwangsbedingungen, die direkt zur Ersetzung dienen).
-if [ -f  $repo_pfad/${robot_name}_kinematic_constraints_implicit.mpl ]; then
+if [ -f  $repo_pfad/robot_codegen_constraints/${robot_name}_kinematic_constraints_implicit.mpl ]; then
 	dateiliste_impconstr="
 		${robot_name}_kinematic_constraints_implicit.mpl
 		robot_kinematic_constraints_calculations_implicit.mpl
