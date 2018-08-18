@@ -4,9 +4,9 @@
 # Berechnung der inversen Dynamik
 # 
 # Dateiname:
-# robot -> Berechnung fÃ¼r allgemeinen Roboter
-# tree -> Berechnung fÃ¼r eine beliebige Baumstruktur (ohne Schleifen)
-# floatb -> floating base wird durch base twist (Geschwindigkeit der Basis) oder vollstÃ¤ndige Orientierung (Euler-Winkel) berÃ¼cksichtigt
+# robot -> Berechnung für allgemeinen Roboter
+# tree -> Berechnung für eine beliebige Baumstruktur (ohne Schleifen)
+# floatb -> floating base wird durch base twist (Geschwindigkeit der Basis) oder vollständige Orientierung (Euler-Winkel) berücksichtigt
 # rotmat -> Kinematik wird mit Rotationsmatrizen berechnet
 # dynamics -> Berechnung der Dynamik
 # worldframe -> Berechnung basierend auf Energien aus Welt-KS (KS W)
@@ -19,15 +19,15 @@
 # [KhalilDombre2002] Modeling, Identification and Control of Robots
 # [Ortmaier2014] Vorlesungsskript Robotik I
 # Initialization
-interface(warnlevel=0): # UnterdrÃ¼cke die folgende Warnung.
-restart: # Gibt eine Warnung, wenn Ã¼ber Terminal-Maple mit read gestartet wird.
+interface(warnlevel=0): # Unterdrücke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
 interface(warnlevel=3):
 with(LinearAlgebra):
 with(ArrayTools):
 with(codegen):
 with(CodeGeneration):
 with(StringTools):
-# Einstellungen fÃ¼r Code-Export: Optimierungsgrad (2=hÃ¶chster) und Aktivierung jedes Terms.
+# Einstellungen für Code-Export: Optimierungsgrad (2=höchster) und Aktivierung jedes Terms.
 #codegen_act := true: # noch nicht implementiert
 codegen_debug := false:
 codegen_opt := 2:
@@ -52,7 +52,7 @@ read "../transformation/proc_transl":
 read "../transformation/proc_trafo_mdh": 
 read "../robot_codegen_definitions/robot_env":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
-# Kennung des Parametersatzes, fÃ¼r den die Dynamikfunktionen erstellt werden sollen. Muss im Repo und in der mpl-Datei auf 1 gelassen werden, da die folgende Zeile mit einem Skript verarbeitet wird.
+# Kennung des Parametersatzes, für den die Dynamikfunktionen erstellt werden sollen. Muss im Repo und in der mpl-Datei auf 1 gelassen werden, da die folgende Zeile mit einem Skript verarbeitet wird.
 codegen_dynpar := 1:
 # Ergebnisse des Lagrange-Formalismus laden
 read sprintf("../codeexport/%s/tmp/floatb_%s_lagrange_dUdq_s_par%d_maple.m", robot_name, base_method_name, codegen_dynpar):
@@ -81,15 +81,16 @@ end if:
 if codeexport_invdyn then
   DynString := sprintf("%s tau",DynString):
 end if:
-printf("Generiere Dynamik (%s) fÃ¼r %s mit Parametersatz %d und %s\n", DynString, robot_name, codegen_dynpar, base_method_name):
+printf("Generiere Dynamik (%s) für %s mit Parametersatz %d und %s\n", DynString, robot_name, codegen_dynpar, base_method_name):
 # Gravitational Load
 # Generate
 taug_s := dUdq_s:
+# Maple Export
 save taug_s, sprintf("../codeexport/%s/tmp/gravload_par%d_maple.m", robot_name, codegen_dynpar):
 # Matlab Export
-# Belastung der Basis (ist falsch fÃ¼r floatb_twist, da das Moment durch diese Wahl der verallgemeinerten Koordinaten (floatb_twist) nicht berechnet werden kann!)
-# Ist korrekt fÃ¼r floatb_eulangrpy.
-# Die Berechnungen werden deshalb nicht fÃ¼r floatb_twist durchgefÃ¼hrt.
+# Belastung der Basis (ist falsch für floatb_twist, da das Moment durch diese Wahl der verallgemeinerten Koordinaten (floatb_twist) nicht berechnet werden kann!)
+# Ist korrekt für floatb_eulangrpy.
+# Die Berechnungen werden deshalb nicht für floatb_twist durchgeführt.
 if codeexport_grav and not(base_method_name="twist") then
   MatlabExport(taug_s(1..6), sprintf("../codeexport/%s/tmp/base_gravload_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
@@ -112,7 +113,9 @@ if codeexport_inertia or codeexport_inertiaD or codeexport_cormat then
     end do:
   end do:
 end if:
-# Matlab Export (nur linke untere Dreiecksmatrix bei vollstÃ¤ndigen Matrizen)
+# Maple Export
+save MM_s, sprintf("../codeexport/%s/tmp/inertia_par%d_maple.m", robot_name, codegen_dynpar):
+# Matlab Export (nur linke untere Dreiecksmatrix bei vollständigen Matrizen)
 if codeexport_inertia and not(base_method_name="twist") then
   MM_s_vek := symmat2vec(MM_s):
   filename_tmp := sprintf("../codeexport/%s/tmp/inertia_floatb_%s_par%d_maple_symvec.m", robot_name, base_method_name, codegen_dynpar):
@@ -124,7 +127,7 @@ if codeexport_inertia and not(base_method_name="twist") then
   MatlabExport(MM_s(7..NQ,1..6), sprintf("../codeexport/%s/tmp/inertia_joint_base_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
 # Gelenk-Massenmatrix.
-# Eliminiere die Basis-Orientierung. Hat keinen Einfluss auf die Matrix, wird aber noch Maple teilweise nicht automatisch entfernt, da die AusdrÃ¼cke zu kompliziert zum Optimieren sind.
+# Eliminiere die Basis-Orientierung. Hat keinen Einfluss auf die Matrix, wird aber noch Maple teilweise nicht automatisch entfernt, da die Ausdrücke zu kompliziert zum Optimieren sind.
 MMjj_s := MM_s(7..NQ,7..NQ):
 for i from 1 to NQB do
   MMjj_s := subs({X_base_s[i,1]=0},MMjj_s):
@@ -146,7 +149,7 @@ if codeexport_inertia and not(base_method_name="twist") then
   MatlabExport(MMbb_s_vek, sprintf("../codeexport/%s/tmp/inertia_base_base_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
 # Mass Matrix Time Derivative
-# Konvertiere Massenmatrix in zeitabhÃ¤ngige Variablen, um Zeitableitung zu berechnen
+# Konvertiere Massenmatrix in zeitabhängige Variablen, um Zeitableitung zu berechnen
 MM_t := convert_s_t(MM_s):
 MMD_t := diff~(MM_t, t):
 MMD_s := convert_t_s(MMD_t):
@@ -169,7 +172,7 @@ for i from 1 to 6 do
   MMDjj_s := subs({V_base_s[i,1]=0},MMDjj_s):
 end do:
 if codeexport_inertiaD then
-  # Vektor der unteren linken Dreiecksmatrix generieren, speichern und wieder laden. Ohne Neuladen hÃ¤ngt sich maple durch einen Bug auf. TODO: KlÃ¤ren.
+  # Vektor der unteren linken Dreiecksmatrix generieren, speichern und wieder laden. Ohne Neuladen hängt sich maple durch einen Bug auf. TODO: Klären.
   MMDjj_s_vek := symmat2vec(MMDjj_s):
   filename_tmp := sprintf("../codeexport/%s/tmp/inertia_joint_joint_time_derivative_floatb_%s_par%d_maple_symvec.m", robot_name, base_method_name, codegen_dynpar):
   save MMDjj_s_vek, filename_tmp:
@@ -186,6 +189,8 @@ if codeexport_corvec then
     tauCC_s := subs({qDD_s(i, 1) = 0}, tauCC_s):
   end do:
 end if:
+# Maple Export
+save tauCC_s, sprintf("../codeexport/%s/tmp/coriolisvec_par%d_maple.m", robot_name, codegen_dynpar):
 # Einzelne Komponenten exportieren (falls der ganze Vektor zu lange dauert).
 if codeexport_corvec and not(base_method_name="twist") and codegen_debug then
   for i to NQ do 
@@ -256,8 +261,10 @@ end if:
 if codeexport_invdyn then
   tau := dTdqDdt_s-dTdq_s+dUdq_s:
 end if:
+# Maple-Export der Dynamik zur Weiterverwendung für paralle Systeme
+save tau, sprintf("../codeexport/%s/tmp/invdyn_floatb_%s_par%d_maple.m", robot_name, base_method_name, codegen_dynpar):
 # Matlab Export: Floating base
-# Berechnung der Basis-Belastung ist fÃ¼r manche Basis-Darstellungen falsch (siehe oben unter Gravitationslast).
+# Berechnung der Basis-Belastung ist für manche Basis-Darstellungen falsch (siehe oben unter Gravitationslast).
 if codeexport_invdyn and not(base_method_name="twist") then
   MatlabExport(tau, sprintf("../codeexport/%s/tmp/invdyn_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
