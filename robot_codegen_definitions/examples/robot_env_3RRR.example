@@ -1,0 +1,26 @@
+﻿# Beispiel für Codegenerierung:
+# 3RRR
+
+robot_name := "3RRR":
+
+NJ := 3:
+NQJ := 3:
+
+qoffset := Matrix(3,1,[0,0,0]):
+alpha := Matrix(3,1,[0,0,0]):
+a := Matrix(3,1,[0,L1, L2]):
+
+d := Matrix(3,1,[0,0,0]):
+theta := Matrix(3,1,[qJ_t(1), qJ_t(2),0]):
+
+v := Matrix(3,1,[0, 1, 2]):
+b := Matrix(3,1,[0, 0, 0]):
+beta := Matrix(3,1,[0, 0, 0]):
+sigma := Matrix(3,1,[0, 0, 0]):
+
+### Platform
+
+AKTIV := 1:
+N_LEGS := 3:
+JE := Matrix(3,3,[XX,XY,XZ,YX,YY,YZ,ZX,ZY,ZZ]):
+xE_s:=<x_all[1];x_all[2];0;0;0;x_all[3]>:
