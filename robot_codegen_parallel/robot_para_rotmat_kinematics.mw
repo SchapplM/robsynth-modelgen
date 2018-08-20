@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="2017" minor="3"/>
+<Version major="2018" minor="0"/>
 <Label-Scheme value="2" prefix=""/>
-<View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false">
+<View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1080" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -191,7 +191,8 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Input>
 </Group>
 <Group labelreference="L2967" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/jacobia_transl_%d_maple.m&quot;, robot_name, LIJAC):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/jacobia_transl_%d_maple.m&quot;, robot_name, LIJAC):
+JB1inv := b_transl:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2958" drawlabel="true">
@@ -214,7 +215,7 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">xED_s := copy(xE_s):
 xEDD_s := copy(xE_s):</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion4" expanded="true" visible="true" pixel-width="500" pixel-height="324" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">FHG_trans := 0:
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L2" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion4" expanded="true" visible="true" pixel-width="500" pixel-height="324" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">FHG_trans := 0:
 FHG_rot := 0:
 Counter := Matrix(6,1):
 for i to 6 do
@@ -251,11 +252,7 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L3013" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">Berechnung der Jacobi-Matrix JB1inv: Gelenkgeschwindigkeiten -&gt; Koppelpunktgeschwindigkeiten P</Text-field>
 </Input>
-</Group>
-<Group hide-input="false" labelreference="L3063" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">JB1inv := b_transl:</Text-field>
-</Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion2" expanded="true" visible="true" pixel-width="697" pixel-height="145" code-language="text/maple" autoexpand="false" wrapping="false" show-border="true" code-line-numbers="true">for i to 3 do
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion2" expanded="true" visible="true" pixel-width="697" pixel-height="145" code-language="text/maple" autofit="false" wrapping="false" show-border="true" code-line-numbers="true">for i to 3 do
 	if JB1inv(1,i) = 0 and JB1inv(2,i) = 0 and JB1inv(3,i) = 0
 	and JB1inv(i,1) = 0 and JB1inv(i,2) = 0 and JB1inv(i,3) = 0 then
 		JB1inv(i,i) := 1:
@@ -270,7 +267,7 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 </Input>
 </Group>
 <Group labelreference="L3017" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal">Berechnug der Matrix Ui: EE-Geschwindigkeiten -&gt; <Font encoding="UTF-8">Koppelpunktgeschwindigkeiten P. i steht f\303\274r den Index des jeweiligen Beines</Font></Text-field>
+<Input><Text-field style="Text" layout="Normal">Berechnung der Matrix Ui: EE-Geschwindigkeiten -&gt; <Font encoding="UTF-8">Koppelpunktgeschwindigkeiten P. i steht f\303\274r den Index des jeweiligen Beines</Font></Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3180" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -303,7 +300,7 @@ COLUMN := ColumnDimension(U1):</Text-field>
 <Group labelreference="L3001" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Substituiere die zeitabh\303\244ngigen EE-Koordinaten mit den oben definierten zeitunabh\303\244ngigen Koordinaten</Font></Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L5" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="715" pixel-height="264" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">for i to N_LEGS do
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L5" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="715" pixel-height="264" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">for i to N_LEGS do
   for j to 3 do
     for k to 6 do
       for l from 4 to 6 do
@@ -365,7 +362,7 @@ COLUMN := ColumnDimension(JB1):</Text-field>
 <Group labelreference="L3133" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">Substituiere in jeder Matrix den Winkel Alpha (Verdrehung in der Basis) und die Gelenkkoordinaten und -geschwindigkeiten</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion3" expanded="true" visible="true" pixel-width="769" pixel-height="384" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">for k from 1 by 1 to N_LEGS do
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L6" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion3" expanded="true" visible="true" pixel-width="769" pixel-height="384" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">for k from 1 by 1 to N_LEGS do
   for i to NQJ do
     for j to NQJ do
     	 JB||k||D(i,j):=subs({alpha=alpha[k]},JB||k||D(i,j)):
