@@ -8,7 +8,7 @@
 % %INPUT_PKIN%
 % 
 % Output:
-% Phi_p [(%NJ%-%NQJ%)x(no of passive joints)] 
+% Phi_p [(no of constraints)x(no of passive joints)] 
 
 % %VERSIONINFO%
 

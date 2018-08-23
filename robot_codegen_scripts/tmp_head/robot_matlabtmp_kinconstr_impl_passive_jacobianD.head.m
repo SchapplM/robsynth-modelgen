@@ -1,6 +1,6 @@
 % Jacobian time derivative of explicit kinematic constraints of
 % %RN%
-% with respect to active joint coordinates
+% with respect to passive joint coordinates
 % Use Code from Maple symbolic Code Generation
 % 
 % Input:
@@ -9,8 +9,8 @@
 % %INPUT_PKIN%
 % 
 % Output:
-% PhiD_a [(%NJ%-%NQJ%)x(no. of active joints)] 
+% PhiD_p [(no of constraints)x(no. of passive joints)] 
 
 % %VERSIONINFO%
 
-function PhiD_a = %FN%(qJ, qJD, pkin)
+function PhiD_p = %FN%(qJ, qJD, pkin)

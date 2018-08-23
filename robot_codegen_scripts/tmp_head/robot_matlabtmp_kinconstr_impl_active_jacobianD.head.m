@@ -9,7 +9,7 @@
 % %INPUT_PKIN%
 % 
 % Output:
-% PhiD_a [(%NJ%-%NQJ%)x(no. of active joints)] 
+% PhiD_a [(no of constraints)x(no. of active joints)] 
 
 % %VERSIONINFO%
 

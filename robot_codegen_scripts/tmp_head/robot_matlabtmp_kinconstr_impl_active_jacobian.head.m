@@ -8,8 +8,8 @@
 % %INPUT_PKIN%
 % 
 % Output:
-% Phi_p [(%NJ%-%NQJ%)x(no of active joints)] 
+% Phi_a [(no of constraints)x(no of active joints)] 
 
 % %VERSIONINFO%
 
-function Phi_p = %FN%(qJ, pkin)
+function Phi_a = %FN%(qJ, pkin)
