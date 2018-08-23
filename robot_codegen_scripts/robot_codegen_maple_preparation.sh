@@ -31,6 +31,10 @@ done
 
 source $repo_pfad/robot_codegen_definitions/robot_env.sh
 
+# Arbeitsverzeichnis leeren (damit alte Dateiversionen nicht versehentlich gestartet werden). 
+rm -rf $repo_pfad/workdir
+mkdir -p $repo_pfad/workdir/tmp
+
 # Alle mpl-Dateien in Arbeitsverzeichnis kopieren
 for mpldat in `find $repo_pfad -name "*.mpl"`; do
   mpldat_full=$repo_pfad/$mpldat
