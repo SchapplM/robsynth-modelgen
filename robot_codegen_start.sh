@@ -21,6 +21,7 @@ CG_PARALLEL=0
 CG_MINIMAL=0
 CG_FIXBONLY=0
 CG_FLOATBONLY=0
+CG_NOTEST=0
 
 # Argumente verarbeiten
 # http://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
@@ -34,6 +35,7 @@ case $key in
     echo "--minimal: Generie nur die Mindestzahl der notwendigen Funktionen"
     echo "--fixb_only: Nur Berechnung der Fixed-Base-Funktionen (nicht: Floating Base)"
     echo "--floatb_only: Nur Berechnung der Floating-Base-Funktionen (nicht: Fixed Base)"
+    echo "--notest: Kein Start der Matlab-Gesamt- und Modultests"
     echo "Die letzten beiden Optionen sind exklusiv (nur eine ist möglich)"
     exit 0
     ;;
@@ -42,6 +44,9 @@ case $key in
     ;;
     --minimal)
     CG_MINIMAL=1
+    ;;
+    --notest)
+    CG_NOTEST=1
     ;;
     --fixb_only)
     CG_FIXBONLY=1
@@ -62,6 +67,7 @@ echo CG_PARALLEL      = "${CG_PARALLEL}"
 echo CG_MINIMAL       = "${CG_MINIMAL}"
 echo CG_FIXBONLY      = "${CG_FIXBONLY}"
 echo CG_FLOATBONLY    = "${CG_FLOATBONLY}"
+echo CG_NOTEST        = "${CG_NOTEST}"
 
 if [ "$CG_FIXBONLY" == "1" ] && [ "$CG_FLOATBONLY" == "1" ]; then
   echo "Nicht beide Optionen gleichzeitig möglich: fixb_only, floatb_only"
@@ -114,7 +120,7 @@ source $repo_pfad/robot_codegen_scripts/robot_codegen_matlab_varpar.sh
 cd $repo_pfad/robot_codegen_scripts/
 source $repo_pfad/robot_codegen_scripts/testfunctions_generate.sh
 
-if [ "$CG_MINIMAL" == "0" ]; then
+if [ "$CG_MINIMAL" == "0" ] && [ "$CG_NOTEST" != "1" ]; then
   # Matlab-Testfunktionen starten
   if [ ! "$CG_FIXBONLY" == "1" ]; then
     matlab -nodesktop -nosplash -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything');quit;"
@@ -123,6 +129,6 @@ if [ "$CG_MINIMAL" == "0" ]; then
   fi;
   echo "Funktionsgenerierung abgeschlossen. Alle Tests erfolgreich."
 else
-  echo "Funktionsgenerierung abgeschlossen. Keine Tests durchgeführt, da nur Minimalversion erstellt wurde."
+  echo "Funktionsgenerierung abgeschlossen. Keine Tests durchgeführt."
 fi;
 

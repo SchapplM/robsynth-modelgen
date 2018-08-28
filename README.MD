@@ -108,6 +108,9 @@ Folgende Argumente sind möglich:
 * Minimale Anzahl der generierten Matlabfunktionen (nur g(q), c(q,qD), M(q)):
 ```
 --minimal
+* Keine Ausführung der Matlab-Testskripte. Nützlich, wenn die Code-Generierung aus einem anderen Skript heraus (evtl über viele Roboterstrukturen) ausgeführt wird:
+```
+--notest
 ```
 * Nur Berechnung der Fixed-Base Funktionen (kürzere Berechnung, sinnvoll wenn Floating-Base-Modell nicht relevant ist)
 ```
