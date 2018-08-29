@@ -88,318 +88,76 @@
     <Task-category name="&lt;default&gt;"/>
 </Task-table>
 <Task/>
-<Group labelreference="L3170" drawlabel="true">
-<Input><Text-field style="Title" layout="Title">Berechnung und Projektion der Dynamikgleichungen</Text-field>
+<Group labelreference="L1506" drawlabel="true">
+<Input><Text-field style="Title" layout="Title">Definitions for Parallel Robot Dynamics Code Generation</Text-field>
 </Input>
 </Group>
-<Group labelreference="L3146" drawlabel="true">
-<Input><Text-field style="Heading 2" layout="Heading 2">Einleitung</Text-field><Text-field style="Normal" layout="Normal">Berechnung und Projektion der Dynamikgleichungen
-
-Dateiname:
-<Font encoding="UTF-8">robot -&gt; Berechnung f\303\274r allgemeinen Roboter
-para -&gt; Berechnung f\303\274r eine parallelen Roboter</Font>
-rotmat -&gt; Kinematik wird mit Rotationsmatrizen berechnet</Text-field><Text-field style="Normal" layout="Normal">projection -&gt; Die Dynamikgleichungen werden auf EE-Koordinaten projiziert
-kinematics -&gt; Berechnung der Kinematik</Text-field>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Init</Text-field></Title>
+<Group labelreference="L1602" drawlabel="true">
+<Input><Text-field style="Normal" layout="Normal"><Font encoding="UTF-8">Erstelle Definitionen f\303\274r die Maple-Skripte zur Berechnung von Kinematik und Dynamik des parallelen Roboters
+</Font>
+Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03</Text-field><Text-field style="Normal" layout="Normal">(C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover</Text-field>
 </Input>
 </Group>
-<Group labelreference="L3151" drawlabel="true">
-<Input><Text-field style="Heading 2" layout="Heading 2">Autor</Text-field><Text-field style="Normal" layout="Normal">Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03</Text-field><Text-field style="Normal" layout="Normal">(C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover</Text-field>
-</Input>
-</Group>
-<Group labelreference="L3167" drawlabel="true">
-<Input><Text-field style="Heading 2" layout="Heading 2">Sources</Text-field><Text-field style="Normal" layout="Normal">[GautierKhalil1990] Direct Calculation of Minimum Set of Inertial Parameters of Serial Robots
-[KhalilDombre2002] Modeling, Identification and Control of Robots
-[Ortmaier2014] Vorlesungsskript Robotik I</Text-field>
-</Input>
-</Group>
-<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Initialization</Text-field></Title>
-<Group labelreference="L3208" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">#interface(warnlevel=0): # Unterdr\303\274cke die folgende Warnung.
+<Group labelreference="L1601" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">interface(warnlevel=0): # Unterdr\303\274cke die folgende Warnung.
 restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet wird.
-</Font>#interface(warnlevel=3):</Text-field>
+</Font>interface(warnlevel=3):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L3168" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(LinearAlgebra):
-#with(ArrayTools):
-with(codegen):
-with(CodeGeneration):
-with(StringTools):</Text-field>
+<Group labelreference="L1637" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(LinearAlgebra):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L3205" drawlabel="true">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Einstellungen f\303\274r Code-Export: Optimierungsgrad (2=h\303\266chster) und Aktivierung jedes Terms.</Font></Text-field>
+<Group labelreference="L1639" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L3191" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">#codegen_act := true: # noch nicht implementiert
-codegen_debug := false:
-codegen_opt := 2:
-codeexport_invdyn := true:</Text-field>
+<Group labelreference="L1681" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_convert_t_s&quot;:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L3202" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_convert_s_t&quot;:
-read &quot;../helper/proc_convert_t_s&quot;: 
-read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
+<Group labelreference="L1595" drawlabel="true">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Lese Umgebungsvariable f\303\274r Codegenerierung.</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L3207" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_index_symmat2vector&quot;:
-read &quot;../helper/proc_symmat2vector&quot;:
-read &quot;../helper/proc_vec2skew&quot;:
-read &quot;../helper/proc_skew2vec&quot;:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L3189" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../transformation/proc_rotx&quot;: 
-read &quot;../transformation/proc_roty&quot;: 
-read &quot;../transformation/proc_rotz&quot;: 
-read &quot;../transformation/proc_trotx&quot;: 
-read &quot;../transformation/proc_troty&quot;: 
-read &quot;../transformation/proc_trotz&quot;: 
-read &quot;../transformation/proc_transl&quot;: 
-read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
-</Input>
-</Group>
-<Group labelreference="L3177" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L3138" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_definitions&quot;, robot_name):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L3156" drawlabel="true">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Kennung des Parametersatzes, f\303\274r den die Dynamikfunktionen erstellt werden sollen. Muss im Repo und in der mpl-Datei auf 1 gelassen werden, da die folgende Zeile mit einem Skript verarbeitet wird.</Font></Text-field>
-</Input>
-</Group>
-<Group labelreference="L3139" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_dynpar := 1:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L3175" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Link-Index, f\303\274r den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber f\303\274r beliebige Segmente aufgestellt werden. (0=Basis)</Font></Text-field>
-</Input>
-</Group>
-<Group labelreference="L3166" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">LIJAC:=NL-1:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L3197" drawlabel="true">
-<Input><Text-field style="Text" layout="Normal">Ergebnisse der Plattform-Dynamik laden</Text-field>
-</Input>
-</Group>
-<Group labelreference="L3186" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/floatb_%s_platform_dynamic_maple.m&quot;, robot_name, base_method_name):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L3144" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal">Ergebnisse der Dynamik der Gelenkkette laden</Text-field>
-</Input>
-</Group>
-<Group labelreference="L3141" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/invdyn_floatb_%s_par%d_maple.m&quot;, robot_name, base_method_name, codegen_dynpar)</Text-field>
-</Input>
-</Group>
-<Group labelreference="L3216" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ergebnisse der Kinematik f\303\274r parallelen Roboter laden</Font></Text-field>
-</Input>
-</Group>
-<Group hide-input="false" labelreference="L3215" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/kinematics_%s_platform_maple.m&quot;, robot_name, base_method_name):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L3201" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal">Ergebnisse G-Vektor laden</Text-field>
-</Input>
-</Group>
-<Group hide-input="false" labelreference="L3209" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/gravload_par%d_maple.m&quot;, robot_name, codegen_dynpar):
-G := Matrix(taug_s(7..NQ,1)):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L3153" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal">Ergebnisse C-Vektor laden</Text-field>
-</Input>
-</Group>
-<Group hide-input="false" labelreference="L3173" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/coriolisvec_par%d_maple.m&quot;, robot_name, codegen_dynpar):
-Cvec := Matrix(tauCC_s(7..NQ,1)):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L3163" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal">Ergebnisse M-Matrix laden</Text-field>
-</Input>
-</Group>
-<Group hide-input="false" labelreference="L3263" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/inertia_par%d_maple.m&quot;, robot_name, codegen_dynpar):
-MM := MM_s(7..NQ,7..NQ):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L3264" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ergebnisse der zus\303\244tzlichen Definitionen laden</Font></Text-field>
-</Input>
-</Group>
-<Group hide-input="false" labelreference="L3258" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/para_definitions&quot;, robot_name):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L3260" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ergebnisse der Kinematik f\303\274r parallen Roboter laden</Font></Text-field>
-</Input>
-</Group>
-<Group labelreference="L3259" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/kinematics_%s_platform_maple.m&quot;, robot_name, base_method_name):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L3165" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Generiere Dynamik f\303\274r PKM %s mit Parametersatz %d und %s\134n&quot;, </Font>robot_name, codegen_dynpar, base_method_name):</Text-field>
+<Group labelreference="L1594" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:
+<Font encoding="UTF-8">printf(&quot;Generiere Parameter f\303\274r %s\134n&quot;,robot_name):</Font></Text-field>
 </Input>
 </Group>
 </Section>
-<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1"><Font encoding="UTF-8">Berechne Dynamik-Matrizen f\303\274r alle Beine</Font></Text-field></Title>
-<Group hide-input="false" labelreference="L3253" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Parallel Robotics Definitions</Text-field></Title>
+<Group labelreference="L1600" drawlabel="true">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Erstelle f\303\274r Gelenkkoordinaten, -geschwindigkeiten und -beschleunigungen f\303\274r jedes Bein</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L3160" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Dupliziere alle berechneten Matrizen. i steht f\303\274r den Index des jeweiligen Beines</Font></Text-field>
+<Group hide-input="false" labelreference="L1711" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">qJD_i_s := Matrix(NQJ,N_LEGS):</Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L3256" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i to N_LEGS do</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  MM||i := Copy(MM):</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  Cvec||i := Copy(Cvec):</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  G||i := Copy(G):</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">end do:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L3180" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal">Substituiere in jeder Matrix den Winkel Alpha (Verdrehung in der Basis) und die Gelenkkoordinaten und -geschwindigkeiten</Text-field>
-</Input>
-</Group>
-<Group hide-input="false" labelreference="L3182" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
-</Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3164" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="987" pixel-height="374" code-language="text/maple" autoexpand="false" wrapping="false" show-border="true" code-line-numbers="true">for k from 1 by 1 to N_LEGS do
-  for i to NQJ do
-  	Cvec||k(i,1):=subs({alpha=alpha[k]},Cvec||k(i,1)):
-  	G||k(i,1):=subs({alpha=alpha[k]},G||k(i,1)):
-    for m to NQJ do #alpha
-      n := (m + (k-1)*NQJ):
-      Cvec||k(i,1):=subs({qJD||m||s=qJ||D||n||s,qJ||m||s=qJ||n||s},Cvec||k(i,1)):
-      G||k(i,1):=subs({qJ||m||s=qJ||n||s},G||k(i,1)):
-    end do:
-    for j to NQJ do
-    	 MM||k(i,j):=subs({alpha=alpha[k]},MM||k(i,j)):
-      for m to NQJ do #alpha
-        n := m + (k-1)*NQJ:
-        MM||k(i,j):=subs({qJ||m||s=qJ||n||s},MM||k(i,j)):
-      end do:
-    end do:
-  end do:
-end do:
-</EC-CodeEditor></CodeEditor-ExecGroup>
-</Section>
-<Group hide-input="false" labelreference="L3206" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
-</Input>
-</Group>
-<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Berechnung, Projektion und Addition der Dynamikgleichungen</Text-field></Title>
-<Group labelreference="L3172" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Berechnung der Kr\303\244fte/Momente an den Gelenken der jeweiligen Beine und Projektion auf EE-Plattform</Font></Text-field>
-</Input>
-</Group>
-<Group hide-input="false" labelreference="L3272" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i to N_LEGS do
-  k := NQJ*(i-1):</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  A||i := Multiply(JBinv_i(..,..,i),JBD_i(..,..,i));</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  B||i := Multiply(-MM||i,Multiply(A||i,Matrix(qJD_i_s(..,i))));</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  tau||i := Transpose(U_i(..,..,i)).Transpose(JBinv_i(..,..,i)).MM||i.JBinv_i(..,..,i).(U_i(..,..,i).H.xEDD_s+U_i(..,..,i).dH.xED_s+UD_i(..,..,i).H.xED_s) + Multiply(Transpose(U_i(..,..,i)),Multiply(Transpose(JBinv_i(..,..,i)),(B||i+Cvec||i+G||i))):</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" spaceabove="0" linebreak="space" rightmargin="0" linespacing="0.0" initial="0" firstindent="0" leftmargin="0" bulletsuffix="" alignment="left" bullet="none" spacebelow="0" pagebreak-before="false">end do:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L3145" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Aufsummieren aller Kr\303\244fte, projiziert auf EE-Plattform</Font></Text-field>
-</Input>
-</Group>
-<Group hide-input="false" labelreference="L3200" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Tmp := 0:</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i to N_LEGS do</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  Tmp := Tmp + tau||i:</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">end do:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L3142" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal">Addiere Inverse Dynamik der Plattform</Text-field>
-</Input>
-</Group>
-<Group labelreference="L3222" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tauGes := Tmp + tauE:</Text-field>
-</Input>
-</Group>
-</Section>
-<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Replace Joint Velocities</Text-field></Title>
-<Group labelreference="L3224" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Substituiere die Gelenkgeschwindigkeiten \303\274ber H-, Ui- und JBi-Matrix mit EE-Geschwindikeiten</Font></Text-field>
-</Input>
-</Group>
-<Group hide-input="false" labelreference="L3225" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Tmp := 0:</Text-field>
-</Input>
-</Group>
-<Group hide-input="false" labelreference="L3266" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i to N_LEGS do</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  Tmp := Multiply(H,xED_s):</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  Tmp := Multiply(U_i(..,..,i),Tmp):</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  z||i := Multiply(JBinv_i(..,..,i),Tmp):</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">end do:</Text-field>
-</Input>
-</Group>
-<Group hide-input="false" labelreference="L3232" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i to 6 do
-  for j to N_LEGS do
-    for l to NQJ do
-      tauGes(i,1) := subs({qJD_i_s(l,j)=z||j(l)},tauGes(i,1)):
-    end do:
+<Group labelreference="L1713" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NQJ do
+  for j from 1 to N_LEGS do
+     k := j-1:
+     qJ_i_s(i,j):=parse(sprintf(&quot;qJ%ds&quot;, i+k*NQJ)):
+     qJD_i_s(i,j):=parse(sprintf(&quot;qJD%ds&quot;, i+k*NQJ)):
+     qJDD_i_s(i,j):=parse(sprintf(&quot;qJDD%ds&quot;, i+k*NQJ)):
   end do:
 end do:</Text-field>
 </Input>
 </Group>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Export</Text-field></Title>
-<Group labelreference="L3150" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tau := tauGes:</Text-field>
+<Group labelreference="L1714" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Maple-Export</Text-field>
 </Input>
 </Group>
-<Group labelreference="L3161" drawlabel="true">
-<Input><Text-field style="Text" layout="Normal">Matlab Export: Floating base
-<Font encoding="UTF-8">Berechnung der Basis-Belastung ist f\303\274r manche Basis-Darstellungen falsch (siehe oben unter Gravitationslast).</Font></Text-field>
+<Group labelreference="L1598" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save qJ_i_s, qJD_i_s, qJDD_i_s, sprintf(&quot;../codeexport/%s/tmp/para_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L3140" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_invdyn then
-  MatlabExport(tau, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
-end if:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L3261" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group labelreference="L1715" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
