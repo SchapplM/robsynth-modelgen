@@ -52,6 +52,7 @@ codegen_dynpar := 1:
 LIJAC:=NL-1:
 # Ergebnisse der analytischen Jacobi-Matrix (Translatorisch)
 read sprintf("../codeexport/%s/tmp/jacobia_transl_%d_maple.m", robot_name, LIJAC):
+JB1 := b_transl:
 printf("Generiere Dynamik für PKM %s mit Parametersatz %d und %s\n", robot_name, codegen_dynpar, base_method_name):
 # Additional Kinematics
 # Erstelle EE-Koordinaten: xE_t, xED_t, xEDD_t -> Variablen mit Zeitabhängigkeit
@@ -61,8 +62,7 @@ xED_t:=diff~(xE_t,t):
 xEDD_t:=diff~(xED_t,t):
 xED_s := copy(xE_s):
 xEDD_s := copy(xE_s):
-FHG_trans := 0:
-FHG_rot := 0:
+FHG_trans := 0:FHG_rot := 0:
 Counter := Matrix(6,1):
 for i to 6 do
    if not(xE_s(i) = 0) then
@@ -84,16 +84,14 @@ end do:
 px, py, pz := 0, 0, 0:
 # Jacobi Matrices (JB1/U1) + Derivates
 # Berechnung der Jacobi-Matrix JB1inv: Gelenkgeschwindigkeiten -> Koppelpunktgeschwindigkeiten P
-JB1 := b_transl:
 for i to 3 do
 	if JB1(1,i) = 0 and JB1(2,i) = 0 and JB1(3,i) = 0
 	and JB1(i,1) = 0 and JB1(i,2) = 0 and JB1(i,3) = 0 then
-		JB1(i,i) := 1:
-	end if:
+		JB1(i,i) := 1:	end if:
 end do:
 # Berechnung der Jacobi-Matrix JBE: Koppelpunktgeschwindigkeiten P -> Gelenkgeschwindigkeiten
 JB1inv := MatrixInverse(JB1):
-# Berechnug der Matrix Ui: EE-Geschwindigkeiten -> Koppelpunktgeschwindigkeiten P. i steht für den Index des jeweiligen Beines
+# Berechnung der Matrix Ui: EE-Geschwindigkeiten -> Koppelpunktgeschwindigkeiten P. i steht für den Index des jeweiligen Beines
 for i to N_LEGS do
   r||i := P||i:
   r||i := rotx(0).roty(0).rotz(xE_t(6)).vec2skew(r||i):
@@ -139,8 +137,7 @@ for i to N_LEGS do
   JB||i := Copy(JB1):
 end do:
 # Substituiere in jeder Matrix den Winkel Alpha (Verdrehung in der Basis) und die Gelenkkoordinaten und -geschwindigkeiten
-for k from 1 by 1 to N_LEGS do
-  for i to NQJ do
+for k from 1 by 1 to N_LEGS do  for i to NQJ do
     for j to NQJ do
     	 JB||k||D(i,j):=subs({alpha=alpha[k]},JB||k||D(i,j)):
     	 JB||k||inv(i,j):=subs({alpha=alpha[k]},JB||k||inv(i,j)):
