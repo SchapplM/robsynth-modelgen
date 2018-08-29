@@ -121,7 +121,7 @@ restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet
 </Group>
 <Group labelreference="L1685" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(LinearAlgebra):
-with(ArrayTools):
+#with(ArrayTools):
 with(codegen):
 with(CodeGeneration):
 with(StringTools):
@@ -161,6 +161,7 @@ read &quot;../transformation/proc_trotx&quot;:
 read &quot;../transformation/proc_troty&quot;: 
 read &quot;../transformation/proc_trotz&quot;: 
 read &quot;../transformation/proc_transl&quot;: 
+read &quot;../transformation/proc_rpyjac&quot;: 
 read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Input>
 </Group>
@@ -199,153 +200,61 @@ end if:
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Additional Kinematics</Text-field></Title>
 <Group labelreference="L2984" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal">Berechnung der Winkelgeschwindigkeiten</Text-field>
+<Input><Text-field style="Text" layout="Normal">Berechnung der Rotationsmatrizen</Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L3035" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">R_0_0_E := rotx(xE_t(4)).roty(xE_t(5)).rotz(xE_t(6)):</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">w_E_0_E_t := Multiply(Transpose(R_0_0_E),diff~(R_0_0_E,t)):</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">w_E_0_E_t := combine(w_E_0_E_t):</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">w_E_0_E_t := skew2vec(w_E_0_E_t):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L2960" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Substituiere die zeitabh\303\244ngigen Geschwindigkeiten im </Font>Winkelgeschwindigkeitsvektor mit <Font encoding="UTF-8">zeitunabh\303\244ngigen </Font>Geschwindigkeiten </Text-field>
-</Input>
-</Group>
-<Group hide-input="false" labelreference="L2961" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">w_E_0_E_s := copy(w_E_0_E_t):</Text-field>
-</Input>
-</Group>
-<Group hide-input="false" labelreference="L3030" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i to 3 do</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">    w_E_0_E_s(i,1) := subs({diff(xE_t(4),t)=xED_s(4),diff(xE_t(5),t)=xED_s(5),diff(xE_t(6),t)=xED_s(6)},w_E_0_E_t(i,1)):</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">end do:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L2996" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal">Erzeuge die Jacobi-Matrix: EE-Geschwindigkeiten -&gt; Winkelgeschwindigkeitsvektor w_E_0_E_t</Text-field>
-</Input>
-</Group>
-<Group hide-input="false" labelreference="L2999" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">w_Jacobi := Matrix(3):</Text-field>
-</Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3018" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="564" pixel-height="224" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true"># i steht f\303\274r die Zeile der jacobi-matrix
-for i to 3 do
-	# j steht f\303\274r die Spalte 
-	for j to 3 do
-		if xED_s(j+3) = 0 then
-			w_Jacobi(i,j) := 0:
-		else
-			w_Jacobi(i,j) := diff(w_E_0_E_s(i),xED_s(j+3)):
-		end if:
-	end do:
-end do:</EC-CodeEditor></CodeEditor-ExecGroup>
-<Group hide-input="false" labelreference="L3017" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
-</Input>
-</Group>
-<Group labelreference="L3002" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Alternative Berechnung f\303\274r die Jacobi-Matrix. Allerdings wird keine R\303\274cksicht auf Null-Eintr\303\244ge genommen.</Font></Text-field>
-</Input>
-</Group>
-<Group hide-input="false" labelreference="L3011" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">#w_Jacobi := Jacobian(convert(w_E_0_E_s,list),convert(xED_dummy(4..6),list)):</Text-field>
+<Group hide-input="false" labelreference="L3045" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">R_0_0_E_t := rotx(xE_t(4)).roty(xE_t(5)).rotz(xE_t(6)):
+R_0_0_E_s := rotx(xE_s(4)).roty(xE_s(5)).rotz(xE_s(6)):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3004" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">Berechnung der H-Matrix und deren Ableitung nach Abdellatif S.20 aus &quot;Modellierung, Identifikation und robuste Regelung von Robotern mit parallelkinematischen Strukturen&quot;</Text-field>
 </Input>
 </Group>
-<Group labelreference="L3007" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+<Group hide-input="false" labelreference="L3059" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">RPYjac_0_t := rpyjac(xE_t(4),xE_t(5),xE_t(6)):
+RPYjac_E_t := combine(Multiply(Transpose(R_0_0_E_t),RPYjac_0_t)):
+RPYjac_0_s := rpyjac(xE_s(4),xE_s(5),xE_s(6)):
+RPYjac_E_s := combine(Multiply(Transpose(R_0_0_E_s),RPYjac_0_s)):</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L5" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion2" expanded="true" visible="true" pixel-width="576" pixel-height="165" code-language="text/maple" autoexpand="false" wrapping="false" show-border="true" code-line-numbers="true"># Berechnung des translatorischen Teils der H-Matrix
-H_trans := Matrix(3,3):
-# i steht f\303\274r den translatorischen Freiheitsgrad (x,y,z)
-for i to 3 do
-	if not(xED_s(i) = 0) then
-		H_trans(i,i) := 1:
-	end if:
-end do:</EC-CodeEditor></CodeEditor-ExecGroup>
-<Group hide-input="false" labelreference="L2990" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">H := &lt;H_trans,ZeroMatrix(3);
-      ZeroMatrix(3),w_Jacobi&gt;:</Text-field>
+</Group>
+<Group hide-input="false" labelreference="L3055" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">w_E_0_E_s := RPYjac_E_s.xED_s(4..6,1):
+w_E_0_E_t := RPYjac_E_t.xED_t(4..6,1):</Text-field>
 </Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">dH := diff~(H,t):</Text-field>
+</Group>
+<Group hide-input="false" labelreference="L3070" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">dRPYjac_E_t := diff~(RPYjac_E_t,t):
+dRPYjac_E_s := Copy(dRPYjac_E_t):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2906" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Substituiere die zeitabh\303\244ngigen Koordinaten in der </Font>Winkelgeschwindigkeits-Jacobi-Matrix mit <Font encoding="UTF-8">zeitunabh\303\244ngigen Koordinaten </Font></Text-field>
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Substituiere die zeitabh\303\244ngigen Koordinaten in der </Font>H-Matrix mit <Font encoding="UTF-8">zeitunabh\303\244ngigen Koordinaten </Font></Text-field>
 </Input>
-</Group>
-<Group hide-input="false" labelreference="L2913" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i to 3 do</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  for j to 3 do</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">    w_Jacobi(i,j) := subs({xE_t(4)=xE_s(4),xE_t(5)=xE_s(5),xE_t(6)=xE_s(6)},w_Jacobi(i,j)):</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  end do:</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">end do:</Text-field>
-</Input>
-</Group>
+</Group><CodeEditor-ExecGroup view="presentation" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion3" expanded="true" visible="true" pixel-width="1070" pixel-height="155" code-language="text/maple" autoexpand="false" wrapping="false" show-border="true" code-line-numbers="true">for i to 3 do
+	for j to 3 do
+		for k from 4 to 6 do
+			dRPYjac_E_s(i,j) := subs({xEDD_t(k)=xEDD_s(k),xED_t(k)=xED_s(k),xE_t(k)=xE_s(k)},dRPYjac_E_s(i,j)):
+		end do:
+	end do:
+end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group hide-input="false" labelreference="L2905" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">wD_E_0_E_t := diff~(w_E_0_E_t,t):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L2907" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Substitiuere zeitabh\303\244ngige EE-Koordinaten/-Geschwindigkeiten/-Beschleunigungen in der Ableitung der H-Matrix mit zeitunabh\303\244ngigen</Font></Text-field>
-</Input>
-</Group>
-<Group hide-input="false" labelreference="L2900" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i to 6 do</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  for k to 6 do</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">    for j to 6 do</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" spaceabove="0" linebreak="space" rightmargin="0" linespacing="0.0" initial="0" firstindent="0" leftmargin="0" bulletsuffix="" alignment="left" bullet="none" spacebelow="0" pagebreak-before="false">      dH(i,k) := subs({xEDD_t(j)=xEDD_s(j),xED_t(j)=xED_s(j),xE_t(j)=xE_s(j)},dH(i,k)):</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" spaceabove="0" linebreak="space" rightmargin="0" linespacing="0.0" initial="0" firstindent="0" leftmargin="0" bulletsuffix="" alignment="left" bullet="none" spacebelow="0" pagebreak-before="false">    end do:</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" spaceabove="0" linebreak="space" rightmargin="0" linespacing="0.0" initial="0" firstindent="0" leftmargin="0" bulletsuffix="" alignment="left" bullet="none" spacebelow="0" pagebreak-before="false">  end do:</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" spaceabove="0" linebreak="space" rightmargin="0" linespacing="0.0" initial="0" firstindent="0" leftmargin="0" bulletsuffix="" alignment="left" bullet="none" spacebelow="0" pagebreak-before="false">end do:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L2901" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal">Substituiere <Font encoding="UTF-8">zeitabh\303\244ngige EE-Koordinaten/-Geschwindigkeiten/-Beschleunigungen in der Ableitung der H-Matrix mit zeitunabh\303\244ngigen</Font></Text-field>
-</Input>
-</Group>
-<Group labelreference="L2976" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">wD_E_0_E_s := copy(wD_E_0_E_t):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L2903" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i to 3 do</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  for j to 6 do</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" spaceabove="0" linebreak="space" rightmargin="0" linespacing="0.0" initial="0" firstindent="0" leftmargin="0" bulletsuffix="" alignment="left" bullet="none" spacebelow="0" pagebreak-before="false">    wD_E_0_E_s(i) := subs({xEDD_t(j)=xEDD_s(j),xED_t(j)=xED_s(j),xE_t(j)=xE_s(j)},wD_E_0_E_t(i)):</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" spaceabove="0" linebreak="space" rightmargin="0" linespacing="0.0" initial="0" firstindent="0" leftmargin="0" bulletsuffix="" alignment="left" bullet="none" spacebelow="0" pagebreak-before="false">  end do:</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" spaceabove="0" linebreak="space" rightmargin="0" linespacing="0.0" initial="0" firstindent="0" leftmargin="0" bulletsuffix="" alignment="left" bullet="none" spacebelow="0" pagebreak-before="false">end do:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" spaceabove="0" linebreak="space" rightmargin="0" linespacing="0.0" initial="0" firstindent="0" leftmargin="0" bulletsuffix="" alignment="left" bullet="none" spacebelow="0" pagebreak-before="false">wD_E_0_E_s := dRPYjac_E_s.xED_s(4..6,1)+RPYjac_E_s.xEDD_s(4..6,1):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L2908" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"></Text-field>
+<Group hide-input="false" labelreference="L3066" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">H := &lt;IdentityMatrix(3,3),ZeroMatrix(3);
+      ZeroMatrix(3),RPYjac_E_s&gt;:</Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L2911" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">#Hinv := MatrixInverse(H);</Text-field>
+<Group hide-input="false" labelreference="L3064" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">dH := &lt;ZeroMatrix(3),ZeroMatrix(3);
+      ZeroMatrix(3),dRPYjac_E_s&gt;:</Text-field>
 </Input>
 </Group>
 </Section>
@@ -427,10 +336,6 @@ end if:</Text-field>
 </Group>
 <Group labelreference="L2956" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save tauE, H, dH, sprintf(&quot;../codeexport/%s/tmp/floatb_%s_platform_dynamic_maple.m&quot;, robot_name, base_method_name):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L3020" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>
