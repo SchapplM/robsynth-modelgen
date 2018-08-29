@@ -84,15 +84,15 @@ end do:
 px, py, pz := 0, 0, 0:
 # Jacobi Matrices (JB1/U1) + Derivates
 # Berechnung der Jacobi-Matrix JB1inv: Gelenkgeschwindigkeiten -> Koppelpunktgeschwindigkeiten P
-JB1inv := b_transl:
+JB1 := b_transl:
 for i to 3 do
-	if JB1inv(1,i) = 0 and JB1inv(2,i) = 0 and JB1inv(3,i) = 0
-	and JB1inv(i,1) = 0 and JB1inv(i,2) = 0 and JB1inv(i,3) = 0 then
-		JB1inv(i,i) := 1:
+	if JB1(1,i) = 0 and JB1(2,i) = 0 and JB1(3,i) = 0
+	and JB1(i,1) = 0 and JB1(i,2) = 0 and JB1(i,3) = 0 then
+		JB1(i,i) := 1:
 	end if:
 end do:
 # Berechnung der Jacobi-Matrix JBE: Koppelpunktgeschwindigkeiten P -> Gelenkgeschwindigkeiten
-JB1 := MatrixInverse(JB1inv):
+JB1inv := MatrixInverse(JB1):
 # Berechnug der Matrix Ui: EE-Geschwindigkeiten -> Koppelpunktgeschwindigkeiten P. i steht für den Index des jeweiligen Beines
 for i to N_LEGS do
   r||i := P||i:
@@ -121,16 +121,16 @@ for i to N_LEGS do
   UD_i(1..ROW,1..COLUMN,i) := U||i||D:
 end do:
 # Berechnung von JB1D
-JB1inv := convert_s_t(JB1inv):
-JB1D := diff~(JB1inv,t):
+JB1 := convert_s_t(JB1):
+JB1D := diff~(JB1,t):
 JB1D := simplify(combine(JB1D)):
 JB1D := convert_t_s(JB1D):
-JB1inv := convert_t_s(JB1inv):
+JB1 := convert_t_s(JB1):
 # Berechne Jacobi-Matrizen für jedes Bein
 # Dupliziere alle berechneten Matrizen. i steht für den Index des jeweiligen Beines
-JB_i := Copy(JB1):
-JBD_i := Copy(JB1D):
 JBinv_i := Copy(JB1inv):
+JBD_i := Copy(JB1D):
+JB_i := Copy(JB1):
 ROW := RowDimension(JB1):
 COLUMN := ColumnDimension(JB1):
 for i to N_LEGS do
@@ -160,9 +160,9 @@ for k from 1 by 1 to N_LEGS do
 end do:
 # Gesamt Jacobi-Matrix
 # Berechnung der inv. Jacobi-Matrix: EE-Geschwindigkeiten -> aktive Gelenkgeschwindigkeiten
-Tmp := JB1[AKTIV,1..3].U1:
+Tmp := JB1inv[AKTIV,1..3].U1:
 for i from 2 to N_LEGS do
-  Tmp := <Tmp;JB||i[AKTIV,1..3].U||i>:
+  Tmp := <Tmp;JB||i||inv[AKTIV,1..3].U||i>:
 end do:
 Jinv := Tmp:
 # Export

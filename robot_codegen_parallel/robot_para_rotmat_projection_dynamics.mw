@@ -311,11 +311,11 @@ end do:
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i to N_LEGS do
   k := NQJ*(i-1):</Text-field>
 </Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  A||i := Multiply(JB_i(..,..,i),JBD_i(..,..,i)):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  A||i := Multiply(JBinv_i(..,..,i),JBD_i(..,..,i)):</Text-field>
 </Input>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  B||i := Multiply(-MM||i,Multiply(A||i,&lt;qJD||(1+k)||s;qJD||(2+k)||s;qJD||(3+k)||s&gt;)):</Text-field>
 </Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  tau||i := Transpose(U_i(..,..,i)).Transpose(JB_i(..,..,i)).MM||i.JB_i(..,..,i).(U_i(..,..,i).H.xEDD_s+U_i(..,..,i).dH.xED_s+UD_i(..,..,i).H.xED_s) + Multiply(Transpose(U_i(..,..,i)),Multiply(Transpose(JB_i(..,..,i)),(B||i+Cvec||i+G||i))):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  tau||i := Transpose(U_i(..,..,i)).Transpose(JBinv_i(..,..,i)).MM||i.JBinv_i(..,..,i).(U_i(..,..,i).H.xEDD_s+U_i(..,..,i).dH.xED_s+UD_i(..,..,i).H.xED_s) + Multiply(Transpose(U_i(..,..,i)),Multiply(Transpose(JBinv_i(..,..,i)),(B||i+Cvec||i+G||i))):</Text-field>
 </Input>
 <Input><Text-field prompt="&gt; " style="Maple Input" spaceabove="0" linebreak="space" rightmargin="0" linespacing="0.0" initial="0" firstindent="0" leftmargin="0" bulletsuffix="" alignment="left" bullet="none" spacebelow="0" pagebreak-before="false">end do:</Text-field>
 </Input>
@@ -359,7 +359,7 @@ end do:
 </Input>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  Tmp := Multiply(U_i(..,..,i),Tmp):</Text-field>
 </Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  z||i := Multiply(JB_i(..,..,i),Tmp):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  z||i := Multiply(JBinv_i(..,..,i),Tmp):</Text-field>
 </Input>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">end do:</Text-field>
 </Input>

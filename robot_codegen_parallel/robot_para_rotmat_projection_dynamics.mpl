@@ -102,9 +102,9 @@ end do:
 # Berechnung der Kräfte/Momente an den Gelenken der jeweiligen Beine und Projektion auf EE-Plattform
 for i to N_LEGS do
   k := NQJ*(i-1):
-  A||i := Multiply(JB_i(..,..,i),JBD_i(..,..,i)):
+  A||i := Multiply(JBinv_i(..,..,i),JBD_i(..,..,i)):
   B||i := Multiply(-MM||i,Multiply(A||i,<qJD||(1+k)||s;qJD||(2+k)||s;qJD||(3+k)||s>)):
-  tau||i := Transpose(U_i(..,..,i)).Transpose(JB_i(..,..,i)).MM||i.JB_i(..,..,i).(U_i(..,..,i).H.xEDD_s+U_i(..,..,i).dH.xED_s+UD_i(..,..,i).H.xED_s) + Multiply(Transpose(U_i(..,..,i)),Multiply(Transpose(JB_i(..,..,i)),(B||i+Cvec||i+G||i))):
+  tau||i := Transpose(U_i(..,..,i)).Transpose(JBinv_i(..,..,i)).MM||i.JBinv_i(..,..,i).(U_i(..,..,i).H.xEDD_s+U_i(..,..,i).dH.xED_s+UD_i(..,..,i).H.xED_s) + Multiply(Transpose(U_i(..,..,i)),Multiply(Transpose(JBinv_i(..,..,i)),(B||i+Cvec||i+G||i))):
 end do:
 # Aufsummieren aller Kräfte, projiziert auf EE-Plattform
 Tmp := 0:
@@ -119,7 +119,7 @@ Tmp := 0:
 for i to N_LEGS do
   Tmp := Multiply(H,xED_s):
   Tmp := Multiply(U_i(..,..,i),Tmp):
-  z||i := Multiply(JB_i(..,..,i),Tmp):
+  z||i := Multiply(JBinv_i(..,..,i),Tmp):
 end do:
 for i to 6 do
   for j to N_LEGS do
