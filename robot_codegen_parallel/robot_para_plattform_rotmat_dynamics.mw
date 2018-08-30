@@ -162,6 +162,7 @@ read &quot;../transformation/proc_troty&quot;:
 read &quot;../transformation/proc_trotz&quot;: 
 read &quot;../transformation/proc_transl&quot;: 
 read &quot;../transformation/proc_rpyjac&quot;: 
+read &quot;../transformation/proc_yprjac&quot;: 
 read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Input>
 </Group>
@@ -193,8 +194,7 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 end if:
 if not assigned(xE_s) then
    xE_s:=&lt;x_all[1];x_all[2];x_all[3];x_all[4];x_all[5];x_all[6]&gt;:
-end if:
-</Text-field>
+end if:</Text-field>
 </Input>
 </Group>
 </Section>
@@ -204,8 +204,8 @@ end if:
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3045" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">R_0_0_E_t := rotx(xE_t(4)).roty(xE_t(5)).rotz(xE_t(6)):
-R_0_0_E_s := rotx(xE_s(4)).roty(xE_s(5)).rotz(xE_s(6)):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">R_0_0_E_t := rotz(xE_t(4)).roty(xE_t(5)).rotx(xE_t(6)):
+R_0_0_E_s := rotz(xE_s(4)).roty(xE_s(5)).rotx(xE_s(6)):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3004" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -213,9 +213,9 @@ R_0_0_E_s := rotx(xE_s(4)).roty(xE_s(5)).rotz(xE_s(6)):</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3059" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">RPYjac_0_t := rpyjac(xE_t(4),xE_t(5),xE_t(6)):
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">RPYjac_0_t := yprjac(xE_t(4),xE_t(5),xE_t(6)):
 RPYjac_E_t := combine(Multiply(Transpose(R_0_0_E_t),RPYjac_0_t)):
-RPYjac_0_s := rpyjac(xE_s(4),xE_s(5),xE_s(6)):
+RPYjac_0_s := yprjac(xE_s(4),xE_s(5),xE_s(6)):
 RPYjac_E_s := combine(Multiply(Transpose(R_0_0_E_s),RPYjac_0_s)):</Text-field>
 </Input>
 </Group>
@@ -232,7 +232,7 @@ dRPYjac_E_s := Copy(dRPYjac_E_t):</Text-field>
 <Group labelreference="L2906" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Substituiere die zeitabh\303\244ngigen Koordinaten in der </Font>H-Matrix mit <Font encoding="UTF-8">zeitunabh\303\244ngigen Koordinaten </Font></Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion3" expanded="true" visible="true" pixel-width="1070" pixel-height="155" code-language="text/maple" autoexpand="false" wrapping="false" show-border="true" code-line-numbers="true">for i to 3 do
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L2" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion3" expanded="true" visible="true" pixel-width="1070" pixel-height="155" code-language="text/maple" autoexpand="false" wrapping="false" show-border="true" code-line-numbers="true">for i to 3 do
 	for j to 3 do
 		for k from 4 to 6 do
 			dRPYjac_E_s(i,j) := subs({xEDD_t(k)=xEDD_s(k),xED_t(k)=xED_s(k),xE_t(k)=xE_s(k)},dRPYjac_E_s(i,j)):
@@ -316,7 +316,7 @@ end if:</Text-field>
 <Input><Text-field style="Text" layout="Normal">Inverse Dynamik der Plattform</Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L3022" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group hide-input="false" labelreference="L3074" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tauE := Multiply(ME,&lt;xEDD_s(1..3,1);wD_E_0_E_s&gt;) + cE - gE:</Text-field>
 </Input>
 </Group>
@@ -336,6 +336,10 @@ end if:</Text-field>
 </Group>
 <Group labelreference="L2956" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save tauE, H, dH, sprintf(&quot;../codeexport/%s/tmp/floatb_%s_platform_dynamic_maple.m&quot;, robot_name, base_method_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3075" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>
