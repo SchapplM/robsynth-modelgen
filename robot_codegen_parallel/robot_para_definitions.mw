@@ -136,7 +136,7 @@ restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">qJD_i_s := Matrix(NQJ,N_LEGS):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1713" drawlabel="true">
+<Group labelreference="L1717" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NQJ do
   for j from 1 to N_LEGS do
      k := j-1:
@@ -147,6 +147,22 @@ restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet
 end do:</Text-field>
 </Input>
 </Group>
+<Group hide-input="false" labelreference="L1723" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">frame_A_i := Matrix(3,N_LEGS):</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L1727" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i to N_LEGS do
+   for j to 3 do
+      if has(indets(leg_frame(4..6)),leg_frame(j+3)) then
+         frame_A_i(j,i) := leg_frame(j+3)[i]:
+      else 
+         frame_A_i(j,i) := leg_frame(j+3):
+      end if:
+   end do:
+end do:</Text-field>
+</Input>
+</Group>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Export</Text-field></Title>
 <Group labelreference="L1714" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -154,11 +170,7 @@ end do:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1598" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save qJ_i_s, qJD_i_s, qJDD_i_s, sprintf(&quot;../codeexport/%s/tmp/para_definitions&quot;, robot_name):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1715" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save frame_A_i, qJ_i_s, qJD_i_s, qJDD_i_s, sprintf(&quot;../codeexport/%s/tmp/para_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 </Section>
