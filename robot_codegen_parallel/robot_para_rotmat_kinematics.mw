@@ -158,6 +158,7 @@ read &quot;../transformation/proc_rotz&quot;:
 read &quot;../transformation/proc_trotx&quot;: 
 read &quot;../transformation/proc_troty&quot;: 
 read &quot;../transformation/proc_trotz&quot;: 
+read &quot;../transformation/proc_rpyjac&quot;: 
 read &quot;../transformation/proc_transl&quot;: 
 read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Input>
@@ -166,8 +167,16 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L3038" drawlabel="true">
+<Group labelreference="L3228" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_definitions&quot;, robot_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3229" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Definitionen f\303\274r parallel Roboter laden</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L3038" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/para_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3040" drawlabel="true">
@@ -182,7 +191,7 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Link-Index, f\303\274r den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber f\303\274r beliebige Segmente aufgestellt werden. (0=Basis)</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L2959" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group labelreference="L3224" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">LIJAC:=NL-1:</Text-field>
 </Input>
 </Group>
@@ -190,9 +199,13 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 <Input><Text-field style="Text" layout="Normal">Ergebnisse der analytischen Jacobi-Matrix (Translatorisch)</Text-field>
 </Input>
 </Group>
-<Group labelreference="L2967" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/jacobia_transl_%d_maple.m&quot;, robot_name, LIJAC):
-JB1 := b_transl:</Text-field>
+<Group hide-input="false" labelreference="L3222" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/jacobia_transl_%d_maple.m&quot;, robot_name, LIJAC):</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L2967" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">px, py, pz := 0, 0, 0:
+JB1 := rotz(frame_A_i(1,1)).roty(frame_A_i(2,1)).rotx(frame_A_i(3,1)).b_transl:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2958" drawlabel="true">
@@ -242,10 +255,6 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">end do:</Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L3219" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">px, py, pz := 0, 0, 0:</Text-field>
-</Input>
-</Group>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Jacobi Matrices (JB1/U1) + Derivates</Text-field></Title>
 <Group labelreference="L3013" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -268,12 +277,12 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Input><Text-field style="Text" layout="Normal">Berechnung der Matrix Ui: EE-Geschwindigkeiten -&gt; <Font encoding="UTF-8">Koppelpunktgeschwindigkeiten P. i steht f\303\274r den Index des jeweiligen Beines</Font></Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L3180" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group hide-input="false" labelreference="L3233" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i to N_LEGS do</Text-field>
 </Input>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  r||i := P||i:</Text-field>
 </Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  r||i := rotx(0).roty(0).rotz(xE_t(6)).vec2skew(r||i):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  r||i := rotz(xE_t(4)).roty(xE_t(5)).rotx(xE_t(6)).vec2skew(r||i):</Text-field>
 </Input>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  ones := Matrix(3,3,shape=identity):</Text-field>
 </Input>
@@ -360,23 +369,26 @@ COLUMN := ColumnDimension(JB1):</Text-field>
 <Group labelreference="L3133" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">Substituiere in jeder Matrix den Winkel Alpha (Verdrehung in der Basis) und die Gelenkkoordinaten und -geschwindigkeiten</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L6" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion3" expanded="true" visible="true" pixel-width="769" pixel-height="384" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">for k from 1 by 1 to N_LEGS do  for i to NQJ do
-    for j to NQJ do
-    	 JB||k||D(i,j):=subs({alpha=alpha[k]},JB||k||D(i,j)):
-    	 JB||k||inv(i,j):=subs({alpha=alpha[k]},JB||k||inv(i,j)):
-    	 JB||k(i,j):=subs({alpha=alpha[k]},JB||k(i,j)):
-      for m to NQJ do #alpha
-        #tmp := VARS(m):
-        n := m + (k-1)*NQJ:
-        JB||k||D(i,j):=subs({qJD||m||s=qJ||D||n||s,qJ||m||s=qJ||n||s},JB||k||D(i,j)):
-        JB||k||inv(i,j):=subs({qJ||m||s=qJ||n||s},JB||k||inv(i,j)):
-        JB||k(i,j):=subs({qJ||m||s=qJ||n||s},JB||k(i,j)):
-      end do:
-    end do:
-  end do:
-  JB_i(1..ROW,1..COLUMN,k) := JB||k:
-  JBD_i(1..ROW,1..COLUMN,k) := JB||k||D:
-  JBinv_i(1..ROW,1..COLUMN,k) := JB||k||inv:
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L6" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion3" expanded="true" visible="true" pixel-width="1082" pixel-height="432" code-language="text/maple" autoexpand="false" wrapping="false" show-border="true" code-line-numbers="true">for k from 1 by 1 to N_LEGS do  
+	for i to NQJ do
+		for j to NQJ do
+			for l to 3 do
+				JB||k||D(i,j):=subs({frame_A_i(l,1)=frame_A_i(l,k)},JB||k||D(i,j)):
+				JB||k||inv(i,j):=subs({frame_A_i(l,1)=frame_A_i(l,k)},JB||k||inv(i,j)):
+				JB||k(i,j):=subs({frame_A_i(l,1)=frame_A_i(l,k)},JB||k(i,j)):
+			end do:
+      		for m to NQJ do #alpha
+				#tmp := VARS(m):
+        			n := m + (k-1)*NQJ:
+        			JB||k||D(i,j):=subs({qJD_i_s(m,1)=qJD_i_s(m,k),qJ_i_s(m,1)=qJ_i_s(m,k)},JB||k||D(i,j)):
+       			JB||k||inv(i,j):=subs({qJ_i_s(m,1)=qJ_i_s(m,k)},JB||k||inv(i,j)):
+        			JB||k(i,j):=subs({qJ_i_s(m,1)=qJ_i_s(m,k)},JB||k(i,j)):
+     		end do:
+    		end do:
+  	end do:
+  	JB_i(1..ROW,1..COLUMN,k) := JB||k:
+  	JBD_i(1..ROW,1..COLUMN,k) := JB||k||D:
+  	JBinv_i(1..ROW,1..COLUMN,k) := JB||k||inv:
 end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Gesamt Jacobi-Matrix</Text-field></Title>
@@ -388,7 +400,7 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Input><Text-field style="Text" layout="Normal">Berechnung der inv. Jacobi-Matrix: EE-Geschwindigkeiten -&gt; aktive Gelenkgeschwindigkeiten</Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L2943" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group hide-input="false" labelreference="L3231" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Tmp := JB1inv[AKTIV,1..3].U1:</Text-field>
 </Input>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 2 to N_LEGS do</Text-field>
@@ -444,10 +456,6 @@ end if:</Text-field>
   end do:
   save taus_fixb, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_fixb_par%d_maple.m&quot;, robot_name, codegen_dynpar):
 end if:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L3192" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>
