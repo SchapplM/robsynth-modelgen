@@ -134,7 +134,7 @@ with(StringTools):</Text-field>
 <Group labelreference="L3191" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">#codegen_act := true: # noch nicht implementiert
 codegen_debug := false:
-codegen_opt := 2:
+codegen_opt := 1:
 codeexport_invdyn := true:</Text-field>
 </Input>
 </Group>
@@ -206,7 +206,7 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ergebnisse der Kinematik f\303\274r parallelen Roboter laden</Font></Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L3215" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group hide-input="false" labelreference="L3296" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/kinematics_%s_platform_maple.m&quot;, robot_name, base_method_name):</Text-field>
 </Input>
 </Group>
@@ -225,7 +225,7 @@ G := Matrix(taug_s(7..NQ,1)):</Text-field>
 </Group>
 <Group hide-input="false" labelreference="L3173" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/coriolisvec_par%d_maple.m&quot;, robot_name, codegen_dynpar):
-Cvec := Matrix(tauCC_s(7..NQ,1)):</Text-field>
+Cvec := combine(Matrix(tauCC_s(7..NQ,1))):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3163" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -234,11 +234,11 @@ Cvec := Matrix(tauCC_s(7..NQ,1)):</Text-field>
 </Group>
 <Group hide-input="false" labelreference="L3263" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/inertia_par%d_maple.m&quot;, robot_name, codegen_dynpar):
-MM := MM_s(7..NQ,7..NQ):</Text-field>
+MM := combine(MM_s(7..NQ,7..NQ)):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3264" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ergebnisse der zus\303\244tzlichen Definitionen laden</Font></Text-field>
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ergebnisse der zus\303\244tzlichen Definitionen f\303\274r parallele Roboter laden</Font></Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3258" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -267,7 +267,7 @@ MM := MM_s(7..NQ,7..NQ):</Text-field>
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Dupliziere alle berechneten Matrizen. i steht f\303\274r den Index des jeweiligen Beines</Font></Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L3256" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group hide-input="false" labelreference="L3276" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i to N_LEGS do</Text-field>
 </Input>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  MM||i := Copy(MM):</Text-field>
@@ -282,27 +282,27 @@ MM := MM_s(7..NQ,7..NQ):</Text-field>
 <Group labelreference="L3180" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">Substituiere in jeder Matrix den Winkel Alpha (Verdrehung in der Basis) und die Gelenkkoordinaten und -geschwindigkeiten</Text-field>
 </Input>
-</Group>
-<Group hide-input="false" labelreference="L3182" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
-</Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3164" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="987" pixel-height="374" code-language="text/maple" autoexpand="false" wrapping="false" show-border="true" code-line-numbers="true">for k from 1 by 1 to N_LEGS do
-  for i to NQJ do
-  	Cvec||k(i,1):=subs({alpha=alpha[k]},Cvec||k(i,1)):
-  	G||k(i,1):=subs({alpha=alpha[k]},G||k(i,1)):
-    for m to NQJ do #alpha
-      n := (m + (k-1)*NQJ):
-      Cvec||k(i,1):=subs({qJD||m||s=qJ||D||n||s,qJ||m||s=qJ||n||s},Cvec||k(i,1)):
-      G||k(i,1):=subs({qJ||m||s=qJ||n||s},G||k(i,1)):
-    end do:
-    for j to NQJ do
-    	 MM||k(i,j):=subs({alpha=alpha[k]},MM||k(i,j)):
-      for m to NQJ do #alpha
-        n := m + (k-1)*NQJ:
-        MM||k(i,j):=subs({qJ||m||s=qJ||n||s},MM||k(i,j)):
-      end do:
-    end do:
-  end do:
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3164" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="1046" pixel-height="482" code-language="text/maple" autoexpand="false" wrapping="false" show-border="true" code-line-numbers="true">for k from 1 by 1 to N_LEGS do
+  	for i to NQJ do
+  		for l to 3 do
+  	 		Cvec||k(i,1):=subs({frame_A_i(l,1)=frame_A_i(l,k)},Cvec||k(i,1)):
+  	  		G||k(i,1):=subs({frame_A_i(l,1)=frame_A_i(l,k)},G||k(i,1)):
+  		end do:
+    		for m to NQJ do #alpha
+      		n := (m + (k-1)*NQJ):
+     		Cvec||k(i,1):=subs({qJD||m||s=qJ||D||n||s,qJ||m||s=qJ||n||s},Cvec||k(i,1)):
+      		G||k(i,1):=subs({qJ||m||s=qJ||n||s},G||k(i,1)):
+    		end do:
+    		for j to NQJ do
+    			for l to 3 do
+    	 			MM||k(i,j):=subs({rame_A_i(l,1)=frame_A_i(l,k)},MM||k(i,j)):
+    	 		end do:
+      		for m to NQJ do #alpha
+        			n := m + (k-1)*NQJ:
+        			MM||k(i,j):=subs({qJ||m||s=qJ||n||s},MM||k(i,j)):
+      		end do:
+    		end do:
+  	end do:
 end do:
 </EC-CodeEditor></CodeEditor-ExecGroup>
 </Section>
@@ -315,7 +315,7 @@ end do:
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Berechnung der Kr\303\244fte/Momente an den Gelenken der jeweiligen Beine und Projektion auf EE-Plattform</Font></Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L3272" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group hide-input="false" labelreference="L3294" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i to N_LEGS do
   k := NQJ*(i-1):</Text-field>
 </Input>
@@ -346,7 +346,7 @@ end do:
 <Input><Text-field style="Text" layout="Normal">Addiere Inverse Dynamik der Plattform</Text-field>
 </Input>
 </Group>
-<Group labelreference="L3222" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group labelreference="L3286" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tauGes := Tmp + tauE:</Text-field>
 </Input>
 </Group>
@@ -360,7 +360,7 @@ end do:
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Tmp := 0:</Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L3266" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group hide-input="false" labelreference="L3292" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i to N_LEGS do</Text-field>
 </Input>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  Tmp := Multiply(H,xED_s):</Text-field>
