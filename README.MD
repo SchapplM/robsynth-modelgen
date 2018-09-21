@@ -538,6 +538,9 @@ Die Datei stellt eine Maple-Eingabe dar. Die Variablen müssen daher mit "__:=__
 Da die Definitionen in jedem Maple-Arbeitsblatt am Ende der Initialisierung geladen werden, ist es möglich, hier Standardeinstellungen zu überschreiben, wie z.B. durch die Definition der Variablen
 * __codegen_opt__: Der Grad der Code-Optimierung für den Export lässt sich steuern und die Rechenzeit der Generierung damit erhöhen (Standardmäßig auf 2, geringere Optimierung mit 1 oder 0).
 
+Weitere Möglichkeiten sind:
+* __codegen_kinematics_opt__ (verhindert in robot_tree_floatb_rotmat_mdh_kinematics.mw die Zusammenfassung paralleler Gelenke; sinnvoll bei Elimination von kinematischen Zwangsbedingungen)
+
 Zu beachten ist, dass in die Maple-Vektoren am einfachsten nur symbolische Ausdrücke eingesetzt werden sollten, die so heißen, wie das Vektorelement selbst. Also __a1__, __a2__ in __a__, __d1__, __d2__ in __d__, __qoffset3__, __qoffset4__ in __qoffset__ und so weiter. Zusätzlich können Nullen und Winkelangaben ("__Pi__", großgeschrieben) eingesetzt werden (vereinfacht die Ergebnisse).
 Sollen die Geometrieparameter anders benannt sein (z.B. __l1__, __l2__), dann sind die Hinweise aus dem Abschnitt [Werte für Kinematikparameter](#werte_kinematikparameter) zu beachten.
 Dabei muss prinzipiell darauf geachtet werden, dass keine Variablen doppelt benannt sind, z.B. eine Länge __d__, die genauso heißt wie der Vektor mit allen MDH-Längen __d__.
