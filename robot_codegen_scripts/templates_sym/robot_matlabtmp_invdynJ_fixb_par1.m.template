@@ -1,10 +1,10 @@
 
 %% Function calls and calculation
 g = %RN%_gravloadJ_floatb_twist_slag_vp1(qJ, g, ...
-  pkin, m_num, rSges_num_mdh);
+  pkin, m, rSges);
 c = %RN%_coriolisvecJ_fixb_slag_vp1(qJ, qJD, ...
-  pkin, m_num, rSges_num_mdh, Icges_num_mdh);
+  pkin, m, rSges, Icges);
 M = %RN%_inertiaJ_slag_vp1(qJ, ...
-    pkin, m_num, rSges_num_mdh, Icges_num_mdh);
+    pkin, m, rSges, Icges);
 tau = g+c+M*qJDD;
 
