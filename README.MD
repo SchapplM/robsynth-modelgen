@@ -211,7 +211,7 @@ Folgende Dateien müssen zusätzlich erzeugt werden, damit die Dynamikgleichunge
 Folgende Ausführungen beziehen sich auf die robot_env:
 
 Maple-Variablen wie __theta__ und __d__ können nun neben den verallgemeinerten Koordinaten __qJ_t__ auch andere zeitabhängige Ausdrücke beinhalten.
-Diese müssen in zwei zusätzlichen Matrizen __kintmp_t__ und __kintmp_s__ aufgelistet werden.
+Diese müssen in zwei zusätzlichen Vektoren __kintmp_t__ und __kintmp_s__ aufgelistet werden.
 In __kintmp_t__ stehen zeitabhängige Größen der Ersetzungsvariablen aus __kintmp_s__.
 *kintmp* steht dabei für temporäre Kinematikparameter. Diese Parameter werden im Folgenden substituiert. Konstante Kinematikparameter müssen nicht extra aufgelistet werden.
 
@@ -234,12 +234,18 @@ Andernfalls wäre die Berechnung sinus(arctan(...)) notwendig.
 Damit die Testfunktionen funktionieren, müssen konkrete Zahlenwerte für die Kinematikparameter vorgegeben werden.
 Die Konstanten müssen in der Datei 
 ```
-robot_codegen_constraints/%RN%_kinematic_constraints_matlab.m
+robot_codegen_constraints/%RN%_kinematic_parameter_values.m
 ```
-eingetragen sein und Variablen initialisieren, die den gleichen Namen haben, wie die in __%RN%_kinematic_constraints.mpl__ verwendeten Konstanten.
+eingetragen sein und Variablen initialisieren, die den gleichen Namen haben, wie die in `%RN%_kinematic_constraints.mpl` verwendeten Konstanten.
 Z. B. __l1__, __l2__, ... für konstante Längen.
 Falls in der Definitionsdatei robot_env auch bereits andere Konstanten als __a1__, ... definiert wurden sind diese hier auch zu definieren.
+
 Falls kinematische Zwangsbedingungen existieren, können die Parameter im Allgemeinen nicht zufällig zum Testen gewählt werden, da sonst die kinematischen Zwangsbedingungen verletzt werden.
+Zusätzlich sollten auch die Grenzen für die Gelenkwinkel der Minimalkoordinaten in der Datei
+```
+robot_codegen_constraints/%RN%_kinematic_constraints_matlab.m
+```
+gesetzt werden. Damit wird sichergestellt, dass durch die zufälligen Winkelstellungen beim Testen die Zwangsbedingungen nicht verletzt werden.
 
 #### Beispiele
 
@@ -558,6 +564,8 @@ Der Ordner examples enthält Beispiele für die Datei %RN%_kinematic_constraints
   robot_kinematic_constraints_calculations.mw
       <-- robot_env
       <-- kinematic_constraints_maple_inert
+  %RN%_kinematic_parameter_values.m
+  %RN%_kinematic_constraints_matlab.m
 ```
 ### Kinematik
 
