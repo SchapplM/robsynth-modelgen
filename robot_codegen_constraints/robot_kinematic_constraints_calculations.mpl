@@ -72,25 +72,34 @@ for i from 1 to NSE do
   end if:
 end do:
 # Zähle, welche Gelenke abhängig sind (durch ZB beschrieben).
+# (in der Gelenkvariablen stehen die Inhalte von kintmp
 jv_zaehler := Matrix(NJ,1):
 for i from 1 to NJ do
   if has(has~(theta_s(i,1), kintmp_s), true) or has(has~(d_s(i,1), kintmp_s), true) then
     jv_zaehler(i,1) := 1:
   end if:
 end do:
+# Zählen, welche Gelenke statische Transformationen sind
+sigma2_zaehler := Matrix(NJ,1):
+for i from 1 to NJ do
+  if sigma(i,1)=2 then
+    sigma2_zaehler(i,1) := 1:
+  end if:
+end do:
 # Anzahl der abhängigen Gelenkvariablen (Zählmethode: Gelenkkoordinaten durchgehen)
-NC1 := add(jv_zaehler(n), n = 1 .. NJ):
+NC1 := add(jv_zaehler(n), n = 1 .. NJ);
 # Anzahl der abhängigen Gelenkvariablen (Zählmethode: Zwangsbedingungen durchgehen)
-NC2 := add(kintmp_zaehler(n), n = 1 .. NSE):
-# Prüfe, ob Anzahl Zwangsbedingungen zu Anzahl Gelenke und Minimalkoordinaten passt.
-NVJ := NJ - NL + 1: # Anzahl virtueller Gelenke
-;
+NC2 := add(kintmp_zaehler(n), n = 1 .. NSE);
+# Anzahl der konstanten Transformationen
+NS := add(sigma2_zaehler(n), n = 1 .. NJ);
+# Anzahl der "realen" Gelenke (statische Transformationen herausrechnen)
+NRJ := NJ - NS;
 # Es gibt (NL - 1) durch Gelenke bewegte Körper, NVJ/2 Koordinatensysteme (hier als "Gelenk" gezählt) sind statisch aufgrund der Schleifenschlussbedingungen
-if NQJ+NC1 <> (NL - 1)+NVJ/2 then
-  printf("Fehler: Anzahl der Zwangsbedingungen %d (aus Gelenkvariablen) passt nicht zur Anzahl der Gelenke %d und der Minimalkoordinaten %d\n", NC1, NJ, NQJ):
+if NQJ+NC1 <> NRJ then
+  printf("Fehler: Anzahl der Abhängigen Gelenke %d (aus Gelenkvariablen) passt nicht zur Anzahl der Gelenke %d und der Minimalkoordinaten %d\n", NC1, NRJ, NQJ):
 end if:
-if NQJ+NC2 <> (NL - 1)+NVJ/2 then
-  printf("Fehler: Anzahl der Zwangsbedingungen %d (aus Verwendung der Zwangsbedingungs-Variablen) passt nicht zur Anzahl der Gelenke %d und der Minimalkoordinaten %d\n", NC2, NJ, NQJ):
+if NC1 <> NC2 then
+  printf("Fehler: Anzahl der Abhängigen Gelenke %d (aus Gelenkvariablen) passt nicht zur Anzahl der Zwangsbedingungen %d (aus Verwendung der Zwangsbedingungs-Variablen)\n", NC1, NC2):
 end if:
 # Indizes der Zwangsbedingungen (in kintmp_s), die wirklich verwendet werden. Wird später nicht mehr benötigt.
 Ind_ZB := Matrix(NC,1):
@@ -148,3 +157,4 @@ if codegen_act = true then
   printf("Ausdrücke für Kinematische ZB gespeichert (Matlab)\n"):
 end if:
 printf("Fertig\n"):
+

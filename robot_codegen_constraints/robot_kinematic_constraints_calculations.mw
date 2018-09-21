@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="2017" minor="3"/>
+<Version major="2018" minor="0"/>
 <Label-Scheme value="2" prefix=""/>
-<View-Properties presentation="true" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false">
+<View-Properties presentation="true" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="30" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="30" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -246,7 +246,8 @@ end do:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L2262" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Z\303\244hle, welche Gelenke abh\303\244ngig sind (durch ZB beschrieben).</Font></Text-field>
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Z\303\244hle, welche Gelenke abh\303\244ngig sind (durch ZB beschrieben).
+(in der Gelenkvariablen stehen die Inhalte von kintmp)</Font></Text-field>
 </Input>
 </Group>
 <Group view="code" hide-output="false" labelreference="L2255" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -261,6 +262,22 @@ end do:</Text-field>
 end do:</Text-field>
 </Input>
 </Group>
+<Group view="code" labelreference="L2281" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Z\303\244hlen, welche Gelenke statische Transformationen sind</Font></Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" hide-output="false" labelreference="L2284" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">sigma2_zaehler := Matrix(NJ,1):</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-output="false" labelreference="L2285" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NJ do
+  if sigma(i,1)=2 then
+    sigma2_zaehler(i,1) := 1:
+  end if:
+end do:</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L2265" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Anzahl der abh\303\244ngigen Gelenkvariablen (Z\303\244hlmethode: Gelenkkoordinaten durchgehen)</Font></Text-field>
 </Input>
@@ -276,13 +293,21 @@ end do:</Text-field>
 <Group view="code" hide-input="false" hide-output="false" labelreference="L2217" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">NC2 := add(kintmp_zaehler(n), n = 1 .. NSE):</Text-field>
 </Input>
-</Group>
-<Group view="code" hide-output="false" labelreference="L2220" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Pr\303\274fe, ob Anzahl Zwangsbedingungen zu Anzahl Gelenke und Minimalkoordinaten passt.</Font></Text-field>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2294" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Anzahl der konstanten Transformationen</Text-field>
 </Input>
 </Group>
-<Group view="code" hide-input="false" labelreference="L2274" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">NVJ := NJ - NL + 1: # Anzahl virtueller Gelenke</Text-field>
+<Group view="code" hide-input="false" labelreference="L2293" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">NS := add(sigma2_zaehler(n), n = 1 .. NJ):</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2295" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Anzahl der &quot;realen&quot; Gelenke (statische Transformationen herausrechnen)</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2292" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">NRJ := NJ - NS:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L2278" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -290,15 +315,15 @@ end do:</Text-field>
 </Input>
 </Group>
 <Group view="code" hide-output="false" labelreference="L2246" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if NQJ+NC1 &lt;&gt; (NL - 1)+NVJ/2 then
-  <Font encoding="UTF-8">printf(&quot;Fehler: Anzahl der Zwangsbedingungen %d (aus Gelenkvariablen) passt nicht zur Anzahl der Gelenke %d und der Minimalkoordinaten %d\134n&quot;, NC1, NJ, NQJ):
-</Font>end if:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if NQJ+NC1 &lt;&gt; NRJ then
+  <Font encoding="UTF-8">printf(&quot;Fehler: Anzahl der Abh\303\244ngigen Gelenke %d (aus Gelenkvariablen) passt nicht zur Anzahl der Gelenke %d und der Minimalkoordinaten %d\134n&quot;, NC1, </Font>NRJ, NQJ):
+end if:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L2264" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if NQJ+NC2 &lt;&gt; (NL - 1)+NVJ/2 then
-  printf(&quot;Fehler: Anzahl der Zwangsbedingungen %d (aus Verwendung der Zwangsbedingungs-Variablen) <Font encoding="UTF-8">passt nicht zur Anzahl der Gelenke %d und der Minimalkoordinaten %d\134n&quot;, NC2, NJ, NQJ):
-</Font>end if:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if NC1 &lt;&gt; NC2 then
+<Font encoding="UTF-8">  printf(&quot;Fehler: Anzahl der Abh\303\244ngigen Gelenke %d (aus Gelenkvariablen) passt nicht zur Anzahl der Zwangsbedingungen %d (aus Verwendung der Zwangsbedingungs-Variablen)\134n&quot;, </Font>NC1, NC2):
+end if:</Text-field>
 </Input>
 </Group>
 <Group view="code" hide-output="false" labelreference="L2221" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -424,6 +449,10 @@ end if:</Text-field>
 </Section><Presentation-Block>
 <Group labelreference="L1950" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Fertig\134n&quot;):</Font></Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2298" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Worksheet>
