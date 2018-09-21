@@ -7,7 +7,8 @@
 % %INPUT_PKIN%
 % 
 % Output:
-% W [(%NJ%-%NQJ%)x%NQJ%] 
+% W [%NJ%x%NQJ%]
+%  Derivative of the joint coordinates w.r.t minimal coordinates
 %
 % Sources:
 % [NakamuraGho1989] Nakamura, Yoshihiko and Ghodoussi, Modjtaba: Dynamics computation of closed-link robot mechanisms with nonredundant and redundant actuators (1989)

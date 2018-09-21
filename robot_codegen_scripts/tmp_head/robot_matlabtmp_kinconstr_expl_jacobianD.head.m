@@ -8,7 +8,7 @@
 % %INPUT_PKIN%
 % 
 % Output:
-% WD [(%NJ%-%NQJ%)x%NQJ%] 
+% WD [%NJ%x%NQJ%]
 %
 % Sources:
 % [NakamuraGho1989] Nakamura, Yoshihiko and Ghodoussi, Modjtaba: Dynamics computation of closed-link robot mechanisms with nonredundant and redundant actuators (1989)
