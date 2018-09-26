@@ -174,6 +174,15 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group>
+<Group labelreference="L3076" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Definitionen f\303\274r parallelen Roboter laden</Font></Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L3077" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/para_definitions&quot;, robot_name):
+r_P_sP_P := r_sP_P:</Text-field>
+</Input>
+</Group>
 <Group labelreference="L3028" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ergebnisse der Kinematik f\303\274r parallen Roboter laden</Font></Text-field>
 </Input>
@@ -188,9 +197,9 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 <Input><Text-field style="Text" layout="Normal">Parameter definieren, wenn nicht vorher schon geschehen</Text-field>
 </Input>
 </Group>
-<Group labelreference="L2969" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if not assigned(JE) then
-   JE := Matrix(3,3,[XX,XY,XZ,YX,YY,YZ,ZX,ZY,ZZ]):
+<Group labelreference="L3079" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if not assigned(J_SE) then
+   J_SP := Matrix(3,3,[XXP,XYP,XZP,XYP,YYP,YZP,XZP,YZP,ZZP]):
 end if:
 if not assigned(xE_s) then
    xE_s:=&lt;x_all[1];x_all[2];x_all[3];x_all[4];x_all[5];x_all[6]&gt;:
@@ -203,9 +212,24 @@ end if:</Text-field>
 <Input><Text-field style="Text" layout="Normal">Berechnung der Rotationsmatrizen</Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L3045" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group hide-input="false" labelreference="L3132" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">R_0_0_E_t := rotz(xE_t(4)).roty(xE_t(5)).rotx(xE_t(6)):
-R_0_0_E_s := rotz(xE_s(4)).roty(xE_s(5)).rotx(xE_s(6)):</Text-field>
+R_0_0_E_s := rotz(xE_s(4)).roty(xE_s(5)).rotx(xE_s(6)):
+r_0_sP_P := R_0_0_E_s.r_P_sP_P:
+J_P_P := J_SP + mE*Multiply(Transpose(vec2skew(r_P_sP_P)),vec2skew(r_P_sP_P)):
+J_0_P := R_0_0_E_s.J_P_P.Transpose(R_0_0_E_s):</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L3045" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" spaceabove="0" linebreak="space" rightmargin="0" linespacing="0.0" initial="0" firstindent="0" leftmargin="0" bulletsuffix="" alignment="left" bullet="none" spacebelow="0" pagebreak-before="false">r_0_sP_P := R_0_0_E_t.r_P_sP_P:
+rD_0_sP_P := diff~(r_0_sP_P,t):
+for i to 3 do
+   for j to 6 do
+      rD_0_sP_P(i) := subs({xED_t(j)=xED_s(j),xE_t(j)=xE_s(j)},rD_0_sP_P(i)):
+   end do:
+end do:
+rD_0_sP_P:
+r_0_sP_P := R_0_0_E_s.r_P_sP_P:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3004" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -221,21 +245,25 @@ RPYjac_E_s := combine(Multiply(Transpose(R_0_0_E_s),RPYjac_0_s)):</Text-field>
 </Group>
 <Group hide-input="false" labelreference="L3055" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">w_E_0_E_s := RPYjac_E_s.xED_s(4..6,1):
+w_0_0_E_s := RPYjac_0_s.xED_s(4..6,1):
 w_E_0_E_t := RPYjac_E_t.xED_t(4..6,1):</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3070" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">dRPYjac_E_t := diff~(RPYjac_E_t,t):
-dRPYjac_E_s := Copy(dRPYjac_E_t):</Text-field>
+dRPYjac_0_t := diff~(RPYjac_0_t,t):
+dRPYjac_E_s := Copy(dRPYjac_E_t):
+dRPYjac_0_s := Copy(dRPYjac_0_t):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2906" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Substituiere die zeitabh\303\244ngigen Koordinaten in der </Font>H-Matrix mit <Font encoding="UTF-8">zeitunabh\303\244ngigen Koordinaten </Font></Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L2" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion3" expanded="true" visible="true" pixel-width="1070" pixel-height="155" code-language="text/maple" autoexpand="false" wrapping="false" show-border="true" code-line-numbers="true">for i to 3 do
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L2" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion3" expanded="true" visible="true" pixel-width="1129" pixel-height="197" code-language="text/maple" autoexpand="false" wrapping="false" show-border="true" code-line-numbers="true">for i to 3 do
 	for j to 3 do
 		for k from 4 to 6 do
 			dRPYjac_E_s(i,j) := subs({xEDD_t(k)=xEDD_s(k),xED_t(k)=xED_s(k),xE_t(k)=xE_s(k)},dRPYjac_E_s(i,j)):
+			dRPYjac_0_s(i,j) := subs({xEDD_t(k)=xEDD_s(k),xED_t(k)=xED_s(k),xE_t(k)=xE_s(k)},dRPYjac_0_s(i,j)):
 		end do:
 	end do:
 end do:</EC-CodeEditor></CodeEditor-ExecGroup>
@@ -244,17 +272,26 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L2903" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" spaceabove="0" linebreak="space" rightmargin="0" linespacing="0.0" initial="0" firstindent="0" leftmargin="0" bulletsuffix="" alignment="left" bullet="none" spacebelow="0" pagebreak-before="false">wD_E_0_E_s := dRPYjac_E_s.xED_s(4..6,1)+RPYjac_E_s.xEDD_s(4..6,1):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" spaceabove="0" linebreak="space" rightmargin="0" linespacing="0.0" initial="0" firstindent="0" leftmargin="0" bulletsuffix="" alignment="left" bullet="none" spacebelow="0" pagebreak-before="false">wD_E_0_E_s := dRPYjac_E_s.xED_s(4..6,1)+RPYjac_E_s.xEDD_s(4..6,1):
+wD_0_0_E_s := dRPYjac_0_s.xED_s(4..6,1)+RPYjac_0_s.xEDD_s(4..6,1):</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L3100" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">H := &lt;IdentityMatrix(3,3),ZeroMatrix(3);
+      ZeroMatrix(3),RPYjac_0_s&gt;:</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3066" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">H := &lt;IdentityMatrix(3,3),ZeroMatrix(3);
-      ZeroMatrix(3),RPYjac_E_s&gt;:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Hinv := MatrixInverse(H):</Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L3064" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group hide-input="false" labelreference="L3093" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">dH := &lt;ZeroMatrix(3),ZeroMatrix(3);
-      ZeroMatrix(3),dRPYjac_E_s&gt;:</Text-field>
+      ZeroMatrix(3),dRPYjac_0_s&gt;:</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L3081" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>
@@ -263,8 +300,42 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Input><Text-field style="Text" layout="Normal">Berechnung des Gravitationsvektors</Text-field>
 </Input>
 </Group>
+<Group hide-input="false" labelreference="L3118" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">xAll := &lt;x;y;z;an;bn;cn&gt;:
+gE_z := xAll(1..3,1) - r_0_sP_P:</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L3122" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for j to 3 do
+  for i from 1 to 6 do
+    gE_z(j) := subs(x_all[i]=xAll(i),gE_z(j)):
+  end do:
+end do:</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L3116" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">dgEdz_final := Matrix(6,1):
+dgEdz := Matrix(3,1):
+gvec := Matrix(3,1,[g1,g2,g3]):
+for j to 6 do
+  for i to 3 do
+     dgEdz(i) := diff(gE_z(i),xAll(j)):
+  end do:
+  dgEdz_final(j) := mE*Transpose(gvec(..,1)).dgEdz(..,1):
+end do:
+</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L3130" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for j to 6 do
+  for i from 1 to 6 do
+    dgEdz_final(j) := subs(xAll(i)=x_all[i],dgEdz_final(j)):
+  end do:
+end do:</Text-field>
+</Input>
+</Group>
 <Group hide-input="false" labelreference="L2953" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">gE := &lt;mE*&lt;g1;g2;g3&gt;;ZeroMatrix(3,1)&gt;: #Multiply mit Transpose(Hinv)</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">gE := Transpose(Hinv).dgEdz_final:#-&lt;mE*&lt;g1;g2;g3&gt;;ZeroMatrix(3,1)&gt;: </Text-field>
 </Input>
 </Group>
 <Group labelreference="L2888" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -283,9 +354,9 @@ end if:</Text-field>
 <Input>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L2893" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">ME := &lt;mE*Matrix(3,shape=identity),ZeroMatrix(3);
-       ZeroMatrix(3),JE&gt;:</Text-field>
+<Group hide-input="false" labelreference="L3128" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">ME := &lt;mE*Matrix(3,shape=identity),mE*vec2skew(r_0_sP_P);
+       mE*Transpose(vec2skew(r_0_sP_P)),J_0_P&gt;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2886" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -297,16 +368,21 @@ end if:</Text-field>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Coriolis-Vector cE of the platform</Text-field></Title>
 <Group labelreference="L2918" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal">Coriolis-Vector</Text-field>
+<Input><Text-field style="Text" layout="Normal">Coriolis-Matrix</Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L3015" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">cE := &lt;ZeroMatrix(3,1);vec2skew(w_E_0_E_s).JE.w_E_0_E_s&gt;:</Text-field>
+<Group hide-input="false" labelreference="L3150" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">#cE := &lt;ZeroMatrix(3,3),mE*vec2skew(rD_0_sP_P);
+       #mE*(Transpose(vec2skew(rD_0_sP_P))+Multiply(vec2skew(w_0_0_E_s),Transpose(vec2skew(r_0_sP_P)))),Multiply(vec2skew
+#(w_0_0_E_s),J_0_P)&gt;:
+cE := &lt;ZeroMatrix(3,3),mE*vec2skew(rD_0_sP_P);
+       ZeroMatrix(3,3),Multiply(vec2skew(w_0_0_E_s),J_0_P)&gt;:
+</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2920" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_corvec then
-  MatlabExport(ME, sprintf(&quot;../codeexport/%s/tmp/coriolisvec_floatb_%s_platform_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
+  MatlabExport(cE, sprintf(&quot;../codeexport/%s/tmp/coriolisvec_floatb_%s_platform_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -316,8 +392,8 @@ end if:</Text-field>
 <Input><Text-field style="Text" layout="Normal">Inverse Dynamik der Plattform</Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L3074" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tauE := Multiply(ME,&lt;xEDD_s(1..3,1);wD_E_0_E_s&gt;) + cE - gE:</Text-field>
+<Group hide-input="false" labelreference="L3152" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tauE := Multiply(ME,H.xEDD_s) + Multiply(ME.dH+cE.H,xED_s) - gE:# - Multiply(Transpose(Hinv),dT):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2941" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
