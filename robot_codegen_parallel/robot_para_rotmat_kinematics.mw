@@ -277,12 +277,12 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Input><Text-field style="Text" layout="Normal">Berechnung der Matrix Ui: EE-Geschwindigkeiten -&gt; <Font encoding="UTF-8">Koppelpunktgeschwindigkeiten P. i steht f\303\274r den Index des jeweiligen Beines</Font></Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L3233" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group hide-input="false" labelreference="L3236" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i to N_LEGS do</Text-field>
 </Input>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  r||i := P||i:</Text-field>
 </Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  r||i := rotz(xE_t(4)).roty(xE_t(5)).rotx(xE_t(6)).vec2skew(r||i):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  r||i := vec2skew(rotz(xE_t(4)).roty(xE_t(5)).rotx(xE_t(6)).r||i):</Text-field>
 </Input>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  ones := Matrix(3,3,shape=identity):</Text-field>
 </Input>
