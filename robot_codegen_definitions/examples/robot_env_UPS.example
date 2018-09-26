@@ -1,5 +1,5 @@
-# Beispiel für Codegenerierung:
-# UPS
+﻿# Beispiel für Codegenerierung:
+# 3RRR
 
 robot_name := "UPS":
 
@@ -26,4 +26,4 @@ N_LEGS := 6:
 leg_frame := Matrix([xA, yA, zA, alphaLeg, 0, 0]):
 xE_s := <x_all[1];x_all[2];x_all[3];x_all[4];x_all[5];x_all[6]>:
 
-JE := Matrix(3,3,[XX,XY,XZ,YX,YY,YZ,ZX,ZY,ZZ]):
+J_SP := Matrix(3,3,[XX,XY,XZ,YX,YY,YZ,ZX,ZY,ZZ]):
