@@ -213,8 +213,17 @@ end if:</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3132" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">R_0_0_E_t := rotz(xE_t(4)).roty(xE_t(5)).rotx(xE_t(6)):
-R_0_0_E_s := rotz(xE_s(4)).roty(xE_s(5)).rotx(xE_s(6)):
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if angleConv = X_Y_Z then
+   R_0_0_E_t := rotx(xE_t(4)).roty(xE_t(5)).rotz(xE_t(6)):
+   R_0_0_E_s := rotx(xE_s(4)).roty(xE_s(5)).rotz(xE_s(6)):
+   RPYjac_0_t := rpyjac(xE_t(4),xE_t(5),xE_t(6)):
+   RPYjac_0_s := rpyjac(xE_s(4),xE_s(5),xE_s(6)):
+elif angleConv = Z_Y_X then
+   R_0_0_E_t := rotz(xE_t(4)).roty(xE_t(5)).rotx(xE_t(6)):
+   R_0_0_E_s := rotz(xE_s(4)).roty(xE_s(5)).rotx(xE_s(6)):
+   RPYjac_0_t := yprjac(xE_t(4),xE_t(5),xE_t(6)):
+   RPYjac_0_s := yprjac(xE_s(4),xE_s(5),xE_s(6)):
+end:
 r_0_sP_P := R_0_0_E_s.r_P_sP_P:
 J_P_P := J_SP + mE*Multiply(Transpose(vec2skew(r_P_sP_P)),vec2skew(r_P_sP_P)):
 J_0_P := R_0_0_E_s.J_P_P.Transpose(R_0_0_E_s):</Text-field>
@@ -237,16 +246,15 @@ r_0_sP_P := R_0_0_E_s.r_P_sP_P:</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3059" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">RPYjac_0_t := yprjac(xE_t(4),xE_t(5),xE_t(6)):
-RPYjac_E_t := combine(Multiply(Transpose(R_0_0_E_t),RPYjac_0_t)):
-RPYjac_0_s := yprjac(xE_s(4),xE_s(5),xE_s(6)):
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">RPYjac_E_t := combine(Multiply(Transpose(R_0_0_E_t),RPYjac_0_t)):
 RPYjac_E_s := combine(Multiply(Transpose(R_0_0_E_s),RPYjac_0_s)):</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3055" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">w_E_0_E_s := RPYjac_E_s.xED_s(4..6,1):
 w_0_0_E_s := RPYjac_0_s.xED_s(4..6,1):
-w_E_0_E_t := RPYjac_E_t.xED_t(4..6,1):</Text-field>
+w_E_0_E_t := RPYjac_E_t.xED_t(4..6,1):
+xED_s(1..3,1);</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3070" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -278,7 +286,8 @@ wD_0_0_E_s := dRPYjac_0_s.xED_s(4..6,1)+RPYjac_0_s.xEDD_s(4..6,1):</Text-field>
 </Group>
 <Group hide-input="false" labelreference="L3100" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">H := &lt;IdentityMatrix(3,3),ZeroMatrix(3);
-      ZeroMatrix(3),RPYjac_0_s&gt;:</Text-field>
+      ZeroMatrix(3),RPYjac_0_s&gt;:
+MatlabExport(H, &quot;H.m&quot;,2);</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3066" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -393,7 +402,7 @@ end if:</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3152" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tauE := Multiply(ME,H.xEDD_s) + Multiply(ME.dH+cE.H,xED_s) - gE:# - Multiply(Transpose(Hinv),dT):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tauE := Multiply(ME.H,xEDD_s) + Multiply(ME.dH+cE.H,xED_s) - gE:# - Multiply(Transpose(Hinv),dT):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2941" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">

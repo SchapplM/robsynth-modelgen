@@ -164,7 +164,9 @@ end do:</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L1731" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_sP_P := Vector(3,symbol=r_sP):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_sP_P := Vector(3,symbol=r_sP):
+angleConvLeg := leg_frame(7):
+angleConv := xE_s(7):</Text-field>
 </Input>
 </Group>
 </Section>
@@ -174,7 +176,11 @@ end do:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1598" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save r_sP_P, frame_A_i, qJ_i_s, qJD_i_s, qJDD_i_s, sprintf(&quot;../codeexport/%s/tmp/para_definitions&quot;, robot_name):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save angleConvLeg, angleConv, r_sP_P, frame_A_i, qJ_i_s, qJD_i_s, qJDD_i_s, sprintf(&quot;../codeexport/%s/tmp/para_definitions&quot;, robot_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1732" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>
