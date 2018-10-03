@@ -210,6 +210,8 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 <Group labelreference="L2958" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Generiere Dynamik f\303\274r PKM %s mit Parametersatz %d und %s\134n&quot;, </Font>robot_name, codegen_dynpar, base_method_name):</Text-field>
 </Input>
+<Output><Text-field style="Line Printed Output" layout="Line Printed Output"><Font encoding="UTF-8">Generiere Dynamik f\303\274r PKM UPS mit Parametersatz 1 und twist</Font></Text-field>
+</Output>
 </Group>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Additional Kinematics</Text-field></Title>
@@ -248,11 +250,17 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3218" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i to N_LEGS do</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tmp := Matrix(3,1,[xP[1],yP[1],zP[1]]):
+for i to N_LEGS do</Text-field>
 </Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  P||i := &lt;xP[i];yP[i];zP[i]&gt;:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  P||i := &lt;xP[i];yP[i];zP[i]&gt;;
+  j := i+1:
+  if i &lt;&gt; 1 then
+     tmp := &lt;tmp | P||i&gt;:
+  end:</Text-field>
 </Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">end do:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">end do:
+P_i := tmp:</Text-field>
 </Input>
 </Group>
 </Section>
@@ -433,12 +441,14 @@ Jinv := simplify(Tmp):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3146" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save Jinv, JB_i, JBD_i, JBinv_i, U_i, UD_i, xE_t, xED_t, xEDD_t, xE_s, xED_s, xEDD_s, sprintf(&quot;../codeexport/%s/tmp/kinematics_%s_platform_maple.m&quot;, robot_name, base_method_name):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save P_i, Jinv, JB_i, JBD_i, JBinv_i, U_i, UD_i, xE_t, xED_t, xEDD_t, xE_s, xED_s, xEDD_s, sprintf(&quot;../codeexport/%s/tmp/kinematics_%s_platform_maple.m&quot;, robot_name, base_method_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3193" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(Jinv, sprintf(&quot;../codeexport/%s/tmp/Jinv_para_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):</Text-field>
 </Input>
+<Output><Text-field style="Line Printed Output" layout="Line Printed Output">Exported Matlab code to ../codeexport/UPS/tmp/Jinv_para_twist_par1_matlab.m (CPUTime: 1.78s)</Text-field>
+</Output>
 </Group>
 <Group labelreference="L2951" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal">Matlab Export: Floating base
