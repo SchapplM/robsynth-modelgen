@@ -133,10 +133,12 @@ restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L1711" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">qJD_i_s := Matrix(NQJ,N_LEGS):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">qJ_i_s := Matrix(NQJ,N_LEGS):
+qJD_i_s := Matrix(NQJ,N_LEGS):
+qJDD_i_s := Matrix(NQJ,N_LEGS):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1717" drawlabel="true">
+<Group hide-input="false" labelreference="L1717" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NQJ do
   for j from 1 to N_LEGS do
      k := j-1:
@@ -177,10 +179,6 @@ angleConv := xE_s(7):</Text-field>
 </Group>
 <Group labelreference="L1598" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save angleConvLeg, angleConv, r_sP_P, frame_A_i, qJ_i_s, qJD_i_s, qJDD_i_s, sprintf(&quot;../codeexport/%s/tmp/para_definitions&quot;, robot_name):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1732" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>
