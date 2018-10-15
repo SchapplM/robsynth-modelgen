@@ -146,6 +146,22 @@ end if:
 if codegen_act then
   MatlabExport(b_rotg, sprintf("../codeexport/%s/tmp/jacobig_rot_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
 end if:
+# Jacobi-Matrix der Rotationsmatrix (Rotatorisch)
+# Ableitung der Rotationsmatrix nach den Gelenkwinkel (kann z.B. für die inverse Kinematik benutzt werden)
+R_0_i_s := convert_t_s( Trf_c(1 .. 3, 1..3, LIJAC+1) ):
+Rb_0_i_s :=Reshape(R_0_i_s, 9,1):
+J_Rb := Matrix(9, NQJ):
+for i from 1 to 9 do
+  for j from 1 to NQJ do
+    J_Rb(i,j) := diff(Rb_0_i_s(i,1), qJ_s(j,1)):
+  end do:
+end do:
+save J_Rb, sprintf("../codeexport/%s/tmp/jacobiR_rot_%d_floatb_%s_maple.m", robot_name, LIJAC, base_method_name):
+if codegen_act then
+  MatlabExport(J_Rb, sprintf("../codeexport/%s/tmp/jacobiR_rot_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
+end if:
+# 
+
 # Jacobi-Zeitableitung
 JD_rotg_t := diff~(convert_s_t(b_rotg), t):
 JD_rotg_s := convert_t_s(JD_rotg_t):
@@ -162,4 +178,5 @@ end if:
 if codegen_act then
   MatlabExport(JD_transla_s, sprintf("../codeexport/%s/tmp/jacobiaD_transl_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
 end if:
+
 

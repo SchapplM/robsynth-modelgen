@@ -115,12 +115,14 @@ fi
 # (4) analytisch, transl., Zeitableitung
 # (5) analytisch, rot., Zeitableitung
 # (6) geometrisch, rot., Zeitableitung
-# (7) geometrisch (vollständig)
-# (8) analytisch (vollständig)
-# (9) geometrisch, Zeitableitung (vollständig)
-# (10) analytisch, Zeitableitung (vollständig)
+# (7) Ableitung der Rotationsmatrix (nur Rotationsteil)
+# (8) geometrisch (vollständig)
+# (9) analytisch (vollständig)
+# (10) geometrisch, Zeitableitung (vollständig)
+# (11) analytisch, Zeitableitung (vollständig)
 
-for (( jacart=1; jacart<=10; jacart++ ))
+
+for (( jacart=1; jacart<=11; jacart++ ))
 do
   for (( ib=0; ib<$robot_NL; ib++ ))
   do
@@ -148,35 +150,38 @@ do
       quelldat=$repo_pfad/codeexport/${robot_name}/tmp/jacobigD_rot_${ib}_floatb_twist_matlab.m
       zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_jacobigD_rot_${ib}_floatb_twist_sym_varpar.m
       headdat=$head_pfad/robot_matlabtmp_jacobigD_rot.head.m
-    elif [ "$jacart" -eq "7" ]; then
+     elif [ "$jacart" -eq "7" ]; then
+      quelldat=$repo_pfad/codeexport/${robot_name}/tmp/jacobiR_rot_${ib}_floatb_twist_matlab.m
+      zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_jacobiR_rot_${ib}_sym_varpar.m
+      headdat=$head_pfad/robot_matlabtmp_jacobiR_rot.head.m
+    elif [ "$jacart" -eq "8" ]; then
       quelldat=$repo_pfad/codeexport/${robot_name}/tmp/jacobig_${ib}_floatb_twist_matlab.m
       zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_jacobig_${ib}_floatb_twist_sym_varpar.m
       headdat=$head_pfad/robot_matlabtmp_jacobig.head.m
-    elif [ "$jacart" -eq "8" ]; then
+    elif [ "$jacart" -eq "9" ]; then
       quelldat=$repo_pfad/codeexport/${robot_name}/tmp/jacobia_${ib}_floatb_twist_matlab.m
       zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_jacobia_${ib}_floatb_twist_sym_varpar.m
-      headdat=$head_pfad/robot_matlabtmp_jacobia.head.m
-    elif [ "$jacart" -eq "9" ]; then
+    elif [ "$jacart" -eq "10" ]; then
       quelldat=$repo_pfad/codeexport/${robot_name}/tmp/jacobigD_${ib}_floatb_twist_matlab.m
       zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_jacobigD_${ib}_floatb_twist_sym_varpar.m
       headdat=$head_pfad/robot_matlabtmp_jacobigD.head.m
-    elif [ "$jacart" -eq "10" ]; then
+    elif [ "$jacart" -eq "11" ]; then
       quelldat=$repo_pfad/codeexport/${robot_name}/tmp/jacobiaD_${ib}_floatb_twist_matlab.m
       zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_jacobiaD_${ib}_floatb_twist_sym_varpar.m
       headdat=$head_pfad/robot_matlabtmp_jacobiaD.head.m
     fi;
-    if [ "$jacart" -eq "4" ] || [ "$jacart" -eq "5" ] || [ "$jacart" -eq "6" ] || [ "$jacart" -gt "8" ]; then # Zeitableitung, Geschwindigkeit ist Eingang
+    if [ "$jacart" -eq "4" ] || [ "$jacart" -eq "5" ] || [ "$jacart" -eq "6" ] || [ "$jacart" -gt "9" ]; then # Zeitableitung, Geschwindigkeit ist Eingang
       input_qD=true
     else
       input_qD=false
     fi;
-    if [ "$jacart" -eq "1" ] || [ "$jacart" -eq "4" ] || [ "$jacart" -gt "6" ]; then # translatorisch oder Gesamtmatrix
+    if [ "$jacart" -eq "1" ] || [ "$jacart" -eq "4" ] || [ "$jacart" -gt "7" ]; then # translatorisch oder Gesamtmatrix
       input_r=true
     else
       input_r=false
     fi;
 
-    if [ "$jacart" -lt "7" ]; then # Einfügen von Quelltext
+    if [ "$jacart" -lt "8" ]; then # Einfügen von Quelltext
       if [ -f $quelldat ]; then
         cat $headdat > $zieldat
         printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -212,7 +217,7 @@ do
     else
       cat $headdat > $zieldat # reines Aufrufen anderer Funktionen
     fi;
-    if [ "$jacart" -lt "7" ]; then
+    if [ "$jacart" -lt "8" ]; then
       source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
     else
       source robot_codegen_matlabfcn_postprocess.sh $zieldat 0 0 ${quelldat}.subsvar
@@ -227,12 +232,13 @@ done
 # (2) analytisch (vollständig)
 # (3) geometrisch, rot.
 # (4) analytisch, rot.
-# (5) geometrisch, Zeitableitung (vollständig)
-# (6) analytisch, Zeitableitung (vollständig)
-# (7) geometrisch, Zeitableitung, rot.
-# (8) analytisch, Zeitableitung, rot.
+# (5) Ableitung der Rotationsmatrix (nur Rotation)
+# (6) geometrisch, Zeitableitung (vollständig)
+# (7) analytisch, Zeitableitung (vollständig)
+# (8) geometrisch, Zeitableitung, rot.
+# (9) analytisch, Zeitableitung, rot.
 
-for (( jacart=1; jacart<=8; jacart++ ))
+for (( jacart=1; jacart<=9; jacart++ ))
 do
   if [ "$jacart" -eq "1" ]; then
     zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_jacobig_floatb_twist_sym_varpar.m
@@ -247,24 +253,27 @@ do
     zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_jacobia_rot_floatb_twist_sym_varpar.m
     headdat=$head_pfad/robot_matlabtmp_jacobia_rot_all.head.m
   elif [ "$jacart" -eq "5" ]; then
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_jacobiR_rot_sym_varpar.m
+    headdat=$head_pfad/robot_matlabtmp_jacobiR_rot_all.head.m
+  elif [ "$jacart" -eq "6" ]; then
     zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_jacobigD_floatb_twist_sym_varpar.m
     headdat=$head_pfad/robot_matlabtmp_jacobigD_all.head.m
-  elif [ "$jacart" -eq "6" ]; then
+  elif [ "$jacart" -eq "7" ]; then
     zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_jacobiaD_floatb_twist_sym_varpar.m
     headdat=$head_pfad/robot_matlabtmp_jacobiaD_all.head.m
-  elif [ "$jacart" -eq "7" ]; then
+  elif [ "$jacart" -eq "8" ]; then
     zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_jacobigD_rot_floatb_twist_sym_varpar.m
     headdat=$head_pfad/robot_matlabtmp_jacobigD_rot_all.head.m
-  elif [ "$jacart" -eq "8" ]; then
+  elif [ "$jacart" -eq "9" ]; then
     zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_jacobiaD_rot_floatb_twist_sym_varpar.m
     headdat=$head_pfad/robot_matlabtmp_jacobiaD_rot_all.head.m
   fi;
-  if [ "$jacart" -gt "4" ]; then # Zeitableitung: Geschwindigkeit als Eingang
+  if [ "$jacart" -gt "5" ]; then # Zeitableitung: Geschwindigkeit als Eingang
     input_qD=true
   else
     input_qD=false
   fi;
-  if [ "$jacart" -eq "1" ] || [ "$jacart" -eq "2" ] || [ "$jacart" -eq "5" ] || [ "$jacart" -eq "6" ]; then # Vollständige Matrix: Position als Eingang
+  if [ "$jacart" -eq "1" ] || [ "$jacart" -eq "2" ] || [ "$jacart" -eq "6" ] || [ "$jacart" -eq "7" ]; then # Vollständige Matrix: Position als Eingang
     input_r=true
   else
     input_r=false
@@ -302,12 +311,14 @@ do
     elif [ "$jacart" -eq "4" ]; then
       printf "\tJa_rot=${robot_name}_jacobia_rot_${ib}_floatb_twist_sym_varpar(qJ, pkin);\n" >> $zieldat
     elif [ "$jacart" -eq "5" ]; then
-      printf "\tJgD=${robot_name}_jacobigD_${ib}_floatb_twist_sym_varpar(qJ, qJD, r_i_i_C, pkin);\n" >> $zieldat
+      printf "\tJR_rot=${robot_name}_jacobiR_rot_${ib}_sym_varpar(qJ, pkin);\n" >> $zieldat
     elif [ "$jacart" -eq "6" ]; then
-      printf "\tJaD=${robot_name}_jacobiaD_${ib}_floatb_twist_sym_varpar(qJ, qJD, r_i_i_C, pkin);\n" >> $zieldat
+      printf "\tJgD=${robot_name}_jacobigD_${ib}_floatb_twist_sym_varpar(qJ, qJD, r_i_i_C, pkin);\n" >> $zieldat
     elif [ "$jacart" -eq "7" ]; then
-      printf "\tJgD_rot=${robot_name}_jacobigD_rot_${ib}_floatb_twist_sym_varpar(qJ, qJD, pkin);\n" >> $zieldat
+      printf "\tJaD=${robot_name}_jacobiaD_${ib}_floatb_twist_sym_varpar(qJ, qJD, r_i_i_C, pkin);\n" >> $zieldat
     elif [ "$jacart" -eq "8" ]; then
+      printf "\tJgD_rot=${robot_name}_jacobigD_rot_${ib}_floatb_twist_sym_varpar(qJ, qJD, pkin);\n" >> $zieldat
+    elif [ "$jacart" -eq "9" ]; then
       printf "\tJaD_rot=${robot_name}_jacobiaD_rot_${ib}_floatb_twist_sym_varpar(qJ, qJD, pkin);\n" >> $zieldat
     fi;
   done
@@ -320,12 +331,14 @@ do
   elif [ "$jacart" -eq "4" ]; then
     printf "else\n\tJa_rot=NaN(3,$robot_NQJ);\nend" >> $zieldat
   elif [ "$jacart" -eq "5" ]; then
-    printf "else\n\tJgD=NaN(6,$robot_NQJ);\nend" >> $zieldat
+    printf "else\n\tJR_rot=NaN(9,$robot_NQJ);\nend" >> $zieldat
   elif [ "$jacart" -eq "6" ]; then
-    printf "else\n\tJaD=NaN(6,$robot_NQJ);\nend" >> $zieldat
+    printf "else\n\tJgD=NaN(6,$robot_NQJ);\nend" >> $zieldat
   elif [ "$jacart" -eq "7" ]; then
-    printf "else\n\tJgD_rot=NaN(6,$robot_NQJ);\nend" >> $zieldat
+    printf "else\n\tJaD=NaN(6,$robot_NQJ);\nend" >> $zieldat
   elif [ "$jacart" -eq "8" ]; then
+    printf "else\n\tJgD_rot=NaN(6,$robot_NQJ);\nend" >> $zieldat
+  elif [ "$jacart" -eq "9" ]; then
     printf "else\n\tJaD_rot=NaN(6,$robot_NQJ);\nend" >> $zieldat
   fi;
   source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
