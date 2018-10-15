@@ -1,0 +1,25 @@
+% Convert vector of modified DH parameters to kinematic parameter vector for
+% %RN%
+%
+% Input:
+% beta_mdh [%NJ%x1]
+%   Rotation around z
+% b_mdh [%NJ%x1]
+%   Translation along z
+% alpha_mdh [%NJ%x1]
+%   Rotation around x
+% a_mdh [%NJ%x1]
+%   Translation along x
+% theta_mdh [%NJ%x1]
+%   Rotation around z
+% d_mdh [%NJ%x1]
+%   Translation along z
+% qoffset_mdh [%NJ%x1]
+%   Offset on joint coordinate q
+%
+% Output:
+% %INPUT_PKIN%
+
+% %VERSIONINFO%
+
+function pkin = %FN%(beta_mdh, b_mdh, alpha_mdh, a_mdh, theta_mdh, d_mdh, qoffset_mdh)

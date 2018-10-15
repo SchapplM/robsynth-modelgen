@@ -42,17 +42,36 @@ done
 # Erzeuge Parameter-Funktion. Diese Funktion kann aufgerufen, um die strukturabhängigen
 # Parameter des Roboters in einer kompilierbaren Funktion zu erhalten (Topologie)
 zieldat=$fcn_pfad/${robot_name}_structural_kinematic_parameters.m
-printf "\n%% Aus ${robot_name}/parameters_mdh_v_matlab.m\n" >> $zieldat
+printf "\n%% Aus parameters_mdh_v_matlab.m\n" >> $zieldat
 cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_v_matlab.m >> $zieldat
 varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat`
 echo "v_mdh = uint8($varname_tmp);" >> $zieldat
-printf "\n%% Aus ${robot_name}/parameters_mdh_sigma_matlab.m\n" >> $zieldat
+printf "\n%% Aus parameters_mdh_sigma_matlab.m\n" >> $zieldat
 cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_sigma_matlab.m >> $zieldat
 varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat`
 echo "sigma_mdh = $varname_tmp;" >> $zieldat
-printf "\n%% Aus ${robot_name}/parameters_mdh_mu_matlab.m\n" >> $zieldat
+printf "\n%% Aus parameters_mdh_mu_matlab.m\n" >> $zieldat
 cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_mu_matlab.m >> $zieldat
 varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat`
 echo "mu_mdh = $varname_tmp;" >> $zieldat
 
+# Parameter-Funktion, die die MDH-Parameter für einen gegebenen Parametervektor pkin ausgibt
+zieldat=$fcn_pfad/${robot_name}_pkin2mdhparam.m
+quelldat_tmp=$repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_all
+echo "" > $quelldat_tmp
+p="beta b alpha a theta d qoffset"
+for exp in ${p[@]}; do
+  printf "\n%% Aus parameters_mdh_${exp}_matlab.m\n" >> $quelldat_tmp
+  cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_${exp}_matlab.m >> $quelldat_tmp
+  varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $quelldat_tmp`
+  echo "${exp}_mdh = $varname_tmp;" >> $quelldat_tmp
+done
+cat $tmp_pfad/robot_matlabtmp_par_KP.m > ${quelldat_tmp}.subsvar # damit werden die Elemente von pkin automatisch in der Funktion mit dem indizierten Vektor `pkin`ersetzt.
+cat $quelldat_tmp >> $zieldat
+source robot_codegen_matlabfcn_postprocess.sh $zieldat 0 0 ${quelldat_tmp}.subsvar
 
+# Parameter-Funktion, die den Parametervektor pkin für gegebene MDH-Parameter ausgibt
+zieldat=$fcn_pfad/${robot_name}_mdhparam2pkin.m
+printf "\n%% Aus parameter_kin_from_mdh_matlab.m\n" >> $zieldat
+cat $repo_pfad/codeexport/${robot_name}/tmp/parameter_kin_from_mdh_matlab.m >> $zieldat
+source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0

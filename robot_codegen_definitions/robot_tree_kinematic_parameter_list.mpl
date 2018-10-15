@@ -83,6 +83,86 @@ pkin := Transpose(Matrix(convert(indets(pkin,name),list))):
 MatlabExport(pkin, sprintf("../codeexport/%s/tmp/parameter_kin_matlab.m", robot_name), 2):
 # Für schnelle Erkennung der Dimension zum Auslesen durch Bash-Skripte
 save pkin, sprintf("../codeexport/%s/tmp/parameter_kin", robot_name):
+# Zuordnung zwischen Kinematikparametern und MDH-Parametern
+# Mit der Zuordnung kann der Vektor der Kinematikparameter (der an jede Funktion übergeben wird) aus den MDH-Parametern bestimmt werden
+# TODO: Dieser Ansatz funktioniert nur, wenn keine Additionen von Variablen in den MDH-Parametern enthalten sind.
+# Schritt 1: pkin_tmp1 nachverarbeiten: Gelenkvariablen und Pi entfernen (damit der solve-Befehl weniger zu verarbeiten hat)
+pkin_tmp3 := pkin_tmp1: # Variable, die gestapelt eine nachbearbeitete Version aller MDH-Parameter enthält
+;
+for i from 1 to RowDimension(pkin_tmp3) do
+  # q entfernen
+  for j from 1 to RowDimension(qJ_t) do
+    pkin_tmp3(i,1) := subs({qJ_t(j,1)=0}, pkin_tmp3(i,1)):
+  end do:
+  # Term Null setzen, wenn keine Variablen drin stehen (z.B. nur Pi)
+  nms:=convert(indets(pkin_tmp3(i),name),list):
+  var_da := 0: # Zähler, ob Variablen enthalten sind
+  for k from 1 to ColumnDimension(nms) do
+    if nms[k] = Pi then # Pi ist Konstante und funktioniert später nicht im Solve-Befehl
+      next:
+    end if:
+    var_da := 1:
+  end do:
+  if var_da = 0 then
+    pkin_tmp3(i,1) := 0:
+  end if:
+end do:
+
+pkin_subs_mdh:=copy(pkin): # ohne "copy" wird anscheinend verlinkt und der Rest geht nicht
+;
+pkt3i := Matrix(RowDimension(pkin_tmp3), 1): # Index-Vektor für pkin_tmp3
+;
+for i from 1 to RowDimension(pkin_tmp3) do
+  pkt3i(i,1):=parse(sprintf("pp%03d", i)): # Hilfsgröße zum späteren Ersetzen
+end do:
+# Ersetze 
+
+for i from 1 to RowDimension(pkin_tmp3) do
+  if pkin_tmp3(i) = 0 then
+    next:
+  end if:
+  for j from 1 to RowDimension(pkin) do
+    # printf("i=%d, j=%d\n", i, j):
+    erg := solve({pkin_tmp3(i)=pkt3i(i)}, pkin(j)):
+    if ArrayTools:-NumElems(erg) = 0 then
+      next:
+    end if:
+    # printf("i=%d\n", i):
+    pkin_subs_mdh(j) := subs({lhs(erg[1])=rhs(erg[1])}, pkin_subs_mdh(j)):
+    break: # Der erste Fund reicht
+  end do:
+end do:
+
+# Ergebnis nachverarbeiten
+# Platzhalter ("ph") generieren (für die Eingabeargumente der Matlab-Funktion zur Berechnung der Parameter)
+beta_ph := Matrix(NJ,1):
+b_ph := Matrix(NJ,1):
+alpha_ph := Matrix(NJ,1):
+a_ph := Matrix(NJ,1):
+theta_ph := Matrix(NJ,1):
+d_ph := Matrix(NJ,1):
+qoffset_ph := Matrix(NJ,1):
+for i from 1 to NJ do
+  beta_ph(i) := parse(sprintf("beta_mdh(%d)", i)):
+  b_ph(i) := parse(sprintf("b_mdh(%d)", i)):
+  alpha_ph(i) := parse(sprintf("alpha_mdh(%d)", i)):
+  a_ph(i) := parse(sprintf("a_mdh(%d)", i)):
+  theta_ph(i) := parse(sprintf("theta_mdh(%d)", i)):
+  d_ph(i) := parse(sprintf("d_mdh(%d)", i)):
+  qoffset_ph(i) := parse(sprintf("qoffset_mdh(%d)", i)):
+end do:
+# Platzhalter-Vektor zur Ersetzung der gestapelten MDH-Parameter
+pkt1_ph := <a_ph;alpha_ph;d_ph;theta_ph; qoffset;b;beta>:
+# Kinematikparameter für kinematische Zwangsbedingungen hinzufügen (falls vorhanden)
+#TODO
+;
+# Parameter-Indizes mit den Platzhaltern für die Matlab-Funktion ersetzen
+for i from 1 to RowDimension(pkin_subs_mdh) do
+  for j from 1 to RowDimension(pkt1_ph) do
+    pkin_subs_mdh(i) := subs( {pkt3i(j)=pkt1_ph(j)}, pkin_subs_mdh(i) ):
+  end do:
+end do:
+MatlabExport(pkin_subs_mdh, sprintf("../codeexport/%s/tmp/parameter_kin_from_mdh_matlab.m", robot_name), 2):
 # Ausgabe
 # MDH-Tabelle ausgeben
 interface(rtablesize=100):

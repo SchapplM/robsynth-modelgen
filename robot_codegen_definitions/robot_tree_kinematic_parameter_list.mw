@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="2017" minor="3"/>
+<Version major="2018" minor="0"/>
 <Label-Scheme value="2" prefix=""/>
-<View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false">
+<View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="100" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -93,7 +93,7 @@
 </Input>
 </Group>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Init</Text-field></Title>
-<Group labelreference="L1602" drawlabel="true">
+<Group labelreference="L1805" drawlabel="true">
 <Input><Text-field style="Normal" layout="Normal">Dieses Arbeitsblatt erstellt einen Vektor mit allen Kinematikparameter
 <Font encoding="UTF-8">Es werden nur die Kinematikparameter eingetragen, die ungleich Null sind, also z.B. keine MDH-Parameter die L\303\244nge oder Winkel Null sind.
 </Font>
@@ -102,53 +102,53 @@
 Moritz Schappler, schappler@irt.uni-hannover.de, 2017-02</Text-field><Text-field style="Normal" layout="Normal">(C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1601" drawlabel="true">
+<Group labelreference="L1801" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">interface(warnlevel=0): # Unterdr\303\274cke die folgende Warnung.
 restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet wird.
 </Font>interface(warnlevel=3):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1695" drawlabel="true">
+<Group labelreference="L1781" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">interface(rtablesize=100): # Damit der ganze Parametervektor ausgegeben werden kann</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1637" drawlabel="true">
+<Group labelreference="L1786" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(LinearAlgebra):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1715" drawlabel="true">
+<Group labelreference="L1784" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1731" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group labelreference="L1789" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_convert_t_s&quot;:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1595" drawlabel="true">
+<Group labelreference="L1780" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Lese Umgebungsvariable f\303\274r Codegenerierung.</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L1594" drawlabel="true">
+<Group labelreference="L1782" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:
 <Font encoding="UTF-8">printf(&quot;Generiere Kinematik-Parametervektor f\303\274r %s\134n&quot;,robot_name):</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L1765" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group labelreference="L1811" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_twist_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Parameter der Zwangsbedingungen lesen</Text-field></Title>
-<Group labelreference="L1719" drawlabel="true">
+<Group labelreference="L1791" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">kin_constraints_exist := false:
 kc_symbols2 := []:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1767" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group labelreference="L1806" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">F\303\274r explizite Zwangsbedingungen</Font></Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L1721" drawlabel="true">
+<Group hide-input="false" labelreference="L1812" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">constrfile := sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_symbols_list_maple&quot;, robot_name):
 if FileTools[Exists](constrfile) then
   read constrfile:
@@ -158,11 +158,11 @@ if FileTools[Exists](constrfile) then
 end if:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1764" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group labelreference="L1809" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Parameter f\303\274r implizite Zwangsbedingungen (dadurch k\303\266nnen auch neue Konstanten hinzugef\303\274gt werden)</Font></Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L1768" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group hide-input="false" labelreference="L1797" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">constrfile := sprintf(&quot;../codeexport/%s/tmp/kinematic_implicit_constraints_symbols_list_maple&quot;, robot_name):
 if FileTools[Exists](constrfile) then
   read constrfile:
@@ -174,19 +174,19 @@ end if:</Text-field>
 </Group>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Liste der Kinematikparameter erstellen</Text-field></Title>
-<Group labelreference="L1711" drawlabel="true">
+<Group labelreference="L1787" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal">Alle einzelnen MDH-Parametervektoren stapeln</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1697" drawlabel="true">
+<Group labelreference="L1779" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">pkin_tmp1 := &lt;a;alpha;d;theta; qoffset;b;beta&gt;:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1724" drawlabel="true">
+<Group labelreference="L1798" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Kinematikparameter f\303\274r kinematische Zwangsbedingungen hinzuf\303\274gen (falls vorhanden)</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L1722" drawlabel="true">
+<Group labelreference="L1802" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if kin_constraints_exist then
   pkin_tmp1 := &lt;pkin_tmp1;Transpose(kc_symbols2)&gt;:
   np_kc := ColumnDimension(kc_symbols2):
@@ -195,37 +195,37 @@ else
 end if:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1699" drawlabel="true">
+<Group labelreference="L1790" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal">Alle Symbole herausfinden
 Durch den Befehl fallen die vektoriell angesprochenen Gelenkkoordinaten (qJ) weg.
 TODO: Liste mit besserer Reihenfolge (siehe Dateikopf)</Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L1700" drawlabel="true">
+<Group hide-input="false" labelreference="L1803" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">nms:=convert(indets(pkin_tmp1,name),list):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1706" drawlabel="true">
+<Group labelreference="L1816" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Laufende Nummer f\303\274r Parameterliste</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L1707" drawlabel="true">
+<Group labelreference="L1817" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">kk := 0:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1705" drawlabel="true">
+<Group labelreference="L1795" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Matrix mit Platz f\303\274r alle Kinematikparameter (falls alle ungleich Null)</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L1704" drawlabel="true">
+<Group labelreference="L1793" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">pkin_tmp2 := Matrix(NJ*6+np_kc,1):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1712" drawlabel="true">
+<Group labelreference="L1788" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal">Terme aus Liste entfernen</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1701" drawlabel="true">
+<Group labelreference="L1807" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to ColumnDimension(nms) do
   if nms[i] = Pi then # (wird im Code sowieso automatisch eingesetzt)
     next:
@@ -239,60 +239,196 @@ TODO: Liste mit besserer Reihenfolge (siehe Dateikopf)</Text-field>
 end do:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1746" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group labelreference="L1799" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">Konstante Winkel, die aus MDH-Definition und nicht aus den ZB kommen umwandeln.</Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L1745" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group hide-input="false" labelreference="L1808" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">q_s := Matrix(1,1,0): q_t :=q_s:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1747" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group labelreference="L1800" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">pkin_tmp1 := convert_t_s(pkin_tmp1):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1744" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group labelreference="L1804" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Konvertierung nochmals durchf\303\274hren (damit nicht delta8 und delta8s als verschiedene Symbole auftauchen)</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L1748" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group labelreference="L1794" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">pkin_tmp2 :=convert_t_s(pkin_tmp2):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1687" drawlabel="true">
+<Group labelreference="L1810" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal">Ausgabevariable belegen</Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L1688" drawlabel="true">
+<Group hide-input="false" labelreference="L1813" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">pkin := Matrix(pkin_tmp2[1..kk,1],kk,1):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1729" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group labelreference="L1818" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">Symbole nochmals gruppieren</Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L1749" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group hide-input="false" labelreference="L1796" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">pkin := Transpose(Matrix(convert(indets(pkin,name),list))):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1708" drawlabel="true">
+<Group labelreference="L1814" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal">Ergebnis speichern</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1716" drawlabel="true">
+<Group labelreference="L1785" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">F\303\274r Generierung des Kinematikparametervektors in Matlab</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L1690" drawlabel="true">
+<Group labelreference="L1783" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(pkin, sprintf(&quot;../codeexport/%s/tmp/parameter_kin_matlab.m&quot;, robot_name), 2):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1709" drawlabel="true">
+<Group labelreference="L1815" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">F\303\274r schnelle Erkennung der Dimension zum Auslesen durch Bash-Skripte</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L1717" drawlabel="true">
+<Group labelreference="L1792" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save pkin, sprintf(&quot;../codeexport/%s/tmp/parameter_kin&quot;, robot_name):</Text-field>
+</Input>
+</Group>
+</Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Zuordnung zwischen Kinematikparametern und MDH-Parametern
+<Font style="Text" encoding="UTF-8">Mit der Zuordnung kann der Vektor der Kinematikparameter (der an jede Funktion \303\274bergeben wird) aus den MDH-Parametern bestimmt werden
+</Font><Font style="Text">TODO: Dieser Ansatz funktioniert nur, wenn keine Additionen von Variablen in den MDH-Parametern enthalten sind.</Font></Text-field></Title>
+<Group labelreference="L1842" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Schritt 1: pkin_tmp1 nachverarbeiten: Gelenkvariablen und Pi entfernen (damit der solve-Befehl weniger zu verarbeiten hat)</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L1846" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">pkin_tmp3 := <Font encoding="UTF-8">pkin_tmp1: # Variable, die gestapelt eine nachbearbeitete Version aller MDH-Parameter enth\303\244lt</Font></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1915" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">for i from 1 to RowDimension(pkin_tmp3) do
+  # q entfernen
+  for j from 1 to RowDimension(qJ_t) do
+    pkin_tmp3(i,1) := subs({qJ_t(j,1)=0}, pkin_tmp3(i,1)):
+  end do:
+  # Term Null setzen, wenn keine Variablen drin stehen (z.B. nur Pi)
+  nms:=convert(indets(pkin_tmp3(i),name),list):
+  var_da := 0: # Z\303\244hler, ob Variablen enthalten sind
+  for k from 1 to ColumnDimension(nms) do
+    if nms[k] = Pi then # Pi ist Konstante und funktioniert sp\303\244ter nicht im Solve-Befehl
+      next:
+    end if:
+    var_da := 1:
+  end do:
+  if var_da = 0 then
+    pkin_tmp3(i,1) := 0:
+  end if:
+end do:
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group hide-input="false" labelreference="L1843" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L1871" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">pkin_subs_mdh:=copy(pkin): # ohne &quot;copy&quot; wird anscheinend verlinkt und der Rest geht nicht</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1866" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">pkt3i := Matrix(RowDimension(pkin_tmp3), 1): # Index-Vektor f\303\274r </Font>pkin_tmp3</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1865" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to RowDimension(pkin_tmp3) do
+<Font encoding="UTF-8">  pkt3i(i,1):=parse(sprintf(&quot;pp%03d&quot;, i)): # Hilfsgr\303\266\303\237e zum sp\303\244teren Ersetzen
+</Font>end do:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1909" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Ersetze </Text-field>
+</Input>
+</Group>
+<Group labelreference="L1910" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1912" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">for i from 1 to RowDimension(pkin_tmp3) do
+  if pkin_tmp3(i) = 0 then
+    next:
+  end if:
+  for j from 1 to RowDimension(pkin) do
+    # printf(&quot;i=%d, j=%d\134n&quot;, i, j):
+    erg := solve({pkin_tmp3(i)=pkt3i(i)}, pkin(j)):
+    if ArrayTools:-NumElems(erg) = 0 then
+      next:
+    end if:
+    # printf(&quot;i=%d\134n&quot;, i):
+    pkin_subs_mdh(j) := subs({lhs(erg[1])=rhs(erg[1])}, pkin_subs_mdh(j)):
+    break: # Der erste Fund reicht
+  end do:
+end do:</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L1918" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1898" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font bold="true">Ergebnis nachverarbeiten</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1899" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Platzhalter (&quot;ph&quot;) generieren (f\303\274r die Eingabeargumente der Matlab-Funktion zur Berechnung der Parameter)</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1905" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">beta_ph := Matrix(NJ,1):
+b_ph := Matrix(NJ,1):
+alpha_ph := Matrix(NJ,1):
+a_ph := Matrix(NJ,1):
+theta_ph := Matrix(NJ,1):
+d_ph := Matrix(NJ,1):
+qoffset_ph := Matrix(NJ,1):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1904" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NJ do
+  beta_ph(i) := parse(sprintf(&quot;beta_mdh(%d)&quot;, i)):
+  b_ph(i) := parse(sprintf(&quot;b_mdh(%d)&quot;, i)):
+  alpha_ph(i) := parse(sprintf(&quot;alpha_mdh(%d)&quot;, i)):
+  a_ph(i) := parse(sprintf(&quot;a_mdh(%d)&quot;, i)):
+  theta_ph(i) := parse(sprintf(&quot;theta_mdh(%d)&quot;, i)):
+  d_ph(i) := parse(sprintf(&quot;d_mdh(%d)&quot;, i)):
+  qoffset_ph(i) := parse(sprintf(&quot;qoffset_mdh(%d)&quot;, i)):
+end do:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1916" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Platzhalter-Vektor zur Ersetzung der gestapelten MDH-Parameter</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1901" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">pkt1_ph := &lt;a_ph;alpha_ph;d_ph;theta_ph; qoffset;b;beta&gt;:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1903" drawlabel="true">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Kinematikparameter f\303\274r kinematische Zwangsbedingungen hinzuf\303\274gen (falls vorhanden)</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1902" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">#TODO</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1917" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Parameter-Indizes mit den Platzhaltern f\303\274r die Matlab-Funktion ersetzen</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1900" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to RowDimension(pkin_subs_mdh) do
+  for j from 1 to RowDimension(pkt1_ph) do
+    pkin_subs_mdh(i) := subs( {pkt3i(j)=pkt1_ph(j)}, pkin_subs_mdh(i) ):
+  end do:
+end do:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1908" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(pkin_subs_mdh, sprintf(&quot;../codeexport/%s/tmp/parameter_kin_from_mdh_matlab.m&quot;, robot_name), 2):</Text-field>
 </Input>
 </Group>
 </Section>
