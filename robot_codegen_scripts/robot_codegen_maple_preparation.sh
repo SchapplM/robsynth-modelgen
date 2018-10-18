@@ -59,6 +59,7 @@ fi
 
 # Dateien im Arbeitsverzeichnis bearbeiten:
 # Code-Generierung für einige Skripte entfernen
+# Ziel: Nur den Matlab-Code exportieren, den man auch wirklich für die Dynamik benötigt.
 if [ "$CG_MINIMAL" == "1" ]; then
   noexportlist="
     robot_tree_floatb_rotmat_kinematics_com_worldframe_par1.mpl
@@ -74,8 +75,6 @@ if [ "$CG_MINIMAL" == "1" ]; then
     robot_tree_base_parameter_transformations.mpl
     ${robot_name}_kinematic_constraints.mpl
     robot_kinematic_constraints_calculations.mpl
-    ${robot_name}_kinematic_constraints_implicit.mpl
-    robot_kinematic_constraints_calculations_implicit.mpl
   "
   for f in $noexportlist; do
       if [ ! -f $repo_pfad/workdir/$f ]; then
