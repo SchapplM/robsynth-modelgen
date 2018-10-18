@@ -40,15 +40,12 @@ kin_constraints_exist := false:
 constrfile := sprintf("../codeexport/%s/tmp/kinematic_constraints_implicit_maple.m", robot_name):
 if FileTools[Exists](constrfile) then
   read constrfile:
+  implconstr_s := implconstr_s: # Für Sichtbarkeit der Variablen
+  implconstr_t := implconstr_t: # Für Sichtbarkeit der Variablen
+  kin_constraints_exist := kin_constraints_exist: # Für Sichtbarkeit der Variablen
 end if:
-read constrfile:
-implconstr_s := implconstr_s: # Für Sichtbarkeit der Variablen
-implconstr_t := implconstr_t: # Für Sichtbarkeit der Variablen
-;
+
 if kin_constraints_exist = true then:
-  kintmp_qs := kintmp_qs: # gelesene Variable sonst nicht sichtbar
-  kintmp_qt := kintmp_qt: # gelesene Variable sonst nicht sichtbar
-  kintmp_subsexp := kintmp_subsexp: # gelesene Variable sonst nicht sichtbar
   printf("Kinematische Zwangsbedingungen in impliziter Form gelesen.\n"):
 else
   printf("Es gibt keine impliziten Zwangsbedingungen. Offene Struktur oder nur explizit definierte Bedingungen. Keine weiteren Berechnungen notwendig."):
@@ -58,7 +55,6 @@ else
   quit:
 end if:
 NIZB := RowDimension(implconstr_s):
-
 # Gelenkdefinitionen
 # Setze aktuierte Gelenke als Minimalkoordinaten voraus
 NAJ := add(mu(k), k=1..NJ):
@@ -81,6 +77,7 @@ printf("Indizes der %d aktiven Gelenke:\n", NAJ);
 Transpose(IndAct);
 printf("Indizes der %d passiven Gelenke:\n", NPJ);
 Transpose(IndPass);
+printf("%d Zwangsbedingungsgleichungen\n", NIZB);
 # Jacobi-Matrix der Impliziten Zwangsbedingungen in Abhängigkeit der unabhängigen Koordinaten
 # 
 # Entspricht J1 in [Docquier2013], A in [ParkChoPlo1999]
