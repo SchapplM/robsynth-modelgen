@@ -20,12 +20,13 @@
 restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
 #interface(warnlevel=3):
 with(LinearAlgebra):
-with(ArrayTools):
+#with(ArrayTools):
 with(codegen):
 with(CodeGeneration):
 with(StringTools):
 with(VectorCalculus):
 # Einstellungen für Code-Export: Optimierungsgrad (2=höchster) und Aktivierung jedes Terms.
+codegen_dynpar := 2:
 codegen_opt := 2:
 codeexport_invdyn := true:
 codeexport_grav := true: 
@@ -45,111 +46,151 @@ read "../transformation/proc_trotx":
 read "../transformation/proc_troty": 
 read "../transformation/proc_trotz": 
 read "../transformation/proc_transl": 
+read "../transformation/proc_rpyjac": 
+read "../transformation/proc_yprjac": 
 read "../transformation/proc_trafo_mdh": 
 read "../robot_codegen_definitions/robot_env":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
+# Definitionen für parallelen Roboter laden
+read sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
+r_P_sP_P := -r_P_sP:
+s_P_P_sP := s_P_sP:
 # Ergebnisse der Kinematik für parallen Roboter laden
 read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
-# Additional Definitions
-# Parameter definieren, wenn nicht vorher schon geschehen
-if not assigned(JE) then
-   JE := Matrix(3,3,[XX,XY,XZ,YX,YY,YZ,ZX,ZY,ZZ]):
-end if:
-if not assigned(xE_s) then
-   xE_s:=<x_all[1];x_all[2];x_all[3];x_all[4];x_all[5];x_all[6]>:
-end if:
-
 # Additional Kinematics
-# Berechnung der Winkelgeschwindigkeiten
-R_0_0_E := rotx(xE_t(4)).roty(xE_t(5)).rotz(xE_t(6)):
-w_E_0_E_t := Multiply(Transpose(R_0_0_E),diff~(R_0_0_E,t)):
-w_E_0_E_t := combine(w_E_0_E_t):
-w_E_0_E_t := skew2vec(w_E_0_E_t):
-# Substituiere die zeitabhängigen Geschwindigkeiten im Winkelgeschwindigkeitsvektor mit zeitunabhängigen Geschwindigkeiten 
-w_E_0_E_s := copy(w_E_0_E_t):
+# Berechnung der Rotationsmatrizen
+if angleConv = X_Y_Z then
+   R_0_0_E_t := rotx(xE_t(4)).roty(xE_t(5)).rotz(xE_t(6)):
+   R_0_0_E_s := rotx(xE_s(4)).roty(xE_s(5)).rotz(xE_s(6)):
+   RPYjac_0_t := rpyjac(xE_t(4),xE_t(5),xE_t(6)):
+   RPYjac_0_s := rpyjac(xE_s(4),xE_s(5),xE_s(6)):
+elif angleConv = Z_Y_X then
+   R_0_0_E_t := rotz(xE_t(4)).roty(xE_t(5)).rotx(xE_t(6)):
+   R_0_0_E_s := rotz(xE_s(4)).roty(xE_s(5)).rotx(xE_s(6)):
+   RPYjac_0_t := yprjac(xE_t(4),xE_t(5),xE_t(6)):
+   RPYjac_0_s := yprjac(xE_s(4),xE_s(5),xE_s(6)):
+end:
+r_0_sP_P := R_0_0_E_s.r_P_sP_P:
+if codegen_dynpar = 1 then
+  J_P_P := J_SP + mE*Multiply(Transpose(vec2skew(r_P_sP_P)),vec2skew(r_P_sP_P)):
+else
+  J_P_P := J_P_P:
+end if:
+J_0_P := R_0_0_E_s.J_P_P.Transpose(R_0_0_E_s):
+r_0_sP_P := R_0_0_E_t.r_P_sP_P:
+rD_0_sP_P := diff~(r_0_sP_P,t):
+s_0_P_sP := R_0_0_E_t.s_P_P_sP:
+sD_0_P_sP := diff~(s_0_P_sP,t):
 for i to 3 do
-    w_E_0_E_s(i,1) := subs({diff(xE_t(4),t)=xED_s(4),diff(xE_t(5),t)=xED_s(5),diff(xE_t(6),t)=xED_s(6)},w_E_0_E_t(i,1)):
+   for j to 6 do
+      rD_0_sP_P(i) := subs({xED_t(j)=xED_s(j),xE_t(j)=xE_s(j)},rD_0_sP_P(i)):
+      sD_0_P_sP(i) := subs({xED_t(j)=xED_s(j),xE_t(j)=xE_s(j)},sD_0_P_sP(i)):
+   end do:
 end do:
-# Erzeuge die Jacobi-Matrix: EE-Geschwindigkeiten -> Winkelgeschwindigkeitsvektor w_E_0_E_t
-w_Jacobi := Matrix(3):
-# i steht für die Zeile der jacobi-matrix
+s_0_P_sP := R_0_0_E_s.s_P_P_sP:
+r_0_sP_P := R_0_0_E_s.r_P_sP_P:
+# Berechnung der H-Matrix und deren Ableitung nach Abdellatif S.20 aus "Modellierung, Identifikation und robuste Regelung von Robotern mit parallelkinematischen Strukturen"
+RPYjac_E_t := combine(Multiply(Transpose(R_0_0_E_t),RPYjac_0_t)):
+RPYjac_E_s := combine(Multiply(Transpose(R_0_0_E_s),RPYjac_0_s)):
+w_E_0_E_s := RPYjac_E_s.xED_s(4..6,1):
+w_0_0_E_s := RPYjac_0_s.xED_s(4..6,1):
+w_E_0_E_t := RPYjac_E_t.xED_t(4..6,1):
+dRPYjac_E_t := diff~(RPYjac_E_t,t):
+dRPYjac_0_t := diff~(RPYjac_0_t,t):
+dRPYjac_E_s := Copy(dRPYjac_E_t):
+dRPYjac_0_s := Copy(dRPYjac_0_t):
+# Substituiere die zeitabhängigen Koordinaten in der H-Matrix mit zeitunabhängigen Koordinaten 
 for i to 3 do
-	# j steht für die Spalte 
 	for j to 3 do
-		if xED_s(j+3) = 0 then
-			w_Jacobi(i,j) := 0:
-		else
-			w_Jacobi(i,j) := diff(w_E_0_E_s(i),xED_s(j+3)):
-		end if:
+		for k from 4 to 6 do
+			dRPYjac_E_s(i,j) := subs({xEDD_t(k)=xEDD_s(k),xED_t(k)=xED_s(k),xE_t(k)=xE_s(k)},dRPYjac_E_s(i,j)):
+			dRPYjac_0_s(i,j) := subs({xEDD_t(k)=xEDD_s(k),xED_t(k)=xED_s(k),xE_t(k)=xE_s(k)},dRPYjac_0_s(i,j)):
+		end do:
 	end do:
 end do:
 
-# Alternative Berechnung für die Jacobi-Matrix. Allerdings wird keine Rücksicht auf Null-Einträge genommen.
-#w_Jacobi := Jacobian(convert(w_E_0_E_s,list),convert(xED_dummy(4..6),list)):
-# Berechnung der H-Matrix und deren Ableitung nach Abdellatif S.20 aus "Modellierung, Identifikation und robuste Regelung von Robotern mit parallelkinematischen Strukturen"
+wD_E_0_E_s := dRPYjac_E_s.xED_s(4..6,1)+RPYjac_E_s.xEDD_s(4..6,1):
+wD_0_0_E_s := dRPYjac_0_s.xED_s(4..6,1)+RPYjac_0_s.xEDD_s(4..6,1):
+H := <IdentityMatrix(3,3),ZeroMatrix(3);
+      ZeroMatrix(3),RPYjac_0_s>:
+MatlabExport(H, "H.m",2);
+Hinv := MatrixInverse(H):
+dH := <ZeroMatrix(3),ZeroMatrix(3);
+      ZeroMatrix(3),dRPYjac_0_s>:
 
-# Berechnung des translatorischen Teils der H-Matrix
-H_trans := Matrix(3,3):
-# i steht für den translatorischen Freiheitsgrad (x,y,z)
-for i to 3 do
-	if not(xED_s(i) = 0) then
-		H_trans(i,i) := 1:
-	end if:
-end do:
-H := <H_trans,ZeroMatrix(3);
-      ZeroMatrix(3),w_Jacobi>:
-dH := diff~(H,t):
-# Substituiere die zeitabhängigen Koordinaten in der Winkelgeschwindigkeits-Jacobi-Matrix mit zeitunabhängigen Koordinaten 
-for i to 3 do
-  for j to 3 do
-    w_Jacobi(i,j) := subs({xE_t(4)=xE_s(4),xE_t(5)=xE_s(5),xE_t(6)=xE_s(6)},w_Jacobi(i,j)):
-  end do:
-end do:
-wD_E_0_E_t := diff~(w_E_0_E_t,t):
-# Substitiuere zeitabhängige EE-Koordinaten/-Geschwindigkeiten/-Beschleunigungen in der Ableitung der H-Matrix mit zeitunabhängigen
-for i to 6 do
-  for k to 6 do
-    for j to 6 do
-      dH(i,k) := subs({xEDD_t(j)=xEDD_s(j),xED_t(j)=xED_s(j),xE_t(j)=xE_s(j)},dH(i,k)):
-    end do:
-  end do:
-end do:
-# Substituiere zeitabhängige EE-Koordinaten/-Geschwindigkeiten/-Beschleunigungen in der Ableitung der H-Matrix mit zeitunabhängigen
-wD_E_0_E_s := copy(wD_E_0_E_t):
-for i to 3 do
-  for j to 6 do
-    wD_E_0_E_s(i) := subs({xEDD_t(j)=xEDD_s(j),xED_t(j)=xED_s(j),xE_t(j)=xE_s(j)},wD_E_0_E_t(i)):
-  end do:
-end do:
-# 
-#Hinv := MatrixInverse(H);
 # Gravitational-Vector gE of the platform
 # Berechnung des Gravitationsvektors
-gE := <mE*<g1;g2;g3>;ZeroMatrix(3,1)>: #Multiply mit Transpose(Hinv)
-;
+xAll := <x;y;z;an;bn;cn>:
+if codegen_dynpar = 1 then
+  gE_z := xE_s(1..3,1) - r_0_sP_P:
+else
+  gE_z := mE*xE_s(1..3,1) + s_0_P_sP:
+end if:
+for j to 3 do
+  for i from 1 to 6 do
+    gE_z(j) := subs(x_all[i]=xAll(i),gE_z(j)):
+  end do:
+end do:
+dgEdz_final := Matrix(6,1):
+dgEdz := Matrix(3,1):
+gvec := Matrix(3,1,[g1,g2,g3]):
+for j to 6 do
+  for i to 3 do
+     dgEdz(i) := diff(gE_z(i),xAll(j)):
+  end do:
+  if codegen_dynpar = 1 then
+    dgEdz_final(j) := mE*Transpose(gvec(..,1)).dgEdz(..,1):
+  else 
+    dgEdz_final(j) := Transpose(gvec(..,1)).dgEdz(..,1):
+  end if:
+end do:
+for j to 6 do
+  for i from 1 to 6 do
+    dgEdz_final(j) := subs(xAll(i)=x_all[i],dgEdz_final(j)):
+  end do:
+end do:
+gE := Transpose(Hinv).dgEdz_final:#-<mE*<g1;g2;g3>;ZeroMatrix(3,1)>: 
 if codeexport_grav then
   MatlabExport(gE, sprintf("../codeexport/%s/tmp/gravload_floatb_%s_platform_matlab.m", robot_name, base_method_name), codegen_opt):
 end if:
 # Mass-Matrix ME of the platform
 # Berechnung Massenmatrix für die EE-Plattform und die Winkelgeschwindigkeit
-ME := <mE*Matrix(3,shape=identity),ZeroMatrix(3);
-       ZeroMatrix(3),JE>:
+if codegen_dynpar = 1 then
+  ME := <mE*Matrix(3,shape=identity),mE*vec2skew(r_0_sP_P);
+         mE*Transpose(vec2skew(r_0_sP_P)),J_0_P>:
+  la := codegen_dynpar;
+else 
+  ME := <mE*Matrix(3,shape=identity),vec2skew(-s_0_P_sP);
+         Transpose(vec2skew(-s_0_P_sP)),J_0_P>:
+  la := codegen_dynpar;
+end if:
 if codeexport_inertia then
   MatlabExport(ME, sprintf("../codeexport/%s/tmp/inertia_floatb_%s_platform_matlab.m", robot_name, base_method_name), codegen_opt):
 end if:
 # Coriolis-Vector cE of the platform
-# Coriolis-Vector
-cE := <ZeroMatrix(3,1);vec2skew(w_E_0_E_s).JE.w_E_0_E_s>:
+# Coriolis-Matrix
+#cE := <ZeroMatrix(3,3),mE*vec2skew(rD_0_sP_P);
+       #mE*(Transpose(vec2skew(rD_0_sP_P))+Multiply(vec2skew(w_0_0_E_s),Transpose(vec2skew(r_0_sP_P)))),Multiply(vec2skew
+#(w_0_0_E_s),J_0_P)>:
+if codegen_dynpar = 1 then
+  cE := <ZeroMatrix(3,3),mE*vec2skew(rD_0_sP_P);
+         ZeroMatrix(3,3),Multiply(vec2skew(w_0_0_E_s),J_0_P)>:
+else
+  cE := <ZeroMatrix(3,3),vec2skew(-sD_0_P_sP);
+         ZeroMatrix(3,3),Multiply(vec2skew(w_0_0_E_s),J_0_P)>:
+end if:
 if codeexport_corvec then
-  MatlabExport(ME, sprintf("../codeexport/%s/tmp/coriolisvec_floatb_%s_platform_matlab.m", robot_name, base_method_name), codegen_opt):
+  MatlabExport(cE, sprintf("../codeexport/%s/tmp/coriolisvec_floatb_%s_platform_matlab.m", robot_name, base_method_name), codegen_opt):
 end if:
 # Torque at the platform
 # Inverse Dynamik der Plattform
-tauE := Multiply(ME,<xEDD_s(1..3,1);wD_E_0_E_s>) + cE - gE:
+MME := ME.H:
+cvecE := Multiply(ME.dH+cE.H,xED_s):
+tauE := Multiply(ME.H,xEDD_s) + Multiply(ME.dH+cE.H,xED_s) - gE:# - Multiply(Transpose(Hinv),dT):
 # Code Export
 if codeexport_invdyn then
   MatlabExport(tauE, sprintf("../codeexport/%s/tmp/invdyn_floatb_%s_platform_matlab.m", robot_name, base_method_name), codegen_opt):
 end if:
 # Maple-Export
-save tauE, H, dH, sprintf("../codeexport/%s/tmp/floatb_%s_platform_dynamic_maple.m", robot_name, base_method_name):
+save MME, cvecE , gE, tauE, H, dH, sprintf("../codeexport/%s/tmp/floatb_platform_dynamic_maple.m", robot_name):
 

@@ -42,59 +42,70 @@ read "../transformation/proc_rotz":
 read "../transformation/proc_trotx": 
 read "../transformation/proc_troty": 
 read "../transformation/proc_trotz": 
+read "../transformation/proc_rpyjac": 
 read "../transformation/proc_transl": 
 read "../transformation/proc_trafo_mdh": 
 read "../robot_codegen_definitions/robot_env":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
+# Definitionen für parallel Roboter laden
+read sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
 # Kennung des Parametersatzes, für den die Dynamikfunktionen erstellt werden sollen. Muss im Repo und in der mpl-Datei auf 1 gelassen werden, da die folgende Zeile mit einem Skript verarbeitet wird.
-codegen_dynpar := 1:
+codegen_dynpar := 2:
 # Link-Index, für den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber für beliebige Segmente aufgestellt werden. (0=Basis)
 LIJAC:=NL-1:
 # Ergebnisse der analytischen Jacobi-Matrix (Translatorisch)
 read sprintf("../codeexport/%s/tmp/jacobia_transl_%d_maple.m", robot_name, LIJAC):
-JB1 := b_transl:
-printf("Generiere Dynamik für PKM %s mit Parametersatz %d und %s\n", robot_name, codegen_dynpar, base_method_name):
-# Additional Kinematics
-# Erstelle EE-Koordinaten: xE_t, xED_t, xEDD_t -> Variablen mit Zeitabhängigkeit
-#                                          xE_s, xED_s, xEDD_s -> Variablen ohne Zeitabhängigkeit
-xE_t:=<xE(t);yE(t);zE(t);PsiE(t);ThetaE(t);PhiE(t)>:
-xED_t:=diff~(xE_t,t):
-xEDD_t:=diff~(xED_t,t):
-xED_s := copy(xE_s):
-xEDD_s := copy(xE_s):
-FHG_trans := 0:FHG_rot := 0:
-Counter := Matrix(6,1):
-for i to 6 do
-   if not(xE_s(i) = 0) then
-   	 Tmp := xE_s(i):
-      xED_s(i) := D||Tmp:
-      xEDD_s(i) := DD||Tmp:
-   else
-      xED_s(i) := 0:
-      xEDD_s(i) := 0:
-      xE_t(i) := 0:
-      xED_t(i) := 0:
-      xEDD_t(i) := 0:
-   end if:
-end do:
-# Definition der Koppelpunkte für jedes Bein und der EE-Koordinaten/-Geschwindigkeiten/-Beschleunigungen
-for i to N_LEGS do
-  P||i := <xP[i];yP[i];zP[i]>:
-end do:
+b_transl := b_transl:
 px, py, pz := 0, 0, 0:
-# Jacobi Matrices (JB1/U1) + Derivates
-# Berechnung der Jacobi-Matrix JB1inv: Gelenkgeschwindigkeiten -> Koppelpunktgeschwindigkeiten P
-for i to 3 do
-	if JB1(1,i) = 0 and JB1(2,i) = 0 and JB1(3,i) = 0
-	and JB1(i,1) = 0 and JB1(i,2) = 0 and JB1(i,3) = 0 then
-		JB1(i,i) := 1:	end if:
+alphaxs_base, betays_base, gammazs_base := 0, 0, 0: 
+# Additional Kinematics
+# Definition der Koppelpunkte für jedes Bein und der EE-Koordinaten/-Geschwindigkeiten/-Beschleunigungen
+tmp := Matrix(3,1,[xP[1],yP[1],zP[1]]):
+for j to 3 do:
+    if (xE_s(j) = 0) then
+      tmp(j,1) := 0:
+    end if:
+  end do:
+for i to N_LEGS do
+  P||i := <xP[i];yP[i];zP[i]>;
+  for j to 3 do:
+    if (xE_s(j) = 0) then
+      P||i(j,1) := 0:
+    end if:
+  end do:
+  j := i+1:
+  if i <> 1 then
+     tmp := <tmp | P||i>:
+  end:
 end do:
+P_i := tmp:
+
+# Jacobi Matrices (JB1/U1) + Derivates
+if angleConvLeg = X_Y_Z then
+   JB1 := rotx(frame_A_i(1,1)).roty(frame_A_i(2,1)).rotz(frame_A_i(3,1)).b_transl(1..3,1..NQJ_parallel):
+elif angleConvLeg = Z_Y_X then
+   JB1 := rotz(frame_A_i(1,1)).roty(frame_A_i(2,1)).rotx(frame_A_i(3,1)).b_transl(1..3,1..NQJ_parallel):
+end:
+#ColJB1 := ColumnDimension(JB1):
+#AppendCol := 3 - ColJB1:
+#JB1 := <JB1|ZeroMatrix(3,AppendCol)>:
+# Berechnung der Jacobi-Matrix JB1inv: Gelenkgeschwindigkeiten -> Koppelpunktgeschwindigkeiten P
+#for i to 3 do
+#	if JB1(1,i) = 0 and JB1(2,i) = 0 and JB1(3,i) = 0
+#	and JB1(i,1) = 0 and JB1(i,2) = 0 and JB1(i,3) = 0 then
+#		JB1 := JB1(..,1..i-1):
+#    	end if:
+#end do:
 # Berechnung der Jacobi-Matrix JBE: Koppelpunktgeschwindigkeiten P -> Gelenkgeschwindigkeiten
-JB1inv := MatrixInverse(JB1):
+JB1inv := MatrixInverse(JB1, method=pseudo):
 # Berechnung der Matrix Ui: EE-Geschwindigkeiten -> Koppelpunktgeschwindigkeiten P. i steht für den Index des jeweiligen Beines
 for i to N_LEGS do
   r||i := P||i:
-  r||i := rotx(0).roty(0).rotz(xE_t(6)).vec2skew(r||i):
+  if angleConv = X_Y_Z then
+     r||i := vec2skew(rotx(xE_t(4)).roty(xE_t(5)).rotz(xE_t(6)).r||i):
+  elif angleConv = Z_Y_X then
+     r||i := vec2skew(rotz(xE_t(4)).roty(xE_t(5)).rotx(xE_t(6)).r||i):
+  end:
   ones := Matrix(3,3,shape=identity):
   U||i := <ones|-r||i>:
   U||i||D := diff~(U||i,t):      #dU berechnen
@@ -136,24 +147,28 @@ for i to N_LEGS do
   JB||i||inv := Copy(JB1inv):
   JB||i := Copy(JB1):
 end do:
+NQJ_parallel;
 # Substituiere in jeder Matrix den Winkel Alpha (Verdrehung in der Basis) und die Gelenkkoordinaten und -geschwindigkeiten
-for k from 1 by 1 to N_LEGS do  for i to NQJ do
-    for j to NQJ do
-    	 JB||k||D(i,j):=subs({alpha=alpha[k]},JB||k||D(i,j)):
-    	 JB||k||inv(i,j):=subs({alpha=alpha[k]},JB||k||inv(i,j)):
-    	 JB||k(i,j):=subs({alpha=alpha[k]},JB||k(i,j)):
-      for m to NQJ do #alpha
-        #tmp := VARS(m):
-        n := m + (k-1)*NQJ:
-        JB||k||D(i,j):=subs({qJD||m||s=qJ||D||n||s,qJ||m||s=qJ||n||s},JB||k||D(i,j)):
-        JB||k||inv(i,j):=subs({qJ||m||s=qJ||n||s},JB||k||inv(i,j)):
-        JB||k(i,j):=subs({qJ||m||s=qJ||n||s},JB||k(i,j)):
-      end do:
-    end do:
-  end do:
-  JB_i(1..ROW,1..COLUMN,k) := JB||k:
-  JBD_i(1..ROW,1..COLUMN,k) := JB||k||D:
-  JBinv_i(1..ROW,1..COLUMN,k) := JB||k||inv:
+for k from 1 by 1 to N_LEGS do  
+	for i to ROW do
+		for j to COLUMN do
+			for l to 3 do
+				JB||k||D(i,j):=subs({frame_A_i(l,1)=frame_A_i(l,k)},JB||k||D(i,j)):
+				JB||k||inv(j,i):=subs({frame_A_i(l,1)=frame_A_i(l,k)},JB||k||inv(j,i)):
+				JB||k(i,j):=subs({frame_A_i(l,1)=frame_A_i(l,k)},JB||k(i,j)):
+			end do:
+      		for m to NQJ_parallel do #alpha
+				#tmp := VARS(m):
+        			n := m + (k-1)*NQJ_parallel:
+        			JB||k||D(i,j):=subs({qJD_i_s(m,1)=qJD_i_s(m,k),qJ_i_s(m,1)=qJ_i_s(m,k)},JB||k||D(i,j)):
+       			JB||k||inv(j,i):=subs({qJ_i_s(m,1)=qJ_i_s(m,k)},JB||k||inv(j,i)):
+        			JB||k(i,j):=subs({qJ_i_s(m,1)=qJ_i_s(m,k)},JB||k(i,j)):
+     		end do:
+    		end do:
+  	end do:
+  	JB_i(1..ROW,1..COLUMN,k) := JB||k:
+  	JBD_i(1..ROW,1..COLUMN,k) := JB||k||D:
+  	JBinv_i(1..COLUMN,1..ROW,k) := JB||k||inv:
 end do:
 # Gesamt Jacobi-Matrix
 # Berechnung der inv. Jacobi-Matrix: EE-Geschwindigkeiten -> aktive Gelenkgeschwindigkeiten
@@ -162,25 +177,22 @@ for i from 2 to N_LEGS do
   Tmp := <Tmp;JB||i||inv[AKTIV,1..3].U||i>:
 end do:
 Jinv := Tmp:
+IdentMat := IdentityMatrix(6,6):
+counter := 0:
+for i to 6 do
+  if not(Equal(Matrix(Jinv(1..N_LEGS, i)), ZeroMatrix(N_LEGS,1))) then
+    if counter = 0 then
+      counter := 1;
+      JinvRed := Column(Jinv, i);
+      pivotMat := IdentMat(i,..);
+    else 
+      JinvRed := <JinvRed|Column(Jinv, i)>;
+      pivotMat := <pivotMat;IdentMat(i,..)>;
+    end if;
+  end if:
+end do:
+Jinv := JinvRed:
 # Export
 # Maple-Export
-save Jinv, JB_i, JBD_i, JBinv_i, U_i, UD_i, xE_t, xED_t, xEDD_t, xE_s, xED_s, xEDD_s, sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
-MatlabExport(Jinv, sprintf("../codeexport/%s/tmp/Jinv_para_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
-# Matlab Export: Floating base
-# Berechnung der Basis-Belastung ist für manche Basis-Darstellungen falsch (siehe oben unter Gravitationslast).
-if codeexport_invdyn and not(base_method_name="twist") then
-  MatlabExport(tau, sprintf("../codeexport/%s/tmp/invdyn_para_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
-end if:
-# Matlab Export: Fixed base
-if codeexport_invdyn then
-  taus_fixb:=tauGes:
-  for i from 1 to NQB do
-    taus_fixb := subs({X_base_s[i,1]=0},taus_fixb):
-  end do:
-  for i from 1 to 6 do
-    taus_fixb := subs({V_base_s[i,1]=0},taus_fixb):
-    taus_fixb := subs({VD_base_s[i,1]=0},taus_fixb):
-  end do:
-  save taus_fixb, sprintf("../codeexport/%s/tmp/invdyn_para_fixb_par%d_maple.m", robot_name, codegen_dynpar):
-end if:
-
+save pivotMat, P_i, Jinv, JB_i, JBD_i, JBinv_i, U_i, UD_i, sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
+MatlabExport(Jinv, sprintf("../codeexport/%s/tmp/Jinv_para_matlab.m", robot_name), codegen_opt):

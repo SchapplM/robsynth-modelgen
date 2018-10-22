@@ -121,9 +121,54 @@ restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Lese Umgebungsvariable f\303\274r Codegenerierung.</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L1594" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:
-<Font encoding="UTF-8">printf(&quot;Generiere Parameter f\303\274r %s\134n&quot;,robot_name):</Font></Text-field>
+<Group labelreference="L3271" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3269" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Generiere Parameter f\303\274r %s\134n&quot;,robot_name):</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L3249" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_definitions&quot;, robot_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3266" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Link-Index, f\303\274r den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber f\303\274r beliebige Segmente aufgestellt werden. (0=Basis)</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L3267" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">LIJAC:=NL-1:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3260" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Ergebnisse der analytischen Jacobi-Matrix (Translatorisch)</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L3261" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">px, py, pz := 0, 0, 0:
+alphaxs_base, betays_base, gammazs_base := 0, 0, 0: 
+read sprintf(&quot;../codeexport/%s/tmp/jacobia_transl_%d_maple.m&quot;, robot_name, LIJAC):
+b_transl := b_transl:
+</Text-field>
+</Input>
+</Group>
+</Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Additional Definitions</Text-field></Title>
+<Group labelreference="L3250" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Parameter definieren, wenn nicht vorher schon geschehen</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L3251" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if not assigned(J_SP) then
+   J_SP := Matrix(3,3,[XX,XY,XZ,XY,YY,YZ,XZ,YZ,ZZ]):
+end if:
+if not assigned(J_P_P) then
+   J_P_P := Matrix(3,3,[XXFP,XYFP,XZFP,XYFP,YYFP,YZFP,XZFP,YZFP,ZZFP]):
+end if:
+if not assigned(xE_s) then
+   xE_s:=&lt;x_all[1];x_all[2];x_all[3];x_all[4];x_all[5];x_all[6]&gt;:
+end if:</Text-field>
 </Input>
 </Group>
 </Section>
@@ -132,19 +177,34 @@ restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Erstelle f\303\274r Gelenkkoordinaten, -geschwindigkeiten und -beschleunigungen f\303\274r jedes Bein</Font></Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L1711" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">qJ_i_s := Matrix(NQJ,N_LEGS):
-qJD_i_s := Matrix(NQJ,N_LEGS):
-qJDD_i_s := Matrix(NQJ,N_LEGS):</Text-field>
+<Group hide-input="false" labelreference="L3263" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">J := simplify(b_transl):
+vars := indets(J):
+counter := 0:
+thetaList := convert(vars,list):
+dList := convert(d,list):
+for i to NQJ do
+  var := parse(sprintf(&quot;qJ%ds&quot;, i)):
+  if has(thetaList, var) then
+    counter := counter + 1:
+  end if:
+  if has(dList, var) then
+    counter := counter + 1:
+  end if:
+end do:
+NQJ_parallel := counter:</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L1717" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NQJ do
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">qJ_i_s := Matrix(NQJ_parallel,N_LEGS):
+qJD_i_s := Matrix(NQJ_parallel,N_LEGS):
+qJDD_i_s := Matrix(NQJ_parallel,N_LEGS):
+for i from 1 to NQJ_parallel do
   for j from 1 to N_LEGS do
      k := j-1:
-     qJ_i_s(i,j):=parse(sprintf(&quot;qJ%ds&quot;, i+k*NQJ)):
-     qJD_i_s(i,j):=parse(sprintf(&quot;qJD%ds&quot;, i+k*NQJ)):
-     qJDD_i_s(i,j):=parse(sprintf(&quot;qJDD%ds&quot;, i+k*NQJ)):
+     qJ_i_s(i,j):=parse(sprintf(&quot;qJ%ds&quot;, i+k*NQJ_parallel)):
+     qJD_i_s(i,j):=parse(sprintf(&quot;qJD%ds&quot;, i+k*NQJ_parallel)):
+     qJDD_i_s(i,j):=parse(sprintf(&quot;qJDD%ds&quot;, i+k*NQJ_parallel)):
   end do:
 end do:</Text-field>
 </Input>
@@ -165,10 +225,55 @@ end do:</Text-field>
 end do:</Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L1731" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_sP_P := Vector(3,symbol=r_sP):
+<Group hide-input="false" labelreference="L3232" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_P_sP := Vector(3,symbol=r_sP):
+s_P_sP := Vector(3,symbol=s_sP):
 angleConvLeg := leg_frame(7):
 angleConv := xE_s(7):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3233" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Erstelle EE-Koordinaten: xE_t, xED_t, xEDD_t <Font encoding="UTF-8">-&gt; Variablen mit Zeitabh\303\244ngigkeit</Font></Text-field><Text-field style="Text" layout="Normal">                                         xE_s, xED_s, xEDD_s <Font encoding="UTF-8">-&gt; Variablen ohne Zeitabh\303\244ngigkeit</Font></Text-field>
+</Input>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">xE_t:=&lt;xE(t);yE(t);zE(t);PsiE(t);ThetaE(t);PhiE(t)&gt;:</Text-field>
+</Input>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">xED_t:=diff~(xE_t,t):</Text-field>
+</Input>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">xEDD_t:=diff~(xED_t,t):</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L3239" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">xE_s := Matrix(xE_s(1..6,1)):
+xED_s := copy(xE_s):
+xEDD_s := copy(xE_s):</Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L2" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="500" pixel-height="344" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">FHG_trans := 0:FHG_rot := 0:
+counter := 6:
+for i to 6 do
+   if not(xE_s(i) = 0) then
+   	 Tmp := xE_s(i):
+      xED_s(i) := D||Tmp:
+      xEDD_s(i) := DD||Tmp:
+   else
+   	 counter := counter - 1:
+      xED_s(i) := 0:
+      xEDD_s(i) := 0:
+      xE_t(i) := 0:
+      xED_t(i) := 0:
+      xEDD_t(i) := 0:
+   end if:
+end do:</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group hide-input="false" labelreference="L3243" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">NX := counter:</Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion3" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">counter := 0:
+for i from 4 to 6 do
+	if not(leg_frame(i) = 0) then
+		counter := counter + 1:
+	end if:
+end do:</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group hide-input="false" labelreference="L3259" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">legAngles := counter:</Text-field>
 </Input>
 </Group>
 </Section>
@@ -178,7 +283,16 @@ angleConv := xE_s(7):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1598" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save angleConvLeg, angleConv, r_sP_P, frame_A_i, qJ_i_s, qJD_i_s, qJDD_i_s, sprintf(&quot;../codeexport/%s/tmp/para_definitions&quot;, robot_name):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save J_P_P, s_P_sP, NX, NQJ_parallel, angleConvLeg, angleConv, r_P_sP, frame_A_i, qJ_i_s, qJD_i_s, qJDD_i_s, xE_t, xED_t, xEDD_t, xE_s, xED_s, xEDD_s, J_SP, sprintf(&quot;../codeexport/%s/tmp/para_definitions&quot;, robot_name):</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L1732" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">varScript := &lt;NX;NQJ_parallel;legAngles&gt;:
+MatlabExport(varScript, sprintf(&quot;../codeexport/%s/tmp/var_parallel.m&quot;, robot_name), 1);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1735" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>

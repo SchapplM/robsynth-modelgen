@@ -28,7 +28,7 @@ with(StringTools):
 # Einstellungen für Code-Export: Optimierungsgrad (2=höchster) und Aktivierung jedes Terms.
 #codegen_act := true: # noch nicht implementiert
 codegen_debug := false:
-codegen_opt := 2:
+codegen_opt := 1:
 codeexport_invdyn := true:
 read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s": 
@@ -48,25 +48,60 @@ read "../transformation/proc_trafo_mdh":
 read "../robot_codegen_definitions/robot_env":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
 # Kennung des Parametersatzes, für den die Dynamikfunktionen erstellt werden sollen. Muss im Repo und in der mpl-Datei auf 1 gelassen werden, da die folgende Zeile mit einem Skript verarbeitet wird.
-codegen_dynpar := 1:
+codegen_dynpar := 2:
 # Link-Index, für den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber für beliebige Segmente aufgestellt werden. (0=Basis)
 LIJAC:=NL-1:
+# Ergebnisse der zusätzlichen Definitionen für parallele Roboter laden
+read sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
 # Ergebnisse der Plattform-Dynamik laden
-read sprintf("../codeexport/%s/tmp/floatb_%s_platform_dynamic_maple.m", robot_name, base_method_name):
+read sprintf("../codeexport/%s/tmp/floatb_platform_dynamic_maple.m", robot_name):
 # Ergebnisse der Dynamik der Gelenkkette laden
 read sprintf("../codeexport/%s/tmp/invdyn_floatb_%s_par%d_maple.m", robot_name, base_method_name, codegen_dynpar)
 ;
 # Ergebnisse der Kinematik für parallelen Roboter laden
 read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
+omegaxs_base := 0:
+omegays_base := 0:
+omegazs_base := 0:
+alphaxs_base := 0:
+betays_base := 0:
+gammazs_base := 0:
+vxs_base := 0:
+vys_base := 0:
+vzs_base := 0:
+
+
+NQ := NQ - (NQJ-NQJ_parallel):
+for i from NQJ_parallel+1 to NQJ do
+	XXC||i := 0:
+	XYC||i := 0:
+	XZC||i := 0:
+	YYC||i := 0:
+	YZC||i := 0:
+	ZZC||i := 0:
+	XX||i := 0:
+	XY||i := 0:
+	XZ||i := 0:
+	YY||i := 0:
+	YZ||i := 0:
+	ZZ||i := 0:
+	SX||i := 0:
+	SY||i := 0:
+	SZ||i := 0:
+	MX||i := 0:
+	MY||i := 0:
+	MZ||i := 0:
+	M||i := 0:
+end do:
 # Ergebnisse G-Vektor laden
 read sprintf("../codeexport/%s/tmp/gravload_par%d_maple.m", robot_name, codegen_dynpar):
 G := Matrix(taug_s(7..NQ,1)):
 # Ergebnisse C-Vektor laden
 read sprintf("../codeexport/%s/tmp/coriolisvec_par%d_maple.m", robot_name, codegen_dynpar):
-Cvec := Matrix(tauCC_s(7..NQ,1)):
+Cvec := combine(Matrix(tauCC_s(7..NQ,1))):
 # Ergebnisse M-Matrix laden
 read sprintf("../codeexport/%s/tmp/inertia_par%d_maple.m", robot_name, codegen_dynpar):
-MM := MM_s(7..NQ,7..NQ):
+MM := combine(MM_s(7..NQ,7..NQ)):
 # Ergebnisse der Kinematik für parallen Roboter laden
 read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
 printf("Generiere Dynamik für PKM %s mit Parametersatz %d und %s\n", robot_name, codegen_dynpar, base_method_name):
@@ -78,33 +113,40 @@ for i to N_LEGS do
   G||i := Copy(G):
 end do:
 # Substituiere in jeder Matrix den Winkel Alpha (Verdrehung in der Basis) und die Gelenkkoordinaten und -geschwindigkeiten
-
 for k from 1 by 1 to N_LEGS do
-  for i to NQJ do
-  	Cvec||k(i,1):=subs({alpha=alpha[k]},Cvec||k(i,1)):
-  	G||k(i,1):=subs({alpha=alpha[k]},G||k(i,1)):
-    for m to NQJ do #alpha
-      n := (m + (k-1)*NQJ):
-      Cvec||k(i,1):=subs({qJD||m||s=qJ||D||n||s,qJ||m||s=qJ||n||s},Cvec||k(i,1)):
-      G||k(i,1):=subs({qJ||m||s=qJ||n||s},G||k(i,1)):
-    end do:
-    for j to NQJ do
-    	 MM||k(i,j):=subs({alpha=alpha[k]},MM||k(i,j)):
-      for m to NQJ do #alpha
-        n := m + (k-1)*NQJ:
-        MM||k(i,j):=subs({qJ||m||s=qJ||n||s},MM||k(i,j)):
-      end do:
-    end do:
-  end do:
+  	for i to NQJ_parallel do
+  		for l to 3 do
+  	 		Cvec||k(i,1):=subs({frame_A_i(l,1)=frame_A_i(l,k)},Cvec||k(i,1)):
+  	  		G||k(i,1):=subs({frame_A_i(l,1)=frame_A_i(l,k)},G||k(i,1)):
+  		end do:
+    		for m to NQJ_parallel do #alpha
+      		n := (m + (k-1)*NQJ_parallel):
+     		Cvec||k(i,1):=subs({qJD||m||s=qJ||D||n||s,qJ||m||s=qJ||n||s},Cvec||k(i,1)):
+      		G||k(i,1):=subs({qJ||m||s=qJ||n||s},G||k(i,1)):
+    		end do:
+    		for j to NQJ_parallel do
+    			for l to 3 do
+    	 			MM||k(i,j):=subs({rame_A_i(l,1)=frame_A_i(l,k)},MM||k(i,j)):
+    	 		end do:
+      		for m to NQJ_parallel do #alpha
+        			n := m + (k-1)*NQJ_parallel:
+        			MM||k(i,j):=subs({qJ||m||s=qJ||n||s},MM||k(i,j)):
+      		end do:
+    		end do:
+  	end do:
 end do:
 
 # Berechnung, Projektion und Addition der Dynamikgleichungen
 # Berechnung der Kräfte/Momente an den Gelenken der jeweiligen Beine und Projektion auf EE-Plattform
 for i to N_LEGS do
-  k := NQJ*(i-1):
-  A||i := Multiply(JBinv_i(..,..,i),JBD_i(..,..,i)):
-  B||i := Multiply(-MM||i,Multiply(A||i,<qJD||(1+k)||s;qJD||(2+k)||s;qJD||(3+k)||s>)):
+  A||i := Multiply(JBinv_i(..,..,i),JBD_i(..,..,i));
+  B||i := Multiply(-MM||i,Multiply(A||i,Multiply(JBinv_i(..,..,i),U_i(..,..,i).H.xED_s)));
+  MMs||i := Transpose(U_i(..,..,i)).Transpose(JBinv_i(..,..,i)).MM||i.JBinv_i(..,..,i).U_i(..,..,i).H;
+  cvecs||i := Transpose(U_i(..,..,i)).Transpose(JBinv_i(..,..,i)).MM||i.JBinv_i(..,..,i).(U_i(..,..,i).dH+UD_i(..,..,i).H).xED_s+Multiply(Transpose(U_i(..,..,i)),Multiply(Transpose(JBinv_i(..,..,i)),(B||i+Cvec||i)));
+  gvecs||i := Multiply(Transpose(U_i(..,..,i)),Multiply(Transpose(JBinv_i(..,..,i)),G||i));
+  
   tau||i := Transpose(U_i(..,..,i)).Transpose(JBinv_i(..,..,i)).MM||i.JBinv_i(..,..,i).(U_i(..,..,i).H.xEDD_s+U_i(..,..,i).dH.xED_s+UD_i(..,..,i).H.xED_s) + Multiply(Transpose(U_i(..,..,i)),Multiply(Transpose(JBinv_i(..,..,i)),(B||i+Cvec||i+G||i))):
+  taus||i := MMs||i.xEDD_s + cvecs||i + gvecs||i;
 end do:
 # Aufsummieren aller Kräfte, projiziert auf EE-Plattform
 Tmp := 0:
@@ -113,6 +155,28 @@ for i to N_LEGS do
 end do:
 # Addiere Inverse Dynamik der Plattform
 tauGes := Tmp + tauE:
+# Aufsummieren aller Massenmatrizen, projiziert auf EE-Plattform
+Tmp := 0:
+for i to N_LEGS do
+  Tmp := Tmp + MMs||i:
+end do:
+# Addiere Massenmatrix der Plattform
+MMGes := Tmp + MME:
+# Aufsummieren aller Coriolisvektoren, projiziert auf EE-Plattform
+Tmp := 0:
+for i to N_LEGS do
+  Tmp := Tmp + cvecs||i:
+end do:
+# Addiere Coriolisvektor der Plattform
+cvecGes := Tmp + cvecE:
+# Aufsummieren aller Gravitiationsvektoren, projiziert auf EE-Plattform
+Tmp := 0:
+for i to N_LEGS do
+  Tmp := Tmp + gvecs||i:
+end do:
+# Addiere Gravitiationsvektor der Plattform
+gGes := Tmp - gE:
+tauGes := MMGes.xEDD_s + cvecGes + gGes:
 # Replace Joint Velocities
 # Substituiere die Gelenkgeschwindigkeiten über H-, Ui- und JBi-Matrix mit EE-Geschwindikeiten
 Tmp := 0:
@@ -123,15 +187,21 @@ for i to N_LEGS do
 end do:
 for i to 6 do
   for j to N_LEGS do
-    k := NQJ*(j-1):
-    tauGes(i,1) := subs({qJD||(1+k)||s=z||j(1),qJD||(2+k)||s=z||j(2),qJD||(3+k)||s=z||j(3)},tauGes(i,1)):
+    for l to NQJ_parallel do
+      tauGes(i,1) := subs({qJD_i_s(l,j)=z||j(l)},tauGes(i,1)):
+    end do:
   end do:
 end do:
 # Export
-tau := tauGes:
+tau := pivotMat.tauGes:
+#J:=MatrixInverse(Jinv):
+#tau:=Transpose(J).tau:
 # Matlab Export: Floating base
 # Berechnung der Basis-Belastung ist für manche Basis-Darstellungen falsch (siehe oben unter Gravitationslast).
 if codeexport_invdyn then
-  MatlabExport(tau, sprintf("../codeexport/%s/tmp/invdyn_para_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(tau, sprintf("../codeexport/%s/tmp/invdyn_para_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
+  MatlabExport(MMGes, sprintf("../codeexport/%s/tmp/inertia_para_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
+  MatlabExport(cvecGes, sprintf("../codeexport/%s/tmp/coriolisvec_para_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
+  MatlabExport(gGes, sprintf("../codeexport/%s/tmp/gGes_para_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
 end if:
 

@@ -133,7 +133,8 @@ with(VectorCalculus):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2950" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_opt := 2:
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_dynpar := 2:
+codegen_opt := 2:
 codeexport_invdyn := true:
 codeexport_grav := true: 
 codeexport_corvec := true:
@@ -180,30 +181,16 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Group>
 <Group hide-input="false" labelreference="L3077" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/para_definitions&quot;, robot_name):
-r_P_sP_P := r_sP_P:</Text-field>
+r_P_sP_P := -r_P_sP:
+s_P_P_sP := s_P_sP:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3028" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ergebnisse der Kinematik f\303\274r parallen Roboter laden</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L2967" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group hide-input="false" labelreference="L2967" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/kinematics_%s_platform_maple.m&quot;, robot_name, base_method_name):</Text-field>
-</Input>
-</Group>
-</Section>
-<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Additional Definitions</Text-field></Title>
-<Group labelreference="L2970" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal">Parameter definieren, wenn nicht vorher schon geschehen</Text-field>
-</Input>
-</Group>
-<Group labelreference="L3079" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if not assigned(J_SE) then
-   J_SP := Matrix(3,3,[XXP,XYP,XZP,XYP,YYP,YZP,XZP,YZP,ZZP]):
-end if:
-if not assigned(xE_s) then
-   xE_s:=&lt;x_all[1];x_all[2];x_all[3];x_all[4];x_all[5];x_all[6]&gt;:
-end if:</Text-field>
 </Input>
 </Group>
 </Section>
@@ -225,19 +212,26 @@ elif angleConv = Z_Y_X then
    RPYjac_0_s := yprjac(xE_s(4),xE_s(5),xE_s(6)):
 end:
 r_0_sP_P := R_0_0_E_s.r_P_sP_P:
-J_P_P := J_SP + mE*Multiply(Transpose(vec2skew(r_P_sP_P)),vec2skew(r_P_sP_P)):
+if codegen_dynpar = 1 then
+  J_P_P := J_SP + mE*Multiply(Transpose(vec2skew(r_P_sP_P)),vec2skew(r_P_sP_P)):
+else
+  J_P_P := J_P_P:
+end if:
 J_0_P := R_0_0_E_s.J_P_P.Transpose(R_0_0_E_s):</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3045" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" spaceabove="0" linebreak="space" rightmargin="0" linespacing="0.0" initial="0" firstindent="0" leftmargin="0" bulletsuffix="" alignment="left" bullet="none" spacebelow="0" pagebreak-before="false">r_0_sP_P := R_0_0_E_t.r_P_sP_P:
 rD_0_sP_P := diff~(r_0_sP_P,t):
+s_0_P_sP := R_0_0_E_t.s_P_P_sP:
+sD_0_P_sP := diff~(s_0_P_sP,t):
 for i to 3 do
    for j to 6 do
       rD_0_sP_P(i) := subs({xED_t(j)=xED_s(j),xE_t(j)=xE_s(j)},rD_0_sP_P(i)):
+      sD_0_P_sP(i) := subs({xED_t(j)=xED_s(j),xE_t(j)=xE_s(j)},sD_0_P_sP(i)):
    end do:
 end do:
-rD_0_sP_P:
+s_0_P_sP := R_0_0_E_s.s_P_P_sP:
 r_0_sP_P := R_0_0_E_s.r_P_sP_P:</Text-field>
 </Input>
 </Group>
@@ -253,8 +247,7 @@ RPYjac_E_s := combine(Multiply(Transpose(R_0_0_E_s),RPYjac_0_s)):</Text-field>
 <Group hide-input="false" labelreference="L3055" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">w_E_0_E_s := RPYjac_E_s.xED_s(4..6,1):
 w_0_0_E_s := RPYjac_0_s.xED_s(4..6,1):
-w_E_0_E_t := RPYjac_E_t.xED_t(4..6,1):
-xED_s(1..3,1);</Text-field>
+w_E_0_E_t := RPYjac_E_t.xED_t(4..6,1):</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3070" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -311,7 +304,11 @@ MatlabExport(H, &quot;H.m&quot;,2);</Text-field>
 </Group>
 <Group hide-input="false" labelreference="L3118" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">xAll := &lt;x;y;z;an;bn;cn&gt;:
-gE_z := xAll(1..3,1) - r_0_sP_P:</Text-field>
+if codegen_dynpar = 1 then
+  gE_z := xE_s(1..3,1) - r_0_sP_P:
+else
+  gE_z := mE*xE_s(1..3,1) + s_0_P_sP:
+end if:</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3122" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -330,9 +327,12 @@ for j to 6 do
   for i to 3 do
      dgEdz(i) := diff(gE_z(i),xAll(j)):
   end do:
-  dgEdz_final(j) := mE*Transpose(gvec(..,1)).dgEdz(..,1):
-end do:
-</Text-field>
+  if codegen_dynpar = 1 then
+    dgEdz_final(j) := mE*Transpose(gvec(..,1)).dgEdz(..,1):
+  else 
+    dgEdz_final(j) := Transpose(gvec(..,1)).dgEdz(..,1):
+  end if:
+end do:</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3130" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -364,8 +364,15 @@ end if:</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3128" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">ME := &lt;mE*Matrix(3,shape=identity),mE*vec2skew(r_0_sP_P);
-       mE*Transpose(vec2skew(r_0_sP_P)),J_0_P&gt;:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_dynpar = 1 then
+  ME := &lt;mE*Matrix(3,shape=identity),mE*vec2skew(r_0_sP_P);
+         mE*Transpose(vec2skew(r_0_sP_P)),J_0_P&gt;:
+  la := codegen_dynpar;
+else 
+  ME := &lt;mE*Matrix(3,shape=identity),vec2skew(-s_0_P_sP);
+         Transpose(vec2skew(-s_0_P_sP)),J_0_P&gt;:
+  la := codegen_dynpar;
+end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2886" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -384,9 +391,13 @@ end if:</Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">#cE := &lt;ZeroMatrix(3,3),mE*vec2skew(rD_0_sP_P);
        #mE*(Transpose(vec2skew(rD_0_sP_P))+Multiply(vec2skew(w_0_0_E_s),Transpose(vec2skew(r_0_sP_P)))),Multiply(vec2skew
 #(w_0_0_E_s),J_0_P)&gt;:
-cE := &lt;ZeroMatrix(3,3),mE*vec2skew(rD_0_sP_P);
-       ZeroMatrix(3,3),Multiply(vec2skew(w_0_0_E_s),J_0_P)&gt;:
-</Text-field>
+if codegen_dynpar = 1 then
+  cE := &lt;ZeroMatrix(3,3),mE*vec2skew(rD_0_sP_P);
+         ZeroMatrix(3,3),Multiply(vec2skew(w_0_0_E_s),J_0_P)&gt;:
+else
+  cE := &lt;ZeroMatrix(3,3),vec2skew(-sD_0_P_sP);
+         ZeroMatrix(3,3),Multiply(vec2skew(w_0_0_E_s),J_0_P)&gt;:
+end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2920" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -402,7 +413,9 @@ end if:</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3152" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tauE := Multiply(ME.H,xEDD_s) + Multiply(ME.dH+cE.H,xED_s) - gE:# - Multiply(Transpose(Hinv),dT):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MME := ME.H:
+cvecE := Multiply(ME.dH+cE.H,xED_s):
+tauE := Multiply(ME.H,xEDD_s) + Multiply(ME.dH+cE.H,xED_s) - gE:# - Multiply(Transpose(Hinv),dT):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2941" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -420,7 +433,7 @@ end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2956" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save tauE, H, dH, sprintf(&quot;../codeexport/%s/tmp/floatb_%s_platform_dynamic_maple.m&quot;, robot_name, base_method_name):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save MME, cvecE , gE, tauE, H, dH, sprintf(&quot;../codeexport/%s/tmp/floatb_platform_dynamic_maple.m&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3075" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
