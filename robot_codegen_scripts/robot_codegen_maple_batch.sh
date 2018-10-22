@@ -187,6 +187,48 @@ if [ -f  $repo_pfad/${robot_name}_kinematic_constraints_implicit.mpl ]; then
 	"
 fi;
 
+# Maple-Skripte zur Berechnung paralleler Roboter
+if [ "$parallel_robot" == "1" ]; then
+  dateiliste_kindyn="
+    robot_tree_floatb_twist_definitions.mpl
+	robot_tree_kinematic_parameter_list.mpl
+    robot_tree_floatb_rotmat_mdh_kinematics.mpl
+    robot_tree_floatb_rotmat_kinematics_com_worldframe_par1.mpl
+    robot_tree_floatb_rotmat_velocity_worldframe_par1.mpl
+    robot_tree_floatb_rotmat_velocity_linkframe.mpl
+	robot_tree_floatb_rotmat_energy_worldframe_par1.mpl
+    robot_tree_floatb_rotmat_energy_worldframe_par2.mpl
+    robot_tree_floatb_rotmat_energy_linkframe_par2.mpl
+    robot_tree_floatb_rotmat_lagrange_worldframe_par1.mpl
+    robot_tree_floatb_rotmat_lagrange_worldframe_par2.mpl
+    robot_tree_floatb_rotmat_dynamics_worldframe_par1.mpl
+    robot_tree_floatb_rotmat_dynamics_worldframe_par2.mpl
+	"
+  if [ "$CG_MINIMAL" == "0" ]; then
+    dateiliste_kindyn="$dateiliste_kindyn
+      robot_chain_floatb_rotmat_energy_regressor.mpl
+      robot_tree_base_parameter_transformations.mpl
+      robot_chain_floatb_rotmat_dynamics_regressor_pv2.mpl
+      robot_chain_floatb_rotmat_dynamics_regressor_minpar.mpl
+      "
+  fi;
+  dateiliste_kindyn="$dateiliste_kindyn
+	robot_tree_rotmat_jacobian_baseframe.mpl
+    robot_para_definitions.mpl
+    robot_para_rotmat_kinematics.mpl
+    robot_para_plattform_rotmat_dynamics_par1.mpl
+    robot_para_rotmat_projection_dynamics_par1.mpl
+    robot_para_plattform_rotmat_dynamics_par2.mpl
+    robot_para_rotmat_projection_dynamics_par2.mpl
+    "
+  if [ "$CG_MINIMAL" == "0" ]; then
+    dateiliste_kindyn="$dateiliste_kindyn
+      robot_para_plattform_rotmat_dynamics_regressor.mpl
+	  robot_para_rotmat_projection_dynamics_regressor.mpl
+	"
+  fi;
+fi;
+
 # Alle Maple-Dateien der Reihe nach ausführen
 for mpldat in $dateiliste_kindyn
 do

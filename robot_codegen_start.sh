@@ -92,6 +92,7 @@ mkdir -p "$repo_pfad/codeexport/$robot_name/testfcn"
 
 # Maple-Definitionen einmal ausführen (damit dort definierte Variablen in Bash übernommen werden)
 $repo_pfad/scripts/run_maple_script.sh $repo_pfad/robot_codegen_definitions/robot_tree_floatb_twist_definitions.mpl
+echo $qJ_t
 
 # Umgebungsvariablen vorbereiten (jetzt enthalten sie die vollen MDH-Informationen (Name, Dimensionen)
 source robot_codegen_tmpvar_bash.sh > /dev/null

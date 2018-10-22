@@ -27,18 +27,27 @@ source robot_codegen_matlab_preparation.sh
 ./robot_codegen_matlab_assemble.sh
 
 # Erstelle Matlab-Funktionen der Kinematik
+if [ "$parallel_robot" == "0" ]; then
 ./robot_codegen_matlab_kinematics_varpar.sh
+fi;
 
 # Erstelle Matlab-Funktionen der explizit ausgerechneten Dynamik (nicht in Regressorform)
-./robot_codegen_matlab_dynamics_fixb_varpar.sh
-./robot_codegen_matlab_dynamics_floatb_varpar.sh
+if [ "$parallel_robot" == "0" ]; then
+	./robot_codegen_matlab_dynamics_fixb_varpar.sh
+	./robot_codegen_matlab_dynamics_floatb_varpar.sh
+fi;
+./robot_codegen_matlab_dynamics_parallel_varpar.sh
 
 # Erstelle Matlab-Funktionen der parameterlinearen Dynamik
-./robot_codegen_matlab_paramlin_fixb_varpar.sh
-./robot_codegen_matlab_paramlin_floatb_varpar.sh
+if [ "$parallel_robot" == "0" ]; then
+	./robot_codegen_matlab_paramlin_fixb_varpar.sh
+	./robot_codegen_matlab_paramlin_floatb_varpar.sh
+fi;
 
 # Erstelle Matlab-Funktionen aus numerischer Berechnung
-./robot_codegen_matlab_num_varpar.sh
+if [ "$parallel_robot" == "0" ]; then
+	./robot_codegen_matlab_num_varpar.sh
+fi;
 
 # Erstelle Matlab-Funktionen aus selbst definierten Dateien
 addgenscript=$repo_pfad/robot_codegen_additional/scripts/${robot_name}_codegen_matlab_additional_varpar.sh
