@@ -39,7 +39,7 @@ echo "robot_NJ=$robot_NJ" >> $robot_env_pfad.sh
 echo "robot_name=\"$robot_name\"" >> $robot_env_pfad.sh
 
 # Variablen für parallelroboter
-NQJ_parallel_pfad=$repo_pfad/CodeExport/$robot_name/tmp/var_parallel.m
+NQJ_parallel_pfad=$repo_pfad/codeexport/$robot_name/tmp/var_parallel.m
 parallel_NX=`grep "unknown(1,1) = " $NQJ_parallel_pfad | tail -1 | sed 's/.*= \(.*\);/\1/'`
 parallel_NQJ_leg=`grep "unknown(2,1) = " $NQJ_parallel_pfad | tail -1 | sed 's/.*= \(.*\);/\1/'`
 parallel_angles_leg=`grep "unknown(3,1) = " $NQJ_parallel_pfad | tail -1 | sed 's/.*= \(.*\);/\1/'`
