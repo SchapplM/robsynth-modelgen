@@ -1,22 +1,23 @@
-﻿# Beispiel für Codegenerierung:
+# Beispiel für Codegenerierung:
 # 3RRR
 
 robot_name := "UPS":
+parallel := 1:
 
-NJ := 3:
-NQJ := 3:
+NJ := 6:
+NQJ := 6:
 
-qoffset := Matrix(3,1,[0,0,0]):
-alpha := Matrix(3,1,[Pi/2, Pi/2, Pi/2]):
-a := Matrix(3,1,[0,0, 0]):
+qoffset := Matrix(6,1,[0,0,0,0,0,0]):
+alpha := Matrix(6,1,[Pi/2, Pi/2, Pi/2, 0, Pi/2, Pi/2]):
+a := Matrix(6,1,[0,0,0,0,0,0]):
 
-d := Matrix(3,1,[0,0,qJ_t(3)]):
-theta := Matrix(3,1,[qJ_t(1), qJ_t(2),0]):
+d := Matrix(6,1,[0,0,qJ_t(3),0,0,0]):
+theta := Matrix(6,1,[qJ_t(1), qJ_t(2),0,qJ_t(4),qJ_t(5),qJ_t(6)]):
 
-v := Matrix(3,1,[0, 1, 2]):
-b := Matrix(3,1,[0, 0, 0]):
-beta := Matrix(3,1,[0,0,0]):
-sigma := Matrix(3,1,[0, 0, 1]):
+v := Matrix(6,1,[0, 1, 2, 3, 4, 5]):
+b := Matrix(6,1,[0, 0, 0, 0, 0, 0]):
+beta := Matrix(6,1,[0,0,0,0,0,0]):
+sigma := Matrix(6,1,[0, 0, 1, 0, 0, 0]):
 
 ### Platform
 
@@ -28,4 +29,3 @@ leg_frame := Matrix(7,1,[xA, yA, zA, alphaLeg, 0, 0, Z_Y_X]):
 xE_s := Matrix(7,1,[x_all[1],x_all[2],x_all[3],x_all[4],x_all[5],x_all[6], Z_Y_X]):
 
 
-J_SP := Matrix(3,3,[XX,XY,XZ,YX,YY,YZ,ZX,ZY,ZZ]):
