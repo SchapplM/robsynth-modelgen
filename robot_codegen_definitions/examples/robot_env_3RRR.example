@@ -1,7 +1,7 @@
-# Beispiel für Codegenerierung:
+﻿# Beispiel für Codegenerierung:
 # 3RRR
 
-robot_name := "3RRR":
+robot_name := "PKM_3RRR":
 
 NJ := 3:
 NQJ := 3:
