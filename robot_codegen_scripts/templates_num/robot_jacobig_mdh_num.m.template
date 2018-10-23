@@ -40,8 +40,9 @@ if link_index > %NL%-1
 end
 
 % Initialisierung. Alle Spalten die nicht gesetzt werden haben keinen
-% Einfluss.
-Jg_C = zeros(6,%NJ%);
+% Einfluss. Fallunterscheidung für symbolische Eingabe.
+if isa([qJ;pkin;r_i_i_C], 'double'), Jg_C = zeros(6,%NJ%);           % numerisch
+else,                                Jg_C = sym('xx', [6,%NJ%]); end % symbolisch
 
 if link_index == 0
   % Die Gelenkwinkel haben keinen Einfluss auf die Basis
@@ -52,8 +53,8 @@ end
 T_c_mdh = %RN%_fkine_fixb_rotmat_mdh_sym_varpar(qJ, pkin);
 [v_mdh, sigma_mdh] = %RN%_structural_kinematic_parameters();
 T_0_i = T_c_mdh(:,:,link_index+1);
-R_0_i = t2r(T_0_i);
-r_0_i_C = (R_0_i) * (r_i_i_C);
+R_0_i = T_0_i(1:3,1:3);
+r_0_i_C = R_0_i * r_i_i_C;
 
 j = link_index;
 for tmp = 1:%NJ%

@@ -55,8 +55,8 @@ end
 T_c_mdh = %RN%_fkine_fixb_rotmat_mdh_sym_varpar(qJ, pkin);
 v_mdh = %RN%_structural_kinematic_parameters();
 T_0_i = T_c_mdh(:,:,link_index+1);
-R_0_i = t2r(T_0_i);
-r_0_i_C = (R_0_i) * (r_i_i_C);
+R_0_i = T_0_i(1:3,1:3);
+r_0_i_C = R_0_i * r_i_i_C;
 
 % Geschwindigkeit des Punktes C
 Jg_C = %RN%_jacobig_mdh_num(qJ, link_index, r_i_i_C, pkin);
