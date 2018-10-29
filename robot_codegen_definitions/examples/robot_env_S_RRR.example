@@ -1,11 +1,11 @@
 # Beispiel für Codegenerierung:
-# 3RRR
+# RRR
 
-robot_name := "P_3RRR":
+robot_name := "S_RRR":
+parallel := 0:
 
 NJ := 3:
 NQJ := 3:
-parallel := 1:
 
 qoffset := Matrix(3,1,[0,0,0]):
 alpha := Matrix(3,1,[0,0,0]):
@@ -18,11 +18,3 @@ v := Matrix(3,1,[0, 1, 2]):
 b := Matrix(3,1,[0, 0, 0]):
 beta := Matrix(3,1,[0, 0, 0]):
 sigma := Matrix(3,1,[0, 0, 0]):
-
-### Platform
-
-AKTIV := 1:
-N_LEGS := 3:
-leg_frame := Matrix(7,1,[xA, yA, 0, 0, 0, 0, Z_Y_X]):
-xE_s := Matrix(7,1,[x_all[1],x_all[2],0,x_all[3],0,0, Z_Y_X]):
-#J_SP := Matrix(3,3,[XX,XY,XZ,XY,YY,YZ,XZ,YZ,ZZ]):
