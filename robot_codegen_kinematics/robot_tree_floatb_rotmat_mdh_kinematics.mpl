@@ -36,6 +36,10 @@ codegen_opt := 2:
 # Ist für einige Systeme vorteilhaft (serielle Ketten mit parallelen Achsen), für andere nicht (z.B. Baumstrukturen mit parallelen Achsen. Hier kann die Code-Optimierung mehr aus nicht trigonometrisch optimierten Termen herausholen).
 # Die Terme werden aber auf jeden Fall übersichtlicher.
 codegen_kinematics_opt := true:
+# Substitutionsreihenfolge von kinematischen Zwangsbedingungen (falls vorhanden) einstellen.
+# 1: Ersetzung bereits in Einzel-Transformationsmatrizen (dann ist die Zusammenfassung für mehrere Achsen aus codegen_kinematics_opt nicht mehr so leicht möglich). Muss 1 sein für trigonometrische Ersetzung.
+# 2: Ersetzung erst nach der Zusammenfassung der Einzel-Transformationsmatrizen zu (kumulierten) Gesamt-Transformationsmatrizen
+codegen_kinematics_subsorder := 1:
 read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s": 
 read "../helper/proc_MatlabExport":
@@ -85,25 +89,25 @@ end do:
 for i from 1 to NJ do 
   Trf(1 .. 4, 1 .. 4, i) := trafo_mdh_full(alpha[i,1], a[i,1], theta[i,1], d[i,1], beta[i,1], b[i,1]):
 end do:
-# Kinematische Zwangsbedingungen ersetzen
+# Kinematische Zwangsbedingungen ersetzen (vor Berechnung der Gesamt-Transformation)
 # Substituiere allgemeine Ausdrücke der Winkel der Parallelstruktur mit kinematischen Zwangsbedingungen in Abhängigkeit der Haupt-Gelenkwinkel
-for i from 1 to NJ do # Index über Transformationsmatrizen aller Körper
-  for ix from 1 to 4 do # Index über Zeilen der Transformationsmatrizen
-    for iy from 1 to 4 do # Index über Spalten der Transformationsmatrizen
-      # Substituiere Zeitvariablen
-      Trf(ix, iy, i) := convert_t_s( Trf(ix, iy, i) ):
-      # Substituiere sin und cos der Winkel (einfachere Ausdrücke)
-      Trf(ix, iy, i) := subs_kintmp_exp(Trf(ix, iy, i)):
-      # Substituiere die verbleibenden Winkel direkt (einige Winkel sind nicht in den Ersetzungsausdrücken enthalten, da sie keine problematischen arctan-Ausdrücke enthalten.
-      for jj from 1 to RowDimension(kintmp_qt) do # Index über zu ersetzende Winkel
-        Trf(ix, iy, i) := subs( { kintmp_s(jj, 1) = kintmp_qs(jj, 1) }, Trf(ix, iy, i) ): 
+if kin_constraints_exist and codegen_kinematics_subsorder = 1 then
+  for i from 1 to NJ do # Index über Transformationsmatrizen aller Körper
+    for ix from 1 to 4 do # Index über Zeilen der Transformationsmatrizen
+      for iy from 1 to 4 do # Index über Spalten der Transformationsmatrizen
+        # Substituiere Zeitvariablen
+        Trf(ix, iy, i) := convert_t_s( Trf(ix, iy, i) ):
+        # Substituiere sin und cos der Winkel (einfachere Ausdrücke)
+        Trf(ix, iy, i) := subs_kintmp_exp(Trf(ix, iy, i)):
+        # Substituiere die verbleibenden Winkel direkt (einige Winkel sind nicht in den Ersetzungsausdrücken enthalten, da sie keine problematischen arctan-Ausdrücke enthalten.
+        for jj from 1 to RowDimension(kintmp_qt) do # Index über zu ersetzende Winkel
+          Trf(ix, iy, i) := subs( { kintmp_s(jj, 1) = kintmp_qs(jj, 1) }, Trf(ix, iy, i) ): 
+        end do:
+        Trf(ix, iy, i) := convert_s_t( Trf(ix, iy, i) ):
       end do:
-      Trf(ix, iy, i) := convert_s_t( Trf(ix, iy, i) ):
     end do:
   end do:
-end do:
-if kin_constraints_exist = true then:
-  printf("Ersetzungen der MDH-Parameter mit Ergebnissen der Parallelstruktur in verallgemeinerten Koordinaten erfolgreich.\n"):
+  printf("Ersetzungen der MDH-Parameter mit Ergebnissen der Parallelstruktur in verallgemeinerten Koordinaten erfolgreich (vor Berechnung der Gesamt-Transformation).\n"):
 end if:
 # Calculate Forward Kinematics (Multi-Joint Transformation)
 Trf_c := Matrix(4, 4, NJ+1): # Diese Initialisierung bringt nichts (initialisiert nur 4x4-Matrix)
@@ -170,6 +174,31 @@ if codegen_kinematics_opt then
     #print(Trf_c(1 .. 4, 1 .. 4, i+1)):
   end do;
 end if;
+# Kinematische Zwangsbedingungen ersetzen (nach Berechnung der Gesamt-Transformation)
+# Substituiere allgemeine Ausdrücke der Winkel der Parallelstruktur mit kinematischen Zwangsbedingungen in Abhängigkeit der Haupt-Gelenkwinkel
+# Da die Gesamt-Transformation Trf_c an dieser Stelle schon berechnet wurde, müssen die Ausdrücke hier in Trf und Trf_c ersetzt werden.
+if kin_constraints_exist and codegen_kinematics_subsorder = 2 then
+  for i from 1 to NJ do # Index über Transformationsmatrizen aller Körper
+    for ix from 1 to 4 do # Index über Zeilen der Transformationsmatrizen
+      for iy from 1 to 4 do # Index über Spalten der Transformationsmatrizen
+        # Substituiere Zeitvariablen
+        Trf(  ix, iy, i)   := convert_t_s( Trf(  ix, iy, i) ):
+        Trf_c(ix, iy, i+1) := convert_t_s( Trf_c(ix, iy, i+1) ):
+        # Substituiere sin und cos der Winkel (einfachere Ausdrücke)
+        Trf(ix,   iy, i)   := subs_kintmp_exp(Trf(  ix, iy, i)):
+        Trf_c(ix, iy, i+1) := subs_kintmp_exp(Trf_c(ix, iy, i+1)):
+        # Substituiere die verbleibenden Winkel direkt (einige Winkel sind nicht in den Ersetzungsausdrücken enthalten, da sie keine problematischen arctan-Ausdrücke enthalten.
+        for jj from 1 to RowDimension(kintmp_qt) do # Index über zu ersetzende Winkel
+          Trf(ix,   iy, i)   := subs( { kintmp_s(jj, 1) = kintmp_qs(jj, 1) }, Trf(  ix, iy, i) ):
+          Trf_c(ix, iy, i+1) := subs( { kintmp_s(jj, 1) = kintmp_qs(jj, 1) }, Trf_c(ix, iy, i+1) ): 
+        end do:
+        Trf(ix,   iy, i)   := convert_s_t( Trf(  ix, iy, i) ):
+        Trf_c(ix, iy, i+1) := convert_s_t( Trf_c(ix, iy, i+1) ):
+      end do:
+    end do:
+  end do:
+  printf("Ersetzungen der MDH-Parameter mit Ergebnissen der Parallelstruktur in verallgemeinerten Koordinaten erfolgreich (nach Berechnung der Gesamt-Transformation).\n"):
+end if:
 # Export
 # Maple-Export
 save Trf, Trf_c, sprintf("../codeexport/%s/tmp/kinematics_floatb_%s_rotmat_maple.m", robot_name, base_method_name):

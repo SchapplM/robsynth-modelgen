@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="2017" minor="3"/>
+<Version major="2018" minor="0"/>
 <Label-Scheme value="2" prefix=""/>
-<View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false">
+<View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -145,6 +145,16 @@ Die Terme werden aber auf jeden Fall \303\274bersichtlicher.</Font></Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_kinematics_opt := true:</Text-field>
 </Input>
 </Group>
+<Group labelreference="L1770" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Substitutionsreihenfolge von kinematischen Zwangsbedingungen (falls vorhanden) einstellen.
+1: Ersetzung bereits in Einzel-Transformationsmatrizen (dann ist die Zusammenfassung f\303\274r mehrere Achsen aus </Font>codegen_kinematics_opt<Font encoding="UTF-8"> nicht mehr so leicht m\303\266glich). Muss 1 sein f\303\274r trigonometrische Ersetzung.
+2: Ersetzung erst nach der Zusammenfassung der Einzel-Transformationsmatrizen zu (kumulierten) Gesamt-Transformationsmatrizen</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1771" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_kinematics_subsorder := 1:</Text-field>
+</Input>
+</Group>
 <Group labelreference="L1583" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_convert_s_t&quot;:
 read &quot;../helper/proc_convert_t_s&quot;: 
@@ -238,32 +248,28 @@ end do:</Text-field>
 </Input>
 </Group>
 </Section>
-<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Kinematische Zwangsbedingungen ersetzen</Text-field></Title>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Kinematische Zwangsbedingungen ersetzen (vor Berechnung der Gesamt-Transformation)</Text-field></Title>
 <Group labelreference="L1714" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Substituiere allgemeine Ausdr\303\274cke der Winkel der Parallelstruktur mit kinematischen Zwangsbedingungen in Abh\303\244ngigkeit der Haupt-Gelenkwinkel</Font></Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L2" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="1584" pixel-height="288" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">for i from 1 to NJ do # Index \303\274ber Transformationsmatrizen aller K\303\266rper
-  for ix from 1 to 4 do # Index \303\274ber Zeilen der Transformationsmatrizen
-    for iy from 1 to 4 do # Index \303\274ber Spalten der Transformationsmatrizen
-      # Substituiere Zeitvariablen
-      Trf(ix, iy, i) := convert_t_s( Trf(ix, iy, i) ):
-      # Substituiere sin und cos der Winkel (einfachere Ausdr\303\274cke)
-      Trf(ix, iy, i) := subs_kintmp_exp(Trf(ix, iy, i)):
-      # Substituiere die verbleibenden Winkel direkt (einige Winkel sind nicht in den Ersetzungsausdr\303\274cken enthalten, da sie keine problematischen arctan-Ausdr\303\274cke enthalten.
-      for jj from 1 to RowDimension(kintmp_qt) do # Index \303\274ber zu ersetzende Winkel
-        Trf(ix, iy, i) := subs( { kintmp_s(jj, 1) = kintmp_qs(jj, 1) }, Trf(ix, iy, i) ): 
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L2" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="1584" pixel-height="288" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">if kin_constraints_exist and codegen_kinematics_subsorder = 1 then
+  for i from 1 to NJ do # Index \303\274ber Transformationsmatrizen aller K\303\266rper
+    for ix from 1 to 4 do # Index \303\274ber Zeilen der Transformationsmatrizen
+      for iy from 1 to 4 do # Index \303\274ber Spalten der Transformationsmatrizen
+        # Substituiere Zeitvariablen
+        Trf(ix, iy, i) := convert_t_s( Trf(ix, iy, i) ):
+        # Substituiere sin und cos der Winkel (einfachere Ausdr\303\274cke)
+        Trf(ix, iy, i) := subs_kintmp_exp(Trf(ix, iy, i)):
+        # Substituiere die verbleibenden Winkel direkt (einige Winkel sind nicht in den Ersetzungsausdr\303\274cken enthalten, da sie keine problematischen arctan-Ausdr\303\274cke enthalten.
+        for jj from 1 to RowDimension(kintmp_qt) do # Index \303\274ber zu ersetzende Winkel
+          Trf(ix, iy, i) := subs( { kintmp_s(jj, 1) = kintmp_qs(jj, 1) }, Trf(ix, iy, i) ): 
+        end do:
+        Trf(ix, iy, i) := convert_s_t( Trf(ix, iy, i) ):
       end do:
-      Trf(ix, iy, i) := convert_s_t( Trf(ix, iy, i) ):
     end do:
   end do:
-end do:
-</EC-CodeEditor></CodeEditor-ExecGroup>
-<Group labelreference="L1712" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if kin_constraints_exist = true then:
-<Font encoding="UTF-8">  printf(&quot;Ersetzungen der MDH-Parameter mit Ergebnissen der Parallelstruktur in verallgemeinerten Koordinaten erfolgreich.\134n&quot;):
-</Font>end if:</Text-field>
-</Input>
-</Group>
+  printf(&quot;Ersetzungen der MDH-Parameter mit Ergebnissen der Parallelstruktur in verallgemeinerten Koordinaten erfolgreich (vor Berechnung der Gesamt-Transformation).\134n&quot;):
+end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Calculate Forward Kinematics (Multi-Joint Transformation)</Text-field></Title>
 <Group labelreference="L1706" drawlabel="true">
@@ -304,7 +310,7 @@ end:</Text-field>
 <Group labelreference="L1727" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">Einfache Kinematik: Multiplikation an vorherige Transformationsmatrix</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="837" pixel-height="200" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">if not(codegen_kinematics_opt) then
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L4" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="837" pixel-height="200" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">if not(codegen_kinematics_opt) then
   for i from 1 to NJ do 
     # Index des vorherigen Koordinatensystems
     j := v(i)+1:
@@ -318,9 +324,9 @@ end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L1730" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Optimierung der Terme: Summentheorem f\303\274r Drehungen um aufeinanderfolgende Achsen.
 Bei Verwendung dieser Optimierung funktioniert die Substitution mit trigonometrischen Ausdr\303\274cken von abh\303\244ngigen Gelenken eventuell anders.
-Die Funktionsweise kann mit aktivierten print-Befehlen nachvollzogen werden.</Font></Text-field>
+</Font>Die Funktionsweise kann mit aktivierten print-Befehlen nachvollzogen werden.</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" hide-input="false" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion3" expanded="true" visible="true" pixel-width="1170" pixel-height="702" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">if codegen_kinematics_opt then
+</Group><CodeEditor-ExecGroup view="presentation" hide-input="false" labelreference="L6" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion3" expanded="true" visible="true" pixel-width="1170" pixel-height="702" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">if codegen_kinematics_opt then
   for i from 1 to NJ do
     #printf(&quot;----------------------\134ni=%d\134n&quot;,i):
     # Bestimme Vorw\303\244rtskinematik f\303\274r das Koordinatensystem i (0=Basis)
@@ -357,81 +363,108 @@ Die Funktionsweise kann mit aktivierten print-Befehlen nachvollzogen werden.</Fo
     #print(Trf_c(1 .. 4, 1 .. 4, i+1)):
   end do;
 end if;</EC-CodeEditor></CodeEditor-ExecGroup>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Kinematische Zwangsbedingungen ersetzen (nach Berechnung der Gesamt-Transformation)</Text-field></Title>
+<Group labelreference="L1856" drawlabel="true">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Substituiere allgemeine Ausdr\303\274cke der Winkel der Parallelstruktur mit kinematischen Zwangsbedingungen in Abh\303\244ngigkeit der Haupt-Gelenkwinkel
+Da die Gesamt-Transformation Trf_c an dieser Stelle schon berechnet wurde, m\303\274ssen die Ausdr\303\274cke hier in Trf und Trf_c ersetzt werden.</Font></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1857" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion2" expanded="true" visible="true" pixel-width="1584" pixel-height="288" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">if kin_constraints_exist and codegen_kinematics_subsorder = 2 then
+  for i from 1 to NJ do # Index \303\274ber Transformationsmatrizen aller K\303\266rper
+    for ix from 1 to 4 do # Index \303\274ber Zeilen der Transformationsmatrizen
+      for iy from 1 to 4 do # Index \303\274ber Spalten der Transformationsmatrizen
+        # Substituiere Zeitvariablen
+        Trf(  ix, iy, i)   := convert_t_s( Trf(  ix, iy, i) ):
+        Trf_c(ix, iy, i+1) := convert_t_s( Trf_c(ix, iy, i+1) ):
+        # Substituiere sin und cos der Winkel (einfachere Ausdr\303\274cke)
+        Trf(ix,   iy, i)   := subs_kintmp_exp(Trf(  ix, iy, i)):
+        Trf_c(ix, iy, i+1) := subs_kintmp_exp(Trf_c(ix, iy, i+1)):
+        # Substituiere die verbleibenden Winkel direkt (einige Winkel sind nicht in den Ersetzungsausdr\303\274cken enthalten, da sie keine problematischen arctan-Ausdr\303\274cke enthalten.
+        for jj from 1 to RowDimension(kintmp_qt) do # Index \303\274ber zu ersetzende Winkel
+          Trf(ix,   iy, i)   := subs( { kintmp_s(jj, 1) = kintmp_qs(jj, 1) }, Trf(  ix, iy, i) ):
+          Trf_c(ix, iy, i+1) := subs( { kintmp_s(jj, 1) = kintmp_qs(jj, 1) }, Trf_c(ix, iy, i+1) ): 
+        end do:
+        Trf(ix,   iy, i)   := convert_s_t( Trf(  ix, iy, i) ):
+        Trf_c(ix, iy, i+1) := convert_s_t( Trf_c(ix, iy, i+1) ):
+      end do:
+    end do:
+  end do:
+  printf(&quot;Ersetzungen der MDH-Parameter mit Ergebnissen der Parallelstruktur in verallgemeinerten Koordinaten erfolgreich (nach Berechnung der Gesamt-Transformation).\134n&quot;):
+end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Export</Text-field></Title>
-<Group labelreference="L1588" drawlabel="true">
+<Group labelreference="L1840" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal">Maple-Export</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1587" drawlabel="true">
+<Group labelreference="L1849" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save Trf, Trf_c, sprintf(&quot;../codeexport/%s/tmp/kinematics_floatb_%s_rotmat_maple.m&quot;, robot_name, base_method_name):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1592" drawlabel="true">
+<Group labelreference="L1839" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Export des symbolischen Ausdrucks f\303\274r alle kumulierten Transformationsmatrizen auf einmal.</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L1640" drawlabel="true">
+<Group labelreference="L1841" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Trf_c_Export := Matrix((NJ+1)*4, 4):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1639" drawlabel="true">
+<Group labelreference="L1854" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NJ+1 do 
   Trf_c_Export((i-1)*4+1 .. 4*i, 1..4) := Trf_c(1..4, 1..4, i):
 end do:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1643" drawlabel="true">
+<Group labelreference="L1842" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
   MatlabExport(convert_t_s(Trf_c_Export), sprintf(&quot;../codeexport/%s/tmp/fkine_mdh_floatb_%s_rotmat_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1690" drawlabel="true">
+<Group labelreference="L1838" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Export des symbolischen Ausdrucks f\303\274r alle Gelenk-Transformationsmatrizen auf einmal.</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L1692" drawlabel="true">
+<Group labelreference="L1843" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Trf_Export := Matrix((NJ)*4, 4):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1689" drawlabel="true">
+<Group labelreference="L1848" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NJ do 
   Trf_Export((i-1)*4+1 .. 4*i, 1..4) := Trf(1..4, 1..4, i):
 end do:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1691" drawlabel="true">
+<Group labelreference="L1853" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
   MatlabExport(convert_t_s(Trf_Export), sprintf(&quot;../codeexport/%s/tmp/joint_transformation_mdh_rotmat_matlab.m&quot;, robot_name), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1722" drawlabel="true">
+<Group labelreference="L1844" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal">Export ohne letzte Zeile</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1723" drawlabel="true">
+<Group labelreference="L1846" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Trf_Export_m := Matrix((NJ)*3, 4):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1724" drawlabel="true">
+<Group labelreference="L1850" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NL do 
   Trf_Export_m((i-1)*3+1 .. 3*i, 1..4) := Trf_c(1..3, 1..4, i):
 end do:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1725" drawlabel="true">
+<Group labelreference="L1851" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
   MatlabExport(convert_t_s(Trf_Export_m), sprintf(&quot;../codeexport/%s/tmp/joint_transformation_mdh_rotmat_m_matlab.m&quot;, robot_name), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1642" drawlabel="true">
+<Group labelreference="L1845" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Export des symbolischen Ausdrucks f\303\274r jede Transformationsmatrix einzeln</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L1641" drawlabel="true">
+<Group labelreference="L1852" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NJ+1 do
   if codegen_act and codegen_debug then
     MatlabExport(convert_t_s(Trf_c(1 .. 4, 1 .. 4, i)), sprintf(&quot;../codeexport/%s/tmp/fkine_%d_floatb_%s_rotmat_matlab.m&quot;, robot_name, i, base_method_name), codegen_opt):
@@ -439,9 +472,10 @@ end if:</Text-field>
 end do:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1644" drawlabel="true">
+<Group labelreference="L1847" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
+</Section>
 </Section>
 </Worksheet>
