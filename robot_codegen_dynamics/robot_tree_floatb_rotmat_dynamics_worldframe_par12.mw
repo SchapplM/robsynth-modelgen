@@ -593,7 +593,9 @@ end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1724" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save tau, sprintf(&quot;../codeexport/%s/tmp/invdyn_floatb_%s_par%d_maple.m&quot;, robot_name, base_method_name, codegen_dynpar):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_invdyn then
+  save tau, sprintf(&quot;../codeexport/%s/tmp/invdyn_floatb_%s_par%d_maple.m&quot;, robot_name, base_method_name, codegen_dynpar):
+end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1611" drawlabel="true">

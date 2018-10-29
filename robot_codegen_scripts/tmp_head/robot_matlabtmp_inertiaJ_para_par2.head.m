@@ -1,4 +1,4 @@
-% Calculate joint inertia matrix for
+% Calculate inertia matrix for
 % %RN%
 % Use Code from Maple symbolic Code Generation
 % 
@@ -13,10 +13,10 @@
 % %INPUT_KOPPEL%
 % 
 % Output:
-% Mq [%NQJ%x%NQJ%]
+% M [%N_LEGS%x%N_LEGS%]
 %   inertia matrix
 
 % %VERSIONINFO%
 
-function Mq = %FN%(xP, qJ, legFrame, ...
+function M = %FN%(xP, qJ, legFrame, ...
   koppelP, pkin, m, mrSges, Ifges)

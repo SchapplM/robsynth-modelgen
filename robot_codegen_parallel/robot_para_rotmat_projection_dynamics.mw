@@ -167,7 +167,7 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Input>
 </Group>
 <Group labelreference="L3138" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_definitions&quot;, robot_name):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_definitions&quot;, leg_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3156" drawlabel="true">
@@ -191,7 +191,8 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3308" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/para_definitions&quot;, robot_name):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:
+read sprintf(&quot;../codeexport/%s/tmp/para_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3197" drawlabel="true">
@@ -199,7 +200,8 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Input>
 </Group>
 <Group labelreference="L3186" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/floatb_platform_dynamic_maple.m&quot;, robot_name):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:
+read sprintf(&quot;../codeexport/%s/tmp/floatb_platform_dynamic_maple.m&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3144" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -207,7 +209,7 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Input>
 </Group>
 <Group labelreference="L3141" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/invdyn_floatb_%s_par%d_maple.m&quot;, robot_name, base_method_name, codegen_dynpar)</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/invdyn_floatb_%s_par%d_maple.m&quot;, leg_name, base_method_name, codegen_dynpar)</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3216" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -215,7 +217,9 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3304" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/kinematics_%s_platform_maple.m&quot;, robot_name, base_method_name):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:
+read sprintf(&quot;../codeexport/%s/tmp/kinematics_%s_platform_maple.m&quot;, robot_name, base_method_name):
+read &quot;../robot_codegen_definitions/robot_env&quot;:</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3298" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -258,7 +262,7 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3313" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/gravload_par%d_maple.m&quot;, robot_name, codegen_dynpar):
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/gravload_par%d_maple.m&quot;, leg_name, codegen_dynpar):
 G := Matrix(taug_s(7..NQ,1)):</Text-field>
 </Input>
 </Group>
@@ -267,7 +271,7 @@ G := Matrix(taug_s(7..NQ,1)):</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3173" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/coriolisvec_par%d_maple.m&quot;, robot_name, codegen_dynpar):
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/coriolisvec_par%d_maple.m&quot;, leg_name, codegen_dynpar):
 Cvec := combine(Matrix(tauCC_s(7..NQ,1))):</Text-field>
 </Input>
 </Group>
@@ -276,7 +280,7 @@ Cvec := combine(Matrix(tauCC_s(7..NQ,1))):</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3263" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/inertia_par%d_maple.m&quot;, robot_name, codegen_dynpar):
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/inertia_par%d_maple.m&quot;, leg_name, codegen_dynpar):
 MM := combine(MM_s(7..NQ,7..NQ)):</Text-field>
 </Input>
 </Group>
@@ -487,18 +491,32 @@ end do:
   for j to N_LEGS do
     for l to NQJ_parallel do
       tauGes(i,1) := subs({qJD_i_s(l,j)=z||j(l)},tauGes(i,1)):
+      cvecGes(i,1) := subs({qJD_i_s(l,j)=z||j(l)},cvecGes(i,1)):
+      gGes(i,1) := subs({qJD_i_s(l,j)=z||j(l)},gGes(i,1)):
+      for k to 6 do
+        MMGes(i,k) := subs({qJD_i_s(l,j)=z||j(l)},MMGes(i,k)):
+      end do:
     end do:
   end do:
 end do:</Text-field>
 </Input>
+<Input><Text-field prompt="&gt; " style="Maple Input" spaceabove="0" linebreak="space" rightmargin="0" linespacing="0.0" initial="0" firstindent="0" leftmargin="0" bulletsuffix="" alignment="left" bullet="none" spacebelow="0" pagebreak-before="false"></Text-field>
+</Input>
 </Group>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Export</Text-field></Title>
-<Group hide-input="false" labelreference="L3150" drawlabel="true">
+<Group hide-input="false" labelreference="L3342" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tau := pivotMat.tauGes:
+MMGes := pivotMat.MMGes:
+cvecGes := pivotMat.cvecGes:
+gGes := pivotMat.gGes:
 #J:=MatrixInverse(Jinv):</Text-field>
 </Input>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">#tau:=Transpose(J).tau:</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L3150" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">#pivotMat.Transpose(pivotMat);</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3161" drawlabel="true">
@@ -511,7 +529,7 @@ end do:</Text-field>
   MatlabExport(tau, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt);
   MatlabExport(MMGes, sprintf(&quot;../codeexport/%s/tmp/inertia_para_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt);
   MatlabExport(cvecGes, sprintf(&quot;../codeexport/%s/tmp/coriolisvec_para_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt);
-  MatlabExport(gGes, sprintf(&quot;../codeexport/%s/tmp/gGes_para_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt);
+  MatlabExport(gGes, sprintf(&quot;../codeexport/%s/tmp/gravvec_para_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt);
 end if:</Text-field>
 </Input>
 </Group>

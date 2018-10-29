@@ -26,7 +26,7 @@ with(CodeGeneration):
 with(StringTools):
 with(VectorCalculus):
 # Einstellungen für Code-Export: Optimierungsgrad (2=höchster) und Aktivierung jedes Terms.
-codegen_dynpar := 2:
+codegen_dynpar := 1:
 codegen_opt := 2:
 codeexport_invdyn := true:
 codeexport_grav := true: 
@@ -50,26 +50,28 @@ read "../transformation/proc_rpyjac":
 read "../transformation/proc_yprjac": 
 read "../transformation/proc_trafo_mdh": 
 read "../robot_codegen_definitions/robot_env":
-read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
+read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
 # Definitionen für parallelen Roboter laden
+read "../robot_codegen_definitions/robot_env":
 read sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
 r_P_sP_P := -r_P_sP:
 s_P_P_sP := s_P_sP:
 # Ergebnisse der Kinematik für parallen Roboter laden
+read "../robot_codegen_definitions/robot_env":
 read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
+read "../robot_codegen_definitions/robot_env":
+# Lade "robotics_repo_path"-File mit Link zum "imes-robotics-matlab"-Repo
+#read("robotics_repo_path"):
+robotics_repo_path := "C:/Users/Tim-David/Documents/Studienarbeit/Repos/imes-robotics-matlab":
+# Lade die Funktionen aus dem "imes-robotics-matlab"-Repo
+read(sprintf("%s/transformation/maple/proc_eul%s2r", robotics_repo_path, angleConvLeg)):
+read(sprintf("%s/transformation/maple/proc_eul%sjac", robotics_repo_path, angleConvLeg)):
 # Additional Kinematics
 # Berechnung der Rotationsmatrizen
-if angleConv = X_Y_Z then
-   R_0_0_E_t := rotx(xE_t(4)).roty(xE_t(5)).rotz(xE_t(6)):
-   R_0_0_E_s := rotx(xE_s(4)).roty(xE_s(5)).rotz(xE_s(6)):
-   RPYjac_0_t := rpyjac(xE_t(4),xE_t(5),xE_t(6)):
-   RPYjac_0_s := rpyjac(xE_s(4),xE_s(5),xE_s(6)):
-elif angleConv = Z_Y_X then
-   R_0_0_E_t := rotz(xE_t(4)).roty(xE_t(5)).rotx(xE_t(6)):
-   R_0_0_E_s := rotz(xE_s(4)).roty(xE_s(5)).rotx(xE_s(6)):
-   RPYjac_0_t := yprjac(xE_t(4),xE_t(5),xE_t(6)):
-   RPYjac_0_s := yprjac(xE_s(4),xE_s(5),xE_s(6)):
-end:
+R_0_0_E_t := parse(sprintf("eul%s2r",angleConvLeg))(xE_t(4..6)):
+R_0_0_E_s := parse(sprintf("eul%s2r",angleConvLeg))(xE_s(4..6)):
+RPYjac_0_t := parse(sprintf("eul%sjac",angleConvLeg))(xE_t(4..6)):
+RPYjac_0_s := parse(sprintf("eul%sjac",angleConvLeg))(xE_s(4..6)):
 r_0_sP_P := R_0_0_E_s.r_P_sP_P:
 if codegen_dynpar = 1 then
   J_P_P := J_SP + mE*Multiply(Transpose(vec2skew(r_P_sP_P)),vec2skew(r_P_sP_P)):

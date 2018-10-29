@@ -1,4 +1,4 @@
 % koppelP [%N_LEGS%x3]
-%   center of mass of all robot links (in body frames)
+%   joints that link the end of legs with platform
 %   rows: number of leg
 %   columns: x-, y-, z-coordinates

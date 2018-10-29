@@ -90,12 +90,72 @@ mkdir -p "$repo_pfad/codeexport/$robot_name/tmp"
 mkdir -p "$repo_pfad/codeexport/$robot_name/matlabfcn"
 mkdir -p "$repo_pfad/codeexport/$robot_name/testfcn"
 
+# Handelt es sich um einen parallelen Roboter, so lade das Bein des Roboters und starte das Skript von vorne
+robot_env_pfad=$repo_pfad/robot_codegen_definitions/robot_env
+parallel_robot=`grep "parallel := " $robot_env_pfad | tail -1 | sed 's/.*= \(.*\):/\1/'`
+parallel_leg_name=`grep "leg_name := " $robot_env_pfad | tail -1 | sed 's/.*= "\(.*\)":/\1/'`
+robot_name=`grep "robot_name := " $robot_env_pfad | tail -1 | sed 's/.*= "\(.*\)":/\1/'`
+echo "parallel_robot=$parallel_robot" >> $robot_env_pfad.sh
+
+
+if [ "$parallel_robot" == "1" ]; then 
+	if [ ! -f $repo_pfad/codeexport/${parallel_leg_name}/tmp/inertia_par2_maple.m ]; then
+		if [ ! -f $repo_pfad/codeexport/${parallel_leg_name}/tmp/tree_floatb_definitions ]; then
+			cd $repo_pfad/robot_codegen_definitions/
+			mv robot_env "robot_env_${robot_name}"
+			cd $repo_pfad/robot_codegen_definitions/examples/
+			cp "robot_env_${parallel_leg_name}.example" $repo_pfad/robot_codegen_definitions/
+			cd $repo_pfad/robot_codegen_definitions/
+			mv "robot_env_${parallel_leg_name}.example" robot_env
+			echo "Starte Berechnung für die Beine ${parallel_leg_name} der PKM ${robot_name}."
+			cd $repo_pfad
+			./robot_codegen_start.sh --fixb_only
+			echo "Starte Berechnung für die Dynamik der PKM"
+			cd $repo_pfad/robot_codegen_definitions/
+			rm robot_env
+			mv "robot_env_${robot_name}" robot_env
+			cd $repo_pfad/robot_codegen_scripts/
+		fi;
+	else
+		# Die Berechnungen für die Beine sind bereits vorhanden -> Lade nur dessen Definitionen
+		robot_name_pkm=$robot_name
+		cd $repo_pfad/robot_codegen_definitions/
+		mv robot_env "robot_env_${robot_name}"
+		cd $repo_pfad/robot_codegen_definitions/examples/
+		cp "robot_env_${parallel_leg_name}.example" $repo_pfad/robot_codegen_definitions/
+		cd $repo_pfad/robot_codegen_definitions/
+		mv "robot_env_${parallel_leg_name}.example" robot_env
+		echo "Die Berechnungen für die Beine sind bereits vorhanden -> Hole Parameter für die Beine ${parallel_leg_name} der PKM ${robot_name}."
+		cd $repo_pfad/robot_codegen_scripts
+		$repo_pfad/scripts/run_maple_script.sh $repo_pfad/robot_codegen_definitions/robot_tree_floatb_twist_definitions.mpl
+		echo $qJ_t
+		source robot_codegen_tmpvar_bash.sh > /dev/null
+		cd $repo_pfad/robot_codegen_definitions/
+		rm robot_env
+		mv "robot_env_${robot_name_pkm}" robot_env
+		cd $repo_pfad/robot_codegen_scripts/
+		robot_env_pfad=$repo_pfad/robot_codegen_definitions/robot_env
+		parallel_robot=`grep "parallel := " $robot_env_pfad | tail -1 | sed 's/.*= \(.*\):/\1/'`
+		parallel_leg_name=`grep "leg_name := " $robot_env_pfad | tail -1 | sed 's/.*= "\(.*\)":/\1/'`
+		robot_name=`grep "robot_name := " $robot_env_pfad | tail -1 | sed 's/.*= "\(.*\)":/\1/'`
+		echo "parallel_robot=$parallel_robot" >> $robot_env_pfad.sh
+	fi;
+fi;
+
 # Maple-Definitionen einmal ausführen (damit dort definierte Variablen in Bash übernommen werden)
-$repo_pfad/scripts/run_maple_script.sh $repo_pfad/robot_codegen_definitions/robot_tree_floatb_twist_definitions.mpl
-echo $qJ_t
+if [ "$parallel_robot" == "1" ]; then 
+	$repo_pfad/scripts/run_maple_script.sh $repo_pfad/robot_codegen_parallel/robot_para_definitions.mpl
+else
+	$repo_pfad/scripts/run_maple_script.sh $repo_pfad/robot_codegen_definitions/robot_tree_floatb_twist_definitions.mpl
+	echo $qJ_t
+fi;
 
 # Umgebungsvariablen vorbereiten (jetzt enthalten sie die vollen MDH-Informationen (Name, Dimensionen)
-source robot_codegen_tmpvar_bash.sh > /dev/null
+if [ "$parallel_robot" == "1" ]; then 
+	source robot_codegen_tmpvar_pkm_bash.sh > /dev/null
+else
+	source robot_codegen_tmpvar_bash.sh > /dev/null
+fi;
 
 # Skripte vorbereiten
 source $repo_pfad/robot_codegen_scripts/robot_codegen_maple_preparation.sh $CG_BASE_ARGUMENT
@@ -112,8 +172,10 @@ cd $repo_pfad/robot_codegen_scripts/
 source $repo_pfad/robot_codegen_scripts/robot_codegen_matlab_varpar.sh
 
 # Testfunktionen generieren
-cd $repo_pfad/robot_codegen_scripts/
-source $repo_pfad/robot_codegen_scripts/testfunctions_generate.sh
+if [ "$parallel_robot" == "0" ]; then
+	cd $repo_pfad/robot_codegen_scripts/
+	source $repo_pfad/robot_codegen_scripts/testfunctions_generate.sh
+fi;
 
 if [ "$CG_MINIMAL" == "0" ]; then
   # Matlab-Testfunktionen starten
@@ -126,4 +188,3 @@ if [ "$CG_MINIMAL" == "0" ]; then
 else
   echo "Funktionsgenerierung abgeschlossen. Keine Tests durchgeführt, da nur Minimalversion erstellt wurde."
 fi;
-

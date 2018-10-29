@@ -30,7 +30,7 @@ with(StringTools):
 # Einstellungen für Code-Export: Optimierungsgrad (2=höchster) und Aktivierung jedes Terms.
 #codegen_act := true: # noch nicht implementiert
 codegen_debug := false:
-codegen_opt := 1:
+codegen_opt := 2:
 codeexport_grav := true: 
 codeexport_corvec := true:
 codeexport_cormat := true:
@@ -86,7 +86,7 @@ printf("Generiere Dynamik (%s) für %s mit Parametersatz %d und %s\n", DynString,
 # Generate
 taug_s := dUdq_s:
 # Maple Export
-#save taug_s, sprintf("../codeexport/%s/tmp/gravload_par%d_maple.m", robot_name, codegen_dynpar):
+save taug_s, sprintf("../codeexport/%s/tmp/gravload_par%d_maple.m", robot_name, codegen_dynpar):
 # Matlab Export
 # Belastung der Basis (ist falsch für floatb_twist, da das Moment durch diese Wahl der verallgemeinerten Koordinaten (floatb_twist) nicht berechnet werden kann!)
 # Ist korrekt für floatb_eulangrpy.
@@ -114,7 +114,7 @@ if codeexport_inertia or codeexport_inertiaD or codeexport_cormat then
   end do:
 end if:
 # Maple Export
-#save MM_s, sprintf("../codeexport/%s/tmp/inertia_par%d_maple.m", robot_name, codegen_dynpar):
+save MM_s, sprintf("../codeexport/%s/tmp/inertia_par%d_maple.m", robot_name, codegen_dynpar):
 # Matlab Export (nur linke untere Dreiecksmatrix bei vollständigen Matrizen)
 if codeexport_inertia and not(base_method_name="twist") then
   MM_s_vek := symmat2vec(MM_s):
@@ -190,7 +190,7 @@ if codeexport_corvec then
   end do:
 end if:
 # Maple Export
-#save tauCC_s, sprintf("../codeexport/%s/tmp/coriolisvec_par%d_maple.m", robot_name, codegen_dynpar):
+save tauCC_s, sprintf("../codeexport/%s/tmp/coriolisvec_par%d_maple.m", robot_name, codegen_dynpar):
 # Einzelne Komponenten exportieren (falls der ganze Vektor zu lange dauert).
 if codeexport_corvec and not(base_method_name="twist") and codegen_debug then
   for i to NQ do 
@@ -262,7 +262,9 @@ if codeexport_invdyn then
   tau := dTdqDdt_s-dTdq_s+dUdq_s:
 end if:
 # Maple-Export der Dynamik zur Weiterverwendung für paralle Systeme
-save tau, sprintf("../codeexport/%s/tmp/invdyn_floatb_%s_par%d_maple.m", robot_name, base_method_name, codegen_dynpar):
+if codeexport_invdyn then
+  save tau, sprintf("../codeexport/%s/tmp/invdyn_floatb_%s_par%d_maple.m", robot_name, base_method_name, codegen_dynpar):
+end if:
 # Matlab Export: Floating base
 # Berechnung der Basis-Belastung ist für manche Basis-Darstellungen falsch (siehe oben unter Gravitationslast).
 if codeexport_invdyn and not(base_method_name="twist") then

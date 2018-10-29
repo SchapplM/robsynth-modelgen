@@ -168,7 +168,7 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Input>
 </Group>
 <Group labelreference="L3228" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_definitions&quot;, robot_name):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_definitions&quot;, leg_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3229" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -176,7 +176,23 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Input>
 </Group>
 <Group labelreference="L3038" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/para_definitions&quot;, robot_name):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:
+read sprintf(&quot;../codeexport/%s/tmp/para_definitions&quot;, robot_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3250" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Lade &quot;robotics_repo_path&quot;-File mit Link zum &quot;imes-robotics-matlab&quot;-Repo</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3251" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">#read(&quot;robotics_repo_path&quot;):
+robotics_repo_path := &quot;C:/Users/Tim-David/Documents/Studienarbeit/Repos/imes-robotics-matlab&quot;:</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L3249" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Lade die Funktionen aus dem &quot;imes-robotics-matlab&quot;-Repo</Text-field>
+</Input>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read(sprintf(&quot;%s/transformation/maple/proc_eul%s2r&quot;, robotics_repo_path, angleConvLeg)):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3040" drawlabel="true">
@@ -200,7 +216,8 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3222" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/jacobia_transl_%d_maple.m&quot;, robot_name, LIJAC):
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/jacobia_transl_%d_maple.m&quot;, leg_name, LIJAC):
+read &quot;../robot_codegen_definitions/robot_env&quot;:
 b_transl := b_transl:</Text-field>
 </Input>
 </Group>
@@ -248,6 +265,8 @@ P_i := tmp:
 elif angleConvLeg = Z_Y_X then
    JB1 := rotz(frame_A_i(1,1)).roty(frame_A_i(2,1)).rotx(frame_A_i(3,1)).b_transl(1..3,1..NQJ_parallel):
 end:
+JB1 := parse(sprintf(&quot;eul%s2r&quot;,angleConvLeg))(frame_A_i(1..3,1)).b_transl(1..3,1..NQJ_parallel):
+
 #ColJB1 := ColumnDimension(JB1):
 #AppendCol := 3 - ColJB1:
 #JB1 := &lt;JB1|ZeroMatrix(3,AppendCol)&gt;:</Text-field>
@@ -274,7 +293,7 @@ end:
 <Input><Text-field style="Text" layout="Normal">Berechnung der Matrix Ui: EE-Geschwindigkeiten -&gt; <Font encoding="UTF-8">Koppelpunktgeschwindigkeiten P. i steht f\303\274r den Index des jeweiligen Beines</Font></Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L3236" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group hide-input="false" labelreference="L3248" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i to N_LEGS do</Text-field>
 </Input>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  r||i := P||i:
@@ -283,6 +302,9 @@ end:
   elif angleConv = Z_Y_X then
      r||i := vec2skew(rotz(xE_t(4)).roty(xE_t(5)).rotx(xE_t(6)).r||i):
   end:</Text-field>
+</Input>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"> 
+  r||i := vec2skew(parse(sprintf(&quot;eul%s2r&quot;,angleConvLeg))(xE_t(4..6)).P||i);</Text-field>
 </Input>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  ones := Matrix(3,3,shape=identity):</Text-field>
 </Input>
@@ -364,7 +386,7 @@ COLUMN := ColumnDimension(JB1):</Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  JB||i := Copy(JB1):</Text-field>
 </Input>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">end do:
-NQJ_parallel;</Text-field>
+NQJ_parallel:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3133" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -443,6 +465,10 @@ Jinv := JinvRed:</Text-field>
 </Group>
 <Group labelreference="L3193" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(Jinv, sprintf(&quot;../codeexport/%s/tmp/Jinv_para_matlab.m&quot;, robot_name), codegen_opt):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3244" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>

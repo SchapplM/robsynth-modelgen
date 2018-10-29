@@ -13,12 +13,12 @@
 % %INPUT_KOPPEL%
 
 % Output:
-% Ja [%N_XP%x%N_XP%]
+% Jinv [%N_XP%x%N_XP%]
 %   Analytische Jacobi-Matrix
 
 % %VERSIONINFO%
 
-function Ja = %FN%(xP, qJ, pkin, koppelP, ...
+function Jinv = %FN%(xP, qJ, pkin, koppelP, ...
 legFrame)
 
 

@@ -14,10 +14,10 @@
 % %INPUT_KOPPEL%
 % 
 % Output:
-% Cq [%NQJ%x%NQJ%]
+% C [%N_LEGS%x%N_LEGS%]
 %   matrix of coriolis and centrifugal joint torques
 
 % %VERSIONINFO%
 
-function Cq = %FN%(xP, xPD, qJ, legFrame, ...
+function C = %FN%(xP, xPD, qJ, legFrame, ...
   koppelP, pkin, m, mrSges, Ifges)

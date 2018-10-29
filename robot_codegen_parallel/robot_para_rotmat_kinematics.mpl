@@ -46,15 +46,22 @@ read "../transformation/proc_rpyjac":
 read "../transformation/proc_transl": 
 read "../transformation/proc_trafo_mdh": 
 read "../robot_codegen_definitions/robot_env":
-read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
+read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
 # Definitionen für parallel Roboter laden
+read "../robot_codegen_definitions/robot_env":
 read sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
+# Lade "robotics_repo_path"-File mit Link zum "imes-robotics-matlab"-Repo
+#read("robotics_repo_path"):
+robotics_repo_path := "C:/Users/Tim-David/Documents/Studienarbeit/Repos/imes-robotics-matlab":
+# Lade die Funktionen aus dem "imes-robotics-matlab"-Repo
+read(sprintf("%s/transformation/maple/proc_eul%s2r", robotics_repo_path, angleConvLeg)):
 # Kennung des Parametersatzes, für den die Dynamikfunktionen erstellt werden sollen. Muss im Repo und in der mpl-Datei auf 1 gelassen werden, da die folgende Zeile mit einem Skript verarbeitet wird.
 codegen_dynpar := 2:
 # Link-Index, für den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber für beliebige Segmente aufgestellt werden. (0=Basis)
 LIJAC:=NL-1:
 # Ergebnisse der analytischen Jacobi-Matrix (Translatorisch)
-read sprintf("../codeexport/%s/tmp/jacobia_transl_%d_maple.m", robot_name, LIJAC):
+read sprintf("../codeexport/%s/tmp/jacobia_transl_%d_maple.m", leg_name, LIJAC):
+read "../robot_codegen_definitions/robot_env":
 b_transl := b_transl:
 px, py, pz := 0, 0, 0:
 alphaxs_base, betays_base, gammazs_base := 0, 0, 0: 
@@ -86,6 +93,8 @@ if angleConvLeg = X_Y_Z then
 elif angleConvLeg = Z_Y_X then
    JB1 := rotz(frame_A_i(1,1)).roty(frame_A_i(2,1)).rotx(frame_A_i(3,1)).b_transl(1..3,1..NQJ_parallel):
 end:
+JB1 := parse(sprintf("eul%s2r",angleConvLeg))(frame_A_i(1..3,1)).b_transl(1..3,1..NQJ_parallel):
+
 #ColJB1 := ColumnDimension(JB1):
 #AppendCol := 3 - ColJB1:
 #JB1 := <JB1|ZeroMatrix(3,AppendCol)>:
@@ -106,6 +115,8 @@ for i to N_LEGS do
   elif angleConv = Z_Y_X then
      r||i := vec2skew(rotz(xE_t(4)).roty(xE_t(5)).rotx(xE_t(6)).r||i):
   end:
+ 
+  r||i := vec2skew(parse(sprintf("eul%s2r",angleConvLeg))(xE_t(4..6)).P||i);
   ones := Matrix(3,3,shape=identity):
   U||i := <ones|-r||i>:
   U||i||D := diff~(U||i,t):      #dU berechnen
@@ -147,7 +158,7 @@ for i to N_LEGS do
   JB||i||inv := Copy(JB1inv):
   JB||i := Copy(JB1):
 end do:
-NQJ_parallel;
+NQJ_parallel:
 # Substituiere in jeder Matrix den Winkel Alpha (Verdrehung in der Basis) und die Gelenkkoordinaten und -geschwindigkeiten
 for k from 1 by 1 to N_LEGS do  
 	for i to ROW do
@@ -196,3 +207,4 @@ Jinv := JinvRed:
 # Maple-Export
 save pivotMat, P_i, Jinv, JB_i, JBD_i, JBinv_i, U_i, UD_i, sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
 MatlabExport(Jinv, sprintf("../codeexport/%s/tmp/Jinv_para_matlab.m", robot_name), codegen_opt):
+

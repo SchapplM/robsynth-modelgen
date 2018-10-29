@@ -14,15 +14,16 @@ read "../helper/proc_convert_t_s":
 # Lese Umgebungsvariable für Codegenerierung.
 read "../robot_codegen_definitions/robot_env":
 printf("Generiere Parameter für %s\n",robot_name):
-read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
+read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
 # Link-Index, für den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber für beliebige Segmente aufgestellt werden. (0=Basis)
 LIJAC:=NL-1:
 # Ergebnisse der analytischen Jacobi-Matrix (Translatorisch)
 px, py, pz := 0, 0, 0:
 alphaxs_base, betays_base, gammazs_base := 0, 0, 0: 
-read sprintf("../codeexport/%s/tmp/jacobia_transl_%d_maple.m", robot_name, LIJAC):
+read sprintf("../codeexport/%s/tmp/jacobia_transl_%d_maple.m", leg_name, LIJAC):
 b_transl := b_transl:
-
+# Lese Umgebungsvariable für Codegenerierung.
+read "../robot_codegen_definitions/robot_env":
 # Additional Definitions
 # Parameter definieren, wenn nicht vorher schon geschehen
 if not assigned(J_SP) then

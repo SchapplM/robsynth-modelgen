@@ -46,20 +46,24 @@ read "../transformation/proc_trotz":
 read "../transformation/proc_transl": 
 read "../transformation/proc_trafo_mdh": 
 read "../robot_codegen_definitions/robot_env":
-read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
+read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
 # Kennung des Parametersatzes, für den die Dynamikfunktionen erstellt werden sollen. Muss im Repo und in der mpl-Datei auf 1 gelassen werden, da die folgende Zeile mit einem Skript verarbeitet wird.
 codegen_dynpar := 1:
 # Link-Index, für den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber für beliebige Segmente aufgestellt werden. (0=Basis)
 LIJAC:=NL-1:
 # Ergebnisse der zusätzlichen Definitionen für parallele Roboter laden
+read "../robot_codegen_definitions/robot_env":
 read sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
 # Ergebnisse der Plattform-Dynamik laden
+read "../robot_codegen_definitions/robot_env":
 read sprintf("../codeexport/%s/tmp/floatb_platform_dynamic_maple.m", robot_name):
 # Ergebnisse der Dynamik der Gelenkkette laden
-read sprintf("../codeexport/%s/tmp/invdyn_floatb_%s_par%d_maple.m", robot_name, base_method_name, codegen_dynpar)
+read sprintf("../codeexport/%s/tmp/invdyn_floatb_%s_par%d_maple.m", leg_name, base_method_name, codegen_dynpar)
 ;
 # Ergebnisse der Kinematik für parallelen Roboter laden
+read "../robot_codegen_definitions/robot_env":
 read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
+read "../robot_codegen_definitions/robot_env":
 omegaxs_base := 0:
 omegays_base := 0:
 omegazs_base := 0:
@@ -94,13 +98,13 @@ for i from NQJ_parallel+1 to NQJ do
 	M||i := 0:
 end do:
 # Ergebnisse G-Vektor laden
-read sprintf("../codeexport/%s/tmp/gravload_par%d_maple.m", robot_name, codegen_dynpar):
+read sprintf("../codeexport/%s/tmp/gravload_par%d_maple.m", leg_name, codegen_dynpar):
 G := Matrix(taug_s(7..NQ,1)):
 # Ergebnisse C-Vektor laden
-read sprintf("../codeexport/%s/tmp/coriolisvec_par%d_maple.m", robot_name, codegen_dynpar):
+read sprintf("../codeexport/%s/tmp/coriolisvec_par%d_maple.m", leg_name, codegen_dynpar):
 Cvec := combine(Matrix(tauCC_s(7..NQ,1))):
 # Ergebnisse M-Matrix laden
-read sprintf("../codeexport/%s/tmp/inertia_par%d_maple.m", robot_name, codegen_dynpar):
+read sprintf("../codeexport/%s/tmp/inertia_par%d_maple.m", leg_name, codegen_dynpar):
 MM := combine(MM_s(7..NQ,7..NQ)):
 # Ergebnisse der Kinematik für parallen Roboter laden
 read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
@@ -189,19 +193,29 @@ for i to 6 do
   for j to N_LEGS do
     for l to NQJ_parallel do
       tauGes(i,1) := subs({qJD_i_s(l,j)=z||j(l)},tauGes(i,1)):
+      cvecGes(i,1) := subs({qJD_i_s(l,j)=z||j(l)},cvecGes(i,1)):
+      gGes(i,1) := subs({qJD_i_s(l,j)=z||j(l)},gGes(i,1)):
+      for k to 6 do
+        MMGes(i,k) := subs({qJD_i_s(l,j)=z||j(l)},MMGes(i,k)):
+      end do:
     end do:
   end do:
 end do:
+
 # Export
 tau := pivotMat.tauGes:
+MMGes := pivotMat.MMGes:
+cvecGes := pivotMat.cvecGes:
+gGes := pivotMat.gGes:
 #J:=MatrixInverse(Jinv):
 #tau:=Transpose(J).tau:
+#pivotMat.Transpose(pivotMat);
 # Matlab Export: Floating base
 # Berechnung der Basis-Belastung ist für manche Basis-Darstellungen falsch (siehe oben unter Gravitationslast).
 if codeexport_invdyn then
   MatlabExport(tau, sprintf("../codeexport/%s/tmp/invdyn_para_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
   MatlabExport(MMGes, sprintf("../codeexport/%s/tmp/inertia_para_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
   MatlabExport(cvecGes, sprintf("../codeexport/%s/tmp/coriolisvec_para_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
-  MatlabExport(gGes, sprintf("../codeexport/%s/tmp/gGes_para_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
+  MatlabExport(gGes, sprintf("../codeexport/%s/tmp/gravvec_para_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
 end if:
 
