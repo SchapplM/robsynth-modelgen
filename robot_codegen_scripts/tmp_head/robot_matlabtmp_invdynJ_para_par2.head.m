@@ -4,8 +4,8 @@
 % 
 % Input:
 % %INPUT_XP%
-% %INPUT_XPD%
-% %INPUT_XPDD%
+% %INPUT_XDP%
+% %INPUT_XDDP%
 % %INPUT_QJ_P%
 % %INPUT_LEGFRAME%
 % g [3x1]
@@ -22,5 +22,5 @@
 
 % %VERSIONINFO%
 
-function tau = %FN%(xP, xPD, xPDD, qJ, legFrame, g, ...
+function tau = %FN%(xP, xDP, xDDP, qJ, legFrame, g, ...
   koppelP, pkin, m, mrSges, Ifges)

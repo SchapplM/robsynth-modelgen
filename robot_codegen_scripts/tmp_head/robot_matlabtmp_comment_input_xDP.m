@@ -1,2 +1,2 @@
-% xPD [%N_XP%x1]
+% xDP [%N_XP%x1]
 %   Generalized platform velocities

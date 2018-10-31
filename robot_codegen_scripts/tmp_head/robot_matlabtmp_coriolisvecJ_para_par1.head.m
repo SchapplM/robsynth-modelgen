@@ -4,7 +4,7 @@
 % 
 % Input:
 % %INPUT_XP%
-% %INPUT_XPD%
+% %INPUT_XDP%
 % %INPUT_QJ_P%
 % %INPUT_LEGFRAME%
 % %INPUT_PKIN%
@@ -19,5 +19,5 @@
 
 % %VERSIONINFO%
 
-function C = %FN%(xP, xPD, qJ, legFrame, ...
+function C = %FN%(xP, xDP, qJ, legFrame, ...
   koppelP, pkin, m, rSges, Icges)

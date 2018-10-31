@@ -1,2 +1,2 @@
-% xPDD [%N_XP%x1]
+% xDDP [%N_XP%x1]
 %   Generalized platform accelerations

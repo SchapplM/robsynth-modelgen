@@ -224,9 +224,6 @@ end if:
 if codeexport_inertiaD then
   DynString := sprintf(&quot;%s MD&quot;,DynString):
 end if:
-if codeexport_invdyn then
-  DynString := sprintf(&quot;%s tau&quot;,DynString):
-end if:
 <Font encoding="UTF-8">printf(&quot;Generiere Dynamik (%s) f\303\274r %s mit Parametersatz %d und %s\134n&quot;, </Font>DynString, robot_name, codegen_dynpar, base_method_name):</Text-field>
 </Input>
 </Group>
@@ -237,7 +234,8 @@ end if:
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L1675" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">taug_s := dUdq_s:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">taug_s := dUdq_s:
+taug_s(7..8):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1729" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -301,16 +299,10 @@ MM_s := Matrix(NQ, NQ):</Text-field>
     for j to NQ do 
       MM_s[i, j] := diff(tauMM_s[i, 1], qDD_s[j, 1]):
     end do:
-  end do:
+  end do:</Text-field>
+</Input>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  save MM_s, sprintf(&quot;../codeexport/%s/tmp/inertia_par%d_maple.m&quot;, robot_name, codegen_dynpar):
 end if:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1737" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal">Maple Export</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1736" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save MM_s, sprintf(&quot;../codeexport/%s/tmp/inertia_par%d_maple.m&quot;, robot_name, codegen_dynpar):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1107" drawlabel="true">
@@ -448,15 +440,8 @@ end if:</Text-field>
   for i to NQ do 
     tauCC_s := subs({qDD_s(i, 1) = 0}, tauCC_s):
   end do:
+  save tauCC_s, sprintf(&quot;../codeexport/%s/tmp/coriolisvec_par%d_maple.m&quot;, robot_name, codegen_dynpar):
 end if:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1744" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal">Maple Export</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1745" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save tauCC_s, sprintf(&quot;../codeexport/%s/tmp/coriolisvec_par%d_maple.m&quot;, robot_name, codegen_dynpar):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1681" drawlabel="true">
@@ -593,9 +578,9 @@ end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1724" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_invdyn then
-  save tau, sprintf(&quot;../codeexport/%s/tmp/invdyn_floatb_%s_par%d_maple.m&quot;, robot_name, base_method_name, codegen_dynpar):
-end if:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">#if codeexport_invdyn then
+  #save tau, sprintf(&quot;../codeexport/%s/tmp/invdyn_%s_par%d_maple.m&quot;, robot_name, base_method_name, codegen_dynpar):
+#end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1611" drawlabel="true">

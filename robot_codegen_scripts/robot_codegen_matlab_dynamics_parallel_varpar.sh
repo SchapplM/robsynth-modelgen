@@ -14,35 +14,8 @@ tmp_pfad=$repo_pfad/workdir/tmp
 head_pfad=$repo_pfad/robot_codegen_scripts/tmp_head
 template_pfad=$repo_pfad/robot_codegen_scripts/templates_sym
 # Initialisiere Variablen
-#source robot_codegen_tmpvar_bash.sh
-source $repo_pfad/robot_codegen_definitions/robot_env.sh
-
-# Inverse Kinematik
-quelldat=$repo_pfad/codeexport/${robot_name}/tmp/Jinv_para_matlab.m
-zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_Jinv.m
-if [ -f $quelldat ]; then
-  cat $head_pfad/robot_matlabtmp_jacobia_parallel.head.m > $zieldat
-  printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-  source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
-  source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
-  cat $tmp_pfad/robot_matlabtmp_assert_qJ_parallel.m >> $zieldat
-  cat $tmp_pfad/robot_matlabtmp_assert_xP.m >> $zieldat
-  cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
-  cat $tmp_pfad/robot_matlabtmp_assert_legFrame_parallel.m >> $zieldat
-  cat $tmp_pfad/robot_matlabtmp_assert_koppelP_parallel.m >> $zieldat
-  echo "%% Variable Initialization" > ${quelldat}.subsvar
-  cat $tmp_pfad/robot_matlabtmp_qJ_parallel.m >> ${quelldat}.subsvar
-  cat $tmp_pfad/robot_matlabtmp_par_koppelP_parallel.m >> ${quelldat}.subsvar
-  cat $tmp_pfad/robot_matlabtmp_xP.m >> ${quelldat}.subsvar
-  cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
-  cat $tmp_pfad/robot_matlabtmp_legFrame_parallel.m >> ${quelldat}.subsvar
-  printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
-  sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
-  cat $quelldat >> $zieldat
-  source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
-else
-  echo "Code in ${quelldat##*/} nicht gefunden."
-fi
+source robot_codegen_tmpvar_bash_par.sh
+source $repo_pfad/robot_codegen_definitions/robot_env_par.sh
 
 # Erstelle Matlab-Funktionen der explizit ausgerechneten Dynamik (nicht in Regressorform)
 for (( dynpar=1; dynpar<=2; dynpar++ ))
@@ -53,7 +26,7 @@ do
     if [ -f $quelldat ]; then
       cat $head_pfad/robot_matlabtmp_gravloadJ_para_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 0
       source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
 	  cat $tmp_pfad/robot_matlabtmp_assert_xP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ_parallel.m >> $zieldat
@@ -84,7 +57,7 @@ do
       printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
       sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
-      source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
+      source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 1 0 ${quelldat}.subsvar
     else
       echo "Code in ${quelldat##*/} nicht gefunden."
     fi
@@ -96,10 +69,10 @@ do
     if [ -f $quelldat ]; then
       cat $head_pfad/robot_matlabtmp_coriolisvecJ_para_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 0
       source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
 	  cat $tmp_pfad/robot_matlabtmp_assert_xP.m >> $zieldat
-	  cat $tmp_pfad/robot_matlabtmp_assert_xPD.m >> $zieldat
+	  cat $tmp_pfad/robot_matlabtmp_assert_xDP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ_parallel.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_m_parallel.m >> $zieldat
@@ -116,7 +89,7 @@ do
       cat $tmp_pfad/robot_matlabtmp_qJ_parallel.m >> ${quelldat}.subsvar
 	  cat $tmp_pfad/robot_matlabtmp_par_koppelP_parallel.m >> ${quelldat}.subsvar
 	  cat $tmp_pfad/robot_matlabtmp_xP.m >> ${quelldat}.subsvar
-	  cat $tmp_pfad/robot_matlabtmp_xPD.m >> ${quelldat}.subsvar
+	  cat $tmp_pfad/robot_matlabtmp_xDP.m >> ${quelldat}.subsvar
       cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
       cat $tmp_pfad/robot_matlabtmp_par_m_parallel.m >> ${quelldat}.subsvar
       if [ $dynpar == 1 ]; then
@@ -131,7 +104,7 @@ do
       printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
       sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
-      source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
+      source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 1 0 ${quelldat}.subsvar
     else
       echo "Code in ${quelldat##*/} nicht gefunden."
     fi
@@ -143,7 +116,7 @@ do
     if [ -f $quelldat ]; then
       cat $head_pfad/robot_matlabtmp_inertiaJ_para_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 0
       source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
 	  cat $tmp_pfad/robot_matlabtmp_assert_xP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ_parallel.m >> $zieldat
@@ -177,12 +150,12 @@ do
       printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
       sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
-      # Benenne die Ergebnisvariable des exportierten Codes um (zusätzlich zu Hilfsskript robot_codegen_matlabfcn_postprocess.sh)
+      # Benenne die Ergebnisvariable des exportierten Codes um (zusätzlich zu Hilfsskript robot_codegen_matlabfcn_postprocess_par.sh)
       #varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat | tr -d '[:space:]'`
       #echo "%% Postprocessing: Reshape Output" >> $zieldat
       #echo "% From vec2symmat_${robot_NQJ}_matlab.m" >> $zieldat
       #sed "s/mv/$varname_tmp/g" $repo_pfad/codeexport/${robot_name}/tmp/vec2symmat_${robot_NQJ}_matlab.m >> $zieldat
-      source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
+      source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 1 0 ${quelldat}.subsvar
     else
       echo "Code in ${quelldat##*/} nicht gefunden."
     fi
@@ -193,11 +166,11 @@ do
     zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_invdyn_para_slag_vp${dynpar}.m
     cat $head_pfad/robot_matlabtmp_invdynJ_para_par${dynpar}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-    source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+    source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 0
     #source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
 	cat $tmp_pfad/robot_matlabtmp_assert_xP.m >> $zieldat
-	cat $tmp_pfad/robot_matlabtmp_assert_xPD.m >> $zieldat
-	cat $tmp_pfad/robot_matlabtmp_assert_xPDD.m >> $zieldat
+	cat $tmp_pfad/robot_matlabtmp_assert_xDP.m >> $zieldat
+	cat $tmp_pfad/robot_matlabtmp_assert_xDDP.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_qJ_parallel.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
@@ -216,8 +189,8 @@ do
       cat $tmp_pfad/robot_matlabtmp_qJ_parallel.m >> ${quelldat}.subsvar
 	  cat $tmp_pfad/robot_matlabtmp_par_koppelP_parallel.m >> ${quelldat}.subsvar
 	  cat $tmp_pfad/robot_matlabtmp_xP.m >> ${quelldat}.subsvar
-	  cat $tmp_pfad/robot_matlabtmp_xPD.m >> ${quelldat}.subsvar
-	  cat $tmp_pfad/robot_matlabtmp_xPDD.m >> ${quelldat}.subsvar
+	  cat $tmp_pfad/robot_matlabtmp_xDP.m >> ${quelldat}.subsvar
+	  cat $tmp_pfad/robot_matlabtmp_xDDP.m >> ${quelldat}.subsvar
       cat $tmp_pfad/robot_matlabtmp_g.m >> ${quelldat}.subsvar
       cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
       cat $tmp_pfad/robot_matlabtmp_par_m_parallel.m >> ${quelldat}.subsvar
@@ -236,6 +209,6 @@ do
     else
       echo "Code in ${quelldat##*/} nicht gefunden. "
     fi
-    source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
+    source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 1 0 ${quelldat}.subsvar
 
 done # par1/par2

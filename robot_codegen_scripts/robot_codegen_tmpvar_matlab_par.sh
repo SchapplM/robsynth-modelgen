@@ -8,7 +8,8 @@
 
 repo_pfad=$(pwd)/../
 tmp_pfad=$repo_pfad/workdir/tmp
-source $repo_pfad/robot_codegen_definitions/robot_env.sh
+source $repo_pfad/robot_codegen_definitions/robot_env_par.sh
+source $repo_pfad/codeexport/${robot_leg_name}/tmp/robot_env.sh
 
 # Kinematikparameter (alle als Vektor): MDH-Parameter und Parameter für Zwangsbedingungen
 echo "" > $tmp_pfad/robot_matlabtmp_par_KP.m
@@ -41,17 +42,17 @@ do
 done
 
 # Plattform-Geschwindigkeiten
-echo "" > $tmp_pfad/robot_matlabtmp_xPD.m
+echo "" > $tmp_pfad/robot_matlabtmp_xDP.m
 for (( i=1 ; i<=$parallel_NX ; i++ ))
 do
-	echo "Dx_all(${i}) = xPD(${i});" >> $tmp_pfad/robot_matlabtmp_xPD.m
+	echo "Dx_all(${i}) = xDP(${i});" >> $tmp_pfad/robot_matlabtmp_xDP.m
 done
 
 # Plattform-Beschleunigungen
-echo "" > $tmp_pfad/robot_matlabtmp_xPDD.m
+echo "" > $tmp_pfad/robot_matlabtmp_xDDP.m
 for (( i=1 ; i<=$parallel_NX ; i++ ))
 do
-	echo "DDx_all(${i}) = xPDD(${i});" >> $tmp_pfad/robot_matlabtmp_xPDD.m
+	echo "DDx_all(${i}) = xDDP(${i});" >> $tmp_pfad/robot_matlabtmp_xDDP.m
 done
 
 # # Kinematikparameter (alle als Vektor): MDH-Parameter und Parameter für Zwangsbedingungen

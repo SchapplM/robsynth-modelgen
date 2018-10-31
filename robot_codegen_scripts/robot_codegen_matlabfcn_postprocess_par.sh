@@ -16,10 +16,12 @@
 repo_pfad=$(pwd)/..
 tmp_pfad=$repo_pfad/workdir/tmp
 tmp_head_pfad=$repo_pfad/robot_codegen_scripts/tmp_head
-source $repo_pfad/robot_codegen_definitions/robot_env.sh
+
+source $repo_pfad/robot_codegen_definitions/robot_env_par.sh
 source $repo_pfad/codeexport/${robot_leg_name}/tmp/robot_env.sh
 # Erneutes Einlesen des Roboternamens der PKM
 source $repo_pfad/robot_codegen_definitions/robot_env_par.sh
+
 
 mfcndat=$1 # Dateipfad als Übergabeargument
 replacelastassignment=$2
@@ -42,34 +44,34 @@ fntmp=$(basename "$mfcndat")
 FN="${fntmp%.*}"
 
 # Setze Beschreibung der Eingabegrößen ein (diese sind für viele Funktionen identisch)
-sed -i "/% %INPUT_M%/r $tmp_head_pfad/robot_matlabtmp_comment_input_m.m" $mfcndat
-sed -i "/%INPUT_M%/d" $mfcndat
-sed -i "/% %INPUT_R%/r $tmp_head_pfad/robot_matlabtmp_comment_input_r.m" $mfcndat
-sed -i "/%INPUT_R%/d" $mfcndat
-sed -i "/% %INPUT_MR%/r $tmp_head_pfad/robot_matlabtmp_comment_input_mr.m" $mfcndat
-sed -i "/%INPUT_MR%/d" $mfcndat
-sed -i "/% %INPUT_IC%/r $tmp_head_pfad/robot_matlabtmp_comment_input_Ic.m" $mfcndat
-sed -i "/%INPUT_IC%/d" $mfcndat
-sed -i "/% %INPUT_IF%/r $tmp_head_pfad/robot_matlabtmp_comment_input_If.m" $mfcndat
-sed -i "/%INPUT_IF%/d" $mfcndat
+sed -i "/% %INPUT_M_P%/r $tmp_head_pfad/robot_matlabtmp_comment_input_m_parallel.m" $mfcndat
+sed -i "/%INPUT_M_P%/d" $mfcndat
+sed -i "/% %INPUT_R_P%/r $tmp_head_pfad/robot_matlabtmp_comment_input_r_parallel.m" $mfcndat
+sed -i "/%INPUT_R_P%/d" $mfcndat
+sed -i "/% %INPUT_MR_P%/r $tmp_head_pfad/robot_matlabtmp_comment_input_mr_parallel.m" $mfcndat
+sed -i "/%INPUT_MR_P%/d" $mfcndat
+sed -i "/% %INPUT_IC_P%/r $tmp_head_pfad/robot_matlabtmp_comment_input_Ic_parallel.m" $mfcndat
+sed -i "/%INPUT_IC_P%/d" $mfcndat
+sed -i "/% %INPUT_IF_P%/r $tmp_head_pfad/robot_matlabtmp_comment_input_If_parallel.m" $mfcndat
+sed -i "/%INPUT_IF_P%/d" $mfcndat
 sed -i "/% %INPUT_PKIN%/r $tmp_head_pfad/robot_matlabtmp_comment_input_pkin.m" $mfcndat
 sed -i "/%INPUT_PKIN%/d" $mfcndat
-sed -i "/% %INPUT_QJ%/r $tmp_head_pfad/robot_matlabtmp_comment_input_qJ.m" $mfcndat
-sed -i "/%INPUT_QJ%/d" $mfcndat
-sed -i "/% %INPUT_QJD%/r $tmp_head_pfad/robot_matlabtmp_comment_input_qJD.m" $mfcndat
-sed -i "/%INPUT_QJD%/d" $mfcndat
-sed -i "/% %INPUT_QJDD%/r $tmp_head_pfad/robot_matlabtmp_comment_input_qJDD.m" $mfcndat
-sed -i "/%INPUT_QJDD%/d" $mfcndat
-sed -i "/% %INPUT_RB%/r $tmp_head_pfad/robot_matlabtmp_comment_input_rB.m" $mfcndat
-sed -i "/%INPUT_RB%/d" $mfcndat
-sed -i "/% %INPUT_PHIB%/r $tmp_head_pfad/robot_matlabtmp_comment_input_phiB.m" $mfcndat
-sed -i "/%INPUT_PHIB%/d" $mfcndat
-sed -i "/% %INPUT_PHIBD%/r $tmp_head_pfad/robot_matlabtmp_comment_input_phiBD.m" $mfcndat
-sed -i "/%INPUT_PHIBD%/d" $mfcndat
-sed -i "/% %INPUT_XDB%/r $tmp_head_pfad/robot_matlabtmp_comment_input_xDB.m" $mfcndat
-sed -i "/%INPUT_XDB%/d" $mfcndat
-sed -i "/% %INPUT_XDDB%/r $tmp_head_pfad/robot_matlabtmp_comment_input_xDDB.m" $mfcndat
-sed -i "/%INPUT_XDDB%/d" $mfcndat
+sed -i "/% %INPUT_PKIN_P%/r $tmp_head_pfad/robot_matlabtmp_comment_input_pkin_parallel.m" $mfcndat
+sed -i "/%INPUT_PKIN_P%/d" $mfcndat
+sed -i "/% %INPUT_QJ_P%/r $tmp_head_pfad/robot_matlabtmp_comment_input_qJ_parallel.m" $mfcndat
+sed -i "/%INPUT_QJ_P%/d" $mfcndat
+sed -i "/% %INPUT_XP%/r $tmp_head_pfad/robot_matlabtmp_comment_input_xP.m" $mfcndat
+sed -i "/%INPUT_XP%/d" $mfcndat
+sed -i "/% %INPUT_XDP%/r $tmp_head_pfad/robot_matlabtmp_comment_input_xDP.m" $mfcndat
+sed -i "/%INPUT_XDP%/d" $mfcndat
+sed -i "/% %INPUT_XDDP%/r $tmp_head_pfad/robot_matlabtmp_comment_input_xDDP.m" $mfcndat
+sed -i "/%INPUT_XDDP%/d" $mfcndat
+sed -i "/% %INPUT_LEGFRAME%/r $tmp_head_pfad/robot_matlabtmp_comment_input_legFrame_parallel.m" $mfcndat
+sed -i "/%INPUT_LEGFRAME%/d" $mfcndat
+sed -i "/% %INPUT_KOPPEL%/r $tmp_head_pfad/robot_matlabtmp_comment_input_koppelP_parallel.m" $mfcndat
+sed -i "/%INPUT_KOPPEL%/d" $mfcndat
+sed -i "/% %INPUT_RSP%/r $tmp_head_pfad/robot_matlabtmp_comment_input_rSP_parallel.m" $mfcndat
+sed -i "/%INPUT_RSP%/d" $mfcndat
 
 # Ersetze Platzhalterausdrücke $RN$, $NJ$, $NL$
 # Hier müssen normale und nicht einfache Anführungszeichen für `sed` genommen werden. Sonst wird das $-Zeichen für die Variable als Text interpretiert...
@@ -84,6 +86,11 @@ sed -i "s/%NKP%/$robot_NKP/g" $mfcndat
 sed -i "s/%NKCP%/$robot_NKCP/g" $mfcndat
 kpstring="pkin=[$(echo "$robot_KP" | sed "s/ /,/g")]';"
 sed -i "s/%KPDEF%/$kpstring/g" $mfcndat
+sed -i "s/%NQJ_P%/$parallel_NQJ_leg/g" $mfcndat
+sed -i "s/%N_LEGS%/$parallel_NLEGS/g" $mfcndat
+sed -i "s/%N_XP%/$parallel_NX/g" $mfcndat
+nges=$((parallel_NQJ_leg + 1))
+sed -i "s/%NGES%/$nges/g" $mfcndat
 
 if [ "$replacelastassignment" != "0" ]; then # vergleiche strings, da das Argument auch leer sein könnte
   # Ersetze Variablennamen des letzten Ergebnisses des generierten Codes
