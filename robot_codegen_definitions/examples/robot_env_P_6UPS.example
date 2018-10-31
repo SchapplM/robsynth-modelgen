@@ -1,0 +1,17 @@
+# Beispiel für Codegenerierung:
+# 3RRR
+
+robot_name := "P_6UPS":
+leg_name := "S_UPS":
+
+
+### Platform
+
+AKTIV := 3:
+N_LEGS := 6:
+
+# Choose leg frame and angle convention
+leg_frame := Matrix(7,1,[xA, yA, zA, alphaLeg, 0, 0, zyx]):
+xE_s := Matrix(7,1,[x_all[1],x_all[2],x_all[3],x_all[4],x_all[5],x_all[6], zyx]):
+
+

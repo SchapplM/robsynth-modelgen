@@ -1,8 +1,7 @@
 # Beispiel für Codegenerierung:
-# 3RRR
+# UPS
 
-robot_name := "P_UPS":
-parallel := 1:
+robot_name := "S_UPS":
 
 NJ := 6:
 NQJ := 6:
@@ -18,14 +17,3 @@ v := Matrix(6,1,[0, 1, 2, 3, 4, 5]):
 b := Matrix(6,1,[0, 0, 0, 0, 0, 0]):
 beta := Matrix(6,1,[0,0,0,0,0,0]):
 sigma := Matrix(6,1,[0, 0, 1, 0, 0, 0]):
-
-### Platform
-
-AKTIV := 3:
-N_LEGS := 6:
-
-# Choose leg frame and angle convention
-leg_frame := Matrix(7,1,[xA, yA, zA, alphaLeg, 0, 0, Z_Y_X]):
-xE_s := Matrix(7,1,[x_all[1],x_all[2],x_all[3],x_all[4],x_all[5],x_all[6], Z_Y_X]):
-
-

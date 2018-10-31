@@ -1,8 +1,7 @@
-# Beispiel für Codegenerierung:
+﻿# Beispiel für Codegenerierung:
 # RRR
 
 robot_name := "S_RRR":
-parallel := 0:
 
 NJ := 3:
 NQJ := 3:
