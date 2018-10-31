@@ -122,7 +122,7 @@ restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3271" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env_par&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3269" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -157,7 +157,7 @@ b_transl := b_transl:</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3273" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env_par&quot;:</Text-field>
 </Input>
 </Group>
 </Section>

@@ -45,25 +45,31 @@ read "../transformation/proc_troty":
 read "../transformation/proc_trotz": 
 read "../transformation/proc_transl": 
 read "../transformation/proc_trafo_mdh": 
-read "../robot_codegen_definitions/robot_env":
+read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
 # Kennung des Parametersatzes, für den die Dynamikfunktionen erstellt werden sollen. Muss im Repo und in der mpl-Datei auf 1 gelassen werden, da die folgende Zeile mit einem Skript verarbeitet wird.
 codegen_dynpar := 1:
 # Link-Index, für den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber für beliebige Segmente aufgestellt werden. (0=Basis)
 LIJAC:=NL-1:
 # Ergebnisse der zusätzlichen Definitionen für parallele Roboter laden
-read "../robot_codegen_definitions/robot_env":
+read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
 # Ergebnisse der Plattform-Dynamik laden
-read "../robot_codegen_definitions/robot_env":
+read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/floatb_platform_dynamic_maple.m", robot_name):
 # Ergebnisse der Dynamik der Gelenkkette laden
-read sprintf("../codeexport/%s/tmp/invdyn_floatb_%s_par%d_maple.m", leg_name, base_method_name, codegen_dynpar)
+#read sprintf("../codeexport/%s/tmp/invdyn_%s_par%d_maple.m", leg_name, base_method_name, codegen_dynpar)
 ;
 # Ergebnisse der Kinematik für parallelen Roboter laden
-read "../robot_codegen_definitions/robot_env":
+read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
-read "../robot_codegen_definitions/robot_env":
+read "../robot_codegen_definitions/robot_env_par":
+# Lade "robotics_repo_path"-File mit Link zum "imes-robotics-matlab"-Repo
+#read("robotics_repo_path"):
+robotics_repo_path := "C:/Users/Tim-David/Documents/Studienarbeit/Repos/imes-robotics-matlab":
+# Lade die Funktionen aus dem "imes-robotics-matlab"-Repo
+read(sprintf("%s/transformation/maple/proc_eul%s2r", robotics_repo_path, angleConvLeg)):
+read(sprintf("%s/transformation/maple/proc_eul%sjac", robotics_repo_path, "zyx")):
 omegaxs_base := 0:
 omegays_base := 0:
 omegazs_base := 0:
@@ -98,8 +104,17 @@ for i from NQJ_parallel+1 to NQJ do
 	M||i := 0:
 end do:
 # Ergebnisse G-Vektor laden
+g1 := gtmp1:
+g2 := gtmp2:
+g3 := gtmp3:
 read sprintf("../codeexport/%s/tmp/gravload_par%d_maple.m", leg_name, codegen_dynpar):
 G := Matrix(taug_s(7..NQ,1)):
+unassign('g1','g2','g3'):
+g := <g1;g2;g3>:
+Rmat := Transpose(parse(sprintf("eul%s2r",angleConvLeg))(frame_A_i(1..3,1))):
+gtmp1 := (Rmat.g)(1):
+gtmp2 := (Rmat.g)(2):
+gtmp3 := (Rmat.g)(3):
 # Ergebnisse C-Vektor laden
 read sprintf("../codeexport/%s/tmp/coriolisvec_par%d_maple.m", leg_name, codegen_dynpar):
 Cvec := combine(Matrix(tauCC_s(7..NQ,1))):
@@ -108,7 +123,7 @@ read sprintf("../codeexport/%s/tmp/inertia_par%d_maple.m", leg_name, codegen_dyn
 MM := combine(MM_s(7..NQ,7..NQ)):
 # Ergebnisse der Kinematik für parallen Roboter laden
 read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
-printf("Generiere Dynamik für PKM %s mit Parametersatz %d und %s\n", robot_name, codegen_dynpar, base_method_name):
+printf("Generiere Dynamik für PKM %s mit Parametersatz %d\n", robot_name, codegen_dynpar, base_method_name):
 # Berechne Dynamik-Matrizen für alle Beine
 # Dupliziere alle berechneten Matrizen. i steht für den Index des jeweiligen Beines
 for i to N_LEGS do
@@ -204,7 +219,7 @@ end do:
 
 # Export
 tau := pivotMat.tauGes:
-MMGes := pivotMat.MMGes:
+MMGes := pivotMat.MMGes.Transpose(pivotMatMas):
 cvecGes := pivotMat.cvecGes:
 gGes := pivotMat.gGes:
 #J:=MatrixInverse(Jinv):

@@ -12,7 +12,7 @@ with(LinearAlgebra):
 read "../helper/proc_MatlabExport":
 read "../helper/proc_convert_t_s":
 # Lese Umgebungsvariable für Codegenerierung.
-read "../robot_codegen_definitions/robot_env":
+read "../robot_codegen_definitions/robot_env_par":
 printf("Generiere Parameter für %s\n",robot_name):
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
 # Link-Index, für den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber für beliebige Segmente aufgestellt werden. (0=Basis)
@@ -23,7 +23,7 @@ alphaxs_base, betays_base, gammazs_base := 0, 0, 0:
 read sprintf("../codeexport/%s/tmp/jacobia_transl_%d_maple.m", leg_name, LIJAC):
 b_transl := b_transl:
 # Lese Umgebungsvariable für Codegenerierung.
-read "../robot_codegen_definitions/robot_env":
+read "../robot_codegen_definitions/robot_env_par":
 # Additional Definitions
 # Parameter definieren, wenn nicht vorher schon geschehen
 if not assigned(J_SP) then

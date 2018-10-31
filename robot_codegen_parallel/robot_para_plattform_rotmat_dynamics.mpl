@@ -28,10 +28,10 @@ with(VectorCalculus):
 # Einstellungen für Code-Export: Optimierungsgrad (2=höchster) und Aktivierung jedes Terms.
 codegen_dynpar := 1:
 codegen_opt := 2:
-codeexport_invdyn := true:
-codeexport_grav := true: 
-codeexport_corvec := true:
-codeexport_inertia := true:
+codeexport_invdyn := false:
+codeexport_grav := false: 
+codeexport_corvec := false:
+codeexport_inertia := false:
 read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s": 
 read "../helper/proc_MatlabExport":
@@ -49,17 +49,17 @@ read "../transformation/proc_transl":
 read "../transformation/proc_rpyjac": 
 read "../transformation/proc_yprjac": 
 read "../transformation/proc_trafo_mdh": 
-read "../robot_codegen_definitions/robot_env":
+read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
 # Definitionen für parallelen Roboter laden
-read "../robot_codegen_definitions/robot_env":
+read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
 r_P_sP_P := -r_P_sP:
 s_P_P_sP := s_P_sP:
 # Ergebnisse der Kinematik für parallen Roboter laden
-read "../robot_codegen_definitions/robot_env":
+read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
-read "../robot_codegen_definitions/robot_env":
+read "../robot_codegen_definitions/robot_env_par":
 # Lade "robotics_repo_path"-File mit Link zum "imes-robotics-matlab"-Repo
 #read("robotics_repo_path"):
 robotics_repo_path := "C:/Users/Tim-David/Documents/Studienarbeit/Repos/imes-robotics-matlab":
@@ -115,7 +115,7 @@ wD_E_0_E_s := dRPYjac_E_s.xED_s(4..6,1)+RPYjac_E_s.xEDD_s(4..6,1):
 wD_0_0_E_s := dRPYjac_0_s.xED_s(4..6,1)+RPYjac_0_s.xEDD_s(4..6,1):
 H := <IdentityMatrix(3,3),ZeroMatrix(3);
       ZeroMatrix(3),RPYjac_0_s>:
-MatlabExport(H, "H.m",2);
+#MatlabExport(H, "H.m",2);
 Hinv := MatrixInverse(H):
 dH := <ZeroMatrix(3),ZeroMatrix(3);
       ZeroMatrix(3),dRPYjac_0_s>:
@@ -153,7 +153,7 @@ for j to 6 do
 end do:
 gE := Transpose(Hinv).dgEdz_final:#-<mE*<g1;g2;g3>;ZeroMatrix(3,1)>: 
 if codeexport_grav then
-  MatlabExport(gE, sprintf("../codeexport/%s/tmp/gravload_floatb_%s_platform_matlab.m", robot_name, base_method_name), codegen_opt):
+  MatlabExport(gE, sprintf("../codeexport/%s/tmp/gravload_platform_matlab.m", robot_name), codegen_opt):
 end if:
 # Mass-Matrix ME of the platform
 # Berechnung Massenmatrix für die EE-Plattform und die Winkelgeschwindigkeit
@@ -167,7 +167,7 @@ else
   la := codegen_dynpar;
 end if:
 if codeexport_inertia then
-  MatlabExport(ME, sprintf("../codeexport/%s/tmp/inertia_floatb_%s_platform_matlab.m", robot_name, base_method_name), codegen_opt):
+  MatlabExport(ME, sprintf("../codeexport/%s/tmp/inertia_platform_matlab.m", robot_name), codegen_opt):
 end if:
 # Coriolis-Vector cE of the platform
 # Coriolis-Matrix
@@ -182,7 +182,7 @@ else
          ZeroMatrix(3,3),Multiply(vec2skew(w_0_0_E_s),J_0_P)>:
 end if:
 if codeexport_corvec then
-  MatlabExport(cE, sprintf("../codeexport/%s/tmp/coriolisvec_floatb_%s_platform_matlab.m", robot_name, base_method_name), codegen_opt):
+  MatlabExport(cE, sprintf("../codeexport/%s/tmp/coriolisvec_platform_matlab.m", robot_name), codegen_opt):
 end if:
 # Torque at the platform
 # Inverse Dynamik der Plattform

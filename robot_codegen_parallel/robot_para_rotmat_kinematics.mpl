@@ -45,10 +45,10 @@ read "../transformation/proc_trotz":
 read "../transformation/proc_rpyjac": 
 read "../transformation/proc_transl": 
 read "../transformation/proc_trafo_mdh": 
-read "../robot_codegen_definitions/robot_env":
+read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
 # Definitionen für parallel Roboter laden
-read "../robot_codegen_definitions/robot_env":
+read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
 # Lade "robotics_repo_path"-File mit Link zum "imes-robotics-matlab"-Repo
 #read("robotics_repo_path"):
@@ -61,7 +61,7 @@ codegen_dynpar := 2:
 LIJAC:=NL-1:
 # Ergebnisse der analytischen Jacobi-Matrix (Translatorisch)
 read sprintf("../codeexport/%s/tmp/jacobia_transl_%d_maple.m", leg_name, LIJAC):
-read "../robot_codegen_definitions/robot_env":
+read "../robot_codegen_definitions/robot_env_par":
 b_transl := b_transl:
 px, py, pz := 0, 0, 0:
 alphaxs_base, betays_base, gammazs_base := 0, 0, 0: 
@@ -93,8 +93,8 @@ if angleConvLeg = X_Y_Z then
 elif angleConvLeg = Z_Y_X then
    JB1 := rotz(frame_A_i(1,1)).roty(frame_A_i(2,1)).rotx(frame_A_i(3,1)).b_transl(1..3,1..NQJ_parallel):
 end:
-JB1 := parse(sprintf("eul%s2r",angleConvLeg))(frame_A_i(1..3,1)).b_transl(1..3,1..NQJ_parallel):
-
+transDOF := nops(indets(xE_s(1..3,1))):
+JB1 := (parse(sprintf("eul%s2r",angleConvLeg))(frame_A_i(1..3,1)).b_transl)(1..transDOF,1..NQJ_parallel):
 #ColJB1 := ColumnDimension(JB1):
 #AppendCol := 3 - ColJB1:
 #JB1 := <JB1|ZeroMatrix(3,AppendCol)>:
@@ -106,7 +106,13 @@ JB1 := parse(sprintf("eul%s2r",angleConvLeg))(frame_A_i(1..3,1)).b_transl(1..3,1
 #    	end if:
 #end do:
 # Berechnung der Jacobi-Matrix JBE: Koppelpunktgeschwindigkeiten P -> Gelenkgeschwindigkeiten
-JB1inv := MatrixInverse(JB1, method=pseudo):
+JB1inv := MatrixInverse(JB1):
+for i from 1 to 3-transDOF do
+  JB1inv := <JB1inv|ZeroMatrix(NQJ_parallel,1)>;
+end do:
+for i from 1 to 3-transDOF do
+  JB1 := <JB1;ZeroMatrix(1,NQJ_parallel)>;
+end do:
 # Berechnung der Matrix Ui: EE-Geschwindigkeiten -> Koppelpunktgeschwindigkeiten P. i steht für den Index des jeweiligen Beines
 for i to N_LEGS do
   r||i := P||i:
@@ -115,7 +121,7 @@ for i to N_LEGS do
   elif angleConv = Z_Y_X then
      r||i := vec2skew(rotz(xE_t(4)).roty(xE_t(5)).rotx(xE_t(6)).r||i):
   end:
- 
+  
   r||i := vec2skew(parse(sprintf("eul%s2r",angleConvLeg))(xE_t(4..6)).P||i);
   ones := Matrix(3,3,shape=identity):
   U||i := <ones|-r||i>:
@@ -123,6 +129,27 @@ for i to N_LEGS do
   #U||i||D := convert_t_s(U||i||D): #dU berechnen
   #U||i := convert_t_s(U||i):
 end do:
+
+robotType := 1:
+counter := 0:
+for i from 4 to 6 do
+  if xE_t(i) = 0 then
+    counter := counter + 1:
+  end if:
+end do:
+if counter = 2 then
+  robotType := 2:
+  for i from 1 to 3 do
+    if not(xE_t(i+3) = 0) then
+      rotPlanar := substring(angleConvLeg,i);
+    end if:
+  end do:
+elif counter = 3 then
+  robotType := 3:
+end if:
+robotType:
+rotPlanar:
+
 U_i := Copy(U1):
 UD_i := Copy(U1D):
 ROW := RowDimension(U1):
@@ -183,15 +210,16 @@ for k from 1 by 1 to N_LEGS do
 end do:
 # Gesamt Jacobi-Matrix
 # Berechnung der inv. Jacobi-Matrix: EE-Geschwindigkeiten -> aktive Gelenkgeschwindigkeiten
-Tmp := JB1inv[AKTIV,1..3].U1:
+Tmp := simplify(JB1inv[AKTIV,1..3].U1):
 for i from 2 to N_LEGS do
   Tmp := <Tmp;JB||i||inv[AKTIV,1..3].U||i>:
 end do:
 Jinv := Tmp:
 IdentMat := IdentityMatrix(6,6):
+IdentMatMas := IdentityMatrix(6,6):
 counter := 0:
-for i to 6 do
-  if not(Equal(Matrix(Jinv(1..N_LEGS, i)), ZeroMatrix(N_LEGS,1))) then
+for i to 3 do
+  if not(xE_t(i) = 0) then
     if counter = 0 then
       counter := 1;
       JinvRed := Column(Jinv, i);
@@ -202,9 +230,40 @@ for i to 6 do
     end if;
   end if:
 end do:
+if robotType = 2 then
+  if rotPlanar = z then
+    JinvRed := <JinvRed|Column(Jinv, 6)>;
+    pivotMat := <pivotMat;IdentMat(6,..)>;
+  elif rotPlanar = y then
+    JinvRed := <JinvRed|Column(Jinv, 5)>;
+    pivotMat := <pivotMat;IdentMat(5,..)>;
+  elif rotPlanar = x then
+    JinvRed := <JinvRed|Column(Jinv, 4)>;
+    pivotMat := <pivotMat;IdentMat(4,..)>;
+  end if;
+elif robotType = 1 then
+  if counter = 0 then
+    JinvRed := Jinv(..,1..3);
+    pivotMat := IdentMat(4..6,..);
+  else
+    JinvRed := <JinvRed|Jinv(..,1..3)>;
+    pivotMat := <pivotMat;IdentMat(4..6,..)>;
+  end if;
+end if;
+counter := 0:
+for i from 1 to 6 do
+  if not(xE_t(i) = 0) then
+    if counter = 0 then
+      counter := 1;
+      pivotMatMas := IdentMat(i,..);
+    else 
+      pivotMatMas := <pivotMatMas;IdentMat(i,..)>;
+    end if;
+  end if:
+end do:
 Jinv := JinvRed:
 # Export
 # Maple-Export
-save pivotMat, P_i, Jinv, JB_i, JBD_i, JBinv_i, U_i, UD_i, sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
+save pivotMat, pivotMatMas, P_i, Jinv, JB_i, JBD_i, JBinv_i, U_i, UD_i, sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
 MatlabExport(Jinv, sprintf("../codeexport/%s/tmp/Jinv_para_matlab.m", robot_name), codegen_opt):
 

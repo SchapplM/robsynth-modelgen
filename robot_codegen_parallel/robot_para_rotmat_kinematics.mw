@@ -164,7 +164,7 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Input>
 </Group>
 <Group labelreference="L2960" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env_par&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3228" drawlabel="true">
@@ -176,7 +176,7 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Input>
 </Group>
 <Group labelreference="L3038" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env_par&quot;:
 read sprintf(&quot;../codeexport/%s/tmp/para_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group>
@@ -217,7 +217,7 @@ robotics_repo_path := &quot;C:/Users/Tim-David/Documents/Studienarbeit/Repos/ime
 </Group>
 <Group hide-input="false" labelreference="L3222" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/jacobia_transl_%d_maple.m&quot;, leg_name, LIJAC):
-read &quot;../robot_codegen_definitions/robot_env&quot;:
+read &quot;../robot_codegen_definitions/robot_env_par&quot;:
 b_transl := b_transl:</Text-field>
 </Input>
 </Group>
@@ -265,8 +265,8 @@ P_i := tmp:
 elif angleConvLeg = Z_Y_X then
    JB1 := rotz(frame_A_i(1,1)).roty(frame_A_i(2,1)).rotx(frame_A_i(3,1)).b_transl(1..3,1..NQJ_parallel):
 end:
-JB1 := parse(sprintf(&quot;eul%s2r&quot;,angleConvLeg))(frame_A_i(1..3,1)).b_transl(1..3,1..NQJ_parallel):
-
+transDOF := nops(indets(xE_s(1..3,1))):
+JB1 := (parse(sprintf(&quot;eul%s2r&quot;,angleConvLeg))(frame_A_i(1..3,1)).b_transl)(1..transDOF,1..NQJ_parallel):
 #ColJB1 := ColumnDimension(JB1):
 #AppendCol := 3 - ColJB1:
 #JB1 := &lt;JB1|ZeroMatrix(3,AppendCol)&gt;:</Text-field>
@@ -285,15 +285,24 @@ JB1 := parse(sprintf(&quot;eul%s2r&quot;,angleConvLeg))(frame_A_i(1..3,1)).b_tra
 <Input><Text-field style="Text" layout="Normal">Berechnung der Jacobi-Matrix JBE: Koppelpunktgeschwindigkeiten P -&gt; Gelenkgeschwindigkeiten</Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L3007" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">JB1inv := MatrixInverse(JB1, method=pseudo):</Text-field>
+<Group hide-input="false" labelreference="L3255" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">JB1inv := MatrixInverse(JB1):
+for i from 1 to 3-transDOF do
+  JB1inv := &lt;JB1inv|ZeroMatrix(NQJ_parallel,1)&gt;;
+end do:</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L3253" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to 3-transDOF do
+  JB1 := &lt;JB1;ZeroMatrix(1,NQJ_parallel)&gt;;
+end do:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3017" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">Berechnung der Matrix Ui: EE-Geschwindigkeiten -&gt; <Font encoding="UTF-8">Koppelpunktgeschwindigkeiten P. i steht f\303\274r den Index des jeweiligen Beines</Font></Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L3248" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group hide-input="false" labelreference="L3258" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i to N_LEGS do</Text-field>
 </Input>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  r||i := P||i:
@@ -303,7 +312,7 @@ JB1 := parse(sprintf(&quot;eul%s2r&quot;,angleConvLeg))(frame_A_i(1..3,1)).b_tra
      r||i := vec2skew(rotz(xE_t(4)).roty(xE_t(5)).rotx(xE_t(6)).r||i):
   end:</Text-field>
 </Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"> 
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  
   r||i := vec2skew(parse(sprintf(&quot;eul%s2r&quot;,angleConvLeg))(xE_t(4..6)).P||i);</Text-field>
 </Input>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  ones := Matrix(3,3,shape=identity):</Text-field>
@@ -317,6 +326,32 @@ JB1 := parse(sprintf(&quot;eul%s2r&quot;,angleConvLeg))(frame_A_i(1..3,1)).b_tra
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  #U||i := convert_t_s(U||i):</Text-field>
 </Input>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">end do:</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L3248" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">
+robotType := 1:
+counter := 0:
+for i from 4 to 6 do
+  if xE_t(i) = 0 then
+    counter := counter + 1:
+  end if:
+end do:
+if counter = 2 then
+  robotType := 2:
+  for i from 1 to 3 do
+    if not(xE_t(i+3) = 0) then
+      rotPlanar := substring(angleConvLeg,i);
+    end if:
+  end do:
+elif counter = 3 then
+  robotType := 3:
+end if:
+robotType:</Text-field>
+</Input>
+<Input><Text-field prompt="&gt; " style="Maple Input" spaceabove="0" linebreak="space" rightmargin="0" linespacing="0.0" initial="0" firstindent="0" leftmargin="0" bulletsuffix="" alignment="left" bullet="none" spacebelow="0" pagebreak-before="false">rotPlanar:</Text-field>
+</Input>
+<Input><Text-field prompt="&gt; " style="Maple Input" spaceabove="0" linebreak="space" rightmargin="0" linespacing="0.0" initial="0" firstindent="0" leftmargin="0" bulletsuffix="" alignment="left" bullet="none" spacebelow="0" pagebreak-before="false"></Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3051" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -424,7 +459,7 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3231" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Tmp := JB1inv[AKTIV,1..3].U1:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Tmp := simplify(JB1inv[AKTIV,1..3].U1):</Text-field>
 </Input>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 2 to N_LEGS do</Text-field>
 </Input>
@@ -433,9 +468,10 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">end do:
 Jinv := Tmp:
 IdentMat := IdentityMatrix(6,6):
+IdentMatMas := IdentityMatrix(6,6):
 counter := 0:
-for i to 6 do
-  if not(Equal(Matrix(Jinv(1..N_LEGS, i)), ZeroMatrix(N_LEGS,1))) then
+for i to 3 do
+  if not(xE_t(i) = 0) then
     if counter = 0 then
       counter := 1;
       JinvRed := Column(Jinv, i);
@@ -443,6 +479,37 @@ for i to 6 do
     else 
       JinvRed := &lt;JinvRed|Column(Jinv, i)&gt;;
       pivotMat := &lt;pivotMat;IdentMat(i,..)&gt;;
+    end if;
+  end if:
+end do:
+if robotType = 2 then
+  if rotPlanar = z then
+    JinvRed := &lt;JinvRed|Column(Jinv, 6)&gt;;
+    pivotMat := &lt;pivotMat;IdentMat(6,..)&gt;;
+  elif rotPlanar = y then
+    JinvRed := &lt;JinvRed|Column(Jinv, 5)&gt;;
+    pivotMat := &lt;pivotMat;IdentMat(5,..)&gt;;
+  elif rotPlanar = x then
+    JinvRed := &lt;JinvRed|Column(Jinv, 4)&gt;;
+    pivotMat := &lt;pivotMat;IdentMat(4,..)&gt;;
+  end if;
+elif robotType = 1 then
+  if counter = 0 then
+    JinvRed := Jinv(..,1..3);
+    pivotMat := IdentMat(4..6,..);
+  else
+    JinvRed := &lt;JinvRed|Jinv(..,1..3)&gt;;
+    pivotMat := &lt;pivotMat;IdentMat(4..6,..)&gt;;
+  end if;
+end if;
+counter := 0:
+for i from 1 to 6 do
+  if not(xE_t(i) = 0) then
+    if counter = 0 then
+      counter := 1;
+      pivotMatMas := IdentMat(i,..);
+    else 
+      pivotMatMas := &lt;pivotMatMas;IdentMat(i,..)&gt;;
     end if;
   end if:
 end do:
@@ -460,7 +527,7 @@ Jinv := JinvRed:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3146" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save pivotMat, P_i, Jinv, JB_i, JBD_i, JBinv_i, U_i, UD_i, sprintf(&quot;../codeexport/%s/tmp/kinematics_%s_platform_maple.m&quot;, robot_name, base_method_name):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save pivotMat, pivotMatMas, P_i, Jinv, JB_i, JBD_i, JBinv_i, U_i, UD_i, sprintf(&quot;../codeexport/%s/tmp/kinematics_%s_platform_maple.m&quot;, robot_name, base_method_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3193" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">

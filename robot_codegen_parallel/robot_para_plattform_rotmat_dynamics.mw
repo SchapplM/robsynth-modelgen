@@ -135,10 +135,10 @@ with(VectorCalculus):</Text-field>
 <Group labelreference="L2950" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_dynpar := 1:
 codegen_opt := 2:
-codeexport_invdyn := true:
-codeexport_grav := true: 
-codeexport_corvec := true:
-codeexport_inertia := true:</Text-field>
+codeexport_invdyn := false:
+codeexport_grav := false: 
+codeexport_corvec := false:
+codeexport_inertia := false:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2948" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -168,7 +168,7 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Input>
 </Group>
 <Group labelreference="L2965" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env_par&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3027" drawlabel="true">
@@ -180,7 +180,7 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3077" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env_par&quot;:
 read sprintf(&quot;../codeexport/%s/tmp/para_definitions&quot;, robot_name):
 r_P_sP_P := -r_P_sP:
 s_P_P_sP := s_P_sP:</Text-field>
@@ -191,9 +191,9 @@ s_P_P_sP := s_P_sP:</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L2967" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env_par&quot;:
 read sprintf(&quot;../codeexport/%s/tmp/kinematics_%s_platform_maple.m&quot;, robot_name, base_method_name):
-read &quot;../robot_codegen_definitions/robot_env&quot;:</Text-field>
+read &quot;../robot_codegen_definitions/robot_env_par&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3253" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -292,7 +292,7 @@ wD_0_0_E_s := dRPYjac_0_s.xED_s(4..6,1)+RPYjac_0_s.xEDD_s(4..6,1):</Text-field>
 <Group hide-input="false" labelreference="L3100" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">H := &lt;IdentityMatrix(3,3),ZeroMatrix(3);
       ZeroMatrix(3),RPYjac_0_s&gt;:
-MatlabExport(H, &quot;H.m&quot;,2);</Text-field>
+#MatlabExport(H, &quot;H.m&quot;,2);</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3066" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -361,7 +361,7 @@ end do:</Text-field>
 </Group>
 <Group labelreference="L2888" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_grav then
-  MatlabExport(gE, sprintf(&quot;../codeexport/%s/tmp/gravload_floatb_%s_platform_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
+  MatlabExport(gE, sprintf(&quot;../codeexport/%s/tmp/gravload_platform_matlab.m&quot;, robot_name), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -389,7 +389,7 @@ end if:</Text-field>
 </Group>
 <Group labelreference="L2886" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertia then
-  MatlabExport(ME, sprintf(&quot;../codeexport/%s/tmp/inertia_floatb_%s_platform_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
+  MatlabExport(ME, sprintf(&quot;../codeexport/%s/tmp/inertia_platform_matlab.m&quot;, robot_name), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -414,7 +414,7 @@ end if:</Text-field>
 </Group>
 <Group labelreference="L2920" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_corvec then
-  MatlabExport(cE, sprintf(&quot;../codeexport/%s/tmp/coriolisvec_floatb_%s_platform_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
+  MatlabExport(cE, sprintf(&quot;../codeexport/%s/tmp/coriolisvec_platform_matlab.m&quot;, robot_name), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
