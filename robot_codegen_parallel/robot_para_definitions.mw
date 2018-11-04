@@ -216,6 +216,10 @@ for i from 1 to NQJ_parallel do
 end do:</Text-field>
 </Input>
 </Group>
+<Group labelreference="L3275" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Erstelle Vektor der Basisdrehungen jedes Beines</Text-field>
+</Input>
+</Group>
 <Group hide-input="false" labelreference="L1723" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">frame_A_i := Matrix(3,N_LEGS):</Text-field>
 </Input>
@@ -230,6 +234,10 @@ end do:</Text-field>
       end if:
    end do:
 end do:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3276" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Plattformschwerpunkt</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3232" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -247,6 +255,10 @@ angleConv := xE_s(7):</Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">xED_t:=diff~(xE_t,t):</Text-field>
 </Input>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">xEDD_t:=diff~(xED_t,t):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3277" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Z\303\244hle Freiheitsgrade des Roboters und setze nicht ben\303\266tigte zu null.</Font></Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3239" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">

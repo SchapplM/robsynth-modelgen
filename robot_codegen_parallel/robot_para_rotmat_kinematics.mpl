@@ -12,9 +12,7 @@
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
 # (C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
 # Sources
-# [GautierKhalil1990] Direct Calculation of Minimum Set of Inertial Parameters of Serial Robots
-# [KhalilDombre2002] Modeling, Identification and Control of Robots
-# [Ortmaier2014] Vorlesungsskript Robotik I
+# [Abdellatif2007] Modellierung, Identifikation und robuste Regelung von Robotern mit parallelkinematischen Strukturen
 # Initialization
 #interface(warnlevel=0): # Unterdrücke die folgende Warnung.
 restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
@@ -32,19 +30,10 @@ codeexport_invdyn := true:
 read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s": 
 read "../helper/proc_MatlabExport":
-read "../helper/proc_index_symmat2vector":
-read "../helper/proc_symmat2vector":
 read "../helper/proc_vec2skew":
-read "../helper/proc_skew2vec":
 read "../transformation/proc_rotx": 
 read "../transformation/proc_roty": 
 read "../transformation/proc_rotz": 
-read "../transformation/proc_trotx": 
-read "../transformation/proc_troty": 
-read "../transformation/proc_trotz": 
-read "../transformation/proc_rpyjac": 
-read "../transformation/proc_transl": 
-read "../transformation/proc_trafo_mdh": 
 read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
 # Definitionen für parallel Roboter laden
@@ -63,8 +52,10 @@ LIJAC:=NL-1:
 read sprintf("../codeexport/%s/tmp/jacobia_transl_%d_maple.m", leg_name, LIJAC):
 read "../robot_codegen_definitions/robot_env_par":
 b_transl := b_transl:
+# Setze Parameter aus serieller Berechnung zu null.
 px, py, pz := 0, 0, 0:
 alphaxs_base, betays_base, gammazs_base := 0, 0, 0: 
+rxs_base, rys_base, rzs_base := 0, 0, 0:
 # Additional Kinematics
 # Definition der Koppelpunkte für jedes Bein und der EE-Koordinaten/-Geschwindigkeiten/-Beschleunigungen
 tmp := Matrix(3,1,[xP[1],yP[1],zP[1]]):
@@ -86,26 +77,13 @@ for i to N_LEGS do
   end:
 end do:
 P_i := tmp:
+#rhs||i := parse(sprintf("eul%s2r",angleConvLeg))(xE_s(4..6)).P||i+Matrix(xE_s(1..3,1)):
 
 # Jacobi Matrices (JB1/U1) + Derivates
-if angleConvLeg = X_Y_Z then
-   JB1 := rotx(frame_A_i(1,1)).roty(frame_A_i(2,1)).rotz(frame_A_i(3,1)).b_transl(1..3,1..NQJ_parallel):
-elif angleConvLeg = Z_Y_X then
-   JB1 := rotz(frame_A_i(1,1)).roty(frame_A_i(2,1)).rotx(frame_A_i(3,1)).b_transl(1..3,1..NQJ_parallel):
-end:
+# Berechnung der Jacobi-Matrix der inversen Kinematik: Koppelpunktgeschwindigkeiten P -> Gelenkgeschwindigkeiten
+# Abdellatif2007 S.37 unten
 transDOF := nops(indets(xE_s(1..3,1))):
 JB1 := (parse(sprintf("eul%s2r",angleConvLeg))(frame_A_i(1..3,1)).b_transl)(1..transDOF,1..NQJ_parallel):
-#ColJB1 := ColumnDimension(JB1):
-#AppendCol := 3 - ColJB1:
-#JB1 := <JB1|ZeroMatrix(3,AppendCol)>:
-# Berechnung der Jacobi-Matrix JB1inv: Gelenkgeschwindigkeiten -> Koppelpunktgeschwindigkeiten P
-#for i to 3 do
-#	if JB1(1,i) = 0 and JB1(2,i) = 0 and JB1(3,i) = 0
-#	and JB1(i,1) = 0 and JB1(i,2) = 0 and JB1(i,3) = 0 then
-#		JB1 := JB1(..,1..i-1):
-#    	end if:
-#end do:
-# Berechnung der Jacobi-Matrix JBE: Koppelpunktgeschwindigkeiten P -> Gelenkgeschwindigkeiten
 JB1inv := MatrixInverse(JB1):
 for i from 1 to 3-transDOF do
   JB1inv := <JB1inv|ZeroMatrix(NQJ_parallel,1)>;
@@ -114,6 +92,7 @@ for i from 1 to 3-transDOF do
   JB1 := <JB1;ZeroMatrix(1,NQJ_parallel)>;
 end do:
 # Berechnung der Matrix Ui: EE-Geschwindigkeiten -> Koppelpunktgeschwindigkeiten P. i steht für den Index des jeweiligen Beines
+# Abdellatif2007 S.21 (2.21)
 for i to N_LEGS do
   r||i := P||i:
   if angleConv = X_Y_Z then
@@ -129,7 +108,7 @@ for i to N_LEGS do
   #U||i||D := convert_t_s(U||i||D): #dU berechnen
   #U||i := convert_t_s(U||i):
 end do:
-
+# Ermittlung des Robotertyps, um später die Gesamt-Jacobi-Matrix reduzieren zu können
 robotType := 1:
 counter := 0:
 for i from 4 to 6 do
@@ -149,7 +128,7 @@ elif counter = 3 then
 end if:
 robotType:
 rotPlanar:
-
+# Erstelle die Matrizen für jedes Bein.
 U_i := Copy(U1):
 UD_i := Copy(U1D):
 ROW := RowDimension(U1):
@@ -178,6 +157,7 @@ JB1 := convert_t_s(JB1):
 JBinv_i := Copy(JB1inv):
 JBD_i := Copy(JB1D):
 JB_i := Copy(JB1):
+#Jinv_DoThanh_i := Copy(Jinv_DoThanh||1):
 ROW := RowDimension(JB1):
 COLUMN := ColumnDimension(JB1):
 for i to N_LEGS do
@@ -185,7 +165,6 @@ for i to N_LEGS do
   JB||i||inv := Copy(JB1inv):
   JB||i := Copy(JB1):
 end do:
-NQJ_parallel:
 # Substituiere in jeder Matrix den Winkel Alpha (Verdrehung in der Basis) und die Gelenkkoordinaten und -geschwindigkeiten
 for k from 1 by 1 to N_LEGS do  
 	for i to ROW do
@@ -207,13 +186,25 @@ for k from 1 by 1 to N_LEGS do
   	JB_i(1..ROW,1..COLUMN,k) := JB||k:
   	JBD_i(1..ROW,1..COLUMN,k) := JB||k||D:
   	JBinv_i(1..COLUMN,1..ROW,k) := JB||k||inv:
+  	for i to N_LEGS do
+		for j to 6 do
+			#Jinv_DoThanh||k(i,j):=subs({frame_A_i(l,1)=frame_A_i(l,k)},Jinv_DoThanh||k(i,j)):
+		end do:
+		for m to NQJ_parallel do
+			n := m + (k-1)*NQJ_parallel:
+			#Jinv_DoThanh||k(i,j):=subs({qJ_i_s(m,1)=qJ_i_s(m,k)},Jinv_DoThanh||k(i,j)):
+		end do:
+	end do:
+	#Jinv_DoThanh_i(1..COLUMN,1..ROW,k) := Jinv_DoThanh||k:
 end do:
 # Gesamt Jacobi-Matrix
 # Berechnung der inv. Jacobi-Matrix: EE-Geschwindigkeiten -> aktive Gelenkgeschwindigkeiten
+# Abdellatif2007 S.21 (2.22)
 Tmp := simplify(JB1inv[AKTIV,1..3].U1):
 for i from 2 to N_LEGS do
   Tmp := <Tmp;JB||i||inv[AKTIV,1..3].U||i>:
 end do:
+# Reduziere die Gesamt-Jacobi-Matrix auf Freiheitsgrade des Roboters
 Jinv := Tmp:
 IdentMat := IdentityMatrix(6,6):
 IdentMatMas := IdentityMatrix(6,6):

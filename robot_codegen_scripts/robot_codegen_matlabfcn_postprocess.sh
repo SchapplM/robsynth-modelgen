@@ -17,9 +17,6 @@ repo_pfad=$(pwd)/..
 tmp_pfad=$repo_pfad/workdir/tmp
 tmp_head_pfad=$repo_pfad/robot_codegen_scripts/tmp_head
 source $repo_pfad/robot_codegen_definitions/robot_env.sh
-source $repo_pfad/codeexport/${robot_leg_name}/tmp/robot_env.sh
-# Erneutes Einlesen des Roboternamens der PKM
-source $repo_pfad/robot_codegen_definitions/robot_env_par.sh
 
 mfcndat=$1 # Dateipfad als Übergabeargument
 replacelastassignment=$2

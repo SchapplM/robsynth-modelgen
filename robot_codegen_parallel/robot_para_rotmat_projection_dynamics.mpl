@@ -13,38 +13,21 @@
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
 # (C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
 # Sources
-# [GautierKhalil1990] Direct Calculation of Minimum Set of Inertial Parameters of Serial Robots
-# [KhalilDombre2002] Modeling, Identification and Control of Robots
-# [Ortmaier2014] Vorlesungsskript Robotik I
+# [Abdellatif2007] Modellierung, Identifikation und robuste Regelung von Robotern mit parallelkinematischen Strukturen
 # Initialization
 #interface(warnlevel=0): # Unterdrücke die folgende Warnung.
 restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
 #interface(warnlevel=3):
 with(LinearAlgebra):
-#with(ArrayTools):
 with(codegen):
 with(CodeGeneration):
 with(StringTools):
-# Einstellungen für Code-Export: Optimierungsgrad (2=höchster) und Aktivierung jedes Terms.
+# Einstellungen für Code-Export: Optimierungsgrad (2=höchster).
 #codegen_act := true: # noch nicht implementiert
 codegen_debug := false:
-codegen_opt := 1:
+codegen_opt := 2:
 codeexport_invdyn := true:
-read "../helper/proc_convert_s_t":
-read "../helper/proc_convert_t_s": 
 read "../helper/proc_MatlabExport":
-read "../helper/proc_index_symmat2vector":
-read "../helper/proc_symmat2vector":
-read "../helper/proc_vec2skew":
-read "../helper/proc_skew2vec":
-read "../transformation/proc_rotx": 
-read "../transformation/proc_roty": 
-read "../transformation/proc_rotz": 
-read "../transformation/proc_trotx": 
-read "../transformation/proc_troty": 
-read "../transformation/proc_trotz": 
-read "../transformation/proc_transl": 
-read "../transformation/proc_trafo_mdh": 
 read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
 # Kennung des Parametersatzes, für den die Dynamikfunktionen erstellt werden sollen. Muss im Repo und in der mpl-Datei auf 1 gelassen werden, da die folgende Zeile mit einem Skript verarbeitet wird.
@@ -70,6 +53,7 @@ robotics_repo_path := "C:/Users/Tim-David/Documents/Studienarbeit/Repos/imes-rob
 # Lade die Funktionen aus dem "imes-robotics-matlab"-Repo
 read(sprintf("%s/transformation/maple/proc_eul%s2r", robotics_repo_path, angleConvLeg)):
 read(sprintf("%s/transformation/maple/proc_eul%sjac", robotics_repo_path, "zyx")):
+# Alle Basisgeschwindigkeiten und -winkel aus Berechnung der seriellen Kette zu null setzen.
 omegaxs_base := 0:
 omegays_base := 0:
 omegazs_base := 0:
@@ -79,8 +63,7 @@ gammazs_base := 0:
 vxs_base := 0:
 vys_base := 0:
 vzs_base := 0:
-
-
+# Physikalische Parameter der Koppelgelenke zu Null setzen.
 NQ := NQ - (NQJ-NQJ_parallel):
 for i from NQJ_parallel+1 to NQJ do
 	XXC||i := 0:
@@ -103,7 +86,7 @@ for i from NQJ_parallel+1 to NQJ do
 	MZ||i := 0:
 	M||i := 0:
 end do:
-# Ergebnisse G-Vektor laden
+# Ergebnisse G-Vektor laden. Die Rotation der Basis wird nur in der Jacobi-Matrix der inverse Kinematik berücksichtigt. Deshalb muss der Gravitationsvektor ebenfalls an die Rotation angepasst werden.
 g1 := gtmp1:
 g2 := gtmp2:
 g3 := gtmp3:
@@ -157,6 +140,7 @@ end do:
 
 # Berechnung, Projektion und Addition der Dynamikgleichungen
 # Berechnung der Kräfte/Momente an den Gelenken der jeweiligen Beine und Projektion auf EE-Plattform
+# Abdellatif2007 S.38 (3.27)
 for i to N_LEGS do
   A||i := Multiply(JBinv_i(..,..,i),JBD_i(..,..,i));
   B||i := Multiply(-MM||i,Multiply(A||i,Multiply(JBinv_i(..,..,i),U_i(..,..,i).H.xED_s)));
@@ -167,6 +151,7 @@ for i to N_LEGS do
   tau||i := Transpose(U_i(..,..,i)).Transpose(JBinv_i(..,..,i)).MM||i.JBinv_i(..,..,i).(U_i(..,..,i).H.xEDD_s+U_i(..,..,i).dH.xED_s+UD_i(..,..,i).H.xED_s) + Multiply(Transpose(U_i(..,..,i)),Multiply(Transpose(JBinv_i(..,..,i)),(B||i+Cvec||i+G||i))):
   taus||i := MMs||i.xEDD_s + cvecs||i + gvecs||i;
 end do:
+# Abdellatif2007 S.40 (3.33)
 # Aufsummieren aller Kräfte, projiziert auf EE-Plattform
 Tmp := 0:
 for i to N_LEGS do
@@ -218,19 +203,22 @@ for i to 6 do
 end do:
 
 # Export
+# Wähle die Einträge aus Dynamikgleichungen, die für Freiheitsgrade des Roboters relevant sind.
+g1 := 0:
+g2 := 0:
+
 tau := pivotMat.tauGes:
 MMGes := pivotMat.MMGes.Transpose(pivotMatMas):
 cvecGes := pivotMat.cvecGes:
 gGes := pivotMat.gGes:
-#J:=MatrixInverse(Jinv):
-#tau:=Transpose(J).tau:
+J:=MatrixInverse(Jinv):
+tau:=Transpose(J).tau:
 #pivotMat.Transpose(pivotMat);
-# Matlab Export: Floating base
-# Berechnung der Basis-Belastung ist für manche Basis-Darstellungen falsch (siehe oben unter Gravitationslast).
+# Matlab Export
 if codeexport_invdyn then
   MatlabExport(tau, sprintf("../codeexport/%s/tmp/invdyn_para_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
-  MatlabExport(MMGes, sprintf("../codeexport/%s/tmp/inertia_para_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
-  MatlabExport(cvecGes, sprintf("../codeexport/%s/tmp/coriolisvec_para_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
-  MatlabExport(gGes, sprintf("../codeexport/%s/tmp/gravvec_para_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
+  #MatlabExport(MMGes, sprintf("../codeexport/%s/tmp/inertia_para_par%d_matlab.m", robot_name, codegen_dynpar), #codegen_opt);
+  #MatlabExport(cvecGes, sprintf("../codeexport/%s/tmp/coriolisvec_para_par%d_matlab.m", robot_name, codegen_dynpar), #codegen_opt);
+  #MatlabExport(gGes, sprintf("../codeexport/%s/tmp/gravvec_para_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt)#;
 end if:
 

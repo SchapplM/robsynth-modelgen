@@ -7,7 +7,7 @@
 % 
 % Input:
 % %INPUT_XP%
-% %INPUT_QJ%
+% %INPUT_QJ_P%
 % %INPUT_LEGFRAME%
 % %INPUT_PKIN%
 % %INPUT_KOPPEL%

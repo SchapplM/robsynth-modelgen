@@ -107,9 +107,7 @@ kinematics -&gt; Berechnung der Kinematik</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3167" drawlabel="true">
-<Input><Text-field style="Heading 2" layout="Heading 2">Sources</Text-field><Text-field style="Normal" layout="Normal">[GautierKhalil1990] Direct Calculation of Minimum Set of Inertial Parameters of Serial Robots
-[KhalilDombre2002] Modeling, Identification and Control of Robots
-[Ortmaier2014] Vorlesungsskript Robotik I</Text-field>
+<Input><Text-field style="Heading 2" layout="Heading 2">Sources</Text-field><Text-field style="Normal" layout="Normal">[Abdellatif2007] Modellierung, Identifikation und robuste Regelung von Robotern mit parallelkinematischen Strukturen</Text-field>
 </Input>
 </Group>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Initialization</Text-field></Title>
@@ -121,45 +119,24 @@ restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet
 </Group>
 <Group labelreference="L3168" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(LinearAlgebra):
-#with(ArrayTools):
 with(codegen):
 with(CodeGeneration):
 with(StringTools):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3205" drawlabel="true">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Einstellungen f\303\274r Code-Export: Optimierungsgrad (2=h\303\266chster) und Aktivierung jedes Terms.</Font></Text-field>
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Einstellungen f\303\274r Code-Export: Optimierungsgrad (2=h\303\266chster).</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L3191" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">#codegen_act := true: # noch nicht implementiert
 codegen_debug := false:
-codegen_opt := 1:
+codegen_opt := 2:
 codeexport_invdyn := true:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3202" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_convert_s_t&quot;:
-read &quot;../helper/proc_convert_t_s&quot;: 
-read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L3207" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_index_symmat2vector&quot;:
-read &quot;../helper/proc_symmat2vector&quot;:
-read &quot;../helper/proc_vec2skew&quot;:
-read &quot;../helper/proc_skew2vec&quot;:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L3189" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../transformation/proc_rotx&quot;: 
-read &quot;../transformation/proc_roty&quot;: 
-read &quot;../transformation/proc_rotz&quot;: 
-read &quot;../transformation/proc_trotx&quot;: 
-read &quot;../transformation/proc_troty&quot;: 
-read &quot;../transformation/proc_trotz&quot;: 
-read &quot;../transformation/proc_transl&quot;: 
-read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3177" drawlabel="true">
@@ -238,7 +215,11 @@ robotics_repo_path := &quot;C:/Users/Tim-David/Documents/Studienarbeit/Repos/ime
 read(sprintf(&quot;%s/transformation/maple/proc_eul%sjac&quot;, robotics_repo_path, &quot;zyx&quot;)):</Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L3298" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group labelreference="L3346" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Alle Basisgeschwindigkeiten und -winkel aus Berechnung der seriellen Kette zu null setzen.</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L3348" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">omegaxs_base := 0:
 omegays_base := 0:
 omegazs_base := 0:
@@ -247,10 +228,15 @@ betays_base := 0:
 gammazs_base := 0:
 vxs_base := 0:
 vys_base := 0:
-vzs_base := 0:
-
-
-NQ := NQ - (NQJ-NQJ_parallel):</Text-field>
+vzs_base := 0:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3349" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Physikalische Parameter der Koppelgelenke zu Null setzen.</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L3298" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">NQ := NQ - (NQJ-NQJ_parallel):</Text-field>
 </Input>
 </Group><CodeEditor-ExecGroup view="presentation" labelreference="L2" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="500" pixel-height="444" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">for i from NQJ_parallel+1 to NQJ do
 	XXC||i := 0:
@@ -274,7 +260,7 @@ NQ := NQ - (NQJ-NQJ_parallel):</Text-field>
 	M||i := 0:
 end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L3201" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal">Ergebnisse G-Vektor laden</Text-field>
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ergebnisse G-Vektor laden. Die Rotation der Basis wird nur in der Jacobi-Matrix der inverse Kinematik ber\303\274cksichtigt. Deshalb muss der Gravitationsvektor ebenfalls an die Rotation angepasst werden.</Font></Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3313" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -376,7 +362,8 @@ end do:
 </Group>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Berechnung, Projektion und Addition der Dynamikgleichungen</Text-field></Title>
 <Group labelreference="L3172" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Berechnung der Kr\303\244fte/Momente an den Gelenken der jeweiligen Beine und Projektion auf EE-Plattform</Font></Text-field>
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Berechnung der Kr\303\244fte/Momente an den Gelenken der jeweiligen Beine und Projektion auf EE-Plattform
+</Font>Abdellatif2007 S.38 (3.27)</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3311" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -398,7 +385,8 @@ end do:
 </Input>
 </Group>
 <Group labelreference="L3145" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Aufsummieren aller Kr\303\244fte, projiziert auf EE-Plattform</Font></Text-field>
+<Input><Text-field style="Text" layout="Normal">Abdellatif2007 S.40 (3.33)<Font encoding="UTF-8">
+Aufsummieren aller Kr\303\244fte, projiziert auf EE-Plattform</Font></Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3200" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -530,14 +518,21 @@ end do:</Text-field>
 </Group>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Export</Text-field></Title>
+<Group labelreference="L3350" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">W\303\244hle die Eintr\303\244ge aus Dynamikgleichungen, die f\303\274r Freiheitsgrade des Roboters relevant sind.</Font></Text-field>
+</Input>
+</Group>
 <Group hide-input="false" labelreference="L3342" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tau := pivotMat.tauGes:
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">g1 := 0:
+g2 := 0:
+
+tau := pivotMat.tauGes:
 MMGes := pivotMat.MMGes.Transpose(pivotMatMas):
 cvecGes := pivotMat.cvecGes:
 gGes := pivotMat.gGes:
-#J:=MatrixInverse(Jinv):</Text-field>
+J:=MatrixInverse(Jinv):</Text-field>
 </Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">#tau:=Transpose(J).tau:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tau:=Transpose(J).tau:</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3150" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -545,16 +540,15 @@ gGes := pivotMat.gGes:
 </Input>
 </Group>
 <Group labelreference="L3161" drawlabel="true">
-<Input><Text-field style="Text" layout="Normal">Matlab Export: Floating base
-<Font encoding="UTF-8">Berechnung der Basis-Belastung ist f\303\274r manche Basis-Darstellungen falsch (siehe oben unter Gravitationslast).</Font></Text-field>
+<Input><Text-field style="Text" layout="Normal">Matlab Export</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3140" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_invdyn then
   MatlabExport(tau, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt);
-  MatlabExport(MMGes, sprintf(&quot;../codeexport/%s/tmp/inertia_para_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt);
-  MatlabExport(cvecGes, sprintf(&quot;../codeexport/%s/tmp/coriolisvec_para_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt);
-  MatlabExport(gGes, sprintf(&quot;../codeexport/%s/tmp/gravvec_para_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt);
+  #MatlabExport(MMGes, sprintf(&quot;../codeexport/%s/tmp/inertia_para_par%d_matlab.m&quot;, robot_name, codegen_dynpar), #codegen_opt);
+  #MatlabExport(cvecGes, sprintf(&quot;../codeexport/%s/tmp/coriolisvec_para_par%d_matlab.m&quot;, robot_name, codegen_dynpar), #codegen_opt);
+  #MatlabExport(gGes, sprintf(&quot;../codeexport/%s/tmp/gravvec_para_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt)#;
 end if:</Text-field>
 </Input>
 </Group>

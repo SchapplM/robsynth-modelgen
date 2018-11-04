@@ -1,11 +1,11 @@
 
 # Calculate Jacobi-Matrix based on MDH-Frames
 # Introduction
-# Jacobi-Matrix fÃ¼r Roboterkinematik basierend auf MDH-Parametern berechnen.
-# Die Berechnung erfolgt durch symbolische Ableitung der Transformationsmatrizen fÃ¼r jeden KÃ¶rper
+# Jacobi-Matrix für Roboterkinematik basierend auf MDH-Parametern berechnen.
+# Die Berechnung erfolgt durch symbolische Ableitung der Transformationsmatrizen für jeden Körper
 # 
-# robot -> Berechnung fÃ¼r allgemeinen Roboter
-# tree -> Berechnung fÃ¼r eine beliebige Baumstruktur (ohne Schleifen)
+# robot -> Berechnung für allgemeinen Roboter
+# tree -> Berechnung für eine beliebige Baumstruktur (ohne Schleifen)
 # rotmat -> Kinematik wird mit Rotationsmatrizen berechnet
 # jacobian -> Berechnung der Jacobi-Matrix
 # baseframe -> Berechnung der Jacobi-Matrix bezogen auf das Basis-Koordinatensystem des Roboters (nicht: Welt-KS)
@@ -20,8 +20,8 @@
 # [Ortmaier2014] Vorlesungsskript Robotik I
 # [Ortmaier2014a] Vorlesungsskript Robotik II
 # Initialization
-interface(warnlevel=0): # UnterdrÃ¼cke die folgende Warnung.
-restart: # Gibt eine Warnung, wenn Ã¼ber Terminal-Maple mit read gestartet wird.
+interface(warnlevel=0): # Unterdrücke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
 interface(warnlevel=3):
 with(LinearAlgebra):
 with(ArrayTools):
@@ -44,14 +44,14 @@ read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
 read sprintf("../codeexport/%s/tmp/kinematics_floatb_%s_rotmat_maple.m", robot_name, base_method_name):
 Trf := Trf:
 Trf_c := Trf_c:
-# Link-Index, fÃ¼r den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber fÃ¼r beliebige Segmente aufgestellt werden. (0=Basis)
+# Link-Index, für den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber für beliebige Segmente aufgestellt werden. (0=Basis)
 LIJAC:=NL-1:
-printf("Generiere Jacobi-Matrix fÃ¼r %s (KÃ¶rper %d)\n", robot_name, LIJAC):
+printf("Generiere Jacobi-Matrix für %s (Körper %d)\n", robot_name, LIJAC):
 # Jacobi-Matrix analytisch (Translatorisch)
 # Ortmaier2014a Gl. (1.15), S.14: Geometrische Zwangsbedingungen in impliziter Form
-# Gleichung enthÃ¤lt verallgemeinerte Koordinaten und Endeffektorposition und ergibt Null.
+# Gleichung enthält verallgemeinerte Koordinaten und Endeffektorposition und ergibt Null.
 x_EE := Matrix(3,1,<r_xEE; r_yEE; r_zEE>):
-# Transformationsmatrix von der Basis zum gegebenen Punkt auf dem KÃ¶rper. Die Koordinaten px,py,pz fÃ¼r den Punkt werden spÃ¤ter eingesetzt.
+# Transformationsmatrix von der Basis zum gegebenen Punkt auf dem Körper. Die Koordinaten px,py,pz für den Punkt werden später eingesetzt.
 T_p := Trf_c(1 .. 4, 1..4, LIJAC+1) . transl(<px;py;pz>):
 h_transl := Matrix(T_p(1..3,4)) - x_EE:
 h_transl_s :=convert_t_s(h_transl):
@@ -63,9 +63,9 @@ for i from 1 to 3 do
   end do:
 end do:
 # Export
-save b_transl, sprintf("../codeexport/%s/tmp/jacobia_transl_%d_maple.m", robot_name, LIJAC):
-# Ausdruck muss nochmal geladen werden, ansonsten hÃ¤ngt sich die Code-Optimerung mit "tryhard" auf.
-# TODO: KlÃ¤ren warum das so ist und Problem beheben.
+save T_p, b_transl, sprintf("../codeexport/%s/tmp/jacobia_transl_%d_maple.m", robot_name, LIJAC):
+# Ausdruck muss nochmal geladen werden, ansonsten hängt sich die Code-Optimerung mit "tryhard" auf.
+# TODO: Klären warum das so ist und Problem beheben.
 read sprintf("../codeexport/%s/tmp/jacobia_transl_%d_maple.m", robot_name, LIJAC):
 b_transl := b_transl:
 if codegen_act and codegen_debug then
@@ -82,17 +82,17 @@ end if:
 # Ortmaier2014a Gl. (1.15), S.14: Geometrische Zwangsbedingungen in impliziter Form
 # Rotationsdarstellung des Endeffektors in RPY-Winkeln
 xo_EE := Matrix(3,1,<phi_xEE; phi_yEE; phi_zEE>):
-# r2rpy liefert inert-arctan (%). Auswertung vor Export dauert zu lange. In exportiertem Matlab-Code muss "%arctan" hÃ¤ndisch gegen "atan2" getauscht werden.
+# r2rpy liefert inert-arctan (%). Auswertung vor Export dauert zu lange. In exportiertem Matlab-Code muss "%arctan" händisch gegen "atan2" getauscht werden.
 h_rota_rpy := r2rpy(T_p) - xo_EE: 
 h_rota_s :=convert_t_s(h_rota_rpy):
 # Jacobi-Matrix der inversen Kinematik
-# Falls die RPY-Darstellung fÃ¼r dieses KÃ¶rper-KS singulÃ¤r ist, existiert die analytische Jacobi-Matrix nicht. Maple gibt dann einen Fehler aus. Die Kennzeichnung mit NaN sorgt dafÃ¼r, dass dies in Matlab erkennbar ist.
-# Die SingularitÃ¤t kann bei kinematischen Strukturen am Anfang auftreten.
+# Falls die RPY-Darstellung für dieses Körper-KS singulär ist, existiert die analytische Jacobi-Matrix nicht. Maple gibt dann einen Fehler aus. Die Kennzeichnung mit NaN sorgt dafür, dass dies in Matlab erkennbar ist.
+# Die Singularität kann bei kinematischen Strukturen am Anfang auftreten.
 b_rota := Matrix(3, NQJ):
 for i from 1 to 3 do
   for j from 1 to NQJ do
     if T_p(3,3) = 0 then
-      b_rota(i,j) := NaN: # SingulÃ¤r
+      b_rota(i,j) := NaN: # Singulär
     else
       b_rota(i,j) := diff(h_rota_s(i,1), qJ_s(j,1)):
     end if:
@@ -103,7 +103,7 @@ save b_rota, sprintf("../codeexport/%s/tmp/jacobia_rot_%d_maple.m", robot_name, 
 # Ausdruck nochmal laden.
 read sprintf("../codeexport/%s/tmp/jacobia_rot_%d_maple.m", robot_name, LIJAC):
 b_rota := b_rota:
-# Einzelne AusdrÃ¼cke als Code exportieren (falls Gesamtausdruck zu komplex ist)
+# Einzelne Ausdrücke als Code exportieren (falls Gesamtausdruck zu komplex ist)
 if codegen_act and codegen_debug then
   for i from 1 to 3 do
     for j from 1 to NQJ do
@@ -115,7 +115,7 @@ if codegen_act then
   MatlabExport(b_rota, sprintf("../codeexport/%s/tmp/jacobia_rot_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
 end if:
 # Jacobi-Matrix geometrisch (Rotatorisch)
-# Zusammenhang zwischen Geschwindigkeit der verallgemeinerten Koordinaten und Winkelgeschwindigkeit des Endeffektors ausgedrÃ¼ckt im Basis-Koordinatensystems
+# Zusammenhang zwischen Geschwindigkeit der verallgemeinerten Koordinaten und Winkelgeschwindigkeit des Endeffektors ausgedrückt im Basis-Koordinatensystems
 read sprintf("../codeexport/%s/tmp/velocity_worldframe_floatbase_%s_par1_maple.m", robot_name, base_method_name):
 omega_W_i := omega_W_i:
 omega_EE := Matrix(3,1,<omega_xEE; omega_yEE; omega_zEE>):

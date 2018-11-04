@@ -107,9 +107,7 @@ dynamics -&gt; Berechnung der Dynamik</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1520" drawlabel="true">
-<Input><Text-field style="Heading 2" layout="Heading 2">Sources</Text-field><Text-field style="Normal" layout="Normal">[GautierKhalil1990] Direct Calculation of Minimum Set of Inertial Parameters of Serial Robots
-[KhalilDombre2002] Modeling, Identification and Control of Robots
-[Ortmaier2014] Vorlesungsskript Robotik I</Text-field>
+<Input><Text-field style="Heading 2" layout="Heading 2">Sources</Text-field><Text-field style="Normal" layout="Normal">[Abdellatif2007] Modellierung, Identifikation und robuste Regelung von Robotern mit parallelkinematischen Strukturen</Text-field>
 </Input>
 </Group>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Initialization</Text-field></Title>
@@ -121,7 +119,6 @@ restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet
 </Group>
 <Group labelreference="L1685" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(LinearAlgebra):
-#with(ArrayTools):
 with(codegen):
 with(CodeGeneration):
 with(StringTools):
@@ -142,29 +139,11 @@ codeexport_inertia := false:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2948" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_convert_s_t&quot;:
-read &quot;../helper/proc_convert_t_s&quot;: 
-read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1708" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_index_symmat2vector&quot;:
-read &quot;../helper/proc_symmat2vector&quot;:
-read &quot;../helper/proc_skew2vec&quot;:
-read &quot;../helper/proc_vec2skew&quot;:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1687" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../transformation/proc_rotx&quot;: 
-read &quot;../transformation/proc_roty&quot;: 
-read &quot;../transformation/proc_rotz&quot;: 
-read &quot;../transformation/proc_trotx&quot;: 
-read &quot;../transformation/proc_troty&quot;: 
-read &quot;../transformation/proc_trotz&quot;: 
-read &quot;../transformation/proc_transl&quot;: 
-read &quot;../transformation/proc_rpyjac&quot;: 
-read &quot;../transformation/proc_yprjac&quot;: 
-read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_vec2skew&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2965" drawlabel="true">
@@ -248,7 +227,7 @@ r_0_sP_P := R_0_0_E_s.r_P_sP_P:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3004" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal">Berechnung der H-Matrix und deren Ableitung nach Abdellatif S.20 aus &quot;Modellierung, Identifikation und robuste Regelung von Robotern mit parallelkinematischen Strukturen&quot;</Text-field>
+<Input><Text-field style="Text" layout="Normal">Berechnung der H-Matrix und deren Ableitung nach Abdellatif2007 S.20</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3059" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -291,8 +270,7 @@ wD_0_0_E_s := dRPYjac_0_s.xED_s(4..6,1)+RPYjac_0_s.xEDD_s(4..6,1):</Text-field>
 </Group>
 <Group hide-input="false" labelreference="L3100" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">H := &lt;IdentityMatrix(3,3),ZeroMatrix(3);
-      ZeroMatrix(3),RPYjac_0_s&gt;:
-#MatlabExport(H, &quot;H.m&quot;,2);</Text-field>
+      ZeroMatrix(3),RPYjac_0_s&gt;:</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3066" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -311,7 +289,8 @@ wD_0_0_E_s := dRPYjac_0_s.xED_s(4..6,1)+RPYjac_0_s.xEDD_s(4..6,1):</Text-field>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Gravitational-Vector gE of the platform</Text-field></Title>
 <Group labelreference="L2922" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal">Berechnung des Gravitationsvektors</Text-field>
+<Input><Text-field style="Text" layout="Normal">Berechnung des Gravitationsvektors
+Abdellatif2007 S.34 (3.20)</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3118" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -356,7 +335,7 @@ end do:</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L2953" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">gE := Transpose(Hinv).dgEdz_final:#-&lt;mE*&lt;g1;g2;g3&gt;;ZeroMatrix(3,1)&gt;: </Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">gE := Transpose(Hinv).dgEdz_final:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2888" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -368,7 +347,8 @@ end if:</Text-field>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Mass-Matrix ME of the platform</Text-field></Title>
 <Group labelreference="L2892" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Berechnung Massenmatrix f\303\274r die EE-Plattform und die Winkelgeschwindigkeit</Font></Text-field>
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Berechnung Massenmatrix f\303\274r die EE-Plattform und die Winkelgeschwindigkeit
+Abdellatif2007 S.39 (3.30)</Font></Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L2891" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -396,14 +376,12 @@ end if:</Text-field>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Coriolis-Vector cE of the platform</Text-field></Title>
 <Group labelreference="L2918" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal">Coriolis-Matrix</Text-field>
+<Input><Text-field style="Text" layout="Normal">Coriolis-Matrix
+Abdellatif2007 S.39 (3.31)</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3150" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">#cE := &lt;ZeroMatrix(3,3),mE*vec2skew(rD_0_sP_P);
-       #mE*(Transpose(vec2skew(rD_0_sP_P))+Multiply(vec2skew(w_0_0_E_s),Transpose(vec2skew(r_0_sP_P)))),Multiply(vec2skew
-#(w_0_0_E_s),J_0_P)&gt;:
-if codegen_dynpar = 1 then
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_dynpar = 1 then
   cE := &lt;ZeroMatrix(3,3),mE*vec2skew(rD_0_sP_P);
          ZeroMatrix(3,3),Multiply(vec2skew(w_0_0_E_s),J_0_P)&gt;:
 else
@@ -421,7 +399,8 @@ end if:</Text-field>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Torque at the platform</Text-field></Title>
 <Group labelreference="L2972" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal">Inverse Dynamik der Plattform</Text-field>
+<Input><Text-field style="Text" layout="Normal">Inverse Dynamik der Plattform
+Abdellatif2007 S.39 (3.29)</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3152" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">

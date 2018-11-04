@@ -12,15 +12,12 @@
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
 # (C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
 # Sources
-# [GautierKhalil1990] Direct Calculation of Minimum Set of Inertial Parameters of Serial Robots
-# [KhalilDombre2002] Modeling, Identification and Control of Robots
-# [Ortmaier2014] Vorlesungsskript Robotik I
+# [Abdellatif2007] Modellierung, Identifikation und robuste Regelung von Robotern mit parallelkinematischen Strukturen
 # Initialization
 #interface(warnlevel=0): # Unterdrücke die folgende Warnung.
 restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
 #interface(warnlevel=3):
 with(LinearAlgebra):
-#with(ArrayTools):
 with(codegen):
 with(CodeGeneration):
 with(StringTools):
@@ -32,23 +29,8 @@ codeexport_invdyn := false:
 codeexport_grav := false: 
 codeexport_corvec := false:
 codeexport_inertia := false:
-read "../helper/proc_convert_s_t":
-read "../helper/proc_convert_t_s": 
 read "../helper/proc_MatlabExport":
-read "../helper/proc_index_symmat2vector":
-read "../helper/proc_symmat2vector":
-read "../helper/proc_skew2vec":
 read "../helper/proc_vec2skew":
-read "../transformation/proc_rotx": 
-read "../transformation/proc_roty": 
-read "../transformation/proc_rotz": 
-read "../transformation/proc_trotx": 
-read "../transformation/proc_troty": 
-read "../transformation/proc_trotz": 
-read "../transformation/proc_transl": 
-read "../transformation/proc_rpyjac": 
-read "../transformation/proc_yprjac": 
-read "../transformation/proc_trafo_mdh": 
 read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
 # Definitionen für parallelen Roboter laden
@@ -91,7 +73,7 @@ for i to 3 do
 end do:
 s_0_P_sP := R_0_0_E_s.s_P_P_sP:
 r_0_sP_P := R_0_0_E_s.r_P_sP_P:
-# Berechnung der H-Matrix und deren Ableitung nach Abdellatif S.20 aus "Modellierung, Identifikation und robuste Regelung von Robotern mit parallelkinematischen Strukturen"
+# Berechnung der H-Matrix und deren Ableitung nach Abdellatif2007 S.20
 RPYjac_E_t := combine(Multiply(Transpose(R_0_0_E_t),RPYjac_0_t)):
 RPYjac_E_s := combine(Multiply(Transpose(R_0_0_E_s),RPYjac_0_s)):
 w_E_0_E_s := RPYjac_E_s.xED_s(4..6,1):
@@ -115,13 +97,13 @@ wD_E_0_E_s := dRPYjac_E_s.xED_s(4..6,1)+RPYjac_E_s.xEDD_s(4..6,1):
 wD_0_0_E_s := dRPYjac_0_s.xED_s(4..6,1)+RPYjac_0_s.xEDD_s(4..6,1):
 H := <IdentityMatrix(3,3),ZeroMatrix(3);
       ZeroMatrix(3),RPYjac_0_s>:
-#MatlabExport(H, "H.m",2);
 Hinv := MatrixInverse(H):
 dH := <ZeroMatrix(3),ZeroMatrix(3);
       ZeroMatrix(3),dRPYjac_0_s>:
 
 # Gravitational-Vector gE of the platform
 # Berechnung des Gravitationsvektors
+# Abdellatif2007 S.34 (3.20)
 xAll := <x;y;z;an;bn;cn>:
 if codegen_dynpar = 1 then
   gE_z := xE_s(1..3,1) - r_0_sP_P:
@@ -151,12 +133,13 @@ for j to 6 do
     dgEdz_final(j) := subs(xAll(i)=x_all[i],dgEdz_final(j)):
   end do:
 end do:
-gE := Transpose(Hinv).dgEdz_final:#-<mE*<g1;g2;g3>;ZeroMatrix(3,1)>: 
+gE := Transpose(Hinv).dgEdz_final:
 if codeexport_grav then
   MatlabExport(gE, sprintf("../codeexport/%s/tmp/gravload_platform_matlab.m", robot_name), codegen_opt):
 end if:
 # Mass-Matrix ME of the platform
 # Berechnung Massenmatrix für die EE-Plattform und die Winkelgeschwindigkeit
+# Abdellatif2007 S.39 (3.30)
 if codegen_dynpar = 1 then
   ME := <mE*Matrix(3,shape=identity),mE*vec2skew(r_0_sP_P);
          mE*Transpose(vec2skew(r_0_sP_P)),J_0_P>:
@@ -171,9 +154,7 @@ if codeexport_inertia then
 end if:
 # Coriolis-Vector cE of the platform
 # Coriolis-Matrix
-#cE := <ZeroMatrix(3,3),mE*vec2skew(rD_0_sP_P);
-       #mE*(Transpose(vec2skew(rD_0_sP_P))+Multiply(vec2skew(w_0_0_E_s),Transpose(vec2skew(r_0_sP_P)))),Multiply(vec2skew
-#(w_0_0_E_s),J_0_P)>:
+# Abdellatif2007 S.39 (3.31)
 if codegen_dynpar = 1 then
   cE := <ZeroMatrix(3,3),mE*vec2skew(rD_0_sP_P);
          ZeroMatrix(3,3),Multiply(vec2skew(w_0_0_E_s),J_0_P)>:
@@ -186,6 +167,7 @@ if codeexport_corvec then
 end if:
 # Torque at the platform
 # Inverse Dynamik der Plattform
+# Abdellatif2007 S.39 (3.29)
 MME := ME.H:
 cvecE := Multiply(ME.dH+cE.H,xED_s):
 tauE := Multiply(ME.H,xEDD_s) + Multiply(ME.dH+cE.H,xED_s) - gE:# - Multiply(Transpose(Hinv),dT):

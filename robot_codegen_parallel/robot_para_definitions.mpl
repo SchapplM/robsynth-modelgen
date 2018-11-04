@@ -63,6 +63,7 @@ for i from 1 to NQJ_parallel do
      qJDD_i_s(i,j):=parse(sprintf("qJDD%ds", i+k*NQJ_parallel)):
   end do:
 end do:
+# Erstelle Vektor der Basisdrehungen jedes Beines
 frame_A_i := Matrix(3,N_LEGS):
 for i to N_LEGS do
    for j to 3 do
@@ -73,6 +74,7 @@ for i to N_LEGS do
       end if:
    end do:
 end do:
+# Plattformschwerpunkt
 r_P_sP := Vector(3,symbol=r_sP):
 s_P_sP := Vector(3,symbol=s_sP):
 angleConvLeg := leg_frame(7):
@@ -82,6 +84,7 @@ angleConv := xE_s(7):
 xE_t:=<xE(t);yE(t);zE(t);PsiE(t);ThetaE(t);PhiE(t)>:
 xED_t:=diff~(xE_t,t):
 xEDD_t:=diff~(xED_t,t):
+# Zähle Freiheitsgrade des Roboters und setze nicht benötigte zu null.
 xE_s := Matrix(xE_s(1..6,1)):
 xED_s := copy(xE_s):
 xEDD_s := copy(xE_s):
