@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="2017" minor="3"/>
+<Version major="2018" minor="0"/>
 <Label-Scheme value="2" prefix=""/>
-<View-Properties presentation="true" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false">
+<View-Properties presentation="true" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="30" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="30" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -167,43 +167,24 @@ read &quot;../helper/proc_convert_t_s&quot;:</Text-field>
 <Group hide-output="false" labelreference="L2194" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">kin_constraints_exist := false:</Text-field>
 </Input>
-</Group>
-<Group hide-output="false" labelreference="L2195" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">constrfile := sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_implicit_maple.m&quot;, robot_name):
+</Group></Presentation-Block><Presentation-Block><CodeEditor-ExecGroup view="presentation" inline-output="false" labelreference="L2352" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">constrfile := sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_implicit_maple.m&quot;, robot_name):
 if FileTools[Exists](constrfile) then
   read constrfile:
-end if:</Text-field>
-</Input>
-</Group>
-<Group view="code" labelreference="L2280" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read constrfile:
-implconstr_s := <Font encoding="UTF-8">implconstr_s: # F\303\274r Sichtbarkeit der Variablen
-</Font>implconstr_t := <Font encoding="UTF-8">implconstr_t: # F\303\274r Sichtbarkeit der Variablen</Font></Text-field>
-</Input>
-</Group>
-<Group hide-output="false" labelreference="L2196" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if kin_constraints_exist = true then:
-  kintmp_qs := kintmp_qs: # gelesene Variable sonst nicht sichtbar
-  kintmp_qt := kintmp_qt: # gelesene Variable sonst nicht sichtbar
-  kintmp_subsexp := kintmp_subsexp: # gelesene Variable sonst nicht sichtbar
-<Font encoding="UTF-8">  printf(&quot;Kinematische Zwangsbedingungen in impliziter Form gelesen.\134n&quot;):
-</Font>else
+  implconstr_s := implconstr_s: # F\303\274r Sichtbarkeit der Variablen
+  implconstr_t := implconstr_t: # F\303\274r Sichtbarkeit der Variablen
+  kin_constraints_exist := kin_constraints_exist: # F\303\274r Sichtbarkeit der Variablen
+end if:
+
+if kin_constraints_exist = true then:
+  printf(&quot;Kinematische Zwangsbedingungen in impliziter Form gelesen.\134n&quot;):
+else
   printf(&quot;Es gibt keine impliziten Zwangsbedingungen. Offene Struktur oder nur explizit definierte Bedingungen. Keine weiteren Berechnungen notwendig.&quot;):
   restart: # Funktioniert nicht. Gedacht, damit im worksheet-Modus nichts mehr passieren kann.
-<Font encoding="UTF-8">  robot_name := &quot;&quot;: # Damit werden die Export-Befehle ung\303\274ltig
-</Font>  codegen_act := false:
+  robot_name := &quot;&quot;: # Damit werden die Export-Befehle ung\303\274ltig
+  codegen_act := false:
   quit:
-end if:</Text-field>
-</Input>
-</Group>
-<Group view="code" hide-input="false" labelreference="L2281" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">NIZB := RowDimension(implconstr_s):</Text-field>
-</Input>
-</Group>
-<Group view="code" labelreference="L2289" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
-</Input>
-</Group></Presentation-Block>
+end if:
+NIZB := RowDimension(implconstr_s):</EC-CodeEditor></CodeEditor-ExecGroup></Presentation-Block>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Gelenkdefinitionen</Text-field></Title><Presentation-Block>
 <Group view="presentation" inline-output="false" labelreference="L2290" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -242,7 +223,8 @@ end do:</Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Indizes der %d aktiven Gelenke:\134n&quot;, </Font>NAJ);
 Transpose(IndAct);
 <Font encoding="UTF-8">printf(&quot;Indizes der %d passiven Gelenke:\134n&quot;, </Font>NPJ);
-Transpose(IndPass);</Text-field>
+Transpose(IndPass);
+<Font encoding="UTF-8">printf(&quot;%d Zwangsbedingungsgleichungen\134n&quot;, </Font>NIZB);</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
