@@ -4,8 +4,8 @@
 # Berechnung der inversen Dynamik der Roboter-Plattform
 # 
 # Dateiname:
-# robot -> Berechnung für allgemeinen Roboter
-# para -> Berechnung für eine parallelen Roboter
+# robot -> Berechnung fÃ¼r allgemeinen Roboter
+# para -> Berechnung fÃ¼r eine parallelen Roboter
 # rotmat -> Kinematik wird mit Rotationsmatrizen berechnet
 # dynamics -> Berechnung der Dynamik
 # Autor
@@ -16,8 +16,8 @@
 # [KhalilDombre2002] Modeling, Identification and Control of Robots
 # [Ortmaier2014] Vorlesungsskript Robotik I
 # Initialization
-#interface(warnlevel=0): # Unterdrücke die folgende Warnung.
-restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
+#interface(warnlevel=0): # UnterdrÃ¼cke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn Ã¼ber Terminal-Maple mit read gestartet wird.
 #interface(warnlevel=3):
 with(LinearAlgebra):
 #with(ArrayTools):
@@ -25,7 +25,7 @@ with(codegen):
 with(CodeGeneration):
 with(StringTools):
 with(VectorCalculus):
-# Einstellungen für Code-Export: Optimierungsgrad (2=höchster) und Aktivierung jedes Terms.
+# Einstellungen fÃ¼r Code-Export: Optimierungsgrad (2=hÃ¶chster) und Aktivierung jedes Terms.
 codegen_dynpar := 1:
 codegen_opt := 2:
 codeexport_invdyn := false:
@@ -51,18 +51,17 @@ read "../transformation/proc_yprjac":
 read "../transformation/proc_trafo_mdh": 
 read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
-# Definitionen für parallelen Roboter laden
+# Definitionen fÃ¼r parallelen Roboter laden
 read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
 r_P_sP_P := -r_P_sP:
 s_P_P_sP := s_P_sP:
-# Ergebnisse der Kinematik für parallen Roboter laden
+# Ergebnisse der Kinematik fÃ¼r parallen Roboter laden
 read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
 read "../robot_codegen_definitions/robot_env_par":
 # Lade "robotics_repo_path"-File mit Link zum "imes-robotics-matlab"-Repo
-#read("robotics_repo_path"):
-robotics_repo_path := "C:/Users/Tim-David/Documents/Studienarbeit/Repos/imes-robotics-matlab":
+read("../robotics_repo_path"):
 # Lade die Funktionen aus dem "imes-robotics-matlab"-Repo
 read(sprintf("%s/transformation/maple/proc_eul%s2r", robotics_repo_path, angleConvLeg)):
 read(sprintf("%s/transformation/maple/proc_eul%sjac", robotics_repo_path, angleConvLeg)):
@@ -101,7 +100,7 @@ dRPYjac_E_t := diff~(RPYjac_E_t,t):
 dRPYjac_0_t := diff~(RPYjac_0_t,t):
 dRPYjac_E_s := Copy(dRPYjac_E_t):
 dRPYjac_0_s := Copy(dRPYjac_0_t):
-# Substituiere die zeitabhängigen Koordinaten in der H-Matrix mit zeitunabhängigen Koordinaten 
+# Substituiere die zeitabhÃ¤ngigen Koordinaten in der H-Matrix mit zeitunabhÃ¤ngigen Koordinaten 
 for i to 3 do
 	for j to 3 do
 		for k from 4 to 6 do
@@ -156,7 +155,7 @@ if codeexport_grav then
   MatlabExport(gE, sprintf("../codeexport/%s/tmp/gravload_platform_matlab.m", robot_name), codegen_opt):
 end if:
 # Mass-Matrix ME of the platform
-# Berechnung Massenmatrix für die EE-Plattform und die Winkelgeschwindigkeit
+# Berechnung Massenmatrix fÃ¼r die EE-Plattform und die Winkelgeschwindigkeit
 if codegen_dynpar = 1 then
   ME := <mE*Matrix(3,shape=identity),mE*vec2skew(r_0_sP_P);
          mE*Transpose(vec2skew(r_0_sP_P)),J_0_P>:
