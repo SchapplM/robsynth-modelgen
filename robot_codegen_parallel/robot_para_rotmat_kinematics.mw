@@ -174,8 +174,7 @@ read sprintf(&quot;../codeexport/%s/tmp/para_definitions&quot;, robot_name):</Te
 </Input>
 </Group>
 <Group labelreference="L3251" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">#read(&quot;robotics_repo_path&quot;):
-robotics_repo_path := &quot;C:/Users/Tim-David/Documents/Studienarbeit/Repos/imes-robotics-matlab&quot;:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read(&quot;../robotics_repo_path&quot;):</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3249" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -536,8 +535,6 @@ Jinv := JinvRed:</Text-field>
 <Group labelreference="L3193" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(Jinv, sprintf(&quot;../codeexport/%s/tmp/Jinv_para_matlab.m&quot;, robot_name), codegen_opt):</Text-field>
 </Input>
-<Output><Text-field style="Line Printed Output" layout="Line Printed Output">Exported Matlab code to ../codeexport/P_6UPS/tmp/Jinv_para_matlab.m (CPUTime: 0.55s)</Text-field>
-</Output>
 </Group>
 <Group labelreference="L3244" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
