@@ -15,7 +15,7 @@
 % Output:
 % tau_g [(6+%NJ%)x1]
 %   Base forces and joint torques required to compensate gravitational load.
-%   Base moments in generalized coordinates (Euler-RPY)
+%   Base moments in generalized coordinates (Euler-XYZ)
 %
 % See also:
 % IMES-Robotik-Toolbox: dynamics/robot_tree_invdyn_floatb_eulxyz_nnew_vp1.m

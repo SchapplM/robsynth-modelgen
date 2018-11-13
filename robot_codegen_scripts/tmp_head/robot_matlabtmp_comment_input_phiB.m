@@ -1,2 +1,2 @@
 % phi_base [3x1]
-%   Base orientation in world frame. Expressed with RPY Euler angles (xyz)
+%   Base orientation in world frame. Expressed with XYZ-Euler angles

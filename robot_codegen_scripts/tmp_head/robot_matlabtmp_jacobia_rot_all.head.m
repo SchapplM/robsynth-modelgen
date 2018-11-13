@@ -6,7 +6,7 @@
 % Endeffektorposition und verallgemeinerten Koordinaten.
 % Zeitableitung der Winkeldarstellung des Endeffektors in Basis-Koordinaten
 % 
-% Winkeldarstellung: RPY-Winkel, rotx(alpha)*roty(beta)*rotz(gamma)
+% Winkeldarstellung: Euler-XYZ-Winkel, rotx(alpha)*roty(beta)*rotz(gamma)
 % 
 % Input:
 % %INPUT_QJ%

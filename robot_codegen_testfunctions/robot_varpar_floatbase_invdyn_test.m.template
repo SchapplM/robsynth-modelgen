@@ -31,7 +31,7 @@ for i = 1:n
   V_W_W_0 = VB(i,:)';
   A_W_W_0 = AB(i,:)';
   
-  % Winkelgeschwindigkeit in RPY-Winkel-Zeitableitung umwandeln
+  % Winkelgeschwindigkeit in Euler-XYZ-Winkel-Zeitableitung umwandeln
   T_basevel = eulxyzjac(ob);
   oDb = OBD(i,:)';
   oDDb = OBDD(i,:)';
