@@ -32,11 +32,11 @@ fprintf('Simulink-Modell berechnet. Rechenzeit: %1.1fs\n', toc(t1));
 
 %% Test
 
-R_base_t0 = rpy2r(phi_base_t0);
+R_base_t0 = eulxyz2r(phi_base_t0);
 quat_base_t0 = r2quat(R_base_t0)
-rpy_base_t0_test = r2rpy(R_base_t0)
-omega_base_t0 = rpyD2omega(phi_base_t0, phiD_base_t0)
-rpyDD2omegaD(phi_base_t0, phiD_base_t0, zeros(3,1))
+rpy_base_t0_test = r2eulxyz(R_base_t0)
+omega_base_t0 = eulxyzD2omega(phi_base_t0, phiD_base_t0)
+eulxyzDD2omegaD(phi_base_t0, phiD_base_t0, zeros(3,1))
 
 xD_base_t0 = [rD_base_t0; phiD_base_t0];
 
