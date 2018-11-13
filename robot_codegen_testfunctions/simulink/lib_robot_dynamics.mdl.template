@@ -7485,7 +7485,7 @@ Library {
 	  Ports			  [1, 1]
 	  Position		  [1195, 295, 1225, 325]
 	  ZOrder		  325
-	  InitialCondition	  "rpyD2omega(phi_base_t0, phiD_base_t0)"
+	  InitialCondition	  "eulxyzD2omega(phi_base_t0, phiD_base_t0)"
 	  Port {
 	    PortNumber		    1
 	    Name		    "omega_base"
@@ -7536,13 +7536,13 @@ Library {
 	}
 	Block {
 	  BlockType		  Reference
-	  Name			  "R2rpy"
+	  Name			  "r2eulxyz"
 	  SID			  "603"
 	  Ports			  [1, 1]
 	  Position		  [1390, 290, 1450, 330]
 	  ZOrder		  338
 	  LibraryVersion	  "1.91"
-	  SourceBlock		  "lib_transformations/R2rpy"
+	  SourceBlock		  "lib_transformations/r2eulxyz"
 	  SourceType		  "SubSystem"
 	  ContentPreviewEnabled	  off
 	  Port {
@@ -7609,7 +7609,7 @@ Library {
 	  SourceBlock		  "lib_rigid_body_kinematics/angvel_int_rotmat"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
-	  R_0E_t0		  "rpy2r(phi_base_t0)"
+	  R_0E_t0		  "eulxyz2r(phi_base_t0)"
 	  Port {
 	    PortNumber		    1
 	    Name		    "R_base"
@@ -7619,13 +7619,13 @@ Library {
 	}
 	Block {
 	  BlockType		  Reference
-	  Name			  "angvelotrans_rpy"
+	  Name			  "eulxyzjac"
 	  SID			  "608"
 	  Ports			  [1, 1]
 	  Position		  [130, 515, 190, 535]
 	  ZOrder		  538
 	  LibraryVersion	  "1.91"
-	  SourceBlock		  "lib_transformations/angvelotrans_rpy"
+	  SourceBlock		  "lib_transformations/eulxyzjac"
 	  SourceType		  "SubSystem"
 	  ContentPreviewEnabled	  off
 	}
@@ -7842,13 +7842,13 @@ Library {
 	}
 	Block {
 	  BlockType		  Reference
-	  Name			  "rpyDD2omegaD"
+	  Name			  "eulxyzDD2omegaD"
 	  SID			  "614"
 	  Ports			  [3, 1]
 	  Position		  [1050, 287, 1155, 333]
 	  ZOrder		  339
 	  LibraryVersion	  "1.91"
-	  SourceBlock		  "lib_transformations/rpyDD2omegaD"
+	  SourceBlock		  "lib_transformations/eulxyzDD2omegaD"
 	  SourceType		  "SubSystem"
 	  ContentPreviewEnabled	  off
 	  Port {
@@ -7974,7 +7974,7 @@ Library {
 	Line {
 	  Name			  "omegaD_base"
 	  ZOrder		  15
-	  SrcBlock		  "rpyDD2omegaD"
+	  SrcBlock		  "eulxyzDD2omegaD"
 	  SrcPort		  1
 	  Points		  [0, 0]
 	  Branch {
@@ -8034,7 +8034,7 @@ Library {
 	  }
 	  Branch {
 	    ZOrder		    25
-	    DstBlock		    "rpyDD2omegaD"
+	    DstBlock		    "eulxyzDD2omegaD"
 	    DstPort		    3
 	  }
 	}
@@ -8053,14 +8053,14 @@ Library {
 	  }
 	  Branch {
 	    ZOrder		    28
-	    DstBlock		    "R2rpy"
+	    DstBlock		    "r2eulxyz"
 	    DstPort		    1
 	  }
 	}
 	Line {
 	  Name			  "phi_base"
 	  ZOrder		  29
-	  SrcBlock		  "R2rpy"
+	  SrcBlock		  "r2eulxyz"
 	  SrcPort		  1
 	  Points		  [24, 0; 0, -75; -76, 0]
 	  Branch {
@@ -8076,7 +8076,7 @@ Library {
 	    Branch {
 	      ZOrder		      32
 	      Points		      [0, -26; -187, 0; 0, 86]
-	      DstBlock		      "rpyDD2omegaD"
+	      DstBlock		      "eulxyzDD2omegaD"
 	      DstPort		      1
 	    }
 	    Branch {
@@ -8096,7 +8096,7 @@ Library {
 	  Branch {
 	    ZOrder		    35
 	    Points		    [-66, 0; 0, 65]
-	    DstBlock		    "rpyDD2omegaD"
+	    DstBlock		    "eulxyzDD2omegaD"
 	    DstPort		    2
 	  }
 	  Branch {
@@ -8308,12 +8308,12 @@ Library {
 	  Labels		  [0, 0]
 	  SrcBlock		  "Bus\nSelector3"
 	  SrcPort		  1
-	  DstBlock		  "angvelotrans_rpy"
+	  DstBlock		  "eulxyzjac"
 	  DstPort		  1
 	}
 	Line {
 	  ZOrder		  65
-	  SrcBlock		  "angvelotrans_rpy"
+	  SrcBlock		  "eulxyzjac"
 	  SrcPort		  1
 	  DstBlock		  "Transpose"
 	  DstPort		  1
@@ -8831,7 +8831,7 @@ Library {
 	  Ports			  [1, 1]
 	  Position		  [1195, 295, 1225, 325]
 	  ZOrder		  325
-	  InitialCondition	  "rpyD2omega(phi_base_t0, phiD_base_t0)"
+	  InitialCondition	  "eulxyzD2omega(phi_base_t0, phiD_base_t0)"
 	  Port {
 	    PortNumber		    1
 	    Name		    "omega_base"
@@ -8882,13 +8882,13 @@ Library {
 	}
 	Block {
 	  BlockType		  Reference
-	  Name			  "R2rpy"
+	  Name			  "r2eulxyz"
 	  SID			  "489"
 	  Ports			  [1, 1]
 	  Position		  [1390, 290, 1450, 330]
 	  ZOrder		  338
 	  LibraryVersion	  "1.87"
-	  SourceBlock		  "lib_transformations/R2rpy"
+	  SourceBlock		  "lib_transformations/r2eulxyz"
 	  SourceType		  "SubSystem"
 	  ContentPreviewEnabled	  off
 	  Port {
@@ -8955,7 +8955,7 @@ Library {
 	  SourceBlock		  "lib_rigid_body_kinematics/angvel_int_rotmat"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
-	  R_0E_t0		  "rpy2r(phi_base_t0)"
+	  R_0E_t0		  "eulxyz2r(phi_base_t0)"
 	  Port {
 	    PortNumber		    1
 	    Name		    "R_base"
@@ -8965,13 +8965,13 @@ Library {
 	}
 	Block {
 	  BlockType		  Reference
-	  Name			  "angvelotrans_rpy"
+	  Name			  "eulxyzjac"
 	  SID			  "494"
 	  Ports			  [1, 1]
 	  Position		  [130, 515, 190, 535]
 	  ZOrder		  538
 	  LibraryVersion	  "1.87"
-	  SourceBlock		  "lib_transformations/angvelotrans_rpy"
+	  SourceBlock		  "lib_transformations/eulxyzjac"
 	  SourceType		  "SubSystem"
 	  ContentPreviewEnabled	  off
 	}
@@ -9188,13 +9188,13 @@ Library {
 	}
 	Block {
 	  BlockType		  Reference
-	  Name			  "rpyDD2omegaD"
+	  Name			  "eulxyzDD2omegaD"
 	  SID			  "500"
 	  Ports			  [3, 1]
 	  Position		  [1050, 287, 1155, 333]
 	  ZOrder		  339
 	  LibraryVersion	  "1.87"
-	  SourceBlock		  "lib_transformations/rpyDD2omegaD"
+	  SourceBlock		  "lib_transformations/eulxyzDD2omegaD"
 	  SourceType		  "SubSystem"
 	  ContentPreviewEnabled	  off
 	  Port {
@@ -9320,7 +9320,7 @@ Library {
 	Line {
 	  Name			  "omegaD_base"
 	  ZOrder		  15
-	  SrcBlock		  "rpyDD2omegaD"
+	  SrcBlock		  "eulxyzDD2omegaD"
 	  SrcPort		  1
 	  Points		  [0, 0]
 	  Branch {
@@ -9380,7 +9380,7 @@ Library {
 	  }
 	  Branch {
 	    ZOrder		    25
-	    DstBlock		    "rpyDD2omegaD"
+	    DstBlock		    "eulxyzDD2omegaD"
 	    DstPort		    3
 	  }
 	}
@@ -9399,14 +9399,14 @@ Library {
 	  }
 	  Branch {
 	    ZOrder		    28
-	    DstBlock		    "R2rpy"
+	    DstBlock		    "r2eulxyz"
 	    DstPort		    1
 	  }
 	}
 	Line {
 	  Name			  "phi_base"
 	  ZOrder		  29
-	  SrcBlock		  "R2rpy"
+	  SrcBlock		  "r2eulxyz"
 	  SrcPort		  1
 	  Points		  [24, 0; 0, -75; -76, 0]
 	  Branch {
@@ -9422,7 +9422,7 @@ Library {
 	    Branch {
 	      ZOrder		      32
 	      Points		      [0, -26; -187, 0; 0, 86]
-	      DstBlock		      "rpyDD2omegaD"
+	      DstBlock		      "eulxyzDD2omegaD"
 	      DstPort		      1
 	    }
 	    Branch {
@@ -9442,7 +9442,7 @@ Library {
 	  Branch {
 	    ZOrder		    35
 	    Points		    [-66, 0; 0, 65]
-	    DstBlock		    "rpyDD2omegaD"
+	    DstBlock		    "eulxyzDD2omegaD"
 	    DstPort		    2
 	  }
 	  Branch {
@@ -9654,12 +9654,12 @@ Library {
 	  Labels		  [0, 0]
 	  SrcBlock		  "Bus\nSelector3"
 	  SrcPort		  1
-	  DstBlock		  "angvelotrans_rpy"
+	  DstBlock		  "eulxyzjac"
 	  DstPort		  1
 	}
 	Line {
 	  ZOrder		  65
-	  SrcBlock		  "angvelotrans_rpy"
+	  SrcBlock		  "eulxyzjac"
 	  SrcPort		  1
 	  DstBlock		  "Transpose"
 	  DstPort		  1
