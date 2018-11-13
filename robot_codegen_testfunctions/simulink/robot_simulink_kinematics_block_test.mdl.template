@@ -881,13 +881,13 @@ Model {
     }
     Block {
       BlockType		      Reference
-      Name		      "%RN%_jacobig_floatb_eulangrpy"
+      Name		      "%RN%_jacobig_floatb_eulxyz"
       SID		      "4"
       Ports		      [2, 1]
       Position		      [350, 402, 445, 473]
       ZOrder		      752
       LibraryVersion	      "1.37"
-      SourceBlock	      "lib_%RN%_kinematics/%RN%_jacobig_floatb_eulangrpy"
+      SourceBlock	      "lib_%RN%_kinematics/%RN%_jacobig_floatb_eulxyz"
       SourceType	      ""
       ContentPreviewEnabled   off
       pkin		      "pkin"
@@ -934,7 +934,7 @@ Model {
 	Branch {
 	  ZOrder		  5
 	  Points		  [0, 125]
-	  DstBlock		  "%RN%_jacobig_floatb_eulangrpy"
+	  DstBlock		  "%RN%_jacobig_floatb_eulxyz"
 	  DstPort		  1
 	}
 	Branch {
@@ -953,7 +953,7 @@ Model {
       ZOrder		      6
       SrcBlock		      "From\nWorkspace1"
       SrcPort		      1
-      DstBlock		      "%RN%_jacobig_floatb_eulangrpy"
+      DstBlock		      "%RN%_jacobig_floatb_eulxyz"
       DstPort		      2
     }
     Line {
@@ -972,7 +972,7 @@ Model {
     }
     Line {
       ZOrder		      9
-      SrcBlock		      "%RN%_jacobig_floatb_eulangrpy"
+      SrcBlock		      "%RN%_jacobig_floatb_eulxyz"
       SrcPort		      1
       DstBlock		      "Jg_floatb_n"
       DstPort		      1

@@ -88,7 +88,7 @@ taug_s := dUdq_s:
 save taug_s, sprintf("../codeexport/%s/tmp/gravload_par%d_maple.m", robot_name, codegen_dynpar):
 # Matlab Export
 # Belastung der Basis (ist falsch für floatb_twist, da das Moment durch diese Wahl der verallgemeinerten Koordinaten (floatb_twist) nicht berechnet werden kann!)
-# Ist korrekt für floatb_eulangrpy.
+# Ist korrekt für floatb_eulxyz.
 # Die Berechnungen werden deshalb nicht für floatb_twist durchgeführt.
 if codeexport_grav and not(base_method_name="twist") then
   MatlabExport(taug_s(1..6), sprintf("../codeexport/%s/tmp/base_gravload_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):

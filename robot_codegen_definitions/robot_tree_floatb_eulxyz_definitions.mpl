@@ -37,7 +37,7 @@ V_base_s:=Matrix(6, 1, [vxs_base,vys_base,vzs_base,alphaDx_base, betaDy_base, ga
 VD_base_t:=diff~(V_base_t, t):
 VD_base_s:=Matrix(6, 1, [vDxs_base,vDys_base,vDzs_base,alphaDDx_base, betaDDy_base, gammaDDz_base]):
 # Name der Methode für die Orientierungsdarstellung der Basis
-base_method_name := "eulangrpy":
+base_method_name := "eulxyz":
 # Umrechnung von der Ableitung der Basis-Orientierung zu Winkelgeschwindigkeiten:
 # Nutze die Euler-XYZ-Konvention ("RPY").
 # Siehe [5], Gl. (4.23)
@@ -53,6 +53,6 @@ qDD_s:= Matrix(NQ,1, <VD_base_s, qJDD_s>):
 # MDH-Gelenkwinkel neu speichern (Definition der verallg. Koordinaten war dort noch nicht bekannt
 theta := value(theta):
 # Export
-save q_t, q_s, qD_t, qD_s, qDD_t, qDD_s, qJ_t, qJ_s, qJD_t, qJD_s, qJDD_t, qJDD_s, g_world, X_base_t, X_base_s, V_base_t, V_base_s, VD_base_t, VD_base_s, qoffset, theta, alpha, d, a,v,b,beta, sigma,mu, M, r_i_i_Si, mr_i_i_Si, I_i_i, I_i_Si, PV2_vec, PV2_mat, robot_name, NQ,NQB,NQJ,NJ,NL, base_method_name, T_basevel, kintmp_t, kintmp_s, sprintf("../codeexport/%s/tmp/tree_floatb_eulangrpy_definitions", robot_name):
+save q_t, q_s, qD_t, qD_s, qDD_t, qDD_s, qJ_t, qJ_s, qJD_t, qJD_s, qJDD_t, qJDD_s, g_world, X_base_t, X_base_s, V_base_t, V_base_s, VD_base_t, VD_base_s, qoffset, theta, alpha, d, a,v,b,beta, sigma,mu, M, r_i_i_Si, mr_i_i_Si, I_i_i, I_i_Si, PV2_vec, PV2_mat, robot_name, NQ,NQB,NQJ,NJ,NL, base_method_name, T_basevel, kintmp_t, kintmp_s, sprintf("../codeexport/%s/tmp/tree_floatb_eulxyz_definitions", robot_name):
 save q_t, q_s, qD_t, qD_s, qDD_t, qDD_s, qJ_t, qJ_s, qJD_t, qJD_s, qJDD_t, qJDD_s, g_world, X_base_t, X_base_s, V_base_t, V_base_s, VD_base_t, VD_base_s, qoffset, theta, alpha, d, a,v,b,beta, sigma,mu, M, r_i_i_Si, mr_i_i_Si, I_i_i, I_i_Si, PV2_vec, PV2_mat, robot_name, NQ,NQB,NQJ,NJ,NL, base_method_name, T_basevel, kintmp_t, kintmp_s, sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
 

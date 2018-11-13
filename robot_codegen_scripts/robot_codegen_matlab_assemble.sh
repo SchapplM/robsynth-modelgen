@@ -18,7 +18,7 @@ tmp_pfad=$repo_pfad/workdir/tmp
 source robot_codegen_tmpvar_bash.sh
 source $repo_pfad/robot_codegen_definitions/robot_env.sh
 
-basemethodenames=( eulangrpy ) # Die zusammenzusetzenden Funktionen sind nicht für "twist" verfügbar
+basemethodenames=( eulxyz ) # Die zusammenzusetzenden Funktionen sind nicht für "twist" verfügbar
 
 # Erstelle Matlab-Funktionen der explizit ausgerechneten Dynamik (nicht in Regressorform)
 for (( dynpar=1; dynpar<=2; dynpar++ ))
@@ -97,7 +97,7 @@ do
       fi    else
       echo "${zieldat##*/} existiert. Kein Zusammensetzen notwendig."
     fi
-  done # floatb_twist/floatb_eulangrpy
+  done # floatb_twist/floatb_eulxyz
 done # par1/par2
 
 

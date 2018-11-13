@@ -1,72 +1,123 @@
-% Calculate vector of base and joint gravitational load for
+% Calculate vector of inverse dynamics base and joint forces/torques for a
 % %RN%
 % Use numerical implementation of recursive Newton-Euler Algorithm
 %
 % Input:
 % q [%NJ%x1]
 %   Joint Angles [rad]
+% qD [%NJ%x1]
+%   Joint Velocities [rad/s]
+% qDD [%NJ%x1]
+%   Joint Accelerations [rad/s]
 % %INPUT_PHIB%
-% g_world [3x1]
-%   gravitation vector in world frame [m/s^2]
+% %INPUT_XDB%
+% %INPUT_XDDB%
 % %INPUT_PKIN%
 % %INPUT_M%
 % %INPUT_R%
+% %INPUT_IC%
 %
 % Output:
-% tau_g [(6+%NJ%)x1]
-%   Base forces and joint torques required to compensate gravitational load.
+% tau [(6+%NJ%)x1]
+%   Base forces and joint torques required to compensate inverse dynamics.
 %   Base moments in generalized coordinates (Euler-RPY)
 %
 % See also:
-% IMES-Robotik-Toolbox: dynamics/robot_tree_invdyn_floatb_eulangrpy_nnew_vp1.m
+% IMES-Robotik-Toolbox: dynamics/robot_tree_invdyn_floatb_eulxyz_nnew_vp1.m
 
 % %VERSIONINFO%
 
-function tau_g = %FN%(q, phi_base, g_world, pkin, m_num, rSges_num_mdh)
+function [tau, v_i_i_ges, w_i_i_ges] = %FN%(q, qD, qDD, phi_base, xD_base, xDD_base, ...
+  pkin, m_num, rSges_num_mdh, Icges_num_mdh)
 
 %%Coder Information
 %#codegen
-%$cgargs {zeros(%NQJ%,1),zeros(3,1),zeros(3,1),zeros(%NKP%,1),zeros(%NL%,1),zeros(%NL%,3)}
+%$cgargs {zeros(%NQJ%,1),zeros(%NQJ%,1),zeros(%NQJ%,1),zeros(3,1),zeros(6,1),zeros(6,1)
+%$cgargs  zeros(%NKP%,1),zeros(%NL%,1),zeros(%NL%,3),zeros(%NL%,6)}
 assert(isreal(q) && all(size(q) == [%NJ% 1]), ...
   '%FN%: q has to be [%NJ%x1] (double)');
+assert(isreal(qD) && all(size(qD) == [%NJ% 1]), ...
+  '%FN%: qD has to be [%NJ%x1] (double)');
+assert(isreal(qDD) && all(size(qDD) == [%NJ% 1]), ...
+  '%FN%: qDD has to be [%NJ%x1] (double)');
 assert(isreal(phi_base) && all(size(phi_base) == [3 1]), ...
   '%FN%: phi_base has to be [3x1] (double)');
-assert(isreal(g_world) && all(size(g_world) == [3 1]), ...
-  '%FN%: g_world has to be [3x1] (double)');
+assert(isreal(xD_base) && all(size(xD_base) == [6 1]), ...
+  '%FN%: xD_base has to be [6x1] (double)');
+assert(isreal(xDD_base) && all(size(xDD_base) == [6 1]), ...
+  '%FN%: xDD_base has to be [6x1] (double)');
 assert(isreal(pkin) && all(size(pkin) == [%NKP% 1]), ...
   '%FN%: Kinematic parameters pkin have to be [%NKP%x1] (double)');
 assert(isreal(m_num) && all(size(m_num) == [%NL% 1]), ...
   '%FN%: m_num has to be [%NL%x1] (double)');
 assert(isreal(rSges_num_mdh) && all(size(rSges_num_mdh) == [%NL%,3]), ...
   '%FN%: rSges_num_mdh has to be [%NL%x3] (double)');
+assert(isreal(Icges_num_mdh) && all(size(Icges_num_mdh) == [%NL% 6]), ...
+  '%FN%: Icges_num_mdh has to be [%NL%x6] (double)');
 
 %% Init
 tau_J = NaN(%NJ%,1);
 R_W_0 = eulxyz2r(phi_base);
 T_basevel = eulxyzjac(phi_base);
-vD_i_i_ges = NaN(3,%NL%);
 [v_mdh, sigma] = %RN%_structural_kinematic_parameters();
+
 
 %% Vorwärts-Iteration
 % Positionen. Berechne symbolisch (effizienter).
 T_mdh = %RN%_joint_trafo_rotmat_mdh_sym_varpar(q, pkin);
 
+% Geschwindigkeiten
+v_i_i_ges = NaN(3,%NL%);
+w_i_i_ges = NaN(3,%NL%);
+
+% Beschleunigungen
+vD_i_i_ges = NaN(3,%NL%);
+wD_i_i_ges = NaN(3,%NL%);
+
 % Anfangswerte: Geschwindigkeit und Beschleunigung der Basis
-vD_i_i_ges(:,1) = -R_W_0'*g_world;
+v_i_i_ges(:,1) = R_W_0'*xD_base(1:3);
+w_i_i_ges(:,1) = R_W_0'*eulxyzD2omega(phi_base, xD_base(4:6));
+
+vD_i_i_ges(:,1) = R_W_0'*xDD_base(1:3);
+wD_i_i_ges(:,1) = R_W_0'*eulxyzDD2omegaD(phi_base, xD_base(4:6), xDD_base(4:6));
 
 for i = 2:%NL%
   % Nummer des Vorgänger-Segments
   j = v_mdh(i-1)+1; % Gelenk 1 führt zu Körper 2 (Matlab-Indizes) usw.
 
   % Temporäre Ausdrücke belegen
+  v_j_j = v_i_i_ges(:,j);
+  w_j_j = w_i_i_ges(:,j);
   vD_j_j = vD_i_i_ges(:,j);
+  wD_j_j = wD_i_i_ges(:,j);
   R_j_i = T_mdh(1:3,1:3,i-1);
+  r_j_j_i = T_mdh(1:3,4,i-1);
 
   % Berechnung
-  vD_i_i = R_j_i'*vD_j_j;
+  % [3], Gl. 9.17
+  w_i_i = R_j_i'*w_j_j;
+  if sigma(i-1) == 0
+    w_i_i = w_i_i + [0;0;1]*qD(i-1);
+  end
+  % [3], Gl. 9.18
+  v_i_i = R_j_i'*( v_j_j + cross(w_j_j, r_j_j_i) );
+  if sigma(i-1) == 1
+    v_i_i = v_i_i + [0;0;1]*qD(i-1);
+  end
+  wD_i_i = R_j_i'*wD_j_j;
+  if sigma(i-1) == 0
+    wD_i_i = wD_i_i + [0;0;1]*qDD(i-1) + cross(R_j_i'*w_j_j, [0;0;1]*qD(i-1));
+  end
+  vD_i_i = R_j_i'*( vD_j_j + cross(wD_j_j, r_j_j_i) +cross(w_j_j, cross(w_j_j, r_j_j_i)) );
+  if sigma(i-1) == 1
+    vD_i_i = vD_i_i + [0;0;1]*qDD(i-1) + 2*cross(R_j_i'*w_j_j, [0;0;1]*qD(i-1));;
+  end
 
   % Ausgabeausdrücke belegen
+  v_i_i_ges(:,i) = v_i_i;
+  w_i_i_ges(:,i) = w_i_i;
   vD_i_i_ges(:,i) = vD_i_i;
+  wD_i_i_ges(:,i) = wD_i_i;
 end
 
 
@@ -77,13 +128,17 @@ n_i_i_ges = NaN(3,%NL%);
 for i = %NL%:-1:1
   % Temporäre Ausdrücke belegen
   vD_i_i = vD_i_i_ges(:,i);
+  w_i_i = w_i_i_ges(:,i);
+  wD_i_i = wD_i_i_ges(:,i);
   c_i = rSges_num_mdh(i,:)';
+  I_i = inertiavector2matrix(Icges_num_mdh(i,:));
 
   % Dynamik-Terme
-  F_i = m_num(i)*vD_i_i;
+  F_i = m_num(i)*(vD_i_i + cross(wD_i_i, c_i) + cross( w_i_i,cross(w_i_i, c_i)) );
+  N_i = I_i*wD_i_i + cross(w_i_i, I_i*w_i_i);
 
   f_i_i = F_i;
-  n_i_i = cross(c_i, F_i);
+  n_i_i = N_i + cross(c_i, F_i);
 
   % Suche alle Nachfolger und addiere das Schnittmoment
   I_nf = find( (v_mdh == (i-1)) ) + 1;
@@ -122,4 +177,4 @@ end
 tau_B = [R_W_0*f_i_i_ges(:,1); T_basevel' * R_W_0*n_i_i_ges(:,1)];
 
 %% Ausgabe
-tau_g = [tau_B; tau_J];
+tau = [tau_B; tau_J];

@@ -16,7 +16,7 @@ for f = fields(TSS)'
   eval(sprintf('%s=TSS.%s;',f{1},f{1}));
 end
 if strcmp(ParameterModus, 'mp')
-  MPVfloatb = %RN%_convert_par2_MPV_floatb_eulangrpy(pkin, m, mrSges, Ifges);
+  MPVfloatb = %RN%_convert_par2_MPV_floatb_eulxyz(pkin, m, mrSges, Ifges);
 end
 DynPar1 = struct('m', m, 'r_S', rSges, 'I_S', Icges);
 
@@ -42,9 +42,9 @@ simin_tau_m = struct('time', 0, ...
     'name', 'tau_m');
 %% Configure Model
 if strcmp(ParameterModus, 'vp1')
-  sl_Modellname = '%RN%_fdyn_floatb_eulangrpy_test_vp1';
+  sl_Modellname = '%RN%_fdyn_floatb_eulxyz_test_vp1';
 elseif strcmp(ParameterModus, 'mp')
-  sl_Modellname = '%RN%_fdyn_floatb_eulangrpy_test_mp_vp';
+  sl_Modellname = '%RN%_fdyn_floatb_eulxyz_test_mp_vp';
 else
   error('Parametermodus nicht definiert');
 end

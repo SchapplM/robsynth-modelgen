@@ -16,7 +16,7 @@ head_pfad=$repo_pfad/robot_codegen_scripts/tmp_head
 source robot_codegen_tmpvar_bash.sh
 source $repo_pfad/robot_codegen_definitions/robot_env.sh
 
-basemethodenames=( twist eulangrpy )
+basemethodenames=( twist eulxyz )
 
 # Erstelle Matlab-Funktionen der explizit ausgerechneten Dynamik (nicht in Regressorform)
 
@@ -183,7 +183,7 @@ do
 
 
   # Funktionen, die nur mit der Euler-Winkeldarstellung für die Basis korrekt sind
-  for basemeth in "eulangrpy"
+  for basemeth in "eulxyz"
   do
     # Gravitationsmoment (Basis)
     quelldat=$repo_pfad/codeexport/${robot_name}/tmp/base_gravload_floatb_${basemeth}_par${dynpar}_matlab.m
@@ -839,5 +839,5 @@ do
       echo "Code in ${quelldat##*/} nicht gefunden."
     fi
 
-  done # floatb_twist/floatb_eulangrpy
+  done # floatb_twist/floatb_eulxyz
 done # par1/par2

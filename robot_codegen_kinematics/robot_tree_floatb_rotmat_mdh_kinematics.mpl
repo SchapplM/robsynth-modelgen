@@ -118,7 +118,7 @@ end do:
 if base_method_name = "twist" then:
   Trf_c(1 .. 4, 1 .. 4, 1) := transl(X_base_t[1..3,1]):
 end:
-if base_method_name = "eulangrpy" then:
+if base_method_name = "eulxyz" then:
   Trf_c(1 .. 4, 1 .. 4, 1) := transl(X_base_t[1..3,1]).rpy2tr(X_base_t[4,1], X_base_t[5,1], X_base_t[6,1]):
 end:
 printf("Nutze die Methode %s für die Basis-Orientierung\n", base_method_name):

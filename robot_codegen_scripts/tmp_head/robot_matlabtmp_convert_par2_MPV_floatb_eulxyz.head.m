@@ -1,6 +1,6 @@
 % Return the minimum parameter vector for
 % %RN%
-% for eulangrpy floating base model
+% for eulxyz floating base model
 % Use Code from Maple symbolic Code Generation
 % 
 % Input:

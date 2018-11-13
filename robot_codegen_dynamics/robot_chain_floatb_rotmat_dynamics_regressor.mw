@@ -182,8 +182,8 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 <Group labelreference="L1773" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">if base_method_name=&quot;twist&quot; then # Basis-Methode &quot;twist&quot; wird (hier) nur f\303\274r fixed Base benutzt
 </Font>  expstring:=&quot;fixb&quot;:
-elif base_method_name=&quot;eulangrpy&quot; then 
-  expstring:=&quot;floatb_eulangrpy&quot;:
+elif base_method_name=&quot;eulxyz&quot; then 
+  expstring:=&quot;floatb_eulxyz&quot;:
 else
 <Font encoding="UTF-8">  printf(&quot;Nicht behandelte Basis-Methode: %s\134n&quot;, </Font>base_method_name):
 fi:</Text-field>

@@ -1,5 +1,5 @@
 Model {
-  Name			  "%RN%_fdyn_floatb_eulangrpy_test"
+  Name			  "%RN%_fdyn_floatb_eulxyz_test"
   Version		  8.5
   MdlSubVersion		  0
   SavedCharacterEncoding  "UTF-8"
@@ -77,7 +77,7 @@ Model {
     NumTestPointedSignals   1
     TestPointedSignal {
       SignalName	      "tau_acc"
-      FullBlockPath	      "%RN%_fdyn_floatb_eulangrpy_test/%RN%_fordyn_floatb_eulangrpy_vp1/Sum3"
+      FullBlockPath	      "%RN%_fdyn_floatb_eulxyz_test/%RN%_fordyn_floatb_eulxyz_vp1/Sum3"
       LogSignal		      1
       MaxPoints		      5000
       Decimation	      2
@@ -932,7 +932,7 @@ Model {
     }
   }
   System {
-    Name		    "%RN%_fdyn_floatb_eulangrpy_test"
+    Name		    "%RN%_fdyn_floatb_eulxyz_test"
     Location		    [49, 24, 1920, 1080]
     Open		    on
     ModelBrowserVisibility  off
@@ -1100,7 +1100,7 @@ Model {
     }
     Block {
       BlockType		      Reference
-      Name		      "%RN%_energy_floatb_eulangrpy_vp1"
+      Name		      "%RN%_energy_floatb_eulxyz_vp1"
       SID		      "23"
       Ports		      [5, 2]
       Position		      [655, 59, 720, 171]
@@ -1108,7 +1108,7 @@ Model {
       ForegroundColor	      "red"
       BackgroundColor	      "yellow"
       LibraryVersion	      "1.113"
-      SourceBlock	      "lib_%RN%_dynamics/%RN%_energy_floatb_eulangrpy_vp1"
+      SourceBlock	      "lib_%RN%_dynamics/%RN%_energy_floatb_eulxyz_vp1"
       SourceType	      ""
       ContentPreviewEnabled   off
       pkin	      "pkin"
@@ -1130,7 +1130,7 @@ Model {
     }
     Block {
       BlockType		      Reference
-      Name		      "%RN%_fordyn_floatb_eulangrpy_vp1"
+      Name		      "%RN%_fordyn_floatb_eulxyz_vp1"
       SID		      "34"
       Ports		      [2, 1]
       Position		      [260, 162, 430, 238]
@@ -1138,7 +1138,7 @@ Model {
       ForegroundColor	      "red"
       BackgroundColor	      "yellow"
       LibraryVersion	      "1.113"
-      SourceBlock	      "lib_%RN%_dynamics/%RN%_fordyn_floatb_eulangrpy_vp1"
+      SourceBlock	      "lib_%RN%_dynamics/%RN%_fordyn_floatb_eulxyz_vp1"
       SourceType	      ""
       ContentPreviewEnabled   off
       r_base_t0		      "r_base_t0"
@@ -1273,7 +1273,7 @@ Model {
       Name		      "T"
       ZOrder		      103
       Labels		      [0, 0]
-      SrcBlock		      "%RN%_energy_floatb_eulangrpy_vp1"
+      SrcBlock		      "%RN%_energy_floatb_eulxyz_vp1"
       SrcPort		      1
       Points		      [53, 0; 0, -10]
       DstBlock		      "Mux"
@@ -1290,7 +1290,7 @@ Model {
       Name		      "Eges"
       ZOrder		      104
       Labels		      [0, 0; 0, 1]
-      SrcBlock		      "%RN%_energy_floatb_eulangrpy_vp1"
+      SrcBlock		      "%RN%_energy_floatb_eulxyz_vp1"
       SrcPort		      2
       Points		      [34, 0; 0, -45]
       DstBlock		      "Mux"
@@ -1298,7 +1298,7 @@ Model {
     }
     Line {
       ZOrder		      144
-      SrcBlock		      "%RN%_fordyn_floatb_eulangrpy_vp1"
+      SrcBlock		      "%RN%_fordyn_floatb_eulxyz_vp1"
       SrcPort		      1
       Points		      [42, 0]
       Branch {
@@ -1329,7 +1329,7 @@ Model {
       Labels		      [0, 0]
       SrcBlock		      "Bus\nSelector"
       SrcPort		      2
-      DstBlock		      "%RN%_energy_floatb_eulangrpy_vp1"
+      DstBlock		      "%RN%_energy_floatb_eulxyz_vp1"
       DstPort		      2
     }
     Line {
@@ -1338,7 +1338,7 @@ Model {
       Labels		      [0, 0]
       SrcBlock		      "Bus\nSelector"
       SrcPort		      3
-      DstBlock		      "%RN%_energy_floatb_eulangrpy_vp1"
+      DstBlock		      "%RN%_energy_floatb_eulxyz_vp1"
       DstPort		      3
     }
     Line {
@@ -1347,7 +1347,7 @@ Model {
       Labels		      [0, 0]
       SrcBlock		      "Bus\nSelector"
       SrcPort		      1
-      DstBlock		      "%RN%_energy_floatb_eulangrpy_vp1"
+      DstBlock		      "%RN%_energy_floatb_eulxyz_vp1"
       DstPort		      1
     }
     Line {
@@ -1356,7 +1356,7 @@ Model {
       Labels		      [0, 0]
       SrcBlock		      "Bus\nSelector"
       SrcPort		      4
-      DstBlock		      "%RN%_energy_floatb_eulangrpy_vp1"
+      DstBlock		      "%RN%_energy_floatb_eulxyz_vp1"
       DstPort		      4
     }
     Line {
@@ -1365,7 +1365,7 @@ Model {
       Labels		      [0, 0]
       SrcBlock		      "Bus\nSelector"
       SrcPort		      5
-      DstBlock		      "%RN%_energy_floatb_eulangrpy_vp1"
+      DstBlock		      "%RN%_energy_floatb_eulxyz_vp1"
       DstPort		      5
     }
     Line {
@@ -1404,7 +1404,7 @@ Model {
       SrcBlock		      "Constant"
       SrcPort		      1
       Points		      [83, 0; 0, 55]
-      DstBlock		      "%RN%_fordyn_floatb_eulangrpy_vp1"
+      DstBlock		      "%RN%_fordyn_floatb_eulxyz_vp1"
       DstPort		      1
     }
     Line {
@@ -1501,7 +1501,7 @@ Model {
       ZOrder		      172
       SrcBlock		      "Add_tau"
       SrcPort		      1
-      DstBlock		      "%RN%_fordyn_floatb_eulangrpy_vp1"
+      DstBlock		      "%RN%_fordyn_floatb_eulxyz_vp1"
       DstPort		      2
     }
   }
@@ -1514,7 +1514,7 @@ Model {
 Stateflow {
   machine {
     id			    1
-    name		    "%RN%_fdyn_floatb_eulangrpy_test"
+    name		    "%RN%_fdyn_floatb_eulxyz_test"
     created		    "20-Oct-2014 09:44:45"
     isLibrary		    0
     firstTarget		    2

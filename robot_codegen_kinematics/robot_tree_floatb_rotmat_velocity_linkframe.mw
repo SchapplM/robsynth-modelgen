@@ -231,7 +231,7 @@ Analog zu [Ortmaier2014], Gl. (7.6)</Text-field>
 <Group labelreference="L1697" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal">Anfangsgeschwindigkeit der Basis:
 <Font encoding="UTF-8">twist: Basis-Geschwindigkeit bzgl Welt-KS ausgedr\303\274ckt im Basis-KS</Font>
-eulangrpy: <Font encoding="UTF-8">V_base_t beinhaltet die Geschwindigkeit der Basis im Welt-KS, ausgedr\303\274ckt im Welt-KS. Daher ist f\303\274r eine Darstellung im K\303\266rper-KS noch die Rotation erforderlich.</Font></Text-field>
+eulxyz: <Font encoding="UTF-8">V_base_t beinhaltet die Geschwindigkeit der Basis im Welt-KS, ausgedr\303\274ckt im Welt-KS. Daher ist f\303\274r eine Darstellung im K\303\266rper-KS noch die Rotation erforderlich.</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1692" drawlabel="true">
@@ -239,7 +239,7 @@ eulangrpy: <Font encoding="UTF-8">V_base_t beinhaltet die Geschwindigkeit der Ba
   rD_i_i(1..3,1) := V_base_t(1..3,1):
   omega_i_i(1..3,1) := V_base_t(4..6,1):
 end:
-if base_method_name = &quot;eulangrpy&quot; then:
+if base_method_name = &quot;eulxyz&quot; then:
   rD_i_i(1..3,1) := Transpose(Trf_c(1..3, 1..3, 1)) . V_base_t(1..3,1):
   omega_i_i(1..3,1) := Transpose(Trf_c(1..3, 1..3, 1)) . T_basevel . V_base_t(4..6,1):
 end:</Text-field>

@@ -49,10 +49,10 @@ else
 fi
 
 # Direkte Kinematik (Basis-Orientierung (EulerXYZ) und Position)
-quelldat=$repo_pfad/codeexport/${robot_name}/tmp/fkine_mdh_floatb_eulangrpy_rotmat_matlab.m
-zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_fkine_floatb_eulangrpy_rotmat_mdh_sym_varpar.m
+quelldat=$repo_pfad/codeexport/${robot_name}/tmp/fkine_mdh_floatb_eulxyz_rotmat_matlab.m
+zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_fkine_floatb_eulxyz_rotmat_mdh_sym_varpar.m
 if [ -f $quelldat ]; then
-  cat $head_pfad/robot_matlabtmp_fkine_floatb_eulangrpy_rotmat.head.m > $zieldat
+  cat $head_pfad/robot_matlabtmp_fkine_floatb_eulxyz_rotmat.head.m > $zieldat
   printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
   source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
   source $repo_pfad/scripts/set_inputdim_line.sh $zieldat

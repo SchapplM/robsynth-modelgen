@@ -16,7 +16,7 @@ head_pfad=$repo_pfad/robot_codegen_scripts/tmp_head
 source robot_codegen_tmpvar_bash.sh
 source $repo_pfad/robot_codegen_definitions/robot_env.sh
 
-basemethodenames=( eulangrpy )
+basemethodenames=( eulxyz )
 
 # Erstelle Matlab-Funktionen der Regressorform für Floating Base Modell
 for basemeth in "${basemethodenames[@]}"

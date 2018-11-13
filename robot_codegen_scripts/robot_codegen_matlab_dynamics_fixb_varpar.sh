@@ -19,8 +19,8 @@ source $repo_pfad/robot_codegen_definitions/robot_env.sh
 
 # Schleife für beide Basis-Darstellungen durchgehen.
 # Die Methode "twist" muss am Ende kommen, damit Basis-unabhängige Funktionen mit den Ergebnissen dieser Methode
-# generiert werden ("twist"-Code ist kürzer; Zuerst erstellte Datei mit "eulangrpy" wird dann überschrieben).
-basemethodenames=( eulangrpy twist )
+# generiert werden ("twist"-Code ist kürzer; Zuerst erstellte Datei mit "eulxyz" wird dann überschrieben).
+basemethodenames=( eulxyz twist )
 
 # Erstelle Matlab-Funktionen der explizit ausgerechneten Dynamik (nicht in Regressorform)
 for (( dynpar=1; dynpar<=2; dynpar++ ))
@@ -330,5 +330,5 @@ do
       cat ${template_pfad}/robot_matlabtmp_invdynJ_fixb_par${dynpar}.m.template >> $zieldat
     fi
     source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
-  done # floatb_twist/floatb_eulangrpy
+  done # floatb_twist/floatb_eulxyz
 done # par1/par2

@@ -31,7 +31,7 @@
 % Moritz Schappler, schappler@irt.uni-hannover.de, 2016-06
 % (C) Institut für Regelungstechnik, Leibniz Universität Hannover
 
-function JgD_C = %RN%_jacobigD_mdh_eulangrpy_num(phi_base, phiD_base, qJ, qJD, link_index, r_i_i_C, ...
+function JgD_C = %RN%_jacobigD_mdh_eulxyz_num(phi_base, phiD_base, qJ, qJD, link_index, r_i_i_C, ...
   pkin)
 %% Init
 %#codegen

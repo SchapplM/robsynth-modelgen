@@ -65,7 +65,7 @@ for i = 1:length(t)
     error('Jacobi-Matrix stimmt nicht zwischen Simulink und Matlab');
   end
   
-  Jg_n_ml_floatb = %RN%_jacobig_mdh_eulangrpy_sym(phiB, q, uint8(NL_modell-1), zeros(3,1), pkin);
+  Jg_n_ml_floatb = %RN%_jacobig_mdh_eulxyz_sym(phiB, q, uint8(NL_modell-1), zeros(3,1), pkin);
   test3 = Jg_n_ml_floatb-Jg_n_sl_floatb;
   if any(abs(test3(:)) > 1e-10)
     error('Floating-Base-Jacobi-Matrix stimmt nicht zwischen Simulink und Matlab');
