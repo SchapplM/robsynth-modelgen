@@ -250,7 +250,7 @@ end if:
 </Group>
 <Group labelreference="L1690" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Belastung der Basis (ist falsch f\303\274r floatb_twist, da das Moment durch diese Wahl der verallgemeinerten Koordinaten (floatb_twist) nicht berechnet werden kann!)
-Ist korrekt f\303\274r floatb_eulangrpy.
+Ist korrekt f\303\274r floatb_eulxyz.
 Die Berechnungen werden deshalb nicht f\303\274r floatb_twist durchgef\303\274hrt.</Font></Text-field>
 </Input>
 </Group>

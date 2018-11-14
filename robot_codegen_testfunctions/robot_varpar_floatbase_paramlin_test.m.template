@@ -30,7 +30,7 @@ for f = fields(TSS)'
 end
 
 % Minimalparametervektor
-MPV = %RN%_convert_par2_MPV_floatb_eulangrpy(pkin, ...
+MPV = %RN%_convert_par2_MPV_floatb_eulxyz(pkin, ...
   m, mrSges, Ifges);
 
 % Vektor mit Inertialparametern
@@ -66,17 +66,17 @@ for i = 1:n
   V_W_W_0 = VB(i,:)';
   xDB = [V_W_W_0(1:3); oDb];
   % calculate kinetic energy with optimized function
-  T_func = %RN%_energykin_floatb_eulangrpy_slag_vp1(q, qD, ob, xDB, ...
+  T_func = %RN%_energykin_floatb_eulxyz_slag_vp1(q, qD, ob, xDB, ...
     pkin, m, rSges, Icges);
   % calculate kinetic energy with minimal parameter regressor
-  t_regmin = %RN%_energykin_floatb_eulangrpy_regmin_slag_vp(q, qD, ob, xDB, ...
+  t_regmin = %RN%_energykin_floatb_eulxyz_regmin_slag_vp(q, qD, ob, xDB, ...
     pkin);
   T_mpv = t_regmin*MPV;
   if abs(T_mpv-T_func) > 1e-12
     error('Kinetic Energy from base parameter vector does not match with direct form.');
   end
   
-  t_reg2 = %RN%_energykin_floatb_eulangrpy_reg2_slag_vp(q, qD, ob, xDB, ...
+  t_reg2 = %RN%_energykin_floatb_eulxyz_reg2_slag_vp(q, qD, ob, xDB, ...
     pkin);
   T_PV2 = t_reg2*PV2floatb;
   if abs(T_PV2-T_func) > 1e-12
@@ -94,18 +94,18 @@ for i = 1:n
   ob = OB(i,:)';
   q = Q(i,:)';
   g_world = G(i,:)';
-  R_W_0 = rpy2r(ob);
+  R_W_0 = eulxyz2r(ob);
   g_base = (R_W_0')*g_world;
   % calculate potential energy with optimized function
-  U_func = %RN%_energypot_floatb_eulangrpy_slag_vp1(q, r_W_W_0, ob, g_world, ...
+  U_func = %RN%_energypot_floatb_eulxyz_slag_vp1(q, r_W_W_0, ob, g_world, ...
     pkin, m, rSges);
-  U_func0 = %RN%_energypot_floatb_eulangrpy_slag_vp1(zeros(NQJ,1), r_W_W_0, ob, g_world, ...
+  U_func0 = %RN%_energypot_floatb_eulxyz_slag_vp1(zeros(NQJ,1), r_W_W_0, ob, g_world, ...
     pkin, m, rSges);
   
   % calculate potential energy with minimal regressor
-  u_regmin = %RN%_energypot_floatb_eulangrpy_regmin_slag_vp(q, r_W_W_0, ob, g_world, ...
+  u_regmin = %RN%_energypot_floatb_eulxyz_regmin_slag_vp(q, r_W_W_0, ob, g_world, ...
     pkin);
-  u_regmin0 = %RN%_energypot_floatb_eulangrpy_regmin_slag_vp(zeros(NQJ,1), r_W_W_0, ob, g_world, ...
+  u_regmin0 = %RN%_energypot_floatb_eulxyz_regmin_slag_vp(zeros(NQJ,1), r_W_W_0, ob, g_world, ...
     pkin);
   U_mpv = u_regmin*MPV;
   U_mpv0 = u_regmin0*MPV;
@@ -114,9 +114,9 @@ for i = 1:n
   end
   
   % calculate potential energy with inertial parameters regressor
-  u_reg2 = %RN%_energypot_floatb_eulangrpy_reg2_slag_vp(q, r_W_W_0, ob, g_world, ...
+  u_reg2 = %RN%_energypot_floatb_eulxyz_reg2_slag_vp(q, r_W_W_0, ob, g_world, ...
     pkin);
-  u_reg20 = %RN%_energypot_floatb_eulangrpy_reg2_slag_vp(zeros(NQJ,1), r_W_W_0, ob, g_world, ...
+  u_reg20 = %RN%_energypot_floatb_eulxyz_reg2_slag_vp(zeros(NQJ,1), r_W_W_0, ob, g_world, ...
     pkin);
   U_PV2 = u_reg2*PV2floatb;
   U_PV20 = u_reg20*PV2floatb;
@@ -134,14 +134,14 @@ for i = 1:n
   ob = OB(i,:)';
   q = Q(i,:)';
   g_world = G(i,:)';
-  R_W_0 = rpy2r(ob);
+  R_W_0 = eulxyz2r(ob);
   g_base = (R_W_0')*g_world;
   % calculate gravitational base load with optimized function
-  tauBg_b_par1 = %RN%_gravloadB_floatb_eulangrpy_slag_vp1(q, ob, g_world, ...
+  tauBg_b_par1 = %RN%_gravloadB_floatb_eulxyz_slag_vp1(q, ob, g_world, ...
     pkin, m, rSges);
 
   % calculate gravitational base load with base parameter regressor
-  tauBg_b_regmin = %RN%_gravloadB_floatb_eulangrpy_regmin_slag_vp(q, ob, g_world, ...
+  tauBg_b_regmin = %RN%_gravloadB_floatb_eulxyz_regmin_slag_vp(q, ob, g_world, ...
     pkin);
   tauBg_b_mpv = tauBg_b_regmin*MPV;
   if any( abs(tauBg_b_mpv-tauBg_b_par1) > 1e-12 )
@@ -149,7 +149,7 @@ for i = 1:n
   end
   
   % calculate gravitational base load with inertial parameter regressor
-  tauBg_b_reg2 = %RN%_gravloadB_floatb_eulangrpy_reg2_slag_vp(q, ob, g_world, ...
+  tauBg_b_reg2 = %RN%_gravloadB_floatb_eulxyz_reg2_slag_vp(q, ob, g_world, ...
     pkin);
   tauBg_b_pv2 = tauBg_b_reg2*PV2floatb;
   if any (abs(tauBg_b_pv2-tauBg_b_par1) > 1e-12 )
@@ -166,10 +166,10 @@ for i = 1:n
   ob = OB(i,:)';
   q = Q(i,:)';
   % calculate inertia with optimized function
-  M_func = %RN%_inertia_floatb_eulangrpy_slag_vp1(q, ob, ...
+  M_func = %RN%_inertia_floatb_eulxyz_slag_vp1(q, ob, ...
     pkin, m, rSges, Icges);
   % calculate inertia with base parameter regressor       
-  M_regmin = %RN%_inertia_floatb_eulangrpy_regmin_slag_vp(q, ob, ...
+  M_regmin = %RN%_inertia_floatb_eulxyz_regmin_slag_vp(q, ob, ...
     pkin);
   M_mpv_vec = M_regmin*MPV;
   M_mpv = vec2symmat(M_mpv_vec);
@@ -177,7 +177,7 @@ for i = 1:n
     error('Floating Base inertia matrix from base parameter vector does not match with direct form.');
   end
   % calculate inertia with inertial parameter regressor
-  M_reg2 = %RN%_inertia_floatb_eulangrpy_reg2_slag_vp(q, ob, ...
+  M_reg2 = %RN%_inertia_floatb_eulxyz_reg2_slag_vp(q, ob, ...
     pkin);
   M_pv2_vec = M_reg2*PV2floatb;
   M_pv2 = vec2symmat(M_mpv_vec);
@@ -193,10 +193,10 @@ for i = 1:n
   ob = OB(i,:)';
   q = Q(i,:)';
   % calculate inertia with optimized function
-  Mqb_func = %RN%_inertiaJB_floatb_eulangrpy_slag_vp1(q, ob, ...
+  Mqb_func = %RN%_inertiaJB_floatb_eulxyz_slag_vp1(q, ob, ...
     pkin, m, rSges, Icges);
   % calculate inertia with base parameter regressor       
-  Mqb_regmin = %RN%_inertiaJB_floatb_eulangrpy_regmin_slag_vp(q, ob, ...
+  Mqb_regmin = %RN%_inertiaJB_floatb_eulxyz_regmin_slag_vp(q, ob, ...
     pkin);
   Mqb_mpv_vec = Mqb_regmin*MPV;
   Mqb_mpv = reshape(Mqb_mpv_vec, 6, NQJ)';
@@ -204,7 +204,7 @@ for i = 1:n
     error('Floating Base inertia matrix from base parameter vector does not match with direct form.');
   end
   % calculate inertia with inertial parameter regressor
-  Mqb_reg2 = %RN%_inertiaJB_floatb_eulangrpy_reg2_slag_vp(q, ob, ...
+  Mqb_reg2 = %RN%_inertiaJB_floatb_eulxyz_reg2_slag_vp(q, ob, ...
     pkin);
   Mqb_pv2_vec = Mqb_reg2*PV2floatb;
   Mqb_pv2 = reshape(Mqb_pv2_vec, 6, NQJ)';
@@ -220,10 +220,10 @@ for i = 1:n
   ob = OB(i,:)';
   q = Q(i,:)';
   % calculate inertia with optimized function
-  Mbb_func = %RN%_inertiaB_floatb_eulangrpy_slag_vp1(q, ob, ...
+  Mbb_func = %RN%_inertiaB_floatb_eulxyz_slag_vp1(q, ob, ...
     pkin, m, rSges, Icges);
   % calculate inertia with base parameter regressor       
-  Mbb_regmin = %RN%_inertiaB_floatb_eulangrpy_regmin_slag_vp(q, ob, ...
+  Mbb_regmin = %RN%_inertiaB_floatb_eulxyz_regmin_slag_vp(q, ob, ...
     pkin);
   Mbb_mpv_vec = Mbb_regmin*MPV;
   Mbb_mpv = vec2symmat(Mbb_mpv_vec);
@@ -231,7 +231,7 @@ for i = 1:n
     error('Floating Base inertia matrix from base parameter vector does not match with direct form.');
   end
   % calculate inertia with inertial parameter regressor
-  Mbb_reg2 = %RN%_inertiaB_floatb_eulangrpy_reg2_slag_vp(q, ob, ...
+  Mbb_reg2 = %RN%_inertiaB_floatb_eulxyz_reg2_slag_vp(q, ob, ...
     pkin);
   Mbb_pv2_vec = Mbb_reg2*PV2floatb;
   Mbb_pv2 = vec2symmat(Mbb_pv2_vec);
@@ -254,10 +254,10 @@ for i = 1:n
   xDB = [V_W_W_0(1:3); oDb];
   
   % calculate inertia time derivative with optimized function
-  MqD_func = %RN%_inertiaD_floatb_eulangrpy_slag_vp1(q, qD, ob, xDB, ...
+  MqD_func = %RN%_inertiaD_floatb_eulxyz_slag_vp1(q, qD, ob, xDB, ...
     pkin, m, rSges, Icges);
   % calculate inertia time derivative with base parameter regressor
-  MqD_regmin = %RN%_inertiaD_floatb_eulangrpy_regmin_slag_vp(q, qD, ob, xDB, ...
+  MqD_regmin = %RN%_inertiaD_floatb_eulxyz_regmin_slag_vp(q, qD, ob, xDB, ...
     pkin);
   MqD_mpv_vec = MqD_regmin*MPV;
   MqD_mpv = vec2symmat(MqD_mpv_vec);
@@ -265,7 +265,7 @@ for i = 1:n
     error('Floating Base inertia matrix time derivative from base parameter vector does not match with direct form.');
   end
   % calculate inertia time derivative with inertial parameter regressor
-  MqD_reg2 = %RN%_inertiaD_floatb_eulangrpy_reg2_slag_vp(q, qD, ob, xDB, ...
+  MqD_reg2 = %RN%_inertiaD_floatb_eulxyz_reg2_slag_vp(q, qD, ob, xDB, ...
     pkin);
   MqD_pv2_vec = MqD_reg2*PV2floatb;
   MqD_pv2 = vec2symmat(MqD_pv2_vec);
@@ -289,11 +289,11 @@ for i = 1:n
   xDB = [V_W_W_0(1:3); oDb];
   
   % calculate coriolis torques with optimized function
-  tauc_func = %RN%_coriolisvec_floatb_eulangrpy_slag_vp1(q, qD, ob, xDB,...
+  tauc_func = %RN%_coriolisvec_floatb_eulxyz_slag_vp1(q, qD, ob, xDB,...
     pkin, m, rSges, Icges);
   
   % calculate coriolis torques with base parameter regressor
-  tauc_regmin = %RN%_coriolisvec_floatb_eulangrpy_regmin_slag_vp(q, qD, ob, xDB,...
+  tauc_regmin = %RN%_coriolisvec_floatb_eulxyz_regmin_slag_vp(q, qD, ob, xDB,...
     pkin);
   tauc_mpv = tauc_regmin*MPV;
   if any (abs(tauc_mpv-tauc_func) > 1e-12 )
@@ -301,7 +301,7 @@ for i = 1:n
   end
   
   % calculate coriolis torques with inertial parameter regressor
-  tauc_reg2 = %RN%_coriolisvec_floatb_eulangrpy_reg2_slag_vp(q, qD, ob, xDB,...
+  tauc_reg2 = %RN%_coriolisvec_floatb_eulxyz_reg2_slag_vp(q, qD, ob, xDB,...
     pkin);
   tauc_pv2 = tauc_reg2*PV2floatb;
   if any( abs(tauc_pv2-tauc_func) > 1e-12 )
@@ -325,11 +325,11 @@ for i = 1:n
   xDB = [V_W_W_0(1:3); oDb];
   
   % calculate coriolis torques with optimized function
-  tauJc_func = %RN%_coriolisvecJ_floatb_eulangrpy_slag_vp1(q, qD, ob, xDB,...
+  tauJc_func = %RN%_coriolisvecJ_floatb_eulxyz_slag_vp1(q, qD, ob, xDB,...
     pkin, m, rSges, Icges);
   
   % calculate coriolis torques with base parameter regressor
-  tauJc_regmin = %RN%_coriolisvecJ_floatb_eulangrpy_regmin_slag_vp(q, qD, ob, xDB,...
+  tauJc_regmin = %RN%_coriolisvecJ_floatb_eulxyz_regmin_slag_vp(q, qD, ob, xDB,...
     pkin);
   tauJc_mpv = tauJc_regmin*MPV;
   if any (abs(tauJc_mpv-tauJc_func) > 1e-12 )
@@ -337,7 +337,7 @@ for i = 1:n
   end
   
   % calculate coriolis torques with inertial parameter regressor
-  tauJc_reg2 = %RN%_coriolisvecJ_floatb_eulangrpy_reg2_slag_vp(q, qD, ob, xDB,...
+  tauJc_reg2 = %RN%_coriolisvecJ_floatb_eulxyz_reg2_slag_vp(q, qD, ob, xDB,...
     pkin);
   tauJc_pv2 = tauJc_reg2*PV2floatb;
   if any( abs(tauJc_pv2-tauJc_func) > 1e-12 )
@@ -361,11 +361,11 @@ for i = 1:n
   xDB = [V_W_W_0(1:3); oDb];
   
   % calculate coriolis torques with optimized function
-  tauBc_func = %RN%_coriolisvecB_floatb_eulangrpy_slag_vp1(q, qD, ob, xDB,...
+  tauBc_func = %RN%_coriolisvecB_floatb_eulxyz_slag_vp1(q, qD, ob, xDB,...
     pkin, m, rSges, Icges);
   
   % calculate coriolis torques with base parameter regressor
-  tauBc_regmin = %RN%_coriolisvecB_floatb_eulangrpy_regmin_slag_vp(q, qD, ob, xDB,...
+  tauBc_regmin = %RN%_coriolisvecB_floatb_eulxyz_regmin_slag_vp(q, qD, ob, xDB,...
     pkin);
   tauBc_mpv = tauBc_regmin*MPV;
   if any (abs(tauBc_mpv-tauBc_func) > 1e-12 )
@@ -373,7 +373,7 @@ for i = 1:n
   end
   
   % calculate coriolis torques with inertial parameter regressor
-  tauBc_reg2 = %RN%_coriolisvecB_floatb_eulangrpy_reg2_slag_vp(q, qD, ob, xDB,...
+  tauBc_reg2 = %RN%_coriolisvecB_floatb_eulxyz_reg2_slag_vp(q, qD, ob, xDB,...
     pkin);
   tauBc_pv2 = tauBc_reg2*PV2floatb;
   if any( abs(tauBc_pv2-tauBc_func) > 1e-12 )
@@ -398,10 +398,10 @@ for i = 1:n
   xDB = [V_W_W_0(1:3); oDb];
   
   % calculate Coriolis-Matrix with optimized function
-  Cq_func = %RN%_coriolismat_floatb_eulangrpy_slag_vp1(q, qD, ob, xDB, ...
+  Cq_func = %RN%_coriolismat_floatb_eulxyz_slag_vp1(q, qD, ob, xDB, ...
     pkin, m, rSges, Icges);
   % calculate Coriolis-Matrix with base parameter regressor
-  Cq_regmin = %RN%_coriolismat_floatb_eulangrpy_regmin_slag_vp(q, qD, ob, xDB, ...
+  Cq_regmin = %RN%_coriolismat_floatb_eulxyz_regmin_slag_vp(q, qD, ob, xDB, ...
     pkin);
   Cq_mpv_vec = Cq_regmin*MPV;
   Cq_mpv = reshape(Cq_mpv_vec, 6+NQJ, 6+NQJ)';
@@ -410,7 +410,7 @@ for i = 1:n
   end
   
   % calculate Coriolis-Matrix with inertial parameter regressor
-  Cq_reg2 = %RN%_coriolismat_floatb_eulangrpy_reg2_slag_vp(q, qD, ob, xDB, ...
+  Cq_reg2 = %RN%_coriolismat_floatb_eulxyz_reg2_slag_vp(q, qD, ob, xDB, ...
     pkin);
   Cq_pv2_vec = Cq_reg2*PV2floatb;
   Cq_pv2 = reshape(Cq_pv2_vec, 6+NQJ, 6+NQJ)';
@@ -439,17 +439,17 @@ for i = 1:n
   xDDB = [A_W_W_0(1:3); oDDb];
 
   % calculate joint inverse dynamics with optimized function
-  tauJ_func = %RN%_invdynJ_floatb_eulangrpy_slag_vp1(q, qD, qDD, ob, xDB, xDDB, g_world, ...
+  tauJ_func = %RN%_invdynJ_floatb_eulxyz_slag_vp1(q, qD, qDD, ob, xDB, xDDB, g_world, ...
     pkin, m, rSges, Icges);
   % calculate joint inverse dynamics with base parameter regressor
-  tauJ_regmin = %RN%_invdynJ_floatb_eulangrpy_regmin_slag_vp(q, qD, qDD, ob, xDB, xDDB, g_world, ...
+  tauJ_regmin = %RN%_invdynJ_floatb_eulxyz_regmin_slag_vp(q, qD, qDD, ob, xDB, xDDB, g_world, ...
     pkin);
   tauJ_mpv = tauJ_regmin*MPV;
   if any( abs(tauJ_func-tauJ_mpv) > 1e-12 )
     error('Inverse dynamics from base parameter vector does not match with direct form.');
   end
   % calculate joint inverse dynamics with inertial parameter regressor
-  tauJ_reg2 = %RN%_invdynJ_floatb_eulangrpy_reg2_slag_vp(q, qD, qDD, ob, xDB, xDDB, g_world, ...
+  tauJ_reg2 = %RN%_invdynJ_floatb_eulxyz_reg2_slag_vp(q, qD, qDD, ob, xDB, xDDB, g_world, ...
     pkin);
   tauJ_pv2 = tauJ_reg2*PV2floatb;
   if any( abs(tauJ_func-tauJ_pv2) > 1e-12 )
@@ -458,17 +458,17 @@ for i = 1:n
   
 
   % calculate base inverse dynamics with optimized function
-  tauB_func = %RN%_invdynB_floatb_eulangrpy_slag_vp1(q, qD, qDD, ob, xDB, xDDB, g_world, ...
+  tauB_func = %RN%_invdynB_floatb_eulxyz_slag_vp1(q, qD, qDD, ob, xDB, xDDB, g_world, ...
     pkin, m, rSges, Icges);
   % calculate base inverse dynamics with base parameter regressor
-  tauB_regmin = %RN%_invdynB_floatb_eulangrpy_regmin_slag_vp(q, qD, qDD, ob, xDB, xDDB, g_world, ...
+  tauB_regmin = %RN%_invdynB_floatb_eulxyz_regmin_slag_vp(q, qD, qDD, ob, xDB, xDDB, g_world, ...
     pkin);
   tauB_mpv = tauB_regmin*MPV;
   if any( abs(tauB_func-tauB_mpv) > 1e-12 )
     error('Inverse dynamics from base parameter vector does not match with direct form.');
   end
   % calculate base inverse dynamics with inertial parameter regressor
-  tauB_reg2 = %RN%_invdynB_floatb_eulangrpy_reg2_slag_vp(q, qD, qDD, ob, xDB, xDDB, g_world, ...
+  tauB_reg2 = %RN%_invdynB_floatb_eulxyz_reg2_slag_vp(q, qD, qDD, ob, xDB, xDDB, g_world, ...
     pkin);
   tauB_pv2 = tauB_reg2*PV2floatb;
   if any( abs(tauB_func-tauB_pv2) > 1e-12 )
@@ -481,7 +481,7 @@ fprintf('Tested floating base joint inverse dynamics for %d random joint angles 
 
 %% Prüfe Minimalparametervektor gegen Matrix mit Inertialparameterzuordnung
 % [Sousa2014] Gl. (38)
-[K, K_d, P_b, P_d] = %RN%_PV2_MPV_transformations_floatb_eulangrpy(pkin);
+[K, K_d, P_b, P_d] = %RN%_PV2_MPV_transformations_floatb_eulxyz(pkin);
                 
 MPV_test = K*PV2floatb;
 test = MPV - MPV_test;
@@ -511,9 +511,9 @@ for i = 1:n
   xDB = [V_W_W_0(1:3); oDb];
   g_world = G(i,:)';
   % [Gautier1990] Gl. (7)
-  t_reg2 = %RN%_energykin_floatb_eulangrpy_reg2_slag_vp(q, qD, ob, xDB, ...
+  t_reg2 = %RN%_energykin_floatb_eulxyz_reg2_slag_vp(q, qD, ob, xDB, ...
     pkin);
-  u_reg2 = %RN%_energypot_floatb_eulangrpy_reg2_slag_vp(q, r_W_W_0, ob, g_world, ...
+  u_reg2 = %RN%_energypot_floatb_eulxyz_reg2_slag_vp(q, r_W_W_0, ob, g_world, ...
     pkin);
   % [Gautier1990] Gl. (8)
   W_g(i,:) = t_reg2+u_reg2;
@@ -521,7 +521,7 @@ end
 % Struktur mit Eingabedaten für Algorithmus generieren
 % [Ksym, K_dsym, P1sym, P2sym] = %RN%_PV2_MPV_transformations_fixb(pkin);
 b = 24;
-[Ksym, K_dsym, P1sym, P2sym] = %RN%_PV2_MPV_transformations_floatb_eulangrpy(pkin);
+[Ksym, K_dsym, P1sym, P2sym] = %RN%_PV2_MPV_transformations_floatb_eulxyz(pkin);
 % Ksym = NaN(b,c);K_dsym=NaN(b,c-b);P1sym=NaN(c,b);P2sym=NaN(c,c-b);
 plin_num_test_struct = struct('W', W_g, 'PV2', PV2floatb, 'MPV', MPV, ...
   'P1sym', P1sym, 'P2sym', P2sym, 'K_dsym', K_dsym, 'Ksym', Ksym, ...

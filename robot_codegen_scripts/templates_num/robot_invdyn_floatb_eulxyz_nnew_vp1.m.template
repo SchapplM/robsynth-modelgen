@@ -20,10 +20,10 @@
 % Output:
 % tau [(6+%NJ%)x1]
 %   Base forces and joint torques required to compensate inverse dynamics.
-%   Base moments in generalized coordinates (Euler-RPY)
+%   Base moments in generalized coordinates (Euler-XYZ)
 %
 % See also:
-% IMES-Robotik-Toolbox: dynamics/robot_tree_invdyn_floatb_eulangrpy_nnew_vp1.m
+% IMES-Robotik-Toolbox: dynamics/robot_tree_invdyn_floatb_eulxyz_nnew_vp1.m
 
 % %VERSIONINFO%
 
@@ -57,8 +57,8 @@ assert(isreal(Icges_num_mdh) && all(size(Icges_num_mdh) == [%NL% 6]), ...
 
 %% Init
 tau_J = NaN(%NJ%,1);
-R_W_0 = rpy2r(phi_base);
-T_basevel = angvelotrans_rpy(phi_base);
+R_W_0 = eulxyz2r(phi_base);
+T_basevel = eulxyzjac(phi_base);
 [v_mdh, sigma] = %RN%_structural_kinematic_parameters();
 
 
@@ -76,10 +76,10 @@ wD_i_i_ges = NaN(3,%NL%);
 
 % Anfangswerte: Geschwindigkeit und Beschleunigung der Basis
 v_i_i_ges(:,1) = R_W_0'*xD_base(1:3);
-w_i_i_ges(:,1) = R_W_0'*rpyD2omega(phi_base, xD_base(4:6));
+w_i_i_ges(:,1) = R_W_0'*eulxyzD2omega(phi_base, xD_base(4:6));
 
 vD_i_i_ges(:,1) = R_W_0'*xDD_base(1:3);
-wD_i_i_ges(:,1) = R_W_0'*rpyDD2omegaD(phi_base, xD_base(4:6), xDD_base(4:6));
+wD_i_i_ges(:,1) = R_W_0'*eulxyzDD2omegaD(phi_base, xD_base(4:6), xDD_base(4:6));
 
 for i = 2:%NL%
   % Nummer des Vorgänger-Segments

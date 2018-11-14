@@ -158,9 +158,9 @@ read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
   read sprintf(&quot;../codeexport/%s/tmp/minimal_parameter_vector_fixb_maple&quot;, robot_name):
   expstring:=&quot;fixb&quot;:
   PV2:=Matrix(PV2_vec[11..10*NL,1]):
-elif base_method_name=&quot;eulangrpy&quot; then 
-  read sprintf(&quot;../codeexport/%s/tmp/minimal_parameter_vector_floatb_eulangrpy_maple&quot;, robot_name):
-  expstring:=&quot;floatb_eulangrpy&quot;:
+elif base_method_name=&quot;eulxyz&quot; then 
+  read sprintf(&quot;../codeexport/%s/tmp/minimal_parameter_vector_floatb_eulxyz_maple&quot;, robot_name):
+  expstring:=&quot;floatb_eulxyz&quot;:
   PV2:=PV2_vec:
 else
 <Font encoding="UTF-8">  printf(&quot;Nicht behandelte Basis-Methode: %s\134n&quot;, </Font>base_method_name):

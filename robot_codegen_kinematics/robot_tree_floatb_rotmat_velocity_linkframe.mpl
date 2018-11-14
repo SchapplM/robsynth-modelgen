@@ -66,12 +66,12 @@ rD_i_i := Matrix(3, NL):
 omega_i_i := Matrix(3, NL):
 # Anfangsgeschwindigkeit der Basis:
 # twist: Basis-Geschwindigkeit bzgl Welt-KS ausgedrückt im Basis-KS
-# eulangrpy: V_base_t beinhaltet die Geschwindigkeit der Basis im Welt-KS, ausgedrückt im Welt-KS. Daher ist für eine Darstellung im Körper-KS noch die Rotation erforderlich.
+# eulxyz: V_base_t beinhaltet die Geschwindigkeit der Basis im Welt-KS, ausgedrückt im Welt-KS. Daher ist für eine Darstellung im Körper-KS noch die Rotation erforderlich.
 if base_method_name = "twist" then:
   rD_i_i(1..3,1) := V_base_t(1..3,1):
   omega_i_i(1..3,1) := V_base_t(4..6,1):
 end:
-if base_method_name = "eulangrpy" then:
+if base_method_name = "eulxyz" then:
   rD_i_i(1..3,1) := Transpose(Trf_c(1..3, 1..3, 1)) . V_base_t(1..3,1):
   omega_i_i(1..3,1) := Transpose(Trf_c(1..3, 1..3, 1)) . T_basevel . V_base_t(4..6,1):
 end:

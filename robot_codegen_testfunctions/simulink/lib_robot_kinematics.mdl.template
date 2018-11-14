@@ -1411,7 +1411,7 @@ Library {
     }
     Block {
       BlockType		      SubSystem
-      Name		      "%RN%_jacobig_floatb_eulangrpy"
+      Name		      "%RN%_jacobig_floatb_eulxyz"
       SID		      "39"
       Ports		      [2, 1]
       Position		      [320, 257, 415, 328]
@@ -1454,7 +1454,7 @@ Library {
 	}
       }
       System {
-	Name			"%RN%_jacobig_floatb_eulangrpy"
+	Name			"%RN%_jacobig_floatb_eulxyz"
 	Location		[666, 427, 1621, 975]
 	Open			off
 	ModelBrowserVisibility	off
@@ -1513,7 +1513,7 @@ Library {
 	}
 	Block {
 	  BlockType		  SubSystem
-	  Name			  "%RN%_jacobig_floatb_eulangrpy_Fcn"
+	  Name			  "%RN%_jacobig_floatb_eulxyz_Fcn"
 	  SID			  "43"
 	  Ports			  [5, 1]
 	  Position		  [370, 163, 485, 277]
@@ -1525,7 +1525,7 @@ Library {
 	  RequestExecContextInheritance	off
 	  SFBlockType		  "MATLAB Function"
 	  System {
-	    Name		    "%RN%_jacobig_floatb_eulangrpy_Fcn"
+	    Name		    "%RN%_jacobig_floatb_eulxyz_Fcn"
 	    Location		    [223, 338, 826, 833]
 	    Open		    off
 	    ModelBrowserVisibility  off
@@ -1700,12 +1700,12 @@ Library {
 	  SrcBlock		  "phi_base"
 	  SrcPort		  1
 	  Points		  [88, 0; 0, 50]
-	  DstBlock		  "%RN%_jacobig_floatb_eulangrpy_Fcn"
+	  DstBlock		  "%RN%_jacobig_floatb_eulxyz_Fcn"
 	  DstPort		  1
 	}
 	Line {
 	  ZOrder		  2
-	  SrcBlock		  "%RN%_jacobig_floatb_eulangrpy_Fcn"
+	  SrcBlock		  "%RN%_jacobig_floatb_eulxyz_Fcn"
 	  SrcPort		  1
 	  DstBlock		  "Jg"
 	  DstPort		  1
@@ -1714,7 +1714,7 @@ Library {
 	  ZOrder		  3
 	  SrcBlock		  "Constant"
 	  SrcPort		  1
-	  DstBlock		  "%RN%_jacobig_floatb_eulangrpy_Fcn"
+	  DstBlock		  "%RN%_jacobig_floatb_eulxyz_Fcn"
 	  DstPort		  3
 	}
 	Line {
@@ -1722,7 +1722,7 @@ Library {
 	  SrcBlock		  "Constant1"
 	  SrcPort		  1
 	  Points		  [78, 0; 0, -40]
-	  DstBlock		  "%RN%_jacobig_floatb_eulangrpy_Fcn"
+	  DstBlock		  "%RN%_jacobig_floatb_eulxyz_Fcn"
 	  DstPort		  4
 	}
 	Line {
@@ -1730,7 +1730,7 @@ Library {
 	  SrcBlock		  "qJ"
 	  SrcPort		  1
 	  Points		  [42, 0; 0, 25]
-	  DstBlock		  "%RN%_jacobig_floatb_eulangrpy_Fcn"
+	  DstBlock		  "%RN%_jacobig_floatb_eulxyz_Fcn"
 	  DstPort		  2
 	}
 	Line {
@@ -1738,7 +1738,7 @@ Library {
 	  SrcBlock		  "Constant6"
 	  SrcPort		  1
 	  Points		  [47, 0; 0, -90]
-	  DstBlock		  "%RN%_jacobig_floatb_eulangrpy_Fcn"
+	  DstBlock		  "%RN%_jacobig_floatb_eulxyz_Fcn"
 	  DstPort		  5
 	}
 	Annotation {
@@ -2150,7 +2150,7 @@ Stateflow {
   }
   chart {
     id			    21
-    name		    "%RN%_jacobig_floatb_eulangrpy/%RN%_jacobig_floatb_eulangrpy_Fcn"
+    name		    "%RN%_jacobig_floatb_eulxyz/%RN%_jacobig_floatb_eulxyz_Fcn"
     windowPosition	    [422 539.941 189 413]
     viewLimits		    [0 156.75 0 153.75]
     screen		    [1 1 3600 1200 1.180555555555556]
@@ -2188,7 +2188,7 @@ Stateflow {
     eml {
       isEML		      1
       script		      "% Floating-Base Jacobimatrix zu beliebigen Punkten\n\nfunction Jg_C = fcn(phi_base, qJ, link_inde"
-      "x, r_i_i_C, pkin)\n%% Init\n%#codegen\n% Segmentnummer wird in MDH-Notation übergeben (0=Basis).\nJg_C = %RN%_jacobig_mdh_eulangrpy_sym(phi_bas"
+      "x, r_i_i_C, pkin)\n%% Init\n%#codegen\n% Segmentnummer wird in MDH-Notation übergeben (0=Basis).\nJg_C = %RN%_jacobig_mdh_eulxyz_sym(phi_bas"
       "e, qJ, link_index, r_i_i_C, pkin);"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
@@ -2355,7 +2355,7 @@ Stateflow {
   }
   instance {
     id			    31
-    name		    "%RN%_jacobig_floatb_eulangrpy/%RN%_jacobig_floatb_eulangrpy_Fcn"
+    name		    "%RN%_jacobig_floatb_eulxyz/%RN%_jacobig_floatb_eulxyz_Fcn"
     machine		    1
     chart		    21
   }

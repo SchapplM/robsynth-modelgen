@@ -32,7 +32,7 @@ m = rand(NL,1); % masses of all links (are positive due to rand() function)
 Ic_pa = rand(NL,3); % inertia of all links around their center of mass in principal axes
 Icges = NaN(NL,6); % inertial of all links around their center of mass in body frame
 for i = 1:NL
-  R_pa = rpy2r(rand(3,1)); % random principal axes
+  R_pa = eulxyz2r(rand(3,1)); % random principal axes
   % inertia tensor in body frame: make sure the eigenvalues are positive and the tensor is positive definite
   Icges(i,:) = inertiamatrix2vector(R_pa*diag(Ic_pa(i,:))*R_pa');
 end
@@ -75,11 +75,11 @@ AB(:,1:3) = (0.5-rand(n, 3))*10;
 for i = 1:n
   % Darstellung umwandeln.
   % TODO: Mit Transformationsmatrizen
-  VB(i, 4:6) = rpyD2omega(OB(i,:)', OBD(i,:)');
-  AB(i, 4:6) = rpyDD2omegaD(OB(i,:)', OBD(i,:)', OBDD(i,:)');
+  VB(i, 4:6) = eulxyzD2omega(OB(i,:)', OBD(i,:)');
+  AB(i, 4:6) = eulxyzDD2omegaD(OB(i,:)', OBD(i,:)', OBDD(i,:)');
   
   % Probe:
-  T_basevel = angvelotrans_rpy(OB(i,:)');
+  T_basevel = eulxyzjac(OB(i,:)');
   obd_test = T_basevel \ VB(i, 4:6)';
   
   if any(abs(obd_test-OBD(i,:)') > 1e-10)

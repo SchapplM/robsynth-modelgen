@@ -61,10 +61,10 @@ if [ "$CG_FIXBONLY" == "1" ]; then
   basemethodenames=( twist )
 elif [ "$CG_FLOATBONLY" == "1" ]; then
   # Berechne nur floating base Modellierung
-  basemethodenames=( eulangrpy )
+  basemethodenames=( eulxyz )
 else
   # Berechne beides
-  basemethodenames=( twist eulangrpy )
+  basemethodenames=( twist eulxyz )
 fi;
 
 for basemeth in "${basemethodenames[@]}"

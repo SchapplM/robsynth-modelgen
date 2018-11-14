@@ -50,11 +50,11 @@ T_B_i = T_c_mdh(:,:,link_index+1);
 r_B_B_C = T_B_i(1:3,4) + T_B_i(1:3,1:3) * r_i_i_C; % r_B_B_i + R_B_i_C
 
 % Rotationsmatrix vom Welt- ins Basis-KS
-R_W_B = rpy2r(phi_base);
+R_W_B = eulxyz2r(phi_base);
 
 % Transformation zwischen RPY-Winkel-Zeitableitung und
 % Winkelgeschwindigkeit der Basis im Welt-KS
-T_angvel = angvelotrans_rpy(phi_base);
+T_angvel = eulxyzjac(phi_base);
 %% Basis-Jacobi-Matrix
 % Siehe [1]
 % [2], equ. (14)

@@ -71,7 +71,7 @@ omega_W_i := Matrix(3, NL):
 if base_method_name = "twist" then:
   omega_W_i(1..3,1) := V_base_t(4..6,1):
 end:
-if base_method_name = "eulangrpy" then:
+if base_method_name = "eulxyz" then:
   omega_W_i(1..3,1) := T_basevel . V_base_t(4..6,1):
 end:
 printf("Nutze die Methode %s für die Basis-Drehgeschwindigkeit\n", base_method_name):

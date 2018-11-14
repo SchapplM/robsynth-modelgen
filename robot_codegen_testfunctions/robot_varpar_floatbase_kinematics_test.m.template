@@ -27,7 +27,7 @@ for i = 1:n
 
   T_c_fixb = %RN%_fkine_fixb_rotmat_mdh_sym_varpar(q, ...
     pkin);
-  T_c_floatb_xyz = %RN%_fkine_floatb_eulangrpy_rotmat_mdh_sym_varpar(q, zeros(3,1), zeros(3,1), ...
+  T_c_floatb_xyz = %RN%_fkine_floatb_eulxyz_rotmat_mdh_sym_varpar(q, zeros(3,1), zeros(3,1), ...
     pkin);
 
   for j = 1:size(T_c_fixb, 3)
@@ -50,8 +50,8 @@ for i = 1:n
     ob = OB(i,:)';
     qJ = Q(i,:)';
     r_i_i_C = rand(3,1);
-    Jg_num = %RN%_jacobig_mdh_eulangrpy_num(ob, qJ, uint8(jj), r_i_i_C, pkin);
-    Jg_sym = %RN%_jacobig_mdh_eulangrpy_sym(ob, qJ, uint8(jj), r_i_i_C, pkin);
+    Jg_num = %RN%_jacobig_mdh_eulxyz_num(ob, qJ, uint8(jj), r_i_i_C, pkin);
+    Jg_sym = %RN%_jacobig_mdh_eulxyz_sym(ob, qJ, uint8(jj), r_i_i_C, pkin);
     test = Jg_num-Jg_sym;
     if any(abs(test(:)) > 1e-6)
       error('Jacobian does not match between sym and num');

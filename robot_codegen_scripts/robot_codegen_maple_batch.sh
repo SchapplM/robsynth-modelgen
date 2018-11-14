@@ -134,7 +134,7 @@ if ! [ "$CG_FIXBONLY" == "1" ]; then
   # Skripte für Floating-Base-Modellierung
   if [ "$CG_MINIMAL" == "0" ]; then
     dateiliste_kindyn="$dateiliste_kindyn
-      robot_tree_floatb_eulangrpy_definitions.mpl
+      robot_tree_floatb_eulxyz_definitions.mpl
       robot_tree_floatb_rotmat_mdh_kinematics.mpl
       robot_tree_floatb_rotmat_kinematics_com_worldframe_par1.mpl
       robot_tree_floatb_rotmat_velocity_worldframe_par1.mpl
@@ -149,7 +149,7 @@ if ! [ "$CG_FIXBONLY" == "1" ]; then
     "
   else
     dateiliste_kindyn="$dateiliste_kindyn
-      robot_tree_floatb_eulangrpy_definitions.mpl
+      robot_tree_floatb_eulxyz_definitions.mpl
       robot_tree_floatb_rotmat_mdh_kinematics.mpl
       robot_tree_floatb_rotmat_velocity_linkframe.mpl
       robot_tree_floatb_rotmat_energy_worldframe_par2.mpl
@@ -170,8 +170,8 @@ if ! [ "$CG_FIXBONLY" == "1" ]; then
     "
   fi;
   # Initialisiere zusätzliche Maple-Skripte speziell für dieses System (benutzerdefiniert)
-  # Mit Basis-Methode "eulangrpy"
-  addlistfile=$repo_pfad/robot_codegen_additional/scripts/${robot_name}_maple_additional_worksheet_list_eulangrpy
+  # Mit Basis-Methode "eulxyz"
+  addlistfile=$repo_pfad/robot_codegen_additional/scripts/${robot_name}_maple_additional_worksheet_list_eulxyz
   if [ -f $addlistfile ]; then
     dateiliste_kindyn="$dateiliste_kindyn `cat $addlistfile`"
   fi;

@@ -108,7 +108,7 @@ echo "robot_NMPVFIXB=$robot_NMPVFIXB" >> $robot_env_pfad.sh
 if [ ! "$1" == "quiet" ]; then
   echo "robot_NMPVFIXB=$robot_NMPVFIXB"
 fi
-mpv_floatb_pfad=$repo_pfad/codeexport/${robot_name}/tmp/minimal_parameter_vector_floatb_eulangrpy_maple
+mpv_floatb_pfad=$repo_pfad/codeexport/${robot_name}/tmp/minimal_parameter_vector_floatb_eulxyz_maple
 if [ -f $mpv_floatb_pfad ]; then
   sed -i 's/\r//g' $mpv_floatb_pfad # Zeilenenden
   robot_NMPVFLOATB=`grep "Matrix" $mpv_floatb_pfad | tail -1 | sed 's/.*Matrix[(]\(.*\)/\1/' | sed 's/, 1, .*//'`

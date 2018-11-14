@@ -131,7 +131,7 @@ echo "rxs_base = r_base(1);" >> $tmp_pfad/robot_matlabtmp_rB.m
 echo "rys_base = r_base(2);" >> $tmp_pfad/robot_matlabtmp_rB.m
 echo "rzs_base = r_base(3);" >> $tmp_pfad/robot_matlabtmp_rB.m
 
-# Basisorientierung (EulerXYZ / RPY)
+# Basisorientierung (Euler-XYZ)
 echo "" > $tmp_pfad/robot_matlabtmp_phiB.m
 echo "alphaxs_base = phi_base(1);" >> $tmp_pfad/robot_matlabtmp_phiB.m
 echo "betays_base = phi_base(2);" >> $tmp_pfad/robot_matlabtmp_phiB.m

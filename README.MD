@@ -128,7 +128,7 @@ Im Folgenden werden die Einzelbefehle gezeigt, die im Gesamt-Skript aus Alternat
 
 #### Erstellung von Symbolischen Ausdrücken
 
-Für die Initialisierung der Variablendefinitionen müssen je nach Berechnung der Basiskinematik die Definitionen für das Modell "twist" oder das Modell "eulangrpy" gestartet werden
+Für die Initialisierung der Variablendefinitionen müssen je nach Berechnung der Basiskinematik die Definitionen für das Modell "twist" oder das Modell "eulxyz" gestartet werden
 
 
 Twist: Die Basisgeschwindigkeit wird als Zeitableitung in den verallgemeinerten Koordinaten aufgenommen. Die Orientierung wird nicht berücksichtigt.
@@ -138,10 +138,10 @@ Nicht zulässig: Humanoide Roboter
 ```
 /robot_codegen_definitions/robot_tree_floatb_twist_definitions.mw
 ```
-Die Basisorientierung wird mit Euler-Winkeln in der RPY-Konvention beschrieben (aufeinanderfolgende Drehungen um die mitgedrehte x-, y- und z-Achse). Für Systeme mit bewegter Basis sind daher _stattdessen_ folgende Definitionen zu laden:
+Die Basisorientierung wird mit Euler-Winkeln in der XYZ-Konvention beschrieben (aufeinanderfolgende Drehungen um die mitgedrehte x-, y- und z-Achse). Für Systeme mit bewegter Basis sind daher _stattdessen_ folgende Definitionen zu laden:
 ```
 /robot_codegen_definitions/robot_tree_floatb_twist_definitions.mw
-/robot_codegen_definitions/robot_tree_floatb_eulangrpy_definitions.mw
+/robot_codegen_definitions/robot_tree_floatb_eulxyz_definitions.mw
 ```
 Für die Erstellung von Ausdrücken für die Dynamik in expliziter Form (nicht: Regressorform) müssen die Maple-Arbeitsblätter in folgender Reihenfolge gestartet werden:
 ```
@@ -290,7 +290,7 @@ robot_codegen_additional/scripts
 robot_codegen_additional/templates
 ```
 abgelegt werden.  
-Existiert im Ordner *scripts* eine Datei *%RN%\_maple_additional_worksheet_list_%BASE%*, werden darin enthaltene Verweise auf Maple-Skripte im Ordner *maple* mit der Code-Generierung ausgeführt. *%BASE%* bezeichnet die Basisdarstellungsmethode. Möglich sind hier *twist* oder *eulangrpy*. Siehe dazu den Abschnitt [Modellkennung](#benennung_modell).  
+Existiert im Ordner *scripts* eine Datei *%RN%\_maple_additional_worksheet_list_%BASE%*, werden darin enthaltene Verweise auf Maple-Skripte im Ordner *maple* mit der Code-Generierung ausgeführt. *%BASE%* bezeichnet die Basisdarstellungsmethode. Möglich sind hier *twist* oder *eulxyz*. Siehe dazu den Abschnitt [Modellkennung](#benennung_modell).  
 Die Datei *%RN%_matlab_codegen_additional* im Ordner scripts wird bei der Matlab-Funktionsgenerierung mit ausgeführt und kann aus dem generierten Matlab-Code sowie Funktionsvorlagen aus dem Ordner *templates* Matlab-Funktionen erstellen.
 
 Die Verwendung dieser zusätzlicher Dateien ist sinnvoll, um die komplette Code-Generierung zu einem System mit einem Startskript durchführen zu können.
@@ -361,7 +361,7 @@ Teil 4: Modellkennung  <a name="benennung_modell"></a>
 
 * fixb (Fixed Base Modell: Orientierung, Geschwindigkeit und Beschleunigung der Basis werden nicht berücksichtigt. Impliziert bei einigen Funktionen "joint")
 * floatb_twist  (Floating Base Modell: Geschwindigkeit und Beschleunigung der Basis werden berücksichtigt. Nicht aber die Orientierung)
-* floatb_eulangrpy  (Floating Base Modell: Orientierung (EulerXYZ), und die Zeitableitungen der Euler-Winkel werden für die Basis-Geschwindigkeit und -Beschleunigung verwendet.)
+* floatb_eulxyz  (Floating Base Modell: Orientierung (EulerXYZ), und die Zeitableitungen der Euler-Winkel werden für die Basis-Geschwindigkeit und -Beschleunigung verwendet.)
 
 Teil 5: Regressorform. 
 Um die gewünschte Größe zu erhalten, muss der ausgegebene Regressorvektor bzw. -Matrix mit dem Parametervektor multipliziert werden.
@@ -400,7 +400,7 @@ Beispiele:
 * lwr4p_invdynJ_fixb_slag_vp2
 * lwr4p_jacobiaD_floatb_twist_sym_varpar
 * lwr4p_coriolismatJ_fixb_slag_vp1
-* lwr4p_invdyn_floatb_eulangrpy_nnew_vp1
+* lwr4p_invdyn_floatb_eulxyz_nnew_vp1
 * lwr4p_energypot_fixb_reg2_slag_vp
 
 #### Parameter
@@ -454,7 +454,7 @@ M, r_i_i_Si, mr_i_i_Si, I_i_Si, I_i_i, PV2_mat, PV2_vec
 ## Ordner- und Dateistruktur <a name="ordnerstruktur"></a> 
 
 Für Maple-Arbeitsblätter werden die eingehenden Ergebnisdateien mit "<--" und die gespeicherten Ergebnisse mit "-->" angezeigt.
-Bei beweglicher Basis werden je nach vorheriger Definition Dateien mit floatb_twist oder floatb_eulangrpy erstellt. Hier werden beispielhaft nur die Dateien mit "twist" genannt.
+Bei beweglicher Basis werden je nach vorheriger Definition Dateien mit floatb_twist oder floatb_eulxyz erstellt. Hier werden beispielhaft nur die Dateien mit "twist" genannt.
 
 Dateien:
 * .mw Maple-Arbeitsblätter
@@ -519,11 +519,11 @@ Der Ordner examples enthält Beispiele für die Datei robot_env.
       <-- robot_env
       --> robot_tree_floatb_definitions
       --> robot_tree_floatb_twist_definitions
-  robot_tree_floatbase_eulangrpy_definitions.mw
+  robot_tree_floatbase_eulxyz_definitions.mw
       <-- robot_env
       <-- robot_tree_floatb_twist_definitions
       --> robot_tree_floatb_definitions
-      --> robot_tree_floatb_eulangrpy_definitions
+      --> robot_tree_floatb_eulxyz_definitions
 ```
 In der Datei robot_env können folgende Variablen definiert werden:
 

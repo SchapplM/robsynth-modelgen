@@ -218,8 +218,8 @@ for iq = 1:size(Q, 1) % Über Zufallsposen
     T_jb = Tc_mdh(:,:,jb+1);
 
     % Winkelkonvention und Umrechnungsfaktor
-    rpy = r2rpy(t2r(T_jb));
-    J_rpy = angvelotrans_rpy(rpy);
+    rpy = r2eulxyz(t2r(T_jb));
+    J_rpy = eulxyzjac(rpy);
 
     % Umrechnung der analytischen in die geometrische Jacobi-Matrix
     % [1], S. 52, Gl. (4.25)
@@ -237,7 +237,7 @@ for iq = 1:size(Q, 1) % Über Zufallsposen
     JaD_rot = %RN%_jacobiaD_rot_floatb_twist_sym_varpar(q, qD, uint8(jb), pkin);
     % Aus Produktregel der Zeitableitung von [1], S. 52, Gl. (4.25)
     rpyD = Ja_rot*qD;
-    JD_rpy = angvelotrans_rpyD(rpy, rpyD);
+    JD_rpy = eulxyzjacD(rpy, rpyD);
     JgD_rot_test = JD_rpy * Ja_rot + J_rpy * JaD_rot;
     % Vergleiche die auf zwei Wegen berechnete Zeitableitung der geometrischen Jacobi-Matrix
     DiffD = JgD_rot_test - JgD_rot;

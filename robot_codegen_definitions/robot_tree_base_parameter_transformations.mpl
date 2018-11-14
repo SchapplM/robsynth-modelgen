@@ -34,9 +34,9 @@ if base_method_name="twist" then
   read sprintf("../codeexport/%s/tmp/minimal_parameter_vector_fixb_maple", robot_name):
   expstring:="fixb":
   PV2:=Matrix(PV2_vec[11..10*NL,1]):
-elif base_method_name="eulangrpy" then 
-  read sprintf("../codeexport/%s/tmp/minimal_parameter_vector_floatb_eulangrpy_maple", robot_name):
-  expstring:="floatb_eulangrpy":
+elif base_method_name="eulxyz" then 
+  read sprintf("../codeexport/%s/tmp/minimal_parameter_vector_floatb_eulxyz_maple", robot_name):
+  expstring:="floatb_eulxyz":
   PV2:=PV2_vec:
 else
   printf("Nicht behandelte Basis-Methode: %s\n", base_method_name):

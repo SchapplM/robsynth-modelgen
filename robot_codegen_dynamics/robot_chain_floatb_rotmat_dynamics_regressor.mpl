@@ -55,8 +55,8 @@ read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
 # Mit diesem Arbeitsblatt werden die Regressor-Ausdrücke für Fixed-Base und Floating-Base Modelle generiert. Erkenne welche Basis-Modellierung aktiv ist
 if base_method_name="twist" then # Basis-Methode "twist" wird (hier) nur für fixed Base benutzt
   expstring:="fixb":
-elif base_method_name="eulangrpy" then 
-  expstring:="floatb_eulangrpy":
+elif base_method_name="eulxyz" then 
+  expstring:="floatb_eulxyz":
 else
   printf("Nicht behandelte Basis-Methode: %s\n", base_method_name):
 fi:
