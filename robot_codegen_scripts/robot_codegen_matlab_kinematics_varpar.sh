@@ -40,7 +40,7 @@ if [ -f $quelldat ]; then
   echo "%% Postprocessing: Reshape Output" >> $zieldat
   printf "%% Convert Maple format (2-dimensional tensor) to Matlab format (3-dimensional tensor)\n" >> $zieldat
   printf "%% Fallunterscheidung der Initialisierung für symbolische Eingabe\n" >> $zieldat
-  printf "if isa([qJ; pkin], 'double'), T_c_mdh = NaN(4,4,%%NJ%%);               %% numerisch\n" >> $zieldat
+  printf "if isa([qJ; pkin], 'double'), T_c_mdh = NaN(4,4,%%NJ%%+1);               %% numerisch\n" >> $zieldat
   printf "else,                         T_c_mdh = sym('xx', [4,4,%%NJ%%+1]); end %% symbolisch\n" >> $zieldat
   printf "for i = 1:%%NJ%%+1\n  T_c_mdh(:,:,i) = T_ges((i-1)*4+1 : 4*i, :);\nend\n" >> $zieldat
   source robot_codegen_matlabfcn_postprocess.sh $zieldat 0 0 ${quelldat}.subsvar
