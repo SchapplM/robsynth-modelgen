@@ -12322,7 +12322,7 @@ Library {
     }
     Annotation {
       SID		      "349"
-      Name		      "Dynamikfunktionen floating base (Euler-RPY) mit variablen Parametern (Parametersatz 1)"
+      Name		      "Dynamikfunktionen floating base (Euler-XYZ) mit variablen Parametern (Parametersatz 1)"
       Position		      [730, 369, 1395, 644]
       InternalMargins	      [0, 0, 0, 0]
       FixedHeight	      on
@@ -12335,7 +12335,7 @@ Library {
     }
     Annotation {
       SID		      "517"
-      Name		      "Dynamikfunktionen floating base (Euler-RPY) mit variablen Parametern (MPV)"
+      Name		      "Dynamikfunktionen floating base (Euler-XYZ) mit variablen Parametern (MPV)"
       Position		      [20, 369, 685, 644]
       InternalMargins	      [0, 0, 0, 0]
       FixedHeight	      on
@@ -15023,8 +15023,7 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function Mq = inertia(qJ, phi_base, pkin, m, r_S, I_S)\n%#codegen\nMq = %RN%_inertia_floatb_eula"
-      "ngrpy_slag_vp1(qJ, phi_base, ...\n  pkin, m, r_S, I_S);\n"
+      script		      "function Mq = inertia(qJ, phi_base, pkin, m, r_S, I_S)\n%#codegen\nMq = %RN%_inertia_floatb_eulxyz_slag_vp1(qJ, phi_base, ...\n  pkin, m, r_S, I_S);\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -16212,8 +16211,7 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function Mq = inertia(qJ, phi_base, pkin, MPV)\n%#codegen\nM_regmin = %RN%_inertia_floatb_eulang"
-      "rpy_regmin_slag_vp(qJ, phi_base, pkin);\nM_mpv_vec = M_regmin*MPV;\nMq = vec2symmat(M_mpv_vec);"
+      script		      "function Mq = inertia(qJ, phi_base, pkin, MPV)\n%#codegen\nM_regmin = %RN%_inertia_floatb_eulxyz_regmin_slag_vp(qJ, phi_base, pkin);\nM_mpv_vec = M_regmin*MPV;\nMq = vec2symmat(M_mpv_vec);"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
