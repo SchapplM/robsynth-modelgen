@@ -46,3 +46,13 @@ if [ -d "$repo_pfad/codeexport/${robot_name}/" ]; then
 	cp $repo_pfad/robot_codegen_definitions/robot_env_par $repo_pfad/codeexport/${robot_name}/tmp/
 	cp $repo_pfad/robot_codegen_definitions/robot_env_par.sh $repo_pfad/codeexport/${robot_name}/tmp/
 fi;
+
+# Dimension des MPV (aus exportiertem Code)
+mpv_para_pfad=$repo_pfad/codeexport/${robot_name}/tmp/RowMinPar_parallel.m
+if [ -f $mpv_para_pfad ]; then
+  # Ersetze Text links und rechts von der Dimension mit nichts.
+  robot_NMPVPARA=`grep "t1 = " $mpv_para_pfad | tail -1 | sed 's/.*= \(.*\);/\1/'`
+else
+  robot_NMPVPARA="NOTDEFINED"
+fi
+echo "robot_NMPVPARA=$robot_NMPVPARA" >> $robot_env_pfad.sh

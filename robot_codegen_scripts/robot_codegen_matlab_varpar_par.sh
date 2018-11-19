@@ -30,7 +30,7 @@ source robot_codegen_assert_matlab_par.sh
 ./robot_codegen_matlab_dynamics_parallel_varpar.sh
 
 # Erstelle Matlab-Funktionen der parameterlinearen Dynamik
-#./robot_codegen_matlab_paramlin_parallel_varpar.sh
+./robot_codegen_matlab_paramlin_parallel_varpar.sh
 
 
 

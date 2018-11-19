@@ -4,8 +4,8 @@
 # Berechnung der inversen Dynamik der Roboter-Plattform
 # 
 # Dateiname:
-# robot -> Berechnung fÃ¼r allgemeinen Roboter
-# para -> Berechnung fÃ¼r eine parallelen Roboter
+# robot -> Berechnung für allgemeinen Roboter
+# para -> Berechnung für eine parallelen Roboter
 # rotmat -> Kinematik wird mit Rotationsmatrizen berechnet
 # dynamics -> Berechnung der Dynamik
 # Autor
@@ -14,15 +14,15 @@
 # Sources
 # [Abdellatif2007] Modellierung, Identifikation und robuste Regelung von Robotern mit parallelkinematischen Strukturen
 # Initialization
-#interface(warnlevel=0): # UnterdrÃ¼cke die folgende Warnung.
-restart: # Gibt eine Warnung, wenn Ã¼ber Terminal-Maple mit read gestartet wird.
-#interface(warnlevel=3):
+interface(warnlevel=0): # Unterdrücke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
+interface(warnlevel=3):
 with(LinearAlgebra):
 with(codegen):
 with(CodeGeneration):
 with(StringTools):
 with(VectorCalculus):
-# Einstellungen fÃ¼r Code-Export: Optimierungsgrad (2=hÃ¶chster) und Aktivierung jedes Terms.
+# Einstellungen für Code-Export: Optimierungsgrad (2=höchster) und Aktivierung jedes Terms.
 codegen_dynpar := 1:
 codegen_opt := 2:
 codeexport_invdyn := false:
@@ -33,12 +33,12 @@ read "../helper/proc_MatlabExport":
 read "../helper/proc_vec2skew":
 read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
-# Definitionen fÃ¼r parallelen Roboter laden
+# Definitionen für parallelen Roboter laden
 read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
 r_P_sP_P := -r_P_sP:
 s_P_P_sP := s_P_sP:
-# Ergebnisse der Kinematik fÃ¼r parallen Roboter laden
+# Ergebnisse der Kinematik für parallen Roboter laden
 read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
 read "../robot_codegen_definitions/robot_env_par":
@@ -73,8 +73,8 @@ end do:
 s_0_P_sP := R_0_0_E_s.s_P_P_sP:
 r_0_sP_P := R_0_0_E_s.r_P_sP_P:
 # Berechnung der H-Matrix und deren Ableitung nach Abdellatif2007 S.20
-RPYjac_E_t := combine(Multiply(Transpose(R_0_0_E_t),RPYjac_0_t)):
-RPYjac_E_s := combine(Multiply(Transpose(R_0_0_E_s),RPYjac_0_s)):
+RPYjac_E_t := simplify(Multiply(Transpose(R_0_0_E_t),RPYjac_0_t)):
+RPYjac_E_s := simplify(Multiply(Transpose(R_0_0_E_s),RPYjac_0_s)):
 w_E_0_E_s := RPYjac_E_s.xED_s(4..6,1):
 w_0_0_E_s := RPYjac_0_s.xED_s(4..6,1):
 w_E_0_E_t := RPYjac_E_t.xED_t(4..6,1):
@@ -82,7 +82,7 @@ dRPYjac_E_t := diff~(RPYjac_E_t,t):
 dRPYjac_0_t := diff~(RPYjac_0_t,t):
 dRPYjac_E_s := Copy(dRPYjac_E_t):
 dRPYjac_0_s := Copy(dRPYjac_0_t):
-# Substituiere die zeitabhÃ¤ngigen Koordinaten in der H-Matrix mit zeitunabhÃ¤ngigen Koordinaten 
+# Substituiere die zeitabhängigen Koordinaten in der H-Matrix mit zeitunabhängigen Koordinaten 
 for i to 3 do
 	for j to 3 do
 		for k from 4 to 6 do
@@ -92,8 +92,8 @@ for i to 3 do
 	end do:
 end do:
 
-wD_E_0_E_s := dRPYjac_E_s.xED_s(4..6,1)+RPYjac_E_s.xEDD_s(4..6,1):
-wD_0_0_E_s := dRPYjac_0_s.xED_s(4..6,1)+RPYjac_0_s.xEDD_s(4..6,1):
+wD_E_0_E_s := simplify(dRPYjac_E_s.xED_s(4..6,1)+RPYjac_E_s.xEDD_s(4..6,1)):
+wD_0_0_E_s := simplify(dRPYjac_0_s.xED_s(4..6,1)+RPYjac_0_s.xEDD_s(4..6,1)):
 H := <IdentityMatrix(3,3),ZeroMatrix(3);
       ZeroMatrix(3),RPYjac_0_s>:
 Hinv := MatrixInverse(H):
@@ -116,7 +116,7 @@ for j to 3 do
 end do:
 dgEdz_final := Matrix(6,1):
 dgEdz := Matrix(3,1):
-gvec := Matrix(3,1,[g1,g2,g3]):
+
 for j to 6 do
   for i to 3 do
      dgEdz(i) := diff(gE_z(i),xAll(j)):
@@ -137,7 +137,7 @@ if codeexport_grav then
   MatlabExport(gE, sprintf("../codeexport/%s/tmp/gravload_platform_matlab.m", robot_name), codegen_opt):
 end if:
 # Mass-Matrix ME of the platform
-# Berechnung Massenmatrix fÃ¼r die EE-Plattform und die Winkelgeschwindigkeit
+# Berechnung Massenmatrix für die EE-Plattform und die Winkelgeschwindigkeit
 # Abdellatif2007 S.39 (3.30)
 if codegen_dynpar = 1 then
   ME := <mE*Matrix(3,shape=identity),mE*vec2skew(r_0_sP_P);
@@ -169,7 +169,7 @@ end if:
 # Abdellatif2007 S.39 (3.29)
 MME := ME.H:
 cvecE := Multiply(ME.dH+cE.H,xED_s):
-tauE := Multiply(ME.H,xEDD_s) + Multiply(ME.dH+cE.H,xED_s) - gE:# - Multiply(Transpose(Hinv),dT):
+tauE := Multiply(MME,xEDD_s) + cvecE - gE:#Multiply(cE,xED_s) - gE:
 # Code Export
 if codeexport_invdyn then
   MatlabExport(tauE, sprintf("../codeexport/%s/tmp/invdyn_floatb_%s_platform_matlab.m", robot_name, base_method_name), codegen_opt):

@@ -56,10 +56,12 @@ dateiliste_kindyn="$dateiliste_kindyn
   robot_para_plattform_rotmat_dynamics_par2.mpl
   robot_para_rotmat_projection_dynamics_par2.mpl
   "
-
-  #robot_para_plattform_rotmat_dynamics_regressor.mpl
-  #robot_para_rotmat_projection_dynamics_regressor.mpl
-  
+if [ "$CG_MINIMAL" == "0" ]; then
+  dateiliste_kindyn="$dateiliste_kindyn
+  robot_para_plattform_rotmat_dynamics_regressor.mpl
+  robot_para_rotmat_projection_dynamics_regressor.mpl
+  "
+fi;
 
 # Alle Maple-Dateien der Reihe nach ausführen
 for mpldat in $dateiliste_kindyn

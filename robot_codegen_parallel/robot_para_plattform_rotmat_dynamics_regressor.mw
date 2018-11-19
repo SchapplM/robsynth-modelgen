@@ -116,9 +116,9 @@ regressor -&gt; Regressorform (parameterlinear)</Text-field>
 </Group>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Initialization</Text-field></Title>
 <Group labelreference="L1709" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">#interface(warnlevel=0): # Unterdr\303\274cke die folgende Warnung.
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">interface(warnlevel=0): # Unterdr\303\274cke die folgende Warnung.
 restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet wird.
-</Font>#interface(warnlevel=3):</Text-field>
+</Font>interface(warnlevel=3):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1685" drawlabel="true">
@@ -136,10 +136,10 @@ with(VectorCalculus):</Text-field>
 </Group>
 <Group labelreference="L2950" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_opt := 2:
-codeexport_invdyn := true:
-codeexport_grav := true: 
-codeexport_corvec := true:
-codeexport_inertia := true:</Text-field>
+codeexport_invdyn := false:
+codeexport_grav := fals: 
+codeexport_corvec := false:
+codeexport_inertia := false:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2948" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -169,11 +169,12 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Input>
 </Group>
 <Group labelreference="L2965" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env_par&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3027" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_definitions&quot;, robot_name):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_definitions&quot;, leg_name):
+read &quot;../robot_codegen_definitions/robot_env_par&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3076" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -182,31 +183,31 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Group>
 <Group hide-input="false" labelreference="L3077" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/para_definitions&quot;, robot_name):
-r_P_sP_P := r_sP_P:</Text-field>
+r_P_sP_P := -r_P_sP:
+s_P_P_sP := s_P_sP:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3028" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ergebnisse der Kinematik f\303\274r parallen Roboter laden</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L2967" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group hide-input="false" labelreference="L3156" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/kinematics_%s_platform_maple.m&quot;, robot_name, base_method_name):</Text-field>
 </Input>
 </Group>
-</Section>
-<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Additional Definitions</Text-field></Title>
-<Group labelreference="L2970" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal">Parameter definieren, wenn nicht vorher schon geschehen</Text-field>
+<Group labelreference="L3259" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Lade &quot;robotics_repo_path&quot;-File mit Link zum &quot;imes-robotics-matlab&quot;-Repo</Text-field>
 </Input>
 </Group>
-<Group labelreference="L3079" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if not assigned(J_SE) then
-   J_SP := Matrix(3,3,[XXP,XYP,XZP,XYP,YYP,YZP,XZP,YZP,ZZP]):
-end if:
-if not assigned(xE_s) then
-   xE_s:=&lt;x_all[1];x_all[2];x_all[3];x_all[4];x_all[5];x_all[6]&gt;:
-end if:
-gvec := Matrix(3,1,[g1,g2,g3]):</Text-field>
+<Group labelreference="L3257" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read(&quot;../robotics_repo_path&quot;):</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L3258" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Lade die Funktionen aus dem &quot;imes-robotics-matlab&quot;-Repo</Text-field>
+</Input>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read(sprintf(&quot;%s/transformation/maple/proc_eul%s2r&quot;, robotics_repo_path, angleConvLeg)):
+read(sprintf(&quot;%s/transformation/maple/proc_eul%sjac&quot;, robotics_repo_path, angleConvLeg)):</Text-field>
 </Input>
 </Group>
 </Section>
@@ -216,19 +217,12 @@ gvec := Matrix(3,1,[g1,g2,g3]):</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3132" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if angleConv = X_Y_Z then
-   R_0_0_E_t := rotx(xE_t(4)).roty(xE_t(5)).rotz(xE_t(6)):
-   R_0_0_E_s := rotx(xE_s(4)).roty(xE_s(5)).rotz(xE_s(6)):
-   RPYjac_0_t := rpyjac(xE_t(4),xE_t(5),xE_t(6)):
-   RPYjac_0_s := rpyjac(xE_s(4),xE_s(5),xE_s(6)):
-elif angleConv = Z_Y_X then
-   R_0_0_E_t := rotz(xE_t(4)).roty(xE_t(5)).rotx(xE_t(6)):
-   R_0_0_E_s := rotz(xE_s(4)).roty(xE_s(5)).rotx(xE_s(6)):
-   RPYjac_0_t := yprjac(xE_t(4),xE_t(5),xE_t(6)):
-   RPYjac_0_s := yprjac(xE_s(4),xE_s(5),xE_s(6)):
-end:
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">R_0_0_E_t := parse(sprintf(&quot;eul%s2r&quot;,angleConvLeg))(xE_t(4..6)):
+R_0_0_E_s := parse(sprintf(&quot;eul%s2r&quot;,angleConvLeg))(xE_s(4..6)):
+RPYjac_0_t := parse(sprintf(&quot;eul%sjac&quot;,angleConvLeg))(xE_t(4..6)):
+RPYjac_0_s := parse(sprintf(&quot;eul%sjac&quot;,angleConvLeg))(xE_s(4..6)):
 r_0_sP_P := R_0_0_E_s.r_P_sP_P:
-J_P_P := J_SP + mE*Multiply(Transpose(vec2skew(r_P_sP_P)),vec2skew(r_P_sP_P)):
+J_P_P := J_P_P:
 J_0_P := R_0_0_E_s.J_P_P.Transpose(R_0_0_E_s):
 J_0_P_raute := Matrix(6,1,[J_0_P(1,1),J_0_P(1,2),J_0_P(1,3),J_0_P(2,2),J_0_P(2,3),J_0_P(3,3)]):
 J_P_P_raute := Matrix(6,1,[J_P_P(1,1),J_P_P(1,2),J_P_P(1,3),J_P_P(2,2),J_P_P(2,3),J_P_P(3,3)]):</Text-field>
@@ -237,18 +231,19 @@ J_P_P_raute := Matrix(6,1,[J_P_P(1,1),J_P_P(1,2),J_P_P(1,3),J_P_P(2,2),J_P_P(2,3
 <Group hide-input="false" labelreference="L3045" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" spaceabove="0" linebreak="space" rightmargin="0" linespacing="0.0" initial="0" firstindent="0" leftmargin="0" bulletsuffix="" alignment="left" bullet="none" spacebelow="0" pagebreak-before="false">r_0_sP_P := R_0_0_E_t.r_P_sP_P:
 r_0_P_sP := -r_0_sP_P:
-rD_0_sP_P := diff~(r_0_sP_P,t):
-for i to 3 do
-   for j to 6 do
-      rD_0_sP_P(i) := subs({xED_t(j)=xED_s(j),xE_t(j)=xE_s(j)},rD_0_sP_P(i)):
-   end do:
-end do:
-rD_0_sP_P:
+#rD_0_sP_P := diff~(r_0_sP_P,t):
+#for i to 3 do
+  # for j to 6 do
+      #rD_0_sP_P(i) := subs({xED_t(j)=xED_s(j),xE_t(j)=xE_s(j)},rD_0_sP_P(i)):
+   #end do:
+#end do:
+#rD_0_sP_P:
 r_0_sP_P := R_0_0_E_s.r_P_sP_P:
 r_0_P_sP := -r_0_sP_P:
 r_P_P_sP := -r_P_sP_P:
-sE := Matrix(mE*r_0_P_sP):
-sE := Matrix(mE*r_P_P_sP):</Text-field>
+#sE := Matrix(mE*r_0_P_sP):
+#sE := Matrix(mE*r_P_P_sP):
+sE := s_P_P_sP:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3004" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -256,8 +251,8 @@ sE := Matrix(mE*r_P_P_sP):</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3059" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">RPYjac_E_t := combine(Multiply(Transpose(R_0_0_E_t),RPYjac_0_t)):
-RPYjac_E_s := combine(Multiply(Transpose(R_0_0_E_s),RPYjac_0_s)):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">RPYjac_E_t := simplify(Multiply(Transpose(R_0_0_E_t),RPYjac_0_t)):
+RPYjac_E_s := simplify(Multiply(Transpose(R_0_0_E_s),RPYjac_0_s)):</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3055" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -286,12 +281,13 @@ dRPYjac_0_s := Copy(dRPYjac_0_t):</Text-field>
 end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group hide-input="false" labelreference="L2905" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">omegaE := &lt;omega1;omega2;omega3&gt;:
+xED_dummy := &lt;xE,yE,zE&gt;:
 omega0 := Transpose(R_0_0_E_s).omegaE:
-&lt;xED_s(1..3,1);omegaE&gt;:
-JR := Jacobian(convert(omega0,list),convert(&lt;xED_s(1..3,1);omegaE&gt;,list)):
+&lt;xED_dummy;omegaE&gt;:
+JR := Jacobian(convert(omega0,list),convert(&lt;xED_dummy;omegaE&gt;,list)):
 JR_T := Transpose(JR):
-vel0 := Transpose(R_0_0_E_s).xED_s(1..3,1):
-JT := Jacobian(convert(vel0,list),convert(&lt;xED_s(1..3,1);omegaE&gt;,list)):
+vel0 := Transpose(R_0_0_E_s).xED_dummy:
+JT := Jacobian(convert(vel0,list),convert(&lt;xED_dummy;omegaE&gt;,list)):
 JT_T := Transpose(JT):</Text-field>
 </Input>
 </Group>
@@ -303,7 +299,7 @@ wD_0_0_E_s := dRPYjac_0_s.xED_s(4..6,1)+RPYjac_0_s.xEDD_s(4..6,1):</Text-field>
 <Group hide-input="false" labelreference="L3100" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">H := &lt;IdentityMatrix(3,3),ZeroMatrix(3);
       ZeroMatrix(3),RPYjac_0_s&gt;:
-MatlabExport(H, &quot;H.m&quot;,2);</Text-field>
+#MatlabExport(H, &quot;H.m&quot;,2);</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3066" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -326,12 +322,13 @@ paramVecP_old := &lt;J_0_P_raute;sE;mE&gt;:
 paramVecP_old := &lt;J_P_P_raute;sE;mE&gt;:
 paramVecP := &lt;J_0_P_raute;sE;mE&gt;:
 paramVecP := &lt;J_P_P_raute;sE;mE&gt;:
+paramVecP_M := Copy(paramVecP):
 tmp := Matrix(10,1):
 for i to N_LEGS do
-   tmpSt := M(NL,1)*Multiply(Transpose(vec2skew(P_i(1..3,i))),vec2skew(P_i(1..3,i))):
+   tmpSt := M(NQJ_parallel+1,1)*Multiply(Transpose(vec2skew(P_i(1..3,i))),vec2skew(P_i(1..3,i))):
    tmpSt_raute := Matrix(6,1,[tmpSt(1,1),tmpSt(1,2),tmpSt(1,3),tmpSt(2,2),tmpSt(2,3),tmpSt(3,3)]):
-   tmp := &lt;tmpSt_raute,M(NL,1)*P_i(1..3,i),M(NL,1)&gt;:
-   paramVecP := paramVecP + tmp:
+   tmp := &lt;tmpSt_raute,M(NQJ_parallel+1,1)*P_i(1..3,i),M(NQJ_parallel+1,1)&gt;:
+   paramVecP_M := paramVecP_M + tmp:
 end do:</Text-field>
 </Input>
 </Group>
@@ -340,9 +337,8 @@ end do:</Text-field>
         wD_0_0_E_s_stern + Multiply(vec2skew(w_0_0_E_s),w_0_0_E_s_stern),-vec2skew(a_E),ZeroMatrix(3,1)&gt;:
 A_E := &lt;JT_T|JR_T&gt;.&lt;ZeroMatrix(3,6),vec2skew(wD_E_0_E_s)+Multiply(vec2skew(w_E_0_E_s),vec2skew(w_E_0_E_s)),a_E;
         wD_E_0_E_s_stern + Multiply(vec2skew(w_E_0_E_s),w_E_0_E_s_stern),-vec2skew(a_E),ZeroMatrix(3,1)&gt;:
-#paramVecP := paramVecP_old:
 tau_regressor := A_E.paramVecP:
-MatlabExport(tau_regressor, &quot;taureg.m&quot;, 2);</Text-field>
+MatlabExport(tau_regressor, &quot;taureg.m&quot;, 2):</Text-field>
 </Input>
 </Group>
 </Section>
@@ -365,8 +361,12 @@ end if:</Text-field>
 <Input><Text-field style="Text" layout="Normal">Maple-Export</Text-field>
 </Input>
 </Group>
-<Group labelreference="L2956" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save paramVecP, A_E, H, dH, sprintf(&quot;../codeexport/%s/tmp/floatb_%s_platform_dynamic_maple.m&quot;, robot_name, base_method_name):</Text-field>
+<Group hide-input="false" labelreference="L2956" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save paramVecP, paramVecP_M, A_E, H, dH, sprintf(&quot;../codeexport/%s/tmp/floatb_%s_platform_dynamic_maple.m&quot;, robot_name, base_method_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3261" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>

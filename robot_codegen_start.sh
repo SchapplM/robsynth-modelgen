@@ -130,23 +130,23 @@ if [ "$CG_NOTGENSERIAL" == "0" ]; then
 	
 	# Matlab-Funktionen generieren
 	cd $repo_pfad/robot_codegen_scripts/
-	#source $repo_pfad/robot_codegen_scripts/robot_codegen_matlab_varpar.sh
+	source $repo_pfad/robot_codegen_scripts/robot_codegen_matlab_varpar.sh
 	
 	# Testfunktionen generieren
 	cd $repo_pfad/robot_codegen_scripts/
-	#source $repo_pfad/robot_codegen_scripts/testfunctions_generate.sh
+	source $repo_pfad/robot_codegen_scripts/testfunctions_generate.sh
 	
-	#if [ "$CG_MINIMAL" == "0" ]; then
+	if [ "$CG_MINIMAL" == "0" ]; then
 	# Matlab-Testfunktionen starten
-		# if [ ! "$CG_FIXBONLY" == "1" ]; then
-			# matlab -nodesktop -nosplash -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything');quit;"
-		# else
-			# matlab -nodesktop -nosplash -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything_fixbase');quit;"  
-		# fi;
-		# echo "Funktionsgenerierung abgeschlossen. Alle Tests erfolgreich."
-	# else
-		# echo "Funktionsgenerierung abgeschlossen. Keine Tests durchgeführt, da nur Minimalversion erstellt wurde."
-	#fi;
+		 if [ ! "$CG_FIXBONLY" == "1" ]; then
+			 matlab -nodesktop -nosplash -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything');quit;"
+		 else
+			 matlab -nodesktop -nosplash -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything_fixbase');quit;"  
+		 fi;
+		 echo "Funktionsgenerierung abgeschlossen. Alle Tests erfolgreich."
+	 else
+		 echo "Funktionsgenerierung abgeschlossen. Keine Tests durchgeführt, da nur Minimalversion erstellt wurde."
+	fi;
 fi;
 
 ### parallelen Roboter berechnen ###
@@ -178,10 +178,10 @@ if [ "$CG_PARROB" == "1" ]; then
 	source $repo_pfad/robot_codegen_scripts/robot_codegen_matlab_varpar_par.sh
 	
 	# Testfunktionen generieren
-	#cd $repo_pfad/robot_codegen_scripts/
-	#source $repo_pfad/robot_codegen_scripts/testfunctions_generate_par.sh
+	cd $repo_pfad/robot_codegen_scripts/
+	source $repo_pfad/robot_codegen_scripts/testfunctions_generate_par.sh
 	
 	# Matlab-Testfunktionen starten
-	#matlab -nodesktop -nosplash -r "run('/c/Users/Tim-David/Documents/Studienarbeit/Repos/robot_dynamics-hybriddyn_Job/codeexport/${robot_name}/testfcn/${robot_name}_compile_test.m');quit;"
-	#echo "Funktionsgenerierung abgeschlossen. Alle Tests erfolgreich."
+	matlab -nodesktop -nosplash -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_compile_test.m');quit;"
+	echo "Funktionsgenerierung abgeschlossen. Alle Tests erfolgreich."
 fi;

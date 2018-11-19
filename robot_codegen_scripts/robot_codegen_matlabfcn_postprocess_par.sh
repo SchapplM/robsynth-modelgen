@@ -91,6 +91,7 @@ sed -i "s/%N_LEGS%/$parallel_NLEGS/g" $mfcndat
 sed -i "s/%N_XP%/$parallel_NX/g" $mfcndat
 nges=$((parallel_NQJ_leg + 1))
 sed -i "s/%NGES%/$nges/g" $mfcndat
+sed -i "s/%NMPVPARA%/$robot_NMPVPARA/g" $mfcndat
 
 if [ "$replacelastassignment" != "0" ]; then # vergleiche strings, da das Argument auch leer sein könnte
   # Ersetze Variablennamen des letzten Ergebnisses des generierten Codes

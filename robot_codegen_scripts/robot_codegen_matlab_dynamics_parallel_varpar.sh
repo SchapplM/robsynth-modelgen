@@ -27,7 +27,7 @@ do
       cat $head_pfad/robot_matlabtmp_gravloadJ_para_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
       source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 0
-      source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
+      source $repo_pfad/scripts/set_inputdim_line_par.sh $zieldat
 	  cat $tmp_pfad/robot_matlabtmp_assert_xP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ_parallel.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
@@ -70,7 +70,7 @@ do
       cat $head_pfad/robot_matlabtmp_coriolisvecJ_para_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
       source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 0
-      source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
+      source $repo_pfad/scripts/set_inputdim_line_par.sh $zieldat
 	  cat $tmp_pfad/robot_matlabtmp_assert_xP.m >> $zieldat
 	  cat $tmp_pfad/robot_matlabtmp_assert_xDP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ_parallel.m >> $zieldat
@@ -117,7 +117,7 @@ do
       cat $head_pfad/robot_matlabtmp_inertiaJ_para_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
       source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 0
-      source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
+      source $repo_pfad/scripts/set_inputdim_line_par.sh $zieldat
 	  cat $tmp_pfad/robot_matlabtmp_assert_xP.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ_parallel.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
@@ -167,7 +167,7 @@ do
     cat $head_pfad/robot_matlabtmp_invdynJ_para_par${dynpar}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
     source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 0
-    #source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
+    source $repo_pfad/scripts/set_inputdim_line_par.sh $zieldat
 	cat $tmp_pfad/robot_matlabtmp_assert_xP.m >> $zieldat
 	cat $tmp_pfad/robot_matlabtmp_assert_xDP.m >> $zieldat
 	cat $tmp_pfad/robot_matlabtmp_assert_xDDP.m >> $zieldat

@@ -23,7 +23,7 @@ if [ -f $quelldat ]; then
   cat $head_pfad/robot_matlabtmp_jacobia_parallel.head.m > $zieldat
   printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
   source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 0
-  source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
+  source $repo_pfad/scripts/set_inputdim_line_par.sh $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_qJ_parallel.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_xP.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat

@@ -175,7 +175,8 @@ if not assigned(J_P_P) then
 end if:
 if not assigned(xE_s) then
    xE_s:=&lt;x_all[1];x_all[2];x_all[3];x_all[4];x_all[5];x_all[6]&gt;:
-end if:</Text-field>
+end if:
+gvec := Matrix(3,1,[g1,g2,g3]):</Text-field>
 </Input>
 </Group>
 </Section>
@@ -302,7 +303,7 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 </Input>
 </Group>
 <Group labelreference="L1598" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save J_P_P, s_P_sP, NX, NQJ_parallel, angleConvLeg, angleConv, r_P_sP, frame_A_i, qJ_i_s, qJD_i_s, qJDD_i_s, xE_t, xED_t, xEDD_t, xE_s, xED_s, xEDD_s, J_SP, sprintf(&quot;../codeexport/%s/tmp/para_definitions&quot;, robot_name):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save gvec, J_P_P, s_P_sP, NX, NQJ_parallel, angleConvLeg, angleConv, r_P_sP, frame_A_i, qJ_i_s, qJD_i_s, qJDD_i_s, xE_t, xED_t, xEDD_t, xE_s, xED_s, xEDD_s, J_SP, sprintf(&quot;../codeexport/%s/tmp/para_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L1732" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
