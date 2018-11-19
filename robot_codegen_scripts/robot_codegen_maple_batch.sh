@@ -53,6 +53,7 @@ fi;
 source robot_codegen_tmpvar_bash.sh
 source $repo_pfad/robot_codegen_definitions/robot_env.sh
 
+
 # Liste mit Maple-Skripten in der richtigen Reihenfolge
 # Skripte für Fixed-Base-Modellierung
 dateiliste_kindyn="

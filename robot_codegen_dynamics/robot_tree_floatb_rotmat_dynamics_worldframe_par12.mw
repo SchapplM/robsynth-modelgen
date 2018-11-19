@@ -297,7 +297,9 @@ MM_s := Matrix(NQ, NQ):</Text-field>
     for j to NQ do 
       MM_s[i, j] := diff(tauMM_s[i, 1], qDD_s[j, 1]):
     end do:
-  end do:
+  end do:</Text-field>
+</Input>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  save MM_s, sprintf(&quot;../codeexport/%s/tmp/inertia_par%d_maple.m&quot;, robot_name, codegen_dynpar):
 end if:</Text-field>
 </Input>
 </Group>
@@ -436,6 +438,7 @@ end if:</Text-field>
   for i to NQ do 
     tauCC_s := subs({qDD_s(i, 1) = 0}, tauCC_s):
   end do:
+  save tauCC_s, sprintf(&quot;../codeexport/%s/tmp/coriolisvec_par%d_maple.m&quot;, robot_name, codegen_dynpar):
 end if:</Text-field>
 </Input>
 </Group>

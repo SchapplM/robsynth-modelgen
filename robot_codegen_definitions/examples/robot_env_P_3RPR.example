@@ -1,0 +1,12 @@
+# Beispiel für Codegenerierung:
+# 3RPR
+
+robot_name := "P_3RPR":
+leg_name := "S_RPR":
+
+### Platform
+
+AKTIV := 2:
+N_LEGS := 3:
+leg_frame := Matrix(7,1,[xA, yA, 0, 0, 0, 0, zyx]):
+xE_s := Matrix(7,1,[x_all[1],x_all[2],0,x_all[3],0,0, zyx]):

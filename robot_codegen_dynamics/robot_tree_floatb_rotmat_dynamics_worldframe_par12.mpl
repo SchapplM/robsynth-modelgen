@@ -111,6 +111,7 @@ if codeexport_inertia or codeexport_inertiaD or codeexport_cormat then
       MM_s[i, j] := diff(tauMM_s[i, 1], qDD_s[j, 1]):
     end do:
   end do:
+  save MM_s, sprintf("../codeexport/%s/tmp/inertia_par%d_maple.m", robot_name, codegen_dynpar):
 end if:
 # Matlab Export (nur linke untere Dreiecksmatrix bei vollständigen Matrizen)
 if codeexport_inertia and not(base_method_name="twist") then
@@ -185,6 +186,7 @@ if codeexport_corvec then
   for i to NQ do 
     tauCC_s := subs({qDD_s(i, 1) = 0}, tauCC_s):
   end do:
+  save tauCC_s, sprintf("../codeexport/%s/tmp/coriolisvec_par%d_maple.m", robot_name, codegen_dynpar):
 end if:
 # Einzelne Komponenten exportieren (falls der ganze Vektor zu lange dauert).
 if codeexport_corvec and not(base_method_name="twist") and codegen_debug then

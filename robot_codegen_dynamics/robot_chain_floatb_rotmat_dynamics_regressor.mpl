@@ -1,3 +1,4 @@
+
 # Base Parameter Regresor Inverse Dynamics for Robot based on MDH frames
 # Einleitung
 # Berechnung der inversen Dynamik in Regressorform
@@ -163,7 +164,7 @@ for i to NQ do
     if i > 6 and j > 6 then # unterer rechter Teil (Gelenkmoment-Gelenkbeschleunigung-Terme)
       i_MM := index_symmat2vec(NQ,i,j): # Passender Index für zeilenweise ausgewählten symmetrischen Teil (siehe Gesamt-Massenmatrix)
       itmp := itmp + 1:
-      MMjj_regressor_s[itmp,..] := MM_regressor_s[i_MM,..]:
+       MMjj_regressor_s[itmp,..] := MM_regressor_s[i_MM,..]:
     end if:
   end do:
 end do:
@@ -304,7 +305,7 @@ end if:
 # Inverse Dynamics
 # Generate
 tau_regressor_s := dTdqDdt_s-dTdq_s+dUdq_s:
-save tau_regressor_s, sprintf("../codeexport/%s/tmp/invdyn_%s_%s_maple.m", robot_name, expstring, regressor_modus):
+save tau_regressor_s, MMjj_regressor_s, tauC_regressor_s, taug_regressor_s, sprintf("../codeexport/%s/tmp/invdyn_%s_%s_maple.m", robot_name, expstring, regressor_modus):
 # Gesamter Vektor (floating base)
 if codeexport_invdyn and not(base_method_name="twist") then
   MatlabExport(tau_regressor_s(1..NQ,..), sprintf("../codeexport/%s/tmp/invdyn_%s_%s_matlab.m", robot_name, expstring, regressor_modus), codegen_opt):
