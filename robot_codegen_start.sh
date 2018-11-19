@@ -62,10 +62,10 @@ case $key in
     --floatb_only)
     CG_FLOATBONLY=1
     ;;
-	--parrob)
+    --parrob)
     CG_PARROB=1
     ;;
-	--not_gen_serial)
+    --not_gen_serial)
     CG_NOTGENSERIAL=1
     ;;
     *)
@@ -106,90 +106,90 @@ cd $repo_pfad/robot_codegen_scripts/
 
 ### seriellen Roboter berechnen ###
 if [ "$CG_NOTGENSERIAL" == "0" ]; then
-	# Ordner vorbereiten
-	source robot_codegen_tmpvar_bash.sh quiet # enthält zunächst unvollständige Definitionen und wird nur für den Roboternamen gebraucht.
-	mkdir -p "$repo_pfad/workdir/tmp"
-	mkdir -p "$repo_pfad/codeexport/$robot_name"
-	mkdir -p "$repo_pfad/codeexport/$robot_name/tmp"
-	mkdir -p "$repo_pfad/codeexport/$robot_name/matlabfcn"
-	mkdir -p "$repo_pfad/codeexport/$robot_name/testfcn"
+  # Ordner vorbereiten
+  source robot_codegen_tmpvar_bash.sh quiet # enthält zunächst unvollständige Definitionen und wird nur für den Roboternamen gebraucht.
+  mkdir -p "$repo_pfad/workdir/tmp"
+  mkdir -p "$repo_pfad/codeexport/$robot_name"
+  mkdir -p "$repo_pfad/codeexport/$robot_name/tmp"
+  mkdir -p "$repo_pfad/codeexport/$robot_name/matlabfcn"
+  mkdir -p "$repo_pfad/codeexport/$robot_name/testfcn"
 
-	echo "Beginne Berechnungen für den seriellen Roboter ${robot_name}"
-	
-	# Maple-Definitionen einmal ausführen (damit dort definierte Variablen in Bash übernommen werden)
-	$repo_pfad/scripts/run_maple_script.sh $repo_pfad/robot_codegen_definitions/robot_tree_floatb_twist_definitions.mpl
-	
-	# Umgebungsvariablen vorbereiten (jetzt enthalten sie die vollen MDH-Informationen (Name, Dimensionen)
-	source robot_codegen_tmpvar_bash.sh > /dev/null
-	
-	# Skripte vorbereiten
-	source $repo_pfad/robot_codegen_scripts/robot_codegen_maple_preparation.sh $CG_BASE_ARGUMENT
-	
-	# Maple-Skripte starten
-	if [ "$CG_PARALLEL" == "1" ]; then
-		source $repo_pfad/robot_codegen_scripts/robot_codegen_maple_batch_par.sh $CG_BASE_ARGUMENT
-	else
-		source $repo_pfad/robot_codegen_scripts/robot_codegen_maple_batch.sh $CG_BASE_ARGUMENT
-	fi;
-	
-	source robot_codegen_tmpvar_bash.sh
-	
-	# Matlab-Funktionen generieren
-	cd $repo_pfad/robot_codegen_scripts/
-	source $repo_pfad/robot_codegen_scripts/robot_codegen_matlab_varpar.sh
-	
-	# Testfunktionen generieren
-	cd $repo_pfad/robot_codegen_scripts/
-	source $repo_pfad/robot_codegen_scripts/testfunctions_generate.sh
-	
-        if [ "$CG_MINIMAL" == "0" ] && [ "$CG_NOTEST" != "1" ]; then
-	# Matlab-Testfunktionen starten
-		 if [ ! "$CG_FIXBONLY" == "1" ]; then
-			 matlab -nodesktop -nosplash -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything');quit;"
-		 else
-			 matlab -nodesktop -nosplash -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything_fixbase');quit;"  
-		 fi;
-		 echo "Funktionsgenerierung abgeschlossen. Alle Tests erfolgreich."
-	 else
-		 echo "Funktionsgenerierung abgeschlossen. Keine Tests durchgeführt, da nur Minimalversion erstellt wurde."
-	fi;
+  echo "Beginne Berechnungen für den seriellen Roboter ${robot_name}"
+
+  # Maple-Definitionen einmal ausführen (damit dort definierte Variablen in Bash übernommen werden)
+  $repo_pfad/scripts/run_maple_script.sh $repo_pfad/robot_codegen_definitions/robot_tree_floatb_twist_definitions.mpl
+
+  # Umgebungsvariablen vorbereiten (jetzt enthalten sie die vollen MDH-Informationen (Name, Dimensionen)
+  source robot_codegen_tmpvar_bash.sh > /dev/null
+
+  # Skripte vorbereiten
+  source $repo_pfad/robot_codegen_scripts/robot_codegen_maple_preparation.sh $CG_BASE_ARGUMENT
+
+  # Maple-Skripte starten
+  if [ "$CG_PARALLEL" == "1" ]; then
+    source $repo_pfad/robot_codegen_scripts/robot_codegen_maple_batch_par.sh $CG_BASE_ARGUMENT
+  else
+    source $repo_pfad/robot_codegen_scripts/robot_codegen_maple_batch.sh $CG_BASE_ARGUMENT
+  fi;
+
+  source robot_codegen_tmpvar_bash.sh
+
+  # Matlab-Funktionen generieren
+  cd $repo_pfad/robot_codegen_scripts/
+  source $repo_pfad/robot_codegen_scripts/robot_codegen_matlab_varpar.sh
+
+  # Testfunktionen generieren
+  cd $repo_pfad/robot_codegen_scripts/
+  source $repo_pfad/robot_codegen_scripts/testfunctions_generate.sh
+
+  if [ "$CG_MINIMAL" == "0" ] && [ "$CG_NOTEST" != "1" ]; then
+  # Matlab-Testfunktionen starten
+     if [ ! "$CG_FIXBONLY" == "1" ]; then
+       matlab -nodesktop -nosplash -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything');quit;"
+     else
+       matlab -nodesktop -nosplash -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything_fixbase');quit;"
+     fi;
+     echo "Funktionsgenerierung abgeschlossen. Alle Tests erfolgreich."
+   else
+     echo "Funktionsgenerierung abgeschlossen. Keine Tests durchgeführt, da nur Minimalversion erstellt wurde."
+  fi;
 fi;
 
 ### parallelen Roboter berechnen ###
 if [ "$CG_PARROB" == "1" ]; then
-	# Ordner vorbereiten
-	source robot_codegen_tmpvar_bash_par.sh quiet # enthält zunächst unvollständige Definitionen und wird nur für den Roboternamen gebraucht.
-	mkdir -p "$repo_pfad/workdir/tmp"
-	mkdir -p "$repo_pfad/codeexport/$robot_name"
-	mkdir -p "$repo_pfad/codeexport/$robot_name/tmp"
-	mkdir -p "$repo_pfad/codeexport/$robot_name/matlabfcn"
-	mkdir -p "$repo_pfad/codeexport/$robot_name/testfcn"
-	
-	echo "Beginne Berechnungen für den parallele Roboter ${robot_name}"
-	
-	# Maple-Definitionen einmal ausführen (damit dort definierte Variablen in Bash übernommen werden)
-	$repo_pfad/scripts/run_maple_script.sh $repo_pfad/robot_codegen_parallel/robot_para_definitions.mpl
-	
-	# Umgebungsvariablen vorbereiten (jetzt enthalten sie die vollen MDH-Informationen (Name, Dimensionen)
-	source robot_codegen_tmpvar_bash_par.sh > /dev/null
-	
-	# Skripte vorbereiten
-	source $repo_pfad/robot_codegen_scripts/robot_codegen_maple_preparation_par.sh
-	
-	# Maple-Skripte starten
-	source $repo_pfad/robot_codegen_scripts/robot_codegen_maple_batch_parrob.sh $CG_BASE_ARGUMENT
+  # Ordner vorbereiten
+  source robot_codegen_tmpvar_bash_par.sh quiet # enthält zunächst unvollständige Definitionen und wird nur für den Roboternamen gebraucht.
+  mkdir -p "$repo_pfad/workdir/tmp"
+  mkdir -p "$repo_pfad/codeexport/$robot_name"
+  mkdir -p "$repo_pfad/codeexport/$robot_name/tmp"
+  mkdir -p "$repo_pfad/codeexport/$robot_name/matlabfcn"
+  mkdir -p "$repo_pfad/codeexport/$robot_name/testfcn"
 
-	# Matlab-Funktionen generieren
-	cd $repo_pfad/robot_codegen_scripts/
-	source $repo_pfad/robot_codegen_scripts/robot_codegen_matlab_varpar_par.sh
-	
-	# Testfunktionen generieren
-	cd $repo_pfad/robot_codegen_scripts/
-	source $repo_pfad/robot_codegen_scripts/testfunctions_generate_par.sh
-	
-	# Matlab-Testfunktionen starten
-        if [ "$CG_NOTEST" != "1" ]; then
-	  matlab -nodesktop -nosplash -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_compile_test.m');quit;"
-	fi;
-        echo "Funktionsgenerierung abgeschlossen. Alle Tests erfolgreich."
+  echo "Beginne Berechnungen für den parallele Roboter ${robot_name}"
+
+  # Maple-Definitionen einmal ausführen (damit dort definierte Variablen in Bash übernommen werden)
+  $repo_pfad/scripts/run_maple_script.sh $repo_pfad/robot_codegen_parallel/robot_para_definitions.mpl
+
+  # Umgebungsvariablen vorbereiten (jetzt enthalten sie die vollen MDH-Informationen (Name, Dimensionen)
+  source robot_codegen_tmpvar_bash_par.sh > /dev/null
+
+  # Skripte vorbereiten
+  source $repo_pfad/robot_codegen_scripts/robot_codegen_maple_preparation_par.sh
+
+  # Maple-Skripte starten
+  source $repo_pfad/robot_codegen_scripts/robot_codegen_maple_batch_parrob.sh $CG_BASE_ARGUMENT
+
+  # Matlab-Funktionen generieren
+  cd $repo_pfad/robot_codegen_scripts/
+  source $repo_pfad/robot_codegen_scripts/robot_codegen_matlab_varpar_par.sh
+
+  # Testfunktionen generieren
+  cd $repo_pfad/robot_codegen_scripts/
+  source $repo_pfad/robot_codegen_scripts/testfunctions_generate_par.sh
+
+  # Matlab-Testfunktionen starten
+  if [ "$CG_NOTEST" != "1" ]; then
+    matlab -nodesktop -nosplash -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_compile_test.m');quit;"
+  fi;
+  echo "Funktionsgenerierung abgeschlossen. Alle Tests erfolgreich."
 fi;

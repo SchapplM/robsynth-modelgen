@@ -44,7 +44,7 @@ if [ -f $quelldat ]; then
 else
   echo "Code in ${quelldat##*/} nicht gefunden."
 fi
-	
+
 # Inverse Dynamik
 quelldat=$repo_pfad/codeexport/${robot_name}/tmp/invdyn_para_reg_matlab.m
 zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_invdyn_para_reg.m
@@ -72,7 +72,7 @@ if [ -f $quelldat ]; then
   cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
 
   cat $tmp_pfad/robot_matlabtmp_legFrame_parallel.m >> ${quelldat}.subsvar
-  
+
   printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
   sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
   cat $quelldat >> $zieldat

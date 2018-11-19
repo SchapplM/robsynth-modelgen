@@ -25,12 +25,12 @@ for mpldat in `find $repo_pfad/robot_codegen_parallel -name "*.mpl"`; do
   cp $mpldat $repo_pfad/workdir/$filename
 done
 
-# Dateien im Arbeitsverzeichnis bearbeiten: 
+# Dateien im Arbeitsverzeichnis bearbeiten:
 # Debug-Ausgabe in allen Skripten entfernen
 if [ "$CG_MINIMAL" == "1" ]; then
   for mpldat in `find $repo_pfad/workdir -name "*.mpl"`; do
       # TODO: Leerzeichen behandeln
-		  sed -i "s/codegen_debug := true:/codegen_debug := false:/g" $mpldat
+      sed -i "s/codegen_debug := true:/codegen_debug := false:/g" $mpldat
   done
 fi
 
