@@ -8,7 +8,9 @@
 %   Dregelenk = 0, Schubgelenk = 1
 % mu_mdh [%NJ%x1]
 %   Aktives Gelenk = 1, Passiv = 0
+% NL [1x1]
+%   Anzahl der Starrkörper (inklusive Basis)
 
 % %VERSIONINFO%
 
-function [v_mdh, sigma_mdh, mu_mdh] = %FN%()
+function [v_mdh, sigma_mdh, mu_mdh, NL] = %FN%()

@@ -54,6 +54,8 @@ printf "\n%% Aus parameters_mdh_mu_matlab.m\n" >> $zieldat
 cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_mdh_mu_matlab.m >> $zieldat
 varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat`
 echo "mu_mdh = $varname_tmp;" >> $zieldat
+printf "\n%% Aus Roboterdefinition\n" >> $zieldat
+echo "NL = $robot_NL;" >> $zieldat
 
 # Parameter-Funktion, die die MDH-Parameter für einen gegebenen Parametervektor pkin ausgibt
 zieldat=$fcn_pfad/${robot_name}_pkin2mdhparam.m
