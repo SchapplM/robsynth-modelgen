@@ -165,7 +165,7 @@ if [ "$CG_PARROB" == "1" ]; then
 	mkdir -p "$repo_pfad/codeexport/$robot_name/matlabfcn"
 	mkdir -p "$repo_pfad/codeexport/$robot_name/testfcn"
 	
-	echo "Beginne Berechnungen für den paralle Roboter ${robot_name}"
+	echo "Beginne Berechnungen für den parallele Roboter ${robot_name}"
 	
 	# Maple-Definitionen einmal ausführen (damit dort definierte Variablen in Bash übernommen werden)
 	$repo_pfad/scripts/run_maple_script.sh $repo_pfad/robot_codegen_parallel/robot_para_definitions.mpl

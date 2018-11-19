@@ -53,8 +53,8 @@ printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
 source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 0
 source $repo_pfad/scripts/set_inputdim_line_par.sh $zieldat
 cat $tmp_pfad/robot_matlabtmp_assert_xP.m >> $zieldat
-cat $tmp_pfad/robot_matlabtmp_assert_xPD.m >> $zieldat
-cat $tmp_pfad/robot_matlabtmp_assert_xPDD.m >> $zieldat
+cat $tmp_pfad/robot_matlabtmp_assert_xDP.m >> $zieldat
+cat $tmp_pfad/robot_matlabtmp_assert_xDDP.m >> $zieldat
 cat $tmp_pfad/robot_matlabtmp_assert_qJ_parallel.m >> $zieldat
 cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
 cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
@@ -66,8 +66,8 @@ if [ -f $quelldat ]; then
   cat $tmp_pfad/robot_matlabtmp_qJ_parallel.m >> ${quelldat}.subsvar
   cat $tmp_pfad/robot_matlabtmp_par_koppelP_parallel.m >> ${quelldat}.subsvar
   cat $tmp_pfad/robot_matlabtmp_xP.m >> ${quelldat}.subsvar
-  cat $tmp_pfad/robot_matlabtmp_xPD.m >> ${quelldat}.subsvar
-  cat $tmp_pfad/robot_matlabtmp_xPDD.m >> ${quelldat}.subsvar
+  cat $tmp_pfad/robot_matlabtmp_xDP.m >> ${quelldat}.subsvar
+  cat $tmp_pfad/robot_matlabtmp_xDDP.m >> ${quelldat}.subsvar
   cat $tmp_pfad/robot_matlabtmp_g.m >> ${quelldat}.subsvar
   cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
 
