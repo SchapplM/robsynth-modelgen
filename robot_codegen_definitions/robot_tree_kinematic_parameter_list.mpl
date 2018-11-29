@@ -152,7 +152,7 @@ for i from 1 to NJ do
   qoffset_ph(i) := parse(sprintf("qoffset_mdh(%d)", i)):
 end do:
 # Platzhalter-Vektor zur Ersetzung der gestapelten MDH-Parameter
-pkt1_ph := <a_ph;alpha_ph;d_ph;theta_ph; qoffset;b;beta>:
+pkt1_ph := <a_ph;alpha_ph;d_ph;theta_ph; qoffset_ph;b_ph;beta_ph>:
 # Kinematikparameter für kinematische Zwangsbedingungen hinzufügen (falls vorhanden)
 #TODO
 ;

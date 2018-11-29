@@ -404,7 +404,7 @@ end do:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1901" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">pkt1_ph := &lt;a_ph;alpha_ph;d_ph;theta_ph; qoffset;b;beta&gt;:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">pkt1_ph := &lt;a_ph;alpha_ph;d_ph;theta_ph; qoffset_ph;b_ph;beta_ph&gt;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1903" drawlabel="true">
