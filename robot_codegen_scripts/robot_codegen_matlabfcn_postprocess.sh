@@ -125,7 +125,8 @@ echo "% Quelle: HybrDyn-Toolbox (ehem. IRT-Maple-Toolbox)" > $versionfile
 now="$(date +'%Y-%m-%d %H:%M')"
 printf "%% Datum: $now\n" >> $versionfile
 rev=`git rev-parse HEAD`
-printf "%% Revision: $rev\n" >> $versionfile
+revdatum=`git log -1 --date=short --pretty=format:%cd`
+printf "%% Revision: $rev ($revdatum)\n" >> $versionfile
 echo "% Moritz Schappler, moritz.schappler@imes.uni-hannover.de" >> $versionfile
 echo "% (C) Institut für mechatronische Systeme, Universität Hannover" >> $versionfile
 
