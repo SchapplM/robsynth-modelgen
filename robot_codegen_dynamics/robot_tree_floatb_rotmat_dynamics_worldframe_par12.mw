@@ -256,7 +256,7 @@ Die Berechnungen werden deshalb nicht f\303\274r floatb_twist durchgef\303\274hr
 </Group>
 <Group labelreference="L1670" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_grav and not(base_method_name=&quot;twist&quot;) then
-  MatlabExport(taug_s(1..6), sprintf(&quot;../codeexport/%s/tmp/base_gravload_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(taug_s(1..6), sprintf(&quot;../codeexport/%s/tmp/gravload_base_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -266,7 +266,7 @@ end if:</Text-field>
 </Group>
 <Group labelreference="L1673" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_grav then
-  MatlabExport(taug_s(7..NQ), sprintf(&quot;../codeexport/%s/tmp/joint_gravload_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(taug_s(7..NQ), sprintf(&quot;../codeexport/%s/tmp/gravload_joint_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>

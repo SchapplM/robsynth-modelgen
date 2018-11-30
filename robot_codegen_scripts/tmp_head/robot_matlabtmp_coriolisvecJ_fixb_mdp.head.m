@@ -1,4 +1,4 @@
-% Calculate vector of centrifugal and Coriolis load on the joints for
+% Calculate minimal parameter regressor of Coriolis joint torque vector for
 % %RN%
 % Use Code from Maple symbolic Code Generation
 % 
@@ -6,9 +6,7 @@
 % %INPUT_QJ%
 % %INPUT_QJD%
 % %INPUT_PKIN%
-% %INPUT_M%
-% %INPUT_MR%
-% %INPUT_IF%
+% %INPUT_MDPFIXB%
 % 
 % Output:
 % tauc [%NQJ%x1]
@@ -16,5 +14,4 @@
 
 % %VERSIONINFO%
 
-function tauc = %FN%(qJ, qJD, ...
-  pkin, m, mrSges, Ifges)
+function tauc = %FN%(qJ, qJD, pkin, MDP)

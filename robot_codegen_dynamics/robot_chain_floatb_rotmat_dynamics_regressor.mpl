@@ -1,3 +1,4 @@
+
 # Base Parameter Regresor Inverse Dynamics for Robot based on MDH frames
 # Einleitung
 # Berechnung der inversen Dynamik in Regressorform
@@ -99,6 +100,23 @@ if codeexport_invdyn then
   DynString := sprintf("%s tau",DynString):
 end if:
 printf("Generiere Dynamik-Regressor (%s) für %s und %s\n", DynString, robot_name, base_method_name):
+# Platzhalter-Vektor der Dynamik-Parameter aufstellen
+nDP := ColumnDimension(u_ges):
+PV := Matrix(nDP,1):
+for i from 1 to nDP do
+  if regressor_modus = "regressor_minpar" then
+    PV(i,1) := parse(sprintf("MDP%d%", i)):
+  elif regressor_modus = "regressor" then
+    PV(i,1) := parse(sprintf("DP%d%", i)):
+  end if:
+end do:
+PV:
+# Name für Export der Terme als Funktion des Parametervektors
+if regressor_modus = "regressor_minpar" then
+  regshortname := "mdp":
+elif regressor_modus = "regressor" then
+  regshortname := "dp":
+end if:
 # Lagrange Formalismus (mit Funktion)
 OutputLagrange := LagrangeN(t_ges, u_ges):
 dTdqDdt_s := OutputLagrange[1]:
@@ -115,17 +133,20 @@ save taug_regressor_s, sprintf("../codeexport/%s/tmp/gravload_%s_maple.m", robot
 # Matlab Export
 # Belastung der Basis (nur Floating Base)
 if codeexport_grav and not(base_method_name="twist") then
-  MatlabExport(taug_regressor_s(1..6,..), sprintf("../codeexport/%s/tmp/base_gravload_floatb_%s_%s_matlab.m", robot_name, base_method_name, regressor_modus), codegen_opt):
+  MatlabExport(taug_regressor_s(1..6,..), sprintf("../codeexport/%s/tmp/gravload_base_floatb_%s_%s_matlab.m", robot_name, base_method_name, regressor_modus), codegen_opt):
 end if:
 # Belastung der Gelenke: 
 # Fixed-Base: Gravitationsvektor im Basis-KS
 # Floating Base: Gravitationsvektor im Welt-KS, Basis-Orientierung berücksichtigt
+taug := taug_regressor_s . PV:
 if codeexport_grav then
-  MatlabExport(taug_regressor_s(7..NQ,..), sprintf("../codeexport/%s/tmp/joint_gravload_%s_%s_matlab.m", robot_name, expstring, regressor_modus), codegen_opt):
+  MatlabExport(taug_regressor_s(7..NQ,..), sprintf("../codeexport/%s/tmp/gravload_joint_%s_%s_matlab.m", robot_name, expstring, regressor_modus), codegen_opt):
+  MatlabExport(taug(7..NQ,..), sprintf("../codeexport/%s/tmp/gravload_joint_%s_%s_matlab.m", robot_name, expstring, regshortname), codegen_opt):
 end if:
 # Kompletter Vektor
 if codeexport_grav and not(base_method_name="twist") then
   MatlabExport(taug_regressor_s(1..NQ,..), sprintf("../codeexport/%s/tmp/gravload_floatb_%s_%s_matlab.m", robot_name, base_method_name, regressor_modus), codegen_opt):
+  MatlabExport(taug(1..NQ,..), sprintf("../codeexport/%s/tmp/gravload_floatb_%s_%s_matlab.m", robot_name, expstring, regshortname), codegen_opt):
 end if:
 # Mass Matrix
 # Berechnung vollständige Massenmatrix
@@ -167,9 +188,13 @@ for i to NQ do
     end if:
   end do:
 end do:
+# Multiplikation der Massenmatrix mit dem Regressorvektor und Export als obere Dreiecksmatrix
+MMjj_tmp := MMjj_regressor_s . PV: # Vektor der oberen rechten Dreiecksmatrix
+;
 # Export Gelenkmassenmatrix
 if codeexport_inertia and base_method_name="twist" then
   MatlabExport(MMjj_regressor_s, sprintf("../codeexport/%s/tmp/inertia_joint_joint_%s_%s_matlab.m", robot_name, expstring, regressor_modus), codegen_opt):
+  MatlabExport(MMjj_tmp, sprintf("../codeexport/%s/tmp/inertia_joint_joint_%s_%s_matlab.m", robot_name, expstring, regshortname), codegen_opt):
 end if:
 # Gelenk-Basis-Massenmatrix
 #  (untere linke Teilmatrix der Gesamt-Massenmatrix)
@@ -236,18 +261,22 @@ for i to NQ do
   tauC_regressor_s := subs({qDD_s(i, 1) = 0}, tauC_regressor_s):
 end do:
 save tauC_regressor_s, sprintf("../codeexport/%s/tmp/coriolisvec_joint_%s_%s_maple.m", robot_name, expstring, regressor_modus):
+tauc := tauC_regressor_s . PV:
 # Matlab Export
 # Belastung der Gelenke
 if codeexport_corvec then
   MatlabExport(tauC_regressor_s(7..NQ,..), sprintf("../codeexport/%s/tmp/coriolisvec_joint_%s_%s_matlab.m", robot_name, expstring, regressor_modus), codegen_opt):
+  MatlabExport(tauc(7..NQ,..), sprintf("../codeexport/%s/tmp/coriolisvec_joint_%s_%s_matlab.m", robot_name, expstring, regshortname), codegen_opt):
 end if:
 # Gesamter Vektor für Floating Base
 if codeexport_corvec and not(base_method_name="twist") then
   MatlabExport(tauC_regressor_s(1..NQ,..), sprintf("../codeexport/%s/tmp/coriolisvec_%s_%s_matlab.m", robot_name, expstring, regressor_modus), codegen_opt):
+  MatlabExport(tauc(1..NQ,..), sprintf("../codeexport/%s/tmp/coriolisvec_%s_%s_matlab.m", robot_name, expstring, regshortname), codegen_opt):
 end if:
 # Nur Basis-Terme
 if codeexport_corvec and not(base_method_name="twist") then
   MatlabExport(tauC_regressor_s(1..6,..), sprintf("../codeexport/%s/tmp/coriolisvec_base_%s_%s_matlab.m", robot_name, expstring, regressor_modus), codegen_opt):
+  MatlabExport(tauc(1..6,..), sprintf("../codeexport/%s/tmp/coriolisvec_base_%s_%s_matlab.m", robot_name, expstring, regshortname), codegen_opt):
 end if:
 # Coriolis Matrix
 # Floating-Base Coriolismatrix (Gesamt)
@@ -305,16 +334,20 @@ end if:
 # Generate
 tau_regressor_s := dTdqDdt_s-dTdq_s+dUdq_s:
 save tau_regressor_s, sprintf("../codeexport/%s/tmp/invdyn_%s_%s_maple.m", robot_name, expstring, regressor_modus):
+tau := tau_regressor_s . PV:
 # Gesamter Vektor (floating base)
 if codeexport_invdyn and not(base_method_name="twist") then
   MatlabExport(tau_regressor_s(1..NQ,..), sprintf("../codeexport/%s/tmp/invdyn_%s_%s_matlab.m", robot_name, expstring, regressor_modus), codegen_opt):
+  MatlabExport(tau, sprintf("../codeexport/%s/tmp/invdyn_%s_%s_matlab.m", robot_name, expstring, regshortname), codegen_opt):
 end if:
 # Belastung der Basis (floating base)
 if codeexport_invdyn and not(base_method_name="twist") then
   MatlabExport(tau_regressor_s(1..6,..), sprintf("../codeexport/%s/tmp/invdyn_base_%s_%s_matlab.m", robot_name, expstring, regressor_modus), codegen_opt):
+  MatlabExport(tau(1..6,..), sprintf("../codeexport/%s/tmp/invdyn_base_%s_%s_matlab.m", robot_name, expstring, regshortname), codegen_opt):
 end if:
 # Belastung der Gelenke
 if codeexport_invdyn then
   MatlabExport(tau_regressor_s(7..NQ,..), sprintf("../codeexport/%s/tmp/invdyn_joint_%s_%s_matlab.m", robot_name, expstring, regressor_modus), codegen_opt):
+  MatlabExport(tau(7..NQ,..), sprintf("../codeexport/%s/tmp/invdyn_joint_%s_%s_matlab.m", robot_name, expstring, regshortname), codegen_opt):
 end if:
 

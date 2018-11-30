@@ -49,6 +49,8 @@ sed -i "/% %INPUT_IC%/r $tmp_head_pfad/robot_matlabtmp_comment_input_Ic.m" $mfcn
 sed -i "/%INPUT_IC%/d" $mfcndat
 sed -i "/% %INPUT_IF%/r $tmp_head_pfad/robot_matlabtmp_comment_input_If.m" $mfcndat
 sed -i "/%INPUT_IF%/d" $mfcndat
+sed -i "/% %INPUT_MDPFIXB%/r $tmp_head_pfad/robot_matlabtmp_comment_input_MDPFIXB.m" $mfcndat
+sed -i "/%INPUT_MDPFIXB%/d" $mfcndat
 sed -i "/% %INPUT_PKIN%/r $tmp_head_pfad/robot_matlabtmp_comment_input_pkin.m" $mfcndat
 sed -i "/%INPUT_PKIN%/d" $mfcndat
 sed -i "/% %INPUT_QJ%/r $tmp_head_pfad/robot_matlabtmp_comment_input_qJ.m" $mfcndat

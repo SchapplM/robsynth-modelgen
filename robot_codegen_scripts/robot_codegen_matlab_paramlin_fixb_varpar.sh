@@ -87,18 +87,22 @@ fi
 for (( rm=1; rm<=2; rm++ ))
 do
   if [ $rm == 1 ]; then
-    maple_string="regressor_minpar"
-    matlab_string="regmin"
+    maple_string_reg="regressor_minpar"
+    matlab_string_reg="regmin"
+    maple_string_vec="mdp"
+    matlab_string_vec="mdp"
   else
-    maple_string="regressor"
-    matlab_string="reg2"
+    maple_string_reg="regressor"
+    matlab_string_reg="reg2"
+    maple_string_vec="dp"
+    matlab_string_vec="dp"
   fi
 
-  # Coriolis-Vektor
-  quelldat=$repo_pfad/codeexport/${robot_name}/tmp/coriolisvec_joint_fixb_${maple_string}_matlab.m
-  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_coriolisvecJ_fixb_${matlab_string}_slag_vp.m
+  # Coriolis-Vektor Regressor
+  quelldat=$repo_pfad/codeexport/${robot_name}/tmp/coriolisvec_joint_fixb_${maple_string_reg}_matlab.m
+  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_coriolisvecJ_fixb_${matlab_string_reg}_slag_vp.m
   if [ -f $quelldat ]; then
-    cat $head_pfad/robot_matlabtmp_coriolisvecJ_fixb_${matlab_string}.head.m > $zieldat
+    cat $head_pfad/robot_matlabtmp_coriolisvecJ_fixb_${matlab_string_reg}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
     source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
     source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
@@ -117,11 +121,38 @@ do
     echo "Code in ${quelldat##*/} nicht gefunden."
   fi
 
-  # Coriolis-Matrix
-  quelldat=$repo_pfad/codeexport/${robot_name}/tmp/coriolismat_joint_fixb_${maple_string}_matlab.m
-  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_coriolismatJ_fixb_${matlab_string}_slag_vp.m
+  # Coriolis-Vektor als Funktion der Dynamikparameter
+  if [ $rm == 1 ]; then
+    quelldat=$repo_pfad/codeexport/${robot_name}/tmp/coriolisvec_joint_fixb_${maple_string_vec}_matlab.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_coriolisvecJ_fixb_${matlab_string_vec}_slag_vp.m
+    if [ -f $quelldat ]; then
+      cat $head_pfad/robot_matlabtmp_coriolisvecJ_fixb_${matlab_string_vec}.head.m > $zieldat
+      printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_MDPFIXB.m >> $zieldat
+      printf "\n%%%% Variable Initialization" > ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_qJ.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_qJD.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_par_MDPFIXB.m >> ${quelldat}.subsvar
+      printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+      sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
+      cat $quelldat >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
+    else
+      echo "Code in ${quelldat##*/} nicht gefunden."
+    fi
+  fi
+  
+  # Coriolis-Matrix-Regressor
+  quelldat=$repo_pfad/codeexport/${robot_name}/tmp/coriolismat_joint_fixb_${maple_string_reg}_matlab.m
+  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_coriolismatJ_fixb_${matlab_string_reg}_slag_vp.m
   if [ -f $quelldat ]; then
-    cat $head_pfad/robot_matlabtmp_coriolismatJ_fixb_${matlab_string}.head.m > $zieldat
+    cat $head_pfad/robot_matlabtmp_coriolismatJ_fixb_${matlab_string_reg}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
     source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
     source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
@@ -140,11 +171,11 @@ do
     echo "Code in ${quelldat##*/} nicht gefunden."
   fi
 
-  # Massenmatrix
-  quelldat=$repo_pfad/codeexport/${robot_name}/tmp/inertia_joint_joint_fixb_${maple_string}_matlab.m
-  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_inertiaJ_${matlab_string}_slag_vp.m
+  # Massenmatrix-Regressor
+  quelldat=$repo_pfad/codeexport/${robot_name}/tmp/inertia_joint_joint_fixb_${maple_string_reg}_matlab.m
+  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_inertiaJ_${matlab_string_reg}_slag_vp.m
   if [ -f $quelldat ]; then
-    cat $head_pfad/robot_matlabtmp_inertiaJ_${matlab_string}.head.m > $zieldat
+    cat $head_pfad/robot_matlabtmp_inertiaJ_${matlab_string_reg}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
     source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
     source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
@@ -159,12 +190,45 @@ do
   else
     echo "Code in ${quelldat##*/} nicht gefunden."
   fi
+  
 
-  # Massenmatrix-Zeitableitung
-  quelldat=$repo_pfad/codeexport/${robot_name}/tmp/inertiaD_joint_joint_fixb_${maple_string}_matlab.m
-  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_inertiaDJ_${matlab_string}_slag_vp.m
+  # Massenmatrix als Funktion der Dynamikparameter
+  quelldat=$repo_pfad/codeexport/${robot_name}/tmp/inertia_joint_joint_fixb_${maple_string_vec}_matlab.m
+  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_inertiaJ_${matlab_string_vec}_slag_vp.m
+  if [ $rm == 1 ]; then
+    if [ -f $quelldat ]; then
+      cat $head_pfad/robot_matlabtmp_inertiaJ_${matlab_string_vec}.head.m > $zieldat
+      printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_MDPFIXB.m >> $zieldat
+      printf "\n%%%% Variable Initialization" > ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_qJ.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_par_MDPFIXB.m >> ${quelldat}.subsvar
+      printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+      sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
+      cat $quelldat >> $zieldat
+      # Die Massenmatrix wird als Dreiecksmatrix exportiert und hier wieder als symmetrische Matrix zusammengestellt.
+      # Benenne die Ergebnisvariable des exportierten Codes um (zusätzlich zu Hilfsskript robot_codegen_matlabfcn_postprocess.sh)
+      varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat | tr -d '[:space:]'`
+      echo "%% Postprocessing: Reshape Output" >> $zieldat
+      echo "% From vec2symmat_${robot_NQJ}_matlab.m" >> $zieldat
+      sed "s/mv/$varname_tmp/g" $repo_pfad/codeexport/${robot_name}/tmp/vec2symmat_${robot_NQJ}_matlab.m >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
+
+    else
+      echo "Code in ${quelldat##*/} nicht gefunden."
+    fi
+  fi
+  
+  # Massenmatrix-Zeitableitung-Regressor
+  quelldat=$repo_pfad/codeexport/${robot_name}/tmp/inertiaD_joint_joint_fixb_${maple_string_reg}_matlab.m
+  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_inertiaDJ_${matlab_string_reg}_slag_vp.m
   if [ -f $quelldat ]; then
-    cat $head_pfad/robot_matlabtmp_inertiaDJ_${matlab_string}.head.m > $zieldat
+    cat $head_pfad/robot_matlabtmp_inertiaDJ_${matlab_string_reg}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
     source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
     source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
@@ -183,11 +247,11 @@ do
     echo "Code in ${quelldat##*/} nicht gefunden."
   fi
 
-  # Gravitationsmoment
-  quelldat=$repo_pfad/codeexport/${robot_name}/tmp/joint_gravload_fixb_${maple_string}_matlab.m
-  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_gravloadJ_${matlab_string}_slag_vp.m
+  # Gravitationsmoment-Regressor
+  quelldat=$repo_pfad/codeexport/${robot_name}/tmp/gravload_joint_fixb_${maple_string_reg}_matlab.m
+  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_gravloadJ_${matlab_string_reg}_slag_vp.m
   if [ -f $quelldat ]; then
-    cat $head_pfad/robot_matlabtmp_gravloadJ_${matlab_string}.head.m > $zieldat
+    cat $head_pfad/robot_matlabtmp_gravloadJ_${matlab_string_reg}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
     source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
     source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
@@ -204,12 +268,38 @@ do
   else
     echo "Code in ${quelldat##*/} nicht gefunden."
   fi
-
-  # Inverse Dynamik
-  quelldat=$repo_pfad/codeexport/${robot_name}/tmp/invdyn_joint_fixb_${maple_string}_matlab.m
-  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_invdynJ_fixb_${matlab_string}_slag_vp.m
+  
+  # Gravitationsmoment-Vektor als Funktion der Dynamikparameter
+  if [ $rm == 1 ]; then
+    quelldat=$repo_pfad/codeexport/${robot_name}/tmp/gravload_joint_fixb_${maple_string_vec}_matlab.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_gravloadJ_floatb_twist_${matlab_string_vec}_slag_vp.m
+    if [ -f $quelldat ]; then
+      cat $head_pfad/robot_matlabtmp_gravloadJ_floatb_twist_${matlab_string_vec}.head.m > $zieldat
+      printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_MDPFIXB.m >> $zieldat
+      printf "\n%%%% Variable Initialization" > ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_qJ.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_g.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_par_MDPFIXB.m >> ${quelldat}.subsvar
+      printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+      sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
+      cat $quelldat >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
+    else
+      echo "Code in ${quelldat##*/} nicht gefunden."
+    fi
+  fi
+  
+  # Inverse Dynamik-Regressor
+  quelldat=$repo_pfad/codeexport/${robot_name}/tmp/invdyn_joint_fixb_${maple_string_reg}_matlab.m
+  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_invdynJ_fixb_${matlab_string_reg}_slag_vp.m
   if [ -f $quelldat ]; then
-    cat $head_pfad/robot_matlabtmp_invdynJ_fixb_${matlab_string}.head.m > $zieldat
+    cat $head_pfad/robot_matlabtmp_invdynJ_fixb_${matlab_string_reg}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
     source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
     source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
@@ -231,12 +321,44 @@ do
   else
     echo "Code in ${quelldat##*/} nicht gefunden."
   fi
+  
+  
+  # Inversdynamik-Vektor als Funktion der Dynamikparameter
+  if [ $rm == 1 ]; then
+    quelldat=$repo_pfad/codeexport/${robot_name}/tmp/invdyn_joint_fixb_${maple_string_vec}_matlab.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_invdynJ_fixb_${matlab_string_vec}_slag_vp.m
+    if [ -f $quelldat ]; then
+      cat $head_pfad/robot_matlabtmp_invdynJ_fixb_${matlab_string_vec}.head.m > $zieldat
+      printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJDD.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_MDPFIXB.m >> $zieldat
+      printf "\n%%%% Variable Initialization" > ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_qJ.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_qJD.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_qJDD.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_g.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_par_MDPFIXB.m >> ${quelldat}.subsvar
+      printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+      sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
+      cat $quelldat >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
+    else
+      echo "Code in ${quelldat##*/} nicht gefunden."
+    fi
+  fi
 
-  # Kinetische Energie (Fixed Base)
-  quelldat=$repo_pfad/codeexport/${robot_name}/tmp/energy_kinetic_fixb_${maple_string}_matlab.m
-  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_energykin_fixb_${matlab_string}_slag_vp.m
+  # Kinetische Energie Regressor (Fixed Base)
+  quelldat=$repo_pfad/codeexport/${robot_name}/tmp/energy_kinetic_fixb_${maple_string_reg}_matlab.m
+  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_energykin_fixb_${matlab_string_reg}_slag_vp.m
   if [ -f $quelldat ]; then
-    cat $head_pfad/robot_matlabtmp_energykin_fixb_${matlab_string}.head.m > $zieldat
+    cat $head_pfad/robot_matlabtmp_energykin_fixb_${matlab_string_reg}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
     source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
     source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
@@ -256,11 +378,11 @@ do
   fi
 
 
-  # Potentielle Energie (Fixed base)
-  quelldat=$repo_pfad/codeexport/${robot_name}/tmp/energy_potential_fixb_${maple_string}_matlab.m
-  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_energypot_fixb_${matlab_string}_slag_vp.m
+  # Potentielle Energie Regressor (Fixed base)
+  quelldat=$repo_pfad/codeexport/${robot_name}/tmp/energy_potential_fixb_${maple_string_reg}_matlab.m
+  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_energypot_fixb_${matlab_string_reg}_slag_vp.m
   if [ -f $quelldat ]; then
-    cat $head_pfad/robot_matlabtmp_energypot_fixb_${matlab_string}.head.m > $zieldat
+    cat $head_pfad/robot_matlabtmp_energypot_fixb_${matlab_string_reg}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
     source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
     source $repo_pfad/scripts/set_inputdim_line.sh $zieldat

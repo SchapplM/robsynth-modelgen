@@ -91,11 +91,11 @@ save taug_s, sprintf("../codeexport/%s/tmp/gravload_par%d_maple.m", robot_name, 
 # Ist korrekt für floatb_eulxyz.
 # Die Berechnungen werden deshalb nicht für floatb_twist durchgeführt.
 if codeexport_grav and not(base_method_name="twist") then
-  MatlabExport(taug_s(1..6), sprintf("../codeexport/%s/tmp/base_gravload_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(taug_s(1..6), sprintf("../codeexport/%s/tmp/gravload_base_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
 # Belastung der Gelenke
 if codeexport_grav then
-  MatlabExport(taug_s(7..NQ), sprintf("../codeexport/%s/tmp/joint_gravload_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(taug_s(7..NQ), sprintf("../codeexport/%s/tmp/gravload_joint_floatb_%s_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
 end if:
 # Kompletter Vektor
 if codeexport_grav and not(base_method_name="twist") then

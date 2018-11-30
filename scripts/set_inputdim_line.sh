@@ -47,7 +47,8 @@ m|zeros(${robot_NL},1)
 rSges|zeros(${robot_NL},3)
 mrSges|zeros(${robot_NL},3)
 Icges|zeros(${robot_NL},6)
-Ifges|zeros(${robot_NL},6)"
+Ifges|zeros(${robot_NL},6)
+MDP|zeros(${robot_NMPVFIXB},1)"
 
 # zusätzliche Ausdrücke anhängen
 extraargs=${extraargs//;/$'\n'}

@@ -176,7 +176,7 @@ do
 
 
     # Gravitationsmoment (Basis)
-    quelldat=$repo_pfad/codeexport/${robot_name}/tmp/base_gravload_floatb_${basemeth}_${maple_string}_matlab.m
+    quelldat=$repo_pfad/codeexport/${robot_name}/tmp/gravload_base_floatb_${basemeth}_${maple_string}_matlab.m
     zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_gravloadB_floatb_${basemeth}_${matlab_string}_slag_vp.m
     if [ -f $quelldat ]; then
       cat $head_pfad/robot_matlabtmp_gravloadB_floatb_${basemeth}_${matlab_string}.head.m > $zieldat
@@ -211,7 +211,7 @@ do
     fi
 
     # Gravitationsmoment (Gelenke)
-    quelldat=$repo_pfad/codeexport/${robot_name}/tmp/joint_gravload_floatb_${basemeth}_${maple_string}_matlab.m
+    quelldat=$repo_pfad/codeexport/${robot_name}/tmp/gravload_joint_floatb_${basemeth}_${maple_string}_matlab.m
     zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_gravloadJ_floatb_${basemeth}_${matlab_string}_slag_vp.m
     if [ -f $quelldat ]; then
       cat $head_pfad/robot_matlabtmp_gravloadJ_floatb_${basemeth}_${matlab_string}.head.m > $zieldat

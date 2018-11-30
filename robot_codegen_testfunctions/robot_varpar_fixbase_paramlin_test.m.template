@@ -303,9 +303,60 @@ end
 fprintf('Tested inverse dynamics for %d random joint angles for %s\n', ...
   n, robot_name);
 
+
+%% Teste Funktionsaufruf mit übergebenem Regressor gegen Regressormatrix
+% Die direkte Übergabe des Dynamik-Parametervektors ist effizienter als die
+% nachträgliche Multiplikation des Regressors
+
+if ~KINCONSTR && ~TREE
+  for i = 1:n
+    q = Q(i,:)';
+    qD = QD(i,:)';
+    qDD = QDD(i,:)';
+    g_base = G(i,:)';
+    
+    taug_regmin = %RN%_gravloadJ_regmin_slag_vp(q, g_base, pkin);
+    taug_mpv = taug_regmin*MPV;
+    taug_func = %RN%_gravloadJ_floatb_twist_mdp_slag_vp(q, g_base, pkin, MPV);
+    if any( abs(taug_func-taug_mpv) > 1e6*eps(max(abs(taug_func))) )
+      error('Grav Load from base parameter regressor does not match with pre-multiplied calculation.');
+    end
+    
+    tauc_regmin = %RN%_coriolisvecJ_fixb_regmin_slag_vp(q, qD, pkin);
+    tauc_mpv = tauc_regmin*MPV;
+    tauc_func = %RN%_coriolisvecJ_fixb_mdp_slag_vp(q, qD, pkin, MPV);
+    if any( abs(tauc_func-tauc_mpv) > 1e6*eps(max(abs(tauc_func))) )
+      error('Coriolis-vector from base parameter regressor does not match with pre-multiplied calculation.');
+    end
+    
+    Mq_regmin = %RN%_inertiaJ_regmin_slag_vp(q, pkin);
+    Mq_mpv_vec = Mq_regmin*MPV;
+    Mq_mpv = vec2symmat(Mq_mpv_vec);
+    Mq_func = %RN%_inertiaJ_mdp_slag_vp(q, pkin, MPV);
+    if any( abs(Mq_func(:)-Mq_mpv(:)) > 1e6*eps(max(abs(Mq_func(:)))) )
+      error('Inertia matrix from base parameter regressor does not match with pre-multiplied calculation.');
+    end
+    
+    tau_regmin = %RN%_invdynJ_fixb_regmin_slag_vp(q, qD, qDD, g_base, ...
+      pkin);
+    tau_mpv = tau_regmin*MPV;
+    tau_func = %RN%_invdynJ_fixb_mdp_slag_vp(q, qD, qDD, g_base, pkin, MPV);
+    if any( abs(tau_func-tau_mpv) > 1e6*eps(max(abs(tau_func))) )
+      error('Inverse dynamics from base parameter regressor does not match with pre-multiplied calculation.');
+    end
+  end
+end
+fprintf('Tested inverse dynamics functions with parameter vector input for %d random joint angles for %s\n', ...
+  n, robot_name);
+
+
+
+%% Abbruch bei kinematischen Zwangsbedingungen
+% TODO: Test durchführen, wenn Minimalparameterform dafür implementiert
 if KINCONSTR || TREE
   return %#ok<*UNRCH>
 end
+
 %% Prüfe Minimalparametervektor gegen Matrix mit Inertialparameterzuordnung
 % [Sousa2014] Gl. (38)
 [K, K_d, P_b, P_d] = %RN%_PV2_MPV_transformations_fixb(pkin);

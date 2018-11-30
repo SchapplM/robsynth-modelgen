@@ -118,6 +118,12 @@ do
 	echo "ZZ${i} = Ifges(${j},3);" >> $tmp_pfad/robot_matlabtmp_par_If.m
 done
 
+# Alle Dynamikparameter als Vektor (Minimale Form, Fixed Base)
+echo "" > $tmp_pfad/robot_matlabtmp_par_MDPFIXB.m
+for (( i=1; i<=$robot_NMPVFIXB; i++ )); do      
+  echo "MDP${i} = MDP(${i});" >> $tmp_pfad/robot_matlabtmp_par_MDPFIXB.m
+done
+
 # Gravitationsvektor
 echo "" > $tmp_pfad/robot_matlabtmp_g.m
 for (( i=1; i<=3; i++ ))
