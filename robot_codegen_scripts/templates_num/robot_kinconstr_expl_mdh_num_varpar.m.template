@@ -1,0 +1,61 @@
+% Explicit kinematic constraints of
+% palh1m1TE
+% Numeric calculation from joint transformation
+% 
+% Input:
+% %INPUT_QJ%
+% %INPUT_PKIN%
+% 
+% Output:
+% jv [%NJ%x1]
+%   Joint variables (rotation around z or translation in z-direction according to MDH)
+%
+% Sources:
+% Berechnungen Schappler; 30.11.2018
+
+% %VERSIONINFO%
+
+function jv = %FN%(qJ, pkin)
+%% Coder Information
+%#codegen
+%$cgargs {zeros(4,1),zeros(23,1)}
+assert(isreal(qJ) && all(size(qJ) == [4 1]), ...
+  '%FN%: qJ has to be [4x1] (double)');
+assert(isreal(pkin) && all(size(pkin) == [23 1]), ...
+  '%FN%: pkin has to be [23x1] (double)');
+
+%% Berechnung
+% Kinematikparameter und Struktureigenschaften
+[beta_mdh, b_mdh, alpha_mdh, a_mdh, theta_mdh, d_mdh, qoffset_mdh] = %RN%_pkin2mdhparam(pkin);
+[~, sigma_mdh] = %RN%_structural_kinematic_parameters();
+
+% Kinematik: Einzel-Gelenktransformationen
+T = %RN%_joint_trafo_rotmat_mdh_sym_varpar(qJ, pkin);
+
+jv = zeros(%NJ%, 1);
+for i = 1:%NJ%
+  % MDH-Parameter
+  sigma = sigma_mdh(i);
+  beta = beta_mdh(i);
+  b = b_mdh(i);
+  alpha = alpha_mdh(i);
+  a = a_mdh(i);
+  theta = theta_mdh(i);
+  d = d_mdh(i);
+  q_offset = qoffset_mdh(i);
+  % Transformationsschritte außer theta und d
+  T_1 = trotz(beta) * transl([0;0;b]) * trotx(alpha) * transl([a;0;0]);
+  % MDH-Transformation so umformen, dass nur noch die Transformation
+  % in die Richtung des Gelenks (theta und d) übrig bleibt
+  if sigma == 0 % Drehgelenk
+    % Gelenkvariable theta aus Rotationsmatrix berechnen
+    R_ztheta = T_1(1:3,1:3)' * T(1:3,1:3,i);
+    theta = atan2(R_ztheta(2,1), R_ztheta(1,1));
+    jv(i) = theta - q_offset;
+  elseif sigma == 1 % Schubgelenk
+    % Gelenkvariable d aus Translations-Teil der Transformationsmatrix
+    T_Tzd = invtr(T_1 * trotz(theta)) * T(:,:,i);
+    d = T_Tzd(3,4);
+    jv(i) = d - q_offset;
+  end
+end
