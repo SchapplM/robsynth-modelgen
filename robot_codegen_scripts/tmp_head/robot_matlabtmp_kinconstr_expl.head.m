@@ -7,7 +7,7 @@
 % %INPUT_PKIN%
 % 
 % Output:
-% jv [(%NJ%x1]
+% jv [%NJ%x1]
 %   Joint variables (rotation around z or translation in z-direction according to MDH)
 %
 % Sources:
