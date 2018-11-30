@@ -8,7 +8,7 @@
 % %INPUT_PKIN%
 % 
 % Output:
-% taug_reg [%NQJ%x%NMPVFIXB%]
+% tauc_reg [%NQJ%x%NMPVFIXB%]
 %   minimal parameter regressor of coriolis joint torque vector
 
 % %VERSIONINFO%

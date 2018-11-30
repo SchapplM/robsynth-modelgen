@@ -8,7 +8,7 @@
 % %INPUT_PKIN%
 % 
 % Output:
-% taug_reg [%NQJ%x(%NQJ%*10)]
+% tauc_reg [%NQJ%x(%NQJ%*10)]
 %   inertial parameter regressor of coriolis joint torque vector
 
 % %VERSIONINFO%
