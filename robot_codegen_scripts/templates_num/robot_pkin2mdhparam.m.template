@@ -23,3 +23,11 @@
 % %VERSIONINFO%
 
 function [beta_mdh, b_mdh, alpha_mdh, a_mdh, theta_mdh, d_mdh, qoffset_mdh] = %FN%(pkin)
+
+%% Init
+%#codegen
+%$cgargs {zeros(%NKP%,1)}
+assert(isreal(pkin) && all(size(pkin) == [%NKP% 1]), ...
+  '%FN%: Kinematic parameters pkin have to be [%NKP%x1] (double)');
+
+%% Zuweisung der Parameter
