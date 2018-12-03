@@ -7,7 +7,7 @@
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
 # (C) Institut für Regelungstechnik, Leibniz Universität Hannover
 
-echo "Generiere Matlabfunktionen"
+echo "Generiere Matlabfunktionen für seriellen Roboter"
 
 repo_pfad=$(pwd)/..
 tmp_pfad=$repo_pfad/workdir/tmp/

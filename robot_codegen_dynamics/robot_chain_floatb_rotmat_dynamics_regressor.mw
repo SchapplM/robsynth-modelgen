@@ -701,7 +701,7 @@ end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1755" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save tau_regressor_s, sprintf(&quot;../codeexport/%s/tmp/invdyn_%s_%s_maple.m&quot;, robot_name, expstring, regressor_modus):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save tau_regressor_s, MMjj_regressor_s, tauC_regressor_s, taug_regressor_s, sprintf(&quot;../codeexport/%s/tmp/invdyn_%s_%s_maple.m&quot;, robot_name, expstring, regressor_modus):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1882" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">

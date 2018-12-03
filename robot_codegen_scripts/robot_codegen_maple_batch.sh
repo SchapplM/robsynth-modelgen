@@ -53,20 +53,21 @@ fi;
 source robot_codegen_tmpvar_bash.sh
 source $repo_pfad/robot_codegen_definitions/robot_env.sh
 
+
 # Liste mit Maple-Skripten in der richtigen Reihenfolge
 # Skripte für Fixed-Base-Modellierung
 dateiliste_kindyn="
     robot_tree_floatb_twist_definitions.mpl
 "
 if [ -f  $repo_pfad/workdir/${robot_name}_kinematic_constraints.mpl ]; then
-	dateiliste_kindyn="$dateiliste_kindyn
-		${robot_name}_kinematic_constraints.mpl
-		robot_kinematic_constraints_calculations.mpl
-	"
+  dateiliste_kindyn="$dateiliste_kindyn
+    ${robot_name}_kinematic_constraints.mpl
+    robot_kinematic_constraints_calculations.mpl
+  "
 fi;
 # Liste der Kinematikparameter
 dateiliste_kindyn="$dateiliste_kindyn
-	robot_tree_kinematic_parameter_list.mpl
+  robot_tree_kinematic_parameter_list.mpl
 "
 
 # Fixed-Base Terme
@@ -181,10 +182,10 @@ fi; # floatb
 # Werden nach der Kinematik gerechnet. Können also auch hier am Ende kommen
 # Die Ergebnisse werden in der Dynamik nicht weiter benutzt (im Gegensatz zu explizit definierten Zwangsbedingungen, die direkt zur Ersetzung dienen).
 if [ -f  $repo_pfad/robot_codegen_constraints/${robot_name}_kinematic_constraints_implicit.mpl ]; then
-	dateiliste_kindyn="$dateiliste_kindyn
-		${robot_name}_kinematic_constraints_implicit.mpl
-		robot_kinematic_constraints_calculations_implicit.mpl
-	"
+  dateiliste_kindyn="$dateiliste_kindyn
+    ${robot_name}_kinematic_constraints_implicit.mpl
+    robot_kinematic_constraints_calculations_implicit.mpl
+  "
 fi;
 
 # Alle Maple-Dateien der Reihe nach ausführen

@@ -12,7 +12,8 @@
 
 # Öffne die Umgebungsvariable und speichere die Informationen als shell-variable
 repo_pfad=$(pwd)/..
-robot_env_pfad=$repo_pfad/robot_codegen_definitions/robot_env
+echo $repo_pfad
+robot_env_pfad="$repo_pfad/robot_codegen_definitions/robot_env"
 
 if [ ! -f "$robot_env_pfad" ]; then
   echo "Keine Roboterdefinition \"$robot_env_pfad\" gefunden"
@@ -30,9 +31,9 @@ if [ ! "$1" == "quiet" ]; then
   echo "robot_name=$robot_name"
 fi
 # Speichere die Daten als Shell-Variablen. Die Variablen werden von anderen Skripten mit `robot_codegen_definitions/robot_env.sh` eingebunden.
-echo "robot_NQJ=$robot_NQJ" > $robot_env_pfad.sh
-echo "robot_NJ=$robot_NJ" >> $robot_env_pfad.sh
-echo "robot_name=\"$robot_name\"" >> $robot_env_pfad.sh
+echo "robot_NQJ=$robot_NQJ" > "$robot_env_pfad.sh"
+echo "robot_NJ=$robot_NJ" >> "$robot_env_pfad.sh"
+echo "robot_name=\"$robot_name\"" >> "$robot_env_pfad.sh"
 
 # Lese weitere Informationen aus der generierten Definitionsdatei
 robot_def_pfad=$repo_pfad/codeexport/${robot_name}/tmp/tree_floatb_twist_definitions
@@ -119,3 +120,9 @@ echo "robot_NMPVFLOATB=$robot_NMPVFLOATB" >> $robot_env_pfad.sh
 if [ ! "$1" == "quiet" ]; then
   echo "robot_NMPVFLOATB=$robot_NMPVFLOATB"
 fi
+
+
+if [ -d "$repo_pfad/codeexport/${robot_name}/" ]; then
+	cp $repo_pfad/robot_codegen_definitions/robot_env $repo_pfad/codeexport/${robot_name}/tmp/
+	cp $repo_pfad/robot_codegen_definitions/robot_env.sh $repo_pfad/codeexport/${robot_name}/tmp/
+fi;

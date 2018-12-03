@@ -69,22 +69,22 @@ fi;
 
 for basemeth in "${basemethodenames[@]}"
 do
-	dateiliste_kin="
-		  robot_tree_floatb_${basemeth}_definitions.mpl
-	"
- 	if [ -f  $repo_pfad/workdir/${robot_name}_kinematic_constraints.mpl ]; then
-		dateiliste_kin="$dateiliste_kin
-			${robot_name}_kinematic_constraints.mpl
-			robot_kinematic_constraints_calculations.mpl
-		"
-	fi;
-	dateiliste_kin="$dateiliste_kin
-		  robot_tree_kinematic_parameter_list.mpl
-		  robot_tree_floatb_rotmat_mdh_kinematics.mpl
-		  robot_tree_floatb_rotmat_kinematics_com_worldframe_par1.mpl
-	"
-	dateiliste_mdhvel="
-	    robot_tree_velocity_mdh_angles.mpl
+  dateiliste_kin="
+      robot_tree_floatb_${basemeth}_definitions.mpl
+  "
+   if [ -f  $repo_pfad/workdir/${robot_name}_kinematic_constraints.mpl ]; then
+    dateiliste_kin="$dateiliste_kin
+      ${robot_name}_kinematic_constraints.mpl
+      robot_kinematic_constraints_calculations.mpl
+    "
+  fi;
+  dateiliste_kin="$dateiliste_kin
+      robot_tree_kinematic_parameter_list.mpl
+      robot_tree_floatb_rotmat_mdh_kinematics.mpl
+      robot_tree_floatb_rotmat_kinematics_com_worldframe_par1.mpl
+  "
+  dateiliste_mdhvel="
+      robot_tree_velocity_mdh_angles.mpl
   "
 
   dateiliste_vel="
@@ -93,43 +93,43 @@ do
   "
 
   if [ "$CG_MINIMAL" == "0" ]; then
-	  dateiliste_en="
+    dateiliste_en="
         robot_tree_floatb_rotmat_energy_worldframe_par1.mpl
         robot_tree_floatb_rotmat_energy_worldframe_par2.mpl
         robot_tree_floatb_rotmat_energy_linkframe_par2.mpl
-	  "
+    "
   else
-	  dateiliste_en="
+    dateiliste_en="
         robot_tree_floatb_rotmat_energy_worldframe_par2.mpl
         robot_tree_floatb_rotmat_energy_linkframe_par2.mpl
-	  "
+    "
   fi;
   dateiliste_lag="
-	    robot_tree_floatb_rotmat_lagrange_worldframe_par2.mpl
+      robot_tree_floatb_rotmat_lagrange_worldframe_par2.mpl
   "
   if [ "$CG_MINIMAL" == "0" ]; then
     dateiliste_lag="
         $dateiliste_lag
-	      robot_tree_floatb_rotmat_lagrange_worldframe_par1.mpl
+        robot_tree_floatb_rotmat_lagrange_worldframe_par1.mpl
     "
   fi;
   dateiliste_dyn="
-	    robot_tree_floatb_rotmat_dynamics_worldframe_par2_corvec.mpl
-	    robot_tree_floatb_rotmat_dynamics_worldframe_par2_grav.mpl
-	    robot_tree_floatb_rotmat_dynamics_worldframe_par2_inertia.mpl
+      robot_tree_floatb_rotmat_dynamics_worldframe_par2_corvec.mpl
+      robot_tree_floatb_rotmat_dynamics_worldframe_par2_grav.mpl
+      robot_tree_floatb_rotmat_dynamics_worldframe_par2_inertia.mpl
   "
   if [ "$CG_MINIMAL" == "0" ]; then
     dateiliste_dyn="
         $dateiliste_dyn
-	      robot_tree_floatb_rotmat_dynamics_worldframe_par1_corvec.mpl
-	      robot_tree_floatb_rotmat_dynamics_worldframe_par1_cormat.mpl
-	      robot_tree_floatb_rotmat_dynamics_worldframe_par1_grav.mpl
-	      robot_tree_floatb_rotmat_dynamics_worldframe_par1_inertia.mpl
-	      robot_tree_floatb_rotmat_dynamics_worldframe_par1_inertiaD.mpl
-	      robot_tree_floatb_rotmat_dynamics_worldframe_par1_invdyn.mpl
-	      robot_tree_floatb_rotmat_dynamics_worldframe_par2_cormat.mpl
-	      robot_tree_floatb_rotmat_dynamics_worldframe_par2_invdyn.mpl
-	      robot_tree_floatb_rotmat_dynamics_worldframe_par2_inertiaD.mpl
+        robot_tree_floatb_rotmat_dynamics_worldframe_par1_corvec.mpl
+        robot_tree_floatb_rotmat_dynamics_worldframe_par1_cormat.mpl
+        robot_tree_floatb_rotmat_dynamics_worldframe_par1_grav.mpl
+        robot_tree_floatb_rotmat_dynamics_worldframe_par1_inertia.mpl
+        robot_tree_floatb_rotmat_dynamics_worldframe_par1_inertiaD.mpl
+        robot_tree_floatb_rotmat_dynamics_worldframe_par1_invdyn.mpl
+        robot_tree_floatb_rotmat_dynamics_worldframe_par2_cormat.mpl
+        robot_tree_floatb_rotmat_dynamics_worldframe_par2_invdyn.mpl
+        robot_tree_floatb_rotmat_dynamics_worldframe_par2_inertiaD.mpl
     "
   fi;
 
@@ -142,18 +142,18 @@ do
     dateiliste_plin="
       $dateiliste_plin
       robot_tree_base_parameter_transformations.mpl
-	    robot_chain_floatb_rotmat_dynamics_regressor_minpar_corvec.mpl
-	    robot_chain_floatb_rotmat_dynamics_regressor_minpar_cormat.mpl
-	    robot_chain_floatb_rotmat_dynamics_regressor_minpar_grav.mpl
-	    robot_chain_floatb_rotmat_dynamics_regressor_minpar_inertia.mpl
-	    robot_chain_floatb_rotmat_dynamics_regressor_minpar_inertiaD.mpl
-	    robot_chain_floatb_rotmat_dynamics_regressor_minpar_invdyn.mpl
-	    robot_chain_floatb_rotmat_dynamics_regressor_pv2_corvec.mpl
-	    robot_chain_floatb_rotmat_dynamics_regressor_pv2_cormat.mpl
-	    robot_chain_floatb_rotmat_dynamics_regressor_pv2_grav.mpl
-	    robot_chain_floatb_rotmat_dynamics_regressor_pv2_inertia.mpl
-	    robot_chain_floatb_rotmat_dynamics_regressor_pv2_inertiaD.mpl
-	    robot_chain_floatb_rotmat_dynamics_regressor_pv2_invdyn.mpl
+      robot_chain_floatb_rotmat_dynamics_regressor_minpar_corvec.mpl
+      robot_chain_floatb_rotmat_dynamics_regressor_minpar_cormat.mpl
+      robot_chain_floatb_rotmat_dynamics_regressor_minpar_grav.mpl
+      robot_chain_floatb_rotmat_dynamics_regressor_minpar_inertia.mpl
+      robot_chain_floatb_rotmat_dynamics_regressor_minpar_inertiaD.mpl
+      robot_chain_floatb_rotmat_dynamics_regressor_minpar_invdyn.mpl
+      robot_chain_floatb_rotmat_dynamics_regressor_pv2_corvec.mpl
+      robot_chain_floatb_rotmat_dynamics_regressor_pv2_cormat.mpl
+      robot_chain_floatb_rotmat_dynamics_regressor_pv2_grav.mpl
+      robot_chain_floatb_rotmat_dynamics_regressor_pv2_inertia.mpl
+      robot_chain_floatb_rotmat_dynamics_regressor_pv2_inertiaD.mpl
+      robot_chain_floatb_rotmat_dynamics_regressor_pv2_invdyn.mpl
     "
   fi;
   # Zusätzliche Maple-Skripte speziell für dieses System (benutzerdefiniert)
@@ -255,10 +255,10 @@ $repo_pfad/scripts/run_maple_script.sh $repo_pfad/workdir/robot_tree_floatb_twis
 # Werden nach der Kinematik gerechnet. Können also auch hier am Ende kommen
 # Die Ergebnisse werden in der Dynamik nicht weiter benutzt (im Gegensatz zu explizit definierten Zwangsbedingungen, die direkt zur Ersetzung dienen).
 if [ -f  $repo_pfad/robot_codegen_constraints/${robot_name}_kinematic_constraints_implicit.mpl ]; then
-	dateiliste_impconstr="
-		${robot_name}_kinematic_constraints_implicit.mpl
-		robot_kinematic_constraints_calculations_implicit.mpl
-	"
+  dateiliste_impconstr="
+    ${robot_name}_kinematic_constraints_implicit.mpl
+    robot_kinematic_constraints_calculations_implicit.mpl
+  "
   for wsic in ${dateiliste_impconstr[@]}
   do
     mpldat_full=$workdir/$wsic

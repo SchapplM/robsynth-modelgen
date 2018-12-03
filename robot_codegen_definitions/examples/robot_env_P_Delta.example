@@ -1,0 +1,12 @@
+# Beispiel für Codegenerierung:
+# Delta
+
+robot_name := "P_Delta":
+leg_name := "S_RUU":
+
+### Platform
+
+AKTIV := 1:
+N_LEGS := 3:
+leg_frame := Matrix(7,1,[xA, yA, 0, alphaLeg, 0, 0, zyx]):
+xE_s := Matrix(7,1,[x_all[1],x_all[2],x_all[3],0,0,0, zyx]):

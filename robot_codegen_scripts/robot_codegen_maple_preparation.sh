@@ -31,7 +31,7 @@ done
 
 source $repo_pfad/robot_codegen_definitions/robot_env.sh
 
-# Arbeitsverzeichnis leeren (damit alte Dateiversionen nicht versehentlich gestartet werden). 
+# Arbeitsverzeichnis leeren (damit alte Dateiversionen nicht versehentlich gestartet werden).
 rm -rf $repo_pfad/workdir
 mkdir -p $repo_pfad/workdir/tmp
 
@@ -48,12 +48,12 @@ for mpldat in `find $repo_pfad -name "*.mpl"`; do
   cp $mpldat $repo_pfad/workdir/$filename
 done
 
-# Dateien im Arbeitsverzeichnis bearbeiten: 
+# Dateien im Arbeitsverzeichnis bearbeiten:
 # Debug-Ausgabe in allen Skripten entfernen
 if [ "$CG_MINIMAL" == "1" ]; then
   for mpldat in `find $repo_pfad/workdir -name "*.mpl"`; do
       # TODO: Leerzeichen behandeln
-		  sed -i "s/codegen_debug := true:/codegen_debug := false:/g" $mpldat
+      sed -i "s/codegen_debug := true:/codegen_debug := false:/g" $mpldat
   done
 fi
 
@@ -79,10 +79,10 @@ if [ "$CG_MINIMAL" == "1" ]; then
   for f in $noexportlist; do
       if [ ! -f $repo_pfad/workdir/$f ]; then
         continue # Datei existiert nicht.
-      fi 
+      fi
       mpldat=$repo_pfad/workdir/$f
       # TODO: Leerzeichen behandeln
-		  sed -i "s/codegen_act := true:/codegen_act := false:/g" $mpldat
+      sed -i "s/codegen_act := true:/codegen_act := false:/g" $mpldat
   done
 fi
 
@@ -97,6 +97,15 @@ cp $repo_pfad/workdir/robot_tree_floatb_rotmat_dynamics_worldframe_par12.mpl $re
 cp $repo_pfad/workdir/robot_tree_floatb_rotmat_dynamics_worldframe_par12.mpl $repo_pfad/workdir/robot_tree_floatb_rotmat_dynamics_worldframe_par2.mpl
 sed -i "s/codegen_dynpar := 1:/codegen_dynpar := 2:/g" $repo_pfad/workdir/robot_tree_floatb_rotmat_dynamics_worldframe_par2.mpl
 
+# Parallele Dynamik-Skripte für Parametersätze 1 und 2 vorbereiten
+cp $repo_pfad/workdir/robot_para_plattform_rotmat_dynamics.mpl $repo_pfad/workdir/robot_para_plattform_rotmat_dynamics_par1.mpl
+cp $repo_pfad/workdir/robot_para_plattform_rotmat_dynamics.mpl $repo_pfad/workdir/robot_para_plattform_rotmat_dynamics_par2.mpl
+sed -i "s/codegen_dynpar := 1:/codegen_dynpar := 2:/g" $repo_pfad/workdir/robot_para_plattform_rotmat_dynamics_par2.mpl
+
+cp $repo_pfad/workdir/robot_para_rotmat_projection_dynamics.mpl $repo_pfad/workdir/robot_para_rotmat_projection_dynamics_par1.mpl
+cp $repo_pfad/workdir/robot_para_rotmat_projection_dynamics.mpl $repo_pfad/workdir/robot_para_rotmat_projection_dynamics_par2.mpl
+sed -i "s/codegen_dynpar := 1:/codegen_dynpar := 2:/g" $repo_pfad/workdir/robot_para_rotmat_projection_dynamics_par2.mpl
+
 # Erstelle einzelne Arbeitsblätter für jeden Teil der inversen Dynamik
 codeexportswitches=( corvec cormat grav inertia inertiaD invdyn )
 for (( dynpar=1; dynpar<=2; dynpar++ ))
@@ -105,13 +114,13 @@ do
   do
     mpldat=$repo_pfad/workdir/robot_tree_floatb_rotmat_dynamics_worldframe_par${dynpar}_${ces}.mpl
     cp $repo_pfad/workdir/robot_tree_floatb_rotmat_dynamics_worldframe_par${dynpar}.mpl $mpldat
-		# deaktiviere jede Code-Exportierung
-		for ces2 in "${codeexportswitches[@]}"
-		do
-		  sed -i "s/codeexport_${ces2} := true:/codeexport_${ces2} := false:/g" $mpldat
+    # deaktiviere jede Code-Exportierung
+    for ces2 in "${codeexportswitches[@]}"
+    do
+      sed -i "s/codeexport_${ces2} := true:/codeexport_${ces2} := false:/g" $mpldat
     done
     # Aktivierung der gewünschten Code-Exportierung
-		sed -i "s/codeexport_${ces} := false:/codeexport_${ces} := true:/g" $mpldat
+    sed -i "s/codeexport_${ces} := false:/codeexport_${ces} := true:/g" $mpldat
   done
 done
 
@@ -128,13 +137,13 @@ do
   do
     mpldat=$repo_pfad/workdir/robot_chain_floatb_rotmat_dynamics_regressor_${rm}_${ces}.mpl
     cp $repo_pfad/workdir/robot_chain_floatb_rotmat_dynamics_regressor_${rm}.mpl $mpldat
-		# deaktiviere jede Code-Exportierung
-		for ces2 in "${codeexportswitches[@]}"
-		do
-		  sed -i "s/codeexport_${ces2} := true:/codeexport_${ces2} := false:/g" $mpldat
+    # deaktiviere jede Code-Exportierung
+    for ces2 in "${codeexportswitches[@]}"
+    do
+      sed -i "s/codeexport_${ces2} := true:/codeexport_${ces2} := false:/g" $mpldat
     done
     # Aktivierung der gewünschten Code-Exportierung
-		sed -i "s/codeexport_${ces} := false:/codeexport_${ces} := true:/g" $mpldat
+    sed -i "s/codeexport_${ces} := false:/codeexport_${ces} := true:/g" $mpldat
   done
 done
 

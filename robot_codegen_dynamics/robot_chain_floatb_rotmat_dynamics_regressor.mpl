@@ -333,7 +333,7 @@ end if:
 # Inverse Dynamics
 # Generate
 tau_regressor_s := dTdqDdt_s-dTdq_s+dUdq_s:
-save tau_regressor_s, sprintf("../codeexport/%s/tmp/invdyn_%s_%s_maple.m", robot_name, expstring, regressor_modus):
+save tau_regressor_s, MMjj_regressor_s, tauC_regressor_s, taug_regressor_s, sprintf("../codeexport/%s/tmp/invdyn_%s_%s_maple.m", robot_name, expstring, regressor_modus):
 tau := tau_regressor_s . PV:
 # Gesamter Vektor (floating base)
 if codeexport_invdyn and not(base_method_name="twist") then

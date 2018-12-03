@@ -1,0 +1,19 @@
+# Beispiel für Codegenerierung:
+# RPR
+
+robot_name := "S_RPR":
+
+NJ := 3:
+NQJ := 3:
+
+qoffset := Matrix(3,1,[0,0,0]):
+alpha := Matrix(3,1,[0,Pi/2,Pi/2]):
+a := Matrix(3,1,[0,0, 0]):
+
+d := Matrix(3,1,[0,qJ_t(2),0]):
+theta := Matrix(3,1,[qJ_t(1), 0,qJ_t(3)]):
+
+v := Matrix(3,1,[0, 1, 2]):
+b := Matrix(3,1,[0, 0, 0]):
+beta := Matrix(3,1,[0, 0, 0]):
+sigma := Matrix(3,1,[0, 1, 0]):
