@@ -53,6 +53,13 @@ for i to NQJ do
   end if:
 end do:
 NQJ_parallel := counter:
+counter := 0:
+for i to ColumnDimension(J) do
+  if not(Equal(J(..,i),Vector(3,[0,0,0]))) then
+    counter := counter + 1:
+  end if:
+end do:
+NQJ_parallel := counter:
 qJ_i_s := Matrix(NQJ_parallel,N_LEGS):
 qJD_i_s := Matrix(NQJ_parallel,N_LEGS):
 qJDD_i_s := Matrix(NQJ_parallel,N_LEGS):

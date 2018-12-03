@@ -7,6 +7,7 @@
 % %INPUT_M_P%
 % %INPUT_MR_P%
 % %INPUT_IF_P%
+% %INPUT_KOPPEL%
 % 
 % Output:
 % MPV [%NMPVPARA%x1]
@@ -14,5 +15,5 @@
 
 % %VERSIONINFO%
 
-function MPV = %FN%(pkin, m, mrSges, Ifges)
+function MPV = %FN%(pkin, m, mrSges, Ifges, koppelP)
 

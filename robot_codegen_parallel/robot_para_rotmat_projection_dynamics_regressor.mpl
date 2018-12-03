@@ -52,7 +52,12 @@ read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
 # Ergebnisse der Kinematik für parallen Roboter laden
 read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
-printf("Generiere Parameterlineare Form der Dynamik für PKM %s mit Parametersatz %d\n", robot_name, codegen_dynpar, base_method_name):
+printf("Generiere Parameterlineare Form der Dynamik für PKM %s mit Minimal-Parametersatz\n", robot_name):
+# Lade "robotics_repo_path"-File mit Link zum "imes-robotics-matlab"-Repo
+read("../robotics_repo_path"):
+# Lade die Funktionen aus dem "imes-robotics-matlab"-Repo
+read(sprintf("%s/transformation/maple/proc_eul%s2r", robotics_repo_path, angleConvLeg)):
+read(sprintf("%s/transformation/maple/proc_eul%sjac", robotics_repo_path, "zyx")):
 # Berechne Dynamik-Matrizen für alle Beine
 # Alle Basisgeschwindigkeiten und -winkel aus Berechnung der seriellen Kette zu null setzen.
 omegaxs_base := 0:
@@ -91,13 +96,11 @@ end do:
 read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
 Paramvec2 := Paramvec2:
 for j to RowDimension(Paramvec2) do
-	if Paramvec2(j) = M(NQJ_parallel+1,1) then
+	if is(Paramvec2(j) = M(NQJ_parallel+1,1)) then
 		Paramvec2(j) := 0;
 		paramVecP := paramVecP_M;
 	end if:
 end do:
-
-
 
 Paramvec2 := remove(has,Paramvec2,0):
 counter := 0:
@@ -113,17 +116,23 @@ for i to RowDimension(Paramvec2) do
 end do:
 
 # Dupliziere alle berechneten Matrizen. i steht für den Index des jeweiligen Beines
-g1 := gtmp1:
-g2 := gtmp2:
-g3 := gtmp3:
-unassign('g1','g2','g3'):
+tauReg := tau_regressor_s(7..NQ,..):
 g := <g1;g2;g3>:
+tmp := <tmp1;tmp2;tmp3>:
 Rmat := Transpose(parse(sprintf("eul%s2r",angleConvLeg))(frame_A_i(1..3,1))):
-gtmp1 := (Rmat.g)(1):
-gtmp2 := (Rmat.g)(2):
-gtmp3 := (Rmat.g)(3):
+gtmp := Rmat.g:
+for i to NQJ_parallel do
+  for k to ColumnDimension(tauReg) do
+    for j to 3 do 
+      tauReg(i,k) := subs({g(j)=tmp(j)},tauReg(i,k)):
+    end do:
+    for j to 3 do 
+      tauReg(i,k) := subs({tmp(j)=gtmp(j)},tauReg(i,k)):
+    end do:
+  end do:
+end do:
 for i to N_LEGS do
-  tau_regressor_s||i := Copy(tau_regressor_s(7..NQ,..)):
+  tau_regressor_s||i := Copy(tauReg):
 end do:
 COLUMNreg := ColumnDimension(tau_regressor_s):
 # Substituiere in jeder Matrix den Winkel Alpha (Verdrehung in der Basis) und die Gelenkkoordinaten und -geschwindigkeiten
@@ -212,7 +221,7 @@ for i to NX do
   end do:
 end do:
 tauGes := ARed:#.paramMinRed:
-if RowDimension(Jinv) < 4 then
+if RowDimension(Jinv) < 5 then
   J:=MatrixInverse(Jinv):
   J:=simplify(J):
   tau:=Transpose(J).tauGes:

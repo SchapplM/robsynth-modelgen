@@ -304,7 +304,7 @@ end if:</Text-field>
 <Group hide-input="false" labelreference="L3122" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for j to 3 do
   for i from 1 to 6 do
-    gE_z(j) := subs(x_all[i]=xAll(i),gE_z(j)):
+    gE_z(j) := subs(xE_s(i)=xAll(i),gE_z(j)):
   end do:
 end do:</Text-field>
 </Input>
@@ -328,13 +328,13 @@ end do:</Text-field>
 <Group hide-input="false" labelreference="L3130" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for j to 6 do
   for i from 1 to 6 do
-    dgEdz_final(j) := subs(xAll(i)=x_all[i],dgEdz_final(j)):
+    dgEdz_final(j) := subs(xAll(i)=xE_s(i),dgEdz_final(j)):
   end do:
 end do:</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L2953" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">gE := Transpose(Hinv).dgEdz_final:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">gE := simplify(Transpose(Hinv).dgEdz_final):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2888" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -356,13 +356,11 @@ end if:</Text-field>
 </Group>
 <Group hide-input="false" labelreference="L3128" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_dynpar = 1 then
-  ME := &lt;mE*Matrix(3,shape=identity),mE*vec2skew(r_0_sP_P);
-         mE*Transpose(vec2skew(r_0_sP_P)),J_0_P&gt;:
-  la := codegen_dynpar;
+  ME := simplify(&lt;mE*Matrix(3,shape=identity),mE*vec2skew(r_0_sP_P);
+         mE*Transpose(vec2skew(r_0_sP_P)),J_0_P&gt;):
 else 
-  ME := &lt;mE*Matrix(3,shape=identity),vec2skew(-s_0_P_sP);
-         Transpose(vec2skew(-s_0_P_sP)),J_0_P&gt;:
-  la := codegen_dynpar;
+  ME := simplify(&lt;mE*Matrix(3,shape=identity),vec2skew(-s_0_P_sP);
+         Transpose(vec2skew(-s_0_P_sP)),J_0_P&gt;):
 end if:</Text-field>
 </Input>
 </Group>
@@ -381,11 +379,11 @@ Abdellatif2007 S.39 (3.31)</Text-field>
 </Group>
 <Group hide-input="false" labelreference="L3150" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_dynpar = 1 then
-  cE := &lt;ZeroMatrix(3,3),mE*vec2skew(rD_0_sP_P);
-         ZeroMatrix(3,3),Multiply(vec2skew(w_0_0_E_s),J_0_P)&gt;:
+  cE := simplify(&lt;ZeroMatrix(3,3),mE*vec2skew(rD_0_sP_P);
+         ZeroMatrix(3,3),Multiply(vec2skew(w_0_0_E_s),J_0_P)&gt;):
 else
-  cE := &lt;ZeroMatrix(3,3),vec2skew(-sD_0_P_sP);
-         ZeroMatrix(3,3),Multiply(vec2skew(w_0_0_E_s),J_0_P)&gt;:
+  cE := simplify(&lt;ZeroMatrix(3,3),vec2skew(-sD_0_P_sP);
+         ZeroMatrix(3,3),Multiply(vec2skew(w_0_0_E_s),J_0_P)&gt;):
 end if:</Text-field>
 </Input>
 </Group>
@@ -405,7 +403,7 @@ Abdellatif2007 S.39 (3.29)</Text-field>
 <Group hide-input="false" labelreference="L3152" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MME := ME.H:
 cvecE := Multiply(ME.dH+cE.H,xED_s):
-tauE := Multiply(MME,xEDD_s) + cvecE - gE:#Multiply(cE,xED_s) - gE:</Text-field>
+tauE := Multiply(MME,xEDD_s) + cvecE - gE:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2941" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">

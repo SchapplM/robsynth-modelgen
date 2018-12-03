@@ -89,8 +89,6 @@ end do:
 g1 := gtmp1:
 g2 := gtmp2:
 g3 := gtmp3:
-#g1 := 0:
-#g2 := 0:
 read sprintf("../codeexport/%s/tmp/gravload_par%d_maple.m", leg_name, codegen_dynpar):
 G := simplify(Matrix(taug_s(7..NQ,1))):
 unassign('g1','g2','g3'):
@@ -109,8 +107,6 @@ read sprintf("../codeexport/%s/tmp/inertia_par%d_maple.m", leg_name, codegen_dyn
 MM := simplify(MM_s(7..NQ,7..NQ)):
 MM := simplify(MM):
 MME := simplify(MME):
-#g1 := 0:
-#g2 := 0:
 gE := simplify(gE):
 # Ergebnisse der Kinematik für parallen Roboter laden
 read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
@@ -150,14 +146,19 @@ end do:
 # Berechnung der Kräfte/Momente an den Gelenken der jeweiligen Beine und Projektion auf EE-Plattform
 # Abdellatif2007 S.38 (3.27)
 for i to N_LEGS do
-  A||i := simplify(Multiply(JBinv_i(..,..,i),JBD_i(..,..,i))):
-  B||i := Multiply(-MM||i,Multiply(A||i,Multiply(JBinv_i(..,..,i),U_i(..,..,i).H.xED_s))):
 
-  MMs||i := Transpose(U_i(..,..,i)).Transpose(JBinv_i(..,..,i)).MM||i.JBinv_i(..,..,i).U_i(..,..,i).H:
-  cvecs||i := Transpose(U_i(..,..,i)).Transpose(JBinv_i(..,..,i)).MM||i.JBinv_i(..,..,i).(U_i(..,..,i).dH+UD_i(..,..,i).H).xED_s+Multiply(Transpose(U_i(..,..,i)),Multiply(Transpose(JBinv_i(..,..,i)),(B||i+Cvec||i))):
-  gvecs||i := Multiply(Transpose(U_i(..,..,i)),Multiply(Transpose(JBinv_i(..,..,i)),G||i)):
+  Jtmp := Multiply(Transpose(U_i(..,..,i)),Transpose(JBinv_i(..,..,i))):
+  qDtmp := Multiply(JBinv_i(..,..,i),U_i(..,..,i).H.xED_s):
+  A||i := simplify(Multiply(JBinv_i(..,..,i),JBD_i(..,..,i))):
+  B||i := Multiply(-MM||i,Multiply(A||i,qDtmp)):
+
   
-  tau||i := Transpose(U_i(..,..,i)).Transpose(JBinv_i(..,..,i)).MM||i.JBinv_i(..,..,i).(U_i(..,..,i).H.xEDD_s+U_i(..,..,i).dH.xED_s+UD_i(..,..,i).H.xED_s) + Multiply(Transpose(U_i(..,..,i)),Multiply(Transpose(JBinv_i(..,..,i)),(B||i+Cvec||i+G||i))):
+  MMs||i := Jtmp.MM||i.Transpose(Jtmp).H:
+  cvecs||i := Jtmp.MM||i.JBinv_i(..,..,i).(U_i(..,..,i).dH+UD_i(..,..,i).H).xED_s+Jtmp.B||i+Jtmp.Cvec||i:
+  gvecs||i := Jtmp.G||i:
+  
+  tau||i := Jtmp.MM||i.JBinv_i(..,..,i).(U_i(..,..,i).H.xEDD_s+U_i(..,..,i).dH.xED_s+UD_i(..,..,i).H.xED_s) + Multiply(Jtmp,(B||i+Cvec||i+G||i)):
+
 
   taus||i := MMs||i.xEDD_s + cvecs||i + gvecs||i:
 end do:
@@ -190,7 +191,7 @@ for i to N_LEGS do
 end do:
 # Addiere Gravitiationsvektor der Plattform
 gGes := Tmp - gE:
-tauGes := MMGes.xEDD_s + cvecGes + gGes:
+#tauGes := MMGes.xEDD_s + cvecGes + gGes:
 # Replace Joint Velocities
 # Substituiere die Gelenkgeschwindigkeiten über H-, Ui- und JBi-Matrix mit EE-Geschwindikeiten
 Tmp := 0:
@@ -226,14 +227,16 @@ end do:
 #  end do:
 #end do:
 tau := pivotMat.tauGes:
-tau:=Transpose(Jtest).tau:
 MMGes := pivotMat.MMGes.Transpose(pivotMatMas):
 cvecGes := pivotMat.cvecGes:
 gGes := pivotMat.gGes:
-if RowDimension(Jinv) < 4 then
+if RowDimension(Jinv) < 5 then
   J:=MatrixInverse(Jinv):
   J:=simplify(J):
   tau:=Transpose(J).tau:
+  MMGes:=Transpose(J).MMGes:
+  cvecGes:=Transpose(J).cvecGes:
+  gGes:=Transpose(J).gGes:
 end if:
 # Matlab Export
 if codeexport_invdyn then

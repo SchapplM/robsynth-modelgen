@@ -19,5 +19,5 @@
 
 % %VERSIONINFO%
 
-function tau_reg = %FN%(xP, xPD, xPDD, qJ, legFrame, g, ...
+function tau_reg = %FN%(xP, xDP, xDDP, qJ, legFrame, g, ...
   koppelP, pkin)

@@ -200,6 +200,13 @@ for i to NQJ do
     counter := counter + 1:
   end if:
 end do:
+NQJ_parallel := counter:
+counter := 0:
+for i to ColumnDimension(J) do
+  if not(Equal(J(..,i),Vector(3,[0,0,0]))) then
+    counter := counter + 1:
+  end if:
+end do:
 NQJ_parallel := counter:</Text-field>
 </Input>
 </Group>

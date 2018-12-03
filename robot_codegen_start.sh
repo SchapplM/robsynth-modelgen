@@ -132,7 +132,7 @@ if [ "$CG_NOTGENSERIAL" == "0" ]; then
     source $repo_pfad/robot_codegen_scripts/robot_codegen_maple_batch.sh $CG_BASE_ARGUMENT
   fi;
 
-  source robot_codegen_tmpvar_bash.sh
+  #source robot_codegen_tmpvar_bash.sh
 
   # Matlab-Funktionen generieren
   cd $repo_pfad/robot_codegen_scripts/
@@ -189,7 +189,7 @@ if [ "$CG_PARROB" == "1" ]; then
 
   # Matlab-Testfunktionen starten
   if [ "$CG_NOTEST" != "1" ]; then
-    matlab -nodesktop -nosplash -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_compile_test.m');quit;"
+    matlab -nodesktop -nosplash -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything_par');quit;"
   fi;
   echo "Funktionsgenerierung abgeschlossen. Alle Tests erfolgreich."
 fi;

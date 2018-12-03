@@ -111,7 +111,7 @@ else
 end if:
 for j to 3 do
   for i from 1 to 6 do
-    gE_z(j) := subs(x_all[i]=xAll(i),gE_z(j)):
+    gE_z(j) := subs(xE_s(i)=xAll(i),gE_z(j)):
   end do:
 end do:
 dgEdz_final := Matrix(6,1):
@@ -129,10 +129,10 @@ for j to 6 do
 end do:
 for j to 6 do
   for i from 1 to 6 do
-    dgEdz_final(j) := subs(xAll(i)=x_all[i],dgEdz_final(j)):
+    dgEdz_final(j) := subs(xAll(i)=xE_s(i),dgEdz_final(j)):
   end do:
 end do:
-gE := Transpose(Hinv).dgEdz_final:
+gE := simplify(Transpose(Hinv).dgEdz_final):
 if codeexport_grav then
   MatlabExport(gE, sprintf("../codeexport/%s/tmp/gravload_platform_matlab.m", robot_name), codegen_opt):
 end if:
@@ -140,13 +140,11 @@ end if:
 # Berechnung Massenmatrix für die EE-Plattform und die Winkelgeschwindigkeit
 # Abdellatif2007 S.39 (3.30)
 if codegen_dynpar = 1 then
-  ME := <mE*Matrix(3,shape=identity),mE*vec2skew(r_0_sP_P);
-         mE*Transpose(vec2skew(r_0_sP_P)),J_0_P>:
-  la := codegen_dynpar;
+  ME := simplify(<mE*Matrix(3,shape=identity),mE*vec2skew(r_0_sP_P);
+         mE*Transpose(vec2skew(r_0_sP_P)),J_0_P>):
 else 
-  ME := <mE*Matrix(3,shape=identity),vec2skew(-s_0_P_sP);
-         Transpose(vec2skew(-s_0_P_sP)),J_0_P>:
-  la := codegen_dynpar;
+  ME := simplify(<mE*Matrix(3,shape=identity),vec2skew(-s_0_P_sP);
+         Transpose(vec2skew(-s_0_P_sP)),J_0_P>):
 end if:
 if codeexport_inertia then
   MatlabExport(ME, sprintf("../codeexport/%s/tmp/inertia_platform_matlab.m", robot_name), codegen_opt):
@@ -155,11 +153,11 @@ end if:
 # Coriolis-Matrix
 # Abdellatif2007 S.39 (3.31)
 if codegen_dynpar = 1 then
-  cE := <ZeroMatrix(3,3),mE*vec2skew(rD_0_sP_P);
-         ZeroMatrix(3,3),Multiply(vec2skew(w_0_0_E_s),J_0_P)>:
+  cE := simplify(<ZeroMatrix(3,3),mE*vec2skew(rD_0_sP_P);
+         ZeroMatrix(3,3),Multiply(vec2skew(w_0_0_E_s),J_0_P)>):
 else
-  cE := <ZeroMatrix(3,3),vec2skew(-sD_0_P_sP);
-         ZeroMatrix(3,3),Multiply(vec2skew(w_0_0_E_s),J_0_P)>:
+  cE := simplify(<ZeroMatrix(3,3),vec2skew(-sD_0_P_sP);
+         ZeroMatrix(3,3),Multiply(vec2skew(w_0_0_E_s),J_0_P)>):
 end if:
 if codeexport_corvec then
   MatlabExport(cE, sprintf("../codeexport/%s/tmp/coriolisvec_platform_matlab.m", robot_name), codegen_opt):
@@ -169,7 +167,7 @@ end if:
 # Abdellatif2007 S.39 (3.29)
 MME := ME.H:
 cvecE := Multiply(ME.dH+cE.H,xED_s):
-tauE := Multiply(MME,xEDD_s) + cvecE - gE:#Multiply(cE,xED_s) - gE:
+tauE := Multiply(MME,xEDD_s) + cvecE - gE:
 # Code Export
 if codeexport_invdyn then
   MatlabExport(tauE, sprintf("../codeexport/%s/tmp/invdyn_floatb_%s_platform_matlab.m", robot_name, base_method_name), codegen_opt):

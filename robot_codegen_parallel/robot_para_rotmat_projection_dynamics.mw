@@ -266,8 +266,6 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">g1 := gtmp1:
 g2 := gtmp2:
 g3 := gtmp3:
-#g1 := 0:
-#g2 := 0:
 read sprintf(&quot;../codeexport/%s/tmp/gravload_par%d_maple.m&quot;, leg_name, codegen_dynpar):
 G := simplify(Matrix(taug_s(7..NQ,1))):
 unassign('g1','g2','g3'):
@@ -298,8 +296,6 @@ Cvec := Cvec:</Text-field>
 MM := simplify(MM_s(7..NQ,7..NQ)):
 MM := simplify(MM):
 MME := simplify(MME):
-#g1 := 0:
-#g2 := 0:
 gE := simplify(gE):</Text-field>
 </Input>
 </Group>
@@ -375,19 +371,24 @@ end do:
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3353" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i to N_LEGS do</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i to N_LEGS do
+</Text-field>
 </Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  A||i := simplify(Multiply(JBinv_i(..,..,i),JBD_i(..,..,i))):</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  B||i := Multiply(-MM||i,Multiply(A||i,Multiply(JBinv_i(..,..,i),U_i(..,..,i).H.xED_s))):
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  Jtmp := Multiply(Transpose(U_i(..,..,i)),Transpose(JBinv_i(..,..,i))):
+  qDtmp := Multiply(JBinv_i(..,..,i),U_i(..,..,i).H.xED_s):
+  A||i := simplify(Multiply(JBinv_i(..,..,i),JBD_i(..,..,i))):
+  B||i := Multiply(-MM||i,Multiply(A||i,qDtmp)):
 
-  MMs||i := Transpose(U_i(..,..,i)).Transpose(JBinv_i(..,..,i)).MM||i.JBinv_i(..,..,i).U_i(..,..,i).H:
-  cvecs||i := Transpose(U_i(..,..,i)).Transpose(JBinv_i(..,..,i)).MM||i.JBinv_i(..,..,i).(U_i(..,..,i).dH+UD_i(..,..,i).H).xED_s+Multiply(Transpose(U_i(..,..,i)),Multiply(Transpose(JBinv_i(..,..,i)),(B||i+Cvec||i))):
-  gvecs||i := Multiply(Transpose(U_i(..,..,i)),Multiply(Transpose(JBinv_i(..,..,i)),G||i)):</Text-field>
+  
+  MMs||i := Jtmp.MM||i.Transpose(Jtmp).H:
+  cvecs||i := Jtmp.MM||i.JBinv_i(..,..,i).(U_i(..,..,i).dH+UD_i(..,..,i).H).xED_s+Jtmp.B||i+Jtmp.Cvec||i:
+  gvecs||i := Jtmp.G||i:</Text-field>
 </Input>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  </Text-field>
 </Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  tau||i := Transpose(U_i(..,..,i)).Transpose(JBinv_i(..,..,i)).MM||i.JBinv_i(..,..,i).(U_i(..,..,i).H.xEDD_s+U_i(..,..,i).dH.xED_s+UD_i(..,..,i).H.xED_s) + Multiply(Transpose(U_i(..,..,i)),Multiply(Transpose(JBinv_i(..,..,i)),(B||i+Cvec||i+G||i))):
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  tau||i := Jtmp.MM||i.JBinv_i(..,..,i).(U_i(..,..,i).H.xEDD_s+U_i(..,..,i).dH.xED_s+UD_i(..,..,i).H.xED_s) + Multiply(Jtmp,(B||i+Cvec||i+G||i)):</Text-field>
+</Input>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">
 
   taus||i := MMs||i.xEDD_s + cvecs||i + gvecs||i:</Text-field>
 </Input>
@@ -484,7 +485,7 @@ end do:
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3336" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tauGes := MMGes.xEDD_s + cvecGes + gGes:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">#tauGes := MMGes.xEDD_s + cvecGes + gGes:</Text-field>
 </Input>
 </Group>
 </Section>
@@ -550,15 +551,17 @@ end do:</Text-field>
 </Group>
 <Group hide-input="false" labelreference="L3342" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tau := pivotMat.tauGes:
-tau:=Transpose(Jtest).tau:
 MMGes := pivotMat.MMGes.Transpose(pivotMatMas):
 cvecGes := pivotMat.cvecGes:
 gGes := pivotMat.gGes:
-if RowDimension(Jinv) &lt; 4 then
+if RowDimension(Jinv) &lt; 5 then
   J:=MatrixInverse(Jinv):
   J:=simplify(J):</Text-field>
 </Input>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  tau:=Transpose(J).tau:
+  MMGes:=Transpose(J).MMGes:
+  cvecGes:=Transpose(J).cvecGes:
+  gGes:=Transpose(J).gGes:
 end if:</Text-field>
 </Input>
 </Group>

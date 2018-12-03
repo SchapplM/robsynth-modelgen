@@ -27,11 +27,18 @@ robot_name=`grep "robot_name := " $robot_env_pfad | tail -1 | sed 's/.*= "\(.*\)
 parallal_leg_name=`grep "leg_name := " $robot_env_pfad | tail -1 | sed 's/.*= "\(.*\)":/\1/'`
 parallel_NLEGS=`grep "N_LEGS := " $robot_env_pfad | tail -1 | sed 's/.*= \(.*\):/\1/'`
 
-# Variablen für parallelroboter
+# Variablen für parallelroboter (aus exportiertem Code)
 NQJ_parallel_pfad=$repo_pfad/codeexport/$robot_name/tmp/var_parallel.m
-parallel_NX=`grep "unknown(1,1) = " $NQJ_parallel_pfad | tail -1 | sed 's/.*= \(.*\);/\1/'`
-parallel_NQJ_leg=`grep "unknown(2,1) = " $NQJ_parallel_pfad | tail -1 | sed 's/.*= \(.*\);/\1/'`
-parallel_angles_leg=`grep "unknown(3,1) = " $NQJ_parallel_pfad | tail -1 | sed 's/.*= \(.*\);/\1/'`
+if [ -f $NQJ_parallel_pfad ]; then
+	parallel_NX=`grep "unknown(1,1) = " $NQJ_parallel_pfad | tail -1 | sed 's/.*= \(.*\);/\1/'`
+	parallel_NQJ_leg=`grep "unknown(2,1) = " $NQJ_parallel_pfad | tail -1 | sed 's/.*= \(.*\);/\1/'`
+	parallel_angles_leg=`grep "unknown(3,1) = " $NQJ_parallel_pfad | tail -1 | sed 's/.*= \(.*\);/\1/'`
+else
+	parallel_NX="NOTDEFINED"
+	parallel_NQJ_leg="NOTDEFINED"
+	parallel_angles_leg="NOTDEFINED"
+fi
+
 robot_system_q=$(( parallel_NQJ_leg * parallel_NLEGS ))
 
 echo "parallel_NX=$parallel_NX" > $robot_env_pfad.sh

@@ -7,7 +7,7 @@
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
 # (C) Institut für Regelungstechnik, Leibniz Universität Hannover
 
-echo "Generiere Matlabfunktionen: parameterlineare Dynamik PKM"
+echo "Generiere Matlabfunktionen: Parameterlineare Dynamik PKM"
 
 repo_pfad=$(pwd)/..
 tmp_pfad=$repo_pfad/workdir/tmp
@@ -29,10 +29,12 @@ if [ -f $quelldat ]; then
   cat $tmp_pfad/robot_matlabtmp_assert_m_parallel.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_mrcom_parallel.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_If_parallel.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_koppelP_parallel.m >> $zieldat
   # echo "%% Conversion Parameterset 1 -> Parameterset 2" >> $zieldat
   # echo "[mrcges, Ifges] = inertial_parameters_convert_par1_par2(rSges, Icges, m);" >> $zieldat
 
   echo "%% Variable Initialization" > ${quelldat}.subsvar
+  cat $tmp_pfad/robot_matlabtmp_par_koppelP_parallel.m >> ${quelldat}.subsvar
   cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
   cat $tmp_pfad/robot_matlabtmp_par_m_parallel.m >> ${quelldat}.subsvar
   cat $tmp_pfad/robot_matlabtmp_par_mrcom_parallel.m >> ${quelldat}.subsvar

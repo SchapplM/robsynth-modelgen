@@ -29,6 +29,9 @@ echo "assert(isreal(qJ) && all(size(qJ) == [$parallel_NQJ_leg $parallel_NLEGS]),
 echo "assert(isreal(pkin) && all(size(pkin) == [$robot_NKP 1]), ...
   '%FN%: pkin has to be [${robot_NKP}x1] (double)');" > $tmp_pfad/robot_matlabtmp_assert_KP.m
   
+echo "assert(isreal(g) && all(size(g) == [3 1]), ...
+  '%FN%: g has to be [3x1] (double)');" > $tmp_pfad/robot_matlabtmp_assert_g.m
+  
 # Dynamikparameter für parallele Roboter
 alleKoerper=$((parallel_NQJ_leg + 1))
 echo "assert(isreal(rSges) && all(size(rSges) == [$alleKoerper,3]), ...

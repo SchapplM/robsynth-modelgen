@@ -19,6 +19,13 @@ for Kp in $robot_KP; do
   echo "$Kp = pkin($i);" >> $tmp_pfad/robot_matlabtmp_par_KP.m
 done
 
+# Gravitationsvektor
+echo "" > $tmp_pfad/robot_matlabtmp_g.m
+for (( i=1; i<=3; i++ ))
+do
+	echo "g${i} = g(${i});" >> $tmp_pfad/robot_matlabtmp_g.m
+done
+
 
 # Parallele Roboter
 # Gelenkwinkel
