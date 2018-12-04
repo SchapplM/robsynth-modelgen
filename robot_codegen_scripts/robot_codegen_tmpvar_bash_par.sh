@@ -24,7 +24,6 @@ robot_leg_name=`grep "leg_name := " $robot_env_pfad | tail -1 | sed 's/.*= "\(.*
 robot_name=`grep "robot_name := " $robot_env_pfad | tail -1 | sed 's/.*= "\(.*\)":/\1/'`
 
 #parallel_robot=`grep "parallel := " $robot_env_pfad | tail -1 | sed 's/.*= \(.*\):/\1/'`
-parallal_leg_name=`grep "leg_name := " $robot_env_pfad | tail -1 | sed 's/.*= "\(.*\)":/\1/'`
 parallel_NLEGS=`grep "N_LEGS := " $robot_env_pfad | tail -1 | sed 's/.*= \(.*\):/\1/'`
 
 # Variablen für parallelroboter (aus exportiertem Code)
