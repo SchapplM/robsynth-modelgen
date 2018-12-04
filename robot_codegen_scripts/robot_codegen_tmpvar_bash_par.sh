@@ -7,8 +7,9 @@
 #
 # Dieses Skript im Ordner ausführen, in dem es im Repo liegt
 
-# Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
-# (C) Institut für Regelungstechnik, Leibniz Universität Hannover
+# Tim Job (Studienarbeit bei Moritz Schappler), 2018-12
+# Moritz Schappler, moritz.schappler@imes.uni-hannover.de
+# (C) Institut für Mechatronische Systeme, Universität Hannover
 
 # Öffne die Umgebungsvariable und speichere die Informationen als shell-variable
 repo_pfad=$(pwd)/..
@@ -26,7 +27,7 @@ robot_name=`grep "robot_name := " $robot_env_pfad | tail -1 | sed 's/.*= "\(.*\)
 #parallel_robot=`grep "parallel := " $robot_env_pfad | tail -1 | sed 's/.*= \(.*\):/\1/'`
 parallel_NLEGS=`grep "N_LEGS := " $robot_env_pfad | tail -1 | sed 's/.*= \(.*\):/\1/'`
 
-# Variablen für parallelroboter (aus exportiertem Code)
+# Variablen für Parallelroboter (aus exportiertem Code)
 NQJ_parallel_pfad=$repo_pfad/codeexport/$robot_name/tmp/var_parallel.m
 if [ -f $NQJ_parallel_pfad ]; then
 	parallel_NX=`grep "unknown(1,1) = " $NQJ_parallel_pfad | tail -1 | sed 's/.*= \(.*\);/\1/'`

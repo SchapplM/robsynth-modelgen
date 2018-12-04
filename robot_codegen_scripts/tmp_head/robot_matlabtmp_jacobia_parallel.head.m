@@ -1,8 +1,8 @@
-% Analytische Jacobi-Matrix für
+% Analytische Jacobi-Matrix für parallelen Roboter
 % Use Code from Maple symbolic Code Generation
 % 
 % analytische Jacobi-Matrix: Differentieller Zusammenhang zwischen
-% Endeffektorposition und aktiven Koordinaten.
+% Endeffektorpose und aktiven Gelenkkoordinaten.
 % Zeitableitung der Winkeldarstellung des Endeffektors in Basis-Koordinaten
 % 
 % Input:

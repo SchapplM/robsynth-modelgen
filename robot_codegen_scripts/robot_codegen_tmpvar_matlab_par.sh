@@ -3,8 +3,9 @@
 #
 # Dieses Skript im Ordner ausführen, in dem es im Repo liegt
 
-# Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
-# (C) Institut für Regelungstechnik, Leibniz Universität Hannover
+# Tim Job (Studienarbeit bei Moritz Schappler), 2018-12
+# Moritz Schappler, moritz.schappler@imes.uni-hannover.de
+# (C) Institut für Mechatronische Systeme, Universität Hannover
 
 repo_pfad=$(pwd)/../
 tmp_pfad=$repo_pfad/workdir/tmp

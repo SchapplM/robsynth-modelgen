@@ -1,4 +1,4 @@
-% Calculate minimal parameter regressor of inverse dynamics joint torque vector for
+% Calculate minimal parameter regressor of inverse dynamics forces for
 % %RN%
 % Use Code from Maple symbolic Code Generation
 % 
@@ -15,7 +15,8 @@
 
 % Output:
 % tau_reg [%N_XP%x%NMPVPARA%]
-%   minimal parameter regressor of inverse dynamics joint torque vector
+%   minimal parameter regressor of inverse dynamics force vector
+%   in task space
 
 % %VERSIONINFO%
 

@@ -1,4 +1,4 @@
-% Calculate Gravitation load on the joints for
+% Calculate Gravitation load for parallel robot
 % %RN%
 % Use Code from Maple symbolic Code Generation
 % 
@@ -8,14 +8,15 @@
 % %INPUT_LEGFRAME%
 % g [3x1]
 %   gravitation vector in mdh base frame [m/s^2]
+% %INPUT_KOPPEL%
 % %INPUT_PKIN%
 % %INPUT_M_P%
 % %INPUT_R_P%
-% %INPUT_KOPPEL%
 % 
 % Output:
 % taug [%N_LEGS%x1]
-%   joint torques required to compensate gravitation load
+%   forces of required to compensate gravitation load
+%   in platform coordinates
 
 % %VERSIONINFO%
 

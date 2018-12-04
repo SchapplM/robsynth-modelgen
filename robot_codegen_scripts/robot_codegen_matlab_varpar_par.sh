@@ -4,8 +4,9 @@
 #
 # Dieses Skript im Ordner ausführen, in dem es im Repo liegt
 
-# Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
-# (C) Institut für Regelungstechnik, Leibniz Universität Hannover
+# Tim Job (Studienarbeit bei Moritz Schappler), 2018-12
+# Moritz Schappler, moritz.schappler@imes.uni-hannover.de
+# (C) Institut für Mechatronische Systeme, Universität Hannover
 
 echo "Generiere Matlabfunktionen für parallelen Roboter"
 
@@ -18,6 +19,7 @@ source $repo_pfad/robot_codegen_definitions/robot_env_par.sh
 # Erstelle Matlab-Hilfsdateien
 source robot_codegen_tmpvar_matlab_par.sh
 source robot_codegen_assert_matlab_par.sh
+# Hilfsskript für Erzeugung symmetrischer Matrizen. Hier (noch) nicht benötigt.
 #source robot_codegen_matlab_preparation.sh
 
 # Korrigiere mit Maple generierte Matlab-Code-Dateien

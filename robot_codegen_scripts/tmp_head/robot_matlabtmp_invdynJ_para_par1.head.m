@@ -1,4 +1,4 @@
-% Calculate vector of inverse dynamics active joint torques for parallel robot
+% Calculate vector of inverse dynamics forces for parallel robot
 % %RN%
 % Use Code from Maple symbolic Code Generation
 % 
@@ -10,15 +10,16 @@
 % %INPUT_LEGFRAME%
 % g [3x1]
 %   gravitation vector in mdh base frame [m/s^2]
+% %INPUT_KOPPEL%
 % %INPUT_PKIN%
 % %INPUT_M_P%
 % %INPUT_R_P%
 % %INPUT_IC_P%
-% %INPUT_KOPPEL%
 % 
 % Output:
 % tau [%N_LEGS%x1]
-%   joint torques of inverse dynamics (contains inertial, gravitational coriolis and centrifugal forces)
+%   forces of inverse dynamics (contains inertial, gravitational coriolis and centrifugal forces)
+%   in platform coordinates xP
 
 % %VERSIONINFO%
 

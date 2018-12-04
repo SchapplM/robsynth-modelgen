@@ -7,11 +7,11 @@
 % %INPUT_XDP%
 % %INPUT_QJ_P%
 % %INPUT_LEGFRAME%
+% %INPUT_KOPPEL%
 % %INPUT_PKIN%
 % %INPUT_M_P%
 % %INPUT_R_P%
 % %INPUT_IC_P%
-% %INPUT_KOPPEL%
 % 
 % Output:
 % C [%N_LEGS%x%N_LEGS%]
