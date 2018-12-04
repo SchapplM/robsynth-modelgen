@@ -4,8 +4,9 @@
 #
 # Dieses Skript im Ordner ausführen, in dem es im Repo liegt
 
-# Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
-# (C) Institut für Regelungstechnik, Leibniz Universität Hannover
+# Tim Job (Studienarbeit bei Moritz Schappler), 2018-12
+# Moritz Schappler, schappler@irt.uni-hannover.de
+# (C) Institut für Mechatronische Systeme, Universität Hannover
 
 echo "Generiere Matlabfunktionen: Kinematik PKM"
 

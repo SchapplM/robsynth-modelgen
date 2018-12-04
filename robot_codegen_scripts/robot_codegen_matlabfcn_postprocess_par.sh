@@ -9,8 +9,9 @@
 #
 # Dieses Skript im Ordner ausführen, in dem es im Repo liegt
 
-# Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
-# (C) Institut für Regelungstechnik, Leibniz Universität Hannover
+# Tim Job (Studienarbeit bei Moritz Schappler), 2018-12
+# Moritz Schappler, moritz.schappler@imes.uni-hannover.de
+# (C) Institut für Mechatronische Systeme, Universität Hannover
 
 
 repo_pfad=$(pwd)/..
@@ -93,6 +94,7 @@ nges=$((parallel_NQJ_leg + 1))
 sed -i "s/%NGES%/$nges/g" $mfcndat
 sed -i "s/%NMPVPARA%/$robot_NMPVPARA/g" $mfcndat
 
+# TODO: Dieser Teil ist doppelt zwischen seriell und parallel. Eventuell nur an einer Stelle halten.
 if [ "$replacelastassignment" != "0" ]; then # vergleiche strings, da das Argument auch leer sein könnte
   # Ersetze Variablennamen des letzten Ergebnisses des generierten Codes
   # prüfe, welches die Ausgabevariable der Funktion ist (steht oben im Funktionskopf)
@@ -128,8 +130,9 @@ fi
 
 # Versionsinformationen einfügen an vorgesehene Stelle
 # TODO: Versionsdatei nicht jedes Mal neu erzeugen (zu viele Schreibzugriffe)
+# TODO: Dieser Abschnitt ist nun doppelt für seriell und parallel. Nur an einer Stelle halten
 versionfile=$tmp_pfad/version_info.head.m
-echo "% Quelle: HybrDyn-Toolbox (ehem. IRT-Maple-Toolbox)" > $versionfile
+echo "% Quelle: HybrDyn-Toolbox" > $versionfile
 now="$(date +'%Y-%m-%d %H:%M')"
 printf "%% Datum: $now\n" >> $versionfile
 rev=`git rev-parse HEAD`

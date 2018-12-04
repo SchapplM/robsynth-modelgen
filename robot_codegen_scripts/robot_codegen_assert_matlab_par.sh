@@ -4,13 +4,17 @@
 #
 # Dieses Skript im Ordner ausführen, in dem es im Repo liegt
 
-# Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
-# (C) Institut für Regelungstechnik, Leibniz Universität Hannover
+# Tim Job (Studienarbeit bei Moritz Schappler), 2018-12
+# Moritz Schappler, moritz.schappler@imes.uni-hannover.de
+# (C) Institut für Mechatronische Systeme, Universität Hannover
 
 repo_pfad=$(pwd)/../
 tmp_pfad=$repo_pfad/workdir/tmp
+
 source $repo_pfad/robot_codegen_definitions/robot_env_par.sh
 source $repo_pfad/codeexport/${robot_leg_name}/tmp/robot_env.sh
+# Definition für Parallele Roboter erneut laden, damit Variable `robot_name` richtig gesetzt ist.
+source $repo_pfad/robot_codegen_definitions/robot_env_par.sh
 
 # Schnipsel für Matlab-varpar-Dateien vorbereiten
 # Parallel Roboter

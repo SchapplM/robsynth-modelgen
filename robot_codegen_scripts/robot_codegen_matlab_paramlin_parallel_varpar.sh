@@ -1,11 +1,12 @@
 #!/bin/bash -e
 # Erstelle fertige Matlab-Funktionen aus exportiertem Code von Maple
-# Dieses Skript erstellt die Funktionen zur Dynamik und wird von robot_codegen_matlab_varpar.sh aufgerufen.
+# Dieses Skript erstellt die Funktionen zur parameterlinearen Dynamik und wird von robot_codegen_matlab_varpar_par.sh aufgerufen.
 #
 # Dieses Skript im Ordner ausführen, in dem es im Repo liegt
 
-# Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
-# (C) Institut für Regelungstechnik, Leibniz Universität Hannover
+# Tim Job (Studienarbeit bei Moritz Schappler), 2018-12
+# Moritz Schappler, moritz.schappler@imes.uni-hannover.de
+# (C) Institut für Mechatronische Systeme, Universität Hannover
 
 echo "Generiere Matlabfunktionen: Parameterlineare Dynamik PKM"
 

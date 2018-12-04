@@ -1,4 +1,4 @@
-% Calculate inertia matrix for
+% Calculate inertia matrix for parallel robot
 % %RN%
 % Use Code from Maple symbolic Code Generation
 % 
@@ -6,15 +6,15 @@
 % %INPUT_XP%
 % %INPUT_QJ_P%
 % %INPUT_LEGFRAME%
+% %INPUT_KOPPEL%
 % %INPUT_PKIN%
 % %INPUT_M_P%
 % %INPUT_MR_P%
 % %INPUT_IF_P%
-% %INPUT_KOPPEL%
 % 
 % Output:
 % M [%N_LEGS%x%N_LEGS%]
-%   inertia matrix
+%   inertia matrix in task space
 
 % %VERSIONINFO%
 
