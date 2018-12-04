@@ -1,0 +1,53 @@
+% Einstellungen für Modultests von %RN% generieren:
+% Enthält Definitionen für Parameter und zufällige Konfigurationen
+%
+% Ausgabe:
+% TSS
+%   Struktur mit Einstellungen für die Modultests
+
+% %VERSIONINFO%
+
+% Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
+% (C) Institut für Regelungstechnik, Universität Hannover
+
+function TSS = %RN%_varpar_testfunctions_parameter_par()
+
+%% General Definitions
+NQJ = %NQJ_P%; % Number of leg coordinates
+N_LEGS = %N_LEGS%; % number of legs
+N_XP = %N_XP%; % number of platform DOF
+robot_name = '%RN%'; % prefix in all function names and simulink models and blocks
+
+koppelP = rand(N_LEGS,3);
+legFrame = rand(N_LEGS,3);
+rSges = rand(NQJ+1,3); % All center of mass coordinates in body frames
+m = rand(NQJ+1,1); % masses of all links (are positive due to rand() function)
+Ic_pa = rand(NQJ+1,3); % inertia of all links around their center of mass in principal axes
+Icges = NaN(NQJ+1,6); % inertial of all links around their center of mass in body frame
+for i = 1:NQJ+1
+  R_pa = eulxyz2r(rand(3,1)); % random principal axes
+  % inertia tensor in body frame: make sure the eigenvalues are positive and the tensor is positive definite
+  Icges(i,:) = inertiamatrix2vector(R_pa*diag(Ic_pa(i,:))*R_pa');
+end
+
+[mrSges, ... % first moment of all links (mass times center of mass)
+ Ifges] = ... % second moment of all links (inertia around body frame origins)
+  inertial_parameters_convert_par1_par2(rSges, Icges, m);
+
+%% Zufällige Roboterkonfigurationen
+% Werden in den Testfunktionen benutzt
+
+n = 100;
+% Gelenkwinkel und -zeitableitungen
+%REPLACE_QDEF%
+Q = [];
+for i = 1:N_LEGS
+	tmp = repmat(q_min',n,1) + rand(n,NQJ).*repmat(q_max'-q_min',n,1);
+	Q = [Q,tmp];
+end
+XP = repmat(xP_min',n,1) + rand(n,N_XP).*repmat(xP_max'-xP_min',n,1);
+XPD = (0.5-rand(n, N_XP))*pi;
+XPDD = (0.5-rand(n, N_XP))*pi;
+
+% Gravitation
+G = (0.5-rand(n, 3))*10;

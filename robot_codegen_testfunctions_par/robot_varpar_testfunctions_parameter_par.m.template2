@@ -1,0 +1,23 @@
+%% Set Outputs
+TSS = struct('type', 'Test Settings Structure');
+% Allgemeine Definitionen
+TSS.G = G;
+TSS.NQJ = NQJ;
+TSS.N_LEGS = N_LEGS;
+TSS.N_XP = N_XP;
+% Kinematikparameter
+TSS.pkin = pkin;
+% Dynamikparameter
+TSS.m = m;
+TSS.rSges = rSges;
+TSS.Icges = Icges;
+TSS.mrSges = mrSges;
+TSS.Ifges = Ifges;
+% Zufällige Konfigurationen für Modultests
+TSS.n = n;
+TSS.Q = Q;
+TSS.XP = XP;
+TSS.XPD = XPD;
+TSS.XPDD = XPDD;
+TSS.koppelP = koppelP;
+TSS.legFrame = legFrame;

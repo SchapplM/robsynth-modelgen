@@ -1,0 +1,61 @@
+% Teste parameterlineare Formen der Dynamik für parallele Roboter
+
+% %VERSIONINFO%
+
+% Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
+% (C) Institut für Regelungstechnik, Universität Hannover
+
+clc
+clear
+
+NQJ = %NQJ_P%;
+N_LEGS = %N_LEGS%; % number of legs
+N_XP = %N_XP%; % number of platform DOF
+robot_name = '%RN%';
+
+%% Parameter
+TSS = %RN%_varpar_testfunctions_parameter_par();
+for f = fields(TSS)'
+  eval(sprintf('%s=TSS.%s;',f{1},f{1}));
+end
+
+% Minimalparametervektor
+MPV = %RN%_minimal_parameter_para(pkin, m, mrSges, Ifges, koppelP);
+
+%% Test inverse dynamic vs regressor form
+Q_GES = length(Q(1,:));
+Q_N = Q_GES/NQJ;
+for i = 1:n
+  q = [];
+  for i = 1:Q_N
+    q = [q;Q(1,(i-1)*NQJ+1:i*NQJ)];
+  end
+  q = q';
+  xP = XP(i,:)';
+  xPD = XPD(i,:)';
+  xPDD = XPDD(i,:)';
+  g = G(i,:)';
+  
+  tauJ_vp2 = %RN%_invdyn_para_slag_vp2(xP, xPD, xPDD, q, legFrame, g, ...
+    koppelP, pkin, m, mrSges, Ifges);
+  tauJ_MPV_A = %RN%_invdyn_para_reg(xP, xPD, xPDD, q, legFrame, g, ...
+    koppelP, pkin);
+	
+  Jinv = %RN%_Jinv(xP, q, pkin, koppelP, ...
+    legFrame);
+	
+  if N_XP > 4
+    tauJ_MPV_A = inv(Jinv)' * tauJ_MPV_A;
+	tauJ_vp2 = inv(Jinv)' * tauJ_vp2;
+  end	
+
+  tauJ_MPV_reg = tauJ_MPV_A*MPV;
+  
+  % compare both
+  Delta = tauJ_MPV_reg - tauJ_vp2;
+  if any(abs(Delta) > 1e6*eps(tauJ_MPV_reg))
+    error('Inverse dynamic does not match with regressor form.')
+  end
+end
+fprintf('Tested regressor form vs inverse dynamic for %d random joint angles for %s\n', ...
+  n, robot_name);

@@ -1,0 +1,92 @@
+% Test function for inverse dynamics from symbolic calculations
+
+
+% %VERSIONINFO%
+
+% Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
+% (C) Institut für Regelungstechnik, Universität Hannover
+
+clc
+clear
+
+NQJ = %NQJ_P%;
+N_LEGS = %N_LEGS%; % number of legs
+N_XP = %N_XP%; % number of platform DOF
+robot_name = '%RN%';
+
+%% Parameter
+TSS = %RN%_varpar_testfunctions_parameter_par();
+for f = fields(TSS)'
+  eval(sprintf('%s=TSS.%s;',f{1},f{1}));
+end
+
+%% Test inverse dynamic
+Q_GES = length(Q(1,:));
+Q_N = Q_GES/NQJ;
+for i = 1:n
+  q = [];
+  for i = 1:Q_N
+    q = [q;Q(1,(i-1)*NQJ+1:i*NQJ)];
+  end
+  q = q';
+  xP = XP(i,:)';
+  xPD = XPD(i,:)';
+  xPDD = XPDD(i,:)';
+  g = G(i,:)';
+  
+  Mmat_vp1 = %RN%_inertia_para_slag_vp1(xP, q, legFrame, ...
+    koppelP, pkin, m, rSges, Icges);
+  Mmat_vp2 = %RN%_inertia_para_slag_vp2(xP, q, legFrame, ...
+    koppelP, pkin, m, mrSges, Ifges);
+	
+  if any( abs(Mmat_vp1 - Mmat_vp2) > 1e6*eps(1+max(abs(Mmat_vp1))) )
+    error('inertia matrices do not match between par1/par2.');
+  end
+  
+  cvec_vp1 = %RN%_coriolisvec_para_slag_vp1(xP, xPD, q, legFrame, ...
+    koppelP, pkin, m, rSges, Icges);
+  cvec_vp2 = %RN%_coriolisvec_para_slag_vp2(xP, xPD, q, legFrame, ...
+    koppelP, pkin, m, mrSges, Ifges);
+
+  if any( abs(cvec_vp1 - cvec_vp2) > 1e6*eps(1+max(abs(cvec_vp1))) )
+    error('coriolis vectors do not match between par1/par2.');
+  end
+  
+  gvec_vp1 = %RN%_gravload_para_slag_vp1(xP, q, g, legFrame,...
+    koppelP, pkin, m, rSges);
+  gvec_vp2 = %RN%_gravload_para_slag_vp2(xP, q, g, legFrame,...
+    koppelP, pkin, m, mrSges);
+
+  if any( abs(gvec_vp1 - gvec_vp2) > 1e6*eps(1+max(abs(gvec_vp1))) )
+    error('gravload vectors do not match between par1/par2.');
+  end 
+  tauJ_vp1 = %RN%_invdyn_para_slag_vp1(xP, xPD, xPDD, q, legFrame, g, ...
+    koppelP, pkin, m, rSges, Icges);
+  tauJ_vp2 = %RN%_invdyn_para_slag_vp2(xP, xPD, xPDD, q, legFrame, g, ...
+    koppelP, pkin, m, mrSges, Ifges);
+
+  if any( abs(tauJ_vp1 - tauJ_vp2) > 1e6*eps(1+max(abs(tauJ_vp1))) )
+    error('complete inverse dynamics do not match between par1/par2.');
+  end 
+
+  tauJ_vp1_terme = Mmat_vp1*xPDD + cvec_vp1 + gvec_vp1;
+  tauJ_vp2_terme = Mmat_vp2*xPDD + cvec_vp2 + gvec_vp2;
+  
+  Jinv = %RN%_Jinv(xP, q, pkin, koppelP, ...
+    legFrame);
+
+  if N_XP > 4
+    tauJ_vp1_terme = inv(Jinv)' * tauJ_vp1_terme;
+	tauJ_vp2_terme = inv(Jinv)' * tauJ_vp2_terme;
+	tauJ_vp1 = inv(Jinv)' * tauJ_vp1;
+	tauJ_vp2 = inv(Jinv)' * tauJ_vp2;
+  end
+  
+  % compare both
+  Delta = tauJ_vp1_terme - tauJ_vp1;
+  if any(abs(Delta) > 1e6*eps(tauJ_vp1_terme))
+    error('Inverse dynamic does not match with inertia, coriolis, gravload components.')
+  end
+end
+fprintf('Tested inertia, coriolis, gravload components vs inverse dynamic for %d random joint angles for %s\n', ...
+  n, robot_name);
