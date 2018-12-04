@@ -7,6 +7,7 @@ Unterstützte Systemtypen sind:
 * Serielle Roboter
 * Hybride Roboter (seriell mit paralleler Teilstruktur)
 * Roboter mit bewegter Basis
+* Parallele Roboter (symmetrisch, mit fester Basis)
 
 Diese Anleitung enthält eine Übersicht über die Bedienung und die Funktionsweise der Toolbox. Detailierte Informationen sollten immer der Implementierung entnommen werden.
 
@@ -120,6 +121,15 @@ Folgende Argumente sind möglich:
 ```
 --floatb_only
 ```
+* Berechnungen für parallelen Roboter durchführen (berechnet auch die Dynamik für den dazugehörigen seriellen Roboter)
+```
+--parrob
+```
+* Die Berechnungen für die serielle Beinkette des parallelen Roboters nicht durchführen.
+```
+--not_gen_serial
+```
+
 Zum Speicherort der Ergebnisse siehe [Ergebnisordner](#ergebnisordner).
 
 ### Alternative 2: Händisches Generieren aller Dateien <a name="start_alt2"></a> 
@@ -275,6 +285,17 @@ Für jede Roboterdefinition ("robot_env") sollten entweder implizite, oder expli
 #### Beispiele
 
 Beispiele für die Implementierung von Zwangsbedingungen in impliziter Form finden sich in den Dateien für *KAS5m7u* (Kraftassistenzsystem 3. Arm). Die Endung "u" hinter dem Roboter bezeichnet das System ohne Zwangsbedingungen "u", dass zunächst aufgestellt wird.
+
+### Parallele Roboter
+
+Für parallele Roboter muss die Datei robot_env mit den Definitionen (MDH-Parametern usw.) und robot_env_par mit Informationen zur parallelen Struktur erstellt werden.
+Beispiele sind in robot_codegen_definitions/examples zu finden (Präfix "P" für parallel und "S" für seriell).
+
+Zur Berechnung müssen die oben berechneten Definitionsdateien vorliegen. Die Nutzung für PKMs erfolgt wie bei seriellen bzw. hybriden Robotern, es muss allerdings das Argument --parrob übergeben werden, damit das Skript auch parallele Berechnungen mit robot_env_par durchführt.
+Wenn die Dynamik der seriellen Ketten bereits berechnet wurde, kann dieser Schritt mit --not_gen_serial übersprungen werden.
+Es wird dann auf die Dateien der bereits berechnete Dynamik (save-Dateien aus Maple und .sh-Definitionsdateien aus der Bash)  zurückgegriffen.
+
+Die Berechnung basiert auf * [AbdellatifHei2009](#quellen), [Job2018_S759](#quellen).
 
 ### Weitergehendes Arbeiten
 
@@ -687,7 +708,31 @@ Berechnet die Dynamik nach dem Lagrange-Formalismus. Siehe Kapitel Dynamik in [O
       <-- energy_kinetic_fixb_regressor_minpar_maple.m
       <-- energy_potential_fixb_regressor_minpar_maple.m
 ```
-     
+
+### Parallele Roboter
+
+Führe folgende Arbeitsblätter nacheinander aus, nachdem bereits die inv. Dynamik für ein Bein nach dem bekannten Vorgehen berechnet wurde:
+
+Normale Form:
+
+```
+/robot_codegen_parallel
+  robot_para_definitions.mw
+  robot_para_rotmat_kinematics.mw
+  robot_para_plattform_rotmat_dynamics.mw
+  robot_para_rotmat_projection_dynamics.mw
+```
+
+Regressorform:
+
+```
+/robot_codegen_parallel
+  robot_para_definitions.mw
+  robot_para_rotmat_kinematics.mw
+  robot_para_plattform_rotmat_dynamics_regressor.mw
+  robot_para_rotmat_projection_dynamics_regressor.mw
+```
+
 ### Zusätzliche Dateien
 
 Die Skripte müssen vom Benutzer erstellt werden, je nach System.
@@ -733,3 +778,5 @@ Textbausteine für Funktionsköpfe:
 * [KhalilDom2002] W. Khalil and E. Dombre: "Modeling, Identification and Control of Robots" (2002)
 * [KhalilCre1997] Khalil, Wisama and Creusot, Denis: "SYMORO : A system for the symbolic modelling of robots" (1997)
 * [KhalilVijKhoMuk2014] Khalil, W. and Vijayalingam, A. and Khomutenko, B. and Mukhanov, I. and Lemoine, P. and Ecorchard, G.: "OpenSYMORO: An open-source software package for Symbolic Modelling of Robots" (2014)
+* [AbdellatifHei2009] Abdellatif, H. and Heimann, B.: Computational efficient inverse dynamics of 6-DOF fully parallel manipulators by using the Lagrangian formalism (2009)
+* [Job2018_S759] Job, T. (Studienarbeit; Betreuer Moritz Schappler): Implementierung einer strukturunabhängigen Dynamikmodellierung für parallelkinematische Maschinen (2018)
