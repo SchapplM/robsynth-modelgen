@@ -10,7 +10,7 @@
 echo "Generiere Matlabfunktionen für parallelen Roboter"
 
 repo_pfad=$(pwd)/..
-tmp_pfad=$repo_pfad/workdir/tmp/
+tmp_pfad=$repo_pfad/workdir/tmp
 # Initialisiere Variablen
 source robot_codegen_tmpvar_bash_par.sh
 source $repo_pfad/robot_codegen_definitions/robot_env_par.sh
@@ -21,7 +21,7 @@ source robot_codegen_assert_matlab_par.sh
 #source robot_codegen_matlab_preparation.sh
 
 # Korrigiere mit Maple generierte Matlab-Code-Dateien
-#./robot_codegen_matlabcode_postprocess_recursive.sh $repo_pfad/codeexport/$robot_name/tmp
+./robot_codegen_matlabcode_postprocess_recursive.sh $repo_pfad/codeexport/$robot_name/tmp
 
 # Erstelle Matlab-Funktionen der Kinematik
 ./robot_codegen_matlab_kinematics_parallel_varpar.sh

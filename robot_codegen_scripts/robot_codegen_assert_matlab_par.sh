@@ -9,8 +9,11 @@
 
 repo_pfad=$(pwd)/../
 tmp_pfad=$repo_pfad/workdir/tmp
+
 source $repo_pfad/robot_codegen_definitions/robot_env_par.sh
 source $repo_pfad/codeexport/${robot_leg_name}/tmp/robot_env.sh
+# Definition für Parallele Roboter erneut laden, damit Variable `robot_name` richtig gesetzt ist.
+source $repo_pfad/robot_codegen_definitions/robot_env_par.sh
 
 # Schnipsel für Matlab-varpar-Dateien vorbereiten
 # Parallel Roboter
