@@ -51,8 +51,15 @@ read "../transformation/proc_troty":
 read "../transformation/proc_trotz": 
 read "../transformation/proc_transl": 
 read "../transformation/proc_trafo_mdh": 
-read "../transformation/proc_rpy2r": 
-read "../transformation/proc_rpy2tr": 
+# Funktionen aus Robotik-Repo
+read("../robotics_repo_path"):
+read(sprintf("%s/transformation/maple/proc_eulxyz2r", robotics_repo_path)):
+# Homogene Transformationsmatrix für Rotation aus XYZ-Euler-Winkel
+eulxyztr := proc (alpha, beta, gamma) 
+  local T; 
+  T := Matrix(4,4,`<,>`(`<|>`(eulxyz2r(<alpha; beta; gamma>),`<,>`(0,0,0)),`<|>`(0,0,0,1)));
+  return T 
+end proc:
 read "../robot_codegen_definitions/robot_env":
 printf("Generiere Kinematik für %s\n", robot_name):
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
@@ -119,7 +126,7 @@ if base_method_name = "twist" then:
   Trf_c(1 .. 4, 1 .. 4, 1) := transl(X_base_t[1..3,1]):
 end:
 if base_method_name = "eulxyz" then:
-  Trf_c(1 .. 4, 1 .. 4, 1) := transl(X_base_t[1..3,1]).rpy2tr(X_base_t[4,1], X_base_t[5,1], X_base_t[6,1]):
+  Trf_c(1 .. 4, 1 .. 4, 1) := transl(X_base_t[1..3,1]) . eulxyztr(X_base_t[4,1], X_base_t[5,1], X_base_t[6,1]):
 end:
 printf("Nutze die Methode %s für die Basis-Orientierung\n", base_method_name):
 # Kinematik aller Körper mit MDH-Ansatz Bestimmen. [KhalilKle1986].

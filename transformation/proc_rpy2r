@@ -1,5 +1,0 @@
-rpy2r := proc (alpha, beta, gamma) 
-  local R; 
-  R := rotx(alpha) . roty(beta) . rotz(gamma); 
-  return R 
-end proc;

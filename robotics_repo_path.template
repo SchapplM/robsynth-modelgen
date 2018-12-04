@@ -1,0 +1,4 @@
+# Diese Datei muss den vollen Pfad zum IMES-Robotik-Repo beinhalten
+# ansonsten funktionieren einige Maple-Skripte nicht.
+# Der Name der Datei muss "robotics_repo_path" sein (ohne Endung)
+robotics_repo_path := "/pfad/zum/robotik/repo":

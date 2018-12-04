@@ -42,8 +42,9 @@ Folgende Schritte müssen durchgeführt werden:
 ## Voraussetzungen <a name="voraussetzungen"></a> 
 
 * Betriebssystem: Linux oder Windows mit [Windows-Linux-Subsystem](https://docs.microsoft.com/en-us/windows/wsl/install-win10) (für .sh-Skripte in [Alternative 1](#start_alt1)). Die Ausführung der Maple-Arbeitsblätter in [Alternative 2](#start_alt2) ist aber auch unter Windows ohne Linux-Subsystem möglich.
-* Maple muss installiert sein (aktuelle Version: Maple 2017)
+* Maple muss installiert sein (aktuelle Version: Maple 2018)
 * Die allgemeine Matlab-Toolbox (Repo `imes-matlab`) und die Matlab-Robotik-Toolbox (Repo `imes-robotics-matlab`) müssen im Matlab-Pfad initialisiert sein (Aufruf der entsprechenden `..._path_init.m` in den jeweiligen Repos). Damit die Pfadinitialisierung auch im Matlab-Terminalaufruf funktioniert, sollte die startup.m richtig gesetzt sein.
+* Der Pfad des Robotik-Repos muss für Maple mit der Datei robotics_repo_path gesetzt werden (analog zur Vorlage robotics_repo_path.template)
 
 ## Starten der Codeerstellung <a name="codeerstellung"></a> 
 
@@ -412,7 +413,7 @@ Alle Parameter müssen der Funktion übergeben werden (siehe Funktionsköpfe). I
 
 Teil 9: Kompilierungskennung
 
-* mex (Kompilierte Funktionen (mit Matlab-Funktion `Mex_Erstellen`) laufen ungefähr 10 mal schneller)
+* mex (Kompilierte Funktionen (mit Matlab-Funktion `matlabfcn2mex`) laufen ungefähr 10 mal schneller)
 
 Beispiele:
 * lwr4p_gravloadJ_floatb_twist_slag_vp1

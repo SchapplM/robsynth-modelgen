@@ -16,7 +16,9 @@
 interface(warnlevel=0): # Unterdrücke die folgende Warnung.
 restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
 interface(warnlevel=3):
-read "../transformation/proc_rpyjac": 
+# Funktion für Euler-Transformation aus Robotik-Repo laden (Pfad muss bekannt sein)
+read("../robotics_repo_path"):
+read(sprintf("%s/transformation/maple/proc_eulxyzjac", robotics_repo_path)):
 # Lese Umgebungsvariable für Codegenerierung.
 read "../robot_codegen_definitions/robot_env":
 printf("Generiere Parameter für %s\n",robot_name):
@@ -41,7 +43,7 @@ base_method_name := "eulxyz":
 # Umrechnung von der Ableitung der Basis-Orientierung zu Winkelgeschwindigkeiten:
 # Nutze die Euler-XYZ-Konvention ("RPY").
 # Siehe [5], Gl. (4.23)
-T_basevel := rpyjac(X_base_t(4), X_base_t(5), X_base_t(6)):
+T_basevel := eulxyzjac(X_base_t(4), X_base_t(5), X_base_t(6)):
 # Verallgemeinerte Koordinaten, gem [2], S. 4, [3], S.1
 NQ:=NQJ+NQB:
 q_t := Matrix(NQ,1, <X_base_t, qJ_t>):

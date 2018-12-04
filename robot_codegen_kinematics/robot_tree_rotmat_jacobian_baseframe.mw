@@ -139,6 +139,22 @@ codegen_debug := false:
 codegen_opt := 2:</Text-field>
 </Input>
 </Group><Presentation-Block>
+<Group view="code" labelreference="L2195" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Funktionen aus Robotik-Repo</Text-field>
+</Input>
+</Group>
+<Group labelreference="L2194" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read(&quot;../robotics_repo_path&quot;):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L2193" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read(sprintf(&quot;%s/transformation/maple/proc_r2eulxyz&quot;, robotics_repo_path)):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2192" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
 <Group labelreference="L2143" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal">Funktionen aus IRT-Maple-Repo</Text-field>
 </Input>
@@ -148,8 +164,7 @@ codegen_opt := 2:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L2133" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../transformation/proc_r2rpy&quot;, maple_repo_path):
-read sprintf(&quot;../transformation/proc_transl&quot;, maple_repo_path):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../transformation/proc_transl&quot;, maple_repo_path):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2128" drawlabel="true">
@@ -273,11 +288,11 @@ Rotationsdarstellung des Endeffektors in RPY-Winkeln</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2145" drawlabel="true">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">r2rpy liefert inert-arctan (%). Auswertung vor Export dauert zu lange. In exportiertem Matlab-Code muss &quot;%arctan&quot; h\303\244ndisch gegen &quot;atan2&quot; getauscht werden.</Font></Text-field>
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">r2eulxyz liefert inert-arctan (%). Auswertung vor Export dauert zu lange. In exportiertem Matlab-Code muss &quot;%arctan&quot; h\303\244ndisch gegen &quot;atan2&quot; getauscht werden.</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L2140" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">h_rota_rpy := r2rpy(T_p) - xo_EE: 
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">h_rota_rpy := r2eulxyz(T_p) - xo_EE: 
 h_rota_s :=convert_t_s(h_rota_rpy):</Text-field>
 </Input>
 </Group>

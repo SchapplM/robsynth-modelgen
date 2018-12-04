@@ -1,5 +1,0 @@
-yprjac := proc (alpha, beta, gamma) 
-  local R; 
-  R := Matrix(3,3,<<0,0,1>|<-sin(alpha),cos(alpha),0>|<cos(alpha)*cos(beta),sin(alpha)*cos(beta),-sin(beta)>>); 
-  return R 
-end proc;
