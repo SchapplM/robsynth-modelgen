@@ -34,7 +34,7 @@ codegen_debug := false:
 codegen_opt := 2:
 # Funktionen aus Robotik-Repo
 read("../robotics_repo_path"):
-read(sprintf("%s/transformation/maple/proc_r2eulxyz", robotics_repo_path)):
+read(sprintf("%s/transformation/maple/proc_r2eulxyz_inert", robotics_repo_path)):
 
 # Funktionen aus IRT-Maple-Repo
 read sprintf("../helper/proc_MatlabExport", maple_repo_path):
@@ -85,8 +85,8 @@ end if:
 # Ortmaier2014a Gl. (1.15), S.14: Geometrische Zwangsbedingungen in impliziter Form
 # Rotationsdarstellung des Endeffektors in RPY-Winkeln
 xo_EE := Matrix(3,1,<phi_xEE; phi_yEE; phi_zEE>):
-# r2eulxyz liefert inert-arctan (%). Auswertung vor Export dauert zu lange. In exportiertem Matlab-Code muss "%arctan" händisch gegen "atan2" getauscht werden.
-h_rota_rpy := r2eulxyz(T_p) - xo_EE: 
+# r2eulxyz_inert liefert inert-arctan (%). Auswertung vor Export dauert zu lange. In exportiertem Matlab-Code muss "%arctan" händisch gegen "atan2" getauscht werden.
+h_rota_rpy := r2eulxyz_inert(T_p) - xo_EE: 
 h_rota_s :=convert_t_s(h_rota_rpy):
 # Jacobi-Matrix der inversen Kinematik
 # Falls die RPY-Darstellung für dieses Körper-KS singulär ist, existiert die analytische Jacobi-Matrix nicht. Maple gibt dann einen Fehler aus. Die Kennzeichnung mit NaN sorgt dafür, dass dies in Matlab erkennbar ist.
