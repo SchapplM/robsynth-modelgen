@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="2017" minor="3"/>
+<Version major="2018" minor="0"/>
 <Label-Scheme value="2" prefix=""/>
-<View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false">
+<View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1080" rtablesize="100" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -104,7 +104,9 @@ regressor -&gt; Regressorform (parameterlinear)</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3151" drawlabel="true">
-<Input><Text-field style="Heading 2" layout="Heading 2">Autor</Text-field><Text-field style="Normal" layout="Normal">Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03</Text-field><Text-field style="Normal" layout="Normal">(C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover</Text-field>
+<Input><Text-field style="Heading 2" layout="Heading 2">Autor</Text-field><Text-field style="Normal" layout="Normal">Tim Job (Studienarbeit bei Moritz Schappler), 2018-12
+Moritz Schappler, moritz.schappler@imes.uni-hannover.de
+<Font encoding="UTF-8">(C) Institut f\303\274r Mechatronische Systeme, Universit\303\244t Hannover</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L3167" drawlabel="true">
@@ -259,7 +261,7 @@ vzs_base := 0:</Text-field>
 <Group hide-input="false" labelreference="L3366" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">NQ := NQ - (NQJ-NQJ_parallel):</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion4" expanded="true" visible="true" pixel-width="500" pixel-height="544" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">for i from NQJ_parallel+1 to NQJ do
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion4" expanded="true" visible="true" pixel-width="500" pixel-height="544" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">for i from NQJ_parallel+1 to NQJ do
 	XXC||i := 0:
 	XYC||i := 0:
 	XZC||i := 0:
@@ -291,7 +293,7 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group hide-input="false" labelreference="L3394" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Paramvec2 := Paramvec2:</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" hide-input="false" labelreference="L3402" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion6" expanded="true" visible="true" pixel-width="717" pixel-height="200" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">for j to RowDimension(Paramvec2) do
+</Group><CodeEditor-ExecGroup view="presentation" hide-input="false" labelreference="L3402" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion6" expanded="true" visible="true" pixel-width="717" pixel-height="200" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">for j to RowDimension(Paramvec2) do
 	if is(Paramvec2(j) = M(NQJ_parallel+1,1)) then
 		Paramvec2(j) := 0;
 		paramVecP := paramVecP_M;
@@ -303,7 +305,7 @@ end do:</EC-CodeEditor>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Paramvec2 := remove(has,Paramvec2,0):
 counter := 0:</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" hide-input="false" labelreference="L5" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion5" expanded="true" visible="true" pixel-width="584" pixel-height="292" code-language="text/maple" autoexpand="false" wrapping="false" show-border="true" code-line-numbers="true">for i to RowDimension(Paramvec2) do
+</Group><CodeEditor-ExecGroup view="presentation" hide-input="false" labelreference="L5" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion5" expanded="true" visible="true" pixel-width="584" pixel-height="292" code-language="text/maple" autofit="false" wrapping="false" show-border="true" code-line-numbers="true">for i to RowDimension(Paramvec2) do
 	if not(Paramvec2(i,1) = NULL) then
 		if counter = 0 then
 			ParamvecNew := Paramvec2(i,1):
@@ -351,7 +353,7 @@ COLUMNreg := ColumnDimension(tau_regressor_s):</Text-field>
 <Group labelreference="L3180" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">Substituiere in jeder Matrix den Winkel Alpha (Verdrehung in der Basis) und die Gelenkkoordinaten und -geschwindigkeiten</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3164" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="1105" pixel-height="275" code-language="text/maple" autoexpand="false" wrapping="false" show-border="true" code-line-numbers="true">for k from 1 by 1 to N_LEGS do
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3164" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="1105" pixel-height="275" code-language="text/maple" autofit="false" wrapping="false" show-border="true" code-line-numbers="true">for k from 1 by 1 to N_LEGS do
   	for i to NQJ_parallel do
   		for j to COLUMNreg do
   			for p from NQJ_parallel+1 to NQJ do
@@ -414,7 +416,7 @@ A := pivotMat.&lt;A_j(1..6,1..ROWS)|A_E&gt;:
 paramMin := &lt;ParamvecNew;paramVecP&gt;:
 NotNullEntries := 0:</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3387" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="1360" pixel-height="111" code-language="text/maple" autoexpand="false" wrapping="false" show-border="true" code-line-numbers="true">for i to RowDimension(paramMin) do
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3387" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="1360" pixel-height="111" code-language="text/maple" autofit="false" wrapping="false" show-border="true" code-line-numbers="true">for i to RowDimension(paramMin) do
 	if not(paramMin(i,1) = 0 or Equal(Column(A,i), ZeroVector[column](RowDimension(A)))) then
 		NotNullEntries := NotNullEntries + 1:
 	end if:
@@ -424,7 +426,7 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 paramMinRed := Matrix(NotNullEntries,1):
 ARed := Matrix(RowDimension(A),NotNullEntries):</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3388" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion2" expanded="true" visible="true" pixel-width="852" pixel-height="224" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">j := 1:
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3388" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion2" expanded="true" visible="true" pixel-width="852" pixel-height="224" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">j := 1:
 for i to RowDimension(paramMin) do
 	if not(paramMin(i,1) = 0 or Equal(Column(A,i), ZeroVector[column](RowDimension(A)))) then
 		paramMinRed(j,1) := paramMin(i,1):
@@ -469,7 +471,7 @@ Tmp2 := 0:</Text-field>
 <Group hide-input="false" labelreference="L3310" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">RowParamMin := RowDimension(paramMinRed):</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L7" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion3" expanded="true" visible="true" pixel-width="553" pixel-height="284" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">for i to NX do
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L7" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion3" expanded="true" visible="true" pixel-width="553" pixel-height="284" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">for i to NX do
   for k to RowParamMin do
     for j to N_LEGS do
       for l to NQJ_parallel do
