@@ -1,0 +1,15 @@
+# Industrieroboter, Kuka (6 FG)
+
+robot_name := "kuka6dof":
+
+NJ := 6:
+NQJ := 6:
+qoffset := Matrix(6,1,[0,0,Pi/2,0,0,0]):
+alpha := Matrix(6,1,[0,Pi/2,0,Pi/2,-Pi/2,Pi/2]):
+d := Matrix(6,1,[L1,0,0,L5,0,L6]):
+a := Matrix(6,1,[0,L2,L3,L4,0,0]):
+v := Matrix(6,1,[0, 1, 2, 3, 4, 5]):
+b := Matrix(6,1,[0, 0, 0, 0, 0, 0]):
+beta := Matrix(6,1,[0, 0, 0, 0, 0, 0]):
+
+theta := qJ_t+qoffset:
