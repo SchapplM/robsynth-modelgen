@@ -18,7 +18,7 @@
 function jv = %FN%(qJ, pkin)
 %% Coder Information
 %#codegen
-%$cgargs {zeros(4,1),zeros(23,1)}
+%$cgargs {zeros(%NQJ%,1),zeros(%NKP%,1)}
 assert(isreal(qJ) && all(size(qJ) == [4 1]), ...
   '%FN%: qJ has to be [4x1] (double)');
 assert(isreal(pkin) && all(size(pkin) == [23 1]), ...
