@@ -40,31 +40,30 @@ for i = 1:n
   Jinv = %RN%_Jinv(xP, q, pkin, koppelP, ...
     legFrame);
   %% Dynamik in Plattform-Koordinaten
-  
-  tauA_vp2 = %RN%_invdyn_para_qa_slag_vp2(xP, xPD, xPDD, q, g, legFrame, ...
+  tauX_vp2 = %RN%_invdyn_para_pf_slag_vp2(xP, xPD, xPDD, q, g, legFrame, ...
     koppelP, pkin, m, mrSges, Ifges);
-  tauA_reg = %RN%_invdyn_para_qa_reg(xP, xPD, xPDD, q, g, legFrame, ...
+  tauX_reg = %RN%_invdyn_para_pf_reg(xP, xPD, xPDD, q, g, legFrame, ...
     koppelP, pkin);
-  tauA_MPV = tauA_reg*MPV;
-  DeltaA = tauA_MPV - tauA_vp2;
-  if any(abs(DeltaA) > 1e6*eps(tauA_MPV))
+  tauX_MPV = tauX_reg*MPV;
+  DeltaX = tauX_MPV - tauX_vp2;
+  if any(abs(DeltaX) > 1e6*eps(tauX_MPV))
     error('Inverse dynamics (platform coordinates) does not match with regressor form.')
   end
   
   %% Dynamik in Antriebskoordinaten
   if N_XP <= 4
-    tauX_vp2 = %RN%_invdyn_para_pf_slag_vp2(xP, xPD, xPDD, q, g, legFrame, ...
+    tauA_vp2 = %RN%_invdyn_para_qa_slag_vp2(xP, xPD, xPDD, q, g, legFrame, ...
       koppelP, pkin, m, mrSges, Ifges);
-    tauX_reg = %RN%_invdyn_para_pf_reg(xP, xPD, xPDD, q, g, legFrame, ...
+    tauA_reg = %RN%_invdyn_para_qa_reg(xP, xPD, xPDD, q, g, legFrame, ...
       koppelP, pkin);
-    tauX_MPV = tauX_reg*MPV;
-    DeltaX = tauX_MPV - tauX_vp2;
-    if any(abs(DeltaX) > 1e6*eps(tauX_MPV))
+    tauA_MPV = tauA_reg*MPV;
+    DeltaA = tauA_MPV - tauA_vp2;
+    if any(abs(DeltaA) > 1e6*eps(tauA_MPV))
       error('Inverse dynamics (actuation coordinates) does not match with regressor form.')
     end
   else % if N_XP > 4
-    tauA_MPV = (Jinv)' \ tauA_reg;
-    tauA_vp2 = (Jinv)' \ tauA_vp2;
+    tauA_MPV = (Jinv)' \ tauX_reg;
+    tauA_vp2 = (Jinv)' \ tauX_vp2;
   end
 end
 fprintf('Tested regressor form vs inverse dynamic for %d random joint angles for %s\n', ...
