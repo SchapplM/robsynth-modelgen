@@ -4,40 +4,42 @@
 # Berechnung und Projektion der Dynamikgleichungen in Regressorform
 # 
 # Dateiname:
-# robot -> Berechnung für allgemeinen Roboter
-# para -> Berechnung für eine parallelen Roboter
+# robot -> Berechnung fÃ¼r allgemeinen Roboter
+# para -> Berechnung fÃ¼r einen parallelen Roboter
 # rotmat -> Kinematik wird mit Rotationsmatrizen berechnet
 # projection -> Die Dynamikgleichungen werden auf EE-Koordinaten projiziert
-# kinematics -> Berechnung der Kinematik
+# dynamics -> Berechnung der Dynamik
 # regressor -> Regressorform (parameterlinear)
 # Autor
-# Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
-# (C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
+# Tim Job (Studienarbeit bei Moritz Schappler), 2018-12
+# Moritz Schappler, moritz.schappler@imes.uni-hannover.de
+# (C) Institut fÃ¼r Mechatronische Systeme, UniversitÃ¤t Hannover
 # Sources
 # [GautierKhalil1990] Direct Calculation of Minimum Set of Inertial Parameters of Serial Robots
 # [KhalilDombre2002] Modeling, Identification and Control of Robots
 # [Ortmaier2014] Vorlesungsskript Robotik I
+# [Job2018_S759] Job, T. (Studienarbeit; Betreuer Moritz Schappler): Implementierung einer strukturunabhÃ¤ngigen Dynamikmodellierung fÃ¼r parallelkinematische Maschinen (2018)
 # Initialization
-interface(warnlevel=0): # Unterdrücke die folgende Warnung.
-restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
+interface(warnlevel=0): # UnterdrÃ¼cke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn Ã¼ber Terminal-Maple mit read gestartet wird.
 interface(warnlevel=3):
 interface(rtablesize=100):
 with(LinearAlgebra):
 with(codegen):
 with(CodeGeneration):
 with(StringTools):
-# Einstellungen für Code-Export: Optimierungsgrad (2=höchster) und Aktivierung jedes Terms.
+# Einstellungen fÃ¼r Code-Export: Optimierungsgrad (2=hÃ¶chster) und Aktivierung jedes Terms.
 #codegen_act := true: # noch nicht implementiert
 codegen_debug := false:
-codegen_opt := 1:
+codegen_opt := 2:
 codeexport_invdyn := true:
 read "../helper/proc_MatlabExport": 
 read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
 read "../robot_codegen_definitions/robot_env_par":
-# Kennung des Parametersatzes, für den die Dynamikfunktionen erstellt werden sollen. Muss im Repo und in der mpl-Datei auf 1 gelassen werden, da die folgende Zeile mit einem Skript verarbeitet wird.
+# Kennung des Parametersatzes, fÃ¼r den die Dynamikfunktionen erstellt werden sollen. Muss im Repo und in der mpl-Datei auf 1 gelassen werden, da die folgende Zeile mit einem Skript verarbeitet wird.
 codegen_dynpar := 2:
-# Link-Index, für den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber für beliebige Segmente aufgestellt werden. (0=Basis)
+# Link-Index, fÃ¼r den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber fÃ¼r beliebige Segmente aufgestellt werden. (0=Basis)
 LIJAC:=NL-1:
 regressor_modus := "regressor_minpar":
 # Ergebnisse der Plattform-Dynamik in Regressorform laden
@@ -48,17 +50,17 @@ read "../robot_codegen_definitions/robot_env_par":
 # Ergebnisse des Minimalparametervektors der Gelenkkette laden
 read sprintf("../codeexport/%s/tmp/minimal_parameter_vector_fixb_maple", leg_name):
 read "../robot_codegen_definitions/robot_env_par":
-# Ergebnisse der zusätzlichen Definitionen für parallele Roboter laden
+# Ergebnisse der zusÃ¤tzlichen Definitionen fÃ¼r parallele Roboter laden
 read sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
-# Ergebnisse der Kinematik für parallen Roboter laden
+# Ergebnisse der Kinematik fÃ¼r parallen Roboter laden
 read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
-printf("Generiere Parameterlineare Form der Dynamik für PKM %s mit Minimal-Parametersatz\n", robot_name):
+printf("Generiere Parameterlineare Form der Dynamik fÃ¼r PKM %s mit Minimal-Parametersatz\n", robot_name):
 # Lade "robotics_repo_path"-File mit Link zum "imes-robotics-matlab"-Repo
 read("../robotics_repo_path"):
 # Lade die Funktionen aus dem "imes-robotics-matlab"-Repo
 read(sprintf("%s/transformation/maple/proc_eul%s2r", robotics_repo_path, angleConvLeg)):
 read(sprintf("%s/transformation/maple/proc_eul%sjac", robotics_repo_path, "zyx")):
-# Berechne Dynamik-Matrizen für alle Beine
+# Berechne Dynamik-Matrizen fÃ¼r alle Beine
 # Alle Basisgeschwindigkeiten und -winkel aus Berechnung der seriellen Kette zu null setzen.
 omegaxs_base := 0:
 omegays_base := 0:
@@ -69,7 +71,7 @@ gammazs_base := 0:
 vxs_base := 0:
 vys_base := 0:
 vzs_base := 0:
-# Physikalische Parameter der Koppelgelenke zu Null setzen.
+# Physikalische Parameter der durch Koppelgelenke bewegten KÃ¶rper zu Null setzen.
 NQ := NQ - (NQJ-NQJ_parallel):
 for i from NQJ_parallel+1 to NQJ do
 	XXC||i := 0:
@@ -92,7 +94,7 @@ for i from NQJ_parallel+1 to NQJ do
 	MZ||i := 0:
 	M||i := 0:
 end do:
-# Ergebnisse der Kinematik für parallelen Roboter laden
+# Ergebnisse der Kinematik fÃ¼r parallelen Roboter laden
 read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
 Paramvec2 := Paramvec2:
 for j to RowDimension(Paramvec2) do
@@ -115,7 +117,7 @@ for i to RowDimension(Paramvec2) do
 	end if:
 end do:
 
-# Dupliziere alle berechneten Matrizen. i steht für den Index des jeweiligen Beines
+# Dupliziere alle berechneten Matrizen. i steht fÃ¼r den Index des jeweiligen Beines
 tauReg := tau_regressor_s(7..NQ,..):
 g := <g1;g2;g3>:
 tmp := <tmp1;tmp2;tmp3>:
@@ -154,14 +156,14 @@ for k from 1 by 1 to N_LEGS do
 end do:
 
 # Berechnung, Projektion und Addition der Dynamikgleichungen
-# Berechnung der Kräfte/Momente an den Gelenken der jeweiligen Beine und Projektion auf EE-Plattform
+# Berechnung der KrÃ¤fte/Momente an den Gelenken der jeweiligen Beine und Projektion auf EE-Plattform
 A_E := A_E:
 U_i := U_i:
 JBinv_i := JBinv_i:
 for i to N_LEGS do
    A_||i:= simplify(Transpose(U_i(..,..,i)).Transpose(JBinv_i(..,..,i))).simplify(tau_regressor_s||i):
 end do:
-# Aufsummieren aller Kräfte, projiziert auf EE-Plattform
+# Aufsummieren aller KrÃ¤fte, projiziert auf EE-Plattform
 Tmp := 0:
 for i to N_LEGS do
   Tmp := Tmp + A_||i:
@@ -193,7 +195,7 @@ for i to RowDimension(paramMin) do
 end do:
 
 # Replace Joint Velocities
-# Substituiere die Gelenkgeschwindigkeiten über H-, Ui- und JBi-Matrix mit EE-Geschwindikeiten
+# Substituiere die Gelenkgeschwindigkeiten Ã¼ber H-, Ui- und JBi-Matrix mit EE-Geschwindikeiten
 Tmp := 0:
 Tmp2 := 0:
 for i to N_LEGS do
@@ -221,20 +223,27 @@ for i to NX do
   end do:
 end do:
 tauGes := ARed:#.paramMinRed:
+# Dynamik in Plattform-Koordinaten (oben berechnet)
+tau_x := tauGes:
+# Dynamik in Antriebs-Koordinaten umrechnen. Nur machen, wenn die Jacobi-Matrix einfach genug ist.
+
 if RowDimension(Jinv) < 5 then
-  J:=MatrixInverse(Jinv):
+  J:=MatrixInverse(Jinv): # TODO: Dieser Schritt ist doppelt. Sollte im Kinematik-Arbeitsblatt ausgelagert werden.
   J:=simplify(J):
-  tau:=Transpose(J).tauGes:
-else
-  tau := tauGes:
+  tau_qa:=Transpose(J).tauGes:
 end if:
 # Export
-#tau := tauGes:
 # Matlab Export: Floating base
-# Berechnung der Basis-Belastung ist für manche Basis-Darstellungen falsch (siehe oben unter Gravitationslast).
+# Berechnung der Basis-Belastung ist fÃ¼r manche Basis-Darstellungen falsch (siehe oben unter Gravitationslast).
+
 if codeexport_invdyn then
-  MatlabExport(tau, sprintf("../codeexport/%s/tmp/invdyn_para_reg_matlab.m", robot_name), codegen_opt):
+  MatlabExport(tau_x, sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_reg_matlab.m", robot_name), codegen_opt):
 end if:
+
+if codeexport_invdyn and RowDimension(Jinv) < 5 then
+  MatlabExport(tau_qa, sprintf("../codeexport/%s/tmp/invdyn_para_actcoord_reg_matlab.m", robot_name), codegen_opt):
+end if:
+
 MatlabExport(paramMinRed, sprintf("../codeexport/%s/tmp/minimal_parameter_parrob_matlab.m", robot_name), codegen_opt):
 MatlabExport(RowParamMin, sprintf("../codeexport/%s/tmp/RowMinPar_parallel.m", robot_name), 2);
 

@@ -4,25 +4,27 @@
 # Berechnung und Projektion der Dynamikgleichungen
 # 
 # Dateiname:
-# robot -> Berechnung für allgemeinen Roboter
-# para -> Berechnung für eine parallelen Roboter
+# robot -> Berechnung fÃ¼r allgemeinen Roboter
+# para -> Berechnung fÃ¼r einen parallelen Roboter
 # rotmat -> Kinematik wird mit Rotationsmatrizen berechnet
 # projection -> Die Dynamikgleichungen werden auf EE-Koordinaten projiziert
-# kinematics -> Berechnung der Kinematik
+# dynamics -> Berechnung der Dynamik
 # Autor
-# Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
-# (C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
+# Tim Job (Studienarbeit bei Moritz Schappler), 2018-12
+# Moritz Schappler, moritz.schappler@imes.uni-hannover.de
+# (C) Institut fÃ¼r Mechatronische Systeme, UniversitÃ¤t Hannover
 # Sources
 # [Abdellatif2007] Modellierung, Identifikation und robuste Regelung von Robotern mit parallelkinematischen Strukturen
+# [Job2018_S759] Job, T. (Studienarbeit; Betreuer Moritz Schappler): Implementierung einer strukturunabhÃ¤ngigen Dynamikmodellierung fÃ¼r parallelkinematische Maschinen (2018)
 # Initialization
-interface(warnlevel=0): # Unterdrücke die folgende Warnung.
-restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
+interface(warnlevel=0): # UnterdrÃ¼cke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn Ã¼ber Terminal-Maple mit read gestartet wird.
 interface(warnlevel=3):
 with(LinearAlgebra):
 with(codegen):
 with(CodeGeneration):
 with(StringTools):
-# Einstellungen für Code-Export: Optimierungsgrad (2=höchster).
+# Einstellungen fÃ¼r Code-Export: Optimierungsgrad (2=hÃ¶chster).
 #codegen_act := true: # noch nicht implementiert
 codegen_debug := false:
 codegen_opt := 2:
@@ -30,11 +32,12 @@ codeexport_invdyn := true:
 read "../helper/proc_MatlabExport":
 read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
-# Kennung des Parametersatzes, für den die Dynamikfunktionen erstellt werden sollen. Muss im Repo und in der mpl-Datei auf 1 gelassen werden, da die folgende Zeile mit einem Skript verarbeitet wird.
+# Kennung des Parametersatzes, fÃ¼r den die Dynamikfunktionen erstellt werden sollen. Muss im Repo und in der mpl-Datei auf 1 gelassen werden, da die folgende Zeile mit einem Skript verarbeitet wird.
 codegen_dynpar := 1:
-# Link-Index, für den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber für beliebige Segmente aufgestellt werden. (0=Basis)
-LIJAC:=NL-1:
-# Ergebnisse der zusätzlichen Definitionen für parallele Roboter laden
+# Link-Index, fÃ¼r den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber fÃ¼r beliebige Segmente aufgestellt werden. (0=Basis)
+LIJAC:=NL-1: # TODO: Kann das weg?
+;
+# Ergebnisse der zusÃ¤tzlichen Definitionen fÃ¼r parallele Roboter laden
 read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
 # Ergebnisse der Plattform-Dynamik laden
@@ -43,15 +46,23 @@ read sprintf("../codeexport/%s/tmp/floatb_platform_dynamic_maple.m", robot_name)
 # Ergebnisse der Dynamik der Gelenkkette laden
 #read sprintf("../codeexport/%s/tmp/invdyn_%s_par%d_maple.m", leg_name, base_method_name, codegen_dynpar)
 ;
-# Ergebnisse der Kinematik für parallelen Roboter laden
+# Ergebnisse der Kinematik fÃ¼r parallelen Roboter laden
 read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
-read "../robot_codegen_definitions/robot_env_par":
+# Neu-Definition der von dieser Datei gelesenen Variablen, damit sie im Workspace erscheinen
+pivotMat := pivotMat:
+pivotMatMas := pivotMatMas:
+Jinv := Jinv:
+JBinv_i := JBinv_i:
+U_i := U_i:
+read "../robot_codegen_definitions/robot_env_par": # TODO: Muss das nochmal geladen werden?
+;
 # Lade "robotics_repo_path"-File mit Link zum "imes-robotics-matlab"-Repo
 read("../robotics_repo_path"):
 # Lade die Funktionen aus dem "imes-robotics-matlab"-Repo
 read(sprintf("%s/transformation/maple/proc_eul%s2r", robotics_repo_path, angleConvLeg)):
-read(sprintf("%s/transformation/maple/proc_eul%sjac", robotics_repo_path, "zyx")):
+read(sprintf("%s/transformation/maple/proc_eul%sjac", robotics_repo_path, "zyx")): # TODO: Muss hier die Winkelkonvention eingesetzt werden? Wird das hier gebraucht?
+# TODO: Euler-Funktion mit "parse"-Befehl hier definieren
 # Alle Basisgeschwindigkeiten und -winkel aus Berechnung der seriellen Kette zu null setzen.
 omegaxs_base := 0:
 omegays_base := 0:
@@ -62,7 +73,7 @@ gammazs_base := 0:
 vxs_base := 0:
 vys_base := 0:
 vzs_base := 0:
-# Physikalische Parameter der Koppelgelenke zu Null setzen.
+# Physikalische Parameter der durch Koppelgelenke bewegten KÃ¶rper zu Null setzen.
 NQ := NQ - (NQJ-NQJ_parallel):
 for i from NQJ_parallel+1 to NQJ do
 	XXC||i := 0:
@@ -85,7 +96,7 @@ for i from NQJ_parallel+1 to NQJ do
 	MZ||i := 0:
 	M||i := 0:
 end do:
-# Ergebnisse G-Vektor laden. Die Rotation der Basis wird nur in der Jacobi-Matrix der inverse Kinematik berücksichtigt. Deshalb muss der Gravitationsvektor ebenfalls an die Rotation angepasst werden.
+# Ergebnisse G-Vektor laden. Die Rotation der Basis wird nur in der Jacobi-Matrix der inverse Kinematik berÃ¼cksichtigt. Deshalb muss der Gravitationsvektor ebenfalls an die Rotation angepasst werden.
 g1 := gtmp1:
 g2 := gtmp2:
 g3 := gtmp3:
@@ -108,11 +119,11 @@ MM := simplify(MM_s(7..NQ,7..NQ)):
 MM := simplify(MM):
 MME := simplify(MME):
 gE := simplify(gE):
-# Ergebnisse der Kinematik für parallen Roboter laden
+# Ergebnisse der Kinematik fÃ¼r parallen Roboter laden
 read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
-printf("Generiere Dynamik für PKM %s mit Parametersatz %d\n", robot_name, codegen_dynpar, base_method_name):
-# Berechne Dynamik-Matrizen für alle Beine
-# Dupliziere alle berechneten Matrizen. i steht für den Index des jeweiligen Beines
+printf("Generiere Dynamik fÃ¼r PKM %s mit Parametersatz %d\n", robot_name, codegen_dynpar, base_method_name):
+# Berechne Dynamik-Matrizen fÃ¼r alle Beine
+# Dupliziere alle berechneten Matrizen. i steht fÃ¼r den Index des jeweiligen Beines
 for i to N_LEGS do
   MM||i := Copy(MM):
   Cvec||i := Copy(Cvec):
@@ -143,8 +154,9 @@ for k from 1 by 1 to N_LEGS do
 end do:
 
 # Berechnung, Projektion und Addition der Dynamikgleichungen
-# Berechnung der Kräfte/Momente an den Gelenken der jeweiligen Beine und Projektion auf EE-Plattform
-# Abdellatif2007 S.38 (3.27)
+# Berechnung der KrÃ¤fte/Momente an den Gelenken der jeweiligen Beine und Projektion auf EE-Plattform
+# Abdellatif2007 S.38 (3.27); [Job2018_S759], S. 29
+
 for i to N_LEGS do
 
   Jtmp := Multiply(Transpose(U_i(..,..,i)),Transpose(JBinv_i(..,..,i))):
@@ -152,9 +164,11 @@ for i to N_LEGS do
   A||i := simplify(Multiply(JBinv_i(..,..,i),JBD_i(..,..,i))):
   B||i := Multiply(-MM||i,Multiply(A||i,qDtmp)):
 
-  
-  MMs||i := Jtmp.MM||i.Transpose(Jtmp).H:
-  cvecs||i := Jtmp.MM||i.JBinv_i(..,..,i).(U_i(..,..,i).dH+UD_i(..,..,i).H).xED_s+Jtmp.B||i+Jtmp.Cvec||i:
+  # [Job2018_S759], Term in der Summe in Gl. (3.50)
+  MMs||i := Jtmp . MM||i . Transpose(Jtmp) . H:
+  # [Job2018_S759], Term in der Summe in Gl. (3.51)
+  cvecs||i := Jtmp.MM||i.JBinv_i(..,..,i).(U_i(..,..,i).dH + UD_i(..,..,i).H).xED_s + Jtmp.B||i + Jtmp.Cvec||i:
+  # [Job2018_S759], Term in der Summe in Gl. (3.52)
   gvecs||i := Jtmp.G||i:
   
   tau||i := Jtmp.MM||i.JBinv_i(..,..,i).(U_i(..,..,i).H.xEDD_s+U_i(..,..,i).dH.xED_s+UD_i(..,..,i).H.xED_s) + Multiply(Jtmp,(B||i+Cvec||i+G||i)):
@@ -162,8 +176,9 @@ for i to N_LEGS do
 
   taus||i := MMs||i.xEDD_s + cvecs||i + gvecs||i:
 end do:
-# Abdellatif2007 S.40 (3.33)
-# Aufsummieren aller Kräfte, projiziert auf EE-Plattform
+
+# Abdellatif2007 S.40 (3.33); [Job2018_S759], (3.49)
+# Aufsummieren aller KrÃ¤fte, projiziert auf EE-Plattform
 Tmp := 0:
 for i to N_LEGS do
   Tmp := Tmp + tau||i:
@@ -171,6 +186,7 @@ end do:
 # Addiere Inverse Dynamik der Plattform
 tauGes := Tmp + tauE:
 # Aufsummieren aller Massenmatrizen, projiziert auf EE-Plattform
+# [Job2018_S759], (3.50)
 Tmp := 0:
 for i to N_LEGS do
   Tmp := Tmp + MMs||i:
@@ -178,6 +194,7 @@ end do:
 # Addiere Massenmatrix der Plattform
 MMGes := Tmp + MME:
 # Aufsummieren aller Coriolisvektoren, projiziert auf EE-Plattform
+# [Job2018_S759], (3.51)
 Tmp := 0:
 for i to N_LEGS do
   Tmp := Tmp + cvecs||i:
@@ -185,6 +202,7 @@ end do:
 # Addiere Coriolisvektor der Plattform
 cvecGes := Tmp + cvecE:
 # Aufsummieren aller Gravitiationsvektoren, projiziert auf EE-Plattform
+# [Job2018_S759], (3.52)
 Tmp := 0:
 for i to N_LEGS do
   Tmp := Tmp + gvecs||i:
@@ -193,7 +211,7 @@ end do:
 gGes := Tmp - gE:
 #tauGes := MMGes.xEDD_s + cvecGes + gGes:
 # Replace Joint Velocities
-# Substituiere die Gelenkgeschwindigkeiten über H-, Ui- und JBi-Matrix mit EE-Geschwindikeiten
+# Substituiere die Gelenkgeschwindigkeiten Ã¼ber H-, Ui- und JBi-Matrix mit EE-Geschwindikeiten
 Tmp := 0:
 for i to N_LEGS do
   Tmp := Multiply(H,xED_s):
@@ -213,7 +231,8 @@ for i to 6 do
   end do:
 end do:
 # Export
-# Wähle die Einträge aus Dynamikgleichungen, die für Freiheitsgrade des Roboters relevant sind.
+# WÃ¤hle die EintrÃ¤ge aus Dynamikgleichungen, die fÃ¼r Freiheitsgrade des Roboters relevant sind.
+# (Ã¼ber die Auswahl-Matrix "pivotMat").
 #Jtestinv := Matrix(6,6,symbol=Jentry):
 #Jtest := MatrixInverse(Jtestinv):
 #Jtest := simplify(Jtest):
@@ -226,23 +245,33 @@ end do:
 #    end do:
 #  end do:
 #end do:
-tau := pivotMat.tauGes:
-MMGes := pivotMat.MMGes.Transpose(pivotMatMas):
-cvecGes := pivotMat.cvecGes:
-gGes := pivotMat.gGes:
+# Dynamik-Terme in Plattform-Koordinaten
+tau_x := pivotMat.tauGes:
+MMGes_x := pivotMat.MMGes.Transpose(pivotMatMas):
+cvecGes_x := pivotMat.cvecGes:
+gGes_x := pivotMat.gGes:
+# Dynamik in Antriebs-Koordinaten umrechnen. Nur machen, wenn die Jacobi-Matrix einfach genug ist. Sonst ist die symbolische Invertierung zu teuer und sollte numerisch gemacht werden
+# [Job2018_S759], S. 30; Gl. 3.53, 3.54
 if RowDimension(Jinv) < 5 then
   J:=MatrixInverse(Jinv):
   J:=simplify(J):
-  tau:=Transpose(J).tau:
-  MMGes:=Transpose(J).MMGes:
-  cvecGes:=Transpose(J).cvecGes:
-  gGes:=Transpose(J).gGes:
+  tau_qa     := Transpose(J) . tau_x:
+  MMGes_qa   := Transpose(J) . MMGes_x:
+  cvecGes_qa := Transpose(J) . cvecGes_x:
+  gGes_qa    := Transpose(J) . gGes_x:
 end if:
+  
 # Matlab Export
 if codeexport_invdyn then
-  MatlabExport(tau, sprintf("../codeexport/%s/tmp/invdyn_para_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
-  MatlabExport(MMGes, sprintf("../codeexport/%s/tmp/inertia_para_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
-  MatlabExport(cvecGes, sprintf("../codeexport/%s/tmp/coriolisvec_para_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
-  MatlabExport(gGes, sprintf("../codeexport/%s/tmp/gravvec_para_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
+  MatlabExport(tau_x,     sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
+  MatlabExport(MMGes_x,   sprintf("../codeexport/%s/tmp/inertia_para_plfcoord_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
+  MatlabExport(cvecGes_x, sprintf("../codeexport/%s/tmp/coriolisvec_para_plfcoord_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
+  MatlabExport(gGes_x,    sprintf("../codeexport/%s/tmp/gravvec_para_plfcoord_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
+end if:
+if codeexport_invdyn and RowDimension(Jinv) < 5 then
+  MatlabExport(tau_qa,     sprintf("../codeexport/%s/tmp/invdyn_para_actcoord_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
+  MatlabExport(MMGes_qa,   sprintf("../codeexport/%s/tmp/inertia_para_actcoord_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
+  MatlabExport(cvecGes_qa, sprintf("../codeexport/%s/tmp/coriolisvec_para_actcoord_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
+  MatlabExport(gGes_qa,    sprintf("../codeexport/%s/tmp/gravvec_para_actcoord_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
 end if:
 

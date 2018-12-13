@@ -1,28 +1,30 @@
 
-# Kinematik für parallelen Roboter
+# Kinematik fÃ¼r parallelen Roboter
 # Einleitung
 # Berechnung der Jacobi-Matrix des parallelen Roboters
 # 
 # Dateiname:
-# robot -> Berechnung für allgemeinen Roboter
-# para -> Berechnung für eine parallelen Roboter
+# robot -> Berechnung fÃ¼r allgemeinen Roboter
+# para -> Berechnung fÃ¼r eine parallelen Roboter
 # rotmat -> Kinematik wird mit Rotationsmatrizen berechnet
 # kinematics -> Berechnung der Kinematik
 # Autor
-# Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
-# (C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
+# Tim Job (Studienarbeit bei Moritz Schappler), 2018-12
+# Moritz Schappler, moritz.schappler@imes.uni-hannover.de
+# (C) Institut fÃ¼r Mechatronische Systeme, UniversitÃ¤t Hannover
 # Sources
 # [Abdellatif2007] Modellierung, Identifikation und robuste Regelung von Robotern mit parallelkinematischen Strukturen
+# [Job2018_S759] Job, T. (Studienarbeit; Betreuer Moritz Schappler): Implementierung einer strukturunabhÃ¤ngigen Dynamikmodellierung fÃ¼r parallelkinematische Maschinen (2018)
 # Initialization
-interface(warnlevel=0): # Unterdrücke die folgende Warnung.
-restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
+interface(warnlevel=0): # UnterdrÃ¼cke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn Ã¼ber Terminal-Maple mit read gestartet wird.
 interface(warnlevel=3):
 with(LinearAlgebra):
 #with(ArrayTools):
 with(codegen):
 with(CodeGeneration):
 with(StringTools):
-# Einstellungen für Code-Export: Optimierungsgrad (2=höchster) und Aktivierung jedes Terms.
+# Einstellungen fÃ¼r Code-Export: Optimierungsgrad (2=hÃ¶chster) und Aktivierung jedes Terms.
 #codegen_act := true: # noch nicht implementiert
 codegen_debug := false:
 codegen_opt := 2:
@@ -36,16 +38,16 @@ read "../transformation/proc_roty":
 read "../transformation/proc_rotz": 
 read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
-# Definitionen für parallel Roboter laden
+# Definitionen fÃ¼r parallel Roboter laden
 read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
 # Lade "robotics_repo_path"-File mit Link zum "imes-robotics-matlab"-Repo
 read("../robotics_repo_path"):
 # Lade die Funktionen aus dem "imes-robotics-matlab"-Repo
 read(sprintf("%s/transformation/maple/proc_eul%s2r", robotics_repo_path, angleConvLeg)):
-# Kennung des Parametersatzes, für den die Dynamikfunktionen erstellt werden sollen. Muss im Repo und in der mpl-Datei auf 1 gelassen werden, da die folgende Zeile mit einem Skript verarbeitet wird.
+# Kennung des Parametersatzes, fÃ¼r den die Dynamikfunktionen erstellt werden sollen. Muss im Repo und in der mpl-Datei auf 1 gelassen werden, da die folgende Zeile mit einem Skript verarbeitet wird.
 codegen_dynpar := 2:
-# Link-Index, für den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber für beliebige Segmente aufgestellt werden. (0=Basis)
+# Link-Index, fÃ¼r den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber fÃ¼r beliebige Segmente aufgestellt werden. (0=Basis)
 LIJAC:=NL-1:
 # Ergebnisse der analytischen Jacobi-Matrix (Translatorisch)
 read sprintf("../codeexport/%s/tmp/jacobia_transl_%d_maple.m", leg_name, LIJAC):
@@ -56,7 +58,7 @@ px, py, pz := 0, 0, 0:
 alphaxs_base, betays_base, gammazs_base := 0, 0, 0: 
 rxs_base, rys_base, rzs_base := 0, 0, 0:
 # Additional Kinematics
-# Definition der Koppelpunkte für jedes Bein und der EE-Koordinaten/-Geschwindigkeiten/-Beschleunigungen
+# Definition der Koppelpunkte fÃ¼r jedes Bein und der EE-Koordinaten/-Geschwindigkeiten/-Beschleunigungen
 tmp := Matrix(3,1,[xP[1],yP[1],zP[1]]):
 for j to 3 do:
     if (xE_s(j) = 0) then
@@ -92,7 +94,7 @@ for i from 1 to 3-transDOF do
 end do:
 JB1inv := simplify(JB1inv):
 JB1 := simplify(JB1):
-# Berechnung der Matrix Ui: EE-Geschwindigkeiten -> Koppelpunktgeschwindigkeiten P. i steht für den Index des jeweiligen Beines
+# Berechnung der Matrix Ui: EE-Geschwindigkeiten -> Koppelpunktgeschwindigkeiten P. i steht fÃ¼r den Index des jeweiligen Beines
 # Abdellatif2007 S.21 (2.21)
 for i to N_LEGS do
   r||i := P||i:
@@ -109,7 +111,7 @@ for i to N_LEGS do
   #U||i||D := convert_t_s(U||i||D): #dU berechnen
   #U||i := convert_t_s(U||i):
 end do:
-# Ermittlung des Robotertyps, um später die Gesamt-Jacobi-Matrix reduzieren zu können
+# Ermittlung des Robotertyps, um spÃ¤ter die Gesamt-Jacobi-Matrix reduzieren zu kÃ¶nnen
 robotType := 1:
 counter := 0:
 for i from 4 to 6 do
@@ -128,12 +130,12 @@ elif counter = 3 then
   robotType := 3:
 end if:
 rotPlanar:
-# Erstelle die Matrizen für jedes Bein.
+# Erstelle die Matrizen fÃ¼r jedes Bein.
 U_i := Copy(U1):
 UD_i := Copy(U1D):
 ROW := RowDimension(U1):
 COLUMN := ColumnDimension(U1):
-# Substituiere die zeitabhängigen EE-Koordinaten mit den oben definierten zeitunabhängigen Koordinaten
+# Substituiere die zeitabhÃ¤ngigen EE-Koordinaten mit den oben definierten zeitunabhÃ¤ngigen Koordinaten
 for i to N_LEGS do
   for j to 3 do
     for k to 6 do
@@ -158,8 +160,8 @@ JB1Dinv := diff~(JB1inv,t):
 JB1Dinv := simplify(JB1Dinv):
 JB1Dinv := simplify(convert_t_s(JB1Dinv)):
 JB1inv := simplify(convert_t_s(JB1inv)):
-# Berechne Jacobi-Matrizen für jedes Bein
-# Dupliziere alle berechneten Matrizen. i steht für den Index des jeweiligen Beines
+# Berechne Jacobi-Matrizen fÃ¼r jedes Bein
+# Dupliziere alle berechneten Matrizen. i steht fÃ¼r den Index des jeweiligen Beines
 JBinv_i := Copy(JB1inv):
 JBD_i := Copy(JB1D):
 JBDinv_i := Copy(JB1Dinv):

@@ -49,37 +49,45 @@ else
 fi
 
 # Inverse Dynamik
-quelldat=$repo_pfad/codeexport/${robot_name}/tmp/invdyn_para_reg_matlab.m
-zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_invdyn_para_reg.m
-cat $head_pfad/robot_matlabtmp_invdynJ_para_regmin.head.m > $zieldat
-printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 0
-source $repo_pfad/scripts/set_inputdim_line_par.sh $zieldat
-cat $tmp_pfad/robot_matlabtmp_assert_xP.m >> $zieldat
-cat $tmp_pfad/robot_matlabtmp_assert_xDP.m >> $zieldat
-cat $tmp_pfad/robot_matlabtmp_assert_xDDP.m >> $zieldat
-cat $tmp_pfad/robot_matlabtmp_assert_qJ_parallel.m >> $zieldat
-cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
-cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+coordmaple=( actcoord plfcoord)
+coordmatlab=( qa pf )
+for (( coord=0; coord<=1; coord++ )); do # 0=act joints, 1=platform
+  # Zeichenkette für die Koordinatensysteme, für die die Dynamik-Terme definiert sind.
+  costrmpl=${coordmaple[$coord]}
+  costrmat=${coordmatlab[$coord]}
+  
+  quelldat=$repo_pfad/codeexport/${robot_name}/tmp/invdyn_para_${costrmpl}_reg_matlab.m
+  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_invdyn_para_${costrmat}_reg.m
+  cat $head_pfad/robot_matlabtmp_invdynJ_para_${costrmat}_regmin.head.m > $zieldat
+  printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+  source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 0
+  source $repo_pfad/scripts/set_inputdim_line_par.sh $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_xP.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_xDP.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_xDDP.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_qJ_parallel.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
 
-cat $tmp_pfad/robot_matlabtmp_assert_legFrame_parallel.m >> $zieldat
-cat $tmp_pfad/robot_matlabtmp_assert_koppelP_parallel.m >> $zieldat
-if [ -f $quelldat ]; then
-  printf "\n%%%% Variable Initialization" > ${quelldat}.subsvar
-  cat $tmp_pfad/robot_matlabtmp_qJ_parallel.m >> ${quelldat}.subsvar
-  cat $tmp_pfad/robot_matlabtmp_par_koppelP_parallel.m >> ${quelldat}.subsvar
-  cat $tmp_pfad/robot_matlabtmp_xP.m >> ${quelldat}.subsvar
-  cat $tmp_pfad/robot_matlabtmp_xDP.m >> ${quelldat}.subsvar
-  cat $tmp_pfad/robot_matlabtmp_xDDP.m >> ${quelldat}.subsvar
-  cat $tmp_pfad/robot_matlabtmp_g.m >> ${quelldat}.subsvar
-  cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
+  cat $tmp_pfad/robot_matlabtmp_assert_legFrame_parallel.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_koppelP_parallel.m >> $zieldat
+  if [ -f $quelldat ]; then
+    printf "\n%%%% Variable Initialization" > ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_qJ_parallel.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_par_koppelP_parallel.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_xP.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_xDP.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_xDDP.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_g.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
 
-  cat $tmp_pfad/robot_matlabtmp_legFrame_parallel.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_legFrame_parallel.m >> ${quelldat}.subsvar
 
-  printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
-  sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
-  cat $quelldat >> $zieldat
-else
-  echo "Code in ${quelldat##*/} nicht gefunden. "
-fi
-source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 1 0 ${quelldat}.subsvar
+    printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+    sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
+    cat $quelldat >> $zieldat
+    source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 1 0 ${quelldat}.subsvar
+  else
+    echo "Code in ${quelldat##*/} nicht gefunden. "
+  fi
+done

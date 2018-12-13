@@ -28,8 +28,8 @@ Q_GES = length(Q(1,:));
 Q_N = Q_GES/NQJ;
 for i = 1:n
   q = [];
-  for i = 1:Q_N
-    q = [q;Q(1,(i-1)*NQJ+1:i*NQJ)];
+  for j = 1:Q_N
+    q = [q;Q(1,(j-1)*NQJ+1:j*NQJ)]; %#ok<AGROW>
   end
   q = q';
   xP = XP(i,:)';
@@ -37,26 +37,36 @@ for i = 1:n
   xPDD = XPDD(i,:)';
   g = G(i,:)';
   
-  tauJ_vp2 = %RN%_invdyn_para_slag_vp2(xP, xPD, xPDD, q, legFrame, g, ...
-    koppelP, pkin, m, mrSges, Ifges);
-  tauJ_MPV_A = %RN%_invdyn_para_reg(xP, xPD, xPDD, q, legFrame, g, ...
-    koppelP, pkin);
-	
   Jinv = %RN%_Jinv(xP, q, pkin, koppelP, ...
     legFrame);
-	
-  if N_XP > 4
-    tauJ_MPV_A = inv(Jinv)' * tauJ_MPV_A;
-	tauJ_vp2 = inv(Jinv)' * tauJ_vp2;
-  end	
-
-  tauJ_MPV_reg = tauJ_MPV_A*MPV;
+  %% Dynamik in Plattform-Koordinaten
   
-  % compare both
-  Delta = tauJ_MPV_reg - tauJ_vp2;
-  if any(abs(Delta) > 1e6*eps(tauJ_MPV_reg))
-    error('Inverse dynamic does not match with regressor form.')
+  tauA_vp2 = %RN%_invdyn_para_qa_slag_vp2(xP, xPD, xPDD, q, legFrame, g, ...
+    koppelP, pkin, m, mrSges, Ifges);
+  tauA_reg = %RN%_invdyn_para_qa_reg(xP, xPD, xPDD, q, legFrame, g, ...
+    koppelP, pkin);
+  tauA_MPV = tauA_reg*MPV;
+  DeltaA = tauA_MPV - tauA_vp2;
+  if any(abs(DeltaA) > 1e6*eps(tauA_MPV))
+    error('Inverse dynamics (platform coordinates) does not match with regressor form.')
+  end
+  
+  %% Dynamik in Antriebskoordinaten
+  if N_XP <= 4
+    tauX_vp2 = %RN%_invdyn_para_pf_slag_vp2(xP, xPD, xPDD, q, legFrame, g, ...
+      koppelP, pkin, m, mrSges, Ifges);
+    tauX_reg = %RN%_invdyn_para_pf_reg(xP, xPD, xPDD, q, legFrame, g, ...
+      koppelP, pkin);
+    tauX_MPV = tauX_reg*MPV;
+    DeltaX = tauX_MPV - tauX_vp2;
+    if any(abs(DeltaX) > 1e6*eps(tauX_MPV))
+      error('Inverse dynamics (actuation coordinates) does not match with regressor form.')
+    end
+  else % if N_XP > 4
+    tauA_MPV = (Jinv)' \ tauA_reg;
+    tauA_vp2 = (Jinv)' \ tauA_vp2;
   end
 end
 fprintf('Tested regressor form vs inverse dynamic for %d random joint angles for %s\n', ...
   n, robot_name);
+
