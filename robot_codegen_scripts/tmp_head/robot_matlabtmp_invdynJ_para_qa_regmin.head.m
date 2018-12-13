@@ -1,15 +1,15 @@
 % Calculate minimal parameter regressor of inverse dynamics forces for
 % %RN%
 % Use Code from Maple symbolic Code Generation
-% 
+%
 % Input:
 % %INPUT_XP%
 % %INPUT_XDP%
 % %INPUT_XDDP%
 % %INPUT_QJ_P%
-% %INPUT_LEGFRAME%
 % g [3x1]
 %   gravitation vector in mdh base frame [m/s^2]
+% %INPUT_LEGFRAME%
 % %INPUT_PKIN%
 % %INPUT_KOPPEL%
 
@@ -20,5 +20,5 @@
 
 % %VERSIONINFO%
 
-function tau_reg = %FN%(xP, xDP, xDDP, qJ, legFrame, g, ...
+function tau_reg = %FN%(xP, xDP, xDDP, qJ, g, legFrame, ...
   koppelP, pkin)

@@ -66,9 +66,9 @@ for i = 1:n
     error('gravload vectors (platform coordinates) do not match between par1/par2.');
   end 
   
-  tauX_vp1 = %RN%_invdyn_para_pf_slag_vp1(xP, xPD, xPDD, q, legFrame, g, ...
+  tauX_vp1 = %RN%_invdyn_para_pf_slag_vp1(xP, xPD, xPDD, q, g, legFrame, ...
     koppelP, pkin, m, rSges, Icges);
-  tauX_vp2 = %RN%_invdyn_para_pf_slag_vp2(xP, xPD, xPDD, q, legFrame, g, ...
+  tauX_vp2 = %RN%_invdyn_para_pf_slag_vp2(xP, xPD, xPDD, q, g, legFrame, ...
     koppelP, pkin, m, mrSges, Ifges);
 
   if any( abs(tauX_vp1 - tauX_vp2) > 1e6*eps(1+max(abs(tauX_vp1))) )
@@ -116,9 +116,9 @@ for i = 1:n
     if any( abs(gvecA_vp1 - gvecA_vp2) > 1e6*eps(1+max(abs(gvecA_vp1))) )
       error('gravload vectors (actuation coordinates) do not match between par1/par2.');
     end 
-    tauA_vp1 = %RN%_invdyn_para_qa_slag_vp1(xP, xPD, xPDD, q, legFrame, g, ...
+    tauA_vp1 = %RN%_invdyn_para_qa_slag_vp1(xP, xPD, xPDD, q, g, legFrame, ...
       koppelP, pkin, m, rSges, Icges);
-    tauA_vp2 = %RN%_invdyn_para_qa_slag_vp2(xP, xPD, xPDD, q, legFrame, g, ...
+    tauA_vp2 = %RN%_invdyn_para_qa_slag_vp2(xP, xPD, xPDD, q, g, legFrame, ...
       koppelP, pkin, m, mrSges, Ifges);
 
     if any( abs(tauA_vp1 - tauA_vp2) > 1e6*eps(1+max(abs(tauA_vp1))) )
@@ -136,10 +136,10 @@ for i = 1:n
   %% Vergleiche Terme im Antriebskoordinaten mit Termen in Plattform-Koordinaten
   test_tauA = tauA_vp1 - (Jinv') \ tauX_vp1;
   test_tauX = tauX_vp1 - (Jinv') * tauA_vp1;
-  if any( abs( test_tauA )  > 1e6*eps(1+max(abs(tauA_vp1))) )
+  if any( abs( test_tauA )  > 1e6*eps(1+max(abs([tauA_vp1;tauX_vp1]))) )
     error('Umrechnung der Dynamik von Plattform- zu Antriebskoordinaten stimmt nicht.');
   end
-  if any( abs( test_tauX )  > 1e6*eps(1+max(abs(tauX_vp1))) )
+  if any( abs( test_tauX )  > 1e6*eps(1+max(abs([tauA_vp1;tauX_vp1]))) )
     error('Umrechnung der Dynamik von Antriebs- zu Plattformkoordinaten stimmt nicht.');
   end
 end
