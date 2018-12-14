@@ -228,8 +228,8 @@ tau_x := tauGes:
 # Dynamik in Antriebs-Koordinaten umrechnen. Nur machen, wenn die Jacobi-Matrix einfach genug ist.
 
 if RowDimension(Jinv) < 5 then
-  J:=MatrixInverse(Jinv): # TODO: Dieser Schritt ist doppelt. Sollte im Kinematik-Arbeitsblatt ausgelagert werden.
-  J:=simplify(J):
+  read sprintf("../codeexport/%s/tmp/jacobian_maple.m", robot_name): # Annahme, dass die Jacobi-Matrix (aus Invertierung) vorher berechnet wurde. Setzt aktuell das normale Dynamik-Skript voraus.
+  J:=J: # Neudefinition, damit Variable im Workspace ist.
   tau_qa:=Transpose(J).tauGes:
 end if:
 # Export

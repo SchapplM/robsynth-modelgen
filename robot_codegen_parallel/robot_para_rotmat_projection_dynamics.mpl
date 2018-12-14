@@ -23,7 +23,8 @@ interface(warnlevel=3):
 with(LinearAlgebra):
 with(codegen):
 with(CodeGeneration):
-with(StringTools):
+with(StringTools): # Für Zeitausgabe
+;
 # Einstellungen für Code-Export: Optimierungsgrad (2=höchster).
 #codegen_act := true: # noch nicht implementiert
 codegen_debug := false:
@@ -73,6 +74,8 @@ gammazs_base := 0:
 vxs_base := 0:
 vys_base := 0:
 vzs_base := 0:
+# Startzeit messen zur Beurteilung der Zeitdauer einzelner Schritte
+st := time():
 # Physikalische Parameter der durch Koppelgelenke bewegten Körper zu Null setzen.
 NQ := NQ - (NQJ-NQJ_parallel):
 for i from NQJ_parallel+1 to NQJ do
@@ -253,14 +256,17 @@ gGes_x := pivotMat.gGes:
 # Dynamik in Antriebs-Koordinaten umrechnen. Nur machen, wenn die Jacobi-Matrix einfach genug ist. Sonst ist die symbolische Invertierung zu teuer und sollte numerisch gemacht werden
 # [Job2018_S759], S. 30; Gl. 3.53, 3.54
 if RowDimension(Jinv) < 5 then
-  J:=MatrixInverse(Jinv):
-  J:=simplify(J):
+  printf("%s. Beginn der Matrix-Invertierung.  CPU-Zeit bis hier: %1.2fs.\n", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
+  J:=MatrixInverse(Jinv): # TODO: Matrix-Invertierung in eigenem Skript (bei der Kinematik; dort mit Platzhalter-Matrix invertieren)
+  printf("%s. Matrix-Invertierung beendet. CPU-Zeit bis hier: %1.2fs.\n", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
+  # J:=simplify(J):
+  # printf("%s. Optimierung beendet. CPU-Zeit bis hier: %1.2fs.\n", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
   tau_qa     := Transpose(J) . tau_x:
   MMGes_qa   := Transpose(J) . MMGes_x:
   cvecGes_qa := Transpose(J) . cvecGes_x:
   gGes_qa    := Transpose(J) . gGes_x:
 end if:
-  
+
 # Matlab Export
 if codeexport_invdyn then
   MatlabExport(tau_x,     sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);

@@ -124,7 +124,7 @@ restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(LinearAlgebra):
 with(codegen):
 with(CodeGeneration):
-with(StringTools):</Text-field>
+<Font encoding="UTF-8">with(StringTools): # F\303\274r Zeitausgabe</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L3205" drawlabel="true">
@@ -241,6 +241,14 @@ gammazs_base := 0:
 vxs_base := 0:
 vys_base := 0:
 vzs_base := 0:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3396" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Startzeit messen zur Beurteilung der Zeitdauer einzelner Schritte</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3397" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">st := time():</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3349" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -577,14 +585,21 @@ gGes_x := pivotMat.gGes:</EC-CodeEditor></CodeEditor-ExecGroup>
 [Job2018_S759], S. 30; Gl. 3.53, 3.54</Text-field>
 </Input>
 </Group><CodeEditor-ExecGroup view="presentation" labelreference="L3373" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion2" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if RowDimension(Jinv) &lt; 5 then
-  J:=MatrixInverse(Jinv):
-  J:=simplify(J):
+  printf(&quot;%s. Beginn der Matrix-Invertierung.  CPU-Zeit bis hier: %1.2fs.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):
+  J:=MatrixInverse(Jinv): # TODO: Matrix-Invertierung in eigenem Skript (bei der Kinematik; dort mit Platzhalter-Matrix invertieren)
+  save J, sprintf(&quot;../codeexport/%s/tmp/jacobian_maple.m&quot;, robot_name): # TODO: Besseren Namen w\303\244hlen und dies im Kinematik-Skript machen.
+  printf(&quot;%s. Matrix-Invertierung beendet. CPU-Zeit bis hier: %1.2fs.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):
+  # J:=simplify(J):
+  # printf(&quot;%s. Optimierung beendet. CPU-Zeit bis hier: %1.2fs.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):
   tau_qa     := Transpose(J) . tau_x:
   MMGes_qa   := Transpose(J) . MMGes_x:
   cvecGes_qa := Transpose(J) . cvecGes_x:
   gGes_qa    := Transpose(J) . gGes_x:
-end if:
-  </EC-CodeEditor></CodeEditor-ExecGroup>
+end if:</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L3399" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
 <Group labelreference="L3161" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal">Matlab Export</Text-field>
 </Input>
@@ -599,7 +614,7 @@ end if:</EC-CodeEditor></CodeEditor-ExecGroup><CodeEditor-ExecGroup view="presen
   MatlabExport(cvecGes_qa, sprintf(&quot;../codeexport/%s/tmp/coriolisvec_para_actcoord_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt);
   MatlabExport(gGes_qa,    sprintf(&quot;../codeexport/%s/tmp/gravvec_para_actcoord_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt);
 end if:</EC-CodeEditor></CodeEditor-ExecGroup>
-<Group labelreference="L3389" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group labelreference="L3402" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>

@@ -506,8 +506,8 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group><CodeEditor-ExecGroup view="presentation" labelreference="L3406" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion7" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if RowDimension(Jinv) &lt; 5 then
-  J:=MatrixInverse(Jinv): # TODO: Dieser Schritt ist doppelt. Sollte im Kinematik-Arbeitsblatt ausgelagert werden.
-  J:=simplify(J):
+  read sprintf(&quot;../codeexport/%s/tmp/jacobian_maple.m&quot;, robot_name): # Annahme, dass die Jacobi-Matrix (aus Invertierung) vorher berechnet wurde. Setzt aktuell das normale Dynamik-Skript voraus.
+  J:=J: # Neudefinition, damit Variable im Workspace ist.
   tau_qa:=Transpose(J).tauGes:
 end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 </Section>
