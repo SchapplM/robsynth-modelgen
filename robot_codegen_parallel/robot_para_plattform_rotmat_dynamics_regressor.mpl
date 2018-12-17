@@ -65,6 +65,7 @@ read(sprintf("%s/transformation/maple/proc_eul%s2r", robotics_repo_path, angleCo
 read(sprintf("%s/transformation/maple/proc_eul%sjac", robotics_repo_path, angleConvLeg)):
 # Additional Kinematics
 # Berechnung der Rotationsmatrizen
+
 R_0_0_E_t := parse(sprintf("eul%s2r",angleConvLeg))(xE_t(4..6)):
 R_0_0_E_s := parse(sprintf("eul%s2r",angleConvLeg))(xE_s(4..6)):
 RPYjac_0_t := parse(sprintf("eul%sjac",angleConvLeg))(xE_t(4..6)):
@@ -74,6 +75,7 @@ J_P_P := J_P_P:
 J_0_P := R_0_0_E_s.J_P_P.Transpose(R_0_0_E_s):
 J_0_P_raute := Matrix(6,1,[J_0_P(1,1),J_0_P(1,2),J_0_P(1,3),J_0_P(2,2),J_0_P(2,3),J_0_P(3,3)]):
 J_P_P_raute := Matrix(6,1,[J_P_P(1,1),J_P_P(1,2),J_P_P(1,3),J_P_P(2,2),J_P_P(2,3),J_P_P(3,3)]):
+
 r_0_sP_P := R_0_0_E_t.r_P_sP_P:
 r_0_P_sP := -r_0_sP_P:
 #rD_0_sP_P := diff~(r_0_sP_P,t):
@@ -89,7 +91,9 @@ r_P_P_sP := -r_P_sP_P:
 #sE := Matrix(mE*r_0_P_sP):
 #sE := Matrix(mE*r_P_P_sP):
 sE := s_P_P_sP:
+
 # Berechnung der H-Matrix und deren Ableitung nach Abdellatif S.20 aus "Modellierung, Identifikation und robuste Regelung von Robotern mit parallelkinematischen Strukturen"
+
 RPYjac_E_t := simplify(Multiply(Transpose(R_0_0_E_t),RPYjac_0_t)):
 RPYjac_E_s := simplify(Multiply(Transpose(R_0_0_E_s),RPYjac_0_s)):
 w_E_0_E_s := RPYjac_E_s.xED_s(4..6,1):
@@ -108,6 +112,7 @@ for i to 3 do
 		end do:
 	end do:
 end do:
+
 omegaE := <omega1;omega2;omega3>:
 xED_dummy := <xE,yE,zE>:
 omega0 := Transpose(R_0_0_E_s).omegaE:
