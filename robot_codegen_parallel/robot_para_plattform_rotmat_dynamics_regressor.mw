@@ -138,10 +138,7 @@ with(VectorCalculus):</Text-field>
 </Group>
 <Group labelreference="L2950" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_opt := 2:
-codeexport_invdyn := false:
-codeexport_grav := fals: 
-codeexport_corvec := false:
-codeexport_inertia := false:</Text-field>
+codeexport_invdyn := false:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2948" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">

@@ -31,9 +31,6 @@ with(VectorCalculus):
 # Einstellungen für Code-Export: Optimierungsgrad (2=höchster) und Aktivierung jedes Terms.
 codegen_opt := 2:
 codeexport_invdyn := false:
-codeexport_grav := fals: 
-codeexport_corvec := false:
-codeexport_inertia := false:
 read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s": 
 read "../helper/proc_MatlabExport":
