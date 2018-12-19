@@ -13,6 +13,9 @@ repo_pfad=$(pwd)/..
 
 source $repo_pfad/robot_codegen_definitions/robot_env_par.sh
 
+# Roboterdefinition kopieren
+cp "$repo_pfad/robot_codegen_definitions/robot_env_par" "$repo_pfad/codeexport/$robot_name/tmp"
+
 # Alle mpl-Dateien in Arbeitsverzeichnis kopieren
 for mpldat in `find $repo_pfad/robot_codegen_parallel -name "*.mpl"`; do
   mpldat_full=$repo_pfad/$mpldat

@@ -31,6 +31,9 @@ done
 
 source $repo_pfad/robot_codegen_definitions/robot_env.sh
 
+# Roboterdefinition kopieren
+cp "$repo_pfad/robot_codegen_definitions/robot_env" "$repo_pfad/codeexport/$robot_name/tmp"
+
 # Arbeitsverzeichnis leeren (damit alte Dateiversionen nicht versehentlich gestartet werden).
 rm -rf $repo_pfad/workdir
 mkdir -p $repo_pfad/workdir/tmp
