@@ -143,7 +143,11 @@ with(StringTools):</Text-field>
 codegen_debug := false:
 codegen_opt := 2:
 codeexport_invdyn := true:
-read &quot;../helper/proc_MatlabExport&quot;: </Text-field>
+<Font encoding="UTF-8">codeexport_actcoord := false: # Generierung der Dynamik in Antriebskoordinaten nicht standardm\303\244\303\237ig (hoher Rechenaufwand)</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L3418" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_MatlabExport&quot;: </Text-field>
 </Input>
 </Group>
 <Group labelreference="L3177" drawlabel="true">
@@ -193,9 +197,12 @@ read &quot;../robot_codegen_definitions/robot_env_par&quot;:</Text-field>
 <Input><Text-field style="Text" layout="Normal">Ergebnisse des Minimalparametervektors der Gelenkkette laden</Text-field>
 </Input>
 </Group>
-<Group labelreference="L3304" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/minimal_parameter_vector_fixb_maple&quot;, leg_name):
-read &quot;../robot_codegen_definitions/robot_env_par&quot;:</Text-field>
+<Group hide-input="false" labelreference="L3304" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/minimal_parameter_vector_fixb_maple&quot;, leg_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3419" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">read &quot;../robot_codegen_definitions/robot_env_par&quot;: # Nochmal laden, um Standard-Einstellungen \303\274berschreiben zu k\303\266nnen.</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L3264" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -292,7 +299,8 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3394" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Paramvec2 := Paramvec2:</Text-field>
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Dynamik-Parameter f\303\274r virtuelle Segmente nach den Plattform-Koppelgelenken entfernen
+</Font></Text-field>
 </Input>
 </Group><CodeEditor-ExecGroup view="presentation" hide-input="false" labelreference="L3402" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion6" expanded="true" visible="true" pixel-width="717" pixel-height="200" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">for j to RowDimension(Paramvec2) do
 	if is(Paramvec2(j) = M(NQJ_parallel+1,1)) then
@@ -300,22 +308,32 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 		paramVecP := paramVecP_M;
 	end if:
 end do:</EC-CodeEditor>
-<Input><Text-field prompt="&gt; " style="Maple Input" spaceabove="0" linebreak="space" rightmargin="0" linespacing="0.0" initial="0" firstindent="0" leftmargin="0" bulletsuffix="" alignment="left" bullet="none" spacebelow="0" pagebreak-before="false"></Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" spaceabove="0" linebreak="space" rightmargin="0" linespacing="0.0" initial="0" firstindent="0" leftmargin="0" bulletsuffix="" alignment="left" bullet="none" spacebelow="0" pagebreak-before="false">Paramvec2 := remove(has,Paramvec2,0): # <Font encoding="UTF-8">Alle Eintr\303\244ge ab der Null entfernen</Font></Text-field>
 </Input></CodeEditor-ExecGroup>
-<Group hide-input="false" labelreference="L3380" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Paramvec2 := remove(has,Paramvec2,0):
-counter := 0:</Text-field>
+<Group labelreference="L3429" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"></Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" hide-input="false" labelreference="L5" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion5" expanded="true" visible="true" pixel-width="584" pixel-height="194" code-language="text/maple" autofit="false" wrapping="false" show-border="true" code-line-numbers="true">for i to RowDimension(Paramvec2) do
-	if not(Paramvec2(i,1) = NULL) then
-		if counter = 0 then
-			ParamvecNew := Paramvec2(i,1):
-			counter := 1:
-		else
-			ParamvecNew := &lt;ParamvecNew;Paramvec2(i,1)&gt;:
-		end if:
-	end if:
-end do:</EC-CodeEditor></CodeEditor-ExecGroup>
+</Group>
+<Group hide-input="false" labelreference="L3380" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
+<Group labelreference="L3430" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Neuen Parametervektor f\303\274r die Beinsegmenten (ohne Plattform)</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L3424" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" hide-input="false" labelreference="L5" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion5" expanded="true" visible="true" pixel-width="1038" pixel-height="223" code-language="text/maple" autofit="false" wrapping="false" show-border="true" code-line-numbers="true">ParamvecNew := Matrix(RowDimension(Paramvec2), 1): # Initialisierung mit maximaler Gr\303\266\303\237e
+kk:=0:
+for i to RowDimension(Paramvec2) do
+  if not(Paramvec2(i,1) = NULL) then
+    kk := kk + 1:
+    ParamvecNew(kk,1) := Paramvec2(i,1):
+  end if:
+end do:
+ParamvecNew := ParamvecNew(1..kk,..):</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group hide-input="false" labelreference="L3381" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
@@ -324,8 +342,10 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Dupliziere alle berechneten Matrizen. i steht f\303\274r den Index des jeweiligen Beines</Font></Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L3326" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tauReg := tau_regressor_s(7..NQ,..):
+<Group labelreference="L3426" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3428" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion11" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">tauReg := tau_regressor_s(7..NQ,..):
 g := &lt;g1;g2;g3&gt;:
 tmp := &lt;tmp1;tmp2;tmp3&gt;:
 Rmat := Transpose(parse(sprintf(&quot;eul%s2r&quot;,angleConvLeg))(frame_A_i(1..3,1))):
@@ -339,36 +359,36 @@ for i to NQJ_parallel do
       tauReg(i,k) := subs({tmp(j)=gtmp(j)},tauReg(i,k)):
     end do:
   end do:
-end do:</Text-field>
+end do:</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group hide-input="false" labelreference="L3326" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
-</Group>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3432" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion12" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">for i to N_LEGS do
+  tau_regressor_s||i := Copy(tauReg):
+end do:
+COLUMNreg := ColumnDimension(tau_regressor_s):</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group hide-input="false" labelreference="L3276" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i to N_LEGS do</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  tau_regressor_s||i := Copy(tauReg):</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">end do:
-COLUMNreg := ColumnDimension(tau_regressor_s):</Text-field>
+<Input><Text-field style="Text" layout="Normal"></Text-field>
 </Input>
 </Group>
 <Group labelreference="L3180" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">Substituiere in jeder Matrix den Winkel Alpha (Verdrehung in der Basis) und die Gelenkkoordinaten und -geschwindigkeiten</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3164" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="1105" pixel-height="275" code-language="text/maple" autofit="false" wrapping="false" show-border="true" code-line-numbers="true">for k from 1 by 1 to N_LEGS do
-  	for i to NQJ_parallel do
-  		for j to COLUMNreg do
-  			for p from NQJ_parallel+1 to NQJ do
-  				tau_regressor_s||k(i,j) := subs({qJDD||p||s=0,qJD||p||s=0,qJ||p||s=0},tau_regressor_s||k(i,j)):
-  			end do:
-  			for l to 3 do
-  	 			tau_regressor_s||k(i,j) := subs({frame_A_i(l,1)=frame_A_i(l,k)},tau_regressor_s||k(i,j)):
-  			end do:
-  			for m to NQJ_parallel do
-  				n := (m + (k-1)*NQJ_parallel):
-     			tau_regressor_s||k(i,j) := subs({qJDD||m||s=qJDD||n||s,qJD||m||s=qJD||n||s,qJ||m||s=qJ||n||s},tau_regressor_s||k(i,j)):
-     		end do:
-  		end do:
-  	end do:
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3164" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="1282" pixel-height="318" code-language="text/maple" autofit="false" wrapping="false" show-border="true" code-line-numbers="true">for k from 1 by 1 to N_LEGS do
+  for i to NQJ_parallel do
+    for j to COLUMNreg do
+      for p from NQJ_parallel+1 to NQJ do
+        tau_regressor_s||k(i,j) := subs({qJDD||p||s=0,qJD||p||s=0,qJ||p||s=0},tau_regressor_s||k(i,j)):
+      end do:
+      for l to 3 do
+        tau_regressor_s||k(i,j) := subs({frame_A_i(l,1)=frame_A_i(l,k)},tau_regressor_s||k(i,j)):
+      end do:
+      for m to NQJ_parallel do
+        n := (m + (k-1)*NQJ_parallel):
+        tau_regressor_s||k(i,j) := subs({qJDD||m||s=qJDD||n||s,qJD||m||s=qJD||n||s,qJ||m||s=qJ||n||s},tau_regressor_s||k(i,j)):
+      end do:
+    end do:
+  end do:
 end do:
 </EC-CodeEditor></CodeEditor-ExecGroup>
 </Section>
@@ -409,12 +429,28 @@ A_j := Tmp:</Text-field>
 <Input><Text-field style="Text" layout="Normal">Addiere Inverse Dynamik der Plattform</Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L3390" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+<Group hide-input="false" labelreference="L3421" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">ROWS := RowDimension(ParamvecNew):</Text-field>
 </Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">ROWS := RowDimension(ParamvecNew):
-A := pivotMat.&lt;A_j(1..6,1..ROWS)|A_E&gt;:
-paramMin := &lt;ParamvecNew;paramVecP&gt;:
+</Group>
+<Group labelreference="L3436" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"></Text-field>
+</Input>
+</Group>
+<Group labelreference="L3438" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Neuer Parametervektor f\303\274r Beine und Plattform</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L3439" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">paramMin := &lt;ParamvecNew;paramVecP&gt;:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3440" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Regressormatrix zusammenstellen</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3437" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">A := pivotMat.&lt;A_j(1..6,1..ROWS)|A_E&gt;:
 NotNullEntries := 0:</Text-field>
 </Input>
 </Group><CodeEditor-ExecGroup view="presentation" labelreference="L3387" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="1360" pixel-height="111" code-language="text/maple" autofit="false" wrapping="false" show-border="true" code-line-numbers="true">for i to RowDimension(paramMin) do
@@ -452,21 +488,20 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 Tmp2 := 0:</Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L3292" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i to N_LEGS do</Text-field>
+<Group labelreference="L3433" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  Tmp := Multiply(H,xED_s):</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  Tmp := Multiply(U_i(..,..,i),Tmp):</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  z||i := simplify(Multiply(JBinv_i(..,..,i),Tmp)):
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3435" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion13" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">for i to N_LEGS do
+  Tmp := Multiply(H,xED_s):
+  Tmp := Multiply(U_i(..,..,i),Tmp):
+  z||i := simplify(Multiply(JBinv_i(..,..,i),Tmp)):
   Tmp2 := JBinv_i(..,..,i).(Multiply(U_i(..,..,i),H).xEDD_s+Multiply(U_i(..,..,i),dH).xED_s+Multiply(UD_i(..,..,i),H).xED_s):
-  A||i := simplify(Multiply(JBinv_i(..,..,i),JBD_i(..,..,i))):</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  B||i := Multiply(A||i,Matrix(qJD_i_s(..,i))):
-  C||i := Tmp2 - B||i:</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">end do:</Text-field>
+  A||i := simplify(Multiply(JBinv_i(..,..,i),JBD_i(..,..,i))):
+  B||i := Multiply(A||i,Matrix(qJD_i_s(..,i))):
+  C||i := Tmp2 - B||i:
+end do:</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group hide-input="false" labelreference="L3292" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3310" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -491,21 +526,21 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 </Input>
 </Group>
 <Group labelreference="L3408" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal">Dynamik in Plattform-Koordinaten (oben berechnet)</Text-field>
+<Input><Text-field style="Text" layout="Normal">Dynamik-Regressor in Plattform-Koordinaten (oben berechnet)</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3407" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tau_x := tauGes:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L3402" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal">Dynamik in Antriebs-Koordinaten umrechnen. Nur machen, wenn die Jacobi-Matrix einfach genug ist.</Text-field>
+<Group labelreference="L3420" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Dynamik-Regressor in Antriebs-Koordinaten umrechnen. Nur machen, wenn die Jacobi-Matrix einfach genug ist.</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3404" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3406" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion7" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if RowDimension(Jinv) &lt; 5 then
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3406" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion7" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if RowDimension(Jinv) &lt; 5 and codeexport_actcoord then
   read sprintf(&quot;../codeexport/%s/tmp/jacobian_maple.m&quot;, robot_name): # Annahme, dass die Jacobi-Matrix (aus Invertierung) vorher berechnet wurde. Setzt aktuell das normale Dynamik-Skript voraus.
   J:=J: # Neudefinition, damit Variable im Workspace ist.
   tau_qa:=Transpose(J).tauGes:
@@ -526,7 +561,7 @@ end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L3409" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3414" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion9" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if codeexport_invdyn and RowDimension(Jinv) &lt; 5 then
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3414" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion9" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if codeexport_invdyn and RowDimension(Jinv) &lt; 5 and codeexport_actcoord then
   MatlabExport(tau_qa, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_actcoord_reg_matlab.m&quot;, robot_name), codegen_opt):
 end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L3261" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">

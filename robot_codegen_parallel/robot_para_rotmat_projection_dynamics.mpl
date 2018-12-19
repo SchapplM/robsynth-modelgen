@@ -30,6 +30,8 @@ with(StringTools): # Für Zeitausgabe
 codegen_debug := false:
 codegen_opt := 2:
 codeexport_invdyn := true:
+codeexport_actcoord := false: # Generierung der Dynamik in Antriebskoordinaten nicht standardmäßig (hoher Rechenaufwand)
+;
 read "../helper/proc_MatlabExport":
 read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
@@ -56,7 +58,7 @@ pivotMatMas := pivotMatMas:
 Jinv := Jinv:
 JBinv_i := JBinv_i:
 U_i := U_i:
-read "../robot_codegen_definitions/robot_env_par": # TODO: Muss das nochmal geladen werden?
+read "../robot_codegen_definitions/robot_env_par": # Nochmal laden, um Standard-Einstellungen überschreiben zu können.
 ;
 # Lade "robotics_repo_path"-File mit Link zum "imes-robotics-matlab"-Repo
 read("../robotics_repo_path"):
@@ -255,9 +257,10 @@ cvecGes_x := pivotMat.cvecGes:
 gGes_x := pivotMat.gGes:
 # Dynamik in Antriebs-Koordinaten umrechnen. Nur machen, wenn die Jacobi-Matrix einfach genug ist. Sonst ist die symbolische Invertierung zu teuer und sollte numerisch gemacht werden
 # [Job2018_S759], S. 30; Gl. 3.53, 3.54
-if RowDimension(Jinv) < 5 then
+if RowDimension(Jinv) < 5 and codeexport_actcoord then
   printf("%s. Beginn der Matrix-Invertierung.  CPU-Zeit bis hier: %1.2fs.\n", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
   J:=MatrixInverse(Jinv): # TODO: Matrix-Invertierung in eigenem Skript (bei der Kinematik; dort mit Platzhalter-Matrix invertieren)
+  save J, sprintf("../codeexport/%s/tmp/jacobian_maple.m", robot_name): # TODO: Besseren Namen wählen und dies im Kinematik-Skript machen.
   printf("%s. Matrix-Invertierung beendet. CPU-Zeit bis hier: %1.2fs.\n", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
   # J:=simplify(J):
   # printf("%s. Optimierung beendet. CPU-Zeit bis hier: %1.2fs.\n", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
@@ -269,15 +272,23 @@ end if:
 
 # Matlab Export
 if codeexport_invdyn then
+  printf("%s. Beginne Code-Export Inverse Dynamik in Plattform-Koordinaten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
   MatlabExport(tau_x,     sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
+  printf("%s. Beginne Code-Export Massenmatrix in Plattform-Koordinaten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
   MatlabExport(MMGes_x,   sprintf("../codeexport/%s/tmp/inertia_para_plfcoord_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
+  printf("%s. Beginne Code-Export Coriolis-Vektor in Plattform-Koordinaten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
   MatlabExport(cvecGes_x, sprintf("../codeexport/%s/tmp/coriolisvec_para_plfcoord_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
+  printf("%s. Beginne Code-Export Gravitations-Vektor in Plattform-Koordinaten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
   MatlabExport(gGes_x,    sprintf("../codeexport/%s/tmp/gravvec_para_plfcoord_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
 end if:
-if codeexport_invdyn and RowDimension(Jinv) < 5 then
+if codeexport_invdyn and RowDimension(Jinv) < 5 and codeexport_actcoord then
+  printf("%s. Beginne Code-Export Inverse Dynamik in Antriebs-Koordinaten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
   MatlabExport(tau_qa,     sprintf("../codeexport/%s/tmp/invdyn_para_actcoord_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
+  printf("%s. Beginne Code-Export Massenmatrix in Antriebs-Koordinaten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
   MatlabExport(MMGes_qa,   sprintf("../codeexport/%s/tmp/inertia_para_actcoord_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
+  printf("%s. Beginne Code-Export Coriolis-Vektor in Antriebs-Koordinaten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
   MatlabExport(cvecGes_qa, sprintf("../codeexport/%s/tmp/coriolisvec_para_actcoord_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
+  printf("%s. Beginne Code-Export Gravitations-Vektor in Antriebs-Koordinaten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
   MatlabExport(gGes_qa,    sprintf("../codeexport/%s/tmp/gravvec_para_actcoord_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
 end if:
 

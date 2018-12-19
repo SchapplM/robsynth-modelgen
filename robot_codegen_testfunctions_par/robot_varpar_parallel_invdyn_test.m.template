@@ -89,7 +89,8 @@ for i = 1:n
 
   
   %% Dynamik in Antriebskoordinaten
-  if N_XP <= 4
+  if N_XP <= 4 && ~isempty(fileparts(which('%RN%_inertia_para_qa_slag_vp1')))
+    % nur testen, falls Funktionen auch generiert wurden.
     MmatA_vp1 = %RN%_inertia_para_qa_slag_vp1(xP, q, legFrame, ...
       koppelP, pkin, m, rSges, Icges);
     MmatA_vp2 = %RN%_inertia_para_qa_slag_vp2(xP, q, legFrame, ...

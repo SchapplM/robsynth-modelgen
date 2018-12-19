@@ -135,7 +135,8 @@ with(CodeGeneration):
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">#codegen_act := true: # noch nicht implementiert
 codegen_debug := false:
 codegen_opt := 2:
-codeexport_invdyn := true:</Text-field>
+<Font encoding="UTF-8">codeexport_invdyn := true:
+codeexport_actcoord := false: # Generierung der Dynamik in Antriebskoordinaten nicht standardm\303\244\303\237ig (hoher Rechenaufwand)</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L3202" drawlabel="true">
@@ -208,7 +209,7 @@ U_i := U_i:</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3381" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env_par&quot;: # TODO: Muss das nochmal geladen werden?</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">read &quot;../robot_codegen_definitions/robot_env_par&quot;: # Nochmal laden, um Standard-Einstellungen \303\274berschreiben zu k\303\266nnen.</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L3345" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -584,7 +585,7 @@ gGes_x := pivotMat.gGes:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Input><Text-field style="Text" layout="Normal">Dynamik in Antriebs-Koordinaten umrechnen. Nur machen, wenn die Jacobi-Matrix einfach genug ist. Sonst ist die symbolische Invertierung zu teuer und sollte numerisch gemacht werden
 [Job2018_S759], S. 30; Gl. 3.53, 3.54</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3373" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion2" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if RowDimension(Jinv) &lt; 5 then
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3373" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion2" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if RowDimension(Jinv) &lt; 5 and codeexport_actcoord then
   printf(&quot;%s. Beginn der Matrix-Invertierung.  CPU-Zeit bis hier: %1.2fs.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):
   J:=MatrixInverse(Jinv): # TODO: Matrix-Invertierung in eigenem Skript (bei der Kinematik; dort mit Platzhalter-Matrix invertieren)
   save J, sprintf(&quot;../codeexport/%s/tmp/jacobian_maple.m&quot;, robot_name): # TODO: Besseren Namen w\303\244hlen und dies im Kinematik-Skript machen.
@@ -604,14 +605,22 @@ end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Input><Text-field style="Text" layout="Normal">Matlab Export</Text-field>
 </Input>
 </Group><CodeEditor-ExecGroup view="presentation" labelreference="L3392" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion6" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if codeexport_invdyn then
+  printf(&quot;%s. Beginne Code-Export Inverse Dynamik in Plattform-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
   MatlabExport(tau_x,     sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt);
+  printf(&quot;%s. Beginne Code-Export Massenmatrix in Plattform-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
   MatlabExport(MMGes_x,   sprintf(&quot;../codeexport/%s/tmp/inertia_para_plfcoord_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt);
+  printf(&quot;%s. Beginne Code-Export Coriolis-Vektor in Plattform-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
   MatlabExport(cvecGes_x, sprintf(&quot;../codeexport/%s/tmp/coriolisvec_para_plfcoord_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt);
+  printf(&quot;%s. Beginne Code-Export Gravitations-Vektor in Plattform-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
   MatlabExport(gGes_x,    sprintf(&quot;../codeexport/%s/tmp/gravvec_para_plfcoord_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt);
-end if:</EC-CodeEditor></CodeEditor-ExecGroup><CodeEditor-ExecGroup view="presentation" labelreference="L3394" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion7" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if codeexport_invdyn and RowDimension(Jinv) &lt; 5 then
+end if:</EC-CodeEditor></CodeEditor-ExecGroup><CodeEditor-ExecGroup view="presentation" labelreference="L3394" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion7" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if codeexport_invdyn and RowDimension(Jinv) &lt; 5 and codeexport_actcoord then
+  printf(&quot;%s. Beginne Code-Export Inverse Dynamik in Antriebs-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
   MatlabExport(tau_qa,     sprintf(&quot;../codeexport/%s/tmp/invdyn_para_actcoord_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt);
+  printf(&quot;%s. Beginne Code-Export Massenmatrix in Antriebs-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
   MatlabExport(MMGes_qa,   sprintf(&quot;../codeexport/%s/tmp/inertia_para_actcoord_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt);
+  printf(&quot;%s. Beginne Code-Export Coriolis-Vektor in Antriebs-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
   MatlabExport(cvecGes_qa, sprintf(&quot;../codeexport/%s/tmp/coriolisvec_para_actcoord_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt);
+  printf(&quot;%s. Beginne Code-Export Gravitations-Vektor in Antriebs-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
   MatlabExport(gGes_qa,    sprintf(&quot;../codeexport/%s/tmp/gravvec_para_actcoord_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt);
 end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L3402" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">

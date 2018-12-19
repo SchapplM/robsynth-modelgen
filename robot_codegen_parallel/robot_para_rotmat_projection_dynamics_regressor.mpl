@@ -33,6 +33,8 @@ with(StringTools):
 codegen_debug := false:
 codegen_opt := 2:
 codeexport_invdyn := true:
+codeexport_actcoord := false: # Generierung der Dynamik in Antriebskoordinaten nicht standardmäßig (hoher Rechenaufwand)
+;
 read "../helper/proc_MatlabExport": 
 read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
@@ -49,7 +51,8 @@ read sprintf("../codeexport/%s/tmp/invdyn_%s_%s_maple.m", leg_name, "fixb", regr
 read "../robot_codegen_definitions/robot_env_par":
 # Ergebnisse des Minimalparametervektors der Gelenkkette laden
 read sprintf("../codeexport/%s/tmp/minimal_parameter_vector_fixb_maple", leg_name):
-read "../robot_codegen_definitions/robot_env_par":
+read "../robot_codegen_definitions/robot_env_par": # Nochmal laden, um Standard-Einstellungen überschreiben zu können.
+;
 # Ergebnisse der zusätzlichen Definitionen für parallele Roboter laden
 read sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
 # Ergebnisse der Kinematik für parallen Roboter laden
@@ -96,28 +99,32 @@ for i from NQJ_parallel+1 to NQJ do
 end do:
 # Ergebnisse der Kinematik für parallelen Roboter laden
 read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
-Paramvec2 := Paramvec2:
+# Dynamik-Parameter für virtuelle Segmente nach den Plattform-Koppelgelenken entfernen
+
 for j to RowDimension(Paramvec2) do
 	if is(Paramvec2(j) = M(NQJ_parallel+1,1)) then
 		Paramvec2(j) := 0;
 		paramVecP := paramVecP_M;
 	end if:
 end do:
+Paramvec2 := remove(has,Paramvec2,0): # Alle Einträge ab der Null entfernen
+# 
+;
 
-Paramvec2 := remove(has,Paramvec2,0):
-counter := 0:
+# Neuen Parametervektor für die Beinsegmenten (ohne Plattform)
+
+ParamvecNew := Matrix(RowDimension(Paramvec2), 1): # Initialisierung mit maximaler Größe
+kk:=0:
 for i to RowDimension(Paramvec2) do
-	if not(Paramvec2(i,1) = NULL) then
-		if counter = 0 then
-			ParamvecNew := Paramvec2(i,1):
-			counter := 1:
-		else
-			ParamvecNew := <ParamvecNew;Paramvec2(i,1)>:
-		end if:
-	end if:
+  if not(Paramvec2(i,1) = NULL) then
+    kk := kk + 1:
+    ParamvecNew(kk,1) := Paramvec2(i,1):
+  end if:
 end do:
+ParamvecNew := ParamvecNew(1..kk,..):
 
 # Dupliziere alle berechneten Matrizen. i steht für den Index des jeweiligen Beines
+
 tauReg := tau_regressor_s(7..NQ,..):
 g := <g1;g2;g3>:
 tmp := <tmp1;tmp2;tmp3>:
@@ -133,26 +140,28 @@ for i to NQJ_parallel do
     end do:
   end do:
 end do:
+
 for i to N_LEGS do
   tau_regressor_s||i := Copy(tauReg):
 end do:
 COLUMNreg := ColumnDimension(tau_regressor_s):
+# 
 # Substituiere in jeder Matrix den Winkel Alpha (Verdrehung in der Basis) und die Gelenkkoordinaten und -geschwindigkeiten
 for k from 1 by 1 to N_LEGS do
-  	for i to NQJ_parallel do
-  		for j to COLUMNreg do
-  			for p from NQJ_parallel+1 to NQJ do
-  				tau_regressor_s||k(i,j) := subs({qJDD||p||s=0,qJD||p||s=0,qJ||p||s=0},tau_regressor_s||k(i,j)):
-  			end do:
-  			for l to 3 do
-  	 			tau_regressor_s||k(i,j) := subs({frame_A_i(l,1)=frame_A_i(l,k)},tau_regressor_s||k(i,j)):
-  			end do:
-  			for m to NQJ_parallel do
-  				n := (m + (k-1)*NQJ_parallel):
-     			tau_regressor_s||k(i,j) := subs({qJDD||m||s=qJDD||n||s,qJD||m||s=qJD||n||s,qJ||m||s=qJ||n||s},tau_regressor_s||k(i,j)):
-     		end do:
-  		end do:
-  	end do:
+  for i to NQJ_parallel do
+    for j to COLUMNreg do
+      for p from NQJ_parallel+1 to NQJ do
+        tau_regressor_s||k(i,j) := subs({qJDD||p||s=0,qJD||p||s=0,qJ||p||s=0},tau_regressor_s||k(i,j)):
+      end do:
+      for l to 3 do
+        tau_regressor_s||k(i,j) := subs({frame_A_i(l,1)=frame_A_i(l,k)},tau_regressor_s||k(i,j)):
+      end do:
+      for m to NQJ_parallel do
+        n := (m + (k-1)*NQJ_parallel):
+        tau_regressor_s||k(i,j) := subs({qJDD||m||s=qJDD||n||s,qJD||m||s=qJD||n||s,qJ||m||s=qJ||n||s},tau_regressor_s||k(i,j)):
+      end do:
+    end do:
+  end do:
 end do:
 
 # Berechnung, Projektion und Addition der Dynamikgleichungen
@@ -170,10 +179,12 @@ for i to N_LEGS do
 end do:
 A_j := Tmp:
 # Addiere Inverse Dynamik der Plattform
-
 ROWS := RowDimension(ParamvecNew):
-A := pivotMat.<A_j(1..6,1..ROWS)|A_E>:
+# 
+# Neuer Parametervektor für Beine und Plattform
 paramMin := <ParamvecNew;paramVecP>:
+# Regressormatrix zusammenstellen
+A := pivotMat.<A_j(1..6,1..ROWS)|A_E>:
 NotNullEntries := 0:
 for i to RowDimension(paramMin) do
 	if not(paramMin(i,1) = 0 or Equal(Column(A,i), ZeroVector[column](RowDimension(A)))) then
@@ -198,6 +209,7 @@ end do:
 # Substituiere die Gelenkgeschwindigkeiten über H-, Ui- und JBi-Matrix mit EE-Geschwindikeiten
 Tmp := 0:
 Tmp2 := 0:
+
 for i to N_LEGS do
   Tmp := Multiply(H,xED_s):
   Tmp := Multiply(U_i(..,..,i),Tmp):
@@ -207,6 +219,7 @@ for i to N_LEGS do
   B||i := Multiply(A||i,Matrix(qJD_i_s(..,i))):
   C||i := Tmp2 - B||i:
 end do:
+
 RowParamMin := RowDimension(paramMinRed):
 for i to NX do
   for k to RowParamMin do
@@ -223,11 +236,11 @@ for i to NX do
   end do:
 end do:
 tauGes := ARed:#.paramMinRed:
-# Dynamik in Plattform-Koordinaten (oben berechnet)
+# Dynamik-Regressor in Plattform-Koordinaten (oben berechnet)
 tau_x := tauGes:
-# Dynamik in Antriebs-Koordinaten umrechnen. Nur machen, wenn die Jacobi-Matrix einfach genug ist.
+# Dynamik-Regressor in Antriebs-Koordinaten umrechnen. Nur machen, wenn die Jacobi-Matrix einfach genug ist.
 
-if RowDimension(Jinv) < 5 then
+if RowDimension(Jinv) < 5 and codeexport_actcoord then
   read sprintf("../codeexport/%s/tmp/jacobian_maple.m", robot_name): # Annahme, dass die Jacobi-Matrix (aus Invertierung) vorher berechnet wurde. Setzt aktuell das normale Dynamik-Skript voraus.
   J:=J: # Neudefinition, damit Variable im Workspace ist.
   tau_qa:=Transpose(J).tauGes:
@@ -240,7 +253,7 @@ if codeexport_invdyn then
   MatlabExport(tau_x, sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_reg_matlab.m", robot_name), codegen_opt):
 end if:
 
-if codeexport_invdyn and RowDimension(Jinv) < 5 then
+if codeexport_invdyn and RowDimension(Jinv) < 5 and codeexport_actcoord then
   MatlabExport(tau_qa, sprintf("../codeexport/%s/tmp/invdyn_para_actcoord_reg_matlab.m", robot_name), codegen_opt):
 end if:
 

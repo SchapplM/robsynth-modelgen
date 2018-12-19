@@ -51,7 +51,8 @@ for i = 1:n
   end
   
   %% Dynamik in Antriebskoordinaten
-  if N_XP <= 4
+  if N_XP <= 4 && ~isempty(fileparts(which('%RN%_invdyn_para_qa_slag_vp2')))
+    % nur testen, falls Funktionen auch generiert wurden.
     tauA_vp2 = %RN%_invdyn_para_qa_slag_vp2(xP, xPD, xPDD, q, g, legFrame, ...
       koppelP, pkin, m, mrSges, Ifges);
     tauA_reg = %RN%_invdyn_para_qa_reg(xP, xPD, xPDD, q, g, legFrame, ...
