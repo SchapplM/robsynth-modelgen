@@ -38,8 +38,12 @@ cp "$repo_pfad/robot_codegen_definitions/robot_env" "$repo_pfad/codeexport/$robo
 rm -rf $repo_pfad/workdir
 mkdir -p $repo_pfad/workdir/tmp
 
-# Alle mpl-Dateien in Arbeitsverzeichnis kopieren
+# Alle mpl-Dateien des Repos in Arbeitsverzeichnis kopieren
+IFS=$'\n' # für Leerzeichen in Pfaden
 for mpldat in `find $repo_pfad -name "*.mpl"`; do
+  if [[ $mpldat == *"/.git/"* ]]; then
+    continue # durch git co <hash> können mpl-Dateien im .git-Ordner entstehen. Diese dürfen nicht kopiert werden (in deren Pfad sind auch Leerzeichen)
+  fi
   mpldat_full=$repo_pfad/$mpldat
   filename="${mpldat_full##*/}"
   dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}" # Substring from 0 thru pos of filename
@@ -50,6 +54,7 @@ for mpldat in `find $repo_pfad -name "*.mpl"`; do
   filename="${mpldat_full##*/}"
   cp $mpldat $repo_pfad/workdir/$filename
 done
+unset IFS # Rücksetzen auf Standardwert
 
 # Dateien im Arbeitsverzeichnis bearbeiten:
 # Debug-Ausgabe in allen Skripten entfernen

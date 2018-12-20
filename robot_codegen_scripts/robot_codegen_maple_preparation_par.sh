@@ -1,4 +1,4 @@
-#!/bin/bash -ex
+#!/bin/bash -e
 # Vorbereitung der Maple-Skripte für die automatische Verarbeitung
 # Die Skripte werden teilweise mit unterschiedlichen Parametern versehen und neu gespeichert.
 #
@@ -16,17 +16,12 @@ source $repo_pfad/robot_codegen_definitions/robot_env_par.sh
 # Roboterdefinition kopieren
 cp "$repo_pfad/robot_codegen_definitions/robot_env_par" "$repo_pfad/codeexport/$robot_name/tmp"
 
-# Alle mpl-Dateien in Arbeitsverzeichnis kopieren
-for mpldat in `find $repo_pfad/robot_codegen_parallel -name "*.mpl"`; do
-  mpldat_full=$repo_pfad/$mpldat
+# Alle mpl-Dateien im Ordner robot_codegen_parallel in Arbeitsverzeichnis kopieren
+# Dieser Schritt wird bereits durch robot_codegen_maple_preparation.sh getan
+# Neu-Durchführung, falls das Skript für serielle Roboter nicht ausgeführt wurde.
+for mpldat_full in `find $repo_pfad/robot_codegen_parallel -name "*.mpl"`; do
   filename="${mpldat_full##*/}"
-  dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}" # Substring from 0 thru pos of filename
-  if [[ "$dir" == *workdir ]]; then
-    # ignoriere gefundene mpl-Dateien, die bereits im Zielverzeichnis sind
-    continue
-  fi;
-  filename="${mpldat_full##*/}"
-  cp $mpldat $repo_pfad/workdir/$filename
+  cp $mpldat_full $repo_pfad/workdir/$filename
 done
 
 # Dateien im Arbeitsverzeichnis bearbeiten:
