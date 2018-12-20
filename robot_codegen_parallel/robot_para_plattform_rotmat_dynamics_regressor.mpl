@@ -1,14 +1,18 @@
 
-# Parameter Regressor Inverse Dynamics for Robot-Base
+# Parameter Regressor Inverse Dynamics for Plattform
 # Einleitung
 # Berechnung der inversen Dynamik der Roboter-Plattform in Regressorform
 # 
 # Dateiname:
 # robot -> Berechnung für allgemeinen Roboter
 # para -> Berechnung für eine parallelen Roboter
+# plattform -> Gleichungen bezogen auf die PKM-Plattform
 # rotmat -> Kinematik wird mit Rotationsmatrizen berechnet
 # dynamics -> Berechnung der Dynamik
 # regressor -> Regressorform (parameterlinear)
+# 
+# TODO
+# Dokumentation. Insbesondere: Was macht paramVecP_M? Wird in Gesamt-Dynamik der PKM benutzt.
 # Autor
 # Tim Job (Studienarbeit bei Moritz Schappler), 2018-12
 # Moritz Schappler, moritz.schappler@imes.uni-hannover.de

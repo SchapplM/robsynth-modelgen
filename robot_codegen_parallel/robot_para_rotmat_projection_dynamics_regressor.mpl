@@ -10,6 +10,10 @@
 # projection -> Die Dynamikgleichungen werden auf EE-Koordinaten projiziert
 # dynamics -> Berechnung der Dynamik
 # regressor -> Regressorform (parameterlinear)
+# 
+# TODO
+# Die Regressorform ist noch nicht in Minimaldarstellung. Außerdem treten Dynamikparameter auf, die bei reduzierten EE-FG (z.B. 2T1R-Bewegung) keinen Einfluss haben.
+# 
 # Autor
 # Tim Job (Studienarbeit bei Moritz Schappler), 2018-12
 # Moritz Schappler, moritz.schappler@imes.uni-hannover.de
@@ -30,27 +34,33 @@ with(CodeGeneration):
 with(StringTools):
 # Einstellungen für Code-Export: Optimierungsgrad (2=höchster) und Aktivierung jedes Terms.
 #codegen_act := true: # noch nicht implementiert
-codegen_debug := false:
 codegen_opt := 2:
 codeexport_invdyn := true:
 codeexport_actcoord := false: # Generierung der Dynamik in Antriebskoordinaten nicht standardmäßig (hoher Rechenaufwand)
 ;
 read "../helper/proc_MatlabExport": 
+# Roboter-Definitionen laden
 read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
 read "../robot_codegen_definitions/robot_env_par":
-# Kennung des Parametersatzes, für den die Dynamikfunktionen erstellt werden sollen. Muss im Repo und in der mpl-Datei auf 1 gelassen werden, da die folgende Zeile mit einem Skript verarbeitet wird.
-codegen_dynpar := 2:
-# Link-Index, für den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber für beliebige Segmente aufgestellt werden. (0=Basis)
-LIJAC:=NL-1:
-regressor_modus := "regressor_minpar":
 # Ergebnisse der Plattform-Dynamik in Regressorform laden
 read sprintf("../codeexport/%s/tmp/floatb_%s_platform_dynamic_maple.m", robot_name, base_method_name):
+# Neu-Definieren, damit Variablen im Workspace auftauchen
+paramVecP := paramVecP:
+paramVecP_M := paramVecP_M:
+A_E := A_E:
+H := H:
+dH := dH:
 # Ergebnisse der Dynamik der Gelenkkette in Regressorform laden
-read sprintf("../codeexport/%s/tmp/invdyn_%s_%s_maple.m", leg_name, "fixb", regressor_modus):
+read sprintf("../codeexport/%s/tmp/invdyn_%s_%s_maple.m", leg_name, "fixb", "regressor_minpar"):
+tau_regressor_s := tau_regressor_s:
+MMjj_regressor_s := MMjj_regressor_s:
+tauC_regressor_s := tauC_regressor_s:
+taug_regressor_s := taug_regressor_s:
 read "../robot_codegen_definitions/robot_env_par":
 # Ergebnisse des Minimalparametervektors der Gelenkkette laden
 read sprintf("../codeexport/%s/tmp/minimal_parameter_vector_fixb_maple", leg_name):
+Paramvec2 := Paramvec2:
 read "../robot_codegen_definitions/robot_env_par": # Nochmal laden, um Standard-Einstellungen überschreiben zu können.
 ;
 # Ergebnisse der zusätzlichen Definitionen für parallele Roboter laden
@@ -74,58 +84,66 @@ gammazs_base := 0:
 vxs_base := 0:
 vys_base := 0:
 vzs_base := 0:
-# Physikalische Parameter der durch Koppelgelenke bewegten Körper zu Null setzen.
-NQ := NQ - (NQJ-NQJ_parallel):
-for i from NQJ_parallel+1 to NQJ do
-	XXC||i := 0:
-	XYC||i := 0:
-	XZC||i := 0:
-	YYC||i := 0:
-	YZC||i := 0:
-	ZZC||i := 0:
-	XX||i := 0:
-	XY||i := 0:
-	XZ||i := 0:
-	YY||i := 0:
-	YZ||i := 0:
-	ZZ||i := 0:
-	SX||i := 0:
-	SY||i := 0:
-	SZ||i := 0:
-	MX||i := 0:
-	MY||i := 0:
-	MZ||i := 0:
-	M||i := 0:
-end do:
+
 # Ergebnisse der Kinematik für parallelen Roboter laden
 read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
+# Variablen neu laden
+pivotMat := pivotMat:
+pivotMatMas := pivotMatMas:
+P_i := P_i:
+Jinv := Jinv:
+JB_i := JB_i:
+JBD_i := JBD_i:
+JBinv_i := JBinv_i:
+JBDinv_i := JBDinv_i:
+U_i := U_i:
+UD_i := UD_i:
 # Dynamik-Parameter für virtuelle Segmente nach den Plattform-Koppelgelenken entfernen
-
-for j to RowDimension(Paramvec2) do
-	if is(Paramvec2(j) = M(NQJ_parallel+1,1)) then
-		Paramvec2(j) := 0;
-		paramVecP := paramVecP_M;
-	end if:
-end do:
-Paramvec2 := remove(has,Paramvec2,0): # Alle Einträge ab der Null entfernen
-# 
+NQ := NQ - (NQJ-NQJ_parallel):
+Paramvec3:=Paramvec2: # Dynamik-Minimalparametervektor der Beinkette
 ;
-
-# Neuen Parametervektor für die Beinsegmenten (ohne Plattform)
-
-ParamvecNew := Matrix(RowDimension(Paramvec2), 1): # Initialisierung mit maximaler Größe
-kk:=0:
-for i to RowDimension(Paramvec2) do
-  if not(Paramvec2(i,1) = NULL) then
-    kk := kk + 1:
-    ParamvecNew(kk,1) := Paramvec2(i,1):
+for i from NQJ_parallel+1 to NQJ do
+  Paramvec3 := subs({XXC||i = 0}, Paramvec3):
+  Paramvec3 := subs({XYC||i = 0}, Paramvec3):
+  Paramvec3 := subs({XZC||i = 0}, Paramvec3):
+  Paramvec3 := subs({YYC||i = 0}, Paramvec3):
+  Paramvec3 := subs({YZC||i = 0}, Paramvec3):
+  Paramvec3 := subs({ZZC||i = 0}, Paramvec3):
+  Paramvec3 := subs({XX||i  = 0}, Paramvec3):
+  Paramvec3 := subs({XY||i  = 0}, Paramvec3):
+  Paramvec3 := subs({XZ||i  = 0}, Paramvec3):
+  Paramvec3 := subs({YY||i  = 0}, Paramvec3):
+  Paramvec3 := subs({YZ||i  = 0}, Paramvec3):
+  Paramvec3 := subs({ZZ||i  = 0}, Paramvec3):
+  Paramvec3 := subs({SX||i  = 0}, Paramvec3):
+  Paramvec3 := subs({SY||i  = 0}, Paramvec3):
+  Paramvec3 := subs({SZ||i  = 0}, Paramvec3):
+  Paramvec3 := subs({MX||i  = 0}, Paramvec3):
+  Paramvec3 := subs({MY||i  = 0}, Paramvec3):
+  Paramvec3 := subs({MZ||i  = 0}, Paramvec3):
+  Paramvec3 := subs({M||i   = 0}, Paramvec3):
+end do:
+Paramvec2: # Bein-Dynamik-Parametervektor vor Vereinfachungen
+;
+Paramvec3: # Bein-Dynamik-Parametervektor nach Vereinfachungen
+;
+paramVecP: # Plattform-Dynamik-Parametervektor ohne Zusammenfassungen
+;
+paramVecP_M: # Plattform-Dynamik-Parametervektor mit Zusammenfassung mit Bein-Dynamikparametern
+;
+# Alle Einträge des Minimalparametervektors, die jetzt Null sind, entfernen
+ParamvecNew := Matrix(RowDimension(Paramvec3), 1): # Initialisierung mit maximaler Größe
+k := 0:
+for j from 1 to RowDimension(Paramvec3) do
+  if not Paramvec3(j,1) = 0 then
+    k := k + 1:
+    ParamvecNew(k,1) := Paramvec3(j,1):
   end if:
 end do:
-ParamvecNew := ParamvecNew(1..kk,..):
-
+# Neuen Parametervektor für die Beinsegmenten (ohne Plattform)
+ParamvecNew := ParamvecNew(1..k,1):
 # Dupliziere alle berechneten Matrizen. i steht für den Index des jeweiligen Beines
-
-tauReg := tau_regressor_s(7..NQ,..):
+tauReg := tau_regressor_s(7..NQ,..): # Regressor aus Berechnung für serielle Beinketten. Dort erste sechs Einträge für Basis
 g := <g1;g2;g3>:
 tmp := <tmp1;tmp2;tmp3>:
 Rmat := Transpose(parse(sprintf("eul%s2r",angleConvLeg))(frame_A_i(1..3,1))):
@@ -182,7 +200,8 @@ A_j := Tmp:
 ROWS := RowDimension(ParamvecNew):
 # 
 # Neuer Parametervektor für Beine und Plattform
-paramMin := <ParamvecNew;paramVecP>:
+paramMin := <ParamvecNew;paramVecP>: # TODO: Hier stand vorher paramVecP_M. Damit war die Regressorform aber nicht für alle Systeme konsistent. Jetzt ist die parameterlineare Form aber nicht mehr so stark zusammengefasst, wie sie es sein könnte.
+;
 # Regressormatrix zusammenstellen
 A := pivotMat.<A_j(1..6,1..ROWS)|A_E>:
 NotNullEntries := 0:

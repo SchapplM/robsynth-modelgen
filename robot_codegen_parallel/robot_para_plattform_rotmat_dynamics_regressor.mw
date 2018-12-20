@@ -89,7 +89,7 @@
 </Task-table>
 <Task/>
 <Group labelreference="L1" drawlabel="true">
-<Input><Text-field style="Title" layout="Title">Parameter Regressor Inverse Dynamics for Robot-Base</Text-field>
+<Input><Text-field style="Title" layout="Title">Parameter Regressor Inverse Dynamics for Plattform</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1518" drawlabel="true">
@@ -97,10 +97,10 @@
 
 Dateiname:
 <Font encoding="UTF-8">robot -&gt; Berechnung f\303\274r allgemeinen Roboter
-para -&gt; Berechnung f\303\274r eine parallelen Roboter</Font>
+para -&gt; Berechnung f\303\274r eine parallelen Roboter</Font></Text-field><Text-field style="Normal" layout="Normal">plattform -&gt; Gleichungen bezogen auf die PKM-Plattform
 rotmat -&gt; Kinematik wird mit Rotationsmatrizen berechnet
 dynamics -&gt; Berechnung der Dynamik
-regressor -&gt; Regressorform (parameterlinear)</Text-field>
+regressor -&gt; Regressorform (parameterlinear)</Text-field><Text-field style="Normal" layout="Normal"></Text-field><Text-field style="Heading 2" layout="Heading 2">TODO</Text-field><Text-field style="Normal" layout="Normal">Dokumentation. Insbesondere: Was macht paramVecP_M? Wird in Gesamt-Dynamik der PKM benutzt.</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1517" drawlabel="true">
