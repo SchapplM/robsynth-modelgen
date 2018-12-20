@@ -14,11 +14,11 @@
 % %INPUT_R_P%
 %
 % Output:
-% taug [%N_LEGS%x1]
+% taugX [%N_LEGS%x1]
 %   forces required to compensate gravitation load
 %   in platform coordinates
 
 % %VERSIONINFO%
 
-function taug = %FN%(xP, qJ, g, legFrame, ...
+function taugX = %FN%(xP, qJ, g, legFrame, ...
   koppelP, pkin, m, rSges)

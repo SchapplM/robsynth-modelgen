@@ -14,11 +14,11 @@
 % %INPUT_IF_P%
 %
 % Output:
-% tauc [%N_LEGS%x1]
+% taucA [%N_LEGS%x1]
 %   forces required to compensate Coriolis and centrifugal joint torques
 %   in actuated joint coordinates
 
 % %VERSIONINFO%
 
-function tauc = %FN%(xP, xDP, qJ, legFrame, ...
+function taucA = %FN%(xP, xDP, qJ, legFrame, ...
   koppelP, pkin, m, mrSges, Ifges)

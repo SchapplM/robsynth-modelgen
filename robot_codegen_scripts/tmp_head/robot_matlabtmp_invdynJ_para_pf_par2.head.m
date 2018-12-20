@@ -17,11 +17,11 @@
 % %INPUT_IF_P%
 %
 % Output:
-% tau [%N_LEGS%x1]
+% tauX [%N_LEGS%x1]
 %   forces of inverse dynamics (contains inertial, gravitational coriolis and centrifugal forces)
 %   in platform coordinates xP
 
 % %VERSIONINFO%
 
-function tau = %FN%(xP, xDP, xDDP, qJ, g, legFrame, ...
+function tauX = %FN%(xP, xDP, xDDP, qJ, g, legFrame, ...
   koppelP, pkin, m, mrSges, Ifges)

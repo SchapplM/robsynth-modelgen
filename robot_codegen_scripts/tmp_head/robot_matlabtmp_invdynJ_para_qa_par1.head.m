@@ -17,11 +17,11 @@
 % %INPUT_IC_P%
 %
 % Output:
-% tau [%N_LEGS%x1]
+% tauA [%N_LEGS%x1]
 %   forces of inverse dynamics (contains inertial, gravitational coriolis and centrifugal forces)
 %   in actuated joint coordinates
 
 % %VERSIONINFO%
 
-function tau = %FN%(xP, xDP, xDDP, qJ, g, legFrame, ...
+function tauA = %FN%(xP, xDP, xDDP, qJ, g, legFrame, ...
   koppelP, pkin, m, rSges, Icges)

@@ -14,11 +14,11 @@
 % %INPUT_KOPPEL%
 
 % Output:
-% tau_reg [%N_XP%x%NMPVPARA%]
+% tauX_reg [%N_XP%x%NMPVPARA%]
 %   minimal parameter regressor of inverse dynamics force vector
 %   in task space
 
 % %VERSIONINFO%
 
-function tau_reg = %FN%(xP, xDP, xDDP, qJ, g, legFrame, ...
+function tauX_reg = %FN%(xP, xDP, xDDP, qJ, g, legFrame, ...
   koppelP, pkin)

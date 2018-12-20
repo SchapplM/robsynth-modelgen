@@ -14,11 +14,11 @@
 % %INPUT_IF_P%
 %
 % Output:
-% tauc [%N_LEGS%x1]
+% taucX [%N_LEGS%x1]
 %   forces required to compensate Coriolis and centrifugal joint torques
 %   in platform coordinates
 
 % %VERSIONINFO%
 
-function tauc = %FN%(xP, xDP, qJ, legFrame, ...
+function taucX = %FN%(xP, xDP, qJ, legFrame, ...
   koppelP, pkin, m, mrSges, Ifges)
