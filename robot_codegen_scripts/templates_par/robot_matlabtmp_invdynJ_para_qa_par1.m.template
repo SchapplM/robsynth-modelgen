@@ -1,0 +1,6 @@
+
+%% Function calls and calculation
+tauX = %RN%_invdyn_para_pf_slag_vp1(xP, xDP, xDDP, qJ, g, legFrame, ...
+  koppelP, pkin, m, rSges, Icges);
+Jinv = %RN%_Jinv(xP, qJ, pkin, koppelP, legFrame);
+tauA  = (Jinv') \ tauX;

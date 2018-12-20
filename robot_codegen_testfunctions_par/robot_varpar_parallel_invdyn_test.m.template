@@ -134,6 +134,18 @@ for i = 1:n
     cvecA_vp1 = (Jinv') \ cvecX_vp1;
   end
   
+  % Prüfe numerische Berechnung in Funktion
+  tauAn_vp1 = %RN%_invdyn_para_qa_slagn_vp1(xP, xPD, xPDD, q, g, legFrame, ...
+    koppelP, pkin, m, rSges, Icges);
+  tauAn_vp2 = %RN%_invdyn_para_qa_slagn_vp2(xP, xPD, xPDD, q, g, legFrame, ...
+    koppelP, pkin, m, mrSges, Ifges);
+  if any( abs(tauA_vp1 - tauAn_vp1) > 1e6*eps(1+max(abs(tauAn_vp1))) )
+    error('complete inverse dynamics (actuation coordinates) do not match between function and calculated here.');
+  end 
+  if any( abs(tauAn_vp1 - tauAn_vp2) > 1e6*eps(1+max(abs(tauAn_vp2))) )
+    error('complete inverse dynamics (partly numeric; actuation coordinates) do not match between par1/par2.');
+  end 
+  
   %% Vergleiche Terme im Antriebskoordinaten mit Termen in Plattform-Koordinaten
   test_tauA = tauA_vp1 - (Jinv') \ tauX_vp1;
   test_tauX = tauX_vp1 - (Jinv') * tauA_vp1;
