@@ -85,7 +85,7 @@ if [ -f "$KP_dat2" ]; then
   varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat`
   echo "pkin = $varname_tmp;" >> $zieldat
   echo "if isempty(pkin)" >> $zieldat
-  echo "  pkin = zeros(0,1);" >> $zieldat
+  echo "  pkin = 0;%Platzhalter-Eingabe" >> $zieldat
   echo "end" >> $zieldat
 else
   echo "Kinematik-Parametervektor in $KP_dat2 nicht gefunden"

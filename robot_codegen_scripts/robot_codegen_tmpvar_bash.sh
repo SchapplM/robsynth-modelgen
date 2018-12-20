@@ -57,6 +57,14 @@ if [ -f $robot_KP_pfad ]; then
 else
   robot_KP="UNDEFINED"
 fi
+if [[ "$robot_NKP" == "0" ]]; then
+  # Falls keine Kinematikparameter notwendig sind, definiere Dummy-Parameter
+  # Ansonsten gibt es Probleme in Simulink-Blöcken wegen Signal mit 0-Dimension
+  robot_NKP=1
+  robot_KP="dummy"
+fi;
+
+
 echo "robot_NKP=$robot_NKP" >> $robot_env_pfad.sh
 echo "robot_KP=\"$robot_KP\"" >> $robot_env_pfad.sh
 if [ ! "$1" == "quiet" ]; then
