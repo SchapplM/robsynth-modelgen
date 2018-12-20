@@ -1,7 +1,7 @@
 % Calculate Gravitation load for parallel robot
 % %RN%
 % Use Code from Maple symbolic Code Generation
-% 
+%
 % Input:
 % %INPUT_XP%
 % %INPUT_QJ_P%
@@ -12,10 +12,10 @@
 % %INPUT_PKIN%
 % %INPUT_M_P%
 % %INPUT_R_P%
-% 
+%
 % Output:
 % taug [%N_LEGS%x1]
-%   forces of required to compensate gravitation load
+%   forces required to compensate gravitation load
 %   in actuated joint coordinates
 
 % %VERSIONINFO%
