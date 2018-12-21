@@ -1,4 +1,9 @@
 # Diese Datei muss den vollen Pfad zum IMES-Robotik-Repo beinhalten
 # ansonsten funktionieren einige Maple-Skripte nicht.
 # Der Name der Datei muss "robotics_repo_path" sein (ohne Endung)
+# Unter Linux:
 robotics_repo_path := "/pfad/zum/robotik/repo":
+# Unter Windows: Zwei mal Backslash wegen Zeichen-Maskierung im String
+# gilt auch für Nutzung der Toolbox mit Windows-Linux-Subsystem oder Git Bash
+# robotics_repo_path := "X:\\Pfad\\Robotik\\Repo": # Alternative 1
+# robotics_repo_path := "X:/Pfad/Robotik/Repo": # Alternative 2
