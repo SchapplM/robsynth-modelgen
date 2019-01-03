@@ -129,16 +129,6 @@ if [ "$subsvardat" != "" ] && [ -f "$subsvardat" ]; then
 fi
 
 # Versionsinformationen einfügen an vorgesehene Stelle
-# TODO: Versionsdatei nicht jedes Mal neu erzeugen (zu viele Schreibzugriffe)
-# TODO: Dieser Abschnitt ist nun doppelt für seriell und parallel. Nur an einer Stelle halten
 versionfile=$tmp_pfad/version_info.head.m
-echo "% Quelle: HybrDyn-Toolbox" > $versionfile
-now="$(date +'%Y-%m-%d %H:%M')"
-printf "%% Datum: $now\n" >> $versionfile
-rev=`git rev-parse HEAD`
-printf "%% Revision: $rev\n" >> $versionfile
-echo "% Moritz Schappler, moritz.schappler@imes.uni-hannover.de" >> $versionfile
-echo "% (C) Institut für mechatronische Systeme, Universität Hannover" >> $versionfile
-
 sed -i "/% %VERSIONINFO%/r $versionfile" $mfcndat
 sed -i "/%VERSIONINFO%/d" $mfcndat

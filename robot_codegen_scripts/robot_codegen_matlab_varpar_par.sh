@@ -19,8 +19,7 @@ source $repo_pfad/robot_codegen_definitions/robot_env_par.sh
 # Erstelle Matlab-Hilfsdateien
 source robot_codegen_tmpvar_matlab_par.sh
 source robot_codegen_assert_matlab_par.sh
-# Hilfsskript für Erzeugung symmetrischer Matrizen. Hier (noch) nicht benötigt.
-#source robot_codegen_matlab_preparation.sh
+source create_git_versioninfo.sh
 
 # Korrigiere mit Maple generierte Matlab-Code-Dateien
 ./robot_codegen_matlabcode_postprocess_recursive.sh $repo_pfad/codeexport/$robot_name/tmp
@@ -34,5 +33,5 @@ source robot_codegen_assert_matlab_par.sh
 # Erstelle Matlab-Funktionen der parameterlinearen Dynamik
 ./robot_codegen_matlab_paramlin_parallel_varpar.sh
 
-
-
+# Erstelle Matlab-Funktionen aus numerischer Berechnung
+./robot_codegen_matlab_num_parallel_varpar.sh
