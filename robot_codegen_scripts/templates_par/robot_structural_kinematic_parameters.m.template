@@ -1,0 +1,13 @@
+% Return Structural Kinematic Parameters of the parallel Robot 
+% %RN%
+%
+% Output:
+% NQJ_leg [1x1]
+%   Anzahl der verwendeten Gelenkkoordinaten der symmetrischen Beinsegmente.
+%   Von der Basis aus gezählt
+
+% %VERSIONINFO%
+
+function [NQJ_leg] = %FN%()
+
+NQJ_leg = %NQJ_P%;
