@@ -196,7 +196,7 @@ for (( dynpar=1; dynpar<=2; dynpar++ )); do
       quelldat=$repo_pfad/codeexport/${robot_name}/tmp/invdyn_para_${costrmpl}_par${dynpar}_matlab.m
       zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_invdyn_para_${costrmat}_slag_vp${dynpar}.m
     else
-      quelldat=$repo_pfad/robot_codegen_scripts/templates_par/robot_matlabtmp_invdynJ_para_qa_par1.m.template
+      quelldat=$repo_pfad/robot_codegen_scripts/templates_par/robot_matlabtmp_invdynJ_para_qa_par1.m.body
       zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_invdyn_para_${costrmat}_slagn_vp${dynpar}.m
     fi
     if [ -f $quelldat ]; then
@@ -246,7 +246,7 @@ for (( dynpar=1; dynpar<=2; dynpar++ )); do
         sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
         cat $quelldat >> $zieldat
       else
-        cat ${template_pfad}/robot_matlabtmp_invdynJ_para_qa_par${dynpar}.m.template >> $zieldat
+        cat ${template_pfad}/robot_matlabtmp_invdynJ_para_qa_par${dynpar}.m.body >> $zieldat
       fi
       source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 1 0 ${quelldat}.subsvar
     else
