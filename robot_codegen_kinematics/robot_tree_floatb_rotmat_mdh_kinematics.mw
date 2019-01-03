@@ -348,6 +348,10 @@ end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 Bei Verwendung dieser Optimierung funktioniert die Substitution mit trigonometrischen Ausdr\303\274cken von abh\303\244ngigen Gelenken eventuell anders.
 </Font>Die Funktionsweise kann mit aktivierten print-Befehlen nachvollzogen werden.</Text-field>
 </Input>
+</Group>
+<Group labelreference="L2212" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
 </Group><CodeEditor-ExecGroup view="presentation" hide-input="false" labelreference="L6" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion3" expanded="true" visible="true" pixel-width="1170" pixel-height="702" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">if codegen_kinematics_opt then
   for i from 1 to NJ do
     #printf(&quot;----------------------\134ni=%d\134n&quot;,i):
@@ -360,11 +364,27 @@ Bei Verwendung dieser Optimierung funktioniert die Substitution mit trigonometri
     #printf(&quot;Trf_tmp neu initialisiert:\134n&quot;):
     #print(Trf_tmp);
     for k from 1 to NJ do # Schleife mit Dummy-L\303\244nge. Wird abgebrochen, falls beendet.
-    	 #printf(&quot;j=%d\134n&quot;,j):
-    	 Kette_akt := [j, op(Kette_akt)]:
-      Trf_tmp := simplify(combine( Matrix(Trf(1 .. 4, 1 .. 4, j) . Trf_tmp) )): # Additionstheorem f\303\274r Drehung um parallele Achsen
-    	 #printf(&quot;Trf_tmp aktualisiert mit Trf %d. Aktuelle Kette: %s\134n&quot;, j, convert(Kette_akt, string)):
-    	 #print(Trf_tmp);
+      #printf(&quot;j=%d\134n&quot;,j):
+      Kette_akt := [j, op(Kette_akt)]:
+      Trf_tmp_sc := simplify(combine( Matrix(Trf(1 .. 4, 1 .. 4, j) . Trf_tmp) )): # Additionstheorem f\303\274r Drehung um parallele Achsen (combine)
+      Trf_tmp_wo := Matrix(Trf(1 .. 4, 1 .. 4, j) . Trf_tmp): # ignoriere Additionstheoreme
+      # Pr\303\274fe, welche Form rechentechnisch am g\303\274nstigsten ist und w\303\244hle diese
+      c1:=add(cost~(Trf_tmp_sc)):
+      cc1:=diff(c1,additions)+diff(c1,multiplications):
+      c2:=add(cost~(Trf_tmp_wo)):
+      cc2:=diff(c2,additions)+diff(c2,multiplications):
+      if cc2 &gt; cc1 then
+        # optimierte Form ist g\303\274nstiger
+        Trf_tmp := Trf_tmp_sc: 
+      else
+        # Optimierung bringt keinen Vorteil. 
+        # Das kann durch zus\303\244tzliche symbolische Parameter alpha/theta verursacht werden.
+        # Der combine-Befehl bringt dann nichts, da es sich nicht um additierte Rotationen um die selbe Achse handelt.
+        Trf_tmp := Trf_tmp_wo: 
+      end if:
+      #printf(&quot;Trf_tmp aktualisiert mit Trf %d. Aktuelle Kette: %s\134n&quot;, j, convert(Kette_akt, string)):
+      #print(Trf_tmp);
+      #printf(&quot;Kosten der optimierten Form (add/mult/fcn): %d (%d/%d/%d), ohne Optimierung: %d (%d/%d/%d)\134n&quot;, cc1, diff(c1,additions), diff(c1,multiplications), diff(c1,functions), cc2, diff(c2,additions), diff(c2,multiplications), diff(c2,functions)):
       if not(alpha(j) = 0) then
         # Die vorherige Achse ist nicht parallel zu dieser
         # Weitere Vereinfachungen ergeben keinen Sinn
@@ -383,14 +403,18 @@ Bei Verwendung dieser Optimierung funktioniert die Substitution mit trigonometri
     Trf_c(1 .. 4, 1 .. 4, i+1) := Matrix(Trf_c(1 .. 4, 1 .. 4, j2+1)) . Trf_tmp:
     #printf(&quot;Trf_tmp an Trf_c angeh\303\244ngt (Eintrag zu K\303\266rper %d. %d -&gt; %d mit Kette %s)\134n&quot;, i, j2, i, convert(Kette_akt, string)):
     #print(Trf_c(1 .. 4, 1 .. 4, i+1)):
-  end do;
+  end do:
 end if;</EC-CodeEditor></CodeEditor-ExecGroup>
-<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Kinematische Zwangsbedingungen ersetzen (nach Berechnung der Gesamt-Transformation)</Text-field></Title>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
+<Group labelreference="L2206" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input>
+</Input>
+</Group><Text-field style="Heading 1" layout="Heading 1">Kinematische Zwangsbedingungen ersetzen (nach Berechnung der Gesamt-Transformation)</Text-field></Title>
 <Group labelreference="L1856" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Substituiere allgemeine Ausdr\303\274cke der Winkel der Parallelstruktur mit kinematischen Zwangsbedingungen in Abh\303\244ngigkeit der Haupt-Gelenkwinkel
 Da die Gesamt-Transformation Trf_c an dieser Stelle schon berechnet wurde, m\303\274ssen die Ausdr\303\274cke hier in Trf und Trf_c ersetzt werden.</Font></Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1857" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion2" expanded="true" visible="true" pixel-width="1584" pixel-height="288" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">if kin_constraints_exist and codegen_kinematics_subsorder = 2 then
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L2201" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion2" expanded="true" visible="true" pixel-width="1584" pixel-height="288" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">if kin_constraints_exist and codegen_kinematics_subsorder = 2 then
   for i from 1 to NJ do # Index \303\274ber Transformationsmatrizen aller K\303\266rper
     for ix from 1 to 4 do # Index \303\274ber Zeilen der Transformationsmatrizen
       for iy from 1 to 4 do # Index \303\274ber Spalten der Transformationsmatrizen
