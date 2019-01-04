@@ -44,7 +44,7 @@ case $key in
     echo "--parrob: Es handelt sich um einen parallelen Roboter"
     echo "--not_gen_serial: Neuberechnung serieller Roboter bei parallelem Roboter unterbinden"
     echo "--notest: Kein Start der Matlab-Gesamt- und Modultests"
-    echo "Die letzten beiden Optionen sind exklusiv (nur eine ist möglich)"
+    echo "Die Optionen fixb_only und floatb_only sind exklusiv (nur eine ist möglich)"
     exit 0
     ;;
     -p|--parallel)
