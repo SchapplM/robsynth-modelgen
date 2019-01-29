@@ -105,8 +105,8 @@ subplot(3,2,sprc2no(3,2,3,2));
 plot(sl.t, sl.phiDD_base);
 ylabel('phiDD');grid on;
 
-E_minmax = minmax( sum(sl.E([1,end],:), 2) );
-E_diff = E_minmax(1) - E_minmax(2);
+[E_min, E_max] = bounds( sum(sl.E([1,end],:), 2) );
+E_diff = E_max - E_min;
 if abs(E_diff) > 1e-6
   error('Nicht energiekonsistent');
 else
