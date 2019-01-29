@@ -403,7 +403,7 @@ Teil 7: Parameterkennung
 Kennzeichnung, welche Parameter als Eingabe für die Funktion verwendet werden.
 * vp1 (Parametersatz 1, variable Parameter)
 * vp2 (Parametersatz 2, variable Parameter)
-* minpar
+* mdp (Dynamik-Minimalparametervektor; minimale Zusammenfassung; siehe unten)
 
 Teil 8:  Kennung für variable Parameter
 
@@ -429,7 +429,7 @@ Beispiele:
 
 * Parametersatz 1 (par1). Masse, Schwerpunkt, Trägheitstensor um den Schwerpunkt ("physical parameters")
 * Parametersatz 2 (par2). Masse, Erstes Moment, Trägheitstensor um den Koordinatenursprung ("inertial Parameters")
-* Minimalparametersatz (minpar). Neugruppierung des Parametersatzes 2 ("base parameters"; base bezeichnet hier nicht die Basis des Roboters, sondern die Minimaldarstellung der Parameter im mathematischen Sinne)
+* Minimalparametersatz (mdp). Neugruppierung des Parametersatzes 2 ("base parameters"; base bezeichnet hier nicht die Basis des Roboters, sondern die Minimaldarstellung der Parameter im mathematischen Sinne)
 
 ## Globale Variablen in Maple
 
