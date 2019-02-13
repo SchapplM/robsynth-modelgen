@@ -89,7 +89,7 @@
 </Task-table>
 <Task/>
 <Group labelreference="L1" drawlabel="true">
-<Input><Text-field style="Title" layout="Title">Inverse Dynamics for Robot-Base</Text-field>
+<Input><Text-field style="Title" layout="Title">Inverse Dynamics for Parallel Robot Platform</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1518" drawlabel="true">
@@ -97,7 +97,7 @@
 
 Dateiname:
 <Font encoding="UTF-8">robot -&gt; Berechnung f\303\274r allgemeinen Roboter
-para -&gt; Berechnung f\303\274r eine parallelen Roboter</Font>
+para -&gt; Berechnung f\303\274r eine parallelen Roboter</Font></Text-field><Text-field style="Normal" layout="Normal">plattform -&gt; Bezogen auf Plattform der PKM
 rotmat -&gt; Kinematik wird mit Rotationsmatrizen berechnet
 dynamics -&gt; Berechnung der Dynamik</Text-field>
 </Input>
@@ -188,8 +188,8 @@ read &quot;../robot_codegen_definitions/robot_env_par&quot;:</Text-field>
 <Group hide-input="false" labelreference="L3255" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">Lade die Funktionen aus dem &quot;imes-robotics-matlab&quot;-Repo</Text-field>
 </Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read(sprintf(&quot;%s/transformation/maple/proc_eul%s2r&quot;, robotics_repo_path, angleConvLeg)):
-read(sprintf(&quot;%s/transformation/maple/proc_eul%sjac&quot;, robotics_repo_path, angleConvLeg)):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read(sprintf(&quot;%s/transformation/maple/proc_eul%s2r&quot;, robotics_repo_path, angleConv)):
+read(sprintf(&quot;%s/transformation/maple/proc_eul%sjac&quot;, robotics_repo_path, angleConv)):</Text-field>
 </Input>
 </Group>
 </Section>
@@ -199,10 +199,10 @@ read(sprintf(&quot;%s/transformation/maple/proc_eul%sjac&quot;, robotics_repo_pa
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3132" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">R_0_0_E_t := parse(sprintf(&quot;eul%s2r&quot;,angleConvLeg))(xE_t(4..6)):
-R_0_0_E_s := parse(sprintf(&quot;eul%s2r&quot;,angleConvLeg))(xE_s(4..6)):
-RPYjac_0_t := parse(sprintf(&quot;eul%sjac&quot;,angleConvLeg))(xE_t(4..6)):
-RPYjac_0_s := parse(sprintf(&quot;eul%sjac&quot;,angleConvLeg))(xE_s(4..6)):
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">R_0_0_E_t := parse(sprintf(&quot;eul%s2r&quot;,angleConv))(xE_t(4..6)):
+R_0_0_E_s := parse(sprintf(&quot;eul%s2r&quot;,angleConv))(xE_s(4..6)):
+RPYjac_0_t := parse(sprintf(&quot;eul%sjac&quot;,angleConv))(xE_t(4..6)):
+RPYjac_0_s := parse(sprintf(&quot;eul%sjac&quot;,angleConv))(xE_s(4..6)):
 r_0_sP_P := R_0_0_E_s.r_P_sP_P:
 if codegen_dynpar = 1 then
   J_P_P := J_SP + mE*Multiply(Transpose(vec2skew(r_P_sP_P)),vec2skew(r_P_sP_P)):
@@ -227,8 +227,13 @@ s_0_P_sP := R_0_0_E_s.s_P_P_sP:
 r_0_sP_P := R_0_0_E_s.r_P_sP_P:</Text-field>
 </Input>
 </Group>
+<Group labelreference="L3262" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2">Berechnung der H-Matrix und deren Ableitung nach Abdellatif2007 S.20</Text-field></Title>
 <Group labelreference="L3004" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal">Berechnung der H-Matrix und deren Ableitung nach Abdellatif2007 S.20</Text-field>
+<Input><Text-field style="Text" layout="Normal"></Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3059" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -253,12 +258,12 @@ dRPYjac_0_s := Copy(dRPYjac_0_t):</Text-field>
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Substituiere die zeitabh\303\244ngigen Koordinaten in der </Font>H-Matrix mit <Font encoding="UTF-8">zeitunabh\303\244ngigen Koordinaten </Font></Text-field>
 </Input>
 </Group><CodeEditor-ExecGroup view="presentation" labelreference="L2" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion3" expanded="true" visible="true" pixel-width="1129" pixel-height="197" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">for i to 3 do
-	for j to 3 do
-		for k from 4 to 6 do
-			dRPYjac_E_s(i,j) := subs({xEDD_t(k)=xEDD_s(k),xED_t(k)=xED_s(k),xE_t(k)=xE_s(k)},dRPYjac_E_s(i,j)):
-			dRPYjac_0_s(i,j) := subs({xEDD_t(k)=xEDD_s(k),xED_t(k)=xED_s(k),xE_t(k)=xE_s(k)},dRPYjac_0_s(i,j)):
-		end do:
-	end do:
+  for j to 3 do
+    for k from 4 to 6 do
+      dRPYjac_E_s(i,j) := subs({xEDD_t(k)=xEDD_s(k),xED_t(k)=xED_s(k),xE_t(k)=xE_s(k)},dRPYjac_E_s(i,j)):
+      dRPYjac_0_s(i,j) := subs({xEDD_t(k)=xEDD_s(k),xED_t(k)=xED_s(k),xE_t(k)=xE_s(k)},dRPYjac_0_s(i,j)):
+    end do:
+  end do:
 end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group hide-input="false" labelreference="L2905" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
@@ -267,6 +272,10 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group hide-input="false" labelreference="L2903" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" spaceabove="0" linebreak="space" rightmargin="0" linespacing="0.0" initial="0" firstindent="0" leftmargin="0" bulletsuffix="" alignment="left" bullet="none" spacebelow="0" pagebreak-before="false">wD_E_0_E_s := simplify(dRPYjac_E_s.xED_s(4..6,1)+RPYjac_E_s.xEDD_s(4..6,1)):
 wD_0_0_E_s := simplify(dRPYjac_0_s.xED_s(4..6,1)+RPYjac_0_s.xEDD_s(4..6,1)):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3260" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Abdellatif2007 S.20 (2.19)</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3100" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -283,6 +292,7 @@ wD_0_0_E_s := simplify(dRPYjac_0_s.xED_s(4..6,1)+RPYjac_0_s.xEDD_s(4..6,1)):</Te
       ZeroMatrix(3),dRPYjac_0_s&gt;:</Text-field>
 </Input>
 </Group>
+</Section>
 <Group hide-input="false" labelreference="L3081" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
@@ -341,7 +351,7 @@ end do:</Text-field>
 </Group>
 <Group labelreference="L2888" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_grav then
-  MatlabExport(gE, sprintf(&quot;../codeexport/%s/tmp/gravload_platform_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(gE, sprintf(&quot;../codeexport/%s/tmp/gravload_platform_eul%s_matlab.m&quot;, robot_name, angleConv), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -368,7 +378,7 @@ end if:</Text-field>
 </Group>
 <Group labelreference="L2886" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertia then
-  MatlabExport(ME, sprintf(&quot;../codeexport/%s/tmp/inertia_platform_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(ME, sprintf(&quot;../codeexport/%s/tmp/inertia_platform_eul%s_matlab.m&quot;, robot_name, angleConv), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -390,8 +400,9 @@ end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2920" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_corvec then
-  MatlabExport(cE, sprintf(&quot;../codeexport/%s/tmp/coriolisvec_platform_matlab.m&quot;, robot_name), codegen_opt):
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">if codeexport_corvec then
+  # Der Term ist nicht der Coriolis-Vektor, sondern eine Matrix, die dazu f\303\274hrt. Daher kein Export.
+</Font>  # MatlabExport(cE, sprintf(&quot;../codeexport/%s/tmp/coriolisvec_platform_eul%s_matlab.m&quot;, robot_name, angleConv), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -414,7 +425,7 @@ tauE := Multiply(MME,xEDD_s) + cvecE - gE:</Text-field>
 </Group>
 <Group labelreference="L2929" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_invdyn then
-  MatlabExport(tauE, sprintf(&quot;../codeexport/%s/tmp/invdyn_floatb_%s_platform_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
+  MatlabExport(tauE, sprintf(&quot;../codeexport/%s/tmp/invdyn_platform_eul%s_matlab.m&quot;, robot_name, angleConv), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -427,6 +438,10 @@ end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3075" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
+<Group labelreference="L3257" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
