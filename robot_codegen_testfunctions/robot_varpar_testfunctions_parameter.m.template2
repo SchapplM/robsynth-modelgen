@@ -19,6 +19,8 @@ TSS.pkin = pkin;
 TSS.theta = theta;
 TSS.sigma = sigma;
 TSS.mu = mu;
+TSS.q_min = q_min;
+TSS.q_max = q_max;
 % Dynamikparameter
 TSS.m = m;
 TSS.rSges = rSges;

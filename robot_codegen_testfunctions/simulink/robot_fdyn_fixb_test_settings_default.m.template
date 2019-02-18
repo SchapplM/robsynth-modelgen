@@ -22,7 +22,7 @@ DynPar1 = struct('m', m, 'r_S', rSges, 'I_S', Icges);
 
 
 %% Anfangswerte
-q_t0 = zeros(NQJ,1);
+q_t0 = (TSS.q_min+TSS.q_max)/2;
 qD_t0 = rand(NQJ,1)*10;
 g_base = [0;0;-9.81];
 
