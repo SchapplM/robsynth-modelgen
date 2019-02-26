@@ -1,4 +1,4 @@
-% Analytischen Jacobi-Matrix für Segment Nr. %LIJAC% (0=Basis) von
+% Analytische Jacobi-Matrix für Segment Nr. %LIJAC% (0=Basis) von
 % %RN%
 % Use Code from Maple symbolic Code Generation
 %
@@ -23,9 +23,9 @@
 function Ja = %FN%(qJ, r_i_i_C, ...
   pkin)
 
-Ja_transl = %RN%_jacobia_transl_%LIJAC%_floatb_twist_sym_varpar(qJ, r_i_i_C, ...
+Ja_transl = %RN%_jacobia_transl_%LIJAC%_sym_varpar(qJ, r_i_i_C, ...
   pkin);
-Ja_rot = %RN%_jacobia_rot_%LIJAC%_floatb_twist_sym_varpar(qJ, ...
+Ja_rot = %RN%_jacobia_rot_%LIJAC%_sym_varpar(qJ, ...
   pkin);
 
 Ja = [Ja_transl; Ja_rot];

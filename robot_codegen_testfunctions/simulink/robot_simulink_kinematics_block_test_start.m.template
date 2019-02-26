@@ -59,7 +59,7 @@ for i = 1:length(t)
     error('Kinematik stimmt nicht zwischen Simulink und Matlab');
   end
   
-  Jg_n_ml = %RN%_jacobig_floatb_twist_sym_varpar(q, uint8(NL_modell-1), zeros(3,1), pkin);
+  Jg_n_ml = %RN%_jacobig_sym_varpar(q, uint8(NL_modell-1), zeros(3,1), pkin);
   test2 = Jg_n_ml-Jg_n_sl;
   if any(abs(test2(:)) > 1e-10)
     error('Jacobi-Matrix stimmt nicht zwischen Simulink und Matlab');

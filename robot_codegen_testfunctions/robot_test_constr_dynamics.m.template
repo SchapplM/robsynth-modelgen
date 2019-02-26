@@ -73,8 +73,8 @@ for iq = 1:TSSc.n
   % Vergleiche Geschwindigkeit und Jacobi-Matrizen
   for jj = 1:TSSc.NL % 1=Basis
     r_i_i_C = rand(3,1); % Jacobi-Matrix für zufälligen Punkt
-    Jgc = %RN%_jacobig_floatb_twist_sym_varpar(q1, uint8(jj), r_i_i_C, TSSc.pkin);
-    Jgo = %RN%u_jacobig_floatb_twist_sym_varpar(q, uint8(jj), r_i_i_C, TSSo.pkin);
+    Jgc = %RN%_jacobig__sym_varpar(q1, uint8(jj), r_i_i_C, TSSc.pkin);
+    Jgo = %RN%u_jacobig__sym_varpar(q, uint8(jj), r_i_i_C, TSSo.pkin);
     % Geschwindigkeit des Punktes mit/ohne ZB
     Vc = Jgc*qD1;
     Vo = Jgo*qD;

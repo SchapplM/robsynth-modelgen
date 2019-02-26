@@ -1,4 +1,4 @@
-% Geometrischen Jacobi-Matrix für Segment Nr. %LIJAC% (0=Basis) von
+% Geometrische Jacobi-Matrix für Segment Nr. %LIJAC% (0=Basis) von
 % %RN%
 % Use Code from Maple symbolic Code Generation
 %
@@ -21,9 +21,9 @@ function Jg = %FN%(qJ, r_i_i_C, ...
   pkin)
 
 
-Ja_transl = %RN%_jacobia_transl_%LIJAC%_floatb_twist_sym_varpar(qJ, r_i_i_C, ...
+Ja_transl = %RN%_jacobia_transl_%LIJAC%_sym_varpar(qJ, r_i_i_C, ...
   pkin);
-Jg_rot = %RN%_jacobig_rot_%LIJAC%_floatb_twist_sym_varpar(qJ, ...
+Jg_rot = %RN%_jacobig_rot_%LIJAC%_sym_varpar(qJ, ...
   pkin);
 
 Jg = [Ja_transl; Jg_rot];
