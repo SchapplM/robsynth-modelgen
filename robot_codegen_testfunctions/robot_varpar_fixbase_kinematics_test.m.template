@@ -1,5 +1,11 @@
 % Test function for kinematics from symbolic calculations
 % with fixed base model
+% 
+% Sources
+% [1] Ortmaier, Robotik I Skript
+% [2] Do Thanh et al: On the Inverse Dynamics Problem of General Parallel
+%     Robots (2009)
+
 
 % %VERSIONINFO%
 
@@ -236,13 +242,23 @@ for iq = 1:size(Q, 1) % Über Zufallsposen
     JgD_rot = %RN%_jacobigD_rot_sym_varpar(q, qD, uint8(jb), pkin);
     JaD_rot = %RN%_jacobiaD_rot_sym_varpar(q, qD, uint8(jb), pkin);
     % Aus Produktregel der Zeitableitung von [1], S. 52, Gl. (4.25)
+    % (Berechnung der geometrischen Jacobi-Matrix aus der analytischen)
     rpyD = Ja_rot*qD;
     JD_rpy = eulxyzjacD(rpy, rpyD);
     JgD_rot_test = JD_rpy * Ja_rot + J_rpy * JaD_rot;
     % Vergleiche die auf zwei Wegen berechnete Zeitableitung der geometrischen Jacobi-Matrix
-    DiffD = JgD_rot_test - JgD_rot;
-    if any( abs(DiffD(:)) > 1e9*eps(1+max(abs(JgD_rot(:)))) )
+    DiffgD = JgD_rot_test - JgD_rot;
+    if any( abs(DiffgD(:)) > 1e9*eps(1+max(abs(JgD_rot(:)))) )
       error('Zeitableitung der geometrischen und analytischen Jacobi-Matrizen stimmen nicht überein (Körper %d)', jb);
+    end
+    % Berechnung der analytischen Jacobi-Matrix aus der geometrischen (d/dt)
+    % Zeitableitung der inversen Euler-Transformationsmatrix 
+    JD_rpy_inv = -J_rpy\JD_rpy/J_rpy; % [2], Gl. 20
+    % Zeitableitung der analytischen Jacobi (Rotationsteil)
+    JaD_rot_test = J_rpy\JgD_rot + JD_rpy_inv *Jg_rot;
+    DiffaD = JaD_rot - JaD_rot_test;
+    if any( abs(DiffaD(:)) > 1e9*eps(1+max(abs(JaD_rot(:)))) )
+      error('Zeitableitung der analytischen und geometrischen Jacobi-Matrizen stimmen nicht überein (Körper %d)', jb);
     end
   end
 end
@@ -259,3 +275,4 @@ matlabfcn2mex({ '%RN%_jacobigD_rot_sym_varpar', ...
                 '%RN%_jacobia_rot_sym_varpar', ...
                 '%RN%_jacobia_transl_sym_varpar', ...
                 '%RN%_jacobiaD_transl_sym_varpar'});
+
