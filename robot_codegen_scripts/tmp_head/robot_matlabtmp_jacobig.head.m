@@ -2,8 +2,8 @@
 % %RN%
 % Use Code from Maple symbolic Code Generation
 %
-% geometrische Jacobi-Matrix: Differentieller Zusammenhang zwischen
-% Endeffektorposition und verallgemeinerten Koordinaten.
+% Geometrische Jacobi-Matrix: Differentieller Zusammenhang zwischen
+% Endeffektorgeschwindigkeit und Geschw. der verallgemeinerten Koordinaten.
 %
 % Input:
 % %INPUT_QJ%
@@ -13,7 +13,7 @@
 %
 % Output:
 % Jg [3x%NQJ%]
-%   Geometrischen Jacobi-Matrix
+%   Geometrische Jacobi-Matrix
 
 % %VERSIONINFO%
 

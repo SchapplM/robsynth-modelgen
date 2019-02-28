@@ -2,7 +2,7 @@
 % %RN%
 % Use Code from Maple symbolic Code Generation
 %
-% geometrische Jacobi-Matrix: Differentieller Zusammenhang zwischen
+% Geometrische Jacobi-Matrix: Differentieller Zusammenhang zwischen
 % Endeffektorposition und verallgemeinerten Koordinaten.
 %
 % Input:
