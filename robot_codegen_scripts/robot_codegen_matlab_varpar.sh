@@ -32,11 +32,15 @@ source create_git_versioninfo.sh
 
 # Erstelle Matlab-Funktionen der explizit ausgerechneten Dynamik (nicht in Regressorform)
 ./robot_codegen_matlab_dynamics_fixb_varpar.sh
+./robot_codegen_matlab_dynamics_fixb_NewtonEuler_varpar.sh
 ./robot_codegen_matlab_dynamics_floatb_varpar.sh
+./robot_codegen_matlab_dynamics_floatb_NewtonEuler_varpar.sh
 
 # Erstelle Matlab-Funktionen der parameterlinearen Dynamik
 ./robot_codegen_matlab_paramlin_fixb_varpar.sh
+./robot_codegen_matlab_paramlin_fixb_NewtonEuler_varpar.sh
 ./robot_codegen_matlab_paramlin_floatb_varpar.sh
+./robot_codegen_matlab_paramlin_floatb_NewtonEuler_varpar.sh
 
 # Erstelle Matlab-Funktionen aus numerischer Berechnung
 ./robot_codegen_matlab_num_varpar.sh
