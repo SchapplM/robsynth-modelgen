@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Worksheet>
+<Version major="2017" minor="0"/>
+<Label-Scheme value="2" prefix=""/>
+<View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false">
+</View-Properties>
+<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1080" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<Styles>
+<Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="2D Output" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Heading 4" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="true" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Line Printed Output" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Heading 2" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="16" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Maple Output" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="2D Inert Output" background="[255,255,255]" bold="false" executable="true" family="Times New Roman" foreground="[144,144,144]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Heading 3" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="true" opaque="false" readonly="false" size="14" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Diagnostic" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[40,120,40]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Ordered List 1" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Maple Input" background="[255,255,255]" bold="true" executable="true" family="Courier New" foreground="[120,0,14]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Text Output" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Ordered List 2" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Ordered List 3" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Ordered List 4" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Ordered List 5" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Annotation Title" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Header and Footer" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="10" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="HyperlinkError" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[255,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="true" placeholder="false"/>
+<Font name="Atomic Variable" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[175,0,175]" italic="true" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="HyperlinkWarning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="true" placeholder="false"/>
+<Font name="Dictionary Hyperlink" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[147,0,15]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="true" placeholder="false"/>
+<Font name="2D Math" background="[255,255,255]" bold="false" executable="true" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Bullet Item" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Maple Plot" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Annotation Text" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="List Item" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Dash Item" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="2D Input" background="[255,255,255]" bold="false" executable="true" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Error" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[255,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Title" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Text" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Normal" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Caption Reference" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Code" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[255,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Maple Input Placeholder" background="[255,255,255]" bold="true" executable="true" family="Courier New" foreground="[200,0,200]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="true"/>
+<Font name="Equation Label" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Author" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Hyperlink" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,128,128]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="true" placeholder="false"/>
+<Font name="Caption Text" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Layout name="Heading 1" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="8" spacebelow="4" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Warning" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Heading 4" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Line Printed Output" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="any" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Heading 2" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="8" spacebelow="2" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Maple Output" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.3" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Heading 3" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Diagnostic" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="any" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Ordered List 1" alignment="left" bullet="numeric" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix=""/>
+<Layout name="Text Output" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="newline" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Ordered List 2" alignment="left" bullet="alphabetic" firstindent="0" leftmargin="36" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix=""/>
+<Layout name="Ordered List 3" alignment="left" bullet="roman" firstindent="0" leftmargin="72" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix=""/>
+<Layout name="Ordered List 4" alignment="left" bullet="ALPHABETIC" firstindent="0" leftmargin="108" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix=""/>
+<Layout name="Ordered List 5" alignment="left" bullet="ROMAN" firstindent="0" leftmargin="144" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix=""/>
+<Layout name="Annotation Title" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="12" spacebelow="12" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="HyperlinkError" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="HyperlinkWarning" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Bullet Item" alignment="left" bullet="dot" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Maple Plot" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="List Item" alignment="left" bullet="indent" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Dash Item" alignment="left" bullet="dash" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Error" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Title" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="12" spacebelow="12" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Normal" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Author" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="8" spacebelow="8" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Pencil-style name="Pencil 1" pen-color="[0,0,0]" pen-height="1.0" pen-width="1.0" pen-opacity="1.0"/>
+<Pencil-style name="Pencil 2" pen-color="[0,0,255]" pen-height="1.0" pen-width="1.0" pen-opacity="1.0"/>
+<Pencil-style name="Pencil 3" pen-color="[0,0,0]" pen-height="3.0" pen-width="3.0" pen-opacity="1.0"/>
+<Pencil-style name="Pencil 4" pen-color="[0,0,255]" pen-height="3.0" pen-width="3.0" pen-opacity="1.0"/>
+<Pencil-style name="Pencil 5" pen-color="[255,0,0]" pen-height="5.0" pen-width="5.0" pen-opacity="1.0"/>
+<Highlighter-style name="Highlighter 5" pen-color="[255,255,0]" pen-height="48.0" pen-width="48.0" pen-opacity="0.8"/>
+<Highlighter-style name="Highlighter 3" pen-color="[51,255,0]" pen-height="24.0" pen-width="24.0" pen-opacity="0.8"/>
+<Highlighter-style name="Highlighter 4" pen-color="[0,255,255]" pen-height="32.0" pen-width="32.0" pen-opacity="0.8"/>
+<Highlighter-style name="Highlighter 1" pen-color="[255,153,255]" pen-height="12.0" pen-width="8.0" pen-opacity="0.8"/>
+<Highlighter-style name="Highlighter 2" pen-color="[255,204,0]" pen-height="14.0" pen-width="14.0" pen-opacity="0.8"/>
+</Styles>
+<Startup-Code startupcode=""/>
+<Metadata-table>
+    <Metadata-category name="&lt;default&gt;"/>
+    <Metadata-tag id="0" category="&lt;default&gt;" name="Document Properties">
+        <Metadata-attribute name="Item List" value="true"/>
+        <Metadata-attribute name="Keywords" value="&lt;default&gt;"/>
+        <Metadata-attribute name="Author" value="&lt;default&gt;"/>
+        <Metadata-attribute name="Title" value="&lt;default&gt;"/>
+        <Metadata-attribute name="Subject" value="&lt;default&gt;"/>
+    </Metadata-tag>
+</Metadata-table>
+<Task-table>
+    <Task-category name="&lt;default&gt;"/>
+</Task-table>
+<Task/>
+<Group labelreference="L1509" drawlabel="true">
+<Input><Text-field style="Title" layout="Title"><Font size="16">NewtonEuler Formulation for Robot based on MDH frames</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1747" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1507" drawlabel="true">
+<Input><Text-field style="Heading 2" layout="Heading 2">Einleitung</Text-field><Text-field style="Normal" layout="Normal"><Font encoding="UTF-8">Berechnung der inversen Dynamik in R\303\274ckw\303\244rtsrekursive
+</Font>
+Dateiname:
+<Font encoding="UTF-8">robot -&gt; Berechnung f\303\274r allgemeinen Roboter
+tree -&gt; Berechnung f\303\274r eine beliebige Baumstruktur (ohne Schleifen)
+</Font>fixb -&gt;  Fixed Base Modell der Basis.
+dynamics -&gt; Berechnung der Dynamik
+NewtonEuler-&gt;Newton - Euler Bewegungsgleichung
+<Font encoding="UTF-8">Linkframe-&gt;Berechnung der Newton Euler im K\303\266rper-KS(KSi)
+</Font>par12 -&gt; Parametersatz 1 (Schwerpunkt als Parameter: SX,SY,SZ) oder Parametersatz 2 (1. und 2. Moment MX,MY,MZ,...)
+</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1712" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Heading 2" layout="Heading 2">Sources</Text-field><Text-field style="Normal" layout="Normal">[GautierKhalil1990] Direct Calculation of Minimum Set of Inertial Parameters of Serial Robots
+[KhalilDombre2002] Modeling, Identification and Control of Robots
+[Ortmaier2014] Vorlesungsskript Robotik I</Text-field><Text-field style="Text" layout="Normal"></Text-field>
+</Input>
+</Group>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Initialization</Text-field></Title>
+<Group labelreference="L1702" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">interface(warnlevel=0): # Unterdr\303\274cke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet wird.
+</Font>interface(warnlevel=3):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1649" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(LinearAlgebra):
+with(ArrayTools):
+with(codegen):
+with(CodeGeneration):
+with(StringTools):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1698" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../transformation/proc_rotx&quot;: 
+read &quot;../transformation/proc_roty&quot;: 
+read &quot;../transformation/proc_rotz&quot;: 
+read &quot;../transformation/proc_trotx&quot;: 
+read &quot;../transformation/proc_troty&quot;: 
+read &quot;../transformation/proc_trotz&quot;: 
+read &quot;../transformation/proc_transl&quot;: 
+read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
+</Input>
+</Group>
+<Group labelreference="L1713" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Einstellungen f\303\274r Code-Export: Optimierungsgrad (2=h\303\266chster) und Aktivierung jedes Terms.</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1651" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_opt := 2:
+codeexport_grav := true: 
+codeexport_corvec := true:
+codeexport_cormat := true:
+codeexport_inertia := true:
+codeexport_inertiaD := true:
+codeexport_invdyn := true:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1780" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_act := true:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1769" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_dynpar := 2:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1650" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_convert_s_t&quot;:
+read &quot;../helper/proc_convert_t_s&quot;: 
+read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1648" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:
+<Font encoding="UTF-8">printf(&quot;Generiere Geschwindigkeit f\303\274r %s (Herleitung im K\303\266rper-KS)\134n&quot;, robot_name):</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1647" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_definitions&quot;, robot_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1714" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_index_symmat2vector&quot;:
+read &quot;../helper/proc_symmat2vector&quot;:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1431" drawlabel="true">
+<Input><Text-field style="Text" layout="Normal">Ergebnisse der Kinematik laden</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1527" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/kinematics_floatb_%s_rotmat_maple.m&quot;, robot_name, base_method_name):
+Trf := Trf:
+Trf_c := Trf_c:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1706" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Ergebnisse der Geschwindigkeit laden</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1707" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/velocity_linkframe_floatb_%s_maple.m&quot;, robot_name, base_method_name):
+omega_i_i:= omega_i_i:
+rD_i_i:= rD_i_i:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1699" drawlabel="true">
+<Input><Text-field style="Text" layout="Normal">Zeitableitungen der MDH-Drehwinkel laden.
+Die Berechnung soll nur an einer Stelle erfolgen. Siehe robot_tree_velocity_mdh_angles.mw.</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1700" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/velocity_mdh_angles_maple.m&quot;, robot_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1701" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">thetaD := thetaD:
+dD :=dD:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1708" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Zeitableitungen der Geschwindigkeit laden.
+Die Berechnung soll nur an einer Stelle erfolgen. Siehe robot_tree_acceleration_mdh_angles.mw.</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1709" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/acceleration_mdh_angles_maple.m&quot;, robot_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1710" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">thetaDD :=thetaDD:
+dDD := dDD:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1731" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Ergebnisse der Geschwindigkeit laden</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1732" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/velocity_linkframe_floatb_%s_maple.m&quot;, robot_name, base_method_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1733" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">omega_i_i:= omega_i_i:
+rD_i_i:= rD_i_i:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1728" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Ergebnisse der Beschleunigung laden</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1729" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"> read sprintf(&quot;../codeexport/%s/tmp/acceleration_linkframe_floatb_%s_maple.m&quot;, robot_name, base_method_name):</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L1730" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">omegaD_i_i:= omegaD_i_i: 
+rDD_i_i:= rDD_i_i:
+rDD_i_Si:= rDD_i_Si:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1715" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"></Text-field><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Mit diesem Arbeitsblatt werden die Vorw\303\244rtsrekursive f\303\274r Fixed-Base Modelle generiert. Erkenne welche Basis-Modellierung aktiv ist</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1716" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">if base_method_name=&quot;twist&quot; then # Basis-Methode &quot;twist&quot; wird (hier) nur f\303\274r fixed Base benutzt
+</Font>  expstring:=&quot;fixb&quot;:
+elif base_method_name=&quot;eulxyz&quot; then 
+  expstring:=&quot;floatb_eulxyz&quot;:
+else
+<Font encoding="UTF-8">  printf(&quot;Nicht behandelte Basis-Methode: %s\134n&quot;, </Font>base_method_name):
+end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1717" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Schalter zur Auswahl der unterschiedlichen Terme, die exportiert werden sollen.</Text-field>
+</Input>
+</Group>
+</Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Newton-Euler formulation(mit Funktion)</Text-field></Title>
+<Group labelreference="L1720" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">OutputNewtonEuler:= NewtonEuler(f_i_i,m_i_i):</Text-field>
+</Input>
+</Group>
+<Section collapsed="false" isCollapsible="false" drawButton="false" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2">Backward recursive computation</Text-field></Title>
+<Group labelreference="L1659" drawlabel="true">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Force exerted on link i by link i-1(unbekannte Kraft zwischen Teilk\303\266rper n-1 und Teilk\303\266rper n)</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1721" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">f_i_i:= Matrix(3,NL):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1656" drawlabel="true">
+<Input><Text-field style="Text" layout="Normal">Moment exerted on link i by link i-1(<Font encoding="UTF-8">unbekannte Moment zwischen Teilk\303\266rper n-1 und Teilk\303\266rper n</Font>)</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1691" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">m_i_i:=Matrix(3,NL):
+</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1749" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Schnittmomente/Kr\303\244fte</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1754" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tau_B := Matrix(6,1):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1750" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tau_J := Matrix(NJ,1):
+tau := Matrix(6+NJ,1):
+
+</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L1737" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">I_i_i_m:= Matrix(3,3,NL):</Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L2" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion2" expanded="true" visible="true" pixel-width="1430" pixel-height="259" code-language="text/maple" autoexpand="false" wrapping="false" show-border="true" code-line-numbers="true">for i from 1 to NL do
+  I_i_i_m(1..3,1..3,i):=Matrix(3,3):
+ end do:
+
+for i from 1 to NL do
+  I_i_i_m[1,1,i]:=I_i_i[1,i]:
+  I_i_i_m[1,2,i]:=I_i_i[2,i]:
+  I_i_i_m[1,3,i]:=I_i_i[3,i]:
+  I_i_i_m[2,2,i]:=I_i_i[4,i]:
+  I_i_i_m[2,3,i]:=I_i_i[5,i]:
+  I_i_i_m[3,3,i]:=I_i_i[6,i]:
+end do:</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group hide-input="false" labelreference="L1738" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L1736" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">
+F_i:= Matrix(3,NL):
+M_i:= Matrix(3,NL):</Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" hide-input="false" labelreference="L4" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="1634" pixel-height="200" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">for i from 1 to NL do
+  # External forces and moment on link i
+  #Betrachte dazu nur die durch Gelenke angetriebenen K\303\266rper, nicht die Basis
+  # [Khali2002](9.5.3) (9.88) &amp; (9.89)
+  F_i(1..3,i):= M(i,1)*rDD_i_i(1..3,i)+CrossProduct(omegaD_i_i(1..3,i),mr_i_i_Si(1..3,i))+ CrossProduct(omega_i_i(1..3,i), CrossProduct(omega_i_i(1..3,i), mr_i_i_Si(1..3,i))):
+  M_i(1..3,i):= I_i_i_m(1..3,1..3,i).omegaD_i_i(1..3,i)+ CrossProduct(omega_i_i(1..3,i),(I_i_i_m(1..3,1..3,i).omega_i_i(1..3,i)))+CrossProduct(mr_i_i_Si(1..3,i),rDD_i_i(1..3,i)):
+end do :</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group hide-input="false" labelreference="L1734" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">
+</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L1745" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1740" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Forces and moment exerted on link i by link i-1</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L1742" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" hide-input="false" labelreference="L3" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="1198" pixel-height="441" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">for i from NL by -1 to 1 do
+  f_i_i(1..3,i):= F_i(1..3,i):
+  m_i_i(1..3,i):= M_i(1..3,i):#+ CrossProduct(r_i_i_Si(1..3,i),(F_i(1..3,i))):
+
+  if i &lt; NL then
+    j := v(i) + 2:
+    printf(&quot;i=%d, j=%d\134n&quot;, i, j):
+    R_j_i := Matrix(Trf(1..3,1..3,i)): 
+    r_j_j_i := Matrix( Trf(1 .. 3, 4, i)):
+    f_i_i(1..3,i) := f_i_i(1..3,i) + R_j_i.f_i_i(1..3,j):
+    m_i_i(1..3,i) := m_i_i(1..3,i) + R_j_i.m_i_i(1..3,j)+ CrossProduct(r_j_j_i, R_j_i.f_i_i(1..3,j) ):
+  end if:
+end do:
+
+for i from 1 to NJ do
+  if sigma(i) = 0 then # Drehgelenk
+    tau_J(i,1) := &lt;0,0,1&gt;.m_i_i(1..3,i+1):
+  else # Schubgelenk
+    tau_J(i,1) := &lt;0,0,1&gt;.f_i_i(1..3,i+1):
+  end if:
+end do:</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L1752" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Unbekannten Kr\303\244fte und Momente zwischen den Teilk\303\266rpern bestimmen</Font></Text-field><Text-field style="Text" layout="Normal"></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1753" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tau_B [1..3,1]:= Transpose(Trf_c(1..3, 1..3, 1)).f_i_i(1..3,1) :
+tau_B [4..6,1]:= Transpose(T_basevel).Trf_c(1..3, 1..3, 1).m_i_i(1..3,1):</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L1751" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tau[1..6,1]:= tau_B:
+tau[7..6+NJ,1]:= tau_J:</Text-field>
+</Input>
+</Group>
+</Section>
+</Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Export</Text-field></Title>
+<Group labelreference="L1786" drawlabel="true">
+<Input>
+</Input>
+</Group>
+<Group labelreference="L1787" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">f_i_i := convert_t_s(f_i_i):
+m_i_i := convert_t_s(m_i_i):
+tau_J := convert_t_s(tau_J):
+tau_B := convert_t_s(tau_B):
+tau := convert_t_s(tau):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1788" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Floating Base</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1789" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Maple Export</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1676" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_invdyn and not(base_method_name=&quot;twist&quot;) then
+  save  f_i_i,m_i_i,tau_J, tau_B, tau,sprintf(&quot;../codeexport/%s/tmp/invdyn_%s_NewtonEuler_linkframe_maple.m&quot;, robot_name, base_method_name):
+  <Font encoding="UTF-8">printf(&quot;Maple-Ausdr\303\274cke exportiert. %s\134n&quot;, </Font>FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1674" drawlabel="true">
+<Input><Text-field style="Text" layout="Normal">Matlab Export</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1776" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_invdyn and not(base_method_name=&quot;twist&quot;) then
+  MatlabExport(convert_t_s(f_i_i), sprintf(&quot;../codeexport/%s/tmp/invdyn_floatb_%s_NewtonEuler_linkframe_f_i_i_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(convert_t_s(m_i_i), sprintf(&quot;../codeexport/%s/tmp/invdyn_floatb_%s_NewtonEuler_linkframe_m_i_i_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(convert_t_s(tau_J), sprintf(&quot;../codeexport/%s/tmp/invdyn_floatb_%s_NewtonEuler_linkframe_tauJ_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(convert_t_s(tau_B), sprintf(&quot;../codeexport/%s/tmp/invdyn_floatb_%s_NewtonEuler_linkframe_tauB_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(convert_t_s(tau), sprintf(&quot;../codeexport/%s/tmp/invdyn_floatb_%s_NewtonEuler_linkframe_tauJB_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1777" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Fixed Base</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1791" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NQB do
+  f_i_i := subs({X_base_s[i,1]=0},f_i_i):
+  m_i_i := subs({X_base_s[i,1]=0},m_i_i):
+  tau_J := subs({X_base_s[i,1]=0},tau_J):
+  tau_B := subs({X_base_s[i,1]=0},tau_B):
+  tau := subs({X_base_s[i,1]=0},tau):
+end do:
+for i from 1 to 6 do
+  f_i_i := subs({V_base_s[i,1]=0},f_i_i):
+  m_i_i := subs({V_base_s[i,1]=0},m_i_i):
+  tau_J := subs({V_base_s[i,1]=0},tau_J):
+  tau_B := subs({V_base_s[i,1]=0},tau_B):
+  tau := subs({V_base_s[i,1]=0},tau):
+  f_i_i := subs({VD_base_s[i,1]=0},f_i_i):
+  m_i_i := subs({VD_base_s[i,1]=0},m_i_i):
+  tau_J := subs({VD_base_s[i,1]=0},tau_J):
+  tau_B := subs({VD_base_s[i,1]=0},tau_B):
+  tau := subs({VD_base_s[i,1]=0},tau):
+end do:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1790" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Maple Export</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1792" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_invdyn then
+  save  f_i_i,m_i_i,tau_J, tau_B, tau,sprintf(&quot;../codeexport/%s/tmp/invdyn_%s_NewtonEuler_linkframe_maple.m&quot;, robot_name, base_method_name):
+  <Font encoding="UTF-8">printf(&quot;Maple-Ausdr\303\274cke exportiert. %s\134n&quot;, </Font>FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1793" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Matlab Export</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L1675" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_invdyn  then
+  MatlabExport(f_i_i, sprintf(&quot;../codeexport/%s/tmp/invdyn_fixb_NewtonEuler_linkframe_f_i_i_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
+  MatlabExport(m_i_i, sprintf(&quot;../codeexport/%s/tmp/invdyn_fixb_NewtonEuler_linkframe_m_i_i_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
+  MatlabExport(tau_J, sprintf(&quot;../codeexport/%s/tmp/invdyn_fixb_NewtonEuler_linkframe_tauJ_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
+  MatlabExport(tau_B, sprintf(&quot;../codeexport/%s/tmp/invdyn_fixb_NewtonEuler_linkframe_tauB_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
+  MatlabExport(tau, sprintf(&quot;../codeexport/%s/tmp/invdyn_fixb_NewtonEuler_linkframe_tauJB_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
+end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1781" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Equation executable="true" style="2D Input" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYlLUkjbWlHRiQ2I1EhRicvJStleGVjdXRhYmxlR1EmZmFsc2VGJy8lLG1hdGh2YXJpYW50R1Enbm9ybWFsRic=">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1768" drawlabel="true">
+<Input><Text-field style="Text" layout="Normal"></Text-field>
+</Input>
+</Group>
+</Section>
+</Worksheet>
