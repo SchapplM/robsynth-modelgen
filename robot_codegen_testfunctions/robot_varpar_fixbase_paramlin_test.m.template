@@ -302,6 +302,82 @@ for i = 1:n
 end
 fprintf('Tested inverse dynamics for %d random joint angles for %s\n', ...
   n, robot_name);
+	
+%% Teste inverse Dynamik aus Newton-Euler
+for i = 1:n
+  q = Q(i,:)';
+  qD = QD(i,:)';
+  qDD = QDD(i,:)';
+  g_base = G(i,:)';
+  tauJ_neweul_func = %RN%_invdynJ_fixb_NewtonEuler_slag_vp2(q, qD, qDD, g_base, ...
+    pkin, m, mrSges, Ifges);
+  % calculate inverse dynamics with inertial parameter regressor
+  tauJ_neweul_reg2 = %RN%_invdynJ_fixb_NewtonEuler_reg2_slag_vp(q, qD, qDD, g_base, ...
+    pkin);
+  tauJ_neweul_pv2 = tauJ_neweul_reg2*PV2fixb;
+  if any( abs(tauJ_neweul_func-tauJ_neweul_pv2) > 1e6*eps(max(abs(tauJ_neweul_func))) )
+    error('Inverse dynamics from inertial parameter vector from Newton-Euler does not match with direct form.');
+  end
+end
+fprintf('Tested inverse dynamics from Newton-Euler for %d random joint angles for %s\n', ...
+  n, robot_name);
+	
+%% Teste Basis-Reaktionskräfte aus inverser Dynamik aus Newton-Euler
+for i = 1:n
+  q = Q(i,:)';
+  qD = QD(i,:)';
+  qDD = QDD(i,:)';
+  g_base = G(i,:)';
+  tauB_neweul_func = %RN%_invdynB_fixb_NewtonEuler_slag_vp2(q, qD, qDD, g_base, ...
+    pkin, m, mrSges, Ifges);
+  % calculate base forces with inertial parameter regressor
+  tauB_neweul_reg2 = %RN%_invdynB_fixb_NewtonEuler_reg2_slag_vp(q, qD, qDD, g_base, ...
+    pkin);
+  tauB_neweul_pv2 = tauB_neweul_reg2*PV2fixb;
+  if any( abs(tauJ_neweul_func-tauJ_neweul_pv2) > 1e6*eps(max(abs(tauJ_neweul_func))) )
+    error('Base forces from inertial parameter vector from Newton-Euler does not match with direct form.');
+  end
+end
+fprintf('Tested base forces from Newton-Euler for %d random joint angles for %s\n', ...
+  n, robot_name);
+	
+%% Teste Schnittkräfte/-momente aus Newton-Euler
+for i = 1:n
+  q = Q(i,:)';
+  qD = QD(i,:)';
+  qDD = QDD(i,:)';
+  g_base = G(i,:)';
+  f_neweul_func = %RN%_invdynf_fixb_NewtonEuler_slag_vp2(q, qD, qDD, g_base, ...
+    pkin, m, mrSges, Ifges);
+  % calculate cutting forces with inertial parameter regressor
+  f_neweul_reg2 = %RN%_invdynf_fixb_NewtonEuler_reg2_slag_vp(q, qD, qDD, g_base, ...
+    pkin);
+  f_neweul_pv2 = f_neweul_reg2*PV2fixb;
+	f_neweul_pv2 = reshape(f_neweul_pv2,[3,%NL%]);
+  if any( abs(f_neweul_func-f_neweul_pv2) > 1e6*eps(max(abs(f_neweul_func))) )
+    error('Cutting forces from inertial parameter vector from Newton-Euler does not match with direct form.');
+  end
+end
+fprintf('Tested cutting forces inverse dynamics from Newton-Euler for %d random joint angles for %s\n', ...
+  n, robot_name);
+for i = 1:n
+  q = Q(i,:)';
+  qD = QD(i,:)';
+  qDD = QDD(i,:)';
+  g_base = G(i,:)';
+  m_neweul_func = %RN%_invdynm_fixb_NewtonEuler_slag_vp2(q, qD, qDD, g_base, ...
+    pkin, m, mrSges, Ifges);
+  % calculate cutting torques with inertial parameter regressor
+  m_neweul_reg2 = %RN%_invdynm_fixb_NewtonEuler_reg2_slag_vp(q, qD, qDD, g_base, ...
+    pkin);
+  m_neweul_pv2 = m_neweul_reg2*PV2fixb;
+	m_neweul_pv2 = reshape(m_neweul_pv2,[3,%NL%]);
+  if any( abs(m_neweul_func-m_neweul_pv2) > 1e6*eps(max(abs(m_neweul_func))) )
+    error('Cutting torques from inertial parameter vector from Newton-Euler does not match with direct form.');
+  end
+end
+fprintf('Tested cutting torques inverse dynamics from Newton-Euler for %d random joint angles for %s\n', ...
+  n, robot_name);
 
 
 %% Teste Funktionsaufruf mit übergebenem Regressor gegen Regressormatrix

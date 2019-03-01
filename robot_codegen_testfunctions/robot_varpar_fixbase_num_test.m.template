@@ -119,6 +119,23 @@ for i = 1:n
   Mq_num4 = inertia_nCRB_vp1_m(T_stack, RotAx_i, v, m, rSges, Icges);
   if any( abs(Mq_num4(:)-Mq_sym(:)) > 1e-10) && ~any(sigma)
     error('Fehler in numerisch berechneter Massenmatrix (Methode 4): Stimmt nicht mit symbolisch berechneter überein.');
+	end
+	
+  % Inverse Dynamik durch symbolisches Newton-Euler Verfahren + Basis Reaktionskräfte
+  tauJ_sym = %RN%_invdynJ_fixb_NewtonEuler_slag_vp2(qJ, qJD,  qJDD, g_base, ...
+    pkin, m, mrSges, Ifges);
+  tauB_sym = %RN%_invdynB_fixb_NewtonEuler_slag_vp2(qJ, qJD,  qJDD, g_base, ...
+    pkin, m, mrSges, Ifges);
+  tau_sym = [tauB_sym; tauJ_sym];
+  tau_num1 = robot_tree_invdyn_floatb_eulxyz_mdh_nnew_vp1(qJ, qJD, qJDD, zeros(3,1), zeros(6,1), zeros(6,1), ...
+    alpha, a, d, theta, q_offset, b, beta, v, sigma, m, rSges, Icges);
+  if any( abs(tau_sym-tau_num1) > 1e-10)
+    error('Fehler in numerisch berechneter inversen Dynamik (Methode 1): Stimmt nicht mit symbolisch berechneter aus Newton-Euler Verfahren überein.');
+  end
+  tau_num2 = %RN%_invdyn_floatb_eulxyz_nnew_vp1(qJ, qJD, qJDD, zeros(3,1), zeros(6,1), zeros(6,1), ...
+    pkin, m, rSges, Icges);
+  if any( abs(tau_sym-tau_num2) > 1e-10)
+    error('Fehler in numerisch berechneter inversen Dynamik (Methode 2): Stimmt nicht mit symbolisch berechneter aus Newton-Euler Verfahren überein.');
   end
 end
 fprintf('Numerische Dynamikfunktionen (Fixed Base) gegen symbolische erfolgreich getestet\n');
