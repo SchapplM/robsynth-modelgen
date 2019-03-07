@@ -409,9 +409,14 @@ Teil 8:  Kennung für variable Parameter
 
 Alle Parameter müssen der Funktion übergeben werden (siehe Funktionsköpfe). Ist in vp1/vp2 bereits enthalten.
 
-* vp
+* vp (Variable Parameter als Eingang)
+* vr (Eingabe ist eine variable Regressormatrix, die ihrerseits sowohl die Kinematikparameter als auch die Gelenkzustände beinhaltet)
 
-Teil 9: Kompilierungskennung
+Teil 9: Trajektorie
+
+* traj (Der Funktionsaufruf gilt für eine gesamte Trajektorie: Alle sonst zeitabhängigen Größen wie q, qD, tau, x sind jetzt Zeitreihen, bei denen die Zeit in den Zeilen der Eingabe-Matrix steht und die Vektor-Einträge in den Spalten).
+
+Teil 10: Kompilierungskennung
 
 * mex (Kompilierte Funktionen (mit Matlab-Funktion `matlabfcn2mex`) laufen ungefähr 10 mal schneller)
 

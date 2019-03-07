@@ -1,0 +1,47 @@
+% Inverse Dynamik für komplette Trajektorie für
+% %RN%
+%
+% Eingabe:
+% Q [NTx%NQJ%]
+%   Trajektorie von Gelenkpositionen (NT Zeitschritte in den Zeilen)
+% QD [NTx%NQJ%]
+%   Trajektorie von Gelenkgeschwindigkeiten
+% QDD [NTx%NQJ%]
+%   Trajektorie von Gelenkbeschleunigungen
+% g [3x1]
+%   gravitation vector in mdh base frame [m/s^2]
+% %INPUT_PKIN%
+% %INPUT_MDPFIXB%
+%
+% Ausgabe:
+% TAU [NTx%NQJ%]
+%   Time series of inverse Dynamics joint torque
+
+% %VERSIONINFO%
+
+function TAU = %FN%(Q, QD, QDD, g, pkin, MDP)
+
+%% Coder Information
+%#codegen
+%$cgargs {coder.newtype('double',[inf,%NQJ%]),
+%$cgargs  coder.newtype('double',[inf,%NQJ%]),
+%$cgargs  coder.newtype('double',[inf,%NQJ%]),
+%$cgargs  zeros(3,1), zeros(%NKP%,1), zeros(%NMPVFIXB%,1)}
+assert(isreal(Q) && all(size(Q,2) == %NQJ%), ...
+  '%FN%: Q needs to be [NTx%NQJ%] (double)');
+assert(isreal(QD) && all(size(QD,2) == %NQJ%), ...
+  '%FN%: QD needs to be [NTx%NQJ%] (double)');
+assert(isreal(QDD) && all(size(QDD,2) == %NQJ%), ...
+  '%FN%: QDD needs to be [NTx%NQJ%] (double)');
+assert(isreal(g) && all(size(g) == [3 1]), ...
+  '%FN%: Gravity vector g has to be [3x1] (double)');
+assert(isreal(pkin) && all(size(pkin) == [%NKP% 1]), ...
+  '%FN%: Kinematic parameters pkin have to be [%NKP%x1] (double)');
+assert(isreal(MDP) && all(size(MDP) == [%NMPVFIXB% 1]), ...
+  '%FN%: Dynamics parameter vector MDP has to be [%NMPVFIXB%x1] (double)');
+
+%% Inverse Dynamik für jeden Zeitschritt der Trajektorie berechnen
+TAU = NaN(size(Q));
+for k = 1:size(Q,1)
+  TAU(k,:) = %RN%_invdynJ_fixb_mdp_slag_vp(Q(k,:)', QD(k,:)', QDD(k,:)', g, pkin, MDP);
+end

@@ -349,7 +349,22 @@ end
 fprintf('Tested inverse dynamics functions with parameter vector input for %d random joint angles for %s\n', ...
   n, robot_name);
 
-
+%% Prüfe Trajektorien-Funktionen
+% Zeitreihe der Regressor-Matrizen
+RV_Traj = %RN%_invdynJ_fixb_regmin_slag_vp_traj(Q, QD, QDD, g_base, pkin);
+% Damit Zeitreihe der Momente berechnen
+TAU_vr = %RN%_invdynJ_fixb_mdp_slag_vr_traj(RV_Traj, MPV);
+% Zeitreihe der Momente über direkten Funktionsaufruf
+TAU_vp = %RN%_invdynJ_fixb_mdp_slag_vp_traj(Q, QD, QDD, g_base, pkin, MPV);
+% Vergleich der Ergebnisse
+test_vr_vp = TAU_vr - TAU_vp;
+if max(abs(test_vr_vp(:))) > 1e-10
+  error('Keine Übereinstimmung zwischen Traj.-Dyn.-Funktionen mit Regressor und MPV als Eingang');
+end
+% Beteiligte Funktionen kompilieren
+matlabfcn2mex({ '%RN%_invdynJ_fixb_regmin_slag_vp_traj', ...
+                '%RN%_invdynJ_fixb_mdp_slag_vr_traj', ...
+                '%RN%_invdynJ_fixb_mdp_slag_vp_traj'});
 
 %% Abbruch bei kinematischen Zwangsbedingungen
 % TODO: Test durchführen, wenn Minimalparameterform dafür implementiert

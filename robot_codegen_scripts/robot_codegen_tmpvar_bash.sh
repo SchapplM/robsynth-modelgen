@@ -129,7 +129,18 @@ if [ ! "$1" == "quiet" ]; then
   echo "robot_NMPVFLOATB=$robot_NMPVFLOATB"
 fi
 
+# Dimension der MPV-Regressor-Matrix (aus exportiertem Code)
+regmat2vec_pfad=$repo_pfad/codeexport/${robot_name}/tmp/invdyn_joint_fixb_regressor_minpar_occupancy_vector_maple
+if [ -f $regmat2vec_pfad ]; then
+  sed -i 's/\r//g' $mpv_fixb_pfad # Zeilenenden
+  # Ersetze Text links und rechts von der Dimension mit nichts.
+  robot_NTAUJFIXBREGNN=`grep "Matrix" $regmat2vec_pfad | tail -1 | sed 's/.*Matrix[(]\(.*\)/\1/' | sed 's/, 1, .*//'`
+else
+  robot_NTAUJFIXBREGNN="NOTDEFINED"
+fi
+echo "robot_NTAUJFIXBREGNN=$robot_NTAUJFIXBREGNN" >> $robot_env_pfad.sh
 
+# Definitionsdateien in den Ergebnisordner kopieren
 if [ -d "$repo_pfad/codeexport/${robot_name}/" ]; then
 	cp $repo_pfad/robot_codegen_definitions/robot_env $repo_pfad/codeexport/${robot_name}/tmp/
 	cp $repo_pfad/robot_codegen_definitions/robot_env.sh $repo_pfad/codeexport/${robot_name}/tmp/

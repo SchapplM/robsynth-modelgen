@@ -350,4 +350,30 @@ if codeexport_invdyn then
   MatlabExport(tau_regressor_s(7..NQ,..), sprintf("../codeexport/%s/tmp/invdyn_joint_%s_%s_matlab.m", robot_name, expstring, regressor_modus), codegen_opt):
   MatlabExport(tau(7..NQ,..), sprintf("../codeexport/%s/tmp/invdyn_joint_%s_%s_matlab.m", robot_name, expstring, regshortname), codegen_opt):
 end if:
+# Regressor-Matrix als Vektor hinschreiben. Dabei Null-Einträge herausfinden und nicht weiter berücksichtigen.
+# Dadurch wird die obere rechte Dreiecksform der Regressor-Matrix ausgenutzt.
+# Platzhalter-Vektor für alle Einträge der Regressor-Matrix
+Reg_Vector := Matrix(ColumnDimension(tau_regressor_s)*RowDimension(tau_regressor_s), 1):
+# Gelenkmoment in Abhängigkeit des Regressor-Vektors (RV)
+tauJ_RV := Matrix(NQJ, 1):
+kk := 0: # Zähler für laufende Nummer des Regressor-Vektors
+for i from 1 to ColumnDimension(tau_regressor_s) do
+  for j from 1 to RowDimension(tau_regressor_s)-6 do
+    # Gehe Spalten- und dann Zeilenweise durch die Regressormatrix (nur Gelenk-Teil)
+    if tau_regressor_s(j+6,i) <> 0 then # Eintrag ungleich Null
+    	 kk := kk + 1:
+    	 # Regressor-Vektor-Eintrag als Platzhalter direkt so, wie er in Matlab-Funktion gebraucht wird ("RV" ist Eingabe der Matlab-Funktion).
+    	 rv_kk := parse(sprintf("RV(%d)", kk)):
+    	 # Eintrag für Regressor-Vektor so schreiben, dass er in einer Matlab-Funktion aus der Regressor-Matrix gebildet werden kann
+    	 Reg_Vector(kk,1) := parse(sprintf("RM(%d,%d)", j, i)):
+    	 # Gelenkmoment aus Multiplikation mit Parametervektor. Dadurch Berechnung unter Ausnutzung der Nullen.
+    	 tauJ_RV(j) := tauJ_RV(j) + rv_kk*PV(i):
+    end if:
+  end do:
+end do:
+# Kürzen des Regressor-Vektors auf die tatsächlich benutzten Einträge
+Reg_Vector := Reg_Vector(1..kk,..):
+save Reg_Vector, sprintf("../codeexport/%s/tmp/invdyn_joint_%s_%s_occupancy_vector_maple", robot_name, expstring, regressor_modus):
+MatlabExport(Reg_Vector, sprintf("../codeexport/%s/tmp/invdyn_joint_%s_%s_occupancy_vector_matlab.m", robot_name, expstring, regressor_modus), codegen_opt):
+MatlabExport(tauJ_RV, sprintf("../codeexport/%s/tmp/invdyn_joint_%s_%s_mult_matlab.m", robot_name, expstring, regshortname), codegen_opt):
 
