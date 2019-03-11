@@ -36,7 +36,7 @@ do
 			
 			# Schnittkräfte (Floating Base) 
 			quelldat=$repo_pfad/codeexport/${robot_name}/tmp/invdyn_floatb_${basemeth}_NewtonEuler_linkframe_${maple_force}_par${dynpar}_matlab.m
-			zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_${matlab_force}_floatb_NewtonEuler_slag_vp${dynpar}.m
+			zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_${matlab_force}_floatb_snew_vp${dynpar}.m
 			if [ -f $quelldat ]; then
 				cat $head_pfad/robot_matlabtmp_${matlab_force}_floatb_${basemeth}_NewtonEuler_par${dynpar}.head.m > $zieldat
 				printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -89,11 +89,10 @@ do
 				printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
 				sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
 				cat $quelldat >> $zieldat
+			  source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
 			else
 				echo "Code in ${quelldat##*/} nicht gefunden."
 			fi
-			source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
-			
 		done # tauJ, tauB, tauJB, Schnittkräfte f und Schnittmomente m
   done # floatb_twist/floatb_eulangrpy
 done # par1/par2

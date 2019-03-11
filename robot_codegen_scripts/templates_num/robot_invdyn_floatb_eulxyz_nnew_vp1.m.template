@@ -21,13 +21,21 @@
 % tau [(6+%NJ%)x1]
 %   Base forces and joint torques required to compensate inverse dynamics.
 %   Base moments in generalized coordinates (Euler-XYZ)
+% v_i_i_ges [3x(%NJ%+1)]
+%   Body velocities (in body frames)
+% w_i_i_ges [3x(%NJ%+1)]
+%   Body accelerations (in body frames)
+% f_i_i_ges [3x(%NJ%+1)]
+%   cut forces in all joints
+% n_i_i_ges [3x(%NJ%+1)]
+%   cut moments in all joints
 %
 % See also:
 % IMES-Robotik-Toolbox: dynamics/robot_tree_invdyn_floatb_eulxyz_nnew_vp1.m
 
 % %VERSIONINFO%
 
-function [tau, v_i_i_ges, w_i_i_ges] = %FN%(q, qD, qDD, phi_base, xD_base, xDD_base, ...
+function [tau, v_i_i_ges, w_i_i_ges, f_i_i_ges, n_i_i_ges] = %FN%(q, qD, qDD, phi_base, xD_base, xDD_base, ...
   pkin, m_num, rSges_num_mdh, Icges_num_mdh)
 
 %%Coder Information

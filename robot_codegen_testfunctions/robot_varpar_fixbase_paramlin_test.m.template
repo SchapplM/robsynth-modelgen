@@ -309,10 +309,10 @@ for i = 1:n
   qD = QD(i,:)';
   qDD = QDD(i,:)';
   g_base = G(i,:)';
-  tauJ_neweul_func = %RN%_invdynJ_fixb_NewtonEuler_slag_vp2(q, qD, qDD, g_base, ...
+  tauJ_neweul_func = %RN%_invdynJ_fixb_snew_vp2(q, qD, qDD, g_base, ...
     pkin, m, mrSges, Ifges);
   % calculate inverse dynamics with inertial parameter regressor
-  tauJ_neweul_reg2 = %RN%_invdynJ_fixb_NewtonEuler_reg2_slag_vp(q, qD, qDD, g_base, ...
+  tauJ_neweul_reg2 = %RN%_invdynJ_fixb_reg2_snew_vp(q, qD, qDD, g_base, ...
     pkin);
   tauJ_neweul_pv2 = tauJ_neweul_reg2*PV2fixb;
   if any( abs(tauJ_neweul_func-tauJ_neweul_pv2) > 1e6*eps(max(abs(tauJ_neweul_func))) )
@@ -328,13 +328,13 @@ for i = 1:n
   qD = QD(i,:)';
   qDD = QDD(i,:)';
   g_base = G(i,:)';
-  tauB_neweul_func = %RN%_invdynB_fixb_NewtonEuler_slag_vp2(q, qD, qDD, g_base, ...
+  tauB_neweul_func = %RN%_invdynB_fixb_snew_vp2(q, qD, qDD, g_base, ...
     pkin, m, mrSges, Ifges);
   % calculate base forces with inertial parameter regressor
-  tauB_neweul_reg2 = %RN%_invdynB_fixb_NewtonEuler_reg2_slag_vp(q, qD, qDD, g_base, ...
+  tauB_neweul_reg2 = %RN%_invdynB_fixb_reg2_snew_vp(q, qD, qDD, g_base, ...
     pkin);
   tauB_neweul_pv2 = tauB_neweul_reg2*PV2fixb;
-  if any( abs(tauJ_neweul_func-tauJ_neweul_pv2) > 1e6*eps(max(abs(tauJ_neweul_func))) )
+  if any( abs(tauB_neweul_func-tauB_neweul_pv2) > 1e6*eps(max(abs(tauB_neweul_func))) )
     error('Base forces from inertial parameter vector from Newton-Euler does not match with direct form.');
   end
 end
@@ -347,10 +347,10 @@ for i = 1:n
   qD = QD(i,:)';
   qDD = QDD(i,:)';
   g_base = G(i,:)';
-  f_neweul_func = %RN%_invdynf_fixb_NewtonEuler_slag_vp2(q, qD, qDD, g_base, ...
+  f_neweul_func = %RN%_invdynf_fixb_snew_vp2(q, qD, qDD, g_base, ...
     pkin, m, mrSges, Ifges);
   % calculate cutting forces with inertial parameter regressor
-  f_neweul_reg2 = %RN%_invdynf_fixb_NewtonEuler_reg2_slag_vp(q, qD, qDD, g_base, ...
+  f_neweul_reg2 = %RN%_invdynf_fixb_reg2_snew_vp(q, qD, qDD, g_base, ...
     pkin);
   f_neweul_pv2 = f_neweul_reg2*PV2fixb;
 	f_neweul_pv2 = reshape(f_neweul_pv2,[3,%NL%]);
@@ -365,10 +365,10 @@ for i = 1:n
   qD = QD(i,:)';
   qDD = QDD(i,:)';
   g_base = G(i,:)';
-  m_neweul_func = %RN%_invdynm_fixb_NewtonEuler_slag_vp2(q, qD, qDD, g_base, ...
+  m_neweul_func = %RN%_invdynm_fixb_snew_vp2(q, qD, qDD, g_base, ...
     pkin, m, mrSges, Ifges);
   % calculate cutting torques with inertial parameter regressor
-  m_neweul_reg2 = %RN%_invdynm_fixb_NewtonEuler_reg2_slag_vp(q, qD, qDD, g_base, ...
+  m_neweul_reg2 = %RN%_invdynm_fixb_reg2_snew_vp(q, qD, qDD, g_base, ...
     pkin);
   m_neweul_pv2 = m_neweul_reg2*PV2fixb;
 	m_neweul_pv2 = reshape(m_neweul_pv2,[3,%NL%]);

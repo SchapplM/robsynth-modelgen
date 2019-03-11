@@ -1,7 +1,7 @@
 % Calculate vector of cutting torques for
 % %RN%
 % Use Code from Maple symbolic Code Generation
-% 
+%
 % Input:
 % %INPUT_QJ%
 % %INPUT_QJD%
@@ -16,12 +16,12 @@
 % %INPUT_M%
 % %INPUT_MR%
 % %INPUT_IF%
-% 
+%
 % Output:
-% m [3x%NL%]
+% m_new [3x%NL%]
 %   vector of cutting torques (contains inertial, gravitational coriolis and centrifugal forces)
 
 % %VERSIONINFO%
 
-function m = %FN%(qJ, qJD, qJDD, phi_base, xD_base, xDD_base, g, ...
+function m_new = %FN%(qJ, qJD, qJDD, phi_base, xD_base, xDD_base, g, ...
   pkin, m, mrSges, Ifges)

@@ -78,8 +78,8 @@ if ! [ "$CG_FLOATBONLY" == "1" ]; then
       robot_tree_velocity_mdh_angles.mpl
       robot_tree_floatb_rotmat_velocity_worldframe_par1.mpl
       robot_tree_floatb_rotmat_velocity_linkframe.mpl
-			robot_tree_acceleration_mdh_angles.mpl
-			robot_tree_floatb_rotmat_acceleration_linkframe.mpl
+      robot_tree_acceleration_mdh_angles.mpl
+      robot_tree_floatb_rotmat_acceleration_linkframe.mpl
   "
 
 
@@ -101,7 +101,7 @@ if ! [ "$CG_FLOATBONLY" == "1" ]; then
         robot_tree_floatb_rotmat_dynamics_worldframe_par1.mpl
         robot_tree_floatb_rotmat_lagrange_worldframe_par2.mpl
         robot_tree_floatb_rotmat_dynamics_worldframe_par2.mpl
-				robot_tree_fixb_dynamics_NewtonEuler_linkframe_par12.mpl
+        robot_tree_fixb_dynamics_NewtonEuler_linkframe_par12.mpl
     "
   else
     dateiliste_kindyn="$dateiliste_kindyn
@@ -111,7 +111,7 @@ if ! [ "$CG_FLOATBONLY" == "1" ]; then
         robot_tree_floatb_rotmat_dynamics_worldframe_par2_grav.mpl
         robot_tree_floatb_rotmat_dynamics_worldframe_par2_inertia.mpl
         robot_tree_floatb_rotmat_dynamics_worldframe_par2_corvec.mpl
-				robot_tree_fixb_dynamics_NewtonEuler_linkframe_par12.mpl
+        robot_tree_fixb_dynamics_NewtonEuler_linkframe_par12.mpl
     "
   fi;
 
@@ -122,7 +122,7 @@ if ! [ "$CG_FLOATBONLY" == "1" ]; then
         robot_tree_base_parameter_transformations.mpl
         robot_chain_floatb_rotmat_dynamics_regressor_pv2.mpl
         robot_chain_floatb_rotmat_dynamics_regressor_minpar.mpl
-				robot_chain_fixb_rotmat_NewtonEuler_regressor.mpl
+        robot_chain_fixb_rotmat_NewtonEuler_regressor.mpl
     "
   fi;
   # Initialisiere zusätzliche Maple-Skripte speziell für dieses System (benutzerdefiniert)
@@ -144,8 +144,8 @@ if ! [ "$CG_FIXBONLY" == "1" ]; then
       robot_tree_floatb_rotmat_kinematics_com_worldframe_par1.mpl
       robot_tree_floatb_rotmat_velocity_worldframe_par1.mpl
       robot_tree_floatb_rotmat_velocity_linkframe.mpl
-			robot_tree_acceleration_mdh_angles.mpl
-			robot_tree_floatb_rotmat_acceleration_linkframe.mpl
+      robot_tree_acceleration_mdh_angles.mpl
+      robot_tree_floatb_rotmat_acceleration_linkframe.mpl
       robot_tree_floatb_rotmat_energy_worldframe_par1.mpl
       robot_tree_floatb_rotmat_energy_worldframe_par2.mpl
       robot_tree_floatb_rotmat_energy_linkframe_par2.mpl
@@ -159,8 +159,8 @@ if ! [ "$CG_FIXBONLY" == "1" ]; then
       robot_tree_floatb_eulxyz_definitions.mpl
       robot_tree_floatb_rotmat_mdh_kinematics.mpl
       robot_tree_floatb_rotmat_velocity_linkframe.mpl
-			robot_tree_acceleration_mdh_angles.mpl
-			robot_tree_floatb_rotmat_acceleration_linkframe.mpl
+      robot_tree_acceleration_mdh_angles.mpl
+      robot_tree_floatb_rotmat_acceleration_linkframe.mpl
       robot_tree_floatb_rotmat_energy_worldframe_par2.mpl
       robot_tree_floatb_rotmat_energy_linkframe_par2.mpl
       robot_tree_floatb_rotmat_lagrange_worldframe_par2.mpl
@@ -176,7 +176,7 @@ if ! [ "$CG_FIXBONLY" == "1" ]; then
         robot_tree_base_parameter_transformations.mpl
         robot_chain_floatb_rotmat_dynamics_regressor_pv2.mpl
         robot_chain_floatb_rotmat_dynamics_regressor_minpar.mpl
-				robot_chain_fixb_rotmat_NewtonEuler_regressor.mpl
+        robot_chain_fixb_rotmat_NewtonEuler_regressor.mpl
     "
   fi;
   # Initialisiere zusätzliche Maple-Skripte speziell für dieses System (benutzerdefiniert)

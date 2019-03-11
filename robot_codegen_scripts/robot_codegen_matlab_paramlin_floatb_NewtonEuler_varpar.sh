@@ -40,7 +40,7 @@ do
 	
 			# Inverse Dynamik
 			quelldat=$repo_pfad/codeexport/${robot_name}/tmp/invdyn_floatb_${basemeth}_NewtonEuler_${maple_force}_${matlab_string}_matlab.m
-			zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_${matlab_force}_floatb_${basemeth}_NewtonEuler_${matlab_string}_slag_vp.m
+			zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_${matlab_force}_floatb_${basemeth}_${matlab_string}_snew_vp.m
 			if [ -f $quelldat ]; then
 				cat $head_pfad/robot_matlabtmp_${matlab_force}_floatb_${basemeth}_NewtonEuler_${matlab_string}.head.m > $zieldat
 				printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat

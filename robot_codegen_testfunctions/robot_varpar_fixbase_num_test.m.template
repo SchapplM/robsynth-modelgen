@@ -41,7 +41,7 @@ for i = 1:n
   qJD = QD(i,:)';
   qJDD = QDD(i,:)';
   g_base = G(i,:)';
-  
+
   % Gelenk-Transformationsmatrizen in Eingabeformat der Modul-Funktion umwandeln
   T = %RN%_joint_trafo_rotmat_mdh_sym_varpar(qJ, pkin);
   T_stack = NaN(3*NQJ,4);
@@ -49,7 +49,7 @@ for i = 1:n
       T_stack(3*ii-2:3*ii,:) = T(1:3,:,ii);
   end
   RotAx_i = repmat([0;0;1]', NQJ, 1); % MDH: Drehachse ist immer die z-Achse (des gedrehten Körpers)
-  
+
   % Gravitation
   taug_sym = %RN%_gravloadJ_floatb_twist_slag_vp1(qJ, g_base, ...
     pkin, m, rSges);
@@ -119,12 +119,12 @@ for i = 1:n
   Mq_num4 = inertia_nCRB_vp1_m(T_stack, RotAx_i, v, m, rSges, Icges);
   if any( abs(Mq_num4(:)-Mq_sym(:)) > 1e-10) && ~any(sigma)
     error('Fehler in numerisch berechneter Massenmatrix (Methode 4): Stimmt nicht mit symbolisch berechneter überein.');
-	end
-	
+  end
+
   % Inverse Dynamik durch symbolisches Newton-Euler Verfahren + Basis Reaktionskräfte
-  tauJ_sym = %RN%_invdynJ_fixb_NewtonEuler_slag_vp2(qJ, qJD,  qJDD, g_base, ...
+  tauJ_sym = %RN%_invdynJ_fixb_snew_vp2(qJ, qJD,  qJDD, g_base, ...
     pkin, m, mrSges, Ifges);
-  tauB_sym = %RN%_invdynB_fixb_NewtonEuler_slag_vp2(qJ, qJD,  qJDD, g_base, ...
+  tauB_sym = %RN%_invdynB_fixb_snew_vp2(qJ, qJD,  qJDD, g_base, ...
     pkin, m, mrSges, Ifges);
   tau_sym = [tauB_sym; tauJ_sym];
   tau_num1 = robot_tree_invdyn_floatb_eulxyz_mdh_nnew_vp1(qJ, qJD, qJDD, zeros(3,1), zeros(6,1), zeros(6,1), ...
@@ -132,10 +132,19 @@ for i = 1:n
   if any( abs(tau_sym-tau_num1) > 1e-10)
     error('Fehler in numerisch berechneter inversen Dynamik (Methode 1): Stimmt nicht mit symbolisch berechneter aus Newton-Euler Verfahren überein.');
   end
-  tau_num2 = %RN%_invdyn_floatb_eulxyz_nnew_vp1(qJ, qJD, qJDD, zeros(3,1), zeros(6,1), zeros(6,1), ...
+  [tau_num2,~,~,f_neweul_num,m_neweul_num] = %RN%_invdyn_floatb_eulxyz_nnew_vp1(qJ, qJD, qJDD, zeros(3,1), zeros(6,1), zeros(6,1), ...
     pkin, m, rSges, Icges);
   if any( abs(tau_sym-tau_num2) > 1e-10)
     error('Fehler in numerisch berechneter inversen Dynamik (Methode 2): Stimmt nicht mit symbolisch berechneter aus Newton-Euler Verfahren überein.');
+  end
+  % Inverse Dynamik für Schnittkräfte und Momente
+  f_neweul_sym = %RN%_invdynf_fixb_snew_vp2(qJ, qJD, qJDD, g_base, ...
+    pkin, m, mrSges, Ifges);
+  m_neweul_sym = %RN%_invdynm_fixb_snew_vp2(qJ, qJD, qJDD, g_base, ...
+    pkin, m, mrSges, Ifges);
+  test_cutwrench = [f_neweul_num;m_neweul_num]-[f_neweul_sym;m_neweul_sym];
+  if max(abs(test_cutwrench(:))) > 1e6*eps(1+max(abs([f_neweul_sym(:);m_neweul_sym(:)])))
+    error('Fehler zwischen symbolisch und numerisch berechneten Schnittkräften/-momente mit Newton-Euler');
   end
 end
 fprintf('Numerische Dynamikfunktionen (Fixed Base) gegen symbolische erfolgreich getestet\n');
@@ -228,11 +237,11 @@ t_ber_g(2,7) = toc/n;
 figure(2);clf;
 set(2, 'Name', 'Fixb_ComputationTime_Comparison');
 subplot(2,4,sprc2no(2,4,1,1));
-bar(t_ber_g(1,:)*1e3); 
+bar(t_ber_g(1,:)*1e3);
 set(gca, 'xticklabel', {'s1/gl','s2/gl','sm/gl','n/id/allg','n/gl/allg','n/id','n/gl'});
 ylabel('t [ms]'); title('gravload');
 subplot(2,4,sprc2no(2,4,2,1));
-bar(t_ber_g(2,:)*1e3); 
+bar(t_ber_g(2,:)*1e3);
 set(gca, 'xticklabel', {'s1/gl','s2/gl','sm/gl','n/id/allg','n/gl/allg','n/id','n/gl'});
 ylabel('t [ms]'); title('gravload (mex)');
 
@@ -305,11 +314,11 @@ end
 t_ber_c(2,5) = toc/n;
 
 subplot(2,4,sprc2no(2,4,1,2));
-bar(t_ber_c(1,:)*1e3); 
+bar(t_ber_c(1,:)*1e3);
 set(gca, 'xticklabel', {'s1/cv','s2/cv','sm/cv', 'n/id/allg','n/id'});
 ylabel('t [ms]'); title('coriolisvec');
 subplot(2,4,sprc2no(2,4,2,2));
-bar(t_ber_c(2,:)*1e3); 
+bar(t_ber_c(2,:)*1e3);
 set(gca, 'xticklabel', {'s1/cv','s2/cv','sm/cv', 'n/id/allg','n/id'});
 ylabel('t [ms]'); title('coriolisvec (mex)');
 
@@ -413,11 +422,11 @@ end
 t_ber_M(2,6) = toc/n;
 
 subplot(2,4,sprc2no(2,4,1,3));
-bar(t_ber_M(1,:)*1e3); 
+bar(t_ber_M(1,:)*1e3);
 set(gca, 'xticklabel', {'s1/M','s2/M','sm/M','n/id/allg', 'n/id', 'n/CRBA'});
 ylabel('t [ms]'); title('inertia');
 subplot(2,4,sprc2no(2,4,2,3));
-bar(t_ber_M(2,:)*1e3); 
+bar(t_ber_M(2,:)*1e3);
 set(gca, 'xticklabel', {'s1/M','s2/M','sm/M','n/id/allg', 'n/id', 'n/CRBA'});
 ylabel('t [ms]'); title('inertia (mex)');
 %% Rechenzeit: Vorwärtsdynamik (Fixed Base)
@@ -434,7 +443,7 @@ t_ber_fdyn(2,2) = t_ber_g(2,1) + t_ber_c(2,5) + t_ber_M(2,1);
 t_ber_fdyn(2,3) =  t_ber_c(2,5) + t_ber_M(2,1);
 
 subplot(2,4,sprc2no(2,4,2,4));
-bar(t_ber_fdyn(2,:)*1e3); 
+bar(t_ber_fdyn(2,:)*1e3);
 set(gca, 'xticklabel', {'s1/s1/s1', 's1/n/s1', 'n/s1'});
 ylabel('t [ms]'); title('fdyn (mex)');
 
