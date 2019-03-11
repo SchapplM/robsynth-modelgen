@@ -43,7 +43,7 @@ base_method_name := "eulxyz":
 # Umrechnung von der Ableitung der Basis-Orientierung zu Winkelgeschwindigkeiten:
 # Nutze die Euler-XYZ-Konvention ("RPY").
 # Siehe [5], Gl. (4.23)
-T_basevel := eulxyzjac(X_base_t(4), X_base_t(5), X_base_t(6)):
+T_basevel := eulxyzjac(X_base_t(4..6,1)):
 # Verallgemeinerte Koordinaten, gem [2], S. 4, [3], S.1
 NQ:=NQJ+NQB:
 q_t := Matrix(NQ,1, <X_base_t, qJ_t>):
