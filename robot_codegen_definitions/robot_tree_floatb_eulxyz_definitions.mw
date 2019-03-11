@@ -195,8 +195,8 @@ Nutze die Euler-XYZ-Konvention (&quot;RPY&quot;).
 Siehe [5], Gl. (4.23)</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1638" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">T_basevel := eulxyzjac(X_base_t(4), X_base_t(5), X_base_t(6)):</Text-field>
+<Group hide-input="false" labelreference="L1638" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">T_basevel := eulxyzjac(X_base_t(4..6,1)):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1624" drawlabel="true">
