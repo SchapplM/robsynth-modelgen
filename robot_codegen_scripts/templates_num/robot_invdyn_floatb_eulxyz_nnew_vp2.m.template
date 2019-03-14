@@ -14,8 +14,8 @@
 % %INPUT_XDDB%
 % %INPUT_PKIN%
 % %INPUT_M%
-% %INPUT_R%
-% %INPUT_IC%
+% %INPUT_MR%
+% %INPUT_IF%
 %
 % Output:
 % tau [(6+%NJ%)x1]
@@ -32,6 +32,7 @@
 %
 % See also:
 % IMES-Robotik-Toolbox: dynamics/robot_tree_invdyn_floatb_eulxyz_nnew_vp1.m
+% HybrDyn-Toolbox: %RN%_invdyn_floatb_eulxyz_nnew_vp1.m
 %
 % Sources:
 % [KhalilDom2002] Modeling, Identification and Control of Robots (2002)
@@ -39,7 +40,7 @@
 % %VERSIONINFO%
 
 function [tau, v_i_i_ges, w_i_i_ges, f_i_i_ges, n_i_i_ges] = %FN%(q, qD, qDD, phi_base, xD_base, xDD_base, ...
-  pkin, m_num, rSges_num_mdh, Icges_num_mdh)
+  pkin, m_num, mrSges_num_mdh, Ifges_num_mdh)
 
 %%Coder Information
 %#codegen
@@ -61,10 +62,10 @@ assert(isreal(pkin) && all(size(pkin) == [%NKP% 1]), ...
   '%FN%: Kinematic parameters pkin have to be [%NKP%x1] (double)');
 assert(isreal(m_num) && all(size(m_num) == [%NL% 1]), ...
   '%FN%: m_num has to be [%NL%x1] (double)');
-assert(isreal(rSges_num_mdh) && all(size(rSges_num_mdh) == [%NL%,3]), ...
-  '%FN%: rSges_num_mdh has to be [%NL%x3] (double)');
-assert(isreal(Icges_num_mdh) && all(size(Icges_num_mdh) == [%NL% 6]), ...
-  '%FN%: Icges_num_mdh has to be [%NL%x6] (double)');
+assert(isreal(mrSges_num_mdh) && all(size(mrSges_num_mdh) == [%NL%,3]), ...
+  '%FN%: mrSges_num_mdh has to be [%NL%x3] (double)');
+assert(isreal(Ifges_num_mdh) && all(size(Ifges_num_mdh) == [%NL% 6]), ...
+  '%FN%: Ifges_num_mdh has to be [%NL%x6] (double)');
 
 %% Init
 tau_J = NaN(%NJ%,1);
@@ -115,13 +116,15 @@ for i = 2:%NL%
   if sigma(i-1) == 1
     v_i_i = v_i_i + [0;0;1]*qD(i-1);
   end
-  wD_i_i = R_j_i'*wD_j_j;
+  wD_i_i = R_j_i'*wD_j_j; % [KhalilDom2002] Gl. 9.84
   if sigma(i-1) == 0
+    % [KhalilDom2002] Gl. 9.86
     wD_i_i = wD_i_i + [0;0;1]*qDD(i-1) + cross(R_j_i'*w_j_j, [0;0;1]*qD(i-1));
   end
+  % [KhalilDom2002] Gl. 9.87
   vD_i_i = R_j_i'*( vD_j_j + cross(wD_j_j, r_j_j_i) +cross(w_j_j, cross(w_j_j, r_j_j_i)) );
   if sigma(i-1) == 1
-    vD_i_i = vD_i_i + [0;0;1]*qDD(i-1) + 2*cross(R_j_i'*w_j_j, [0;0;1]*qD(i-1));;
+    vD_i_i = vD_i_i + [0;0;1]*qDD(i-1) + 2*cross(R_j_i'*w_j_j, [0;0;1]*qD(i-1));
   end
 
   % Ausgabeausdrücke belegen
@@ -141,15 +144,16 @@ for i = %NL%:-1:1
   vD_i_i = vD_i_i_ges(:,i);
   w_i_i = w_i_i_ges(:,i);
   wD_i_i = wD_i_i_ges(:,i);
-  c_i = rSges_num_mdh(i,:)'; % Schwerpunkt
-  I_ci = inertiavector2matrix(Icges_num_mdh(i,:)); % Trägheit bez. auf Schwerpunkt
+  mc_i = mrSges_num_mdh(i,:)'; % Mass * Schwerpunkt (1. Moment)
+  I_i = inertiavector2matrix(Ifges_num_mdh(i,:)); % Trägheit bez. auf KS-Ursprung
 
-  % Dynamik-Terme
-  F_i = m_num(i)*(vD_i_i + cross(wD_i_i, c_i) + cross( w_i_i,cross(w_i_i, c_i)) );
-  N_i = I_ci*wD_i_i + cross(w_i_i, I_ci*w_i_i);
+  % Dynamik-Terme: [KhalilDom2002] (Sec. 9.5.3)
+  % [KhalilDom2002] Gl. (9.88), (9.89)
+  F_i = m_num(i)*vD_i_i + cross(wD_i_i, mc_i) + cross(w_i_i,cross(w_i_i, mc_i));
+  N_i = I_i*wD_i_i + cross(w_i_i, I_i*w_i_i) + cross(mc_i, vD_i_i);
 
   f_i_i = F_i;
-  n_i_i = N_i + cross(c_i, F_i);
+  n_i_i = N_i;
 
   % Suche alle Nachfolger und addiere das Schnittmoment
   I_nf = find( (v_mdh == (i-1)) ) + 1;

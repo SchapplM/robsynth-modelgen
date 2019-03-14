@@ -73,6 +73,11 @@ for i = 1:n
   if any( abs(taug_sym-taug_num4(7:end)) > 1e-10)
     error('Fehler in numerisch berechneter Gravitationslast (Methode 4): Stimmt nicht mit symbolisch berechneter überein.');
   end
+  taug_num5 = %RN%_invdyn_floatb_eulxyz_nnew_vp2(qJ, zeros(NJ,1), zeros(NJ,1), zeros(3,1), zeros(6,1), [-g_base;zeros(3,1)], ...
+    pkin, m, mrSges, Ifges);
+  if any( abs(taug_sym-taug_num5(7:end)) > 1e-10)
+    error('Fehler in numerisch berechneter Gravitationslast (Methode 5): Stimmt nicht mit symbolisch berechneter überein.');
+  end
 
   % Coriolis
   tauc_sym = %RN%_coriolisvecJ_fixb_slag_vp1(qJ, qJD, ...
@@ -92,18 +97,26 @@ for i = 1:n
   if any( abs(tauc_sym-tauc_num3(7:end)) > 1e-10)
     error('Fehler in numerisch berechneter Corioliskraft (Methode 3): Stimmt nicht mit symbolisch berechneter überein.');
   end
+  tauc_num4 = %RN%_invdyn_floatb_eulxyz_nnew_vp2(qJ, qJD, zeros(NJ,1), zeros(3,1), zeros(6,1), zeros(6,1), ...
+    pkin, m, mrSges, Ifges);
+  if any( abs(tauc_sym-tauc_num4(7:end)) > 1e-10)
+    error('Fehler in numerisch berechneter Corioliskraft (Methode 4): Stimmt nicht mit symbolisch berechneter überein.');
+  end
 
   % Massenmatrix
   Mq_sym = %RN%_inertiaJ_slag_vp1(qJ, ...
     pkin, m, rSges, Icges);
   Mq_num1 = NaN(NJ,NJ);
   Mq_num2 = NaN(NJ,NJ);
+  Mq_num3 = NaN(NJ,NJ);
   INJ = eye(NJ);
   for jj = 1:NJ
     Mq_num1(:,jj) = [zeros(NJ,6), eye(NJ)]*robot_tree_invdyn_floatb_eulxyz_mdh_nnew_vp1  (qJ, zeros(NJ,1), INJ(:,jj), zeros(3,1), zeros(6,1), zeros(6,1) , ...
       alpha, a, d, theta, q_offset, b, beta, v, sigma, m, rSges, Icges);
     Mq_num2(:,jj) = [zeros(NJ,6), eye(NJ)]*%RN%_invdyn_floatb_eulxyz_nnew_vp1(qJ, zeros(NJ,1), INJ(:,jj), zeros(3,1), zeros(6,1), zeros(6,1) , ...
       pkin, m, rSges, Icges);
+    Mq_num3(:,jj) = [zeros(NJ,6), eye(NJ)]*%RN%_invdyn_floatb_eulxyz_nnew_vp2(qJ, zeros(NJ,1), INJ(:,jj), zeros(3,1), zeros(6,1), zeros(6,1) , ...
+      pkin, m, mrSges, Ifges);
   end
   if any( abs(Mq_num1(:)-Mq_sym(:)) > 1e-10)
     error('Fehler in numerisch berechneter Massenmatrix (Methode 1): Stimmt nicht mit symbolisch berechneter überein.');
@@ -111,17 +124,28 @@ for i = 1:n
   if any( abs(Mq_num2(:)-Mq_sym(:)) > 1e-10)
     error('Fehler in numerisch berechneter Massenmatrix (Methode 2): Stimmt nicht mit symbolisch berechneter überein.');
   end
-  Mq_num3 = %RN%_inertiaJ_nCRB_vp1(qJ, ...
-    pkin, m, rSges, Icges);
-  if any( abs(Mq_num3(:)-Mq_sym(:)) > 1e-10) && ~any(sigma)
+  if any( abs(Mq_num3(:)-Mq_sym(:)) > 1e-10)
     error('Fehler in numerisch berechneter Massenmatrix (Methode 3): Stimmt nicht mit symbolisch berechneter überein.');
   end
-  Mq_num4 = inertia_nCRB_vp1_m(T_stack, RotAx_i, v, m, rSges, Icges);
+  Mq_num4 = %RN%_inertiaJ_nCRB_vp1(qJ, ...
+    pkin, m, rSges, Icges);
   if any( abs(Mq_num4(:)-Mq_sym(:)) > 1e-10) && ~any(sigma)
     error('Fehler in numerisch berechneter Massenmatrix (Methode 4): Stimmt nicht mit symbolisch berechneter überein.');
   end
+  Mq_num5 = inertia_nCRB_vp1_m(T_stack, RotAx_i, v, m, rSges, Icges);
+  if any( abs(Mq_num5(:)-Mq_sym(:)) > 1e-10) && ~any(sigma)
+    error('Fehler in numerisch berechneter Massenmatrix (Methode 5): Stimmt nicht mit symbolisch berechneter überein.');
+  end
 
   % Inverse Dynamik durch symbolisches Newton-Euler Verfahren + Basis Reaktionskräfte
+  [~, ~, ~, f_i_i_ges1, n_i_i_ges1] = %RN%_invdyn_floatb_eulxyz_nnew_vp1(qJ, qJD, qJDD, zeros(3,1), zeros(6,1), [-g_base;zeros(3,1)], ...
+      pkin, m, rSges, Icges);
+  [~, ~, ~, f_i_i_ges2, n_i_i_ges2] = %RN%_invdyn_floatb_eulxyz_nnew_vp2(qJ, qJD, qJDD, zeros(3,1), zeros(6,1), [-g_base;zeros(3,1)], ...
+      pkin, m, mrSges, Ifges);
+  test_fm = [f_i_i_ges1-f_i_i_ges2; n_i_i_ges1-n_i_i_ges2];
+  if any(abs(test_fm(:))>1e-10)
+    error('Schnittkräfte/-momente stimmen nicht zwischen Parametersatz 1/2');
+  end
   tauJ_sym = %RN%_invdynJ_fixb_snew_vp2(qJ, qJD,  qJDD, g_base, ...
     pkin, m, mrSges, Ifges);
   tauB_sym = %RN%_invdynB_fixb_snew_vp2(qJ, qJD,  qJDD, g_base, ...
