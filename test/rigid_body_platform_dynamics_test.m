@@ -15,7 +15,9 @@ close all
 % als Minimalkoordinaten (aus Floating Base Modell ohne Gelenke) liegt im
 % Robotik-Repo.
 robotics_repo_path = fullfile(fileparts(which('robotics_toolbox_path_init.m')));
-addpath(fullfile(robotics_repo_path, 'dynamics', 'rigidbody_fdyn'));
+if isempty(robotics_repo_path)
+  error('Test kann nicht ausgeführt werden: Robotik-Repo liegt nicht im Matlab-Pfad');
+end
 
 %% Einstellungen: Dynamikparameter
 % Masse
@@ -35,6 +37,7 @@ g_W = [0;0;-9.81];
 
 r_S = r_B_B_C';
 I_S = inertiamatrix2vector(I_B_C);
+I_O = inertiamatrix2vector(inertia_steiner(I_B_C, r_B_B_C, m));
 %% Testen der Starrkörperdynamik mit verschiedenen Methoden
 % Dummy-Eingaben für Dynamik-Funktionen aus Euler-XYZ-Lagrange-Herleitung
 % (Hintergrund: Standard-Modell Floating-Base-Roboter ohne Gelenke)
@@ -64,13 +67,18 @@ Tw = eulxyzjac(phi);
 H = [eye(3), zeros(3,3); zeros(3,3), Tw];
 
 % Dynamik-Berechnung aus Lagrange-Euler-XYZ-Darstellung
-c1 = rigidbody_coriolisvec_floatb_eulxyz_slag_vp1(q, qD, phi, xD, ...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m, r_S, I_S);
-M1 = rigidbody_inertia_floatb_eulxyz_slag_vp1(q, phi, ...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m, r_S, I_S);
-g1 = rigidbody_gravload_base_floatb_eulxyz_slag_vp1(q, phi, g_W,...
-  alpha_mdh, a_mdh, d_mdh, q_offset_mdh, b_mdh, beta_mdh, m, r_S);
+c1 = rigidbody_coriolisvecB_floatb_eulxyz_slag_vp1(phi, xD, m, r_S, I_S);
+M1 = rigidbody_inertiaB_floatb_eulxyz_slag_vp1(phi, m, r_S, I_S);
+g1 = rigidbody_gravloadB_floatb_eulxyz_slag_vp1(phi, g_W, m, r_S);
 tau1 = M1*xDD + c1 + g1;
+
+c1t = rigidbody_coriolisvecB_floatb_eulxyz_slag_vp2(phi, xD, m, m*r_S, I_O);
+M1t = rigidbody_inertiaB_floatb_eulxyz_slag_vp2(phi, m, m*r_S, I_O);
+g1t = rigidbody_gravloadB_floatb_eulxyz_slag_vp2(phi, g_W, m, m*r_S);
+tau1_test = M1t*xDD + c1t + g1t;
+if any(abs(tau1-tau1_test) > 1e-10)
+  error('Herleitung Floating Base Starrkörper stimmt nicht mit Parametersatz 1 vs 2');
+end
 
 % Dynamik-Berechnung aus PKM-Plattform-Funktionen
 % (aus robot_para_plattform_rotmat_dynamics.mw)
