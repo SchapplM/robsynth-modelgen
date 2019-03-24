@@ -424,8 +424,53 @@ tau_B := convert_t_s(tau_B):
 tau := convert_t_s(tau):</Text-field>
 </Input>
 </Group><Presentation-Block>
-<Group labelreference="L1820" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"></Text-field>
+<Group labelreference="L1827" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Floating Base</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L1822" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">f_i_i_floatb := copy(f_i_i):
+m_i_i_floatb := copy(m_i_i):
+tau_J_floatb := copy(tau_J):
+tau_B_floatb := copy(tau_B):
+tau_floatb := copy(tau):
+for i from 1 to 6 do
+  if i &lt; 4 then
+    var := VD_base_s[i,1] - g_world[i,1];
+  else
+    var := VD_base_s[i,1]:
+  end if:
+  f_i_i_floatb := subs({VD_base_s[i,1]=var},f_i_i_floatb):
+  m_i_i_floatb := subs({VD_base_s[i,1]=var},m_i_i_floatb):
+  tau_J_floatb := subs({VD_base_s[i,1]=var},tau_J_floatb):
+  tau_B_floatb := subs({VD_base_s[i,1]=var},tau_B_floatb):
+  tau_floatb := subs({VD_base_s[i,1]=var},tau_floatb):
+end do:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1825" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Maple Export</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1826" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_invdyn and not(base_method_name=&quot;twist&quot;) then
+  save  f_i_i_floatb,m_i_i_floatb,tau_J_floatb, tau_B_floatb, tau_floatb,sprintf(&quot;../codeexport/%s/tmp/invdyn_%s_NewtonEuler_linkframe_maple.m&quot;, robot_name, base_method_name):
+  <Font encoding="UTF-8">printf(&quot;Maple-Ausdr\303\274cke exportiert. %s\134n&quot;, </Font>FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1824" drawlabel="true">
+<Input><Text-field style="Text" layout="Normal">Matlab Export</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1823" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_invdyn and not(base_method_name=&quot;twist&quot;) then
+  MatlabExport(convert_t_s(f_i_i_floatb), sprintf(&quot;../codeexport/%s/tmp/invdyn_floatb_%s_NewtonEuler_linkframe_f_i_i_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(convert_t_s(m_i_i_floatb), sprintf(&quot;../codeexport/%s/tmp/invdyn_floatb_%s_NewtonEuler_linkframe_m_i_i_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(convert_t_s(tau_J_floatb), sprintf(&quot;../codeexport/%s/tmp/invdyn_floatb_%s_NewtonEuler_linkframe_tauJ_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(convert_t_s(tau_B_floatb), sprintf(&quot;../codeexport/%s/tmp/invdyn_floatb_%s_NewtonEuler_linkframe_tauB_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(convert_t_s(tau_floatb), sprintf(&quot;../codeexport/%s/tmp/invdyn_floatb_%s_NewtonEuler_linkframe_tauJB_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1821" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">

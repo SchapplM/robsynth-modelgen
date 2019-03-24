@@ -166,7 +166,37 @@ m_i_i := convert_t_s(m_i_i):
 tau_J := convert_t_s(tau_J):
 tau_B := convert_t_s(tau_B):
 tau := convert_t_s(tau):
-# 
+# Floating Base
+f_i_i_floatb := copy(f_i_i):
+m_i_i_floatb := copy(m_i_i):
+tau_J_floatb := copy(tau_J):
+tau_B_floatb := copy(tau_B):
+tau_floatb := copy(tau):
+for i from 1 to 6 do
+  if i < 4 then
+    var := VD_base_s[i,1] - g_world[i,1];
+  else
+    var := VD_base_s[i,1]:
+  end if:
+  f_i_i_floatb := subs({VD_base_s[i,1]=var},f_i_i_floatb):
+  m_i_i_floatb := subs({VD_base_s[i,1]=var},m_i_i_floatb):
+  tau_J_floatb := subs({VD_base_s[i,1]=var},tau_J_floatb):
+  tau_B_floatb := subs({VD_base_s[i,1]=var},tau_B_floatb):
+  tau_floatb := subs({VD_base_s[i,1]=var},tau_floatb):
+end do:
+# Maple Export
+if codeexport_invdyn and not(base_method_name="twist") then
+  save  f_i_i_floatb,m_i_i_floatb,tau_J_floatb, tau_B_floatb, tau_floatb,sprintf("../codeexport/%s/tmp/invdyn_%s_NewtonEuler_linkframe_maple.m", robot_name, base_method_name):
+  printf("Maple-Ausdrücke exportiert. %s\n", FormatTime("%Y-%m-%d %H:%M:%S")):
+end if:
+# Matlab Export
+if codeexport_invdyn and not(base_method_name="twist") then
+  MatlabExport(convert_t_s(f_i_i_floatb), sprintf("../codeexport/%s/tmp/invdyn_floatb_%s_NewtonEuler_linkframe_f_i_i_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(convert_t_s(m_i_i_floatb), sprintf("../codeexport/%s/tmp/invdyn_floatb_%s_NewtonEuler_linkframe_m_i_i_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(convert_t_s(tau_J_floatb), sprintf("../codeexport/%s/tmp/invdyn_floatb_%s_NewtonEuler_linkframe_tauJ_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(convert_t_s(tau_B_floatb), sprintf("../codeexport/%s/tmp/invdyn_floatb_%s_NewtonEuler_linkframe_tauB_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
+  MatlabExport(convert_t_s(tau_floatb), sprintf("../codeexport/%s/tmp/invdyn_floatb_%s_NewtonEuler_linkframe_tauJB_par%d_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
+end if:
 # Fixed Base
 for i from 1 to NQB do
   f_i_i := subs({X_base_s[i,1]=0},f_i_i):
