@@ -90,7 +90,7 @@ for i from 1 to NJ do # Gelenke durchgehen
   # [GautierKhalil1988], equ.7: omega_jj aus [GautierKhalil1988] entspricht omega_i_i(1 .. 3, i+1) hier
   # [Ortmaier](7.14) (S.99) & (7.19) (S.99)
   if sigma(i) = 0 then # Drehgelenk
-    omegaD_i_i(1 .. 3, i+1) := Matrix(Multiply(R_i_j,( Matrix(3,1,omegaD_i_i(1 .. 3, j))))) + Matrix( thetaDD(i,1)*<0;0;1>) + Matrix(thetaD(i,1)* CrossProduct(Matrix(3,1,omega_i_i(1 .. 3, j)),<0;0;1>)) :
+    omegaD_i_i(1 .. 3, i+1) := Matrix(Multiply(R_i_j,( Matrix(3,1,omegaD_i_i(1 .. 3, j))))) + Matrix( thetaDD(i,1)*<0;0;1>) + Matrix(CrossProduct(R_i_j.Matrix(3,1,omega_i_i(1 .. 3, j)),thetaD(i,1)*<0;0;1>)) :
   else: # Schubgelenk
     omegaD_i_i(1 .. 3, i+1) := Multiply(R_i_j, Matrix(3,1,omegaD_i_i(1 .. 3, j))): 
   end if:
@@ -100,9 +100,9 @@ for i from 1 to NJ do # Gelenke durchgehen
   # [GautierKhalil1988], equ.8: v_jj aus [GautierKhalil1988] entspricht rD_i_i(1 .. 3, i+1) hier
   # [Ortmaier](7.17) (S.99) & (7.22) (S.100)
   if sigma(i) = 0 then # Drehgelenk
-    rDD_i_i(1 .. 3, i+1) := Multiply( R_i_j, ( rDD_i_i(1 .. 3, j) )+ omegaD_i_i(1 .. 3, j) &x r_j_j_i + CrossProduct(omega_i_i(1..3,j),(omega_i_i(1..3,j) &x r_j_j_i ))) :
+    rDD_i_i(1 .. 3, i+1) := Multiply( R_i_j, ( rDD_i_i(1 .. 3, j) + omegaD_i_i(1 .. 3, j) &x r_j_j_i + CrossProduct(omega_i_i(1..3,j),(omega_i_i(1..3,j) &x r_j_j_i )))) :
   else: # Schubgelenk
-    rDD_i_i(1 .. 3, i+1) := Matrix( Multiply( R_i_j, ( rDD_i_i(1 .. 3, j)  + CrossProduct(omega_i_i(1..3,j), (omega_i_i(1..3,j) &x r_j_j_i )) + CrossProduct(omegaD_i_i(1..3,j), r_j_j_i)))) + Matrix( 2* dD(i,1) * CrossProduct(omega_i_i(1..3,j),<0;0;1>)) + Matrix(dDD(i,1)*<0;0;1>)  : 
+    rDD_i_i(1 .. 3, i+1) := Matrix( Multiply( R_i_j, ( rDD_i_i(1 .. 3, j)  + CrossProduct(omega_i_i(1..3,j), (omega_i_i(1..3,j) &x r_j_j_i )) + CrossProduct(omegaD_i_i(1..3,j), r_j_j_i)))) + Matrix( 2* dD(i,1) * CrossProduct(R_i_j.omega_i_i(1..3,j),<0;0;1>)) + Matrix(dDD(i,1)*<0;0;1>)  : 
   end if:
   printf("Beschleunigung für Körperkoordinatensystem %d aufgestellt (Herleitung im Körper-KS). %s\n", i, FormatTime("%Y-%m-%d %H:%M:%S")): #0=Basis
 end do:
