@@ -50,6 +50,40 @@ for i = 1:n
     error('Inverse dynamics (platform coordinates) does not match with regressor form.')
   end
   
+  %% Gravitationsvektor in Plattform-Koordinaten
+  taugX_vp2 = %RN%_gravload_para_pf_slag_vp2(xP, q, g, legFrame, ...
+    koppelP, pkin, m, mrSges);
+  taugX_reg = %RN%_gravload_para_pf_reg(xP, q, g, legFrame, ...
+    koppelP, pkin);
+  taugX_MPV = taugX_reg*MPV;
+  DeltagX = taugX_MPV - taugX_vp2;
+  if any(abs(DeltagX) > 1e6*eps(taugX_MPV))
+    error('Gravload (platform coordinates) does not match with regressor form.')
+  end
+  
+  %% Coriolisvektor in Plattform-Koordinaten
+  taucX_vp2 = %RN%_coriolisvec_para_pf_slag_vp2(xP, xPD, q, legFrame, ...
+    koppelP, pkin, m, mrSges, Ifges);
+  taucX_reg = %RN%_coriolisvec_para_pf_reg(xP, xPD, q, legFrame, ...
+    koppelP, pkin);
+  taucX_MPV = taucX_reg*MPV;
+  DeltacX = taucX_MPV - taucX_vp2;
+  if any(abs(DeltacX) > 1e6*eps(taucX_MPV))
+    error('Coriolis Vector (platform coordinates) does not match with regressor form.')
+  end
+  
+  %% Massenmatrix in Plattform-Koordinaten
+  MMX_vp2 = %RN%_inertia_para_pf_slag_vp2(xP, q, legFrame, ...
+    koppelP, pkin, m, mrSges, Ifges);
+  MMX_reg = %RN%_inertia_para_pf_reg(xP, q, legFrame, ...
+    koppelP, pkin);
+  MMX_MPV_vec = MMX_reg*MPV;
+  MMX_MPV = vec2symmat(MMX_MPV_vec);
+  DeltaMMX = MMX_MPV - MMX_vp2;
+  if any(abs(DeltaMMX) > 1e6*eps(MMX_MPV))
+    error('Inertia Matrix (platform coordinates) does not match with regressor form.')
+  end
+  
   %% Dynamik in Antriebskoordinaten
   if N_XP <= 4 && ~isempty(fileparts(which('%RN%_invdyn_para_qa_slag_vp2')))
     % nur testen, falls Funktionen auch generiert wurden.
@@ -62,9 +96,56 @@ for i = 1:n
     if any(abs(DeltaA) > 1e6*eps(tauA_MPV))
       error('Inverse dynamics (actuation coordinates) does not match with regressor form.')
     end
+    
+    %% Gravitationsvektor in Antriebskoordinaten
+    taugA_vp2 = %RN%_gravload_para_qa_slag_vp2(xP, q, g, legFrame, ...
+      koppelP, pkin, m, mrSges);
+    taugA_reg = %RN%_gravload_para_qa_reg(xP, q, g, legFrame, ...
+      koppelP, pkin);
+    taugA_MPV = taugA_reg*MPV;
+    DeltagA = taugA_MPV - taugA_vp2;
+    if any(abs(DeltagA) > 1e6*eps(taugA_MPV))
+      error('Gravload (actuation coordinates) does not match with regressor form.')
+    end
+    
+    %% Coriolisvektor in Antriebskoordinaten
+    taucA_vp2 = %RN%_coriolisvec_para_qa_slag_vp2(xP, xPD, q, legFrame, ...
+      koppelP, pkin, m, mrSges, Ifges);
+    taucA_reg = %RN%_coriolisvec_para_qa_reg(xP, xPD, q, legFrame, ...
+      koppelP, pkin);
+    taucA_MPV = taucA_reg*MPV;
+    DeltacA = taucA_MPV - taucA_vp2;
+    if any(abs(DeltacA) > 1e6*eps(taucA_MPV))
+      error('Coriolis Vector (actuation coordinates) does not match with regressor form.')
+    end
+    
+    %% Massenmatrix in Antriebskoordinaten
+    MMA_vp2 = %RN%_inertia_para_qa_slag_vp2(xP, q, legFrame, ...
+      koppelP, pkin, m, mrSges, Ifges);
+    MMA_reg = %RN%_inertia_para_qa_reg(xP, q, legFrame, ...
+      koppelP, pkin);
+    MMA_MPV_vec = MMA_reg*MPV;
+    MMA_MPV = vec2symmat(MMA_MPV_vec);
+    DeltaMMA = MMA_MPV - MMA_vp2;
+    if any(abs(DeltaA) > 1e6*eps(tauA_MPV))
+      error('Inertia Matrix (actuation coordinates) does not match with regressor form.')
+    end
   else % if N_XP > 4
+    %% Gesamtdynamik
     tauA_MPV = (Jinv)' \ tauX_reg;
     tauA_vp2 = (Jinv)' \ tauX_vp2;
+    
+    %% Gravitationsvektor
+    taugA_MPV = (Jinv)' \ taugX_reg;
+    taugA_vp2 = (Jinv)' \ taugX_vp2;
+    
+    %% Coriolisvektor
+    taucA_MPV = (Jinv)' \ taucX_reg;
+    taucA_vp2 = (Jinv)' \ taucX_vp2;
+    
+    %% Massenmatrix
+    MMA_MPV = (Jinv)' \ MMX_MPV;
+    MMA_vp2 = (Jinv)' \ MMX_vp2;
   end
 end
 fprintf('Tested regressor form vs inverse dynamic for %d random joint angles for %s\n', ...
