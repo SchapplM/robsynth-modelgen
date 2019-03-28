@@ -4,16 +4,16 @@
 # Berechnung der inversen Dynamik in Regressorform
 # 
 # Dateiname:
-# robot -> Berechnung fÃ¼r allgemeinen Roboter
-# chain -> Berechnung fÃ¼r eine serielle Struktur (nicht: Baumstruktur)
+# robot -> Berechnung für allgemeinen Roboter
+# chain -> Berechnung für eine serielle Struktur (nicht: Baumstruktur)
 # floatb -> Floating Base (und auch fixed Base) Modell der Basis.
 # rotmat -> Kinematik wird mit Rotationsmatrizen berechnet
 # dynamics -> Berechnung der Dynamik
 # regressor -> Regressorform (parameterlinear)
 # 
 # Siehe auch: robot_chain_floatb_rotmat_dynamics_regressor.mw.
-# Im Gegensatz zu der allgemeinen Dynamik werden hier die fixed-Base-AusdrÃ¼cke ohne eine "twist"-Basis-Berechnung Ã¼bernommen.
-# Ursache ist, dass der Parametervektor und damit der Regressor sich zwischen Fixed-Base und Floating-Base unterscheidet und daher ein Ableiten des Fixed-Base falles aus der Floating-Base-Formulierung mit einfacher Basis-Darstellung ("twist") nicht mÃ¶glich ist.
+# Im Gegensatz zu der allgemeinen Dynamik werden hier die fixed-Base-Ausdrücke ohne eine "twist"-Basis-Berechnung übernommen.
+# Ursache ist, dass der Parametervektor und damit der Regressor sich zwischen Fixed-Base und Floating-Base unterscheidet und daher ein Ableiten des Fixed-Base falles aus der Floating-Base-Formulierung mit einfacher Basis-Darstellung ("twist") nicht möglich ist.
 # Autor
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
 # (C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
@@ -22,15 +22,15 @@
 # [KhalilDombre2002] Modeling, Identification and Control of Robots
 # [Ortmaier2014] Vorlesungsskript Robotik I
 # Initialization
-interface(warnlevel=0): # UnterdrÃ¼cke die folgende Warnung.
-restart: # Gibt eine Warnung, wenn Ã¼ber Terminal-Maple mit read gestartet wird.
+interface(warnlevel=0): # Unterdrücke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
 interface(warnlevel=3):
 with(LinearAlgebra):
 with(ArrayTools):
 with(codegen):
 with(CodeGeneration):
 with(StringTools):
-# Einstellungen fÃ¼r Code-Export: Optimierungsgrad (2=hÃ¶chster) und Aktivierung jedes Terms.
+# Einstellungen für Code-Export: Optimierungsgrad (2=höchster) und Aktivierung jedes Terms.
 codegen_opt := 2:
 codeexport_grav := true: 
 codeexport_corvec := true:
@@ -53,15 +53,15 @@ read "../transformation/proc_transl":
 read "../transformation/proc_trafo_mdh": 
 read "../robot_codegen_definitions/robot_env":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
-# Mit diesem Arbeitsblatt werden die Regressor-AusdrÃ¼cke fÃ¼r Fixed-Base und Floating-Base Modelle generiert. Erkenne welche Basis-Modellierung aktiv ist
-if base_method_name="twist" then # Basis-Methode "twist" wird (hier) nur fÃ¼r fixed Base benutzt
+# Mit diesem Arbeitsblatt werden die Regressor-Ausdrücke für Fixed-Base und Floating-Base Modelle generiert. Erkenne welche Basis-Modellierung aktiv ist
+if base_method_name="twist" then # Basis-Methode "twist" wird (hier) nur für fixed Base benutzt
   expstring:="fixb":
 elif base_method_name="eulxyz" then 
   expstring:="floatb_eulxyz":
 else
   printf("Nicht behandelte Basis-Methode: %s\n", base_method_name):
 fi:
-# Es ist in diesem Arbeitsblatt mÃ¶glich, zwei verschiedene Regressoren zu generieren und zu exportieren: Basierend auf Minimalparametern und auf vollem Parametersatz (PV2).
+# Es ist in diesem Arbeitsblatt möglich, zwei verschiedene Regressoren zu generieren und zu exportieren: Basierend auf Minimalparametern und auf vollem Parametersatz (PV2).
 # Der Term "regressor" oder "regressor_minpar" ist jeweils in den Dateinamen enthalten.
 # Der folgende Befehl muss immer auf "regressor_minpar" gesetzt sein, da diese Zeile durch das Skript robot_codegen_maple_preparation.sh ausgewertet und modifiziert wird.
 regressor_modus := "regressor_minpar":
@@ -70,16 +70,16 @@ if regressor_modus = "regressor_minpar" then
   read sprintf("../codeexport/%s/tmp/energy_potential_%s_regressor_minpar_maple.m", robot_name, expstring):
   t_ges := t_ges_minpar:
   u_ges := u_ges_minpar:
-  printf("Generiere Minimalparameterregressor der Dynamik fÃ¼r %s\n", robot_name):
+  printf("Generiere Minimalparameterregressor der Dynamik für %s\n", robot_name):
 end if:
 if regressor_modus = "regressor" then
   read sprintf("../codeexport/%s/tmp/energy_kinetic_%s_regressor_maple.m", robot_name, expstring):
   read sprintf("../codeexport/%s/tmp/energy_potential_%s_regressor_maple.m", robot_name, expstring):
   t_ges := t_ges:
   u_ges := u_ges:
-  printf("Generiere Regressor der Dynamik fÃ¼r %s (nicht Minimalparameter)\n", robot_name):
+  printf("Generiere Regressor der Dynamik für %s (nicht Minimalparameter)\n", robot_name):
 end if:
-# Schalter zur Auswahl der unterschiedlichen Terme, die exportiert werden sollen. FÃ¼r parallele Berechnung interessant.
+# Schalter zur Auswahl der unterschiedlichen Terme, die exportiert werden sollen. Für parallele Berechnung interessant.
 DynString := "Term:":
 if codeexport_grav then
   DynString := sprintf("%s g",DynString):
@@ -99,7 +99,7 @@ end if:
 if codeexport_invdyn then
   DynString := sprintf("%s tau",DynString):
 end if:
-printf("Generiere Dynamik-Regressor (%s) fÃ¼r %s und %s\n", DynString, robot_name, base_method_name):
+printf("Generiere Dynamik-Regressor (%s) für %s und %s\n", DynString, robot_name, base_method_name):
 # Platzhalter-Vektor der Dynamik-Parameter aufstellen
 nDP := ColumnDimension(u_ges):
 PV := Matrix(nDP,1):
@@ -111,7 +111,7 @@ for i from 1 to nDP do
   end if:
 end do:
 PV:
-# Name fÃ¼r Export der Terme als Funktion des Parametervektors
+# Name für Export der Terme als Funktion des Parametervektors
 if regressor_modus = "regressor_minpar" then
   regshortname := "mdp":
 elif regressor_modus = "regressor" then
@@ -137,7 +137,7 @@ if codeexport_grav and not(base_method_name="twist") then
 end if:
 # Belastung der Gelenke: 
 # Fixed-Base: Gravitationsvektor im Basis-KS
-# Floating Base: Gravitationsvektor im Welt-KS, Basis-Orientierung berÃ¼cksichtigt
+# Floating Base: Gravitationsvektor im Welt-KS, Basis-Orientierung berücksichtigt
 taug := taug_regressor_s . PV:
 if codeexport_grav then
   MatlabExport(taug_regressor_s(7..NQ,..), sprintf("../codeexport/%s/tmp/gravload_joint_%s_%s_matlab.m", robot_name, expstring, regressor_modus), codegen_opt):
@@ -149,10 +149,10 @@ if codeexport_grav and not(base_method_name="twist") then
   MatlabExport(taug(1..NQ,..), sprintf("../codeexport/%s/tmp/gravload_floatb_%s_%s_matlab.m", robot_name, expstring, regshortname), codegen_opt):
 end if:
 # Mass Matrix
-# Berechnung vollstÃ¤ndige Massenmatrix
-# Generiere die Massenmatrix erst fÃ¼r Floating-Base-Komplettsystem, dann entnehme die Teilmatrizen fÃ¼r Gelenk-Gelenk, Gelenk-Basis zum separaten Export
+# Berechnung vollständige Massenmatrix
+# Generiere die Massenmatrix erst für Floating-Base-Komplettsystem, dann entnehme die Teilmatrizen für Gelenk-Gelenk, Gelenk-Basis zum separaten Export
 Paramvec_size := ColumnDimension(t_ges):
-# Berechnung vollstÃ¤ndige Massenmatrix
+# Berechnung vollständige Massenmatrix
 # Initialisiere. Speichere nur den unteren linken Teil der Massenmatrix
 # Siehe: https://de.wikipedia.org/wiki/Symmetrische_Matrix
 tauMM_regressor_s := dTdqDdt_s(1..NQ,..):
@@ -182,7 +182,7 @@ for i to NQ do
       next: # rechte obere Seite der symmetrischen Matrix. Keine neue Information. Nicht berechnen oder speichern.
     end if:
     if i > 6 and j > 6 then # unterer rechter Teil (Gelenkmoment-Gelenkbeschleunigung-Terme)
-      i_MM := index_symmat2vec(NQ,i,j): # Passender Index fÃ¼r zeilenweise ausgewÃ¤hlten symmetrischen Teil (siehe Gesamt-Massenmatrix)
+      i_MM := index_symmat2vec(NQ,i,j): # Passender Index für zeilenweise ausgewählten symmetrischen Teil (siehe Gesamt-Massenmatrix)
       itmp := itmp + 1:
       MMjj_regressor_s[itmp,..] := MM_regressor_s[i_MM,..]:
     end if:
@@ -199,12 +199,12 @@ end if:
 # Gelenk-Basis-Massenmatrix
 #  (untere linke Teilmatrix der Gesamt-Massenmatrix)
 MMjb_regressor_s := Matrix(6*NQJ, Paramvec_size):
-# Gehe Schleife Ã¼ber alle Massenmatrix-Elemente durch und entnehme die passenden Elemente fÃ¼r die Teilmatrix)
+# Gehe Schleife über alle Massenmatrix-Elemente durch und entnehme die passenden Elemente für die Teilmatrix)
 itmp:=0:
 for i to NQ do
   for j to NQ do  # Spaltenindex der Massenmatrix
     if i > 6 and j < 7 then # unterer linker Teil
-      i_MM := index_symmat2vec(NQ,i,j): # Passender Index fÃ¼r zeilenweise ausgewÃ¤hlten symmetrischen Teil (siehe Gesamt-Massenmatrix)
+      i_MM := index_symmat2vec(NQ,i,j): # Passender Index für zeilenweise ausgewählten symmetrischen Teil (siehe Gesamt-Massenmatrix)
       itmp := itmp + 1:
       MMjb_regressor_s[itmp,..] := MM_regressor_s[i_MM,..]:
     end if:
@@ -215,7 +215,7 @@ if codeexport_inertia and not(base_method_name="twist") then
 end if:
 # Basis-Massenmatrix
 MMbb_regressor_s := Matrix(6*(6+1)/2, Paramvec_size):
-# Gehe Schleife Ã¼ber alle Massenmatrix-Elemente durch und entnehme die passenden Elemente fÃ¼r die Teilmatrix)
+# Gehe Schleife über alle Massenmatrix-Elemente durch und entnehme die passenden Elemente für die Teilmatrix)
 itmp:=0:
 for i to NQ do
   for j to NQ do  # Spaltenindex der Massenmatrix
@@ -223,7 +223,7 @@ for i to NQ do
       next: # rechte obere Seite der symmetrischen Matrix. Keine neue Information. Nicht berechnen oder speichern.
     end if:
     if i < 7 and j < 7 then # unterer linker Teil
-      i_MM := index_symmat2vec(NQ,i,j): # Passender Index fÃ¼r zeilenweise ausgewÃ¤hlten symmetrischen Teil (siehe Gesamt-Massenmatrix)
+      i_MM := index_symmat2vec(NQ,i,j): # Passender Index für zeilenweise ausgewählten symmetrischen Teil (siehe Gesamt-Massenmatrix)
       itmp := itmp + 1:
       MMbb_regressor_s[itmp,..] := MM_regressor_s[i_MM,..]:
     end if:
@@ -240,7 +240,7 @@ MMD_regressor_s := convert_t_s(MMD_regressor_t):
 if codeexport_inertiaD and not(base_method_name="twist") then
   MatlabExport(MMD_regressor_s, sprintf("../codeexport/%s/tmp/inertiaD_floatb_%s_%s_matlab.m", robot_name, base_method_name, regressor_modus), codegen_opt):
 end if:
-# Konvertiere Gelenk-Massenmatrix in zeitabhÃ¤ngige Variablen, um Zeitableitung zu berechnen
+# Konvertiere Gelenk-Massenmatrix in zeitabhängige Variablen, um Zeitableitung zu berechnen
 MMjj_regressor_t := convert_s_t(MMjj_regressor_s):
 MMDjj_regressor_t := diff~(MMjj_regressor_t, t):
 MMDjj_regressor_s := convert_t_s(MMDjj_regressor_t):
@@ -255,7 +255,7 @@ if codeexport_inertiaD and not(base_method_name="twist") then
   MatlabExport(MMDjb_regressor_s, sprintf("../codeexport/%s/tmp/inertiaD_joint_base_floatb_%s_%s_matlab.m", robot_name, base_method_name, regressor_modus), codegen_opt):
 end if:
 # Coriolis Vector
-# Generieren (gleiches Vorgehen fÃ¼r fixed und floating base)
+# Generieren (gleiches Vorgehen für fixed und floating base)
 tauC_regressor_s := dTdqDdt_s-dTdq_s:
 for i to NQ do 
   tauC_regressor_s := subs({qDD_s(i, 1) = 0}, tauC_regressor_s):
@@ -268,7 +268,7 @@ if codeexport_corvec then
   MatlabExport(tauC_regressor_s(7..NQ,..), sprintf("../codeexport/%s/tmp/coriolisvec_joint_%s_%s_matlab.m", robot_name, expstring, regressor_modus), codegen_opt):
   MatlabExport(tauc(7..NQ,..), sprintf("../codeexport/%s/tmp/coriolisvec_joint_%s_%s_matlab.m", robot_name, expstring, regshortname), codegen_opt):
 end if:
-# Gesamter Vektor fÃ¼r Floating Base
+# Gesamter Vektor für Floating Base
 if codeexport_corvec and not(base_method_name="twist") then
   MatlabExport(tauC_regressor_s(1..NQ,..), sprintf("../codeexport/%s/tmp/coriolisvec_%s_%s_matlab.m", robot_name, expstring, regressor_modus), codegen_opt):
   MatlabExport(tauc(1..NQ,..), sprintf("../codeexport/%s/tmp/coriolisvec_%s_%s_matlab.m", robot_name, expstring, regshortname), codegen_opt):
@@ -288,15 +288,15 @@ cijk := proc (i::integer, j::integer, k::integer, A, qs)
   c := (1/2)*(diff(A[i, j], qs(k, 1)))+(1/2)*(diff(A[i, k], qs(j, 1)))-(1/2)*(diff(A[j, k], qs(i, 1))):
   return c:
 end proc:
-# Initialisierung. Speichere die vollstÃ¤ndige Coriolismatrix (nicht symmetrisch/schiefsymmetrisch). Unterschied zum Vorgehen bei der Massenmatrix
+# Initialisierung. Speichere die vollständige Coriolismatrix (nicht symmetrisch/schiefsymmetrisch). Unterschied zum Vorgehen bei der Massenmatrix
 C_regressor_s := Matrix(NQ*NQ, Paramvec_size):
 # Berechnung
-i_rr := 0: # Vektor-Index fÃ¼r den Regressor der Coriolismatrix (Ausgabe)
+i_rr := 0: # Vektor-Index für den Regressor der Coriolismatrix (Ausgabe)
 for i to NQ do # Zeilenindex der Coriolismatrix
   for j to NQ do  # Spaltenindex der Coriolismatrix
     i_rr := i_rr + 1: # Gehe zeilenweise durch den unteren linken Teil der Coriolismatrix (inkl. Diagonale)
     for k from 1 to Paramvec_size do # Spaltenindex der Regressormatrix
-      # Massenmatrix fÃ¼r Parameter k generieren (fÃ¼r Funktion mit Christoffel-Symbol-Ansatz benÃ¶tigt)
+      # Massenmatrix für Parameter k generieren (für Funktion mit Christoffel-Symbol-Ansatz benötigt)
       MM_k := Matrix(NQ,NQ):
       for ii from 1 to NQ do
         for jj from 1 to NQ do
@@ -315,13 +315,13 @@ if codeexport_cormat and not(base_method_name="twist") then
   MatlabExport(C_regressor_s, sprintf("../codeexport/%s/tmp/coriolismat_floatb_%s_%s_matlab.m", robot_name, base_method_name, regressor_modus), codegen_opt):
 end if:
 # Gelenk-Coriolismatrix
-# Extrahiere Teilmatrix, die fÃ¼r die Gelenkterme (ohne Basiseinfluss) zustÃ¤ndig sind
+# Extrahiere Teilmatrix, die für die Gelenkterme (ohne Basiseinfluss) zuständig sind
 Cjj_regressor_s := Matrix(NQJ*NQJ, Paramvec_size):
 itmp := 0:
 for i to NQ do # Zeilenindex der Coriolismatrix
   for j to NQ do  # Spaltenindex der Coriolismatrix
     if i > 6 and j > 6 then # unterer rechter Teil
-      i_C := (i-1)*NQ+j: # Passender Index fÃ¼r zeilenweise ausgewÃ¤hltes Element
+      i_C := (i-1)*NQ+j: # Passender Index für zeilenweise ausgewähltes Element
       itmp := itmp + 1:
       Cjj_regressor_s[itmp,..] := C_regressor_s[i_C,..]:
     end if:
@@ -333,7 +333,7 @@ end if:
 # Inverse Dynamics
 # Generate
 tau_regressor_s := dTdqDdt_s-dTdq_s+dUdq_s:
-save tau_regressor_s, MMjj_regressor_s, tauC_regressor_s, taug_regressor_s, sprintf("../codeexport/%s/tmp/invdyn_%s_%s_maple.m", robot_name, expstring, regressor_modus):
+save tau_regressor_s, MMjj_regressor_s, tauMM_regressor_s, tauC_regressor_s, taug_regressor_s, sprintf("../codeexport/%s/tmp/invdyn_%s_%s_maple.m", robot_name, expstring, regressor_modus):
 tau := tau_regressor_s . PV:
 # Gesamter Vektor (floating base)
 if codeexport_invdyn and not(base_method_name="twist") then
