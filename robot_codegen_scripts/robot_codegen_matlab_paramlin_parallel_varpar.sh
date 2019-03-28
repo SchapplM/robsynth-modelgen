@@ -57,7 +57,7 @@ for (( coord=0; coord<=1; coord++ )); do # 0=act joints, 1=platform
   costrmat=${coordmatlab[$coord]}
   
   quelldat=$repo_pfad/codeexport/${robot_name}/tmp/invdyn_para_${costrmpl}_reg_matlab.m
-  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_invdyn_para_${costrmat}_reg.m
+  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_invdyn_para_${costrmat}_regmin.m
   if [ -f $quelldat ]; then
     cat $head_pfad/robot_matlabtmp_invdynJ_para_${costrmat}_regmin.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -101,7 +101,7 @@ for (( coord=0; coord<=1; coord++ )); do # 0=act joints, 1=platform
   costrmat=${coordmatlab[$coord]}
   
   quelldat=$repo_pfad/codeexport/${robot_name}/tmp/invdyn_para_${costrmpl}_taugreg_matlab.m
-  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_gravload_para_${costrmat}_reg.m
+  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_gravload_para_${costrmat}_regmin.m
   if [ -f $quelldat ]; then
     cat $head_pfad/robot_matlabtmp_gravloadJ_para_${costrmat}_regmin.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -141,7 +141,7 @@ for (( coord=0; coord<=1; coord++ )); do # 0=act joints, 1=platform
   costrmat=${coordmatlab[$coord]}
   
   quelldat=$repo_pfad/codeexport/${robot_name}/tmp/invdyn_para_${costrmpl}_tauCreg_matlab.m
-  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_coriolisvec_para_${costrmat}_reg.m
+  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_coriolisvec_para_${costrmat}_regmin.m
   if [ -f $quelldat ]; then
     cat $head_pfad/robot_matlabtmp_coriolisvecJ_para_${costrmat}_regmin.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -181,7 +181,7 @@ for (( coord=0; coord<=1; coord++ )); do # 0=act joints, 1=platform
   costrmat=${coordmatlab[$coord]}
   
   quelldat=$repo_pfad/codeexport/${robot_name}/tmp/invdyn_para_${costrmpl}_MMreg_matlab.m
-  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_inertia_para_${costrmat}_reg.m
+  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_inertia_para_${costrmat}_regmin.m
   if [ -f $quelldat ]; then
     cat $head_pfad/robot_matlabtmp_inertiaJ_para_${costrmat}_regmin.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
