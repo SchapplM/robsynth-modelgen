@@ -57,7 +57,7 @@ for i = 1:NJ
   PV2fixb(10*i) = m(i+1);
 end
 
-% Liste der Namen der Dynamikparameter. Basis wird hier nicht betrachtet 
+% Liste der Namen der Dynamikparameter. Basis wird hier nicht betrachtet
 % (Index "0"), aber bei den Körpern NL mitgezählt.
 PV2_Names = cell(10*NL,1);
 for i = 1:NL-1
@@ -104,7 +104,7 @@ fprintf('Tested kinetic energy for %d random joint angles for %s\n', ...
 for i = 1:n
   q = Q(i,:)';
   g_base = G(i,:)';
-  
+
   U_func = %RN%_energypot_fixb_slag_vp1(q, g_base, ...
     pkin, m, rSges);
   U_func0 = %RN%_energypot_fixb_slag_vp1(zeros(NQJ,1), g_base, ...
@@ -122,7 +122,7 @@ for i = 1:n
       error('Potential Energy from base parameter vector does not match with direct form.');
     end
   end
-  
+
   % calculate potential energy with inertial parameters regressor
   u_reg2 = %RN%_energypot_fixb_reg2_slag_vp(q, g_base, ...
     pkin);
@@ -132,7 +132,7 @@ for i = 1:n
   U_pv20 = u_reg20*PV2fixb;
   if abs((U_pv2-U_pv20)-(U_func-U_func0)) > 1e6*eps(max(abs([U_pv2;U_pv20;U_func;U_func0])))
     error('Potential Energy from inertial parameter vector does not match with direct form.');
-  end  
+  end
 end
 fprintf('Tested potential energy for %d random joint angles for %s\n', ...
   n, robot_name);
@@ -269,7 +269,7 @@ for i = 1:n
   MqD_pv2 = vec2symmat(MqD_pv2_vec);
   if any( abs(MqD_func(:)-MqD_pv2(:)) > 1e6*eps(1+max(abs(MqD_func(:)))) )
     error('Joint inertia matrix time derivative from inertial parameter vector does not match with direct form.');
-  end  
+  end
 end
 fprintf('Tested Joint inertia matrix time derivative for %d random joint angles for %s\n', ...
   n, robot_name);
@@ -302,7 +302,7 @@ for i = 1:n
 end
 fprintf('Tested inverse dynamics for %d random joint angles for %s\n', ...
   n, robot_name);
-	
+
 %% Teste inverse Dynamik aus Newton-Euler
 for i = 1:n
   q = Q(i,:)';
@@ -321,7 +321,7 @@ for i = 1:n
 end
 fprintf('Tested inverse dynamics from Newton-Euler for %d random joint angles for %s\n', ...
   n, robot_name);
-	
+
 %% Teste Basis-Reaktionskräfte aus inverser Dynamik aus Newton-Euler
 for i = 1:n
   q = Q(i,:)';
@@ -340,7 +340,7 @@ for i = 1:n
 end
 fprintf('Tested base forces from Newton-Euler for %d random joint angles for %s\n', ...
   n, robot_name);
-	
+
 %% Teste Schnittkräfte/-momente aus Newton-Euler
 for i = 1:n
   q = Q(i,:)';
@@ -353,8 +353,8 @@ for i = 1:n
   f_neweul_reg2 = %RN%_invdynf_fixb_reg2_snew_vp(q, qD, qDD, g_base, ...
     pkin);
   f_neweul_pv2 = f_neweul_reg2*PV2fixb;
-	f_neweul_pv2 = reshape(f_neweul_pv2,[3,%NL%]);
-  if any( abs(f_neweul_func-f_neweul_pv2) > 1e6*eps(max(abs(f_neweul_func))) )
+  f_neweul_pv2 = reshape(f_neweul_pv2,[3,%NL%]);
+  if any( abs(f_neweul_func(:)-f_neweul_pv2(:)) > 1e6*eps(max(abs(f_neweul_func(:)))) )
     error('Cutting forces from inertial parameter vector from Newton-Euler does not match with direct form.');
   end
 end
@@ -371,8 +371,8 @@ for i = 1:n
   m_neweul_reg2 = %RN%_invdynm_fixb_reg2_snew_vp(q, qD, qDD, g_base, ...
     pkin);
   m_neweul_pv2 = m_neweul_reg2*PV2fixb;
-	m_neweul_pv2 = reshape(m_neweul_pv2,[3,%NL%]);
-  if any( abs(m_neweul_func-m_neweul_pv2) > 1e6*eps(max(abs(m_neweul_func))) )
+  m_neweul_pv2 = reshape(m_neweul_pv2,[3,%NL%]);
+  if any( abs(m_neweul_func(:)-m_neweul_pv2(:)) > 1e6*eps(max(abs(m_neweul_func(:)))) )
     error('Cutting torques from inertial parameter vector from Newton-Euler does not match with direct form.');
   end
 end
@@ -476,6 +476,4 @@ plin_num_test_struct = struct('W', W_g, 'PV2', PV2fixb, 'MPV', MPV, ...
 robot_paramlin_test_reg_num(plin_num_test_struct);
 
 fprintf('Symbolisch berechnete Minimalparameterform gegen numerische Form geprüft\n');
-
-
 
