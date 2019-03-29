@@ -15,7 +15,7 @@
 % %INPUT_PKIN%
 %
 % Output:
-% f_new_reg [(3*%NL%)x(10*%NQJ%)]
+% f_new_reg [(3*%NL%)x(10*%NL%)]
 %   inertial parameter regressor for cutting forces of inverse dynamics
 %   (contains inertial, gravitational coriolis and centrifugal forces)
 

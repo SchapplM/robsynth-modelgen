@@ -11,7 +11,7 @@
 % %INPUT_PKIN%
 % 
 % Output:
-% tauB_reg [6x(%NQJ%*10)]
+% tauB_reg [6x(%NL%*10)]
 %   inertial parameter regressor of inverse dynamics base forces vector
 
 % %VERSIONINFO%

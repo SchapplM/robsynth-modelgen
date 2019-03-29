@@ -11,7 +11,7 @@
 % %INPUT_PKIN%
 %
 % Output:
-% f_new_reg [(3*%NL%)x(%NQJ%*10)]
+% f_new_reg [(3*%NL%)x(%NL%*10)]
 %   inertial parameter regressor of inverse dynamics cutting forces vector
 
 % %VERSIONINFO%

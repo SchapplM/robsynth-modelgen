@@ -15,7 +15,7 @@
 % %INPUT_PKIN%
 % 
 % Output:
-% tauB_reg [6x(10*%NQJ%)]
+% tauB_reg [6x(10*%NL%)]
 %   inertial parameter regressor for generalized base forces of inverse dynamics
 %   (contains inertial, gravitational coriolis and centrifugal forces)
 %   base moment as Euler angle moment

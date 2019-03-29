@@ -11,7 +11,7 @@
 % %INPUT_PKIN%
 %
 % Output:
-% m_new_reg [(3*%NL%)x(%NQJ%*10)]
+% m_new_reg [(3*%NL%)x(%Nl%*10)]
 %   inertial parameter regressor of inverse dynamics cutting torque vector
 
 % %VERSIONINFO%

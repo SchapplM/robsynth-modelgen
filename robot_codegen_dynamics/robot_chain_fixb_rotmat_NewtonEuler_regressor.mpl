@@ -67,17 +67,17 @@ end do:
 
 # Linearisierung_Gelenkmomente(base)
 # 
-tauB_regressor := Matrix(6,10*NJ):
+tauB_regressor := Matrix(6,10*NL):
 
 for i from 1 to 6 do 
-  for j from 1 to 10*NJ do
-    tauB_regressor[i,j] := diff(tau_B(i,1),PV2_vec[10+j,1]):
+  for j from 1 to 10*NL do
+    tauB_regressor[i,j] := diff(tau_B(i,1),PV2_vec[j,1]):
   end do:
 end do:
 
 
 # Linearisierung_Schnittmomente
-m_regressor := Matrix(3*NL,10*NJ):
+m_regressor := Matrix(3*NL,10*NL):
 
 
 m_i_i_vec := Matrix(3*(NL),1):
@@ -88,13 +88,13 @@ for i from 1 to NL do
 end do:
 
 for i from 1 to 3*NL do 
-  for j from 1 to 10*NJ do
-    m_regressor[i,j] := diff~(m_i_i_vec(i,1),PV2_vec[10+j,1]):
+  for j from 1 to 10*NL do
+    m_regressor[i,j] := diff~(m_i_i_vec(i,1),PV2_vec[j,1]):
   end do:
 end do:
 
 # Linearisierung_Schnittkräfte
-f_regressor := Matrix(3*NL,10*NJ):
+f_regressor := Matrix(3*NL,10*NL):
 
 f_i_i_vec := Matrix(3*(NL),1):
 for i from 1 to NL do
@@ -104,8 +104,8 @@ for i from 1 to NL do
 end do:
 
 for i from 1 to 3*NL do 
-  for j from 1 to 10*NJ do
-    f_regressor[i,j] := diff~(f_i_i_vec(i,1),PV2_vec[10+j,1]):
+  for j from 1 to 10*NL do
+    f_regressor[i,j] := diff~(f_i_i_vec(i,1),PV2_vec[j,1]):
   end do:
 end do:
 
