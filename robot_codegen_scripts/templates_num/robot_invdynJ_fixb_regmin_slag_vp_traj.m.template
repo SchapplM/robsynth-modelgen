@@ -1,0 +1,45 @@
+% Calculate time series of minimal parameter regressor of inv. dyn. joint torques for
+% %RN%
+%
+% Input:
+% Q [NTx%NQJ%]
+%   Trajektorie von Gelenkpositionen (NT Zeitschritte in den Zeilen)
+% QD [NTx%NQJ%]
+%   Trajektorie von Gelenkgeschwindigkeiten
+% QDD [NTx%NQJ%]
+%   Trajektorie von Gelenkbeschleunigungen
+% g [3x1]
+%   gravitation vector in mdh base frame [m/s^2]
+% %INPUT_PKIN%
+%
+% Output:
+% RV_Traj [NTx%robot_NTAUJFIXBREGNN%]
+%   time series of regressor matrices as vectors
+%   see %RN%_invdynJ_fixb_regmin2vec.m
+
+% %VERSIONINFO%
+
+function RV_Traj = %FN%(Q, QD, QDD, g, pkin)
+%% Coder Information
+%#codegen
+%$cgargs {coder.newtype('double',[inf,%NQJ%]),
+%$cgargs  coder.newtype('double',[inf,%NQJ%]),
+%$cgargs  coder.newtype('double',[inf,%NQJ%]),
+%$cgargs  zeros(3,1), zeros(%NKP%,1)}
+assert(isreal(Q) && all(size(Q,2) == %NQJ%), ...
+  '%FN%: Q needs to be [NTx%NQJ%] (double)');
+assert(isreal(QD) && all(size(QD,2) == %NQJ%), ...
+  '%FN%: QD needs to be [NTx%NQJ%] (double)');
+assert(isreal(QDD) && all(size(QDD,2) == %NQJ%), ...
+  '%FN%: QDD needs to be [NTx%NQJ%] (double)');
+assert(isreal(g) && all(size(g) == [3 1]), ...
+  '%FN%: Gravity vector g has to be [3x1] (double)');
+assert(isreal(pkin) && all(size(pkin) == [%NKP% 1]), ...
+  '%FN%: Kinematic parameters pkin have to be [%NKP%x1] (double)');
+  
+%% Trajektorie der Regressor-Vektoren aufbauen
+RV_Traj = NaN(size(Q,1), %robot_NTAUJFIXBREGNN%);
+for ii = 1:size(Q,1)
+  RV_Traj(ii,:) = %RN%_invdynJ_fixb_regmin2vec( ...
+    %RN%_invdynJ_fixb_regmin_slag_vp(Q(ii,:)', QD(ii,:)', QDD(ii,:)', g, pkin) );
+end

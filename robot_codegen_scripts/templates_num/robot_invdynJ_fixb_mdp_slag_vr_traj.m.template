@@ -1,0 +1,31 @@
+% Inverse Dynamik für komplette Trajektorie für
+% %RN%
+%
+% Eingabe:
+% RV_Traj [NTx%robot_NTAUJFIXBREGNN%]
+%   time series of regressor matrices as vectors
+%   Number of time steps (NT) in rows
+%   see %RN%_invdynJ_fixb_regmin2vec.m
+% %INPUT_MDPFIXB%
+%
+% Ausgabe:
+% TAU [NTx%NQJ%]
+%   Time series of inverse Dynamics joint torque
+
+% %VERSIONINFO%
+
+function TAU = %FN%(RV_Traj, MDP)
+
+%% Coder Information
+%#codegen
+%$cgargs {coder.newtype('double',[inf,%robot_NTAUJFIXBREGNN%]), zeros(%NMPVFIXB%,1)}
+assert(isreal(RV_Traj) && all(size(RV_Traj,2) == %robot_NTAUJFIXBREGNN%), ...
+  '%FN%: RV_Traj needs to be [NTx%robot_NTAUJFIXBREGNN%] (double)');
+assert(isreal(MDP) && all(size(MDP) == [%NMPVFIXB% 1]), ...
+  '%FN%: Dynamics parameter vector MDP has to be [%NMPVFIXB%x1] (double)');
+
+%% Inverse Dynamik für jeden Zeitschritt der Trajektorie berechnen
+TAU = NaN(size(RV_Traj,1), %NQJ%);
+for ii = 1:size(RV_Traj,1)
+  TAU(ii,:) = %RN%_invdynJ_fixb_mdp_slag_vr(RV_Traj(ii,:), MDP);
+end

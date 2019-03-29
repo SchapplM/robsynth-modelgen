@@ -82,6 +82,36 @@ else
   echo "Code in ${quelldat1##*/} oder anderer nicht gefunden."
 fi
 
+# Umwandlung der Invers-Dynamik-Regressor-Matrix in einen Vektor
+quelldat=$repo_pfad/codeexport/${robot_name}/tmp/invdyn_joint_fixb_regressor_minpar_occupancy_vector_matlab.m
+zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_invdynJ_fixb_regmin2vec.m
+if [ -f $quelldat ]; then
+  cat $head_pfad/robot_matlabtmp_invdynJ_fixb_regmin2vec.head.m > $zieldat
+  printf "%% From ${quelldat##*/}\n" >> $zieldat
+  cat $quelldat >> $zieldat
+  source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0
+else
+  echo "Code in ${quelldat##*/} nicht gefunden."
+fi
+
+# Invers-Dynamik-Funktion mit Multiplikation von Regressormatrix und Parametervektor
+quelldat=$repo_pfad/codeexport/${robot_name}/tmp/invdyn_joint_fixb_mdp_mult_matlab.m
+zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_invdynJ_fixb_mdp_slag_vr.m
+if [ -f $quelldat ]; then
+  cat $head_pfad/robot_matlabtmp_invdynJ_fixb_mdp_vr.head.m > $zieldat
+  printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+  echo "%\$cgargs {zeros(%robot_NTAUJFIXBREGNN%,1), zeros(%NMPVFIXB%,1)}" >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_MDPFIXB.m >> $zieldat
+  printf "\n%%%% Variable Initialization" > ${quelldat}.subsvar
+  cat $tmp_pfad/robot_matlabtmp_par_MDPFIXB.m >> ${quelldat}.subsvar
+  printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+  cat $quelldat >> $zieldat
+  source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
+else
+  echo "Code in ${quelldat##*/} nicht gefunden."
+fi
+
+
 # Generiere zwei verschiedene Regressorformen:
 # Minimalparameterregressor (rm=1) und Inertialparameterregressor (rm=2)
 for (( rm=1; rm<=2; rm++ ))

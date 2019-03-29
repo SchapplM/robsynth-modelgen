@@ -4,7 +4,7 @@
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="100" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -741,7 +741,44 @@ end if:</Text-field>
 end if:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1758" drawlabel="true">
+<Group labelreference="L1887" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Regressor-Matrix als Vektor hinschreiben. Dabei Null-<Font encoding="UTF-8">Eintr\303\244ge herausfinden und nicht weiter ber\303\274cksichtigen.
+Dadurch wird die obere rechte Dreiecksform der Regressor-Matrix ausgenutzt.</Font></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1889" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion6" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true"># Platzhalter-Vektor f\303\274r alle Eintr\303\244ge der Regressor-Matrix
+Reg_Vector := Matrix(ColumnDimension(tau_regressor_s)*RowDimension(tau_regressor_s), 1):
+# Gelenkmoment in Abh\303\244ngigkeit des Regressor-Vektors (RV)
+tauJ_RV := Matrix(NQJ, 1):
+kk := 0: # Z\303\244hler f\303\274r laufende Nummer des Regressor-Vektors
+for i from 1 to ColumnDimension(tau_regressor_s) do
+  for j from 1 to RowDimension(tau_regressor_s)-6 do
+    # Gehe Spalten- und dann Zeilenweise durch die Regressormatrix (nur Gelenk-Teil)
+    if tau_regressor_s(j+6,i) &lt;&gt; 0 then # Eintrag ungleich Null
+    	 kk := kk + 1:
+    	 # Regressor-Vektor-Eintrag als Platzhalter direkt so, wie er in Matlab-Funktion gebraucht wird (&quot;RV&quot; ist Eingabe der Matlab-Funktion).
+    	 rv_kk := parse(sprintf(&quot;RV(%d)&quot;, kk)):
+    	 # Eintrag f\303\274r Regressor-Vektor so schreiben, dass er in einer Matlab-Funktion aus der Regressor-Matrix gebildet werden kann
+    	 Reg_Vector(kk,1) := parse(sprintf(&quot;RM(%d,%d)&quot;, j, i)):
+    	 # Gelenkmoment aus Multiplikation mit Parametervektor. Dadurch Berechnung unter Ausnutzung der Nullen.
+    	 tauJ_RV(j) := tauJ_RV(j) + rv_kk*PV(i):
+    end if:
+  end do:
+end do:
+# K\303\274rzen des Regressor-Vektors auf die tats\303\244chlich benutzten Eintr\303\244ge
+Reg_Vector := Reg_Vector(1..kk,..):</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L1899" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save Reg_Vector, sprintf(&quot;../codeexport/%s/tmp/invdyn_joint_%s_%s_occupancy_vector_maple&quot;, robot_name, expstring, regressor_modus):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1895" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(Reg_Vector, sprintf(&quot;../codeexport/%s/tmp/invdyn_joint_%s_%s_occupancy_vector_matlab.m&quot;, robot_name, expstring, regressor_modus), codegen_opt):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1898" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(tauJ_RV, sprintf(&quot;../codeexport/%s/tmp/invdyn_joint_%s_%s_mult_matlab.m&quot;, robot_name, expstring, regshortname), codegen_opt):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1890" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
