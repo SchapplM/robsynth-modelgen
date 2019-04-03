@@ -8,13 +8,14 @@
 % %INPUT_LEGFRAME%
 % %INPUT_PKIN%
 % %INPUT_KOPPEL%
+% %INPUT_MDPFIXB_P%
 
 % Output:
-% tau_reg [%N_XP%*(%N_XP%+1)/2x%NMPVPARA%]
+% MMX [%N_XP%x%N_XP%]
 %   minimal parameter regressor of inertia matrix for parallel robot
-%   in actuation coordinates
+%   in task space
 
 % %VERSIONINFO%
 
-function tau_reg = %FN%(xP, qJ, legFrame, ...
-  koppelP, pkin)
+function MMX = %FN%(xP, qJ, legFrame, ...
+  koppelP, pkin, MDP)

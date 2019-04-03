@@ -148,6 +148,12 @@ echo "YYFP = Ifges(${j},2);" >> $tmp_pfad/robot_matlabtmp_par_If_parallel.m
 echo "YZFP = Ifges(${j},6);" >> $tmp_pfad/robot_matlabtmp_par_If_parallel.m
 echo "ZZFP = Ifges(${j},3);" >> $tmp_pfad/robot_matlabtmp_par_If_parallel.m
 
+# Alle Dynamikparameter als Vektor (Minimale Form, Fixed Base)
+echo "" > $tmp_pfad/robot_matlabtmp_par_MDPFIXB_parallel.m
+for (( i=1; i<=$robot_NMPVPARA; i++ )); do      
+  echo "MDP${i} = MDP(${i});" >> $tmp_pfad/robot_matlabtmp_par_MDPFIXB_parallel.m
+done
+
 # Orientierungen der Beinbasis-KOs
 echo "" > $tmp_pfad/robot_matlabtmp_legFrame_parallel.m
 for (( i=0; i<$parallel_NLEGS; i++ ))

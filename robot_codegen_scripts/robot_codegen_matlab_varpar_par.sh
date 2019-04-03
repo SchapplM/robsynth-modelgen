@@ -21,6 +21,9 @@ source robot_codegen_tmpvar_matlab_par.sh
 source robot_codegen_assert_matlab_par.sh
 source create_git_versioninfo.sh
 
+# Hilfsskript für Erzeugung symmetrischer Matrizen.
+source robot_codegen_matlab_preparation_par.sh
+
 # Korrigiere mit Maple generierte Matlab-Code-Dateien
 ./robot_codegen_matlabcode_postprocess_recursive.sh $repo_pfad/codeexport/$robot_name/tmp
 

@@ -10,7 +10,7 @@
 % %INPUT_KOPPEL%
 
 % Output:
-% tau_reg [%N_XP%x%NMPVPARA%]
+% tau_reg [%N_XP%*(%N_XP%+1)/2x%NMPVPARA%]
 %   minimal parameter regressor of inertia matrix for parallel robot
 %   in task space
 
