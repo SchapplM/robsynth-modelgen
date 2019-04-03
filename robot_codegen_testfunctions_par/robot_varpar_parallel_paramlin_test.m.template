@@ -150,4 +150,117 @@ for i = 1:n
 end
 fprintf('Tested regressor form vs inverse dynamic for %d random joint angles for %s\n', ...
   n, robot_name);
-
+  
+%% Teste Funktionsaufruf mit übergebenem Regressor gegen Regressormatrix
+% Die direkte Übergabe des Dynamik-Parametervektors ist effizienter als die
+% nachträgliche Multiplikation des Regressors
+for i = 1:n
+  q = [];
+  for j = 1:Q_N
+    q = [q;Q(1,(j-1)*NQJ+1:j*NQJ)]; %#ok<AGROW>
+  end
+  q = q';
+  xP = XP(i,:)';
+  xPD = XPD(i,:)';
+  xPDD = XPDD(i,:)';
+  g = G(i,:)';
+  
+  Jinv = %RN%_Jinv(xP, q, pkin, koppelP, ...
+    legFrame);
+  %% Dynamik in Plattform-Koordinaten
+  tauX_reg = %RN%_invdyn_para_pf_regmin(xP, xPD, xPDD, q, g, legFrame, ...
+    koppelP, pkin);
+  tauX_MPV = tauX_reg*MPV;
+  tauX_func = %RN%_invdyn_para_pf_mdp(xP, xPD, xPDD, q, g, legFrame, ...
+    koppelP, pkin, MPV);
+  DeltaX = tauX_MPV - tauX_func;
+  if any(abs(DeltaX) > 1e6*eps(tauX_MPV))
+    error('Inverse dynamics (platform coordinates) from parameter regressor does not match with pre-multiplied calculation.')
+  end
+  
+  %% Gravitationsvektor in Plattform-Koordinaten
+  taugX_reg = %RN%_gravload_para_pf_regmin(xP, q, g, legFrame, ...
+    koppelP, pkin);
+  taugX_MPV = taugX_reg*MPV;
+  taugX_func = %RN%_gravload_para_pf_mdp(xP, q, g, legFrame, ...
+    koppelP, pkin, MPV);
+  DeltagX = taugX_MPV - taugX_func;
+  if any(abs(DeltagX) > 1e6*eps(taugX_MPV))
+    error('Grav Load (platform coordinates) from parameter regressor does not match with pre-multiplied calculation.')
+  end
+  
+  %% Coriolisvektor in Plattform-Koordinaten
+  taucX_reg = %RN%_coriolisvec_para_pf_regmin(xP, xPD, q, legFrame, ...
+    koppelP, pkin);
+  taucX_MPV = taucX_reg*MPV;
+  taucX_func = %RN%_coriolisvec_para_pf_mdp(xP, xPD, q, legFrame, ...
+    koppelP, pkin, MPV);
+  DeltacX = taucX_MPV - taucX_func;
+  if any(abs(DeltacX) > 1e6*eps(taucX_MPV))
+    error('Coriolis-vector (platform coordinates) from parameter regressor does not match with pre-multiplied calculation.')
+  end
+  
+  %% Massenmatrix in Plattform-Koordinaten
+  MMX_vp2 = %RN%_inertia_para_pf_slag_vp2(xP, q, legFrame, ...
+    koppelP, pkin, m, mrSges, Ifges);
+  MMX_reg = %RN%_inertia_para_pf_regmin(xP, q, legFrame, ...
+    koppelP, pkin);
+  MMX_MPV_vec = MMX_reg*MPV;
+  MMX_MPV = vec2symmat(MMX_MPV_vec);
+  MMX_func = %RN%_inertia_para_pf_mdp(xP, q, legFrame, ...
+    koppelP, pkin, MPV);
+  DeltaMMX = MMX_MPV - MMX_func;
+  if any(abs(DeltaMMX) > 1e6*eps(MMX_MPV))
+    error('Inertia matrix (platform coordinates) from parameter regressor does not match with pre-multiplied calculation.')
+  end
+  
+  %% Dynamik in Antriebskoordinaten
+  if N_XP <= 4 && ~isempty(fileparts(which('%RN%_invdyn_para_qa_slag_vp2')))
+    % nur testen, falls Funktionen auch generiert wurden.
+    tauA_reg = %RN%_invdyn_para_qa_regmin(xP, xPD, xPDD, q, g, legFrame, ...
+      koppelP, pkin);
+    tauA_MPV = tauA_reg*MPV;
+    tauA_func = %RN%_invdyn_para_qa_mdp(xP, xPD, xPDD, q, g, legFrame, ...
+      koppelP, pkin, MPV);
+    DeltaA = tauA_MPV - tauA_func;
+    if any(abs(DeltaA) > 1e6*eps(tauA_MPV))
+      error('Inverse dynamics (actuation coordinates) from parameter regressor does not match with pre-multiplied calculation.')
+    end
+    
+    %% Gravitationsvektor in Antriebskoordinaten
+    taugA_reg = %RN%_gravload_para_qa_regmin(xP, q, g, legFrame, ...
+      koppelP, pkin);
+    taugA_MPV = taugA_reg*MPV;
+    taugA_func = %RN%_gravload_para_qa_mdp(xP, q, g, legFrame, ...
+      koppelP, pkin, MPV);
+    DeltagA = taugA_MPV - taugA_func;
+    if any(abs(DeltagA) > 1e6*eps(taugA_MPV))
+      error('Grav Load (actuation coordinates) from parameter regressor does not match with pre-multiplied calculation.')
+    end
+    
+    %% Coriolisvektor in Antriebskoordinaten
+    taucA_reg = %RN%_coriolisvec_para_qa_regmin(xP, xPD, q, legFrame, ...
+      koppelP, pkin);
+    taucA_MPV = taucA_reg*MPV;
+    taucA_func = %RN%_coriolisvec_para_qa_mdp(xP, xPD, q, legFrame, ...
+      koppelP, pkin, MPV);
+    DeltacA = taucA_MPV - taucA_func;
+    if any(abs(DeltacA) > 1e6*eps(taucA_MPV))
+      error('Coriolis-vector (actuation coordinates) from parameter regressor does not match with pre-multiplied calculation.')
+    end
+    
+    %% Massenmatrix in Antriebskoordinaten
+    MMA_reg = %RN%_inertia_para_qa_regmin(xP, q, legFrame, ...
+      koppelP, pkin);
+    MMA_MPV_vec = MMA_reg*MPV;
+    MMA_MPV = vec2symmat(MMA_MPV_vec);
+    MMA_func = %RN%_inertia_para_qa_mdp(xP, q, legFrame, ...
+      koppelP, pkin, MPV);
+    DeltaMMA = MMA_MPV - MMA_func;
+    if any(abs(DeltaA) > 1e6*eps(tauA_MPV))
+      error('Inertia matrix (actuation coordinates) from parameter regressor does not match with pre-multiplied calculation.')
+    end
+  end
+end
+fprintf('Tested inverse dynamics functions with parameter vector input for %d random joint angles for %s\n', ...
+  n, robot_name);
