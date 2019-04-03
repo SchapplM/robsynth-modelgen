@@ -664,6 +664,31 @@ greg_x := gregRed:</Text-field>
 </Input>
 </Group>
 </Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">PKM-Dynamik-Funktionen mit MPV bereits eingesetzt</Text-field></Title>
+<Group labelreference="L3518" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Erzeuge MPV-Vektor</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3522" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">nMDP := RowDimension(paramMinRed):</Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L14" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion19" expanded="true" visible="true" pixel-width="538" pixel-height="100" code-language="text/maple" autoexpand="false" wrapping="false" show-border="true" code-line-numbers="true">PV := Matrix(nMDP,1):
+for i from 1 to nMDP do
+  PV(i,1) := parse(sprintf(&quot;MDP%d%&quot;, i)):
+end do:</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L3519" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tau_x_mdp := tau_x.PV:
+MMreg_x_mdp := MMreg_x.PV:
+Creg_x_mdp := Creg_x.PV:
+greg_x_mdp := greg_x.PV:
+
+tau_qa_mdp := tau_qa.PV:
+MMreg_qa_mdp := MMreg_qa.PV:
+Creg_qa_mdp := Creg_qa.PV:
+greg_qa_mdp := greg_qa.PV:</Text-field>
+</Input>
+</Group>
+</Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Export</Text-field></Title>
 <Group labelreference="L3161" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal">Matlab Export: Floating base
@@ -694,6 +719,26 @@ end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 </Group><CodeEditor-ExecGroup view="presentation" labelreference="L3416" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion10" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autoexpand="true" wrapping="true" show-border="true" code-line-numbers="true">MatlabExport(paramMinRed, sprintf(&quot;../codeexport/%s/tmp/minimal_parameter_parrob_matlab.m&quot;, robot_name), codegen_opt):
 MatlabExport(RowParamMin, sprintf(&quot;../codeexport/%s/tmp/RowMinPar_parallel.m&quot;, robot_name), 2);</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L3417" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
+<Group labelreference="L3525" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Matlab Export: PKM-Dynamik-Funktionen mit MPV bereits eingesetzt</Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L19" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion20" expanded="true" visible="true" pixel-width="1166" pixel-height="264" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">if codeexport_invdyn then
+  MatlabExport(tau_x_mdp, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_reg_mdp_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(MMreg_x_mdp, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_MMreg_mdp_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(Creg_x_mdp, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_tauCreg_mdp_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(greg_x_mdp, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_taugreg_mdp_matlab.m&quot;, robot_name), codegen_opt):
+end if:
+
+if codeexport_invdyn and RowDimension(Jinv) &lt; 5 and codeexport_actcoord then
+  MatlabExport(tau_qa_mdp, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_actcoord_reg_mdp_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(MMreg_qa_mdp, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_actcoord_MMreg_mdp_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(Creg_qa_mdp, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_actcoord_tauCreg_mdp_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(greg_qa_mdp, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_actcoord_taugreg_mdp_matlab.m&quot;, robot_name), codegen_opt):
+end if:</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group hide-input="false" labelreference="L3527" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>

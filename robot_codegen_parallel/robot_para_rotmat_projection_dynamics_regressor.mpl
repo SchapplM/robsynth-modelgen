@@ -366,6 +366,22 @@ tau_x := ARed:
 MMreg_x := MMregRed:
 Creg_x := CregRed:
 greg_x := gregRed:
+# PKM-Dynamik-Funktionen mit MPV bereits eingesetzt
+# Erzeuge MPV-Vektor
+nMDP := RowDimension(paramMinRed):
+PV := Matrix(nMDP,1):
+for i from 1 to nMDP do
+  PV(i,1) := parse(sprintf("MDP%d%", i)):
+end do:
+tau_x_mdp := tau_x.PV:
+MMreg_x_mdp := MMreg_x.PV:
+Creg_x_mdp := Creg_x.PV:
+greg_x_mdp := greg_x.PV:
+
+tau_qa_mdp := tau_qa.PV:
+MMreg_qa_mdp := MMreg_qa.PV:
+Creg_qa_mdp := Creg_qa.PV:
+greg_qa_mdp := greg_qa.PV:
 # Export
 # Matlab Export: Floating base
 # Berechnung der Basis-Belastung ist für manche Basis-Darstellungen falsch (siehe oben unter Gravitationslast).
@@ -386,4 +402,19 @@ end if:
 
 MatlabExport(paramMinRed, sprintf("../codeexport/%s/tmp/minimal_parameter_parrob_matlab.m", robot_name), codegen_opt):
 MatlabExport(RowParamMin, sprintf("../codeexport/%s/tmp/RowMinPar_parallel.m", robot_name), 2);
+
+# Matlab Export: PKM-Dynamik-Funktionen mit MPV bereits eingesetzt
+if codeexport_invdyn then
+  MatlabExport(tau_x_mdp, sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_reg_mdp_matlab.m", robot_name), codegen_opt):
+  MatlabExport(MMreg_x_mdp, sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_MMreg_mdp_matlab.m", robot_name), codegen_opt):
+  MatlabExport(Creg_x_mdp, sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_tauCreg_mdp_matlab.m", robot_name), codegen_opt):
+  MatlabExport(greg_x_mdp, sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_taugreg_mdp_matlab.m", robot_name), codegen_opt):
+end if:
+
+if codeexport_invdyn and RowDimension(Jinv) < 5 and codeexport_actcoord then
+  MatlabExport(tau_qa_mdp, sprintf("../codeexport/%s/tmp/invdyn_para_actcoord_reg_mdp_matlab.m", robot_name), codegen_opt):
+  MatlabExport(MMreg_qa_mdp, sprintf("../codeexport/%s/tmp/invdyn_para_actcoord_MMreg_mdp_matlab.m", robot_name), codegen_opt):
+  MatlabExport(Creg_qa_mdp, sprintf("../codeexport/%s/tmp/invdyn_para_actcoord_tauCreg_mdp_matlab.m", robot_name), codegen_opt):
+  MatlabExport(greg_qa_mdp, sprintf("../codeexport/%s/tmp/invdyn_para_actcoord_taugreg_mdp_matlab.m", robot_name), codegen_opt):
+end if:
 
