@@ -58,8 +58,20 @@ printf "\n%% Aus Roboterdefinition\n" >> $zieldat
 echo "% Anzahl der Robotersegmente (inkl Basis)" >> $zieldat
 echo "NL = $robot_NL;" >> $zieldat
 echo "% Anzahl der Kinematikparameter" >> $zieldat
-echo "% pkin = [$robot_KP]'" >> $zieldat
 echo "NKP = $robot_NKP;" >> $zieldat
+echo "% Anzahl der Minimalkoordinaten (für hybride Systeme)" >> $zieldat
+echo "NQJ = $robot_NQJ;" >> $zieldat
+echo "% Namen der Kinematikparameter" >> $zieldat
+printf "pkin_names = {" >> $zieldat
+i=0
+for Kp in $robot_KP; do
+  i=$((i+1)); 
+  printf "\'$Kp\'" >> $zieldat
+  if [ "$i" -lt "$robot_NKP" ]; then
+    printf ", " >> $zieldat
+  fi
+done
+printf "};\n" >> $zieldat
 
 # Parameter-Funktion, die die MDH-Parameter für einen gegebenen Parametervektor pkin ausgibt
 zieldat=$fcn_pfad/${robot_name}_pkin2mdhparam.m

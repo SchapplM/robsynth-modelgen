@@ -12,7 +12,11 @@
 %   Anzahl der Starrkörper (inklusive Basis)
 % NKP [1x1]
 %   Anzahl der Kinematikparameter im Vektor `pkin`
+% NQJ [1x1]
+%   Anzahl der Minimalkoordinaten der kinematischen Kette
+% pkin_names (1x%NKP%) cell
+%   Namen aller Kinematik-Parameter im Vektor `pkin`
 
 % %VERSIONINFO%
 
-function [v_mdh, sigma_mdh, mu_mdh, NL, NKP] = %FN%()
+function [v_mdh, sigma_mdh, mu_mdh, NL, NKP, NQJ, pkin_names] = %FN%()
