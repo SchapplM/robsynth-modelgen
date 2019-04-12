@@ -93,3 +93,6 @@ zieldat=$fcn_pfad/${robot_name}_mdhparam2pkin.m
 printf "\n%% Aus parameter_kin_from_mdh_matlab.m\n" >> $zieldat
 cat $repo_pfad/codeexport/${robot_name}/tmp/parameter_kin_from_mdh_matlab.m >> $zieldat
 source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0
+if [ "$robot_KP" == "dummy" ]; then
+  printf "pkin = NaN;%% Dummy-Wert, da pkin nicht leer sein soll\n" >> $zieldat
+fi
