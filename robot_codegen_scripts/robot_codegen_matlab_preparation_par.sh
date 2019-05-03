@@ -3,12 +3,12 @@
 #
 # Dieses Skript im Ordner ausführen, in dem es im Repo liegt
 
-# Moritz Schappler, schappler@imes.uni-hannover.de, 2018-05
-# (C) Institut für mechatronische Systeme, Leibniz Universität Hannover
+# Moritz Schappler, moritz.schappler@imes.uni-hannover.de, 2018-05
+# (C) Institut für Mechatronische Systeme, Leibniz Universität Hannover
 
 repo_pfad=$(pwd)/..
 # Initialisiere Variablen
-source $repo_pfad/robot_codegen_definitions/robot_env.sh
+source $repo_pfad/robot_codegen_definitions/robot_env_par.sh
 
 # Umrechnung von Dreiecksmatrix einer symmetrischer Matrix als Vektor geschrieben in eine symmetrische Matrix
 $repo_pfad/scripts/run_maple_script.sh $repo_pfad/helper/robot_gen_symmat2vector_parrob.mpl
