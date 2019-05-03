@@ -695,10 +695,12 @@ Berechnet die Energie des Systems mit unterschiedlichen Darstellungsweisen. Sieh
 
 ### Dynamik
 
-Berechnet die Dynamik nach dem Lagrange-Formalismus. Siehe Kapitel Dynamik in [OrtmaierRobI](#quellen). Zur Berechnung der Regressorform siehe [KhalilDom2002](#quellen).
+Berechnet die Dynamik. Siehe Kapitel Dynamik in [OrtmaierRobI](#quellen). Zur Berechnung der Regressorform siehe [KhalilDom2002](#quellen).
+
+Berechnung mit dem Lagrange-Formalismus:
 ```
 /robot_codegen_dynamics
-  robot_tree_floatb_rotmat_dynamics_worldframe_par12.mw
+  robot_tree_floatb_rotmat_lagrange_worldframe_par12.mw
       <-- robot_env
       <-- robot_tree_floatb_definitions
       <-- robot_energy_potential_floatb_worldframe_par1_maple.m
@@ -713,6 +715,34 @@ Berechnet die Dynamik nach dem Lagrange-Formalismus. Siehe Kapitel Dynamik in [O
       <-- robot_tree_floatb_definitions
       <-- energy_kinetic_fixb_regressor_minpar_maple.m
       <-- energy_potential_fixb_regressor_minpar_maple.m
+```
+
+Berechnung der Dynamik mit dem Newton-Euler-Verfahren:
+```
+/robot_codegen_kinematics
+  robot_tree_acceleration_mdh_angles.mw
+      <-- robot_env
+      <-- velocity_mdh_angles_maple.m
+      --> acceleration_mdh_angles_maple.m
+  robot_tree_floatb_rotmat_acceleration_linkframe.mw
+      <-- robot_env
+      <-- velocity_mdh_angles_maple.m
+      <-- acceleration_mdh_angles_maple.m
+      <-- kinematics_rotmat_maple.m
+      <-- velocity_linkframe_floatb_twist_maple.m
+      --> acceleration_linkframe_floatb_twist_maple.m
+/robot_codegen_dynamics
+  robot_tree_fixb_dynamics_NewtonEuler_linkframe_par12.mw
+      <-- robot_env
+      <-- robot_tree_floatb_definitions
+      <-- kinematics_rotmat_maple.m
+      <-- velocity_worldframe_floatb_twist_maple.m
+      <-- velocity_mdh_angles_maple.m
+      <-- acceleration_mdh_angles_maple.m
+      <-- acceleration_linkframe_floatb_twist_maple.m
+      --> invdyn_floatb_twist_NewtonEuler_linkframe_maple.m
+  robot_chain_fixb_rotmat_NewtonEuler_regressor.mw
+      <-- invdyn_floatb_twist_NewtonEuler_linkframe_maple.m
 ```
 
 ### Parallele Roboter

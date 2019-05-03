@@ -87,11 +87,16 @@ do
       robot_tree_velocity_mdh_angles.mpl
   "
 
-  dateiliste_vel="
+  dateiliste_velacc="
       robot_tree_floatb_rotmat_velocity_worldframe_par1.mpl
       robot_tree_floatb_rotmat_velocity_linkframe.mpl
   "
-
+  if [ "$CG_MINIMAL" == "0" ]; then
+    dateiliste_velacc="
+          $dateiliste_velacc
+          robot_tree_acceleration_mdh_angles.mpl
+    "
+  fi
   if [ "$CG_MINIMAL" == "0" ]; then
     dateiliste_en="
         robot_tree_floatb_rotmat_energy_worldframe_par1.mpl
@@ -104,13 +109,14 @@ do
         robot_tree_floatb_rotmat_energy_linkframe_par2.mpl
     "
   fi;
-  dateiliste_lag="
+  dateiliste_dyndep="
       robot_tree_floatb_rotmat_lagrange_worldframe_par2.mpl
   "
   if [ "$CG_MINIMAL" == "0" ]; then
-    dateiliste_lag="
-        $dateiliste_lag
+    dateiliste_dyndep="
+        $dateiliste_dyndep
         robot_tree_floatb_rotmat_lagrange_worldframe_par1.mpl
+        robot_tree_floatb_rotmat_acceleration_linkframe.mpl
     "
   fi;
   dateiliste_dyn="
@@ -130,6 +136,7 @@ do
         robot_tree_floatb_rotmat_dynamics_worldframe_par2_cormat.mpl
         robot_tree_floatb_rotmat_dynamics_worldframe_par2_invdyn.mpl
         robot_tree_floatb_rotmat_dynamics_worldframe_par2_inertiaD.mpl
+        robot_tree_fixb_dynamics_NewtonEuler_linkframe_par12.mpl
     "
   fi;
 
@@ -154,6 +161,7 @@ do
       robot_chain_floatb_rotmat_dynamics_regressor_pv2_inertia.mpl
       robot_chain_floatb_rotmat_dynamics_regressor_pv2_inertiaD.mpl
       robot_chain_floatb_rotmat_dynamics_regressor_pv2_invdyn.mpl
+      robot_chain_fixb_rotmat_NewtonEuler_regressor.mpl
     "
   fi;
   # Zusätzliche Maple-Skripte speziell für dieses System (benutzerdefiniert)
@@ -184,7 +192,7 @@ do
     echo "Starte Maple-Skript $filename"
     $repo_pfad/scripts/run_maple_script.sh $dir/$filename
   done
-  for wsvel in ${dateiliste_vel[@]}
+  for wsvel in ${dateiliste_velacc[@]}
   do
     mpldat_full=$workdir/$wsvel
     filename="${mpldat_full##*/}"
@@ -193,7 +201,7 @@ do
     $repo_pfad/scripts/run_maple_script.sh $dir/$filename &
   done
   wait
-  echo "FERTIG mit Geschwindigkeit für ${basemeth}"
+  echo "FERTIG mit Geschwindigkeit/MDH-Beschleunigung für ${basemeth}"
 
   for wsen in ${dateiliste_en[@]}
   do
@@ -205,8 +213,8 @@ do
   done
   wait
   echo "FERTIG mit Energie für ${basemeth}"
-
-  for wslag in ${dateiliste_lag[@]}
+  
+  for wslag in ${dateiliste_dyndep[@]}
   do
     mpldat_full=$workdir/$wslag
     filename="${mpldat_full##*/}"
