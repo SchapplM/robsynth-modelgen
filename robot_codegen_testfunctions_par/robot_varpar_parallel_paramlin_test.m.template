@@ -60,6 +60,13 @@ for i = 1:n
   if any(abs(DeltagX) > 1e6*eps(taugX_MPV))
     error('Gravload (platform coordinates) does not match with regressor form.')
   end
+  % Gravitationsvektor-Regressor gegen Dynamik-Regressor
+  tauX_reg = %RN%_invdyn_para_pf_regmin(xP, xPD*0, xPDD*0, q, g, legFrame, ...
+    koppelP, pkin);
+  Diff_tau_taug = taugX_reg - tauX_reg;
+  if any(abs(Diff_tau_taug(:)) > 1e-10)
+    error('Inverse Dynamik Regressor stimmt nicht gegen Gravitation-Regressor');
+  end
   
   %% Coriolisvektor in Plattform-Koordinaten
   taucX_vp2 = %RN%_coriolisvec_para_pf_slag_vp2(xP, xPD, q, legFrame, ...
@@ -71,6 +78,14 @@ for i = 1:n
   if any(abs(DeltacX) > 1e6*eps(taucX_MPV))
     error('Coriolis Vector (platform coordinates) does not match with regressor form.')
   end
+  % Coriolisvektor-Regressor gegen Dynamik-Regressor
+  tauX_reg = %RN%_invdyn_para_pf_regmin(xP, xPD, xPDD*0, q, g*0, legFrame, ...
+    koppelP, pkin);
+  Diff_tau_tauc = taucX_reg - tauX_reg;
+  if any(abs(Diff_tau_tauc(:)) > 1e-10)
+    error('Inverse Dynamik Regressor stimmt nicht gegen Coriolis-Regressor');
+  end
+  
   
   %% Massenmatrix in Plattform-Koordinaten
   MMX_vp2 = %RN%_inertia_para_pf_slag_vp2(xP, q, legFrame, ...
