@@ -4,8 +4,9 @@
 #
 # Dieses Skript im Ordner ausführen, in dem es im Repo liegt
 
-# Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
-# (C) Institut für Regelungstechnik, Leibniz Universität Hannover
+# Tim-David Job (Hiwi bei Moritz Schappler), 2018-04
+# Moritz Schappler, moritz.schappler@imes.uni-hannover.de, 2018-04
+# (C) Institut für Mechatronische Systeme, Leibniz Universität Hannover
 
 echo "Generiere Matlabfunktionen: Dynamik nach Newton-Euler (explizit), fixed-base"
 
@@ -22,62 +23,54 @@ forcematlab=( invdynJ invdynB invdynJB invdynf invdynm )
 basemethodenames=( twist ) # eulxyz
 
 # Erstelle Matlab-Funktionen der explizit ausgerechneten Dynamik mit Newton-Euler (nicht in Regressorform)
-for (( dynpar=2; dynpar<=2; dynpar++ ));
-do
-
-  for basemeth in "${basemethodenames[@]}"
-  do
-	
-		# Generiere Dynamik für: tauJ, tauB, tauJB, Schnittkräfte f und Schnittmomente m
-		for (( force=0; force<=4; force++ )) 
-		do
-			maple_force=${forcemaple[$force]}
-			matlab_force=${forcematlab[$force]}
-			
-			# Inverse Dynamik
-			quelldat=$repo_pfad/codeexport/${robot_name}/tmp/invdyn_fixb_NewtonEuler_linkframe_${maple_force}_par${dynpar}_matlab.m
-			zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_${matlab_force}_fixb_snew_vp${dynpar}.m
-			if [ -f $quelldat ]; then
-				cat $head_pfad/robot_matlabtmp_${matlab_force}_fixb_NewtonEuler_par${dynpar}.head.m > $zieldat
-				printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-				source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
-				source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
-				cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
-				cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
-				cat $tmp_pfad/robot_matlabtmp_assert_qJDD.m >> $zieldat
-				cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
-				cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
-				cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
-				if [ $dynpar == 1 ]; then
-					cat $tmp_pfad/robot_matlabtmp_assert_rcom.m >> $zieldat
-					cat $tmp_pfad/robot_matlabtmp_assert_Ic.m >> $zieldat
-				else
-					cat $tmp_pfad/robot_matlabtmp_assert_mrcom.m >> $zieldat
-					cat $tmp_pfad/robot_matlabtmp_assert_If.m >> $zieldat
-				fi
-			
-				printf "\n%%%% Variable Initialization" > ${quelldat}.subsvar
-				cat $tmp_pfad/robot_matlabtmp_qJ.m >> ${quelldat}.subsvar
-				cat $tmp_pfad/robot_matlabtmp_qJD.m >> ${quelldat}.subsvar
-				cat $tmp_pfad/robot_matlabtmp_qJDD.m >> ${quelldat}.subsvar
-				cat $tmp_pfad/robot_matlabtmp_g.m >> ${quelldat}.subsvar
-				cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
-				cat $tmp_pfad/robot_matlabtmp_par_m.m >> ${quelldat}.subsvar
-				if [ $dynpar == 1 ]; then
-					cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> ${quelldat}.subsvar
-					cat $tmp_pfad/robot_matlabtmp_par_Ic.m >> ${quelldat}.subsvar
-				else
-					cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> ${quelldat}.subsvar
-					cat $tmp_pfad/robot_matlabtmp_par_If.m >> ${quelldat}.subsvar
-				fi
-				printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
-				sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
-				cat $quelldat >> $zieldat
-			else
-				echo "Code in ${quelldat##*/} nicht gefunden."
-			fi
-			source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
-
-		done # tauJ, tauB, tauJB, Schnittkräfte f und Schnittmomente m
+for (( dynpar=2; dynpar<=2; dynpar++ )); do
+  for basemeth in "${basemethodenames[@]}"; do
+    # Generiere Dynamik für: tauJ, tauB, tauJB, Schnittkräfte f und Schnittmomente m
+    for (( force=0; force<=4; force++ )); do
+      maple_force=${forcemaple[$force]}
+      matlab_force=${forcematlab[$force]}
+      # Inverse Dynamik
+      quelldat=$repo_pfad/codeexport/${robot_name}/tmp/invdyn_fixb_NewtonEuler_linkframe_${maple_force}_par${dynpar}_matlab.m
+      zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_${matlab_force}_fixb_snew_vp${dynpar}.m
+      if [ -f $quelldat ]; then
+        cat $head_pfad/robot_matlabtmp_${matlab_force}_fixb_NewtonEuler_par${dynpar}.head.m > $zieldat
+        printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+        source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+        source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
+        cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_assert_qJDD.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+        cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
+        if [ $dynpar == 1 ]; then
+          cat $tmp_pfad/robot_matlabtmp_assert_rcom.m >> $zieldat
+          cat $tmp_pfad/robot_matlabtmp_assert_Ic.m >> $zieldat
+        else
+          cat $tmp_pfad/robot_matlabtmp_assert_mrcom.m >> $zieldat
+          cat $tmp_pfad/robot_matlabtmp_assert_If.m >> $zieldat
+        fi
+        printf "\n%%%% Variable Initialization" > ${quelldat}.subsvar
+        cat $tmp_pfad/robot_matlabtmp_qJ.m >> ${quelldat}.subsvar
+        cat $tmp_pfad/robot_matlabtmp_qJD.m >> ${quelldat}.subsvar
+        cat $tmp_pfad/robot_matlabtmp_qJDD.m >> ${quelldat}.subsvar
+        cat $tmp_pfad/robot_matlabtmp_g.m >> ${quelldat}.subsvar
+        cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
+        cat $tmp_pfad/robot_matlabtmp_par_m.m >> ${quelldat}.subsvar
+        if [ $dynpar == 1 ]; then
+          cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> ${quelldat}.subsvar
+          cat $tmp_pfad/robot_matlabtmp_par_Ic.m >> ${quelldat}.subsvar
+        else
+          cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> ${quelldat}.subsvar
+          cat $tmp_pfad/robot_matlabtmp_par_If.m >> ${quelldat}.subsvar
+        fi
+        printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+        sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
+        cat $quelldat >> $zieldat
+      else
+        echo "Code in ${quelldat##*/} nicht gefunden."
+      fi
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
+    done # tauJ, tauB, tauJB, Schnittkräfte f und Schnittmomente m
   done # floatb_twist/floatb_eulangrpy
 done # par1/par2

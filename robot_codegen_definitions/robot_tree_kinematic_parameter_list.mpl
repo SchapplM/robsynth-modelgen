@@ -16,6 +16,7 @@ interface(rtablesize=100): # Damit der ganze Parametervektor ausgegeben werden k
 with(LinearAlgebra):
 read "../helper/proc_MatlabExport":
 read "../helper/proc_convert_t_s":
+codegen_act := true:
 # Lese Umgebungsvariable für Codegenerierung.
 read "../robot_codegen_definitions/robot_env":
 printf("Generiere Kinematik-Parametervektor für %s\n",robot_name):
@@ -162,7 +163,11 @@ for i from 1 to RowDimension(pkin_subs_mdh) do
     pkin_subs_mdh(i) := subs( {pkt3i(j)=pkt1_ph(j)}, pkin_subs_mdh(i) ):
   end do:
 end do:
-MatlabExport(pkin_subs_mdh, sprintf("../codeexport/%s/tmp/parameter_kin_from_mdh_matlab.m", robot_name), 2):
+if codegen_act then
+  interface(warnlevel=0): # Unterdrücke die folgende Warnung (weil MDH-Parameter als Funktionsnamen interpretiert werden. Code funktioniert trotzdem.)
+  MatlabExport(pkin_subs_mdh, sprintf("../codeexport/%s/tmp/parameter_kin_from_mdh_matlab.m", robot_name), 2):
+  interface(warnlevel=3):
+end if:
 # Ausgabe
 # MDH-Tabelle ausgeben
 interface(rtablesize=100):
@@ -171,5 +176,5 @@ Test:=<<"i" | "sigma" | "mu"|"beta"|"b"|"alpha"|"a"|"theta"|"d"|"v">,Test>:
 printf("MDH-Tabelle für %s:\n", robot_name):
 Test;
 printf("Kinematik-Parameter für %s: %dx%d\n", robot_name, RowDimension(pkin), ColumnDimension(pkin)):
-pkin;
+Transpose(pkin);
 

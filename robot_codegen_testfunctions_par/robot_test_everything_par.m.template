@@ -1,8 +1,11 @@
 % Test script for all Matlab/Simulink functions for 
 % %RN%
 
-% Moritz Schappler, schappler@irt.uni-hannover.de, 2016-05
-% (C) Institut für Regelungstechnik, Universität Hannover
+% %VERSIONINFO%
+
+% Tim Job (Studienarbeit bei Moritz Schappler), 2018-12
+% Moritz Schappler, moritz.schappler@imes.uni-hannover.de
+% (C) Institut für Mechatronische Systeme, Universität Hannover
 
 clc
 clear

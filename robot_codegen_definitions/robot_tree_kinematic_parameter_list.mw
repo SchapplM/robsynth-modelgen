@@ -4,7 +4,7 @@
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="100" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -122,6 +122,10 @@ restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet
 </Group>
 <Group labelreference="L1789" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_convert_t_s&quot;:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1919" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_act := true:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1780" drawlabel="true">
@@ -428,7 +432,11 @@ end do:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1908" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(pkin_subs_mdh, sprintf(&quot;../codeexport/%s/tmp/parameter_kin_from_mdh_matlab.m&quot;, robot_name), 2):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">if codegen_act then
+  interface(warnlevel=0): # Unterdr\303\274cke die folgende Warnung (weil MDH-Parameter als Funktionsnamen interpretiert werden. Code funktioniert trotzdem.)
+  </Font>MatlabExport(pkin_subs_mdh, sprintf(&quot;../codeexport/%s/tmp/parameter_kin_from_mdh_matlab.m&quot;, robot_name), 2):
+  interface(warnlevel=3):
+end if:</Text-field>
 </Input>
 </Group>
 </Section>
@@ -459,7 +467,7 @@ Test;</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L1763" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">pkin;</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Transpose(pkin);</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1755" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">

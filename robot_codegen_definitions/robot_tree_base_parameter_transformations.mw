@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="2017" minor="3"/>
+<Version major="2018" minor="0"/>
 <Label-Scheme value="2" prefix=""/>
-<View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false">
+<View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -210,7 +210,9 @@ end do:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1803" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(K, sprintf(&quot;../codeexport/%s/tmp/PV2_MPV_transformation_linear_%s_matlab.m&quot;, robot_name, expstring), 2):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
+  MatlabExport(K, sprintf(&quot;../codeexport/%s/tmp/PV2_MPV_transformation_linear_%s_matlab.m&quot;, robot_name, expstring), 2):
+end:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1802" drawlabel="true">
@@ -245,7 +247,7 @@ P_d := Matrix(n, n_d): # f\303\274r [SousaCor2014] equ. (33)</Font></Text-field>
 <Group labelreference="L1842" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L2" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion3" expanded="true" visible="true" pixel-width="1530" pixel-height="720" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">for i from 1 to n_b do:
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L2" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion3" expanded="true" visible="true" pixel-width="1530" pixel-height="720" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">for i from 1 to n_b do:
   # gehe alle Zeilen durch und pr\303\274fe, ob der MPV nur aus einem Inertialparameter-Eintrag besteht   
   # falls er nicht aus einem Inertialparameter-Eintrag besteht, kommt der Basis-Eintrag nur in dieser Zeile vor.   
   # falls der MPV-Eintrag aus mehreren Inertialparameter-Eintr\303\244gen besteht, die nur hier vorkommen, wird der kleinere genommen (der weiter unten steht)
@@ -296,7 +298,7 @@ end do:
 <Group labelreference="L1827" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1843" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="891" pixel-height="324" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">i_d := 0:
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1843" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="891" pixel-height="324" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">i_d := 0:
 for j from 1 to n do:
   # Pr\303\274fe ob der betrachtete Parameter in der Permutationsmatrix f\303\274r linear unabh\303\244ngige vorkommt
   # Summe \303\274ber die Zeilen von P_b: Pr\303\274fe, ob linear unabh\303\244ngig
@@ -317,7 +319,7 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Transformationsmatrix K_d f\303\274llen. Setze K_d nur aus den Spalten von K f\303\274r die linear abh\303\244ngigen Inertialparameter zusammen
 K_d: Matrix zur Aufteilung des Minimalparametervektors in linear abh\303\244ngige und unabh\303\244ngige Inertialparameter</Font></Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L4" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion2" expanded="true" visible="true" pixel-width="1062" pixel-height="360" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">K_d:=Matrix(n_b, n_d):
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L4" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion2" expanded="true" visible="true" pixel-width="1062" pixel-height="360" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">K_d:=Matrix(n_b, n_d):
 j_Kd := 0:
 for j from 1 to n do:
   # Pr\303\274fe, ob der Inertialparameter j linear abh\303\244ngig ist.
@@ -350,9 +352,11 @@ end do:
 </Input>
 </Group>
 <Group labelreference="L1817" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(K_d, sprintf(&quot;../codeexport/%s/tmp/PV2_MPV_transformation_linear_dependant_%s_matlab.m&quot;, robot_name, expstring), 2):
-MatlabExport(P_b, sprintf(&quot;../codeexport/%s/tmp/PV2_permutation_linear_independant_%s_matlab.m&quot;, robot_name, expstring), 2):
-MatlabExport(P_d, sprintf(&quot;../codeexport/%s/tmp/PV2_permutation_linear_dependant_%s_matlab.m&quot;, robot_name, expstring), 2):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
+  MatlabExport(K_d, sprintf(&quot;../codeexport/%s/tmp/PV2_MPV_transformation_linear_dependant_%s_matlab.m&quot;, robot_name, expstring), 2):
+  MatlabExport(P_b, sprintf(&quot;../codeexport/%s/tmp/PV2_permutation_linear_independant_%s_matlab.m&quot;, robot_name, expstring), 2):
+  MatlabExport(P_d, sprintf(&quot;../codeexport/%s/tmp/PV2_permutation_linear_dependant_%s_matlab.m&quot;, robot_name, expstring), 2):
+end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1833" drawlabel="true">

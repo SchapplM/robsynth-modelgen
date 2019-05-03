@@ -58,7 +58,9 @@ for i to Paramvec_size do
   end do:
 end do:
 # Export der Umwandlung von Parametersatz 2 nach Minimalparameter (Matrix)
-MatlabExport(K, sprintf("../codeexport/%s/tmp/PV2_MPV_transformation_linear_%s_matlab.m", robot_name, expstring), 2):
+if codegen_act then
+  MatlabExport(K, sprintf("../codeexport/%s/tmp/PV2_MPV_transformation_linear_%s_matlab.m", robot_name, expstring), 2):
+end:
 save K, sprintf("../codeexport/%s/tmp/PV2_MPV_transformation_linear_dependant_%s_maple", robot_name, expstring):
 # Aufteilung der Matrixdarstellung in einzelne Teilmatrizen
 # Generate the Matrices required in [SousaCor2014] equ. (33)
@@ -73,6 +75,7 @@ n := n_b+n_d: # [SousaCor2014] equ. (31)
 P_b := Matrix(n, n_b): # für [SousaCor2014] equ. (33) 
 P_d := Matrix(n, n_d): # für [SousaCor2014] equ. (33)
 ;
+
 for i from 1 to n_b do:
   # gehe alle Zeilen durch und prüfe, ob der MPV nur aus einem Inertialparameter-Eintrag besteht   
   # falls er nicht aus einem Inertialparameter-Eintrag besteht, kommt der Basis-Eintrag nur in dieser Zeile vor.   
@@ -112,7 +115,9 @@ for i from 1 to n_b do:
     # printf("Keinen Basis-Inertialparameter in MPV Zeile %d gefunden.\n", i):
   end if:
 end do:
+
 # Alle linear abhängigen Parameter (der Rest) in andere Permutationsmatrix P_d packen
+
 i_d := 0:
 for j from 1 to n do:
   # Prüfe ob der betrachtete Parameter in der Permutationsmatrix für linear unabhängige vorkommt
@@ -156,7 +161,9 @@ delta_b := Transpose(P_b) . PV2: # Zur Überprüfung
 ;
 delta_d := Transpose(P_d) . PV2: # Zur Überprüfung
 ;
-MatlabExport(K_d, sprintf("../codeexport/%s/tmp/PV2_MPV_transformation_linear_dependant_%s_matlab.m", robot_name, expstring), 2):
-MatlabExport(P_b, sprintf("../codeexport/%s/tmp/PV2_permutation_linear_independant_%s_matlab.m", robot_name, expstring), 2):
-MatlabExport(P_d, sprintf("../codeexport/%s/tmp/PV2_permutation_linear_dependant_%s_matlab.m", robot_name, expstring), 2):
+if codegen_act then
+  MatlabExport(K_d, sprintf("../codeexport/%s/tmp/PV2_MPV_transformation_linear_dependant_%s_matlab.m", robot_name, expstring), 2):
+  MatlabExport(P_b, sprintf("../codeexport/%s/tmp/PV2_permutation_linear_independant_%s_matlab.m", robot_name, expstring), 2):
+  MatlabExport(P_d, sprintf("../codeexport/%s/tmp/PV2_permutation_linear_dependant_%s_matlab.m", robot_name, expstring), 2):
+end if:
 

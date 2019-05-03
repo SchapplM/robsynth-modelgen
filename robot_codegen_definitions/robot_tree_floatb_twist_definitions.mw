@@ -123,6 +123,10 @@ restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_convert_t_s&quot;:</Text-field>
 </Input>
 </Group>
+<Group labelreference="L1711" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_act := true:</Text-field>
+</Input>
+</Group>
 <Group labelreference="L1595" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Lese Umgebungsvariable f\303\274r Codegenerierung.</Font></Text-field>
 </Input>
@@ -436,49 +440,20 @@ end if:</Text-field>
 Benutze die Funktion convert_t_s, um eventuelle Substitutionsvariablen f\303\274r konstante Gelenkwinkel zu verwenden, da die Matlab-Terme auch mit substituierten Ausdr\303\274cken generiert werden.
 Zur Kennzeichnung von zeitabh\303\244ngigen und konstanten Ausdr\303\274cken kann &quot;delta1(t)&quot;, &quot;delta1&quot; und &quot;delta1s&quot; verwendet werden.</Font></Text-field>
 </Input>
-</Group>
-<Group labelreference="L1638" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(v, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_v_matlab.m&quot;, robot_name), 2):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1651" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(convert_t_s(a), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_a_matlab.m&quot;, robot_name), 2):</Text-field>
-</Input>
-</Group>
-<Group hide-input="false" hide-output="false" labelreference="L1650" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">d_export := d *~ (1-~sigma):
-MatlabExport(convert_t_s(d_export), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_d_matlab.m&quot;, robot_name), 2):</Text-field>
-</Input>
-</Group>
-<Group hide-output="false" labelreference="L1668" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">theta_export := theta *~ sigma:
-MatlabExport(convert_t_s(theta_export), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_theta_matlab.m&quot;, robot_name), 2):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1649" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(convert_t_s(b), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_b_matlab.m&quot;, robot_name), 2):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1645" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(convert_t_s(alpha), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_alpha_matlab.m&quot;, robot_name), 2):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1646" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(convert_t_s(beta), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_beta_matlab.m&quot;, robot_name), 2):</Text-field>
-</Input>
-</Group>
-<Group hide-output="false" labelreference="L1647" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(convert_t_s(qoffset), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_qoffset_matlab.m&quot;, robot_name), 2):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1664" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(sigma, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_sigma_matlab.m&quot;, robot_name), 2):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1688" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(mu, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_mu_matlab.m&quot;, robot_name), 2):</Text-field>
-</Input>
-</Group>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1714" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if codegen_act then
+  MatlabExport(v, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_v_matlab.m&quot;, robot_name), 2):
+  MatlabExport(convert_t_s(a), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_a_matlab.m&quot;, robot_name), 2):
+  d_export := d *~ (1-~sigma):
+  MatlabExport(convert_t_s(d_export), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_d_matlab.m&quot;, robot_name), 2):
+  theta_export := theta *~ sigma:
+  MatlabExport(convert_t_s(theta_export), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_theta_matlab.m&quot;, robot_name), 2):
+  MatlabExport(convert_t_s(b), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_b_matlab.m&quot;, robot_name), 2):
+  MatlabExport(convert_t_s(alpha), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_alpha_matlab.m&quot;, robot_name), 2):
+  MatlabExport(convert_t_s(beta), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_beta_matlab.m&quot;, robot_name), 2):
+  MatlabExport(convert_t_s(qoffset), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_qoffset_matlab.m&quot;, robot_name), 2):
+  MatlabExport(sigma, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_sigma_matlab.m&quot;, robot_name), 2):
+  MatlabExport(mu, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_mu_matlab.m&quot;, robot_name), 2):
+end:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L1669" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>

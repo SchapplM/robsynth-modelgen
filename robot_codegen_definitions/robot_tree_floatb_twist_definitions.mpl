@@ -17,6 +17,7 @@ interface(warnlevel=3):
 with(LinearAlgebra):
 read "../helper/proc_MatlabExport":
 read "../helper/proc_convert_t_s":
+codegen_act := true:
 # Lese Umgebungsvariable für Codegenerierung.
 read "../robot_codegen_definitions/robot_env":
 printf("Generiere Parameter für %s\n",robot_name):
@@ -166,16 +167,18 @@ save q_t, q_s, qD_t, qD_s, qDD_t, qDD_s, qJ_t, qJ_s, qJD_t, qJD_s, qJDD_t, qJDD_
 # Einzelne DH-Parameter als Matlab-Code exportieren. Damit lässt sich in Matlab ein passender Parametersatz generieren.
 # Benutze die Funktion convert_t_s, um eventuelle Substitutionsvariablen für konstante Gelenkwinkel zu verwenden, da die Matlab-Terme auch mit substituierten Ausdrücken generiert werden.
 # Zur Kennzeichnung von zeitabhängigen und konstanten Ausdrücken kann "delta1(t)", "delta1" und "delta1s" verwendet werden.
-MatlabExport(v, sprintf("../codeexport/%s/tmp/parameters_mdh_v_matlab.m", robot_name), 2):
-MatlabExport(convert_t_s(a), sprintf("../codeexport/%s/tmp/parameters_mdh_a_matlab.m", robot_name), 2):
-d_export := d *~ (1-~sigma):
-MatlabExport(convert_t_s(d_export), sprintf("../codeexport/%s/tmp/parameters_mdh_d_matlab.m", robot_name), 2):
-theta_export := theta *~ sigma:
-MatlabExport(convert_t_s(theta_export), sprintf("../codeexport/%s/tmp/parameters_mdh_theta_matlab.m", robot_name), 2):
-MatlabExport(convert_t_s(b), sprintf("../codeexport/%s/tmp/parameters_mdh_b_matlab.m", robot_name), 2):
-MatlabExport(convert_t_s(alpha), sprintf("../codeexport/%s/tmp/parameters_mdh_alpha_matlab.m", robot_name), 2):
-MatlabExport(convert_t_s(beta), sprintf("../codeexport/%s/tmp/parameters_mdh_beta_matlab.m", robot_name), 2):
-MatlabExport(convert_t_s(qoffset), sprintf("../codeexport/%s/tmp/parameters_mdh_qoffset_matlab.m", robot_name), 2):
-MatlabExport(sigma, sprintf("../codeexport/%s/tmp/parameters_mdh_sigma_matlab.m", robot_name), 2):
-MatlabExport(mu, sprintf("../codeexport/%s/tmp/parameters_mdh_mu_matlab.m", robot_name), 2):
+if codegen_act then
+  MatlabExport(v, sprintf("../codeexport/%s/tmp/parameters_mdh_v_matlab.m", robot_name), 2):
+  MatlabExport(convert_t_s(a), sprintf("../codeexport/%s/tmp/parameters_mdh_a_matlab.m", robot_name), 2):
+  d_export := d *~ (1-~sigma):
+  MatlabExport(convert_t_s(d_export), sprintf("../codeexport/%s/tmp/parameters_mdh_d_matlab.m", robot_name), 2):
+  theta_export := theta *~ sigma:
+  MatlabExport(convert_t_s(theta_export), sprintf("../codeexport/%s/tmp/parameters_mdh_theta_matlab.m", robot_name), 2):
+  MatlabExport(convert_t_s(b), sprintf("../codeexport/%s/tmp/parameters_mdh_b_matlab.m", robot_name), 2):
+  MatlabExport(convert_t_s(alpha), sprintf("../codeexport/%s/tmp/parameters_mdh_alpha_matlab.m", robot_name), 2):
+  MatlabExport(convert_t_s(beta), sprintf("../codeexport/%s/tmp/parameters_mdh_beta_matlab.m", robot_name), 2):
+  MatlabExport(convert_t_s(qoffset), sprintf("../codeexport/%s/tmp/parameters_mdh_qoffset_matlab.m", robot_name), 2):
+  MatlabExport(sigma, sprintf("../codeexport/%s/tmp/parameters_mdh_sigma_matlab.m", robot_name), 2):
+  MatlabExport(mu, sprintf("../codeexport/%s/tmp/parameters_mdh_mu_matlab.m", robot_name), 2):
+end:
 

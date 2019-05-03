@@ -66,5 +66,5 @@ dUdq_s := OutputLagrange[3]:
 save dUdq_s, sprintf("../codeexport/%s/tmp/floatb_%s_lagrange_dUdq_s_par%d_maple.m", robot_name, base_method_name, codegen_dynpar):
 save dTdq_s, sprintf("../codeexport/%s/tmp/floatb_%s_lagrange_dTdq_s_par%d_maple.m", robot_name, base_method_name, codegen_dynpar):
 save dTdqDdt_s, sprintf("../codeexport/%s/tmp/floatb_%s_lagrange_dTdqDdt_s_par%d_maple.m", robot_name, base_method_name, codegen_dynpar):
-printf("Lagrange-Formalismus durchgeführt und Ergebnisse gespeichert\n"):
+printf("Lagrange-Formalismus durchgeführt und Ergebnisse gespeichert (Dynamik-Parametersatz %d)\n", codegen_dynpar):
 

@@ -31,6 +31,7 @@ with(codegen):
 with(CodeGeneration):
 with(StringTools):
 # Einstellungen für Code-Export: Optimierungsgrad (2=höchster) und Aktivierung jedes Terms.
+codegen_act := true:
 codegen_opt := 2:
 codeexport_grav := true: 
 codeexport_corvec := true:
@@ -132,19 +133,19 @@ taug_regressor_s := dUdq_s:
 save taug_regressor_s, sprintf("../codeexport/%s/tmp/gravload_%s_maple.m", robot_name, regressor_modus):
 # Matlab Export
 # Belastung der Basis (nur Floating Base)
-if codeexport_grav and not(base_method_name="twist") then
+if codegen_act and codeexport_grav and not(base_method_name="twist") then
   MatlabExport(taug_regressor_s(1..6,..), sprintf("../codeexport/%s/tmp/gravload_base_floatb_%s_%s_matlab.m", robot_name, base_method_name, regressor_modus), codegen_opt):
 end if:
 # Belastung der Gelenke: 
 # Fixed-Base: Gravitationsvektor im Basis-KS
 # Floating Base: Gravitationsvektor im Welt-KS, Basis-Orientierung berücksichtigt
 taug := taug_regressor_s . PV:
-if codeexport_grav then
+if codegen_act and codeexport_grav then
   MatlabExport(taug_regressor_s(7..NQ,..), sprintf("../codeexport/%s/tmp/gravload_joint_%s_%s_matlab.m", robot_name, expstring, regressor_modus), codegen_opt):
   MatlabExport(taug(7..NQ,..), sprintf("../codeexport/%s/tmp/gravload_joint_%s_%s_matlab.m", robot_name, expstring, regshortname), codegen_opt):
 end if:
 # Kompletter Vektor
-if codeexport_grav and not(base_method_name="twist") then
+if codegen_act and codeexport_grav and not(base_method_name="twist") then
   MatlabExport(taug_regressor_s(1..NQ,..), sprintf("../codeexport/%s/tmp/gravload_floatb_%s_%s_matlab.m", robot_name, base_method_name, regressor_modus), codegen_opt):
   MatlabExport(taug(1..NQ,..), sprintf("../codeexport/%s/tmp/gravload_floatb_%s_%s_matlab.m", robot_name, expstring, regshortname), codegen_opt):
 end if:
@@ -170,7 +171,7 @@ for i to NQ do # Zeilenindex der Massenmatrix
   end do:
 end do:
 # Export Gesamt-Massenmatrix
-if codeexport_inertia and not(base_method_name="twist") then
+if codegen_act and codeexport_inertia and not(base_method_name="twist") then
   MatlabExport(MM_regressor_s, sprintf("../codeexport/%s/tmp/inertia_floatb_%s_%s_matlab.m", robot_name, base_method_name, regressor_modus), codegen_opt):
 end if:
 # Gelenk-Massenmatrix extrahieren
@@ -192,7 +193,7 @@ end do:
 MMjj_tmp := MMjj_regressor_s . PV: # Vektor der oberen rechten Dreiecksmatrix
 ;
 # Export Gelenkmassenmatrix
-if codeexport_inertia and base_method_name="twist" then
+if codegen_act and codeexport_inertia and base_method_name="twist" then
   MatlabExport(MMjj_regressor_s, sprintf("../codeexport/%s/tmp/inertia_joint_joint_%s_%s_matlab.m", robot_name, expstring, regressor_modus), codegen_opt):
   MatlabExport(MMjj_tmp, sprintf("../codeexport/%s/tmp/inertia_joint_joint_%s_%s_matlab.m", robot_name, expstring, regshortname), codegen_opt):
 end if:
@@ -210,7 +211,7 @@ for i to NQ do
     end if:
   end do:
 end do:
-if codeexport_inertia and not(base_method_name="twist") then
+if codegen_act and codeexport_inertia and not(base_method_name="twist") then
   MatlabExport(MMjb_regressor_s, sprintf("../codeexport/%s/tmp/inertia_joint_base_floatb_%s_%s_matlab.m", robot_name, base_method_name, regressor_modus), codegen_opt):
 end if:
 # Basis-Massenmatrix
@@ -229,7 +230,7 @@ for i to NQ do
     end if:
   end do:
 end do:
-if codeexport_inertia and not(base_method_name="twist") then
+if codegen_act and codeexport_inertia and not(base_method_name="twist") then
   MatlabExport(MMbb_regressor_s, sprintf("../codeexport/%s/tmp/inertia_base_base_floatb_%s_%s_matlab.m", robot_name, base_method_name, regressor_modus), codegen_opt):
 end if:
 # Mass Matrix Time Derivative
@@ -237,21 +238,21 @@ end if:
 MM_regressor_t := convert_s_t(MM_regressor_s):
 MMD_regressor_t := diff~(MM_regressor_t, t):
 MMD_regressor_s := convert_t_s(MMD_regressor_t):
-if codeexport_inertiaD and not(base_method_name="twist") then
+if codegen_act and codeexport_inertiaD and not(base_method_name="twist") then
   MatlabExport(MMD_regressor_s, sprintf("../codeexport/%s/tmp/inertiaD_floatb_%s_%s_matlab.m", robot_name, base_method_name, regressor_modus), codegen_opt):
 end if:
 # Konvertiere Gelenk-Massenmatrix in zeitabhängige Variablen, um Zeitableitung zu berechnen
 MMjj_regressor_t := convert_s_t(MMjj_regressor_s):
 MMDjj_regressor_t := diff~(MMjj_regressor_t, t):
 MMDjj_regressor_s := convert_t_s(MMDjj_regressor_t):
-if codeexport_inertiaD and base_method_name="twist" then
+if codegen_act and codeexport_inertiaD and base_method_name="twist" then
   MatlabExport(MMDjj_regressor_s, sprintf("../codeexport/%s/tmp/inertiaD_joint_joint_%s_%s_matlab.m", robot_name, expstring, regressor_modus), codegen_opt):
 end if:
 # Gelenk-Basis-Massenmatrix
 MMjb_regressor_t := convert_s_t(MMjb_regressor_s):
 MMDjb_regressor_t := diff~(MMjb_regressor_t, t):
 MMDjb_regressor_s := convert_t_s(MMDjb_regressor_t):
-if codeexport_inertiaD and not(base_method_name="twist") then
+if codegen_act and codeexport_inertiaD and not(base_method_name="twist") then
   MatlabExport(MMDjb_regressor_s, sprintf("../codeexport/%s/tmp/inertiaD_joint_base_floatb_%s_%s_matlab.m", robot_name, base_method_name, regressor_modus), codegen_opt):
 end if:
 # Coriolis Vector
@@ -264,17 +265,17 @@ save tauC_regressor_s, sprintf("../codeexport/%s/tmp/coriolisvec_joint_%s_%s_map
 tauc := tauC_regressor_s . PV:
 # Matlab Export
 # Belastung der Gelenke
-if codeexport_corvec then
+if codegen_act and codeexport_corvec then
   MatlabExport(tauC_regressor_s(7..NQ,..), sprintf("../codeexport/%s/tmp/coriolisvec_joint_%s_%s_matlab.m", robot_name, expstring, regressor_modus), codegen_opt):
   MatlabExport(tauc(7..NQ,..), sprintf("../codeexport/%s/tmp/coriolisvec_joint_%s_%s_matlab.m", robot_name, expstring, regshortname), codegen_opt):
 end if:
 # Gesamter Vektor für Floating Base
-if codeexport_corvec and not(base_method_name="twist") then
+if codegen_act and codeexport_corvec and not(base_method_name="twist") then
   MatlabExport(tauC_regressor_s(1..NQ,..), sprintf("../codeexport/%s/tmp/coriolisvec_%s_%s_matlab.m", robot_name, expstring, regressor_modus), codegen_opt):
   MatlabExport(tauc(1..NQ,..), sprintf("../codeexport/%s/tmp/coriolisvec_%s_%s_matlab.m", robot_name, expstring, regshortname), codegen_opt):
 end if:
 # Nur Basis-Terme
-if codeexport_corvec and not(base_method_name="twist") then
+if codegen_act and codeexport_corvec and not(base_method_name="twist") then
   MatlabExport(tauC_regressor_s(1..6,..), sprintf("../codeexport/%s/tmp/coriolisvec_base_%s_%s_matlab.m", robot_name, expstring, regressor_modus), codegen_opt):
   MatlabExport(tauc(1..6,..), sprintf("../codeexport/%s/tmp/coriolisvec_base_%s_%s_matlab.m", robot_name, expstring, regshortname), codegen_opt):
 end if:
@@ -311,7 +312,7 @@ for i to NQ do # Zeilenindex der Coriolismatrix
 end do:
 save C_regressor_s, sprintf("../codeexport/%s/tmp/coriolismat_%s_%s_maple.m", robot_name, expstring, regressor_modus):
 # Matlab Export: Floating Base Gesamt
-if codeexport_cormat and not(base_method_name="twist") then
+if codegen_act and codeexport_cormat and not(base_method_name="twist") then
   MatlabExport(C_regressor_s, sprintf("../codeexport/%s/tmp/coriolismat_floatb_%s_%s_matlab.m", robot_name, base_method_name, regressor_modus), codegen_opt):
 end if:
 # Gelenk-Coriolismatrix
@@ -327,7 +328,7 @@ for i to NQ do # Zeilenindex der Coriolismatrix
     end if:
   end do:
 end do:
-if codeexport_cormat and base_method_name="twist" then
+if codegen_act and codeexport_cormat and base_method_name="twist" then
   MatlabExport(Cjj_regressor_s, sprintf("../codeexport/%s/tmp/coriolismat_joint_fixb_%s_matlab.m", robot_name, regressor_modus), codegen_opt):
 end if:
 # Inverse Dynamics
@@ -336,17 +337,17 @@ tau_regressor_s := dTdqDdt_s-dTdq_s+dUdq_s:
 save tau_regressor_s, MMjj_regressor_s, tauMM_regressor_s, tauC_regressor_s, taug_regressor_s, sprintf("../codeexport/%s/tmp/invdyn_%s_%s_maple.m", robot_name, expstring, regressor_modus):
 tau := tau_regressor_s . PV:
 # Gesamter Vektor (floating base)
-if codeexport_invdyn and not(base_method_name="twist") then
+if codegen_act and codeexport_invdyn and not(base_method_name="twist") then
   MatlabExport(tau_regressor_s(1..NQ,..), sprintf("../codeexport/%s/tmp/invdyn_%s_%s_matlab.m", robot_name, expstring, regressor_modus), codegen_opt):
   MatlabExport(tau, sprintf("../codeexport/%s/tmp/invdyn_%s_%s_matlab.m", robot_name, expstring, regshortname), codegen_opt):
 end if:
 # Belastung der Basis (floating base)
-if codeexport_invdyn and not(base_method_name="twist") then
+if codegen_act and codeexport_invdyn and not(base_method_name="twist") then
   MatlabExport(tau_regressor_s(1..6,..), sprintf("../codeexport/%s/tmp/invdyn_base_%s_%s_matlab.m", robot_name, expstring, regressor_modus), codegen_opt):
   MatlabExport(tau(1..6,..), sprintf("../codeexport/%s/tmp/invdyn_base_%s_%s_matlab.m", robot_name, expstring, regshortname), codegen_opt):
 end if:
 # Belastung der Gelenke
-if codeexport_invdyn then
+if codegen_act and codeexport_invdyn then
   MatlabExport(tau_regressor_s(7..NQ,..), sprintf("../codeexport/%s/tmp/invdyn_joint_%s_%s_matlab.m", robot_name, expstring, regressor_modus), codegen_opt):
   MatlabExport(tau(7..NQ,..), sprintf("../codeexport/%s/tmp/invdyn_joint_%s_%s_matlab.m", robot_name, expstring, regshortname), codegen_opt):
 end if:
@@ -374,7 +375,7 @@ end do:
 # Kürzen des Regressor-Vektors auf die tatsächlich benutzten Einträge
 Reg_Vector := Reg_Vector(1..kk,..):
 save Reg_Vector, sprintf("../codeexport/%s/tmp/invdyn_joint_%s_%s_occupancy_vector_maple", robot_name, expstring, regressor_modus):
-if codeexport_invdyn then
+if codegen_act and codeexport_invdyn then
   interface(warnlevel=0): # Unterdrücke die folgende Warnung (Ist prinzipbedingt, da RM/RV als Funktionsnamen interpretiert werden. Der Code funktioniert trotzdem.
   MatlabExport(Reg_Vector, sprintf("../codeexport/%s/tmp/invdyn_joint_%s_%s_occupancy_vector_matlab.m", robot_name, expstring, regressor_modus), codegen_opt):
   MatlabExport(tauJ_RV, sprintf("../codeexport/%s/tmp/invdyn_joint_%s_%s_mult_matlab.m", robot_name, expstring, regshortname), codegen_opt):
