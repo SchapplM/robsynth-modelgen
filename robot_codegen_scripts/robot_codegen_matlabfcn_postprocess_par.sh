@@ -55,6 +55,8 @@ sed -i "/% %INPUT_IC_P%/r $tmp_head_pfad/robot_matlabtmp_comment_input_Ic_parall
 sed -i "/%INPUT_IC_P%/d" $mfcndat
 sed -i "/% %INPUT_IF_P%/r $tmp_head_pfad/robot_matlabtmp_comment_input_If_parallel.m" $mfcndat
 sed -i "/%INPUT_IF_P%/d" $mfcndat
+sed -i "/% %INPUT_MDPFIXB_P%/r $tmp_head_pfad/robot_matlabtmp_comment_input_MDPFIXB_parallel.m" $mfcndat
+sed -i "/%INPUT_MDPFIXB_P%/d" $mfcndat
 sed -i "/% %INPUT_PKIN%/r $tmp_head_pfad/robot_matlabtmp_comment_input_pkin.m" $mfcndat
 sed -i "/%INPUT_PKIN%/d" $mfcndat
 sed -i "/% %INPUT_PKIN_P%/r $tmp_head_pfad/robot_matlabtmp_comment_input_pkin_parallel.m" $mfcndat
@@ -81,6 +83,7 @@ sed -i "s/%NQJ%/$robot_NQJ/g" $mfcndat
 sed -i "s/%NJ%/$robot_NJ/g" $mfcndat
 sed -i "s/%NL%/$robot_NL/g" $mfcndat
 sed -i "s/%NMPVFIXB%/$robot_NMPVFIXB/g" $mfcndat
+sed -i "s/%NMPVFIXB_PARROB%/$robot_NMPVPARA/g" $mfcndat
 sed -i "s/%NMPVFLOATB%/$robot_NMPVFLOATB/g" $mfcndat
 sed -i "s/%FN%/$FN/g" $mfcndat
 sed -i "s/%NKP%/$robot_NKP/g" $mfcndat

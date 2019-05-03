@@ -50,7 +50,8 @@ m|zeros(${parallel_NQJ_leg}+1,1)
 rSges|zeros(${parallel_NQJ_leg}+1,3)
 mrSges|zeros(${parallel_NQJ_leg}+1,3)
 Icges|zeros(${parallel_NQJ_leg}+1,6)
-Ifges|zeros(${parallel_NQJ_leg}+1,6)"
+Ifges|zeros(${parallel_NQJ_leg}+1,6)
+MDP|zeros(${robot_NMPVPARA},1)"
 
 # zusätzliche Ausdrücke anhängen
 extraargs=${extraargs//;/$'\n'}

@@ -57,7 +57,7 @@ for (( coord=0; coord<=1; coord++ )); do # 0=act joints, 1=platform
   costrmat=${coordmatlab[$coord]}
   
   quelldat=$repo_pfad/codeexport/${robot_name}/tmp/invdyn_para_${costrmpl}_reg_matlab.m
-  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_invdyn_para_${costrmat}_reg.m
+  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_invdyn_para_${costrmat}_regmin.m
   if [ -f $quelldat ]; then
     cat $head_pfad/robot_matlabtmp_invdynJ_para_${costrmat}_regmin.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
@@ -86,6 +86,268 @@ for (( coord=0; coord<=1; coord++ )); do # 0=act joints, 1=platform
     printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
     sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
     cat $quelldat >> $zieldat
+    source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 1 0 ${quelldat}.subsvar
+  else
+    echo "Code in ${quelldat##*/} nicht gefunden. "
+  fi
+  
+  # Inverse Dynamik mit MPV bereits eingesetzt
+  quelldat=$repo_pfad/codeexport/${robot_name}/tmp/invdyn_para_${costrmpl}_reg_mdp_matlab.m
+  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_invdyn_para_${costrmat}_mdp.m
+  if [ -f $quelldat ]; then
+    cat $head_pfad/robot_matlabtmp_invdynJ_para_${costrmat}_mdp.head.m > $zieldat
+    printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+    source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 0
+    source $repo_pfad/scripts/set_inputdim_line_par.sh $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_xP.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_xDP.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_xDDP.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_qJ_parallel.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_legFrame_parallel.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_koppelP_parallel.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_MDPFIXB_parallel.m >> $zieldat
+
+    printf "\n%%%% Variable Initialization" > ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_qJ_parallel.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_par_koppelP_parallel.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_xP.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_xDP.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_xDDP.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_g.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_par_MDPFIXB_parallel.m >> ${quelldat}.subsvar
+
+    cat $tmp_pfad/robot_matlabtmp_legFrame_parallel.m >> ${quelldat}.subsvar
+
+    printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+    sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
+    cat $quelldat >> $zieldat
+    source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 1 0 ${quelldat}.subsvar
+  else
+    echo "Code in ${quelldat##*/} nicht gefunden. "
+  fi
+done
+
+# Gravitationsvektor
+coordmaple=( actcoord plfcoord)
+coordmatlab=( qa pf )
+for (( coord=0; coord<=1; coord++ )); do # 0=act joints, 1=platform
+  # Zeichenkette für die Koordinatensysteme, für die die Dynamik-Terme definiert sind.
+  costrmpl=${coordmaple[$coord]}
+  costrmat=${coordmatlab[$coord]}
+  
+  quelldat=$repo_pfad/codeexport/${robot_name}/tmp/invdyn_para_${costrmpl}_taugreg_matlab.m
+  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_gravload_para_${costrmat}_regmin.m
+  if [ -f $quelldat ]; then
+    cat $head_pfad/robot_matlabtmp_gravloadJ_para_${costrmat}_regmin.head.m > $zieldat
+    printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+    source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 0
+    source $repo_pfad/scripts/set_inputdim_line_par.sh $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_xP.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_qJ_parallel.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_legFrame_parallel.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_koppelP_parallel.m >> $zieldat
+
+    printf "\n%%%% Variable Initialization" > ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_qJ_parallel.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_par_koppelP_parallel.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_xP.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_g.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
+
+    cat $tmp_pfad/robot_matlabtmp_legFrame_parallel.m >> ${quelldat}.subsvar
+
+    printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+    sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
+    cat $quelldat >> $zieldat
+    source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 1 0 ${quelldat}.subsvar
+  else
+    echo "Code in ${quelldat##*/} nicht gefunden. "
+  fi
+  
+  # Gravitationsvektor mit MPV bereits eingesetzt
+  quelldat=$repo_pfad/codeexport/${robot_name}/tmp/invdyn_para_${costrmpl}_taugreg_mdp_matlab.m
+  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_gravload_para_${costrmat}_mdp.m
+  if [ -f $quelldat ]; then
+    cat $head_pfad/robot_matlabtmp_gravloadJ_para_${costrmat}_mdp.head.m > $zieldat
+    printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+    source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 0
+    source $repo_pfad/scripts/set_inputdim_line_par.sh $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_xP.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_qJ_parallel.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_legFrame_parallel.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_koppelP_parallel.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_MDPFIXB_parallel.m >> $zieldat
+
+    printf "\n%%%% Variable Initialization" > ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_qJ_parallel.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_par_koppelP_parallel.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_xP.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_g.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_par_MDPFIXB_parallel.m >> ${quelldat}.subsvar
+
+    cat $tmp_pfad/robot_matlabtmp_legFrame_parallel.m >> ${quelldat}.subsvar
+
+    printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+    sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
+    cat $quelldat >> $zieldat
+    source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 1 0 ${quelldat}.subsvar
+  else
+    echo "Code in ${quelldat##*/} nicht gefunden. "
+  fi
+done
+
+# Coriolisvektor
+coordmaple=( actcoord plfcoord)
+coordmatlab=( qa pf )
+for (( coord=0; coord<=1; coord++ )); do # 0=act joints, 1=platform
+  # Zeichenkette für die Koordinatensysteme, für die die Dynamik-Terme definiert sind.
+  costrmpl=${coordmaple[$coord]}
+  costrmat=${coordmatlab[$coord]}
+  
+  quelldat=$repo_pfad/codeexport/${robot_name}/tmp/invdyn_para_${costrmpl}_tauCreg_matlab.m
+  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_coriolisvec_para_${costrmat}_regmin.m
+  if [ -f $quelldat ]; then
+    cat $head_pfad/robot_matlabtmp_coriolisvecJ_para_${costrmat}_regmin.head.m > $zieldat
+    printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+    source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 0
+    source $repo_pfad/scripts/set_inputdim_line_par.sh $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_xP.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_xDP.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_qJ_parallel.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_legFrame_parallel.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_koppelP_parallel.m >> $zieldat
+
+    printf "\n%%%% Variable Initialization" > ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_qJ_parallel.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_par_koppelP_parallel.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_xP.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_xDP.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
+
+    cat $tmp_pfad/robot_matlabtmp_legFrame_parallel.m >> ${quelldat}.subsvar
+
+    printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+    sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
+    cat $quelldat >> $zieldat
+    source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 1 0 ${quelldat}.subsvar
+  else
+    echo "Code in ${quelldat##*/} nicht gefunden. "
+  fi
+  
+  # Coriolisvektor mit MPV bereits eingesetzt
+  quelldat=$repo_pfad/codeexport/${robot_name}/tmp/invdyn_para_${costrmpl}_tauCreg_mdp_matlab.m
+  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_coriolisvec_para_${costrmat}_mdp.m
+  if [ -f $quelldat ]; then
+    cat $head_pfad/robot_matlabtmp_coriolisvecJ_para_${costrmat}_mdp.head.m > $zieldat
+    printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+    source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 0
+    source $repo_pfad/scripts/set_inputdim_line_par.sh $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_xP.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_xDP.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_qJ_parallel.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_legFrame_parallel.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_koppelP_parallel.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_MDPFIXB_parallel.m >> $zieldat
+
+    printf "\n%%%% Variable Initialization" > ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_qJ_parallel.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_par_koppelP_parallel.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_xP.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_xDP.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_par_MDPFIXB_parallel.m >> ${quelldat}.subsvar
+
+    cat $tmp_pfad/robot_matlabtmp_legFrame_parallel.m >> ${quelldat}.subsvar
+
+    printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+    sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
+    cat $quelldat >> $zieldat
+    source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 1 0 ${quelldat}.subsvar
+  else
+    echo "Code in ${quelldat##*/} nicht gefunden. "
+  fi
+done
+
+# Massenmatrix
+coordmaple=( actcoord plfcoord)
+coordmatlab=( qa pf )
+for (( coord=0; coord<=1; coord++ )); do # 0=act joints, 1=platform
+  # Zeichenkette für die Koordinatensysteme, für die die Dynamik-Terme definiert sind.
+  costrmpl=${coordmaple[$coord]}
+  costrmat=${coordmatlab[$coord]}
+  
+  quelldat=$repo_pfad/codeexport/${robot_name}/tmp/invdyn_para_${costrmpl}_MMreg_matlab.m
+  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_inertia_para_${costrmat}_regmin.m
+  if [ -f $quelldat ]; then
+    cat $head_pfad/robot_matlabtmp_inertiaJ_para_${costrmat}_regmin.head.m > $zieldat
+    printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+    source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 0
+    source $repo_pfad/scripts/set_inputdim_line_par.sh $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_xP.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_qJ_parallel.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_legFrame_parallel.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_koppelP_parallel.m >> $zieldat
+
+    printf "\n%%%% Variable Initialization" > ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_qJ_parallel.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_par_koppelP_parallel.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_xP.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
+
+    cat $tmp_pfad/robot_matlabtmp_legFrame_parallel.m >> ${quelldat}.subsvar
+
+    printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+    sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
+    cat $quelldat >> $zieldat
+    source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 1 0 ${quelldat}.subsvar
+  else
+    echo "Code in ${quelldat##*/} nicht gefunden. "
+  fi
+  
+  # Massenmatrix mit MPV bereits eingesetzt
+  quelldat=$repo_pfad/codeexport/${robot_name}/tmp/invdyn_para_${costrmpl}_MMreg_mdp_matlab.m
+  zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_inertia_para_${costrmat}_mdp.m
+  if [ -f $quelldat ]; then
+    cat $head_pfad/robot_matlabtmp_inertiaJ_para_${costrmat}_mdp.head.m > $zieldat
+    printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+    source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 0
+    source $repo_pfad/scripts/set_inputdim_line_par.sh $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_xP.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_qJ_parallel.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_legFrame_parallel.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_koppelP_parallel.m >> $zieldat
+    cat $tmp_pfad/robot_matlabtmp_assert_MDPFIXB_parallel.m >> $zieldat
+
+    printf "\n%%%% Variable Initialization" > ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_qJ_parallel.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_par_koppelP_parallel.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_xP.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_par_MDPFIXB_parallel.m >> ${quelldat}.subsvar
+
+    cat $tmp_pfad/robot_matlabtmp_legFrame_parallel.m >> ${quelldat}.subsvar
+
+    printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+    sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
+    cat $quelldat >> $zieldat
+    # Die Massenmatrix wird als Dreiecksmatrix exportiert und hier wieder als symmetrische Matrix zusammengestellt.
+    # Benenne die Ergebnisvariable des exportierten Codes um (zusätzlich zu Hilfsskript robot_codegen_matlabfcn_postprocess.sh)
+    varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat | tr -d '[:space:]'`
+    echo "%% Postprocessing: Reshape Output" >> $zieldat
+    echo "% From vec2symmat_${parallel_NX}_matlab.m" >> $zieldat
+    sed "s/mv/$varname_tmp/g" $repo_pfad/codeexport/${robot_name}/tmp/vec2symmat_${parallel_NX}_matlab.m >> $zieldat
     source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 1 0 ${quelldat}.subsvar
   else
     echo "Code in ${quelldat##*/} nicht gefunden. "
