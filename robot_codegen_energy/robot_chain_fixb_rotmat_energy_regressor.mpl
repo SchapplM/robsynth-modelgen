@@ -160,7 +160,7 @@ for i to 10*NJ do
     # printf("t_ges[1,%d] not Null\n", i):
     effect := 1:
   else
-    for j to NJ do
+    for j to NQJ do
       if has(u_ges[1,i],{qJ_t(j,1)}) then
         # printf("u_ges[1,%d] not constant\n", i):
         effect := 1:
