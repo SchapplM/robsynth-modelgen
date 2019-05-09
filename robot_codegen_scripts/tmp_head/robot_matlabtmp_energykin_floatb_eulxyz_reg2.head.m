@@ -12,7 +12,7 @@
 % 
 % Output:
 % T_reg [1x(%NL%*10)]
-%   minimal parameter regressor of kinetic energy
+%   inertial parameter regressor of kinetic energy
 
 % %VERSIONINFO%
 

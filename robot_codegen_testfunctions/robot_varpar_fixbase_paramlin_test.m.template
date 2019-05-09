@@ -479,7 +479,8 @@ fprintf('Transformationen des fixb-Minimalparametervektors erfolgreich getestet\
 %% Teste Minimalparameterform gegen numerische Berechnung nach [Gautier1990]
 % Matrix mit Samples der Regressormatrix erstellen ([Gautier1990], Gl. (8))
 % Zufällige Werte, nach [Gautier1990], Kap. 5-1-1
-W_g = NaN(NQJ*n, length(PV2fixb)); % Informationsmatrix des Inertialparameter-Regressors. Zum Testen des Rangs
+W_g_invdyn = NaN(NQJ*n, length(PV2fixb)); % Informationsmatrix des Inertialparameter-Regressors. Zum Testen des Rangs
+W_g_energy = NaN(n, length(PV2fixb)); % Gleiche Matrix, nur mit Energie, statt Dynamik
 for i = 1:n
   q = Q(i,:)';
   qD = QD(i,:)';
@@ -488,17 +489,28 @@ for i = 1:n
   % [Gautier1990] Gl. (7)
   tau_reg2 = %RN%_invdynJ_fixb_reg2_slag_vp(q, qD, qDD, g_base, ...
     pkin);
-  % [Gautier1990] Gl. (8)
-  W_g((i-1)*NQJ+1:i*NQJ,:) = tau_reg2;
+  % Füllen der Matrix: [Gautier1990], Kap. 2-3
+  % [Gautier1990] Gl. (8) (Füllen mit Dynamik-Regressor)
+  W_g_invdyn((i-1)*NQJ+1:i*NQJ,:) = tau_reg2;
+  % [Gautier1990] Gl. (6) (Füllen mit Energie-Regressor)
+  % Der konstante Anteil der potentiellen Energie muss abgezogen werden
+  u_reg2 = %RN%_energypot_fixb_reg2_slag_vp(q, g_base, pkin);
+  u_reg20 = %RN%_energypot_fixb_reg2_slag_vp(zeros(NQJ,1), g_base, pkin);
+  t_reg2 = %RN%_energykin_fixb_reg2_slag_vp(q, qD, pkin);
+  W_g_energy(i,:) = t_reg2 + u_reg2 - u_reg20;
 end
 % Struktur mit Eingabedaten für Algorithmus generieren
 [Ksym, K_dsym, P1sym, P2sym] = %RN%_PV2_MPV_transformations_fixb(pkin);
-plin_num_test_struct = struct('W', W_g, 'PV2', PV2fixb, 'MPV', MPV, ...
+plin_num_test_struct = struct('W', W_g_energy, 'PV2', PV2fixb, 'MPV', MPV, ...
   'P1sym', P1sym, 'P2sym', P2sym, 'K_dsym', K_dsym, 'Ksym', Ksym, ...
   'NQ', NQJ, 'PV2_Names', {PV2_Names});
 % Aufruf des Test-Algorithmus als Funktion (der Test kann genauso für
 % Floating Base durchgeführt werden und wird deshalb ausgelagert. Die
 % Übergabeargumente unterscheiden sich nur minimal)
+robot_paramlin_test_reg_num(plin_num_test_struct);
+
+% Test genauso für inverse Dynamik durchführen
+plin_num_test_struct.W = W_g_invdyn;
 robot_paramlin_test_reg_num(plin_num_test_struct);
 
 fprintf('Symbolisch berechnete Minimalparameterform gegen numerische Form geprüft\n');

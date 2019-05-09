@@ -362,11 +362,16 @@ Teil 2: Funktionskennung
 * gravload (Gelenkdrehmoment resultierend aus Gravitationsbelastung)
 * inertia (Massenmatrix)
 * inertiaD (Zeitableitung der Massenmatrix)
-* invdyn (Inverse Dynamik: Gelenkdrehmoment resultierend aus allen dynamischen Einflüssen)
+* invdyn (Inverse Dynamik: Kräfte resultierend aus allen dynamischen Einflüssen)
+  * invdynf: Schnittkräfte in den Gelenken resultierend aus inverser Dynamik
+  * invdynm: Schnittmomente in den Gelenken
+  * invdynJ: Gelenkmomente
+  * invdynB: Basis-Reaktionskraft und -Moment
 * jacobig (Geometrische Jacobi-Matrix: Zusammenhang zwischen translatorischer- und Winkelgeschwindigkeit zu den Geschwindigkeiten der verallgemeinerten Koordinaten)
 * jacobigD (Zeitableitung der geometrischen Jacobi-Matrix)
 * jacobia (Analytische Jacobi-Matrix: Statt der Winkelgeschwindigkeit besteht im rotatorischen Teil der Bezug zur Zeitableitung der Orientierungsdarstellung (z.B. Zeitableitung der Euler-Winkel)
 * jacobiaD (Zeitableitung der analytischen Jacobi-Matrix)
+* jacobiR (Ableitung der Rotationsmatrix nach den Gelenkwinkeln)
 * kinconstr_expl (Explizite Darstellung von kinematischen Zwangsbedingungen)
 * kinconstr_expl_jacobian, kinconstr_expl_jacobianD (Ableitung der expliziten Form der kinematischen Zwangsbedingungen nach den verallgemeinerten Koordinaten)
 * kinconstr_impl (Implizite Darstellung von kinematischen Zwangsbedingungen). Diese Funktion dient nur der Kontrolle und muss immer Null sein

@@ -9,7 +9,7 @@
 % 
 % Output:
 % T_reg [1x(%NQJ%*10)]
-%   minimal parameter regressor of kinetic energy
+%   inertial parameter regressor of kinetic energy
 
 % %VERSIONINFO%
 
