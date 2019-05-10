@@ -34,7 +34,9 @@ if any(sigma)
   fprintf('Schubgelenke noch nicht implementiert. Überspringe Test des CRBA.\n');
 end
 
-MPV = %RN%_convert_par2_MPV_fixb(pkin,  m, mrSges, Ifges);
+MPV = %RN%_convert_par2_MPV_fixb(pkin, m, mrSges, Ifges);
+RotAx_i = repmat([0;0;1]', NQJ, 1); % MDH: Drehachse ist immer die z-Achse (des gedrehten Körpers)
+
 %% Test gegen numerische Funktionen der fixed base Dynamik
 for i = 1:n
   qJ = Q(i,:)';
@@ -48,7 +50,6 @@ for i = 1:n
   for ii = 1:NQJ
       T_stack(3*ii-2:3*ii,:) = T(1:3,:,ii);
   end
-  RotAx_i = repmat([0;0;1]', NQJ, 1); % MDH: Drehachse ist immer die z-Achse (des gedrehten Körpers)
 
   % Gravitation
   taug_sym = %RN%_gravloadJ_floatb_twist_slag_vp1(qJ, g_base, ...
@@ -172,6 +173,79 @@ for i = 1:n
   end
 end
 fprintf('Numerische Dynamikfunktionen (Fixed Base) gegen symbolische erfolgreich getestet\n');
+
+
+%% Test gegen numerische Funktionen der Kinematik
+for i = 1:n
+  qJ = Q(i,:)';
+  qJD = QD(i,:)';
+  qJDD = QDD(i,:)';
+  g_base = G(i,:)';
+
+  % Gestapelte Transformationsmatrizen für alle Körper-KS (einschl. Basis)
+  Tc = %RN%_fkine_fixb_rotmat_mdh_sym_varpar(qJ, pkin);
+  Tc_stack = NaN(3*NL,4);
+  for ii = 1:NL
+      Tc_stack(3*ii-2:3*ii,:) = Tc(1:3,:,ii);
+  end
+  
+  % Test der allgemeinen gegen die angepasste numerische Jacobi-Matrix
+  for j = uint8(0:NL-1)
+    r_i_i_C = rand(3,1);
+    J_gen = robot_tree_jacobig_m(Tc_stack(4:end,:), RotAx_i, v, sigma, j, r_i_i_C);
+    J_rob = %RN%_jacobig_mdh_num(qJ, j, r_i_i_C, pkin);
+    test_J = J_gen - J_rob;
+    if max(abs(test_J(:))) > 1e-10
+      error('Jacobi-Matrix stimmt nicht mit allgemeiner und spezieller numerischer Implementierung');
+    end
+  end
+  
+  % Vergleiche Gelenk-Jacobi mit Schnittkraft-Jacobi für Gelenk-Einträge
+  for j = uint8(0:NL-1)
+    r_i_i_C = rand(3,1);
+    J_rob = %RN%_jacobig_mdh_num(qJ, j, r_i_i_C, pkin);
+    Jg_C = robot_tree_jacobig_cutforce_m(Tc_stack, v, j, r_i_i_C);
+    jidx = (2:7)*6 - (sigma'==1)*3; % Prüfe die Spalten aller Gelenkachsen
+    test_J = J_rob - Jg_C(:,jidx);
+    if max(abs(test_J(:))) > 1e-10
+      error('Jacobi-Matrix unterscheidet sich bei robot_tree_jacobig_cutforce_m');
+    end
+  end
+  
+  % Teste allgemeine Schnittkraft-Jacobi gegen Schnittkraft-Funktionen
+  % Ansatz: Definiere Gravitationskraft des einzigen massebehafteten
+  % Segmentes als externe Kraft. Berechne resultierende Schnittkräfte
+  % sowohl über inverse Dynamik (Newton-Euler) als auch über Projektion der
+  % gedachten externen Kraft
+  for j = uint8(0:NL-1)
+    % Masse des Roboters belegen um virtuelle Kraft zu erzeugen, die der
+    % Gewichtskraft entspricht
+    m_test = m;
+    m_test((1:NL)~=j+1) = 0;
+    mrSges_test = mrSges;
+    mrSges_test((1:NL)~=j+1,:) = 0;
+    
+    % Berechnung der Schnittkräfte durch Projektion
+    Jg_C = robot_tree_jacobig_cutforce_m(Tc_stack, v, j, rSges(j+1,:)');
+    F_test = [m(j+1)*g_base; zeros(3,1)]; % Gewichtskraft
+    W_1 = -Jg_C' * F_test;
+    
+    % Berechne Gewichtskraft der Testkonfiguration mit Newton-Euler
+    f_neweul_sym = %RN%_invdynf_fixb_snew_vp2(qJ, 0*qJ, 0*qJ, g_base, ...
+      pkin, m_test, mrSges_test, 0*Ifges);
+    m_neweul_sym = %RN%_invdynm_fixb_snew_vp2(qJ, 0*qJ, 0*qJ, g_base, ...
+      pkin, m_test, mrSges_test, 0*Ifges);
+    W_2 = reshape([f_neweul_sym;m_neweul_sym], 6*NL, 1);
+    
+    % Vergleich
+    test_W = W_1 - W_2;
+    if max(abs(test_W)) > 1e-10
+      error('Schnittkräfte aus Newton-Euler stimmen nicht mit externer Kraft überein');
+    end
+  end
+end
+fprintf('Funktionen für Schnittkraft-Jacobi gegen Dynamik validiert\n');
+
 %% Zeitmessung gegen numerische Funktionen: Gravitation (Fixed Base)
 % Berechne Gravitationslast mit unterschiedlichen Methoden:
 % Symbolisch, numerisch, mit inverser Dynamik und mit Spezialfunktione,
@@ -470,5 +544,6 @@ subplot(2,4,sprc2no(2,4,2,4));
 bar(t_ber_fdyn(2,:)*1e3);
 set(gca, 'xticklabel', {'s1/s1/s1', 's1/n/s1', 'n/s1'});
 ylabel('t [ms]'); title('fdyn (mex)');
+
 
 
