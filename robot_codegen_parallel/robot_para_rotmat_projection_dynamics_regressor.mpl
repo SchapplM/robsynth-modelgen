@@ -346,14 +346,14 @@ for i to 6 do
 	end if:
 end do:
 # Erzeugung der Massenmatrizen
-MMregRed := Matrix(NX*(NX+1)/2, RowDimension(paramMinRed)):
-MMreg_qa := Matrix(NX*(NX+1)/2, RowDimension(paramMinRed)):
+MMregRed := Matrix(NX*NX, RowDimension(paramMinRed)):
+MMreg_qa := Matrix(NX*NX, RowDimension(paramMinRed)):
 i_rr := 0:
 for i to NX do # Zeilenindex der Massenmatrix
   for j to NX do  # Spaltenindex der Massenmatrix
-    if j > i then
-      next: # rechte obere Seite der symmetrischen Matrix. Keine neue Information. Nicht berechnen oder speichern.
-    end if:
+    #if j > i then
+    #  next: # rechte obere Seite der symmetrischen Matrix. Keine neue Information. Nicht berechnen oder speichern.
+    #end if:
     i_rr := i_rr + 1: # Gehe zeilenweise durch den unteren linken Teil der Massenmatrix (inkl. Diagonale)
     for k to RowDimension(paramMinRed) do # Spaltenindex der Regressormatrix
       MMregRed[i_rr, k] := diff(MregRed[i, k], xEDD_s_dummy[j, 1]):

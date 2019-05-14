@@ -93,7 +93,7 @@ for i = 1:n
   MMX_reg = %RN%_inertia_para_pf_regmin(xP, q, legFrame, ...
     koppelP, pkin);
   MMX_MPV_vec = MMX_reg*MPV;
-  MMX_MPV = vec2symmat(MMX_MPV_vec);
+  MMX_MPV = vec2mat(MMX_MPV_vec);
   DeltaMMX = MMX_MPV - MMX_vp2;
   if any(abs(DeltaMMX(:)) > 1e6*eps(MMX_MPV(:)))
     error('Inertia Matrix (platform coordinates) does not match with regressor form.')
@@ -140,7 +140,7 @@ for i = 1:n
     MMA_reg = %RN%_inertia_para_qa_regmin(xP, q, legFrame, ...
       koppelP, pkin);
     MMA_MPV_vec = MMA_reg*MPV;
-    MMA_MPV = vec2symmat(MMA_MPV_vec);
+    MMA_MPV = vec2mat(MMA_MPV_vec);
     DeltaMMA = MMA_MPV - MMA_vp2;
     if any(abs(DeltaMMA(:)) > 1e6*eps(DeltaMMA(:)))
       error('Inertia Matrix (actuation coordinates) does not match with regressor form.')
@@ -221,7 +221,7 @@ for i = 1:n
   MMX_reg = %RN%_inertia_para_pf_regmin(xP, q, legFrame, ...
     koppelP, pkin);
   MMX_MPV_vec = MMX_reg*MPV;
-  MMX_MPV = vec2symmat(MMX_MPV_vec);
+  MMX_MPV = vec2mat(MMX_MPV_vec);
   MMX_func = %RN%_inertia_para_pf_mdp(xP, q, legFrame, ...
     koppelP, pkin, MPV);
   DeltaMMX = MMX_MPV - MMX_func;
@@ -268,7 +268,7 @@ for i = 1:n
     MMA_reg = %RN%_inertia_para_qa_regmin(xP, q, legFrame, ...
       koppelP, pkin);
     MMA_MPV_vec = MMA_reg*MPV;
-    MMA_MPV = vec2symmat(MMA_MPV_vec);
+    MMA_MPV = vec2mat(MMA_MPV_vec);
     MMA_func = %RN%_inertia_para_qa_mdp(xP, q, legFrame, ...
       koppelP, pkin, MPV);
     DeltaMMA = MMA_MPV - MMA_func;

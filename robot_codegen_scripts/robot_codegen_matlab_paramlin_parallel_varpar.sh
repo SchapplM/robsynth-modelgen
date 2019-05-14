@@ -346,8 +346,8 @@ for (( coord=0; coord<=1; coord++ )); do # 0=act joints, 1=platform
     # Benenne die Ergebnisvariable des exportierten Codes um (zusätzlich zu Hilfsskript robot_codegen_matlabfcn_postprocess.sh)
     varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat | tr -d '[:space:]'`
     echo "%% Postprocessing: Reshape Output" >> $zieldat
-    echo "% From vec2symmat_${parallel_NX}_matlab.m" >> $zieldat
-    sed "s/mv/$varname_tmp/g" $repo_pfad/codeexport/${robot_name}/tmp/vec2symmat_${parallel_NX}_matlab.m >> $zieldat
+    echo "% From vec2mat_${parallel_NX}_matlab.m" >> $zieldat
+    sed "s/mv/$varname_tmp/g" $repo_pfad/codeexport/${robot_name}/tmp/vec2mat_${parallel_NX}_matlab.m >> $zieldat
     source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 1 0 ${quelldat}.subsvar
   else
     echo "Code in ${quelldat##*/} nicht gefunden. "

@@ -4,7 +4,7 @@
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1080" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="0" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1080" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -127,7 +127,7 @@ with(StringTools):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1708" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_vector2symmat&quot;:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_vector2mat&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1686" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -154,7 +154,7 @@ read sprintf(&quot;../codeexport/%s/tmp/para_definitions&quot;, robot_name):</Te
 </Input>
 </Group>
 <Group labelreference="L1709" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">M_NX:= vec2symmat(mv, NX):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">M_NX:= vec2mat(mv, NX):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1720" drawlabel="true">
@@ -166,7 +166,7 @@ read sprintf(&quot;../codeexport/%s/tmp/para_definitions&quot;, robot_name):</Te
 </Input>
 </Group>
 <Group labelreference="L1715" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(M_NX, sprintf(&quot;../codeexport/%s/tmp/vec2symmat_%d_matlab.m&quot;, robot_name, NX), codegen_opt):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(M_NX, sprintf(&quot;../codeexport/%s/tmp/vec2mat_%d_matlab.m&quot;, robot_name, NX), codegen_opt):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1721" drawlabel="true">

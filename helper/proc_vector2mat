@@ -1,0 +1,12 @@
+vec2mat := proc(a, N)
+local i,j,k,A:
+A := Matrix(N,N):
+k := 0:
+for i from 1 to N do
+  for j from 1 to N do
+    k := k + 1:
+    A(i,j) := a(k):
+  end do:
+end do:
+return A:
+end proc:
