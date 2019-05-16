@@ -192,12 +192,12 @@ fi; # floatb
 # Kinematische Zwangsbedingungen in impliziter Form
 # Werden nach der Kinematik gerechnet. Können also auch hier am Ende kommen
 # Die Ergebnisse werden in der Dynamik nicht weiter benutzt (im Gegensatz zu explizit definierten Zwangsbedingungen, die direkt zur Ersetzung dienen).
-if [ -f  $repo_pfad/robot_codegen_constraints/${robot_name}_kinematic_constraints_implicit.mpl ]; then
-  dateiliste_kindyn="$dateiliste_kindyn
-    ${robot_name}_kinematic_constraints_implicit.mpl
-    robot_kinematic_constraints_calculations_implicit.mpl
-  "
-fi;
+#if [ -f  $repo_pfad/robot_codegen_constraints/${robot_name}_kinematic_constraints_implicit.mpl ]; then
+#  dateiliste_kindyn="$dateiliste_kindyn
+#    ${robot_name}_kinematic_constraints_implicit.mpl
+#    robot_kinematic_constraints_calculations_implicit.mpl
+#  "
+#fi;
 
 # Alle Maple-Dateien der Reihe nach ausführen
 for mpldat in $dateiliste_kindyn

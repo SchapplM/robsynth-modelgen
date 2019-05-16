@@ -1,0 +1,15 @@
+% Test script for all Matlab/Simulink functions for 
+% %RN%
+
+% Moritz Schappler, schappler@irt.uni-hannover.de, 2016-05
+% (C) Institut für Regelungstechnik, Universität Hannover
+
+clc
+clear
+
+%RN%_testfunctions_path_init
+
+%RN%_test_constr_dynamics
+%RN%_compile_test
+
+fprintf('Tests aller Funktionen für %RN% abgeschlossen.\n');
