@@ -139,7 +139,7 @@ with(VectorCalculus):</Text-field>
 <Group labelreference="L2950" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_opt := 2:
 codeexport_invdyn := false:
-codeexport_grav := fals: 
+codeexport_grav := false: 
 codeexport_corvec := false:
 codeexport_inertia := false:</Text-field>
 </Input>
@@ -352,7 +352,7 @@ A_E := &lt;JT_T|JR_T&gt;.&lt;ZeroMatrix(3,6),vec2skew(wD_E_0_E_s)+Multiply(vec2s
 <Group hide-input="false" labelreference="L3275" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MM_regmin := Matrix(6*6, RowDimension(paramVecP)):</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion4" expanded="true" visible="true" pixel-width="1040" pixel-height="264" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">i_rr := 0:
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion4" expanded="true" visible="true" pixel-width="1040" pixel-height="264" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">i_rr := 0:
 for i to 6 do # Zeilenindex der Massenmatrix
   for j to 6 do  # Spaltenindex der Massenmatrix
     i_rr := i_rr + 1: # Gehe zeilenweise durch den unteren linken Teil der Massenmatrix (inkl. Diagonale)
@@ -372,7 +372,7 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Coriolis Vector</Text-field></Title>
 <Group hide-input="false" labelreference="L3267" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">c_regmin := &lt;JT_T|JR_T&gt;.&lt;ZeroMatrix(3,6),Multiply(vec2skew(w_E_0_E_s),vec2skew(w_0_0_E_s)),ZeroMatrix(3,1);
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">c_regmin := &lt;JT_T|JR_T&gt;.&lt;ZeroMatrix(3,6),Multiply(vec2skew(w_E_0_E_s),vec2skew(w_E_0_E_s)),ZeroMatrix(3,1);
              Multiply(vec2skew(w_E_0_E_s),w_E_0_E_s_stern),ZeroMatrix(3,3),ZeroMatrix(3,1)&gt;:</Text-field>
 </Input>
 </Group>

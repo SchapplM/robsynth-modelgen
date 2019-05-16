@@ -1,30 +1,26 @@
 
-# Parameter Regressor Inverse Dynamics for Plattform
+# Parameter Regressor Inverse Dynamics for Robot-Base
 # Einleitung
 # Berechnung der inversen Dynamik der Roboter-Plattform in Regressorform
 # 
 # Dateiname:
-# robot -> Berechnung fÃ¼r allgemeinen Roboter
-# para -> Berechnung fÃ¼r eine parallelen Roboter
-# plattform -> Gleichungen bezogen auf die PKM-Plattform
+# robot -> Berechnung für allgemeinen Roboter
+# para -> Berechnung für eine parallelen Roboter
 # rotmat -> Kinematik wird mit Rotationsmatrizen berechnet
 # dynamics -> Berechnung der Dynamik
 # regressor -> Regressorform (parameterlinear)
-# 
-# TODO
-# Dokumentation. Insbesondere: Was macht paramVecP_M? Wird in Gesamt-Dynamik der PKM benutzt.
 # Autor
 # Tim Job (Studienarbeit bei Moritz Schappler), 2018-12
 # Moritz Schappler, moritz.schappler@imes.uni-hannover.de
-# (C) Institut fÃ¼r Mechatronische Systeme, UniversitÃ¤t Hannover
+# (C) Institut für Mechatronische Systeme, Universität Hannover
 # Sources
 # [GautierKhalil1990] Direct Calculation of Minimum Set of Inertial Parameters of Serial Robots
 # [KhalilDombre2002] Modeling, Identification and Control of Robots
 # [Ortmaier2014] Vorlesungsskript Robotik I
 # [Abdel2007] Modellierung, Identifikation und robuste Regelung von Robotern mit parallelkinematischen Strukturen
 # Initialization
-interface(warnlevel=0): # UnterdrÃ¼cke die folgende Warnung.
-restart: # Gibt eine Warnung, wenn Ã¼ber Terminal-Maple mit read gestartet wird.
+interface(warnlevel=0): # Unterdrücke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
 interface(warnlevel=3):
 with(LinearAlgebra):
 #with(ArrayTools):
@@ -32,9 +28,12 @@ with(codegen):
 with(CodeGeneration):
 with(StringTools):
 with(VectorCalculus):
-# Einstellungen fÃ¼r Code-Export: Optimierungsgrad (2=hÃ¶chster) und Aktivierung jedes Terms.
+# Einstellungen für Code-Export: Optimierungsgrad (2=höchster) und Aktivierung jedes Terms.
 codegen_opt := 2:
 codeexport_invdyn := false:
+codeexport_grav := false: 
+codeexport_corvec := false:
+codeexport_inertia := false:
 read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s": 
 read "../helper/proc_MatlabExport":
@@ -53,11 +52,11 @@ read "../transformation/proc_trafo_mdh":
 read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
 read "../robot_codegen_definitions/robot_env_par":
-# Definitionen fÃ¼r parallelen Roboter laden
+# Definitionen für parallelen Roboter laden
 read sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
 r_P_sP_P := -r_P_sP:
 s_P_P_sP := s_P_sP:
-# Ergebnisse der Kinematik fÃ¼r parallen Roboter laden
+# Ergebnisse der Kinematik für parallen Roboter laden
 read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
 # Lade "robotics_repo_path"-File mit Link zum "imes-robotics-matlab"-Repo
 read("../robotics_repo_path"):
@@ -100,7 +99,7 @@ dRPYjac_E_t := diff~(RPYjac_E_t,t):
 dRPYjac_0_t := diff~(RPYjac_0_t,t):
 dRPYjac_E_s := Copy(dRPYjac_E_t):
 dRPYjac_0_s := Copy(dRPYjac_0_t):
-# Substituiere die zeitabhÃ¤ngigen Koordinaten in der H-Matrix mit zeitunabhÃ¤ngigen Koordinaten 
+# Substituiere die zeitabhängigen Koordinaten in der H-Matrix mit zeitunabhängigen Koordinaten 
 for i to 3 do
 	for j to 3 do
 		for k from 4 to 6 do
@@ -170,7 +169,7 @@ for i to 6 do # Zeilenindex der Massenmatrix
 end do:
 
 # Coriolis Vector
-c_regmin := <JT_T|JR_T>.<ZeroMatrix(3,6),Multiply(vec2skew(w_E_0_E_s),vec2skew(w_0_0_E_s)),ZeroMatrix(3,1);
+c_regmin := <JT_T|JR_T>.<ZeroMatrix(3,6),Multiply(vec2skew(w_E_0_E_s),vec2skew(w_E_0_E_s)),ZeroMatrix(3,1);
              Multiply(vec2skew(w_E_0_E_s),w_E_0_E_s_stern),ZeroMatrix(3,3),ZeroMatrix(3,1)>:
 # Graviational Vector
 g_regmin := <JT_T|JR_T>.<ZeroMatrix(3,6),ZeroMatrix(3,3),-Transpose(R_0_0_E_s).gvec;

@@ -64,7 +64,7 @@ for i = 1:n
   tauX_reg = %RN%_invdyn_para_pf_regmin(xP, xPD*0, xPDD*0, q, g, legFrame, ...
     koppelP, pkin);
   Diff_tau_taug = taugX_reg - tauX_reg;
-  if any(abs(Diff_tau_taug(:)) > 1e-10)
+  if max(abs(Diff_tau_taug(:))) > max(1e3*eps(tauX_reg(:)))
     error('Inverse Dynamik Regressor stimmt nicht gegen Gravitation-Regressor');
   end
   
@@ -82,7 +82,7 @@ for i = 1:n
   tauX_reg = %RN%_invdyn_para_pf_regmin(xP, xPD, xPDD*0, q, g*0, legFrame, ...
     koppelP, pkin);
   Diff_tau_tauc = taucX_reg - tauX_reg;
-  if any(abs(Diff_tau_tauc(:)) > 1e-10)
+  if max(abs(Diff_tau_tauc(:))) > max(1e3*eps(tauX_reg(:)))
     error('Inverse Dynamik Regressor stimmt nicht gegen Coriolis-Regressor');
   end
   
@@ -93,7 +93,7 @@ for i = 1:n
   MMX_reg = %RN%_inertia_para_pf_regmin(xP, q, legFrame, ...
     koppelP, pkin);
   MMX_MPV_vec = MMX_reg*MPV;
-  MMX_MPV = vec2symmat(MMX_MPV_vec);
+  MMX_MPV = reshape(MMX_MPV_vec,N_XP,N_XP)';
   DeltaMMX = MMX_MPV - MMX_vp2;
   if any(abs(DeltaMMX(:)) > 1e6*eps(MMX_MPV(:)))
     error('Inertia Matrix (platform coordinates) does not match with regressor form.')
@@ -140,7 +140,7 @@ for i = 1:n
     MMA_reg = %RN%_inertia_para_qa_regmin(xP, q, legFrame, ...
       koppelP, pkin);
     MMA_MPV_vec = MMA_reg*MPV;
-    MMA_MPV = vec2symmat(MMA_MPV_vec);
+    MMA_MPV = vec2mat(MMA_MPV_vec);
     DeltaMMA = MMA_MPV - MMA_vp2;
     if any(abs(DeltaMMA(:)) > 1e6*eps(DeltaMMA(:)))
       error('Inertia Matrix (actuation coordinates) does not match with regressor form.')
@@ -221,7 +221,7 @@ for i = 1:n
   MMX_reg = %RN%_inertia_para_pf_regmin(xP, q, legFrame, ...
     koppelP, pkin);
   MMX_MPV_vec = MMX_reg*MPV;
-  MMX_MPV = vec2symmat(MMX_MPV_vec);
+  MMX_MPV = reshape(MMX_MPV_vec,N_XP,N_XP)';
   MMX_func = %RN%_inertia_para_pf_mdp(xP, q, legFrame, ...
     koppelP, pkin, MPV);
   DeltaMMX = MMX_MPV - MMX_func;
@@ -268,7 +268,7 @@ for i = 1:n
     MMA_reg = %RN%_inertia_para_qa_regmin(xP, q, legFrame, ...
       koppelP, pkin);
     MMA_MPV_vec = MMA_reg*MPV;
-    MMA_MPV = vec2symmat(MMA_MPV_vec);
+    MMA_MPV = vec2mat(MMA_MPV_vec);
     MMA_func = %RN%_inertia_para_qa_mdp(xP, q, legFrame, ...
       koppelP, pkin, MPV);
     DeltaMMA = MMA_MPV - MMA_func;
