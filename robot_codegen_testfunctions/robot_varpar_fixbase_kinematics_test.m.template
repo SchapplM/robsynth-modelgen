@@ -264,6 +264,38 @@ for iq = 1:size(Q, 1) % Über Zufallsposen
 end
 fprintf('Erfolgreich analytische gegen geometrische Jacobi-Matrix (Rotationsteil) getestet (und Zeitableitung).\n');
 
+%% Teste Geometrische Jacobi gegen Rotationsmatrix-Jacobi
+for iq = 1:size(Q, 1) % Über Zufallsposen
+  for jb  = 0:NL-1 % Über alle Körper
+    for ie = uint8(1:12) % Über alle Euler-Konventionen
+      q = Q(iq,:)';
+      qD = Q(iq,:)';
+
+      % direkte Kinematik (mit gleichem Modell berechnet. Gleichheit der
+      % Modelle wird in anderer Testfunktion  verifiziert)
+      Tc_mdh = %RN%_fkine_fixb_rotmat_mdh_sym_varpar(q, pkin);
+      T_jb = Tc_mdh(:,:,jb+1);
+
+      % Winkelkonvention und Umrechnungsfaktor
+      phi = r2eul(t2r(T_jb), ie);
+      J_phi = euljac(phi, ie);
+
+      % Analytische Jacobi-Matrix
+      Jg_rot = %RN%_jacobig_rot_sym_varpar(q, uint8(jb), pkin);
+
+      % Rotationsmatrix-Jacobi
+      JR = %RN%_jacobiR_rot_sym_varpar(q, uint8(jb), pkin);
+
+      % Testausdruck für Zusammenhang zwischen den beiden Jacobi-Matrizen
+      test = J_phi\Jg_rot - eul_diff_rotmat(t2r(T_jb), ie)*JR;
+      if max(abs(test(:))) > 1e-10
+        error('Geometrische und Rotationsmatrix-Jacobi stimmen nicht überein');
+      end
+    end
+  end
+end
+fprintf('Erfolgreich geometrische gegen Rotationsmatrix-Jacobi getestet.\n');
+
 %% Kompiliere alle Jacobi-bezogenen Funktionen
 matlabfcn2mex({ '%RN%_jacobigD_rot_sym_varpar', ...
                 '%RN%_jacobiaD_rot_sym_varpar', ...
