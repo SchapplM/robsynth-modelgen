@@ -17,7 +17,7 @@ source $repo_pfad/robot_codegen_definitions/robot_env.sh
 
 testfcn_pfad=$repo_pfad/codeexport/$robot_name/testfcn
 
-for f in $(find $repo_pfad/robot_codegen_testfunctions -name "*.template")
+for f in $(find $repo_pfad/robot_codegen_testfunctions $repo_pfad/robot_codegen_testfunctions/simulink -maxdepth 1 -name "*.template")
 do
   tmpdat_full=$f
   filename="${tmpdat_full##*/}"                      # Strip longest match of */ from start

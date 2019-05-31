@@ -24,6 +24,12 @@ dateiliste_kindyn="
   robot_kinematic_constraints_calculations_implicit.mpl
   "
 
+if [ "$CG_MINIMAL" == "0" ]; then
+  dateiliste_kindyn="$dateiliste_kindyn
+      robot_implicit_contraints_rotmat_dynamics_worldframe_par1_reg2.mpl
+  "
+fi;
+
 # Alle Maple-Dateien der Reihe nach ausführen
 for mpldat in $dateiliste_kindyn
 do

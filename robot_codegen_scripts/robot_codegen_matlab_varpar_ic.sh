@@ -27,6 +27,5 @@ source create_git_versioninfo.sh
 # Erstelle Matlab-Funktionen der Kinematik
 ./robot_codegen_matlab_kinematics_ic_varpar.sh
 
-# Erstelle Matlab-Funktionen der explizit ausgerechneten Dynamik (nicht in Regressorform)
-#./robot_codegen_matlab_dynamics_fixb_ic_varpar.sh
-#./robot_codegen_matlab_dynamics_floatb_ic_varpar.sh
+# Erstelle Matlab-Funktionen der Dynamik (Explizit und in Regressorform)
+./robot_codegen_matlab_dynamics_ic_varpar.sh

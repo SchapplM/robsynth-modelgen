@@ -120,3 +120,18 @@ if [ -f $quelldat ]; then
 else
   echo "Code in ${quelldat##*/} nicht gefunden."
 fi
+
+quelldat=$repo_pfad/codeexport/${robot_name}/tmp/positionVector_NQJ_matlab.m
+zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_positionVector_NQJ.m
+if [ -f $quelldat ]; then
+  cat $head_pfad/robot_matlabtmp_position_vector.head.m > $zieldat
+  printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+  sed -i "s/%RN%/$robot_name/g" $zieldat
+  source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+  sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
+  cat $quelldat >> $zieldat
+  source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 1 ${quelldat}.subsvar
+  sed -i "s/%NAJ%/$robot_NAJ/g" $zieldat
+else
+  echo "Code in ${quelldat##*/} nicht gefunden."
+fi

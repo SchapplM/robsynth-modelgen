@@ -73,8 +73,7 @@ sed -i "/%INPUT_XDDB%/d" $mfcndat
 # Ersetze Platzhalterausdrücke $RN$, $NJ$, $NL$
 # Hier müssen normale und nicht einfache Anführungszeichen für `sed` genommen werden. Sonst wird das $-Zeichen für die Variable als Text interpretiert...
 sed -i "s/%RN%/$robot_name/g" $mfcndat
-robot_name_DE=${robot_name//IC/DE}
-robot_name_OL=${robot_name//IC/OL}
+sed -i "s/%RNTE%/$robot_name_TE/g" $mfcndat
 sed -i "s/%RNDE%/$robot_name_DE/g" $mfcndat
 sed -i "s/%RNOL%/$robot_name_OL/g" $mfcndat
 sed -i "s/%NQJ%/$robot_NQJ/g" $mfcndat
