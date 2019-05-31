@@ -229,6 +229,21 @@ Transpose(IndPass);
 </Input>
 </Group></Presentation-Block>
 </Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Positionsvektor der Minimalkoordinaten zur Umrechnung OL zu TE/DE</Text-field></Title><Presentation-Block>
+<Group view="presentation" inline-output="false" labelreference="L2357" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Zum Vergleich des Ergebnisses aus den expliziten Zwangsbedingungen und den des offenen Systems</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" hide-input="false" labelreference="L2356" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">posNQJ := Matrix(NJ,1):
+for i from 1 to NJ do
+  if SearchText(&quot;qJ&quot;,convert(theta(i),string)) = 1 or SearchText(&quot;qJ&quot;,convert(d(i),string)) = 1 then
+    posNQJ(i) := 1:
+  end if:
+end do:</Text-field>
+</Input>
+</Group></Presentation-Block>
+</Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1"><Font encoding="UTF-8">Jacobi-Matrix der Impliziten Zwangsbedingungen in Abh\303\244ngigkeit der unabh\303\244ngigen Koordinaten</Font></Text-field></Title><Presentation-Block>
 <Group view="presentation" inline-output="false" labelreference="L2282" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal"></Text-field>
@@ -331,9 +346,13 @@ end do:</Text-field>
 save PhiaD_s, sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_explicit_active_jacobian_time_derivative_maple.m&quot;, robot_name):</Text-field>
 </Input>
 </Group>
-<Group view="code" labelreference="L2312" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group view="code" labelreference="L2359" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save Phip_s, sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_explicit_passive_jacobian_maple.m&quot;, robot_name):
 save PhipD_s, sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_explicit_passive_jacobian_time_derivative_maple.m&quot;, robot_name):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2312" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save posNQJ, IndAct, IndPass, sprintf(&quot;../codeexport/%s/tmp/positionVector_NQJ_maple.m&quot;, robot_name):</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L2021" drawlabel="true">
@@ -347,6 +366,7 @@ save PhipD_s, sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_explicit_
   MatlabExport(PhiaD_s, sprintf(&quot;../codeexport/%s/tmp/kinconstr_impl_active_jacobianD_matlab.m&quot;, robot_name), codegen_opt):
   MatlabExport(Phip_s, sprintf(&quot;../codeexport/%s/tmp/kinconstr_impl_passive_jacobian_matlab.m&quot;, robot_name), codegen_opt):
   MatlabExport(PhipD_s, sprintf(&quot;../codeexport/%s/tmp/kinconstr_impl_passive_jacobianD_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(posNQJ, sprintf(&quot;../codeexport/%s/tmp/positionVector_NQJ_matlab.m&quot;, robot_name), codegen_opt):
   <Font encoding="UTF-8">printf(&quot;Ausdr\303\274cke f\303\274r </Font>Kinematische ZB<Font encoding="UTF-8"> gespeichert (Matlab)\134n&quot;):</Font>
 end if:</Text-field>
 </Input>

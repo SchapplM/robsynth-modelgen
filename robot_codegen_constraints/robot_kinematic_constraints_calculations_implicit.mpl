@@ -79,6 +79,14 @@ Transpose(IndAct);
 printf("Indizes der %d passiven Gelenke:\n", NPJ);
 Transpose(IndPass);
 printf("%d Zwangsbedingungsgleichungen\n", NIZB);
+# Positionsvektor der Minimalkoordinaten zur Umrechnung OL zu TE/DE
+# Zum Vergleich des Ergebnisses aus den expliziten Zwangsbedingungen und den des offenen Systems
+posNQJ := Matrix(NJ,1):
+for i from 1 to NJ do
+  if SearchText("qJ",convert(theta(i),string)) = 1 or SearchText("qJ",convert(d(i),string)) = 1 then
+    posNQJ(i) := 1:
+  end if:
+end do:
 # Jacobi-Matrix der Impliziten Zwangsbedingungen in Abhängigkeit der unabhängigen Koordinaten
 # 
 # Entspricht J1 in [Docquier2013], A in [ParkChoPlo1999]
@@ -117,6 +125,7 @@ save Phia_s, sprintf("../codeexport/%s/tmp/kinematic_constraints_explicit_active
 save PhiaD_s, sprintf("../codeexport/%s/tmp/kinematic_constraints_explicit_active_jacobian_time_derivative_maple.m", robot_name):
 save Phip_s, sprintf("../codeexport/%s/tmp/kinematic_constraints_explicit_passive_jacobian_maple.m", robot_name):
 save PhipD_s, sprintf("../codeexport/%s/tmp/kinematic_constraints_explicit_passive_jacobian_time_derivative_maple.m", robot_name):
+save posNQJ, IndAct, IndPass, sprintf("../codeexport/%s/tmp/positionVector_NQJ_maple.m", robot_name):
 printf("Ausdrücke für Kinematische ZB gespeichert (Maple)\n"):
 if codegen_act then
   MatlabExport(implconstr_s, sprintf("../codeexport/%s/tmp/kinconstr_impl_matlab.m", robot_name), codegen_opt):
@@ -124,6 +133,7 @@ if codegen_act then
   MatlabExport(PhiaD_s, sprintf("../codeexport/%s/tmp/kinconstr_impl_active_jacobianD_matlab.m", robot_name), codegen_opt):
   MatlabExport(Phip_s, sprintf("../codeexport/%s/tmp/kinconstr_impl_passive_jacobian_matlab.m", robot_name), codegen_opt):
   MatlabExport(PhipD_s, sprintf("../codeexport/%s/tmp/kinconstr_impl_passive_jacobianD_matlab.m", robot_name), codegen_opt):
+  MatlabExport(posNQJ, sprintf("../codeexport/%s/tmp/positionVector_NQJ_matlab.m", robot_name), codegen_opt):
   printf("Ausdrücke für Kinematische ZB gespeichert (Matlab)\n"):
 end if:
 
