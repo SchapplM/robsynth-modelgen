@@ -176,7 +176,7 @@ if [ "$CG_IC" == "1" ]; then
   echo "Beginne Berechnungen für den hybriden Roboter mit impliziten Zwangsbedingungen ${robot_name}"
 
   # Skripte vorbereiten
-  source $repo_pfad/robot_codegen_scripts/robot_codegen_maple_preparation_ic.sh
+  source $repo_pfad/robot_codegen_scripts/robot_codegen_maple_preparation.sh
 
   # Maple-Skripte starten
   source $repo_pfad/robot_codegen_scripts/robot_codegen_maple_batch_ic.sh $CG_BASE_ARGUMENT
