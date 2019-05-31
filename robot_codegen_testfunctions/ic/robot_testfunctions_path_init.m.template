@@ -20,5 +20,5 @@ addpath(matlabfcn_path);
 
 % Verzeichnis aller Roboter hinzufügen
 fcn_path = fullfile(main_path_robot, 'codeexport');
-addpath(fcn_path);
+addpath(genpath(fcn_path));
 
