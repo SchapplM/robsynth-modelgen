@@ -67,10 +67,10 @@ for (( dynpar=2; dynpar<=2; dynpar++ )); do
         printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
         sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
         cat $quelldat >> $zieldat
+        source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
       else
         echo "Code in ${quelldat##*/} nicht gefunden."
       fi
-      source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
     done # tauJ, tauB, tauJB, Schnittkräfte f und Schnittmomente m
   done # floatb_twist/floatb_eulangrpy
 done # par1/par2
