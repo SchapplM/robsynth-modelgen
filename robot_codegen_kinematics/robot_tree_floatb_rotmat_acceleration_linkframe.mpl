@@ -28,14 +28,14 @@ codegen_opt := 2:
 read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s": 
 read "../helper/proc_MatlabExport":
-read "../transformation/proc_rotx": 
-read "../transformation/proc_roty": 
-read "../transformation/proc_rotz": 
-read "../transformation/proc_trotx": 
-read "../transformation/proc_troty": 
-read "../transformation/proc_trotz": 
-read "../transformation/proc_transl": 
-read "../transformation/proc_trafo_mdh": 
+read "../transformation/proc_rotx":
+read "../transformation/proc_roty":
+read "../transformation/proc_rotz":
+read "../transformation/proc_trotx":
+read "../transformation/proc_troty":
+read "../transformation/proc_trotz":
+read "../transformation/proc_transl":
+read "../transformation/proc_trafo_mdh":
 read "../robot_codegen_definitions/robot_env":
 printf("Generiere Beschleunigung für %s (Herleitung im Körper-KS)\n", robot_name):
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
@@ -73,7 +73,7 @@ if base_method_name = "twist" then:
   rDD_i_i(1..3,1) := diff~(V_base_t(1..3,1),t):
   omegaD_i_i(1..3,1) := diff~(V_base_t(4..6,1),t):
 end:
-if base_method_name = "eulangrpy" then:
+if base_method_name = "eulxyz" then:
   rDD_i_i(1..3,1) := Transpose(Trf_c(1..3, 1..3, 1)) . diff~(V_base_t(1..3,1),t):
   omegaD_i_i(1..3,1) := Transpose(Trf_c(1..3, 1..3, 1)) . T_basevel . diff~(V_base_t(4..6,1),t):
 end:
@@ -108,7 +108,7 @@ for i from 1 to NJ do # Gelenke durchgehen
 end do:
 
 # Acceleration of Center of Mass
-NULL;
+
 rDD_i_Si := Matrix(3, NL):
 
 for i to NL do 
