@@ -109,8 +109,8 @@ Moritz Schappler, moritz.schappler@imes.uni-hannover.de
 </Input>
 </Group>
 <Group labelreference="L3167" drawlabel="true">
-<Input><Text-field style="Heading 2" layout="Heading 2">Sources</Text-field><Text-field style="Normal" layout="Normal"><Font encoding="UTF-8">[Abdellatif2007] Modellierung, Identifikation und robuste Regelung von Robotern mit parallelkinematischen Strukturen
-[Job2018_S759] Job, T. (Studienarbeit; Betreuer Moritz Schappler): Implementierung einer strukturunabh\303\244ngigen Dynamikmodellierung f\303\274r parallelkinematische Maschinen (2018)</Font></Text-field>
+<Input><Text-field style="Heading 2" layout="Heading 2">Sources</Text-field><Text-field style="Normal" layout="Normal">[Abdellatif2007] Modellierung, Identifikation und robuste Regelung von Robotern mit parallelkinematischen Strukturen
+<Font encoding="UTF-8">[Job2018_S759] Job, T. (Studienarbeit; Betreuer Moritz Schappler): Implementierung einer strukturunabh\303\244ngigen Dynamikmodellierung f\303\274r parallelkinematische Maschinen (2018)</Font></Text-field>
 </Input>
 </Group>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Initialization</Text-field></Title>
@@ -135,8 +135,8 @@ with(CodeGeneration):
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">#codegen_act := true: # noch nicht implementiert
 codegen_debug := false:
 codegen_opt := 2:
-<Font encoding="UTF-8">codeexport_invdyn := true:
-codeexport_actcoord := false: # Generierung der Dynamik in Antriebskoordinaten nicht standardm\303\244\303\237ig (hoher Rechenaufwand)</Font></Text-field>
+codeexport_invdyn := true:
+<Font encoding="UTF-8">codeexport_actcoord := false: # Generierung der Dynamik in Antriebskoordinaten nicht standardm\303\244\303\237ig (hoher Rechenaufwand)</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L3202" drawlabel="true">
@@ -598,7 +598,23 @@ gGes_x := pivotMat.gGes:</EC-CodeEditor></CodeEditor-ExecGroup>
   gGes_qa    := Transpose(J) . gGes_x:
 end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L3399" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Maple-Export (zur eventuellen sp\303\244teren Verarbeitung in Maple)</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L3403" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save tau_x,     sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_par%d_maple.m&quot;,      robot_name, codegen_dynpar):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3404" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save MMGes_x,   sprintf(&quot;../codeexport/%s/tmp/inertia_para_plfcoord_par%d_maple.m&quot;,     robot_name, codegen_dynpar):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3405" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save cvecGes_x, sprintf(&quot;../codeexport/%s/tmp/coriolisvec_para_plfcoord_par%d_maple.m&quot;, robot_name, codegen_dynpar):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3406" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save gGes_x,    sprintf(&quot;../codeexport/%s/tmp/gravvec_para_plfcoord_par%d_maple.m&quot;,     robot_name, codegen_dynpar):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3161" drawlabel="true">

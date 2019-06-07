@@ -4,39 +4,39 @@
 # Berechnung und Projektion der Dynamikgleichungen in Regressorform
 # 
 # Dateiname:
-# robot -> Berechnung für allgemeinen Roboter
-# para -> Berechnung für einen parallelen Roboter
+# robot -> Berechnung fÃ¼r allgemeinen Roboter
+# para -> Berechnung fÃ¼r einen parallelen Roboter
 # rotmat -> Kinematik wird mit Rotationsmatrizen berechnet
 # projection -> Die Dynamikgleichungen werden auf EE-Koordinaten projiziert
 # dynamics -> Berechnung der Dynamik
 # regressor -> Regressorform (parameterlinear)
 # 
 # TODO
-# Die Regressorform ist noch nicht in Minimaldarstellung. Außerdem treten Dynamikparameter auf, die bei reduzierten EE-FG (z.B. 2T1R-Bewegung) keinen Einfluss haben.
+# Die Regressorform ist noch nicht in Minimaldarstellung. AuÃŸerdem treten Dynamikparameter auf, die bei reduzierten EE-FG (z.B. 2T1R-Bewegung) keinen Einfluss haben.
 # 
 # Autor
 # Tim Job (Studienarbeit bei Moritz Schappler), 2018-12
 # Moritz Schappler, moritz.schappler@imes.uni-hannover.de
-# (C) Institut für Mechatronische Systeme, Universität Hannover
+# (C) Institut fÃ¼r Mechatronische Systeme, UniversitÃ¤t Hannover
 # Sources
 # [GautierKhalil1990] Direct Calculation of Minimum Set of Inertial Parameters of Serial Robots
 # [KhalilDombre2002] Modeling, Identification and Control of Robots
 # [Ortmaier2014] Vorlesungsskript Robotik I
-# [Job2018_S759] Job, T. (Studienarbeit; Betreuer Moritz Schappler): Implementierung einer strukturunabhängigen Dynamikmodellierung für parallelkinematische Maschinen (2018)
+# [Job2018_S759] Job, T. (Studienarbeit; Betreuer Moritz Schappler): Implementierung einer strukturunabhÃ¤ngigen Dynamikmodellierung fÃ¼r parallelkinematische Maschinen (2018)
 # Initialization
-interface(warnlevel=0): # Unterdrücke die folgende Warnung.
-restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
+interface(warnlevel=0): # UnterdrÃ¼cke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn Ã¼ber Terminal-Maple mit read gestartet wird.
 interface(warnlevel=3):
 interface(rtablesize=100):
 with(LinearAlgebra):
 with(codegen):
 with(CodeGeneration):
 with(StringTools):
-# Einstellungen für Code-Export: Optimierungsgrad (2=höchster) und Aktivierung jedes Terms.
+# Einstellungen fÃ¼r Code-Export: Optimierungsgrad (2=hÃ¶chster) und Aktivierung jedes Terms.
 #codegen_act := true: # noch nicht implementiert
 codegen_opt := 2:
 codeexport_invdyn := true:
-codeexport_actcoord := false: # Generierung der Dynamik in Antriebskoordinaten nicht standardmäßig (hoher Rechenaufwand)
+codeexport_actcoord := false: # Generierung der Dynamik in Antriebskoordinaten nicht standardmÃ¤ÃŸig (hoher Rechenaufwand)
 ;
 read "../helper/proc_MatlabExport": 
 # Roboter-Definitionen laden
@@ -62,19 +62,19 @@ read "../robot_codegen_definitions/robot_env_par":
 # Ergebnisse des Minimalparametervektors der Gelenkkette laden
 read sprintf("../codeexport/%s/tmp/minimal_parameter_vector_fixb_maple", leg_name):
 Paramvec2 := Paramvec2:
-read "../robot_codegen_definitions/robot_env_par": # Nochmal laden, um Standard-Einstellungen überschreiben zu können.
+read "../robot_codegen_definitions/robot_env_par": # Nochmal laden, um Standard-Einstellungen Ã¼berschreiben zu kÃ¶nnen.
 ;
-# Ergebnisse der zusätzlichen Definitionen für parallele Roboter laden
+# Ergebnisse der zusÃ¤tzlichen Definitionen fÃ¼r parallele Roboter laden
 read sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
-# Ergebnisse der Kinematik für parallen Roboter laden
+# Ergebnisse der Kinematik fÃ¼r parallen Roboter laden
 read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
-printf("Generiere Parameterlineare Form der Dynamik für PKM %s mit Minimal-Parametersatz\n", robot_name):
+printf("Generiere Parameterlineare Form der Dynamik fÃ¼r PKM %s mit Minimal-Parametersatz\n", robot_name):
 # Lade "robotics_repo_path"-File mit Link zum "imes-robotics-matlab"-Repo
 read("../robotics_repo_path"):
 # Lade die Funktionen aus dem "imes-robotics-matlab"-Repo
 read(sprintf("%s/transformation/maple/proc_eul%s2r", robotics_repo_path, angleConvLeg)):
 read(sprintf("%s/transformation/maple/proc_eul%sjac", robotics_repo_path, "zyx")):
-# Berechne Dynamik-Matrizen für alle Beine
+# Berechne Dynamik-Matrizen fÃ¼r alle Beine
 # Alle Basisgeschwindigkeiten und -winkel aus Berechnung der seriellen Kette zu null setzen.
 omegaxs_base := 0:
 omegays_base := 0:
@@ -95,7 +95,7 @@ alphaDDx_base := 0:
 betaDDy_base := 0:
 gammaDDz_base := 0:
 
-# Ergebnisse der Kinematik für parallelen Roboter laden
+# Ergebnisse der Kinematik fÃ¼r parallelen Roboter laden
 read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
 # Variablen neu laden
 pivotMat := pivotMat:
@@ -108,7 +108,7 @@ JBinv_i := JBinv_i:
 JBDinv_i := JBDinv_i:
 U_i := U_i:
 UD_i := UD_i:
-# Dynamik-Parameter für virtuelle Segmente nach den Plattform-Koppelgelenken entfernen
+# Dynamik-Parameter fÃ¼r virtuelle Segmente nach den Plattform-Koppelgelenken entfernen
 NQ := NQ - (NQJ-NQJ_parallel):
 Paramvec3:=Paramvec2: # Dynamik-Minimalparametervektor der Beinkette
 ;
@@ -141,8 +141,8 @@ paramVecP: # Plattform-Dynamik-Parametervektor ohne Zusammenfassungen
 ;
 paramVecP_M: # Plattform-Dynamik-Parametervektor mit Zusammenfassung mit Bein-Dynamikparametern
 ;
-# Alle Einträge des Minimalparametervektors, die jetzt Null sind, entfernen
-ParamvecNew := Matrix(RowDimension(Paramvec3), 1): # Initialisierung mit maximaler Größe
+# Alle EintrÃ¤ge des Minimalparametervektors, die jetzt Null sind, entfernen
+ParamvecNew := Matrix(RowDimension(Paramvec3), 1): # Initialisierung mit maximaler GrÃ¶ÃŸe
 k := 0:
 for j from 1 to RowDimension(Paramvec3) do
   if not Paramvec3(j,1) = 0 then
@@ -150,9 +150,9 @@ for j from 1 to RowDimension(Paramvec3) do
     ParamvecNew(k,1) := Paramvec3(j,1):
   end if:
 end do:
-# Neuen Parametervektor für die Beinsegmenten (ohne Plattform)
+# Neuen Parametervektor fÃ¼r die Beinsegmenten (ohne Plattform)
 ParamvecNew := ParamvecNew(1..k,1):
-# Dupliziere alle berechneten Matrizen. i steht für den Index des jeweiligen Beines
+# Dupliziere alle berechneten Matrizen. i steht fÃ¼r den Index des jeweiligen Beines
 tauReg := tau_regressor_s(7..NQ,..):
 #MatrixEnd := index_symmat2vec(NQJ_parallel,NQJ_parallel,NQJ_parallel):
 #MMjjReg := MMjj_regressor_s(1..MatrixEnd,..):
@@ -163,7 +163,7 @@ end do:
 tauCReg := tauC_regressor_s(7..NQ,..):
 taugReg := taug_regressor_s(7..NQ,..):
 
-# Regressor aus Berechnung für serielle Beinketten. Dort erste sechs Einträge für Basis
+# Regressor aus Berechnung fÃ¼r serielle Beinketten. Dort erste sechs EintrÃ¤ge fÃ¼r Basis
 g := <g1;g2;g3>:
 tmp := <tmp1;tmp2;tmp3>:
 Rmat := Transpose(parse(sprintf("eul%s2r",angleConvLeg))(frame_A_i(1..3,1))):
@@ -218,7 +218,7 @@ for k from 1 by 1 to N_LEGS do
 end do:
 
 # Berechnung, Projektion und Addition der Dynamikgleichungen
-# Berechnung der Kräfte/Momente an den Gelenken der jeweiligen Beine und Projektion auf EE-Plattform
+# Berechnung der KrÃ¤fte/Momente an den Gelenken der jeweiligen Beine und Projektion auf EE-Plattform
 A_E := A_E:
 U_i := U_i:
 JBinv_i := JBinv_i:
@@ -228,7 +228,7 @@ for i to N_LEGS do
    Creg_||i:= simplify(Transpose(U_i(..,..,i)).Transpose(JBinv_i(..,..,i))).simplify(tauC_regressor_s||i):
    greg_||i:= simplify(Transpose(U_i(..,..,i)).Transpose(JBinv_i(..,..,i))).simplify(taug_regressor_s||i):
 end do:
-# Aufsummieren aller Kräfte, projiziert auf EE-Plattform
+# Aufsummieren aller KrÃ¤fte, projiziert auf EE-Plattform
 Tmp := 0:
 TmpM := 0:
 TmpC := 0:
@@ -246,8 +246,8 @@ greg_j := Tmpg:
 # Addiere Inverse Dynamik der Plattform
 ROWS := RowDimension(ParamvecNew):
 # 
-# Neuer Parametervektor für Beine und Plattform
-paramMin := <ParamvecNew;paramVecP>: # TODO: Hier stand vorher paramVecP_M. Damit war die Regressorform aber nicht für alle Systeme konsistent. Jetzt ist die parameterlineare Form aber nicht mehr so stark zusammengefasst, wie sie es sein könnte.
+# Neuer Parametervektor fÃ¼r Beine und Plattform
+paramMin := <ParamvecNew;paramVecP>: # TODO: Hier stand vorher paramVecP_M. Damit war die Regressorform aber nicht fÃ¼r alle Systeme konsistent. Jetzt ist die parameterlineare Form aber nicht mehr so stark zusammengefasst, wie sie es sein kÃ¶nnte.
 ;
 # Regressormatrix zusammenstellen
 A := pivotMat.<A_j(1..6,1..ROWS)|A_E>:
@@ -281,7 +281,7 @@ for i to RowDimension(paramMin) do
 end do:
 
 # Replace Joint Velocities
-# Substituiere die Gelenkgeschwindigkeiten über H-, Ui- und JBi-Matrix mit EE-Geschwindikeiten
+# Substituiere die Gelenkgeschwindigkeiten Ã¼ber H-, Ui- und JBi-Matrix mit EE-Geschwindikeiten
 Tmp := 0:
 Tmp2 := 0:
 
@@ -383,8 +383,14 @@ MMreg_qa_mdp := MMreg_qa.PV:
 Creg_qa_mdp := Creg_qa.PV:
 greg_qa_mdp := greg_qa.PV:
 # Export
-# Matlab Export: Floating base
-# Berechnung der Basis-Belastung ist für manche Basis-Darstellungen falsch (siehe oben unter Gravitationslast).
+# Maple-Export (zur eventuellen spÃ¤teren Verarbeitung in Maple)
+save tau_x,   sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_reg_maple.m",     robot_name):
+save MMreg_x, sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_MMreg_maple.m",   robot_name):
+save Creg_x,  sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_tauCreg_maple.m", robot_name):
+save greg_x,  sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_taugreg_maple.m", robot_name):
+
+# Matlab Export: Floating base (TODO: Was heiÃŸt das? Hier ist doch kein Floating Base?)
+# Berechnung der Basis-Belastung ist fÃ¼r manche Basis-Darstellungen falsch (siehe oben unter Gravitationslast). (TODO: Ist das noch aktuell?)
 
 if codeexport_invdyn then
   MatlabExport(tau_x, sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_reg_matlab.m", robot_name), codegen_opt):
@@ -400,10 +406,21 @@ if codeexport_invdyn and RowDimension(Jinv) < 5 and codeexport_actcoord then
   MatlabExport(greg_qa, sprintf("../codeexport/%s/tmp/invdyn_para_actcoord_taugreg_matlab.m", robot_name), codegen_opt):
 end if:
 
+# Maple-Export
+save paramMinRed, sprintf("../codeexport/%s/tmp/minimal_parameter_parrob_maple.m", robot_name):
+save RowParamMin, sprintf("../codeexport/%s/tmp/RowMinPar_parallel_maple.m",       robot_name):
+
 MatlabExport(paramMinRed, sprintf("../codeexport/%s/tmp/minimal_parameter_parrob_matlab.m", robot_name), codegen_opt):
 MatlabExport(RowParamMin, sprintf("../codeexport/%s/tmp/RowMinPar_parallel.m", robot_name), 2);
 
-# Matlab Export: PKM-Dynamik-Funktionen mit MPV bereits eingesetzt
+# PKM-Dynamik-Funktionen mit MPV bereits eingesetzt
+
+# Maple-Export
+save tau_x_mdp,   sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_reg_mdp_maple.m",     robot_name):
+save MMreg_x_mdp, sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_MMreg_mdp_maple.m",   robot_name):
+save Creg_x_mdp,  sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_tauCreg_mdp_maple.m", robot_name):
+save greg_x_mdp,  sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_taugreg_mdp_maple.m", robot_name):
+# Matlab Export: 
 if codeexport_invdyn then
   MatlabExport(tau_x_mdp, sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_reg_mdp_matlab.m", robot_name), codegen_opt):
   MatlabExport(MMreg_x_mdp, sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_MMreg_mdp_matlab.m", robot_name), codegen_opt):
