@@ -280,7 +280,7 @@ for iq = 1:size(Q, 1) % Über Zufallsposen
       phi = r2eul(t2r(T_jb), ie);
       J_phi = euljac(phi, ie);
 
-      % Analytische Jacobi-Matrix
+      % Geometrische Jacobi-Matrix (Rotationsteil)
       Jg_rot = %RN%_jacobig_rot_sym_varpar(q, uint8(jb), pkin);
 
       % Rotationsmatrix-Jacobi
