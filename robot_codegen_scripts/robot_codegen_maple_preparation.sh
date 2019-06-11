@@ -105,8 +105,8 @@ cp $repo_pfad/workdir/robot_tree_floatb_rotmat_dynamics_worldframe_par12.mpl $re
 cp $repo_pfad/workdir/robot_tree_floatb_rotmat_dynamics_worldframe_par12.mpl $repo_pfad/workdir/robot_tree_floatb_rotmat_dynamics_worldframe_par2.mpl
 sed -i "s/codegen_dynpar := 1:/codegen_dynpar := 2:/g" $repo_pfad/workdir/robot_tree_floatb_rotmat_dynamics_worldframe_par2.mpl
 
-cp $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_par1_reg2.mpl $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_par1_reg2.mpl
-cp $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_par1_reg2.mpl $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_par2_reg2.mpl
+cp $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_par12_reg2.mpl $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_par1_reg2.mpl
+cp $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_par12_reg2.mpl $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_par2_reg2.mpl
 sed -i "s/codegen_dynpar := 1:/codegen_dynpar := 2:/g" $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_par2_reg2.mpl
 
 # Parallele Dynamik-Skripte für Parametersätze 1 und 2 vorbereiten
