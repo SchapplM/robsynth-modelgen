@@ -23,7 +23,7 @@ source $repo_pfad/robot_codegen_definitions/robot_env_IC.sh
 basemethodenames=( eulxyz )
 
 # Erstelle Matlab-Funktionen der explizit ausgerechneten Dynamik (nicht in Regressorform)
-for (( dynpar=1; dynpar<=1; dynpar++ ))
+for (( dynpar=1; dynpar<=2; dynpar++ ))
 do
   for basemeth in "${basemethodenames[@]}"
   do
