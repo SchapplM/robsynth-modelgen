@@ -100,7 +100,7 @@ for iq = 1:TSSc.n
     
     % Dynamik der offenen Kette
     tau = %RNOL%_invdynJ_fixb_slag_vp1(q, qD, qDD, g, ...
-    TSSo.pkin, TSSo.m, TSSo.mrSges, TSSo.Ifges);
+    TSSo.pkin, TSSo.m, TSSo.rSges, TSSo.Icges);
     
     % Dynamik der geschlossenen Kette aus Jacobi (Projektion)
     % [NakamuraGho1989], Gl. 5 
@@ -157,7 +157,7 @@ for iq = 1:TSSc.n
     
     % Test symbolisch berechneter inverse Dynamik über impl. Zwangsbedingungen mit numerischer Projektion
     tauICs = %RN%_invdynJ_fixb_slag_vp1(q, qD, qDD, g, ...
-    TSSo.pkin, TSSo.m, TSSo.mrSges, TSSo.Ifges);
+    TSSo.pkin, TSSo.m, TSSo.rSges, TSSo.Icges);
     
     test = tauIC-tauICs;
     if any( abs(test(:)) > 1e6*eps(max(abs(W))) )
