@@ -1,0 +1,41 @@
+%% Set Outputs
+TSS = struct('type', 'Test Settings Structure');
+% Allgemeine Definitionen
+TSS.NQJ = NQJ;
+TSS.NJ = NJ;
+TSS.NL = NL;
+TSS.Ind_depjoints = logical(Ind_depjoints); % Binärindizes der abhängigen Gelenke
+% Kinematische Zwangsbedingungen
+TSS.NQJ = NQJ;
+% Kinematikparameter
+TSS.a = a;
+TSS.alpha = alpha;
+TSS.d = d;
+TSS.q_offset = q_offset;
+TSS.b = b;
+TSS.beta = beta;
+TSS.v = v;
+TSS.pkin = pkin;
+TSS.theta = theta;
+TSS.sigma = sigma;
+TSS.mu = mu;
+TSS.q_min = q_min;
+TSS.q_max = q_max;
+% Dynamikparameter
+TSS.m = m;
+TSS.rSges = rSges;
+TSS.Icges = Icges;
+TSS.mrSges = mrSges;
+TSS.Ifges = Ifges;
+% Zufällige Konfigurationen für Modultests
+TSS.n = n;
+TSS.Q = Q;
+TSS.QD = QD;
+TSS.QDD = QDD;
+TSS.RB = RB;
+TSS.OB = OB;
+TSS.OBD = OBD;
+TSS.OBDD = OBDD;
+TSS.VB = VB;
+TSS.AB = AB;
+TSS.G = G;

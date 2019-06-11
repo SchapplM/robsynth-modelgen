@@ -26,7 +26,7 @@ end
 
 
 TSSc = %RNTE%_varpar_testfunctions_parameter; % mit Zwangsbedingungen
-TSSo = %RNOL%_varpar_testfunctions_parameter; % ohne Zwangsbedingungen
+TSSo = %RN%_varpar_testfunctions_parameter; % ohne Zwangsbedingungen
 
 % Dynamikparameter angleichen
 TSSc.m = TSSo.m;
