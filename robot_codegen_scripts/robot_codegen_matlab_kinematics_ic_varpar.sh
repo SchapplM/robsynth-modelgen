@@ -130,7 +130,7 @@ if [ -f $quelldat ]; then
   source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
   sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
   cat $quelldat >> $zieldat
-  source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 1 ${quelldat}.subsvar
+  source robot_codegen_matlabfcn_postprocess_ic.sh $zieldat 1 1 ${quelldat}.subsvar
   sed -i "s/%NAJ%/$robot_NAJ/g" $zieldat
 else
   echo "Code in ${quelldat##*/} nicht gefunden."

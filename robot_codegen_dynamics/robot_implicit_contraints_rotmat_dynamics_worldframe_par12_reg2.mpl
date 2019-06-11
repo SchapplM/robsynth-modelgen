@@ -119,7 +119,7 @@ end if:
 # Fixed Base
 if codeexport_invdyn then
   tauIC_fixb:=tauIC:
-  tauIC_regressor_fix:=tauIC_regressor:
+  tauIC_regressor_fixb:=tauIC_regressor:
   for i from 1 to NQB do
     tauIC_fixb := subs({X_base_s[i,1]=0},tauIC_fixb):
     tauIC_regressor_fixb := subs({X_base_s[i,1]=0},tauIC_regressor_fixb):
