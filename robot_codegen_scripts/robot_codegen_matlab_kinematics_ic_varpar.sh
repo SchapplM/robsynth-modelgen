@@ -135,3 +135,23 @@ if [ -f $quelldat ]; then
 else
   echo "Code in ${quelldat##*/} nicht gefunden."
 fi
+
+quelldat=$repo_pfad/codeexport/${robot_name}/tmp/kinconstr_impl_projection_jacobian_matlab.m
+zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_kinconstr_impl_projection_jacobian_mdh_sym_varpar.m
+if [ -f $quelldat ]; then
+  cat $head_pfad/robot_matlabtmp_kinconstr_impl_jacobian.head.m > $zieldat
+  printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+
+  echo "%% Variable Initialization" > ${quelldat}.subsvar
+  cat $tmp_pfad/robot_matlabtmp_qJ.m >> ${quelldat}.subsvar
+  cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
+
+  printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+  sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
+  cat $quelldat >> $zieldat
+  source robot_codegen_matlabfcn_postprocess_ic.sh $zieldat 1 0 ${quelldat}.subsvar
+else
+  echo "Code in ${quelldat##*/} nicht gefunden."
+fi
