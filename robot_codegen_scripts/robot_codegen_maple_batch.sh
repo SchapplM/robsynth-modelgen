@@ -153,6 +153,7 @@ if ! [ "$CG_FIXBONLY" == "1" ]; then
       robot_tree_floatb_rotmat_lagrange_worldframe_par2.mpl
       robot_tree_floatb_rotmat_dynamics_worldframe_par1.mpl
       robot_tree_floatb_rotmat_dynamics_worldframe_par2.mpl
+      robot_tree_fixb_dynamics_NewtonEuler_linkframe_par12.mpl
     "
   else
     dateiliste_kindyn="$dateiliste_kindyn
@@ -167,6 +168,7 @@ if ! [ "$CG_FIXBONLY" == "1" ]; then
       robot_tree_floatb_rotmat_dynamics_worldframe_par2_grav.mpl
       robot_tree_floatb_rotmat_dynamics_worldframe_par2_inertia.mpl
       robot_tree_floatb_rotmat_dynamics_worldframe_par2_corvec.mpl
+      robot_tree_fixb_dynamics_NewtonEuler_linkframe_par12.mpl
     "
   fi;
   # Skripte für Regressorform: Float-Base Energie-Regressor und dann die anderen nochmal

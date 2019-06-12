@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="2018" minor="0"/>
+<Version major="2017" minor="0"/>
 <Label-Scheme value="2" prefix=""/>
-<View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
+<View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1080" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -257,7 +257,7 @@ eulangrpy: <Font encoding="UTF-8">V_base_t beinhaltet die Geschwindigkeit der Ba
   rDD_i_i(1..3,1) := diff~(V_base_t(1..3,1),t):
   omegaD_i_i(1..3,1) := diff~(V_base_t(4..6,1),t):
 end:
-if base_method_name = &quot;eulangrpy&quot; then:
+if base_method_name = &quot;eulxyz&quot; then:
   rDD_i_i(1..3,1) := Transpose(Trf_c(1..3, 1..3, 1)) . diff~(V_base_t(1..3,1),t):
   omegaD_i_i(1..3,1) := Transpose(Trf_c(1..3, 1..3, 1)) . T_basevel . diff~(V_base_t(4..6,1),t):
 end:</Text-field>
@@ -267,7 +267,7 @@ end:</Text-field>
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Erh\303\266he die Beschleunigung jedes K\303\266rpers
 Betrachte dazu nur die durch Gelenke angetriebenen K\303\266rper, nicht die Basis</Font></Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L2" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="2940" pixel-height="599" code-language="text/maple" autofit="false" wrapping="false" show-border="true" code-line-numbers="true">for i from 1 to NJ do # Gelenke durchgehen
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L2" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="2940" pixel-height="599" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">for i from 1 to NJ do # Gelenke durchgehen
   # K\303\266rper der von Gelenkwinkel i bewegt wird: K\303\266rperindex i+1
   # Vorg\303\244ngerk\303\266rper bestimmen
   j := v(i) + 1:
@@ -304,7 +304,7 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L1712" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="2964" pixel-height="200" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">rDD_i_Si := Matrix(3, NL):
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="2964" pixel-height="200" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">rDD_i_Si := Matrix(3, NL):
 
 for i to NL do 
   rDD_i_Si(1 .. 3, i) := Matrix(rDD_i_i(1 .. 3, i))+Matrix(CrossProduct(omegaD_i_i(1 .. 3, i), r_i_i_Si(1 .. 3, i)))+Matrix(CrossProduct(omega_i_i(1 .. 3, i), CrossProduct(omega_i_i(1 .. 3, i), r_i_i_Si(1 .. 3, i)))): 
