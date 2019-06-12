@@ -163,6 +163,23 @@ for iq = 1:TSSc.n
     if any( abs(test(:)) > 1e6*eps(max(abs(W))) )
         error('Dynamik symbolischer Berechnung stimmt nicht mit numerischer Ã¼berein');
     end
+    
+    % Teste Gravitationsmoment
+    taug1_expl = %RNTE%_gravloadJ_floatb_twist_slag_vp2(q1, g, TSSc.pkin, TSSc.m, TSSc.mrSges);
+    taug1_impl = %RN%_gravloadJ_floatb_twist_slag_vp2(q, g, TSSo.pkin, TSSo.m, TSSo.mrSges);
+    
+    if any(abs(taug1_expl-taug1_impl) > 1e-10)
+        error('Gravitationsmoment mit ZB-Jacobi stimmt nicht mit Gravitationsmoment aus Eliminations-Ansatz');
+    end
+    
+    % Teste Massenmatrix
+    MM1_impl = %RN%_inertiaJ_slag_vp2(q, TSSo.pkin, TSSo.m, TSSo.mrSges, TSSo.Ifges);
+    MM1_expl = %RNTE%_inertiaJ_slag_vp2(q1, TSSc.pkin, TSSc.m, TSSc.mrSges, TSSc.Ifges);
+    
+    test = MM1_impl - MM1_expl;
+    if any( abs(test(:)) > 1e6*eps(1+max(abs(test))) )
+      error('Massenmatrix mit ZB-Jacobi stimmt nicht mit Massenmatrix aus Eliminations-Ansatz');
+    end
 end
 
 fprintf('Herleitung mit impliziter und expliziter Form der Zwangsbedingungen erfolgreich verglichen\n');

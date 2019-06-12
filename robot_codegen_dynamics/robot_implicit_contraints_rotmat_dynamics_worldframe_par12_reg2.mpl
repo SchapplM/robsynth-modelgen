@@ -16,7 +16,9 @@
 # Moritz Schappler, moritz.schappler@imes.uni-hannover.de
 # (C) Institut für Mechatronische Systeme, Universität Hannover
 # Sources
+# [ParkChoPlo1999] Park, FC and Choi, Jihyeon and Ploen, SR: Symbolic formulation of closed chain dynamics in independent coordinates
 # [Docquier2013] Docquier, Nicolas and Poncelet, Antoine and Fisette, Paul: ROBOTRAN: a powerful symbolic gnerator of multibody models (2013)
+# [DoThanhKotHeiOrt2009b] Do Thanh et al.: On the inverse dynamics problem of general parallel robots (2009)
 # Initialization
 interface(warnlevel=0): # Unterdrücke die folgende Warnung.
 restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
@@ -43,7 +45,7 @@ else
   printf("Nicht behandelte Basis-Methode: %s\n", base_method_name):
 fi:
 # Kennung des Parametersatzes, für den die Dynamikfunktionen erstellt werden sollen. Muss im Repo und in der mpl-Datei auf 1 gelassen werden, da die folgende Zeile mit einem Skript verarbeitet wird.
-codegen_dynpar := 1:
+codegen_dynpar := 2:
 regressor_modus := "regressor":
 # Ergebnisse der inversen Dynamik für par1 laden
 read sprintf("../codeexport/%s/tmp/invdyn_fixb_par%d_maple.m", robot_name_OL, codegen_dynpar):
@@ -51,6 +53,10 @@ tau := Matrix(taus_fixb(7..NQ,1)):
 # Ergebnisse der inversen Dynamik in Regressorform laden
 read sprintf("../codeexport/%s/tmp/invdyn_%s_%s_maple.m", robot_name_OL, expstring, regressor_modus):
 tau_regressor_s := tau_regressor_s(7..NQ,..):
+read sprintf("../codeexport/%s/tmp/gravload_par%d_maple.m", robot_name_OL, codegen_dynpar):
+taug := Matrix(taug_s(7..NQ,..)):
+read sprintf("../codeexport/%s/tmp/inertia_par%d_maple.m", robot_name_OL, codegen_dynpar):
+MM := Matrix(MM_s(7..NQ,7..NQ)):
 # Ergebnisse der impliziten Zwangsbedingungen laden
 read sprintf("../codeexport/%s/tmp/kinconstr_impl_projection_jacobian_maple", robot_name):
 B21 := B21:
@@ -106,7 +112,11 @@ for i from 1 to NQJP do
 end do:
 # Inverse Dynamik
 # explizit [Docquier2013], Gl. 12
-tauIC := P1.tau + Transpose(B21).P2.tau:
+tauIC := P1.tau + Transpose(B21).P2.tau: #tauIC := (P1 + Transpose(B21).P2).tau:
+taugIC := P1.taug + Transpose(B21).P2.taug: #taugIC := (P1 + Transpose(B21).P2).taug:
+# [ParkChoPlo1999], Gl. 55; [DoThanhKotHeiOrt2009b], Gl. (23)
+W := Transpose(P1 + Transpose(B21).P2):
+MMIC := Transpose(W).MM.W:
 # Regressorform [Docquier2013], Gl. 12
 tauIC_regressor := P1.tau_regressor_s + Transpose(B21).P2.tau_regressor_s:
 # Export
@@ -119,18 +129,26 @@ end if:
 # Fixed Base
 if codeexport_invdyn then
   tauIC_fixb:=tauIC:
+  taugIC_fixb:=taugIC:
+  MMIC_fixb:=MMIC:
   tauIC_regressor_fixb:=tauIC_regressor:
   for i from 1 to NQB do
     tauIC_fixb := subs({X_base_s[i,1]=0},tauIC_fixb):
+    MMIC_fixb := subs({X_base_s[i,1]=0},MMIC_fixb):
     tauIC_regressor_fixb := subs({X_base_s[i,1]=0},tauIC_regressor_fixb):
   end do:
   for i from 1 to 6 do
     tauIC_fixb := subs({V_base_s[i,1]=0},tauIC_fixb):
     tauIC_fixb := subs({VD_base_s[i,1]=0},tauIC_fixb):
+    MMIC_fixb := subs({V_base_s[i,1]=0},MMIC_fixb):
+    MMIC_fixb := subs({VD_base_s[i,1]=0},MMIC_fixb):
     tauIC_regressor_fixb := subs({V_base_s[i,1]=0},tauIC_regressor_fixb):
     tauIC_regressor_fixb := subs({VD_base_s[i,1]=0},tauIC_regressor_fixb):
   end do:
   MatlabExport(tauIC_fixb, sprintf("../codeexport/%s/tmp/invdyn_fixb_par%d_ic_matlab.m", robot_name, codegen_dynpar), codegen_opt):
+  MatlabExport(taugIC_fixb, sprintf("../codeexport/%s/tmp/gravload_joint_floatb_twist_par%d_ic_matlab.m", robot_name, codegen_dynpar), codegen_opt):
+  #MMIC_vek := symmat2vec(MMIC_fixb):
+  MatlabExport(MMIC_fixb, sprintf("../codeexport/%s/tmp/inertia_joint_joint_floatb_%s_par%d_ic_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
   MatlabExport(tauIC_regressor_fixb, sprintf("../codeexport/%s/tmp/invdyn_fixb_%s_ic_matlab.m", robot_name, regressor_modus), codegen_opt):
 end if:
 # Export Anzahl der aktiven Koordinaten NAJ

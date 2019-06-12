@@ -10,6 +10,33 @@
 repo_pfad=$(pwd)/..
 echo $repo_pfad
 
+# Standard-Einstellungen
+CG_MINIMAL=0
+CG_FIXBONLY=0
+CG_FLOATBONLY=0
+
+# Argumente verarbeiten
+# http://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
+while [[ $# > 0 ]]
+do
+key="$1"
+case $key in
+    --minimal)
+    CG_MINIMAL=1
+    ;;
+    --fixb_only)
+    CG_FIXBONLY=1
+    ;;
+    --floatb_only)
+    CG_FLOATBONLY=1
+    ;;
+    *)
+            # unknown option
+    ;;
+esac
+shift # past argument or value
+done
+
 # Namen des Roboters herausfinden (damit roboterspezifische Zwangsbedingungen berechnet werden können)
 source robot_codegen_tmpvar_bash_IC.sh
 source $repo_pfad/robot_codegen_definitions/robot_env_IC.sh
