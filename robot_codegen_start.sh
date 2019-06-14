@@ -108,7 +108,10 @@ cd $repo_pfad/robot_codegen_scripts/
 if [ "$CG_NOTGENSERIAL" == "0" ]; then
   # Ordner vorbereiten
   source robot_codegen_tmpvar_bash.sh quiet # enthält zunächst unvollständige Definitionen und wird nur für den Roboternamen gebraucht.
-  mkdir -p "$repo_pfad/workdir/tmp"
+  # Arbeitsverzeichnis leeren, damit keine relikte eines vorherigen Roboters drin sind ...
+  rm -rf "$repo_pfad/workdir/tmp"
+  mkdir -p "$repo_pfad/workdir/tmp" # ... und neu erstellen
+  # Ergebnis-Ordner erstellen
   mkdir -p "$repo_pfad/codeexport/$robot_name"
   mkdir -p "$repo_pfad/codeexport/$robot_name/tmp"
   mkdir -p "$repo_pfad/codeexport/$robot_name/matlabfcn"
