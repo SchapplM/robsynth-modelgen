@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="2018" minor="0"/>
+<Version major="2017" minor="0"/>
 <Label-Scheme value="2" prefix=""/>
-<View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
+<View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1080" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -182,7 +182,7 @@ read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
 </Group>
 <Group labelreference="L1648" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:
-<Font encoding="UTF-8">printf(&quot;Generiere Geschwindigkeit f\303\274r %s (Herleitung im K\303\266rper-KS)\134n&quot;, robot_name):</Font></Text-field>
+<Font encoding="UTF-8">printf(&quot;Generiere Dynamikgleichungen f\303\274r %s (Herleitung im K\303\266rper-KS)\134n&quot;, robot_name):</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1647" drawlabel="true">
@@ -270,7 +270,7 @@ rDD_i_Si:= rDD_i_Si:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1715" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"></Text-field><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Mit diesem Arbeitsblatt werden die Vorw\303\244rtsrekursive f\303\274r Fixed-Base Modelle generiert. Erkenne welche Basis-Modellierung aktiv ist</Font></Text-field>
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Mit diesem Arbeitsblatt werden die Vorw\303\244rtsrekursive f\303\274r Fixed-Base Modelle generiert. Erkenne welche Basis-Modellierung aktiv ist</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1716" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -299,7 +299,7 @@ end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1721" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">f_i_i:= Matrix(3,NL):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">f_i_i:= Matrix(3,NJ+1):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1656" drawlabel="true">
@@ -307,7 +307,7 @@ end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1691" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">m_i_i:=Matrix(3,NL):
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">m_i_i:=Matrix(3,NJ+1):
 </Text-field>
 </Input>
 </Group>
@@ -329,7 +329,7 @@ tau := Matrix(6+NJ,1):
 <Group hide-input="false" labelreference="L1737" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">I_i_i_m:= Matrix(3,3,NL):</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L2" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion2" expanded="true" visible="true" pixel-width="1430" pixel-height="304" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">for i from 1 to NL do
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L2" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion2" expanded="true" visible="true" pixel-width="1430" pixel-height="304" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">for i from 1 to NL do
   I_i_i_m(1..3,1..3,i):=Matrix(3,3):
  end do:
 
@@ -352,7 +352,7 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">F_i:= Matrix(3,NL):
 M_i:= Matrix(3,NL):</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" hide-input="false" labelreference="L4" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="2023" pixel-height="173" code-language="text/maple" autofit="false" wrapping="false" show-border="true" code-line-numbers="true">for i from 1 to NL do
+</Group><CodeEditor-ExecGroup view="presentation" hide-input="false" labelreference="L4" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="2023" pixel-height="173" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">for i from 1 to NL do
   # External forces and moment on link i
   #Betrachte dazu nur die durch Gelenke angetriebenen K\303\266rper, nicht die Basis
   # [Khali2002](9.5.3) (9.88) &amp; (9.89)
@@ -370,25 +370,43 @@ end do :</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group hide-input="false" labelreference="L1742" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" hide-input="false" labelreference="L3" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="1198" pixel-height="441" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">for i from NL by -1 to 1 do
-  f_i_i(1..3,i):= F_i(1..3,i):
-  m_i_i(1..3,i):= M_i(1..3,i):# + CrossProduct(r_i_i_Si(1..3,i),(F_i(1..3,i))):
+</Group><CodeEditor-ExecGroup view="presentation" hide-input="false" labelreference="L3" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="1198" pixel-height="784" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">for i from NL by -1 to 1 do
+  f_i_i_part:= F_i(1..3,i):
+  m_i_i_part:= M_i(1..3,i):# + CrossProduct(r_i_i_Si(1..3,i),(F_i(1..3,i))):
 
-  if i &lt; NL then
-    j := v(i) + 2:
-    # printf(&quot;i=%d, j=%d\134n&quot;, i, j):
-    R_j_i := Matrix(Trf(1..3,1..3,i)): 
-    r_j_j_i := Matrix( Trf(1 .. 3, 4, i)):
-    f_i_i(1..3,i) := f_i_i(1..3,i) + R_j_i.f_i_i(1..3,j):
-    m_i_i(1..3,i) := m_i_i(1..3,i) + R_j_i.m_i_i(1..3,j)+ CrossProduct(r_j_j_i, R_j_i.f_i_i(1..3,j) ):
+  I_nf := Matrix([ListTools[SearchAll](i-1,convert(v,list))]):
+ 
+  for tmp from 1 to ColumnDimension(I_nf) do
+    I_nf(tmp) := I_nf(tmp)+1:
+  end do:
+
+  if ColumnDimension(I_nf) &lt;&gt; 0 then
+    for tmp from 1 to RowDimension(v) do
+      j := I_nf(tmp): 
+      
+      R_i_j := Matrix(Trf(1..3,1..3,j-1)): 
+      r_i_i_j := Matrix(Trf(1 .. 3, 4, j-1)):
+      f_j_j := f_i_i(1..3,j):
+      m_j_j := m_i_i(1..3,j):
+    
+      f_i_i_part := f_i_i_part + R_i_j.f_j_j:
+      m_i_i_part := m_i_i_part + R_i_j.m_j_j + CrossProduct(r_i_i_j, R_i_j.f_j_j):
+      
+      if tmp = ColumnDimension(I_nf) then
+        break: #Abbruch. Alle Nachfolger untersucht.
+      end if:
+    end do:
   end if:
+
+  f_i_i(1..3,i) := f_i_i_part;
+  m_i_i(1..3,i) := m_i_i_part;
 end do:
 
-for i from 1 to NJ do
-  if sigma(i) = 0 then # Drehgelenk
-    tau_J(i,1) := &lt;0,0,1&gt;.m_i_i(1..3,i+1):
+for i from 2 to NL do # Schleife \303\274ber Anzahl der K\303\266rper
+  if sigma(i-1) = 0 then # Drehgelenk
+    tau_J(i-1,1) := &lt;0,0,1&gt;.m_i_i(1..3,i):
   else # Schubgelenk
-    tau_J(i,1) := &lt;0,0,1&gt;.f_i_i(1..3,i+1):
+    tau_J(i-1,1) := &lt;0,0,1&gt;.f_i_i(1..3,i):
   end if:
 end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L1752" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -525,6 +543,10 @@ end do:</Text-field>
   MatlabExport(tau_B, sprintf(&quot;../codeexport/%s/tmp/invdyn_fixb_NewtonEuler_linkframe_tauB_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
   MatlabExport(tau, sprintf(&quot;../codeexport/%s/tmp/invdyn_fixb_NewtonEuler_linkframe_tauJB_par%d_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1828" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Equation executable="true" style="2D Input" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYlLUkjbWlHRiQ2I1EhRicvJStleGVjdXRhYmxlR1EmZmFsc2VGJy8lLG1hdGh2YXJpYW50R1Enbm9ybWFsRic=">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 <Group labelreference="L1800" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">

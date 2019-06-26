@@ -123,6 +123,7 @@ do
       robot_tree_floatb_rotmat_dynamics_worldframe_par2_corvec.mpl
       robot_tree_floatb_rotmat_dynamics_worldframe_par2_grav.mpl
       robot_tree_floatb_rotmat_dynamics_worldframe_par2_inertia.mpl
+      robot_tree_fixb_dynamics_NewtonEuler_linkframe_par12.mpl
   "
   if [ "$CG_MINIMAL" == "0" ]; then
     dateiliste_dyn="
@@ -136,7 +137,6 @@ do
         robot_tree_floatb_rotmat_dynamics_worldframe_par2_cormat.mpl
         robot_tree_floatb_rotmat_dynamics_worldframe_par2_invdyn.mpl
         robot_tree_floatb_rotmat_dynamics_worldframe_par2_inertiaD.mpl
-        robot_tree_fixb_dynamics_NewtonEuler_linkframe_par12.mpl
     "
   fi;
 

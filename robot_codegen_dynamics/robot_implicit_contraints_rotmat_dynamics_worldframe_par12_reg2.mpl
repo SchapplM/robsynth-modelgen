@@ -32,7 +32,10 @@ with(StringTools):
 #codegen_act := true: # noch nicht implementiert
 codegen_debug := false:
 codegen_opt := 2:
+<<<<<<< HEAD
+=======
 codeexport_invdyn := true:
+>>>>>>> 8d488cb60ee456399bb5a58b5ae0e003066e129f
 read "../helper/proc_MatlabExport":
 read "../robot_codegen_definitions/robot_env_IC":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name_OL):
@@ -45,6 +48,46 @@ else
   printf("Nicht behandelte Basis-Methode: %s\n", base_method_name):
 fi:
 # Kennung des Parametersatzes, für den die Dynamikfunktionen erstellt werden sollen. Muss im Repo und in der mpl-Datei auf 1 gelassen werden, da die folgende Zeile mit einem Skript verarbeitet wird.
+<<<<<<< HEAD
+codegen_dynpar := 1:
+regressor_modus := "regressor":
+herleitungsverfahren := "lagrange":
+codeexport_invdyn := false:
+codeexport_grav_inertia := false:
+codeexport_regressor := false:
+if herleitungsverfahren = "lagrange" then #Dynamik aus Lagrange
+# Ergebnisse der inversen Dynamik für par1/2 laden
+  if codeexport_invdyn then
+    read sprintf("../codeexport/%s/tmp/invdyn_fixb_par%d_maple.m", robot_name_OL, codegen_dynpar):
+    tau := Matrix(taus_fixb(7..NQ,1)):
+    printf("Generiere inverse Dynamik (%s) für %s basierend auf IC-Jacobi und OL-Dynamik mit Parametersatz %d und %s\n", herleitungsverfahren, robot_name, codegen_dynpar, base_method_name):
+  fi:
+# Ergebnisse der inversen Dynamik in Regressorform laden
+  if codeexport_regressor then
+    read sprintf("../codeexport/%s/tmp/invdyn_%s_%s_maple.m", robot_name_OL, expstring, regressor_modus):
+    tau_regressor_s := tau_regressor_s(7..NQ,..):
+    printf("Generiere Dynamik in Regressorform (%s) für %s basierend auf IC-Jacobi und OL-Dynamik\n", herleitungsverfahren, robot_name):
+  fi:
+# Ergebnisse der inversen Dynamik in Einzeltermen laden
+  if codeexport_grav_inertia then
+    read sprintf("../codeexport/%s/tmp/gravload_par%d_maple.m", robot_name_OL, codegen_dynpar):
+    taug := Matrix(taug_s(7..NQ,..)):
+    read sprintf("../codeexport/%s/tmp/inertia_par%d_maple.m", robot_name_OL, codegen_dynpar):
+    MM := Matrix(MM_s(7..NQ,7..NQ)):
+    printf("Generiere Gravitationsvektor und Massenmatrix (%s) für %s basierend auf IC-Jacobi und OL-Dynamik mit Parametersatz %d und %s\n", herleitungsverfahren, robot_name, codegen_dynpar, base_method_name):
+  fi:
+else #Dynamik aus Newton-Euler
+# Ergebnisse der inversen Dynamik für par1/2 laden
+  read sprintf("../codeexport/%s/tmp/invdyn_twist_NewtonEuler_linkframe_maple.m", robot_name_OL):
+  tau := Matrix(tau_J(1..NQJ,..)):
+  taug := copy(tau):
+  for i from 1 to NQ do
+    taug := subs({qD_s[i,1]=0},taug):
+    taug := subs({qDD_s[i,1]=0},taug):
+  end do:
+  printf("Generiere Gravitationsvektor und gesamte inverse Dynamik (%s) für %s basierend auf IC-Jacobi und OL-Dynamik mit Parametersatz %d\n", herleitungsverfahren, robot_name, codegen_dynpar):
+fi:
+=======
 codegen_dynpar := 2:
 regressor_modus := "regressor":
 # Ergebnisse der inversen Dynamik für par1 laden
@@ -57,6 +100,7 @@ read sprintf("../codeexport/%s/tmp/gravload_par%d_maple.m", robot_name_OL, codeg
 taug := Matrix(taug_s(7..NQ,..)):
 read sprintf("../codeexport/%s/tmp/inertia_par%d_maple.m", robot_name_OL, codegen_dynpar):
 MM := Matrix(MM_s(7..NQ,7..NQ)):
+>>>>>>> 8d488cb60ee456399bb5a58b5ae0e003066e129f
 # Ergebnisse der impliziten Zwangsbedingungen laden
 read sprintf("../codeexport/%s/tmp/kinconstr_impl_projection_jacobian_maple", robot_name):
 B21 := B21:
@@ -65,7 +109,10 @@ B21D := B21D:
 # Ergebnisse des Positionsvektors und der aktiven und passiven Gelenke laden
 read sprintf("../codeexport/%s/tmp/positionVector_NQJ_maple.m", robot_name):
 posNQJ := posNQJ:
+<<<<<<< HEAD
+=======
 printf("Generiere Dynamik (%s) und Regressorform für %s basierend auf auf IC-Jacobi und OL-Dynamik mit Parametersatz %d/ Regressor  und %s\n", DynString, robot_name, codegen_dynpar, base_method_name):
+>>>>>>> 8d488cb60ee456399bb5a58b5ae0e003066e129f
 # Pertubationsmatrizen berechnen
 # Entferne aktive/passive Koordinaten zur Umrechnung
 # Berechne die Anzahl aller aktiven und passiven Gelenke (inkl virtueller Schnittgelenke)
@@ -92,6 +139,24 @@ for i from 1 to NJ do
     if posAct <> 0 then
       IndAct := DeleteRow(IndAct,posAct):
     end if:
+<<<<<<< HEAD
+    #posPass := ListTools[Search](i, convert(IndPass, list)):
+    #if posPass <> 0 then
+    #  IndPass := DeleteRow(IndPass,posPass):
+    #end if:
+  end if:
+end do:
+NQJA := RowDimension(IndAct):
+NQJP := NQJ-NQJA: #RowDimension(IndPass):
+IndPass:= Matrix(NQJP, 1):
+kp := 1: ka := 1:
+for i from 1 to NQJ do
+  if ListTools[Search](i, convert(IndAct, list)) = 0 then
+    IndPass(kp) := i:
+    kp := kp + 1:
+  end if:
+end do:
+=======
     posPass := ListTools[Search](i, convert(IndPass, list)):
     if posPass <> 0 then
       IndPass := DeleteRow(IndPass,posPass):
@@ -100,6 +165,7 @@ for i from 1 to NJ do
 end do:
 NQJA := RowDimension(IndAct):
 NQJP := RowDimension(IndPass):
+>>>>>>> 8d488cb60ee456399bb5a58b5ae0e003066e129f
 # Permutationsmatrizen berechnen zur Umrechnung von aufgeteilten Koordinaten
 # (aktiv/passiv nacheinander) in Koordinaten der Baumstruktur (aktiv/passiv gemischt) 
 P1 := Matrix(NQJA,NQJ):
@@ -112,8 +178,13 @@ for i from 1 to NQJP do
 end do:
 # Inverse Dynamik
 # explizit [Docquier2013], Gl. 12
+<<<<<<< HEAD
+taugIC := P1.taug + Transpose(B21).P2.taug: #taugIC := (P1 + Transpose(B21).P2).taug:
+tauIC := P1.tau + Transpose(B21).P2.tau: #tauIC := (P1 + Transpose(B21).P2).tau:
+=======
 tauIC := P1.tau + Transpose(B21).P2.tau: #tauIC := (P1 + Transpose(B21).P2).tau:
 taugIC := P1.taug + Transpose(B21).P2.taug: #taugIC := (P1 + Transpose(B21).P2).taug:
+>>>>>>> 8d488cb60ee456399bb5a58b5ae0e003066e129f
 # [ParkChoPlo1999], Gl. 55; [DoThanhKotHeiOrt2009b], Gl. (23)
 W := Transpose(P1 + Transpose(B21).P2):
 MMIC := Transpose(W).MM.W:
@@ -123,8 +194,15 @@ tauIC_regressor := P1.tau_regressor_s + Transpose(B21).P2.tau_regressor_s:
 # Export der Belastung der Gelenke
 # Floating Base
 if codeexport_invdyn and not(base_method_name="twist") then
+<<<<<<< HEAD
+  MatlabExport(tauIC, sprintf("../codeexport/%s/tmp/invdyn_floatb_%s_par%d_ic_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
+end if:
+if codeexport_regressor and not(base_method_name="twist") then
+  MatlabExport(tauIC_regressor, sprintf("../codeexport/%s/tmp/invdyn_floatb_%s_%s_ic_matlab.m", robot_name, base_method_name, regressor_modus), codegen_opt):
+=======
   MatlabExport(tauIC_regressor, sprintf("../codeexport/%s/tmp/invdyn_floatb_%s_%s_ic_matlab.m", robot_name, base_method_name, regressor_modus), codegen_opt):
   MatlabExport(tauIC, sprintf("../codeexport/%s/tmp/invdyn_floatb_%s_par%d_ic_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
+>>>>>>> 8d488cb60ee456399bb5a58b5ae0e003066e129f
 end if:
 # Fixed Base
 if codeexport_invdyn then
@@ -151,6 +229,46 @@ if codeexport_invdyn then
   MatlabExport(MMIC_fixb, sprintf("../codeexport/%s/tmp/inertia_joint_joint_floatb_%s_par%d_ic_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
   MatlabExport(tauIC_regressor_fixb, sprintf("../codeexport/%s/tmp/invdyn_fixb_%s_ic_matlab.m", robot_name, regressor_modus), codegen_opt):
 end if:
+<<<<<<< HEAD
+if codeexport_grav_inertia then
+  taugIC_fixb:=taugIC:
+  MMIC_fixb:=MMIC:
+  for i from 1 to NQB do
+    MMIC_fixb := subs({X_base_s[i,1]=0},MMIC_fixb):
+  end do:
+  for i from 1 to 6 do
+    MMIC_fixb := subs({V_base_s[i,1]=0},MMIC_fixb):
+    MMIC_fixb := subs({VD_base_s[i,1]=0},MMIC_fixb):
+  end do:
+  MatlabExport(taugIC_fixb, sprintf("../codeexport/%s/tmp/gravload_joint_floatb_twist_par%d_ic_matlab.m", robot_name, codegen_dynpar), codegen_opt):
+  MatlabExport(MMIC_fixb, sprintf("../codeexport/%s/tmp/inertia_joint_joint_floatb_%s_par%d_ic_matlab.m", robot_name, base_method_name, codegen_dynpar), codegen_opt):
+end if:
+if codeexport_regressor then
+  tauIC_regressor_fixb:=tauIC_regressor:
+  for i from 1 to NQB do
+    tauIC_regressor_fixb := subs({X_base_s[i,1]=0},tauIC_regressor_fixb):
+  end do:
+  for i from 1 to 6 do
+    tauIC_regressor_fixb := subs({V_base_s[i,1]=0},tauIC_regressor_fixb):
+    tauIC_regressor_fixb := subs({VD_base_s[i,1]=0},tauIC_regressor_fixb):
+  end do:
+  MatlabExport(tauIC_regressor_fixb, sprintf("../codeexport/%s/tmp/invdyn_fixb_%s_ic_matlab.m", robot_name, regressor_modus), codegen_opt):
+end if:
+if herleitungsverfahren = "newton" then
+  tauIC_fixb:=tauIC:
+  taugIC_fixb:=taugIC:
+  for i from 1 to NQB do
+    tauIC_fixb := subs({X_base_s[i,1]=0},tauIC_fixb):
+  end do:
+  for i from 1 to 6 do
+    tauIC_fixb := subs({V_base_s[i,1]=0},tauIC_fixb):
+    tauIC_fixb := subs({VD_base_s[i,1]=0},tauIC_fixb):
+  end do:
+  MatlabExport(tauIC_fixb, sprintf("../codeexport/%s/tmp/invdyn_fixb_snew_par%d_ic_matlab.m", robot_name, codegen_dynpar), codegen_opt):
+  MatlabExport(taugIC_fixb, sprintf("../codeexport/%s/tmp/gravload_joint_floatb_twist_snew_par%d_ic_matlab.m", robot_name, codegen_dynpar), codegen_opt):
+end if:
+=======
+>>>>>>> 8d488cb60ee456399bb5a58b5ae0e003066e129f
 # Export Anzahl der aktiven Koordinaten NAJ
 MatlabExport(NAJ, sprintf("../codeexport/%s/tmp/NAJ_ic_matlab.m", robot_name), codegen_opt):
 

@@ -140,7 +140,10 @@ with(StringTools):</Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">#codegen_act := true: # noch nicht implementiert
 codegen_debug := false:
 codegen_opt := 2:
+<<<<<<< HEAD
+=======
 codeexport_invdyn := true:
+>>>>>>> 8d488cb60ee456399bb5a58b5ae0e003066e129f
 read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
 </Input>
 </Group>
@@ -167,6 +170,60 @@ fi:</Text-field>
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Kennung des Parametersatzes, f\303\274r den die Dynamikfunktionen erstellt werden sollen. Muss im Repo und in der mpl-Datei auf 1 gelassen werden, da die folgende Zeile mit einem Skript verarbeitet wird.</Font></Text-field>
 </Input>
 </Group>
+<<<<<<< HEAD
+<Group labelreference="L2318" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_dynpar := 1:
+regressor_modus := &quot;regressor&quot;:
+herleitungsverfahren := &quot;lagrange&quot;:
+codeexport_invdyn := false:
+codeexport_grav_inertia := false:
+codeexport_regressor := false:</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L2346" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if herleitungsverfahren = &quot;lagrange&quot; then #Dynamik aus Lagrange</Text-field>
+</Input>
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ergebnisse der inversen Dynamik f\303\274r par1/2 laden</Font></Text-field>
+</Input>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  if codeexport_invdyn then
+    read sprintf(&quot;../codeexport/%s/tmp/invdyn_fixb_par%d_maple.m&quot;, robot_name_OL, codegen_dynpar):
+    tau := Matrix(taus_fixb(7..NQ,1)):
+    <Font encoding="UTF-8">printf(&quot;Generiere inverse Dynamik (%s) f\303\274r %s basierend auf IC-Jacobi und OL-Dynamik mit Parametersatz %d und %s\134n&quot;, </Font>herleitungsverfahren, robot_name, codegen_dynpar, base_method_name):
+  fi:</Text-field>
+</Input>
+<Input><Text-field style="Text" layout="Normal">Ergebnisse der inversen Dynamik in Regressorform laden</Text-field>
+</Input>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  if codeexport_regressor then
+    read sprintf(&quot;../codeexport/%s/tmp/invdyn_%s_%s_maple.m&quot;, robot_name_OL, expstring, regressor_modus):
+    tau_regressor_s := tau_regressor_s(7..NQ,..):
+    <Font encoding="UTF-8">printf(&quot;Generiere Dynamik in Regressorform (%s) f\303\274r %s basierend auf IC-Jacobi und OL-Dynamik\134n&quot;, </Font>herleitungsverfahren, robot_name):
+  fi:</Text-field>
+</Input>
+<Input><Text-field style="Text" layout="Normal">Ergebnisse der inversen Dynamik in Einzeltermen laden</Text-field>
+</Input>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  if codeexport_grav_inertia then
+    read sprintf(&quot;../codeexport/%s/tmp/gravload_par%d_maple.m&quot;, robot_name_OL, codegen_dynpar):
+    taug := Matrix(taug_s(7..NQ,..)):
+    read sprintf(&quot;../codeexport/%s/tmp/inertia_par%d_maple.m&quot;, robot_name_OL, codegen_dynpar):
+    MM := Matrix(MM_s(7..NQ,7..NQ)):
+    <Font encoding="UTF-8">printf(&quot;Generiere Gravitationsvektor und Massenmatrix (%s) f\303\274r %s basierend auf IC-Jacobi und OL-Dynamik mit Parametersatz %d und %s\134n&quot;, </Font>herleitungsverfahren, robot_name, codegen_dynpar, base_method_name):
+  fi:</Text-field>
+</Input>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">else #Dynamik aus Newton-Euler</Text-field>
+</Input>
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ergebnisse der inversen Dynamik f\303\274r par1/2 laden</Font></Text-field>
+</Input>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  read sprintf(&quot;../codeexport/%s/tmp/invdyn_twist_NewtonEuler_linkframe_maple.m&quot;, robot_name_OL):
+  tau := Matrix(tau_J(1..NQJ,..)):
+  taug := copy(tau):
+  for i from 1 to NQ do
+    taug := subs({qD_s[i,1]=0},taug):
+    taug := subs({qDD_s[i,1]=0},taug):
+  end do:
+  <Font encoding="UTF-8">printf(&quot;Generiere Gravitationsvektor und gesamte inverse Dynamik (%s) f\303\274r %s basierend auf IC-Jacobi und OL-Dynamik mit Parametersatz %d\134n&quot;, </Font>herleitungsverfahren, robot_name, codegen_dynpar):</Text-field>
+</Input>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">fi:</Text-field>
+=======
 <Group labelreference="L1696" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_dynpar := 2:
 regressor_modus := &quot;regressor&quot;:</Text-field>
@@ -192,6 +249,7 @@ read sprintf(&quot;../codeexport/%s/tmp/gravload_par%d_maple.m&quot;, robot_name
 taug := Matrix(taug_s(7..NQ,..)):
 read sprintf(&quot;../codeexport/%s/tmp/inertia_par%d_maple.m&quot;, robot_name_OL, codegen_dynpar):
 MM := Matrix(MM_s(7..NQ,7..NQ)):</Text-field>
+>>>>>>> 8d488cb60ee456399bb5a58b5ae0e003066e129f
 </Input>
 </Group>
 <Group labelreference="L1725" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -214,10 +272,13 @@ B21D := B21D:</Text-field>
 posNQJ := posNQJ:</Text-field>
 </Input>
 </Group>
+<<<<<<< HEAD
+=======
 <Group labelreference="L1700" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Generiere Dynamik (%s) und Regressorform f\303\274r %s basierend auf auf IC-Jacobi und OL-Dynamik mit Parametersatz %d/ Regressor  und %s\134n&quot;, </Font>DynString, robot_name, codegen_dynpar, base_method_name):</Text-field>
 </Input>
 </Group>
+>>>>>>> 8d488cb60ee456399bb5a58b5ae0e003066e129f
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Pertubationsmatrizen berechnen</Text-field></Title>
 <Group labelreference="L1735" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -244,7 +305,11 @@ IndPass:= Matrix(NPJ, 1):
 ka := 1: kp := 1:</Text-field>
 </Input>
 </Group>
+<<<<<<< HEAD
+<Group view="code" hide-input="false" labelreference="L2348" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+=======
 <Group view="code" hide-input="false" labelreference="L2298" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+>>>>>>> 8d488cb60ee456399bb5a58b5ae0e003066e129f
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NJ do
   if mu(i) = 1 then
     IndAct(ka) := i:
@@ -267,17 +332,38 @@ end do:</Text-field>
     if posAct &lt;&gt; 0 then
       IndAct := DeleteRow(IndAct,posAct):
     end if:
+<<<<<<< HEAD
+    #posPass := ListTools[Search](i, convert(IndPass, list)):
+    #if posPass &lt;&gt; 0 then
+    #  IndPass := DeleteRow(IndPass,posPass):
+    #end if:
+=======
     posPass := ListTools[Search](i, convert(IndPass, list)):
     if posPass &lt;&gt; 0 then
       IndPass := DeleteRow(IndPass,posPass):
     end if:
+>>>>>>> 8d488cb60ee456399bb5a58b5ae0e003066e129f
   end if:
 end do:</Text-field>
 </Input>
 </Group>
+<<<<<<< HEAD
+<Group hide-input="false" labelreference="L2350" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">NQJA := RowDimension(IndAct):
+NQJP := NQJ-NQJA: #RowDimension(IndPass):
+IndPass:= Matrix(NQJP, 1):
+kp := 1: ka := 1:
+for i from 1 to NQJ do
+  if ListTools[Search](i, convert(IndAct, list)) = 0 then
+    IndPass(kp) := i:
+    kp := kp + 1:
+  end if:
+end do:</Text-field>
+=======
 <Group hide-input="false" labelreference="L1743" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">NQJA := RowDimension(IndAct):
 NQJP := RowDimension(IndPass):</Text-field>
+>>>>>>> 8d488cb60ee456399bb5a58b5ae0e003066e129f
 </Input>
 </Group>
 <Group labelreference="L1744" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -306,8 +392,13 @@ end do:</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L1724" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<<<<<<< HEAD
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">taugIC := P1.taug + Transpose(B21).P2.taug: #taugIC := (P1 + Transpose(B21).P2).taug:
+tauIC := P1.tau + Transpose(B21).P2.tau: #tauIC := (P1 + Transpose(B21).P2).tau:</Text-field>
+=======
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tauIC := P1.tau + Transpose(B21).P2.tau: #tauIC := (P1 + Transpose(B21).P2).tau:
 taugIC := P1.taug + Transpose(B21).P2.taug: #taugIC := (P1 + Transpose(B21).P2).taug:</Text-field>
+>>>>>>> 8d488cb60ee456399bb5a58b5ae0e003066e129f
 </Input>
 </Group>
 <Group labelreference="L2313" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -323,7 +414,11 @@ MMIC := Transpose(W).MM.W:</Text-field>
 <Input><Text-field style="Text" layout="Normal">Regressorform [Docquier2013], Gl. 12</Text-field>
 </Input>
 </Group>
+<<<<<<< HEAD
+<Group labelreference="L2342" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+=======
 <Group labelreference="L1733" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+>>>>>>> 8d488cb60ee456399bb5a58b5ae0e003066e129f
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tauIC_regressor := P1.tau_regressor_s + Transpose(B21).P2.tau_regressor_s:</Text-field>
 </Input>
 </Group>
@@ -337,10 +432,22 @@ MMIC := Transpose(W).MM.W:</Text-field>
 <Input><Text-field style="Text" layout="Normal">Floating Base</Text-field>
 </Input>
 </Group>
+<<<<<<< HEAD
+<Group labelreference="L2334" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_invdyn and not(base_method_name=&quot;twist&quot;) then
+  MatlabExport(tauIC, sprintf(&quot;../codeexport/%s/tmp/invdyn_floatb_%s_par%d_ic_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L2305" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_regressor and not(base_method_name=&quot;twist&quot;) then
+  MatlabExport(tauIC_regressor, sprintf(&quot;../codeexport/%s/tmp/invdyn_floatb_%s_%s_ic_matlab.m&quot;, robot_name, base_method_name, regressor_modus), codegen_opt):
+=======
 <Group labelreference="L2305" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_invdyn and not(base_method_name=&quot;twist&quot;) then
   MatlabExport(tauIC_regressor, sprintf(&quot;../codeexport/%s/tmp/invdyn_floatb_%s_%s_ic_matlab.m&quot;, robot_name, base_method_name, regressor_modus), codegen_opt):
   MatlabExport(tauIC, sprintf(&quot;../codeexport/%s/tmp/invdyn_floatb_%s_par%d_ic_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+>>>>>>> 8d488cb60ee456399bb5a58b5ae0e003066e129f
 end if:</Text-field>
 </Input>
 </Group>
@@ -348,7 +455,11 @@ end if:</Text-field>
 <Input><Text-field style="Text" layout="Normal">Fixed Base</Text-field>
 </Input>
 </Group>
+<<<<<<< HEAD
+<Group labelreference="L2336" drawlabel="true">
+=======
 <Group labelreference="L2310" drawlabel="true">
+>>>>>>> 8d488cb60ee456399bb5a58b5ae0e003066e129f
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_invdyn then
   tauIC_fixb:=tauIC:
   taugIC_fixb:=taugIC:
@@ -375,6 +486,55 @@ end if:</Text-field>
 end if:</Text-field>
 </Input>
 </Group>
+<<<<<<< HEAD
+<Group labelreference="L2338" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_grav_inertia then
+  taugIC_fixb:=taugIC:
+  MMIC_fixb:=MMIC:
+  for i from 1 to NQB do
+    MMIC_fixb := subs({X_base_s[i,1]=0},MMIC_fixb):
+  end do:
+  for i from 1 to 6 do
+    MMIC_fixb := subs({V_base_s[i,1]=0},MMIC_fixb):
+    MMIC_fixb := subs({VD_base_s[i,1]=0},MMIC_fixb):
+  end do:
+  MatlabExport(taugIC_fixb, sprintf(&quot;../codeexport/%s/tmp/gravload_joint_floatb_twist_par%d_ic_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
+  MatlabExport(MMIC_fixb, sprintf(&quot;../codeexport/%s/tmp/inertia_joint_joint_floatb_%s_par%d_ic_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L2340" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_regressor then
+  tauIC_regressor_fixb:=tauIC_regressor:
+  for i from 1 to NQB do
+    tauIC_regressor_fixb := subs({X_base_s[i,1]=0},tauIC_regressor_fixb):
+  end do:
+  for i from 1 to 6 do
+    tauIC_regressor_fixb := subs({V_base_s[i,1]=0},tauIC_regressor_fixb):
+    tauIC_regressor_fixb := subs({VD_base_s[i,1]=0},tauIC_regressor_fixb):
+  end do:
+  MatlabExport(tauIC_regressor_fixb, sprintf(&quot;../codeexport/%s/tmp/invdyn_fixb_%s_ic_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
+end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L2310" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if herleitungsverfahren = &quot;newton&quot; then
+  tauIC_fixb:=tauIC:
+  taugIC_fixb:=taugIC:
+  for i from 1 to NQB do
+    tauIC_fixb := subs({X_base_s[i,1]=0},tauIC_fixb):
+  end do:
+  for i from 1 to 6 do
+    tauIC_fixb := subs({V_base_s[i,1]=0},tauIC_fixb):
+    tauIC_fixb := subs({VD_base_s[i,1]=0},tauIC_fixb):
+  end do:
+  MatlabExport(tauIC_fixb, sprintf(&quot;../codeexport/%s/tmp/invdyn_fixb_snew_par%d_ic_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
+  MatlabExport(taugIC_fixb, sprintf(&quot;../codeexport/%s/tmp/gravload_joint_floatb_twist_snew_par%d_ic_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
+end if:</Text-field>
+</Input>
+</Group>
+=======
+>>>>>>> 8d488cb60ee456399bb5a58b5ae0e003066e129f
 <Group labelreference="L2311" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">Export Anzahl der aktiven Koordinaten NAJ</Text-field>
 </Input>
