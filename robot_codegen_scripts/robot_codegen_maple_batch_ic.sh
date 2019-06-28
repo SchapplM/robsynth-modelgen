@@ -53,24 +53,16 @@ dateiliste_kindyn="
 
 if [ "$CG_MINIMAL" == "0" ]; then
   dateiliste_kindyn="$dateiliste_kindyn
-<<<<<<< HEAD
       robot_implicit_contraints_rotmat_dynamics_worldframe_par1_invdyn.mpl
       robot_implicit_contraints_rotmat_dynamics_worldframe_par2_invdyn.mpl
       robot_implicit_contraints_rotmat_dynamics_worldframe_par1_grav_inertia.mpl
       robot_implicit_contraints_rotmat_dynamics_worldframe_reg2.mpl
-=======
-      robot_implicit_contraints_rotmat_dynamics_worldframe_par1_reg2.mpl
->>>>>>> 8d488cb60ee456399bb5a58b5ae0e003066e129f
   "
 fi;
 
 dateiliste_kindyn="$dateiliste_kindyn
-<<<<<<< HEAD
     robot_implicit_contraints_rotmat_dynamics_worldframe_par2_grav_inertia.mpl
     robot_implicit_contraints_rotmat_dynamics_worldframe_snew_par2.mpl
-=======
-    robot_implicit_contraints_rotmat_dynamics_worldframe_par2_reg2.mpl
->>>>>>> 8d488cb60ee456399bb5a58b5ae0e003066e129f
 "
 
 # Alle Maple-Dateien der Reihe nach ausführen
