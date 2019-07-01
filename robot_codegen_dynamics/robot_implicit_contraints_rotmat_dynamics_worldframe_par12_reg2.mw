@@ -341,13 +341,15 @@ taugIC := P1.taug + Transpose(B21).P2.taug: #taugIC := (P1 + Transpose(B21).P2).
 </Group>
 <Group labelreference="L2345" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if herleitungsverfahren = &quot;newton&quot; then
+  tau_MM := copy(tau):
+  for i to NQ do
+    tau_MM := subs(qD_s[i, 1] = 0,tau_MM);
+  end do:
+
   MM := Matrix(NQJ, NQJ):
   for i to NQJ do 
     for j to NQJ do 
-      MM[i, j] := diff(tau[i, 1], qDD_s[j, 1]):
-      for k to NQJ do
-        MM[i, j] := subs(qD_s[k, 1] = 0,MM[i, j]);
-      end do:
+      MM[i, j] := diff(tau_MM[i, 1], qDD_s[6+j, 1]):
     end do:
   end do:
 end if:</Text-field>
@@ -357,7 +359,7 @@ end if:</Text-field>
 <Input><Text-field style="Text" layout="Normal">[ParkChoPlo1999], Gl. 55; [DoThanhKotHeiOrt2009b], Gl. (23)</Text-field>
 </Input>
 </Group>
-<Group labelreference="L2342" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group labelreference="L2349" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">W := Transpose(P1 + Transpose(B21).P2):
 MMIC := Transpose(W).MM.W:</Text-field>
 </Input>
@@ -459,7 +461,7 @@ end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2312" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Equation executable="true" style="2D Input" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYlLUkjbWlHRiQ2I1EhRicvJStleGVjdXRhYmxlR1EmZmFsc2VGJy8lLG1hdGh2YXJpYW50R1Enbm9ybWFsRic=">JSFH</Equation></Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Equation executable="true" style="2D Input" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYlLUkjbWlHRiQ2I1EhRicvJStleGVjdXRhYmxlR1EmZmFsc2VGJy8lLG1hdGh2YXJpYW50R1Enbm9ybWFsRic=">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
 </Input>
 </Group>
 </Section>

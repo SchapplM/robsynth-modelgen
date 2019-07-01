@@ -148,13 +148,15 @@ tauIC := P1.tau + Transpose(B21).P2.tau: #tauIC := (P1 + Transpose(B21).P2).tau:
 taugIC := P1.taug + Transpose(B21).P2.taug: #taugIC := (P1 + Transpose(B21).P2).taug:
 tauIC_regressor := P1.tau_regressor_s + Transpose(B21).P2.tau_regressor_s:
 if herleitungsverfahren = "newton" then
+  tau_MM := copy(tau):
+  for i to NQ do
+    tau_MM := subs(qD_s[i, 1] = 0,tau_MM);
+  end do:
+
   MM := Matrix(NQJ, NQJ):
   for i to NQJ do 
     for j to NQJ do 
-      MM[i, j] := diff(tau[i, 1], qDD_s[j, 1]):
-      for k to NQJ do
-        MM[i, j] := subs(qD_s[k, 1] = 0,MM[i, j]);
-      end do:
+      MM[i, j] := diff(tau_MM[i, 1], qDD_s[6+j, 1]):
     end do:
   end do:
 end if:
