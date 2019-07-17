@@ -23,7 +23,7 @@ robot_name = '%RN%';
 % Dann entfallen alle folgenden Tests (noch nicht implementiert)
 if NJ ~= NQJ
   KINCONSTR = true;
-  fprintf('Tests entfallen aufgrund der Existenz kinematischer Zwangsbedingungen\n');
+  fprintf('Einige Tests entfallen aufgrund der Existenz kinematischer Zwangsbedingungen\n');
 else
   KINCONSTR = false;
 end
@@ -35,10 +35,15 @@ for f = fields(TSS)'
 end
 
 if any(diff(TSS.v) ~= 1)
-  fprintf('Tests entfallen aufgrund der Baumstruktur (noch nicht implementiert)\n');
+  fprintf('Einige Tests entfallen aufgrund der Baumstruktur (noch nicht implementiert)\n');
   TREE = 1;
 else
   TREE = 0;
+end
+
+if KINCONSTR && any(sigma==2)
+  fprintf('Parameterlineare Form funktioniert nur, wenn es keine virtuellen Transformationen gibt. Abbruch der Tests\n');
+  return
 end
 
 % Minimalparametervektor
@@ -47,7 +52,7 @@ if ~KINCONSTR && ~TREE
 end
 
 % Vektor mit Inertialparametern
-PV2fixb = NaN(10*NJ,1);
+PV2fixb = NaN(10*NJ,1); % TODO: Für sigma=2 dürfen virtuelle Transformationen hier nciht gezählt werden.
 for i = 1:NJ
   % different order:
   % Ifges_num_mdh: XX,YY,ZZ,XY,XZ,YZ
@@ -57,7 +62,7 @@ for i = 1:NJ
   PV2fixb(10*i) = m(i+1);
 end
 
-% Vektor mit Inertialparametern mit Basisparametern
+% Vektor der Inertialparametern mit Dynamikparametern der Basis (für Newton-Euler-Dynamik)
 PV2fixbBase = NaN(10*NL,1);
 for i = 1:NL
   % different order:

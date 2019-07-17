@@ -19,14 +19,14 @@ clc
 %% Init
 
 if isempty(fileparts(which('%RNTE%_varpar_testfunctions_parameter')))
-    fprintf('Test für die impliziten ZB nicht ausgeführt, da die expliziten ZBs noch nicht vorliegen');
+    fprintf('Test für die impliziten ZB nicht ausgeführt, da die expliziten ZBs noch nicht vorliegen\n');
     return;
 end
 
 
 
 TSSc = %RNTE%_varpar_testfunctions_parameter; % mit Zwangsbedingungen
-TSSo = %RN%_varpar_testfunctions_parameter; % ohne Zwangsbedingungen
+TSSo = %RNOL%_varpar_testfunctions_parameter; % ohne Zwangsbedingungen
 
 % Dynamikparameter angleichen
 TSSc.m = TSSo.m;
@@ -93,14 +93,37 @@ for iq = 1:TSSc.n
     qDD = W*qDD1 + WD*qD1;
     
     % Teste implizite Zwangsbedingungen
-    h = %RN%_kinconstr_impl_mdh_sym_varpar(q, TSSo.pkin)';
-    if any(abs(h(:)) > 1e-10)
+    h = %RN%_kinconstr_impl_mdh_sym_varpar(q, TSSo.pkin);
+    if any(abs(h) > 1e-10)
       error('Implizite Zwangsbedingungen werden nicht erfüllt!');
     end
     
+    % Vergleiche Gelenk-Transformationsmatrizen
+    Tc = %RNTE%_joint_trafo_rotmat_mdh_sym_varpar(q1, TSSc.pkin);
+    Tu = %RNOL%_joint_trafo_rotmat_mdh_sym_varpar(q, TSSo.pkin);
+    for jj = 1:TSSc.NJ 
+      test = Tc(:,:,jj)\Tu(:,:,jj) - eye(4);
+      if any( abs(test(:)) > 1e-10 )
+        [Tc(:,:,jj),Tu(:,:,jj)] %#ok<NOPTS>
+        r2eulxyz(Tc(1:3,1:3,jj)' * Tu(1:3,1:3,jj))*180/pi %#ok<NOPTS>
+        error('Gelenk-Transformation stimmt nicht');
+      end
+    end
+    % Vergleiche KörperKS-Transformationsmatrizen
+    Tcc = %RNTE%_fkine_fixb_rotmat_mdh_sym_varpar(q1, TSSc.pkin);
+    Tcu = %RNOL%_fkine_fixb_rotmat_mdh_sym_varpar(q, TSSo.pkin);
+    for jj = 1:TSSc.NL % 1=Basis
+      test = Tcc(:,:,jj)\Tcu(:,:,jj) - eye(4);
+      if any( abs(test(:)) > 1e-10 )
+        [Tcc(:,:,jj),Tcu(:,:,jj)] %#ok<NOPTS>
+        r2eulxyz(Tcc(1:3,1:3,jj)' * Tcu(1:3,1:3,jj))*180/pi %#ok<NOPTS>
+        error('Transformation stimmt nicht');
+      end
+    end
+    
     % Dynamik der offenen Kette
-    tau = %RNOL%_invdynJ_fixb_slag_vp1(q, qD, qDD, g, ...
-    TSSo.pkin, TSSo.m, TSSo.rSges, TSSo.Icges);
+    tau = %RNOL%_invdynJ_fixb_slag_vp2(q, qD, qDD, g, ...
+    TSSo.pkin, TSSo.m, TSSo.mrSges, TSSo.Ifges);
     
     % Dynamik der geschlossenen Kette aus Jacobi (Projektion)
     % [NakamuraGho1989], Gl. 5 
@@ -156,8 +179,8 @@ for iq = 1:TSSc.n
     end
     
     % Test symbolisch berechneter inverse Dynamik über impl. Zwangsbedingungen mit numerischer Projektion
-    tauICs = %RN%_invdynJ_fixb_slag_vp1(q, qD, qDD, g, ...
-    TSSo.pkin, TSSo.m, TSSo.rSges, TSSo.Icges);
+    tauICs = %RN%_invdynJ_fixb_slag_vp2(q, qD, qDD, g, ...
+    TSSo.pkin, TSSo.m, TSSo.mrSges, TSSo.Ifges);
     
     test = tauIC-tauICs;
     if any( abs(test(:)) > 1e6*eps(max(abs(W))) )
