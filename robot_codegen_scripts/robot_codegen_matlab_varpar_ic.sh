@@ -13,7 +13,7 @@ echo "Generiere Matlabfunktionen für Roboter mit IC"
 repo_pfad=$(pwd)/..
 tmp_pfad=$repo_pfad/workdir/tmp
 # Initialisiere Variablen
-source robot_codegen_tmpvar_bash_IC.sh
+source robot_codegen_tmpvar_bash_ic.sh
 source $repo_pfad/robot_codegen_definitions/robot_env_IC.sh
 
 # Erstelle Matlab-Hilfsdateien

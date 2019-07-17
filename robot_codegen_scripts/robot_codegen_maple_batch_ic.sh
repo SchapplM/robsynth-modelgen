@@ -38,7 +38,7 @@ shift # past argument or value
 done
 
 # Namen des Roboters herausfinden (damit roboterspezifische Zwangsbedingungen berechnet werden können)
-source robot_codegen_tmpvar_bash_IC.sh
+source robot_codegen_tmpvar_bash_ic.sh
 source $repo_pfad/robot_codegen_definitions/robot_env_IC.sh
 
 # Liste mit Maple-Skripten in der richtigen Reihenfolge für parallelen Roboter
