@@ -123,8 +123,12 @@ do
       robot_tree_floatb_rotmat_dynamics_worldframe_par2_corvec.mpl
       robot_tree_floatb_rotmat_dynamics_worldframe_par2_grav.mpl
       robot_tree_floatb_rotmat_dynamics_worldframe_par2_inertia.mpl
-      robot_tree_fixb_dynamics_NewtonEuler_linkframe_par12.mpl
   "
+  if [ "$robot_kinconstr_exist" == "0" ]; then
+        dateiliste_kindyn="$dateiliste_kindyn
+        robot_tree_fixb_dynamics_NewtonEuler_linkframe_par12.mpl
+    "
+  fi;
   if [ "$CG_MINIMAL" == "0" ]; then
     dateiliste_dyn="
         $dateiliste_dyn
@@ -161,9 +165,14 @@ do
       robot_chain_floatb_rotmat_dynamics_regressor_pv2_inertia.mpl
       robot_chain_floatb_rotmat_dynamics_regressor_pv2_inertiaD.mpl
       robot_chain_floatb_rotmat_dynamics_regressor_pv2_invdyn.mpl
-      robot_chain_fixb_rotmat_NewtonEuler_regressor.mpl
     "
+    if [ "$robot_kinconstr_exist" == "0" ]; then
+          dateiliste_kindyn="$dateiliste_kindyn
+          robot_tree_fixb_dynamics_NewtonEuler_linkframe_par12.mpl
+      "
+    fi;
   fi;
+  
   # Zusätzliche Maple-Skripte speziell für dieses System (benutzerdefiniert)
   # Für jede Basis-Methode anhängen.
   addlistfile=$repo_pfad/robot_codegen_additional/scripts/${robot_name}_maple_additional_worksheet_list_${basemeth}

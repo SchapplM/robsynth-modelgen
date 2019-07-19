@@ -101,8 +101,8 @@ if ! [ "$CG_FLOATBONLY" == "1" ]; then
         robot_tree_floatb_rotmat_dynamics_worldframe_par1.mpl
         robot_tree_floatb_rotmat_lagrange_worldframe_par2.mpl
         robot_tree_floatb_rotmat_dynamics_worldframe_par2.mpl
-        robot_tree_fixb_dynamics_NewtonEuler_linkframe_par12.mpl
     "
+    
   else
     dateiliste_kindyn="$dateiliste_kindyn
         robot_tree_floatb_rotmat_energy_worldframe_par2.mpl
@@ -114,6 +114,12 @@ if ! [ "$CG_FLOATBONLY" == "1" ]; then
         robot_tree_fixb_dynamics_NewtonEuler_linkframe_par12.mpl
     "
   fi;
+  
+  if [ "$robot_kinconstr_exist" == "0" ]; then
+        dateiliste_kindyn="$dateiliste_kindyn
+        robot_tree_fixb_dynamics_NewtonEuler_linkframe_par12.mpl
+    "
+  fi;
 
   # Skripte für Regressorform
   if [ "$CG_MINIMAL" == "0" ]; then
@@ -122,8 +128,12 @@ if ! [ "$CG_FLOATBONLY" == "1" ]; then
         robot_tree_base_parameter_transformations.mpl
         robot_chain_floatb_rotmat_dynamics_regressor_pv2.mpl
         robot_chain_floatb_rotmat_dynamics_regressor_minpar.mpl
-        robot_chain_fixb_rotmat_NewtonEuler_regressor.mpl
     "
+    if [ "$robot_kinconstr_exist" == "0" ]; then
+          dateiliste_kindyn="$dateiliste_kindyn
+          robot_tree_fixb_dynamics_NewtonEuler_linkframe_par12.mpl
+      "
+    fi;
   fi;
   # Initialisiere zusätzliche Maple-Skripte speziell für dieses System (benutzerdefiniert)
   # Mit Basis-Methode "twist"
@@ -153,7 +163,6 @@ if ! [ "$CG_FIXBONLY" == "1" ]; then
       robot_tree_floatb_rotmat_lagrange_worldframe_par2.mpl
       robot_tree_floatb_rotmat_dynamics_worldframe_par1.mpl
       robot_tree_floatb_rotmat_dynamics_worldframe_par2.mpl
-      robot_tree_fixb_dynamics_NewtonEuler_linkframe_par12.mpl
     "
   else
     dateiliste_kindyn="$dateiliste_kindyn
@@ -168,6 +177,10 @@ if ! [ "$CG_FIXBONLY" == "1" ]; then
       robot_tree_floatb_rotmat_dynamics_worldframe_par2_grav.mpl
       robot_tree_floatb_rotmat_dynamics_worldframe_par2_inertia.mpl
       robot_tree_floatb_rotmat_dynamics_worldframe_par2_corvec.mpl
+    "
+  fi;
+  if [ "$robot_kinconstr_exist" == "0" ]; then
+    dateiliste_kindyn="$dateiliste_kindyn
       robot_tree_fixb_dynamics_NewtonEuler_linkframe_par12.mpl
     "
   fi;
@@ -178,8 +191,12 @@ if ! [ "$CG_FIXBONLY" == "1" ]; then
         robot_tree_base_parameter_transformations.mpl
         robot_chain_floatb_rotmat_dynamics_regressor_pv2.mpl
         robot_chain_floatb_rotmat_dynamics_regressor_minpar.mpl
-        robot_chain_fixb_rotmat_NewtonEuler_regressor.mpl
     "
+    if [ "$robot_kinconstr_exist" == "0" ]; then
+          dateiliste_kindyn="$dateiliste_kindyn
+          robot_tree_fixb_dynamics_NewtonEuler_linkframe_par12.mpl
+      "
+    fi;
   fi;
   # Initialisiere zusätzliche Maple-Skripte speziell für dieses System (benutzerdefiniert)
   # Mit Basis-Methode "eulxyz"
