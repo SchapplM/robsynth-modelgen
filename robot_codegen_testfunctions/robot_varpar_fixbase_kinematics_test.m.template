@@ -265,9 +265,10 @@ end
 fprintf('Erfolgreich analytische gegen geometrische Jacobi-Matrix (Rotationsteil) getestet (und Zeitableitung).\n');
 
 %% Teste Geometrische Jacobi gegen Rotationsmatrix-Jacobi
-for iq = 1:size(Q, 1) % Über Zufallsposen
-  for jb  = 0:NL-1 % Über alle Körper
-    for ie = uint8(1:12) % Über alle Euler-Konventionen
+for ie = uint8(1:12) % Über alle Euler-Konventionen
+  for iq = 1:size(Q, 1) % Über Zufallsposen
+    for jb  = 0:NL-1 % Über alle Körper
+    
       q = Q(iq,:)';
       qD = Q(iq,:)';
 
@@ -280,6 +281,15 @@ for iq = 1:size(Q, 1) % Über Zufallsposen
       phi = r2eul(t2r(T_jb), ie);
       J_phi = euljac(phi, ie);
 
+      % Prüfe, ob Winkelkonvention für diese Körper-KS-Rotationsmatrix
+      % gültig ist
+      if rank(J_phi) == 2
+        if iq == 1
+          fprintf('Euler-Winkel-Konvention %s führt zu singulärer Orientierungsdarstellung für Körper-KS-Jacobi %d (Das ist kein Fehler)\n', euler_angle_properties(ie), jb);
+        end
+        continue;
+      end
+      
       % Geometrische Jacobi-Matrix (Rotationsteil)
       Jg_rot = %RN%_jacobig_rot_sym_varpar(q, uint8(jb), pkin);
 
