@@ -1,0 +1,163 @@
+# Vollständige Liste der Ersetzungsausdrücke für %RN%
+Format: Kennzeichnung des Ausdrucks als Überschrift "##" gefolgt von dessen Inhalt in neuer Zeile (umschlossen von Code-Hervorhebung ("Backtick"-Zeichen).
+Zur Ersetzung im Quelltext werden die Ausdrücke mit "%"-Zeichen umklammert.
+
+Moritz Schappler, moritz.schappler@imes.uni-hannover.de, 2019-07  
+(C) Institut für Mechatronische Systeme, Universität Hannover
+
+## RN
+
+```
+%RN%
+```
+
+## NQJ
+
+```
+%NQJ%
+```
+
+## NJ
+
+```
+%NJ%
+```
+
+## NL
+
+```
+%NL%
+```
+
+## NMPVFIXB
+
+```
+%NMPVFIXB%
+```
+
+## NMPVFLOATB
+
+```
+%NMPVFLOATB%
+```
+
+## NKP
+
+```
+%NKP%
+```
+
+## NKCP
+
+```
+%RN%
+```
+
+## KPDEF
+
+```
+%KPDEF%
+```
+
+## robot_NTAUJFIXBREGNN
+
+```
+%robot_NTAUJFIXBREGNN%
+```
+
+## VERSIONINFO
+
+```
+% %VERSIONINFO%
+```
+
+## INPUT_M
+
+```
+% %INPUT_M%
+```
+
+## INPUT_R
+
+```
+% %INPUT_R%
+```
+
+## INPUT_MR
+
+```
+% %INPUT_MR%
+```
+
+## INPUT_IC
+
+```
+% %INPUT_IC%
+```
+
+## INPUT_IF
+
+```
+% %INPUT_IF%
+```
+
+## INPUT_MDPFIXB
+
+```
+% %INPUT_MDPFIXB%
+```
+
+## INPUT_PKIN
+
+```
+% %INPUT_PKIN%
+```
+
+## INPUT_QJ
+
+```
+% %INPUT_QJ%
+```
+
+## INPUT_QJD
+
+```
+% %INPUT_QJD%
+```
+
+## INPUT_QJDD
+
+```
+% %INPUT_QJDD%
+```
+
+## INPUT_RB
+
+```
+% %INPUT_RB%
+```
+
+## INPUT_PHIB
+
+```
+% %INPUT_PHIB%
+```
+
+## INPUT_PHIBD
+
+```
+% %INPUT_PHIBD%
+```
+
+## INPUT_XDB
+
+```
+% %INPUT_XDB%
+```
+
+## INPUT_XDDB
+
+```
+% %INPUT_XDDB%
+```
+
