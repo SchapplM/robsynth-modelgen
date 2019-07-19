@@ -2,7 +2,7 @@
 % %RN%
 %
 % Eingabe:
-% RV_Traj [NTx%robot_NTAUJFIXBREGNN%]
+% RV_Traj [NTx%NTAUJFIXBREGNN%]
 %   time series of regressor matrices as vectors
 %   Number of time steps (NT) in rows
 %   see %RN%_invdynJ_fixb_regmin2vec.m
@@ -18,9 +18,9 @@ function TAU = %FN%(RV_Traj, MDP)
 
 %% Coder Information
 %#codegen
-%$cgargs {coder.newtype('double',[inf,%robot_NTAUJFIXBREGNN%]), zeros(%NMPVFIXB%,1)}
-assert(isreal(RV_Traj) && all(size(RV_Traj,2) == %robot_NTAUJFIXBREGNN%), ...
-  '%FN%: RV_Traj needs to be [NTx%robot_NTAUJFIXBREGNN%] (double)');
+%$cgargs {coder.newtype('double',[inf,%NTAUJFIXBREGNN%]), zeros(%NMPVFIXB%,1)}
+assert(isreal(RV_Traj) && all(size(RV_Traj,2) == %NTAUJFIXBREGNN%), ...
+  '%FN%: RV_Traj needs to be [NTx%NTAUJFIXBREGNN%] (double)');
 assert(isreal(MDP) && all(size(MDP) == [%NMPVFIXB% 1]), ...
   '%FN%: Dynamics parameter vector MDP has to be [%NMPVFIXB%x1] (double)');
 

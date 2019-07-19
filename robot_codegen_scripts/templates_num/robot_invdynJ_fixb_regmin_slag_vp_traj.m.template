@@ -13,7 +13,7 @@
 % %INPUT_PKIN%
 %
 % Output:
-% RV_Traj [NTx%robot_NTAUJFIXBREGNN%]
+% RV_Traj [NTx%NTAUJFIXBREGNN%]
 %   time series of regressor matrices as vectors
 %   see %RN%_invdynJ_fixb_regmin2vec.m
 
@@ -38,7 +38,7 @@ assert(isreal(pkin) && all(size(pkin) == [%NKP% 1]), ...
   '%FN%: Kinematic parameters pkin have to be [%NKP%x1] (double)');
   
 %% Trajektorie der Regressor-Vektoren aufbauen
-RV_Traj = NaN(size(Q,1), %robot_NTAUJFIXBREGNN%);
+RV_Traj = NaN(size(Q,1), %NTAUJFIXBREGNN%);
 for ii = 1:size(Q,1)
   RV_Traj(ii,:) = %RN%_invdynJ_fixb_regmin2vec( ...
     %RN%_invdynJ_fixb_regmin_slag_vp(Q(ii,:)', QD(ii,:)', QDD(ii,:)', g, pkin) );

@@ -100,7 +100,7 @@ zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_invdynJ_fixb
 if [ -f $quelldat ]; then
   cat $head_pfad/robot_matlabtmp_invdynJ_fixb_mdp_vr.head.m > $zieldat
   printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-  echo "%\$cgargs {zeros(%robot_NTAUJFIXBREGNN%,1), zeros(%NMPVFIXB%,1)}" >> $zieldat
+  echo "%\$cgargs {zeros(%NTAUJFIXBREGNN%,1), zeros(%NMPVFIXB%,1)}" >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_MDPFIXB.m >> $zieldat
   printf "\n%%%% Variable Initialization" > ${quelldat}.subsvar
   cat $tmp_pfad/robot_matlabtmp_par_MDPFIXB.m >> ${quelldat}.subsvar

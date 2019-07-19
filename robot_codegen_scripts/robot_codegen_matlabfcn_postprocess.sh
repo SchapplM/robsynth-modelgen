@@ -83,7 +83,7 @@ sed -i "s/%NKP%/$robot_NKP/g" $mfcndat
 sed -i "s/%NKCP%/$robot_NKCP/g" $mfcndat
 kpstring="pkin=[$(echo "$robot_KP" | sed "s/ /,/g")]';"
 sed -i "s/%KPDEF%/$kpstring/g" $mfcndat
-sed -i "s/%robot_NTAUJFIXBREGNN%/$robot_NTAUJFIXBREGNN/g" $mfcndat
+sed -i "s/%NTAUJFIXBREGNN%/$robot_NTAUJFIXBREGNN/g" $mfcndat
 
 
 if [ "$replacelastassignment" != "0" ]; then # vergleiche strings, da das Argument auch leer sein könnte
