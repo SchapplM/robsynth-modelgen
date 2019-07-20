@@ -188,8 +188,8 @@ for iq = 1:TSSc.n
     end
     
     % Test inverse Dynmik Newton-Euler vs Lagrange
-    tauICs_snew = %RN%_invdynJ_fixb_snew_vp1(q, qD, qDD, g, ...
-    TSSo.pkin, TSSo.m, TSSo.rSges, TSSo.Icges);
+    tauICs_snew = %RN%_invdynJ_fixb_snew_vp2(q, qD, qDD, g, ...
+    TSSo.pkin, TSSo.m, TSSo.mrSges, TSSo.Ifges);
     
     test = tauICs_snew-tauICs;
     if any( abs(test(:)) > 1e6*eps(max(abs(W))) )
