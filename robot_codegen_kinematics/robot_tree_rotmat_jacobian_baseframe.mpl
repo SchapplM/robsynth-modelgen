@@ -17,6 +17,7 @@
 # (C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
 # 
 # Sources
+# [SchapplerTapOrt2019] Schappler, M. et al.: Resolution of Functional Redundancy for 3T2R Robot Tasks using Two Sets of Reciprocal Euler Angles, Proc. of the 15th IFToMM World Congress, 2019
 # [Ortmaier2014] Vorlesungsskript Robotik I
 # [Ortmaier2014a] Vorlesungsskript Robotik II
 # Initialization
@@ -115,7 +116,9 @@ if codegen_act and codegen_debug then
   end do:
 end if:
 if codegen_act then
+  interface(warnlevel=0): # Unterdrücke die Warnung für arctan
   MatlabExport(b_rota, sprintf("../codeexport/%s/tmp/jacobia_rot_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
+  interface(warnlevel=3):
 end if:
 # Jacobi-Matrix geometrisch (Rotatorisch)
 # Zusammenhang zwischen Geschwindigkeit der verallgemeinerten Koordinaten und Winkelgeschwindigkeit des Endeffektors ausgedrückt im Basis-Koordinatensystems
@@ -151,35 +154,38 @@ if codegen_act then
 end if:
 # Jacobi-Matrix der Rotationsmatrix (Rotatorisch)
 # Ableitung der Rotationsmatrix nach den Gelenkwinkel (kann z.B. für die inverse Kinematik benutzt werden)
+# Siehe [SchapplerTapOrt2019], Gl. 31, Term III und Gl. 27
 R_0_i_s := convert_t_s( Trf_c(1 .. 3, 1..3, LIJAC+1) ):
 Rb_0_i_s :=Reshape(R_0_i_s, 9,1):
-J_Rb := Matrix(9, NQJ):
+J_Rb_s := Matrix(9, NQJ):
 for i from 1 to 9 do
   for j from 1 to NQJ do
-    J_Rb(i,j) := diff(Rb_0_i_s(i,1), qJ_s(j,1)):
+    J_Rb_s(i,j) := diff(Rb_0_i_s(i,1), qJ_s(j,1)):
   end do:
 end do:
-save J_Rb, sprintf("../codeexport/%s/tmp/jacobiR_rot_%d_floatb_%s_maple.m", robot_name, LIJAC, base_method_name):
+save J_Rb_s, sprintf("../codeexport/%s/tmp/jacobiR_rot_%d_floatb_%s_maple.m", robot_name, LIJAC, base_method_name):
 if codegen_act then
-  MatlabExport(J_Rb, sprintf("../codeexport/%s/tmp/jacobiR_rot_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
+  MatlabExport(J_Rb_s, sprintf("../codeexport/%s/tmp/jacobiR_rot_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
 end if:
-# 
-
-# Jacobi-Zeitableitung
+# Jacobi-Zeitableitungen
+# Die Jacobi-Zeitableitungen werden z.B. zur Umrechnung zwischen EE-Beschleunigungen und Gelenk-Beschleunigungen benötigt.
 JD_rotg_t := diff~(convert_s_t(b_rotg), t):
 JD_rotg_s := convert_t_s(JD_rotg_t):
 JD_rota_t := diff~(convert_s_t(b_rota), t):
 JD_rota_s := convert_t_s(JD_rota_t):
 JD_transla_t := diff~(convert_s_t(b_transl), t):
 JD_transla_s := convert_t_s(JD_transla_t):
+# Zeitableitung der Ableitung der Rotationsmatrix nach den Gelenkwinkeln. Dieser Term wird zur Berechnung der Zeitableitung der kinematischen Zwangsbedingungen für PKM benötigt.
+# Das wird bei der Berechnung der Coriolis-Terme aus dieser Darstellung benötigt.
+JD_Rb_t := diff~(convert_s_t(J_Rb_s), t):
+JD_Rb_s := convert_t_s(JD_Rb_t):
+# Matlab-Export
 if codegen_act then
   MatlabExport(JD_rotg_s, sprintf("../codeexport/%s/tmp/jacobigD_rot_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
-end if:
-if codegen_act then
+  interface(warnlevel=0): # Unterdrücke die Warnung für arctan
   MatlabExport(JD_rota_s, sprintf("../codeexport/%s/tmp/jacobiaD_rot_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
-end if:
-if codegen_act then
+  interface(warnlevel=3):
   MatlabExport(JD_transla_s, sprintf("../codeexport/%s/tmp/jacobiaD_transl_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
+  MatlabExport(JD_Rb_s, sprintf("../codeexport/%s/tmp/jacobiRD_rot_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
 end if:
-
 

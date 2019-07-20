@@ -274,7 +274,7 @@ for ie = uint8(1:12) % Über alle Euler-Konventionen
     for jb  = 0:NL-1 % Über alle Körper
     
       q = Q(iq,:)';
-      qD = Q(iq,:)';
+      qD = QD(iq,:)';
 
       % direkte Kinematik (mit gleichem Modell berechnet. Gleichheit der
       % Modelle wird in anderer Testfunktion  verifiziert)
@@ -321,6 +321,22 @@ for ie = uint8(1:12) % Über alle Euler-Konventionen
         error('Berechnung der Rotationsmatrix-Jacobi aus geometrischer Jacobi stimmt nicht');
       end
     end
+    
+    % Zeitableitung der Rotationsmatrix-Jacobi-Matrix testen
+    % Berechne zweite Matrix basierend auf Inkrement der Gelenkkoordinaten
+    % (Differenzenquotient mit Ein-Schritt-Verfahren)
+    dt = 1e-6;
+    q2 = q + qD*dt;
+    JR2 = %RN%_jacobiR_rot_sym_varpar(q2, uint8(jb), pkin);
+
+    JRD1 = %RN%_jacobiRD_rot_sym_varpar(q, qD, uint8(jb), pkin);
+    JR2_diff = JR + JRD1*dt;
+    JRD_diff = (JR2 - JR)/dt;
+    test1 = JR2 - JR2_diff;
+    test2 = JRD_diff - JRD1;
+    if any(abs(test1(:)) > 1e-10) || any(abs(test2(:)) > 1e-5)
+      error('Zeitableitung der Rotationsmatrix-Jacobi stimmt nicht');
+    end
   end
 end
 fprintf('Erfolgreich geometrische gegen Rotationsmatrix-Jacobi getestet.\n');
@@ -335,5 +351,7 @@ matlabfcn2mex({ '%RN%_jacobigD_rot_sym_varpar', ...
                 '%RN%_jacobig_rot_sym_varpar', ...
                 '%RN%_jacobia_rot_sym_varpar', ...
                 '%RN%_jacobia_transl_sym_varpar', ...
-                '%RN%_jacobiaD_transl_sym_varpar'});
+                '%RN%_jacobiaD_transl_sym_varpar', ...
+                '%RN%_jacobiR_rot_sym_varpar', ...
+                '%RN%_jacobiRD_rot_sym_varpar'});
 
