@@ -114,6 +114,9 @@ if [ "$subsvardat" != "" ] && [ -f "$subsvardat" ]; then
     # Ersetze den Ausdruck nur im Matlab-Code und nur für Variablen (nicht überall im Text)
     # (die Variablen werden im Quelltext immer von Zeichen begrenzt, die kein Teil des Variablennamens sein können.)
     # Keine Ersetzung in Kommentarzeilen
+    # Die Ersetzung funktioniert nicht, wenn zwei Ausdrücke nur mit Leerzeichen nebeneinanderstehen
+    # Das wird im Fall von Matlab-Matrizen durch robot_codegen_matlabcode_postprocess.sh sichergestellt.
+    # (Die Einträge werden durch Kommas getrennt)
     sed -i "/^%/! s/\([^a-zA-Z0-9_]\)$OLDEXP\([^a-zA-Z0-9_]\)/\1$NEWEXP\2/g" $mfcndat
   done
   IFS=$OLDIFS
