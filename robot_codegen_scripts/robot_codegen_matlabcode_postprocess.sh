@@ -31,7 +31,7 @@ fi;
 # Das verschlechtert die Lesbarkeit und ist mit anderen Programmen nicht kompatibel (z.B. Lenze m2xml). Füge die Kommas hinzu. Erkenne Lücken zwischen Code durch Leerzeichen (\s) zwischen für Code typischen Zeichen.
 if [ "`grep '\[' $matfilepath | grep '\([0-9a-zA-Z()]\)\s\([-]*[0-9a-zA-Z()]\)' | wc -l`" -gt "0" ]; then
   for i in {1..2}; do # zwei mal durchführen (rechter Teil des Ausdrucks kann linker Teil des nächsten sein)
-    sed -i '/\[/ s/\([0-9a-zA-Z();]\)\s\([-]*[0-9a-zA-Z();]\)/\1, \2/g' $matfilepath
+    sed -i '/\[/ s/\([0-9a-zA-Z()]\)\s\([-]*[0-9a-zA-Z()]\)/\1, \2/g' $matfilepath
     # Bei Matrizen müssen auch die Semikolons als Trennzeichen genutzt werden.
     # Dadurch werden die Kommas auch direkt vor die Semikolons gesetzt,
     # was im folgenden Schritt wieder rückgängig gemacht wird.
