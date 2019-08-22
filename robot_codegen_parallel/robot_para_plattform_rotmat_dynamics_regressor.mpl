@@ -4,23 +4,23 @@
 # Berechnung der inversen Dynamik der Roboter-Plattform in Regressorform
 # 
 # Dateiname:
-# robot -> Berechnung für allgemeinen Roboter
-# para -> Berechnung für eine parallelen Roboter
+# robot -> Berechnung fÃ¼r allgemeinen Roboter
+# para -> Berechnung fÃ¼r eine parallelen Roboter
 # rotmat -> Kinematik wird mit Rotationsmatrizen berechnet
 # dynamics -> Berechnung der Dynamik
 # regressor -> Regressorform (parameterlinear)
 # Autor
 # Tim Job (Studienarbeit bei Moritz Schappler), 2018-12
 # Moritz Schappler, moritz.schappler@imes.uni-hannover.de
-# (C) Institut für Mechatronische Systeme, Universität Hannover
+# (C) Institut fÃ¼r Mechatronische Systeme, UniversitÃ¤t Hannover
 # Sources
 # [GautierKhalil1990] Direct Calculation of Minimum Set of Inertial Parameters of Serial Robots
 # [KhalilDombre2002] Modeling, Identification and Control of Robots
 # [Ortmaier2014] Vorlesungsskript Robotik I
 # [Abdel2007] Modellierung, Identifikation und robuste Regelung von Robotern mit parallelkinematischen Strukturen
 # Initialization
-interface(warnlevel=0): # Unterdrücke die folgende Warnung.
-restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
+interface(warnlevel=0): # UnterdrÃ¼cke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn Ã¼ber Terminal-Maple mit read gestartet wird.
 interface(warnlevel=3):
 with(LinearAlgebra):
 #with(ArrayTools):
@@ -28,7 +28,7 @@ with(codegen):
 with(CodeGeneration):
 with(StringTools):
 with(VectorCalculus):
-# Einstellungen für Code-Export: Optimierungsgrad (2=höchster) und Aktivierung jedes Terms.
+# Einstellungen fÃ¼r Code-Export: Optimierungsgrad (2=hÃ¶chster) und Aktivierung jedes Terms.
 codegen_opt := 2:
 codeexport_invdyn := false:
 codeexport_grav := false: 
@@ -52,11 +52,11 @@ read "../transformation/proc_trafo_mdh":
 read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
 read "../robot_codegen_definitions/robot_env_par":
-# Definitionen für parallelen Roboter laden
+# Definitionen fÃ¼r parallelen Roboter laden
 read sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
 r_P_sP_P := -r_P_sP:
 s_P_P_sP := s_P_sP:
-# Ergebnisse der Kinematik für parallen Roboter laden
+# Ergebnisse der Kinematik fÃ¼r parallen Roboter laden
 read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
 # Lade "robotics_repo_path"-File mit Link zum "imes-robotics-matlab"-Repo
 read("../robotics_repo_path"):
@@ -99,7 +99,7 @@ dRPYjac_E_t := diff~(RPYjac_E_t,t):
 dRPYjac_0_t := diff~(RPYjac_0_t,t):
 dRPYjac_E_s := Copy(dRPYjac_E_t):
 dRPYjac_0_s := Copy(dRPYjac_0_t):
-# Substituiere die zeitabhängigen Koordinaten in der H-Matrix mit zeitunabhängigen Koordinaten 
+# Substituiere die zeitabhÃ¤ngigen Koordinaten in der H-Matrix mit zeitunabhÃ¤ngigen Koordinaten 
 for i to 3 do
 	for j to 3 do
 		for k from 4 to 6 do
@@ -184,5 +184,5 @@ if codeexport_invdyn then
   MatlabExport(g_regmin, sprintf("../codeexport/%s/tmp/invdyn_floatb_%s_gplatform_matlab.m", robot_name, base_method_name), codegen_opt):
 end if:
 # Maple-Export
-save paramVecP, paramVecP_M, A_E, M_regmin, c_regmin, g_regmin, H, dH, sprintf("../codeexport/%s/tmp/floatb_%s_platform_dynamic_maple.m", robot_name, base_method_name):
+save paramVecP, paramVecP_M, A_E, M_regmin, c_regmin, g_regmin, H, dH, sprintf("../codeexport/%s/tmp/floatb_%s_platform_dynamic_reg_maple.m", robot_name, base_method_name):
 

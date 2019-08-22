@@ -44,13 +44,16 @@ read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
 read "../robot_codegen_definitions/robot_env_par":
 # Ergebnisse der Plattform-Dynamik in Regressorform laden
-read sprintf("../codeexport/%s/tmp/floatb_%s_platform_dynamic_maple.m", robot_name, base_method_name):
+read sprintf("../codeexport/%s/tmp/floatb_%s_platform_dynamic_reg_maple.m", robot_name, base_method_name):
 # Neu-Definieren, damit Variablen im Workspace auftauchen
 paramVecP := paramVecP:
 paramVecP_M := paramVecP_M:
 A_E := A_E:
 H := H:
 dH := dH:
+M_regmin := M_regmin:
+c_regmin := c_regmin:
+g_regmin := g_regmin:
 # Ergebnisse der Dynamik der Gelenkkette in Regressorform laden
 read sprintf("../codeexport/%s/tmp/invdyn_%s_%s_maple.m", leg_name, "fixb", "regressor_minpar"):
 tau_regressor_s := tau_regressor_s:
