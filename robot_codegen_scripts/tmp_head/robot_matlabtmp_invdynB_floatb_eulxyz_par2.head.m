@@ -1,12 +1,11 @@
 % Calculate vector of inverse dynamics generalized base forces for
 % %RN%
 % Use Code from Maple symbolic Code Generation
-% 
+%
 % Input:
 % %INPUT_QJ%
 % %INPUT_QJD%
 % %INPUT_QJDD%
-% %INPUT_RB%
 % %INPUT_PHIB%
 % %INPUT_XDB%
 % %INPUT_XDDB%
@@ -16,7 +15,7 @@
 % %INPUT_M%
 % %INPUT_MR%
 % %INPUT_IF%
-% 
+%
 % Output:
 % tauB [6x1]
 %   generalized base forces of inverse dynamics (contains inertial, gravitational coriolis and centrifugal forces)
