@@ -4,6 +4,8 @@
 
 % Quellen:
 % [NakamuraGho1989] Nakamura, Yoshihiko and Ghodoussi, Modjtaba: Dynamics computation of closed-link robot mechanisms with nonredundant and redundant actuators (1989)
+% [ParkChoPlo1999] Park, FC and Choi, Jihyeon and Ploen, SR: Symbolic formulation of closed chain dynamics in independent coordinates
+% [UdwadiaKal1992] Udwadia, Firdaus E and Kalaba, Robert E: A new perspective on constrained motion (1992) 
 % [Docquier2013] Docquier, Nicolas and Poncelet, Antoine and Fisette, Paul: ROBOTRAN: a powerful symbolic gnerator of multibody models (2013)
 
 % %VERSIONINFO%
@@ -94,7 +96,7 @@ for iq = 1:TSSc.n
     
     % Teste implizite Zwangsbedingungen
     h = %RN%_kinconstr_impl_mdh_sym_varpar(q, TSSo.pkin);
-    if any(abs(h) > 1e-10)
+    if any(abs(h) > 1e-10) && any(abs(h(abs(h) > 1e-10)) - 2*pi > 1e-10) % Für die Orientierugszwangsbedingung ist auch +-2*Pi erlaubt
       error('Implizite Zwangsbedingungen werden nicht erfüllt!');
     end
     
@@ -120,7 +122,21 @@ for iq = 1:TSSc.n
         error('Transformation stimmt nicht');
       end
     end
-    
+    % Vergleiche Geschwindigkeit und Jacobi-Matrizen
+  for jj = 0:TSSc.NL-1 % 0=Basis
+    fcn_name_c = ['%RNTE%_jacobig_' int2str(jj) '_sym_varpar'];
+	fcn_name_o = ['%RNOL%_jacobig_' int2str(jj) '_sym_varpar'];
+    r_i_i_C = rand(3,1); % Jacobi-Matrix für zufälligen Punkt
+    Jgc = feval(fcn_name_c, q1, r_i_i_C, TSSc.pkin);
+    Jgo = feval(fcn_name_o, q, r_i_i_C, TSSo.pkin);
+    % Geschwindigkeit des Punktes mit/ohne ZB
+    Vc = Jgc*qD1;
+    Vo = Jgo*qD;
+    if any( abs(Vc-Vo) > 1e-10 )
+      error('Geschwindigkeit/Jacobi-Matrix stimmt nicht');
+    end
+  end
+  
     % Dynamik der offenen Kette
     tau = %RNOL%_invdynJ_fixb_slag_vp2(q, qD, qDD, g, ...
     TSSo.pkin, TSSo.m, TSSo.mrSges, TSSo.Ifges);
@@ -165,7 +181,7 @@ for iq = 1:TSSc.n
     qDD_impl = P0 * [qDD1; qDD2];
   
   
-    if any(abs(qDD_impl-qDD) > 1e-10)
+    if any(abs(qDD_impl-qDD) > 1e-8)
       error('Beschleunigungen stimmen nicht zwischen Herleitung über impliziter und expliziter ZB');
     end
     
@@ -203,7 +219,6 @@ for iq = 1:TSSc.n
     if any(abs(taug1_expl-taug1_impl) > 1e-10)
         error('Gravitationsmoment mit ZB-Jacobi stimmt nicht mit Gravitationsmoment aus Eliminations-Ansatz');
     end
-    
 
     % Test Gravitationsmoment mit Newton-Euler
     taug1_snew_impl = %RN%_gravloadJ_floatb_twist_snew_vp2(q, g, TSSo.pkin, TSSo.m, TSSo.mrSges);
@@ -220,6 +235,97 @@ for iq = 1:TSSc.n
     if any( abs(test(:)) > 1e6*eps(1+max(abs(test))) )
       error('Massenmatrix mit ZB-Jacobi stimmt nicht mit Massenmatrix aus Eliminations-Ansatz');
     end
+	
+	% Test Coriolisvektor
+    tauCC1_offen = %RNOL%_coriolisvecJ_fixb_slag_vp2(q, qD, TSSo.pkin, TSSo.m, TSSo.mrSges, TSSo.Ifges);
+    tauCC1_expl = %RNTE%_coriolisvecJ_fixb_slag_vp2(q1, qD1, TSSc.pkin, TSSc.m, TSSc.mrSges, TSSc.Ifges);
+
+    MM1_offen = %RNOL%_inertiaJ_slag_vp2(q, TSSo.pkin, TSSo.m, TSSo.mrSges, TSSo.Ifges);
+	
+	tauCC1_impl = W' * tauCC1_offen + W' * MM1_offen * WD * qD1;
+    
+    test = tauCC1_impl - tauCC1_expl;
+    if any( abs(test(:)) > 1e6*eps(1+max(abs(test))) )
+      error('Coriolisvektor mit ZB-Jacobi stimmt nicht mit Coriolisvektor aus Eliminations-Ansatz');
+    end
 end
 
-fprintf('Herleitung mit impliziter und expliziter Form der Zwangsbedingungen erfolgreich verglichen\n');
+fprintf('Test der Zwangsbedingungen mit impliziter und expliziter Form für %d Kombinationen nach [NakamuraGho1989] erfolgreich\n', TSSc.n);
+
+%% Test der Zwangsbedingungen mit Gauß'schem Prinzip des kleinsten Zwangs
+% Nach [UdwadiaKal1992]
+
+% Funktioniert noch nicht, da Gelenkmomente an Koppelgelenken null sind
+fprintf('Tests der Zwangsbedingungen mit impliziter und expliziter Form nach [UdwadiaKal1992] entfallen, da noch nicht implementiert\n');
+return
+
+II = TSSc.Ind_depjoints; % Indizes n2 in n
+n = TSSo.NJ; % Anzahl Gelenke
+n1 = TSSc.NQJ; % Anzahl unabhängige Gelenke
+n2 = sum(II); % Anzahl abhängige Gelenke
+
+for iq = 1:TSSc.n
+    g = TSSc.G(iq,:)';
+    
+    % Minimalkoordinaten für System mit ZB
+    q1 = TSSc.Q(iq,:)';
+    qD1 = TSSc.QD(iq,:)';
+    
+    % Umrechnung von System mit ZB auf offenes System ohne ZB
+    W = %RNTE%_kinconstr_expl_jacobian_mdh_sym_varpar(q1, TSSc.pkin);
+    WD = %RNTE%_kinconstr_expl_jacobianD_mdh_sym_varpar(q1, qD1, TSSc.pkin);
+    % Gelenkposition und -geschwindigkeit ohne ZB
+    q = %RNTE%_kinconstr_expl_mdh_sym_varpar(q1, TSSc.pkin);
+    
+    % Korrektur
+    q = q(II_oc);
+    W = W(II_oc,:);
+    WD = WD(II_oc,:);
+    
+    qD = W*qD1;
+    
+    % Zwangsbedingungen: Bestimme implizite Formulierung nach [Docquier2013]
+    % aus expliziter Formulierung (siehe Aufzeichnungen Schappler, 19.12.2017)
+    F = W(II,:);
+    FD = WD(II,:);
+    J = NaN(n2,n); % Aus der Zeitableitung der impliziten ZB nach den Koordinaten des offenen Systems
+    JD = NaN(n2,n);
+    J(:,1:n1) = -F;
+    J(:,n1+1:n1+n2) = eye(n2,n2);
+    JD(:,1:n1) = -FD;
+    JD(:,n1+1:n1+n2) = zeros(n2,n2);
+    
+    % Zwangsbedingungen in Form aus [UdwadiaKal1992], Gl. (3) konvertieren
+    % (mit Koeffizientenvergleich der ZB-Gleichung (siehe [Docquier2013]).
+    A = J;
+    b = -JD*qD;
+    
+    % Dynamik ohne ZB ([UdwadiaKal1992], Gl. (1), (2)
+    M = %RNOL%_inertiaJ_slag_vp1(q, ...
+        TSSo.pkin, TSSo.m, TSSo.rSges, TSSo.Icges);
+    Q = -%RNOL%_invdynJ_fixb_slag_vp1(q, qD, qD*0, g, ...
+        TSSo.pkin, TSSo.m, TSSo.rSges, TSSo.Icges);
+    a = M \ Q;
+    
+    K = sqrtm(M) * pinv( A / sqrtm(M) ); % [UdwadiaKal1992] Text nach Gl. (5a')
+    Qc = K*(b - A*(M\Q)); % [UdwadiaKal1992] Gl. (5b)
+    
+    % Beschleunigung des offenen Systems mit Kräften aus den Zwangsbedingungen
+    qDD2 = M\(Q+Qc);
+    
+    % Referenzlösung: Beschleunigung des geschlossenen Systems (mit ZB)
+    M1 = %RNTE%_inertiaJ_slag_vp2(q1, ...
+        TSSc.pkin, TSSc.m, TSSc.mrSges, TSSc.Ifges);
+    tau1 = %RNTE%_invdynJ_fixb_slag_vp2(q1, qD1, qD1*0, g, ...
+        TSSc.pkin, TSSc.m, TSSc.mrSges, TSSc.Ifges);
+    qDD1 = M1 \ (-tau1);
+    qDD2_test = W*qDD1 + WD*qD1;
+    
+    test = qDD2 - qDD2_test;
+    if any(abs(test) > 1e-8)
+        error('Abgleich nach [UdwadiaKal1992] Fehlgeschlagen');
+    end
+end
+
+fprintf('Test der Zwangsbedingungen mit impliziter und expliziter Form für %d Kombinationen nach [UdwadiaKal1992] erfolgreich\n', TSSc.n);
+

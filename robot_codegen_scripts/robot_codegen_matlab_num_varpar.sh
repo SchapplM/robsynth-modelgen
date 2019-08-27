@@ -42,7 +42,7 @@ do
   # Prüfe, ob die Datei für dieses System nicht generiert werden sollte:
   # Für Systeme mit kinematischen Zwangsbedingungen funktionieren einige Ansätze der nicht
   # (z.B. Inverse Dynamik mit Newton-Euler und Jacobi-Matrix mit geometrischer Berechnung).
-  if [ "$robot_kinconstr_exist" == "1" ]; then
+  if [ "$robot_kinconstr_exist" == "1" ] || [ "$robot_NQJ" != "$robot_NJ" ]; then
     donotgenerate=0
     for blstr in $blacklist_constraints; do
       if [[ $f == *"$blstr"* ]]; then

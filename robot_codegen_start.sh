@@ -151,7 +151,7 @@ if [ "$CG_NOTGENSERIAL" == "0" ]; then
   source $repo_pfad/robot_codegen_scripts/testfunctions_generate.sh
 
   if [ "$CG_MINIMAL" == "0" ] && [ "$CG_NOTEST" != "1" ]; then
-  # Matlab-Testfunktionen starten
+   #Matlab-Testfunktionen starten
      if [ ! "$CG_FIXBONLY" == "1" ]; then
        matlab -nodesktop -nosplash -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything');quit;"
      else

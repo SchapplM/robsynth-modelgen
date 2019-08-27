@@ -242,7 +242,7 @@ for ii = 1:n
     SolverOutput = ode45(odefun,[0 t_End],x0, options);
   catch err
     if KINCONSTR
-      warning('Kine Lösung der direkten Dynamik möglich. Wahrscheinlich Verlassen des gültigen Gelenkraums');
+      warning('Keine Lösung der direkten Dynamik möglich. Wahrscheinlich Verlassen des gültigen Gelenkraums');
       continue
     else
       % Es gibt keine kinematischen Zwangsbedingungen, die direkte Dynamik

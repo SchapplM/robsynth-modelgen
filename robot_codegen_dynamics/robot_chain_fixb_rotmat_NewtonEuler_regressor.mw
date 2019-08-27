@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="2017" minor="0"/>
+<Version major="2019" minor="0"/>
 <Label-Scheme value="2" prefix=""/>
-<View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false">
+<View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1080" rtablesize="100" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" compactdisplay="false" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" historytimestamp="false" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1080" rtablesize="100" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" ansicolor="[]" elisiondigitsthreshold="10000" showassumed="1" ansilprint="false" trailingsemicolon="true" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -145,7 +145,8 @@ codeexport_cormat := true:
 codeexport_inertia := true:
 codeexport_inertiaD := true:
 codeexport_invdyn := true:
-codeexport_act:= true:</Text-field>
+codeexport_act:= true:
+codegen_dynpar := 2:</Text-field>
 </Input>
 </Group>
 <Group hide-output="false" labelreference="L1773" drawlabel="true">
@@ -156,7 +157,7 @@ read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
 </Group>
 <Group hide-output="false" labelreference="L1769" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:
-<Font encoding="UTF-8">printf(&quot;Generiere Minimalparameterregressor der Energie f\303\274r %s\134n&quot;, robot_name, codegen_dynpar):</Font></Text-field>
+<Font encoding="UTF-8">printf(&quot;Generiere Regressorform f\303\274r %s\134n&quot;, robot_name, codegen_dynpar):</Font></Text-field>
 </Input>
 </Group>
 <Group hide-output="false" labelreference="L1803" drawlabel="true">
@@ -168,7 +169,7 @@ read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
 </Input>
 </Group>
 <Group hide-output="false" labelreference="L1774" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/invdyn_%s_NewtonEuler_linkframe_maple.m&quot;, robot_name, base_method_name):
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/invdyn_%s_NewtonEuler_linkframe_par%d_maple.m&quot;, robot_name, base_method_name, codegen_dynpar):
 f_i_i := f_i_i:
 m_i_i := m_i_i:
 tau_B := tau_B:
@@ -202,12 +203,12 @@ end if:</Text-field>
 </Group>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2">Linearisierung_Gelenkmomente</Text-field></Title>
 <Group hide-output="false" labelreference="L1656" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tauJ_regressor := Matrix(NJ, 10*NJ):
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tauJ_regressor := Matrix(NQJ, 10*(NL-1)):
 </Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L4" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion11" expanded="true" visible="true" pixel-width="1144" pixel-height="214" code-language="text/maple" autoexpand="false" wrapping="false" show-border="true" code-line-numbers="true">
-for i from 1 to NJ do 
-  for j from 1 to 10*NJ do
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L4" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion11" expanded="true" visible="true" pixel-width="1144" pixel-height="214" code-language="text/maple" autofit="false" wrapping="false" show-border="true" code-line-numbers="true">
+for i from 1 to NQJ do 
+  for j from 1 to 10*(NL-1) do
     tauJ_regressor[i,j] :=  diff(tau_J(i,1),PV2_vec[10+j,1]):
   end do:
 end do:
@@ -221,7 +222,7 @@ end do:
 <Group labelreference="L1855" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tauB_regressor := Matrix(6,10*NL):</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1898" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion12" expanded="true" visible="true" pixel-width="1168" pixel-height="208" code-language="text/maple" autoexpand="false" wrapping="false" show-border="true" code-line-numbers="true">
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1898" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion12" expanded="true" visible="true" pixel-width="1168" pixel-height="208" code-language="text/maple" autofit="false" wrapping="false" show-border="true" code-line-numbers="true">
 for i from 1 to 6 do 
   for j from 1 to 10*NL do
     tauB_regressor[i,j] := diff(tau_B(i,1),PV2_vec[j,1]):
@@ -238,7 +239,7 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">m_regressor := Matrix(3*NL,10*NL):
 </Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L6" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion13" expanded="true" visible="true" pixel-width="1254" pixel-height="327" code-language="text/maple" autoexpand="false" wrapping="false" show-border="true" code-line-numbers="true">
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L6" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion13" expanded="true" visible="true" pixel-width="1254" pixel-height="327" code-language="text/maple" autofit="false" wrapping="false" show-border="true" code-line-numbers="true">
 m_i_i_vec := Matrix(3*(NL),1):
 for i from 1 to NL do
   for j from 1 to 3 do
@@ -266,7 +267,7 @@ end do:
 <Group labelreference="L1893" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">f_regressor := Matrix(3*NL,10*NL):</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L8" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion14" expanded="true" visible="true" pixel-width="915" pixel-height="269" code-language="text/maple" autoexpand="false" wrapping="false" show-border="true" code-line-numbers="true">
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L8" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion14" expanded="true" visible="true" pixel-width="915" pixel-height="269" code-language="text/maple" autofit="false" wrapping="false" show-border="true" code-line-numbers="true">
 f_i_i_vec := Matrix(3*(NL),1):
 for i from 1 to NL do
   for j from 1 to 3 do 
@@ -311,7 +312,7 @@ end if</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1903" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Equation executable="true" style="2D Input" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYlLUkjbWlHRiQ2I1EhRicvJStleGVjdXRhYmxlR1EmZmFsc2VGJy8lLG1hdGh2YXJpYW50R1Enbm9ybWFsRic=">JSFH</Equation></Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Equation executable="true" style="2D Input" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYlLUkjbWlHRiQ2I1EhRicvJStleGVjdXRhYmxlR1EmZmFsc2VGJy8lLG1hdGh2YXJpYW50R1Enbm9ybWFsRic=">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
 </Input>
 </Group>
 </Section>

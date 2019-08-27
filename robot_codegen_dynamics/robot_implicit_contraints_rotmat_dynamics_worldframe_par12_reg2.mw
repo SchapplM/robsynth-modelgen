@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="2017" minor="0"/>
+<Version major="2019" minor="0"/>
 <Label-Scheme value="2" prefix=""/>
-<View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false">
+<View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1080" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" compactdisplay="false" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" historytimestamp="false" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1080" rtablesize="[10, 10]" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" ansicolor="[]" elisiondigitsthreshold="10000" showassumed="1" ansilprint="false" trailingsemicolon="true" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -166,12 +166,13 @@ fi:</Text-field>
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Kennung des Parametersatzes, f\303\274r den die Dynamikfunktionen erstellt werden sollen. Muss im Repo und in der mpl-Datei auf 1 gelassen werden, da die folgende Zeile mit einem Skript verarbeitet wird.</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L2317" drawlabel="true">
+<Group labelreference="L2351" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_dynpar := 1:
 regressor_modus := &quot;regressor&quot;:
 herleitungsverfahren := &quot;lagrange&quot;:
 codeexport_invdyn := false:
 codeexport_grav_inertia := false:
+codeexport_coriolisvec := false:
 codeexport_regressor := false:
 if herleitungsverfahren = &quot;lagrange&quot; then #Dynamik aus Lagrange</Text-field>
 </Input>
@@ -191,20 +192,34 @@ if herleitungsverfahren = &quot;lagrange&quot; then #Dynamik aus Lagrange</Text-
 <Font encoding="UTF-8">    printf(&quot;Generiere Dynamik in Regressorform (%s) f\303\274r %s basierend auf IC-Jacobi und OL-Dynamik\134n&quot;, herleitungsverfahren, robot_name):
 </Font>  fi:</Text-field>
 </Input>
-<Input><Text-field style="Text" layout="Normal">Ergebnisse der inversen Dynamik in Einzeltermen laden</Text-field>
+<Input><Text-field style="Text" layout="Normal">Ergebnisse der Massenmatrix und des Gravitationsvektors laden</Text-field>
 </Input>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  if codeexport_grav_inertia then
     read sprintf(&quot;../codeexport/%s/tmp/gravload_par%d_maple.m&quot;, robot_name_OL, codegen_dynpar):
     taug := Matrix(taug_s(7..NQ,..)):
     read sprintf(&quot;../codeexport/%s/tmp/inertia_par%d_maple.m&quot;, robot_name_OL, codegen_dynpar):
     MM := Matrix(MM_s(7..NQ,7..NQ)):
+    read sprintf(&quot;../codeexport/%s/tmp/coriolisvec_par%d_maple.m&quot;, robot_name_OL, codegen_dynpar):
+    tauCC := Matrix(tauCC_s(7..NQ,..)):
 <Font encoding="UTF-8">    printf(&quot;Generiere Gravitationsvektor und Massenmatrix (%s) f\303\274r %s basierend auf IC-Jacobi und OL-Dynamik mit Parametersatz %d und %s\134n&quot;, herleitungsverfahren, robot_name, codegen_dynpar, base_method_name):
+</Font>  fi:</Text-field>
+</Input>
+<Input><Text-field prompt="&gt; " style="Maple Input" spaceabove="0" linebreak="space" rightmargin="0" linespacing="0.0" initial="0" firstindent="0" leftmargin="0" bulletsuffix="" alignment="left" bullet="none" spacebelow="0" pagebreak-before="false"></Text-field>
+</Input>
+<Input><Text-field style="Text" layout="Normal">Ergebnisse des Coriolisvektors laden. Noch nicht implementiert.</Text-field>
+</Input>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  if codeexport_coriolisvec then
+    read sprintf(&quot;../codeexport/%s/tmp/coriolisvec_par%d_maple.m&quot;, robot_name_OL, codegen_dynpar):
+    tauCC := Matrix(tauCC_s(7..NQ,..)):
+    read sprintf(&quot;../codeexport/%s/tmp/inertia_par%d_maple.m&quot;, robot_name_OL, codegen_dynpar):
+    MM := Matrix(MM_s(7..NQ,7..NQ)):
+<Font encoding="UTF-8">    printf(&quot;Generiere Coriolisvektor (%s) f\303\274r %s basierend auf IC-Jacobi und OL-Dynamik mit Parametersatz %d und %s\134n&quot;, herleitungsverfahren, robot_name, codegen_dynpar, base_method_name):
 </Font>  fi:
 else #Dynamik aus Newton-Euler</Text-field>
 </Input>
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ergebnisse der inversen Dynamik f\303\274r par1/2 laden</Font></Text-field>
 </Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  read sprintf(&quot;../codeexport/%s/tmp/invdyn_twist_NewtonEuler_linkframe_maple.m&quot;, robot_name_OL):
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  read sprintf(&quot;../codeexport/%s/tmp/invdyn_twist_NewtonEuler_linkframe_par%d_maple.m&quot;, robot_name_OL, codegen_dynpar):
   tau := Matrix(tau_J(1..NQJ,..)):
   taug := copy(tau):
   for i from 1 to NQ do
@@ -330,9 +345,20 @@ end do:</Text-field>
 <Input><Text-field style="Text" layout="Normal">explizit [Docquier2013], Gl. 12</Text-field>
 </Input>
 </Group>
+<Group hide-input="false" labelreference="L2361" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">W := Transpose(P1 + Transpose(B21).P2):
+WD := Transpose(Transpose(B21D).P2):
+#q1D_s := Transpose(W).qJD_s:
+tauIC := Transpose(W).tau:
+taugIC := Transpose(W).taug:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L2362" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">[DoThanhKotHeiOrt2009b], Gl. (23); [ParkChoPlo1999] Gl. (56)</Text-field>
+</Input>
+</Group>
 <Group hide-input="false" labelreference="L1724" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tauIC := P1.tau + Transpose(B21).P2.tau: #tauIC := (P1 + Transpose(B21).P2).tau:
-taugIC := P1.taug + Transpose(B21).P2.taug: #taugIC := (P1 + Transpose(B21).P2).taug:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">#tauCCIC := Transpose(W).tauCC + Transpose(W).MM.WD.q1D_s: # noch nicht implementiert</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1733" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -360,8 +386,7 @@ end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2349" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">W := Transpose(P1 + Transpose(B21).P2):
-MMIC := Transpose(W).MM.W:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MMIC := Transpose(W).MM.W:</Text-field>
 </Input>
 </Group>
 </Section>
@@ -401,7 +426,7 @@ end if:</Text-field>
 end if:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L2335" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group labelreference="L2354" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_grav_inertia then
   taugIC_fixb:=taugIC:
   MMIC_fixb:=MMIC:
@@ -414,6 +439,24 @@ end if:</Text-field>
   end do:
   MatlabExport(taugIC_fixb, sprintf(&quot;../codeexport/%s/tmp/gravload_joint_floatb_twist_par%d_ic_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
   MatlabExport(MMIC_fixb, sprintf(&quot;../codeexport/%s/tmp/inertia_joint_joint_floatb_%s_par%d_ic_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L2363" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Noch nicht implementiert</Text-field>
+</Input>
+</Group>
+<Group labelreference="L2356" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_coriolisvec then
+  tauCCIC_fixb:=tauCCIC:
+  for i from 1 to NQB do
+    tauCCIC_fixb := subs({X_base_s[i,1]=0},tauCCIC_fixb):
+  end do:
+  for i from 1 to 6 do
+    tauCCIC_fixb := subs({V_base_s[i,1]=0},tauCCIC_fixb):
+    tauCCIC_fixb := subs({VD_base_s[i,1]=0},tauCCIC_fixb):
+  end do:
+  MatlabExport(tauCCIC_fixb, sprintf(&quot;../codeexport/%s/tmp/coriolisvec_joint_fixb_twist_par%d_ic_matlab.m&quot;, robot_name, codegen_dynpar), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
@@ -461,7 +504,7 @@ end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2312" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Equation executable="true" style="2D Input" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYlLUkjbWlHRiQ2I1EhRicvJStleGVjdXRhYmxlR1EmZmFsc2VGJy8lLG1hdGh2YXJpYW50R1Enbm9ybWFsRic=">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Equation executable="true" style="2D Input" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYlLUkjbWlHRiQ2I1EhRicvJStleGVjdXRhYmxlR1EmZmFsc2VGJy8lLG1hdGh2YXJpYW50R1Enbm9ybWFsRic=">JSFH</Equation></Text-field>
 </Input>
 </Group>
 </Section>

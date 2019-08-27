@@ -108,11 +108,16 @@ sed -i "s/codegen_dynpar := 1:/codegen_dynpar := 2:/g" $repo_pfad/workdir/robot_
 # Dynamik-Skripte für IC
 cp $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_par12_reg2.mpl $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_par1_grav_inertia.mpl
 cp $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_par12_reg2.mpl $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_par2_grav_inertia.mpl
+cp $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_par12_reg2.mpl $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_par1_coriolisvec.mpl
+cp $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_par12_reg2.mpl $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_par2_coriolisvec.mpl
 cp $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_par12_reg2.mpl $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_par1_invdyn.mpl
 cp $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_par12_reg2.mpl $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_par2_invdyn.mpl
 cp $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_par12_reg2.mpl $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_reg2.mpl
 cp $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_par12_reg2.mpl $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_snew_par1.mpl
 cp $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_par12_reg2.mpl $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_snew_par2.mpl
+sed -i "s/codegen_dynpar := 1:/codegen_dynpar := 2:/g" $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_par2_coriolisvec.mpl
+sed -i "s/codeexport_coriolisvec := false:/codeexport_coriolisvec := true:/g" $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_par2_coriolisvec.mpl
+sed -i "s/codeexport_coriolisvec := false:/codeexport_coriolisvec := true:/g" $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_par1_coriolisvec.mpl
 sed -i "s/codegen_dynpar := 1:/codegen_dynpar := 2:/g" $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_par2_grav_inertia.mpl
 sed -i "s/codeexport_grav_inertia := false:/codeexport_grav_inertia := true:/g" $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_par2_grav_inertia.mpl
 sed -i "s/codeexport_grav_inertia := false:/codeexport_grav_inertia := true:/g" $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_par1_grav_inertia.mpl

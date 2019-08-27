@@ -4,18 +4,18 @@
 # Erstellung einer parameterlinearen Regressorform in Newton Euler Bewegungsgleichung
 # 
 # Dateiname:
-# robot -> Berechnung für allgemeinen Roboter
-# chain -> Berechnung für eine serielle Struktur (nicht: Baumstruktur)
-# fixb -> fixed base. Kein Floating base Modell. Dort ist diese Form der Minimalparameterform nicht möglich.
+# robot -> Berechnung fÃ¼r allgemeinen Roboter
+# chain -> Berechnung fÃ¼r eine serielle Struktur (nicht: Baumstruktur)
+# fixb -> fixed base. Kein Floating base Modell. Dort ist diese Form der Minimalparameterform nicht mÃ¶glich.
 # rotmat -> Kinematik wird mit Rotationsmatrizen berechnet
 # NewtonEuler -> Berechnung der Newton Euler Bewegungsgleichung
 # regressor -> Regressorform (parameterlinear)
 # 
 # Initialisierung
-interface(warnlevel=0): # Unterdrücke die folgende Warnung.
-restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
+interface(warnlevel=0): # UnterdrÃ¼cke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn Ã¼ber Terminal-Maple mit read gestartet wird.
 interface(warnlevel=3):
-interface(rtablesize=100): # Zur Anzeige von größeren Vektoren
+interface(rtablesize=100): # Zur Anzeige von grÃ¶ÃŸeren Vektoren
 ;
 with(LinearAlgebra):
 with(ArrayTools):
@@ -31,36 +31,37 @@ codeexport_inertia := true:
 codeexport_inertiaD := true:
 codeexport_invdyn := true:
 codeexport_act:= true:
+codegen_dynpar := 2:
 read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s": 
 read "../helper/proc_MatlabExport":
 read "../robot_codegen_definitions/robot_env":
-printf("Generiere Minimalparameterregressor der Energie für %s\n", robot_name, codegen_dynpar):
+printf("Generiere Regressorform fÃ¼r %s\n", robot_name, codegen_dynpar):
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name, base_method_name):
 # Ergebnisse der Newton Euler- Bewegungsgleichung laden
-read sprintf("../codeexport/%s/tmp/invdyn_%s_NewtonEuler_linkframe_maple.m", robot_name, base_method_name):
+read sprintf("../codeexport/%s/tmp/invdyn_%s_NewtonEuler_linkframe_par%d_maple.m", robot_name, base_method_name, codegen_dynpar):
 f_i_i := f_i_i:
 m_i_i := m_i_i:
 tau_B := tau_B:
 tau_J := tau_J:
-# Mit diesem Arbeitsblatt werden die Vorwärtsrekursive für Fixed-Base Modelle generiert. Erkenne welche Basis-Modellierung aktiv ist
-if base_method_name="twist" then # Basis-Methode "twist" wird (hier) nur für fixed Base benutzt
+# Mit diesem Arbeitsblatt werden die VorwÃ¤rtsrekursive fÃ¼r Fixed-Base Modelle generiert. Erkenne welche Basis-Modellierung aktiv ist
+if base_method_name="twist" then # Basis-Methode "twist" wird (hier) nur fÃ¼r fixed Base benutzt
   expstring:="fixb":
 elif base_method_name="eulxyz" then 
   expstring:="floatb_eulxyz":
 else
   printf("Nicht behandelte Basis-Methode: %s\n", base_method_name):
 end if:
-# Die kinetischen und potentiellen Energien aus (2) und (3) stehen ab hier durch T_fixb und U_fixb zur Verfügung. 
+# Die kinetischen und potentiellen Energien aus (2) und (3) stehen ab hier durch T_fixb und U_fixb zur VerfÃ¼gung. 
 # Der Parametervektor 'PV2_vec' aus (13) wurde in 'robot_tree_floatb_twist_definitions.mw' aufgestellt. 
 # Parameterlinearisierung
 # Parameterlinearisierung auf Basis von [HRL_IDR] (14) und (15)
 # Linearisierung_Gelenkmomente
-tauJ_regressor := Matrix(NJ, 10*NJ):
+tauJ_regressor := Matrix(NQJ, 10*(NL-1)):
 
 
-for i from 1 to NJ do 
-  for j from 1 to 10*NJ do
+for i from 1 to NQJ do 
+  for j from 1 to 10*(NL-1) do
     tauJ_regressor[i,j] :=  diff(tau_J(i,1),PV2_vec[10+j,1]):
   end do:
 end do:
@@ -93,7 +94,7 @@ for i from 1 to 3*NL do
   end do:
 end do:
 
-# Linearisierung_Schnittkräfte
+# Linearisierung_SchnittkrÃ¤fte
 f_regressor := Matrix(3*NL,10*NL):
 
 f_i_i_vec := Matrix(3*(NL),1):
@@ -115,7 +116,7 @@ save tauJ_regressor, sprintf("../codeexport/%s/tmp/fixb_NewtonEuler_tauJ_regress
 save tauB_regressor, sprintf("../codeexport/%s/tmp/fixb_NewtonEuler_tauB_regressor_maple.m", robot_name):
 save m_regressor, sprintf("../codeexport/%s/tmp/fixb_NewtonEuler_m_regressor_maple.m", robot_name):
 save f_regressor, sprintf("../codeexport/%s/tmp/fixb_NewtonEuler_f_regressor_maple.m", robot_name):
-printf("Maple-Ausdrücke exportiert. %s\n", FormatTime("%Y-%m-%d %H:%M:%S")):
+printf("Maple-AusdrÃ¼cke exportiert. %s\n", FormatTime("%Y-%m-%d %H:%M:%S")):
 # Matlab Export
 if codegen_act then
   MatlabExport(convert_t_s(tauJ_regressor), sprintf("../codeexport/%s/tmp/invdyn_%s_NewtonEuler_tauJ_regressor_matlab.m", robot_name, expstring), codegen_opt):

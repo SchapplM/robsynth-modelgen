@@ -22,6 +22,9 @@ zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_kinconstr_im
 if [ -f $quelldat ]; then
   cat $head_pfad/robot_matlabtmp_kinconstr_impl.head.m > $zieldat
   printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+  sed -i "s/%RN%/$robot_name/g" $zieldat
+  source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+  source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
 
@@ -32,7 +35,7 @@ if [ -f $quelldat ]; then
   printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
   sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
   cat $quelldat >> $zieldat
-  source robot_codegen_matlabfcn_postprocess_ic.sh $zieldat 1 1 ${quelldat}.subsvar
+  source robot_codegen_matlabfcn_postprocess_ic.sh $zieldat 1 0 ${quelldat}.subsvar
 else
   echo "Code in ${quelldat##*/} nicht gefunden."
 fi
@@ -42,6 +45,9 @@ zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_kinconstr_im
 if [ -f $quelldat ]; then
   cat $head_pfad/robot_matlabtmp_kinconstr_impl_active_jacobian.head.m > $zieldat
   printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+  sed -i "s/%RN%/$robot_name/g" $zieldat
+  source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+  source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
 
@@ -62,6 +68,9 @@ zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_kinconstr_im
 if [ -f $quelldat ]; then
   cat $head_pfad/robot_matlabtmp_kinconstr_impl_active_jacobianD.head.m > $zieldat
   printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+  sed -i "s/%RN%/$robot_name/g" $zieldat
+  source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+  source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
@@ -84,6 +93,9 @@ zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_kinconstr_im
 if [ -f $quelldat ]; then
   cat $head_pfad/robot_matlabtmp_kinconstr_impl_passive_jacobian.head.m > $zieldat
   printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+  sed -i "s/%RN%/$robot_name/g" $zieldat
+  source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+  source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
 
@@ -104,6 +116,9 @@ zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_kinconstr_im
 if [ -f $quelldat ]; then
   cat $head_pfad/robot_matlabtmp_kinconstr_impl_passive_jacobianD.head.m > $zieldat
   printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+  sed -i "s/%RN%/$robot_name/g" $zieldat
+  source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+  source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
@@ -137,10 +152,13 @@ else
 fi
 
 quelldat=$repo_pfad/codeexport/${robot_name}/tmp/kinconstr_impl_projection_jacobian_matlab.m
-zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_kinconstr_impl_projection_jacobian_mdh_sym_varpar.m
+zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_kinconstr_impl_proj_jacobian_mdh_sym_varpar.m
 if [ -f $quelldat ]; then
   cat $head_pfad/robot_matlabtmp_kinconstr_impl_jacobian.head.m > $zieldat
   printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+  sed -i "s/%RN%/$robot_name/g" $zieldat
+  source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+  source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
   cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
 

@@ -41,13 +41,6 @@ else
   TREE = 0;
 end
 
-if isempty(fileparts(which('%RN%_invdynB_fixb_snew_vp2')))
-    fprintf('Test fÃ¼r die inverse Dynamik aus Newton-Euler nicht ausgeführt, da ZB vorliegen\n');
-    NEW = false;
-else
-    NEW = true;
-end
-
 % Minimalparametervektor
 if ~KINCONSTR && ~TREE
   MPV = %RN%_convert_par2_MPV_fixb(pkin, m, mrSges, Ifges);
@@ -186,7 +179,7 @@ fprintf('Tested gravitation joint torque for %d random joint angles for %s\n', .
 for i = 1:n
   q = Q(i,:)';
   qD = QD(i,:)';
-  tauc_func = %RN%_coriolisvecJ_fixb_slag_vp1(q, qD, ...
+  tauc_func = %RN%_coriolisvecJ_fixb_slag_vp1(q, qD, ...NEW
     pkin, m, rSges, Icges);
   % calculate coriolis torques with optimized function
   if ~KINCONSTR && ~TREE
@@ -231,7 +224,7 @@ for i = 1:n
     pkin);
   Cq_pv2_vec = Cq_reg2*PV2fixb;
   Cq_pv2 = reshape(Cq_pv2_vec, NQJ, NQJ)';
-  if any( abs(Cq_func(:)-Cq_pv2(:)) > 1e6*eps(max(abs(Cq_func(:)))) )
+  if any( abs(Cq_func(:)-Cq_pv2(:)) > 1e6*eps(1+max(abs(Cq_func(:)))) )
     error('Coriolis matrix from inertial parameter vector does not match with direct form.');
   end
 end
@@ -322,7 +315,7 @@ fprintf('Tested inverse dynamics for %d random joint angles for %s\n', ...
   n, robot_name);
 
 %% Teste inverse Dynamik aus Newton-Euler
-if NEW
+if ~KINCONSTR
   for i = 1:n
     q = Q(i,:)';
     qD = QD(i,:)';

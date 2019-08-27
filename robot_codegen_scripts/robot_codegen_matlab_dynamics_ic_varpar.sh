@@ -20,7 +20,7 @@ source $repo_pfad/robot_codegen_definitions/robot_env_IC.sh
 # Schleife für beide Basis-Darstellungen durchgehen.
 # Die Methode "twist" muss am Ende kommen, damit Basis-unabhängige Funktionen mit den Ergebnissen dieser Methode
 # generiert werden ("twist"-Code ist kürzer; Zuerst erstellte Datei mit "eulxyz" wird dann überschrieben).
-basemethodenames=( twist eulxyz )
+basemethodenames=( twist )
 
 # Erstelle Matlab-Funktionen der explizit ausgerechneten Dynamik (nicht in Regressorform)
 
@@ -59,29 +59,6 @@ do
       else
         cat $tmp_pfad/robot_matlabtmp_assert_mrcom.m >> $zieldat
         cat $tmp_pfad/robot_matlabtmp_assert_If.m >> $zieldat
-      fi
-
-      printf "\n%%%% Variable Initialization" > ${quelldat}.subsvar
-      cat $tmp_pfad/robot_matlabtmp_qJ.m >> ${quelldat}.subsvar
-      cat $tmp_pfad/robot_matlabtmp_qJD.m >> ${quelldat}.subsvar
-      cat $tmp_pfad/robot_matlabtmp_qJDD.m >> ${quelldat}.subsvar
-      if [ $basemeth == "twist" ]; then
-        cat $tmp_pfad/robot_matlabtmp_vB.m >> ${quelldat}.subsvar
-        cat $tmp_pfad/robot_matlabtmp_aB.m >> ${quelldat}.subsvar
-      else
-        cat $tmp_pfad/robot_matlabtmp_phiB.m >> ${quelldat}.subsvar
-        cat $tmp_pfad/robot_matlabtmp_xDB.m >> ${quelldat}.subsvar
-        cat $tmp_pfad/robot_matlabtmp_xDDB.m >> ${quelldat}.subsvar
-      fi
-      cat $tmp_pfad/robot_matlabtmp_g.m >> ${quelldat}.subsvar
-      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
-      cat $tmp_pfad/robot_matlabtmp_par_m.m >> ${quelldat}.subsvar
-      if [ $dynpar == 1 ]; then
-        cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> ${quelldat}.subsvar
-        cat $tmp_pfad/robot_matlabtmp_par_Ic.m >> ${quelldat}.subsvar
-      else
-        cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> ${quelldat}.subsvar
-        cat $tmp_pfad/robot_matlabtmp_par_If.m >> ${quelldat}.subsvar
       fi
       
       printf "\n%%%% Variable Initialization" > ${quelldat}.subsvar
@@ -205,6 +182,50 @@ do
     else
       echo "Code in ${quelldat##*/} nicht gefunden."
     fi
+	
+	# Coriolisvektor (Gelenke) Noch nicht implementiert
+    # source $repo_pfad/robot_codegen_definitions/robot_env_IC.sh
+    # quelldat=$repo_pfad/codeexport/${robot_name}/tmp/coriolisvec_joint_fixb_${basemeth}_par${dynpar}_ic_matlab.m
+    # zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_coriolisvecJ_fixb_slag_vp${dynpar}.m
+    # if [ -f $quelldat ]; then
+      # cat $head_pfad/robot_matlabtmp_coriolisvecJ_fixb_ic_par${dynpar}.head.m > $zieldat
+      # printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      # sed -i "s/%RN%/$robot_name/g" $zieldat
+      # source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      # source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
+      # cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
+      # cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
+      # cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+      # cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
+      # if [ $dynpar == 1 ]; then
+        # cat $tmp_pfad/robot_matlabtmp_assert_rcom.m >> $zieldat
+        # cat $tmp_pfad/robot_matlabtmp_assert_Ic.m >> $zieldat
+      # else
+        # cat $tmp_pfad/robot_matlabtmp_assert_mrcom.m >> $zieldat
+        # cat $tmp_pfad/robot_matlabtmp_assert_If.m >> $zieldat
+      # fi
+      
+      # printf "\n%%%% Variable Initialization" > ${quelldat}.subsvar
+      # cat $tmp_pfad/robot_matlabtmp_qJ.m >> ${quelldat}.subsvar
+      # cat $tmp_pfad/robot_matlabtmp_qJD.m >> ${quelldat}.subsvar
+      # cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
+      # cat $tmp_pfad/robot_matlabtmp_par_m.m >> ${quelldat}.subsvar
+      # if [ $dynpar == 1 ]; then
+        # cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> ${quelldat}.subsvar
+        # cat $tmp_pfad/robot_matlabtmp_par_Ic.m >> ${quelldat}.subsvar
+      # else
+        # cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> ${quelldat}.subsvar
+        # cat $tmp_pfad/robot_matlabtmp_par_If.m >> ${quelldat}.subsvar
+      # fi
+      
+      # printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+      # sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
+      # cat $quelldat >> $zieldat
+      # source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 1 ${quelldat}.subsvar
+      # sed -i "s/%NAJ%/$robot_NAJ/g" $zieldat
+    # else
+      # echo "Code in ${quelldat##*/} nicht gefunden."
+    # fi  
     
     # Gravitationsmoment (Gelenke)
     source $repo_pfad/robot_codegen_definitions/robot_env_IC.sh

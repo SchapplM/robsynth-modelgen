@@ -19,10 +19,17 @@ source $repo_pfad/robot_codegen_definitions/robot_env_IC.sh
 # Erstelle Matlab-Hilfsdateien
 source robot_codegen_tmpvar_matlab.sh
 source robot_codegen_assert_matlab.sh
+source robot_codegen_matlab_preparation.sh
 source create_git_versioninfo.sh
+
+# Variableninitialisierung wiederholen
+source $repo_pfad/robot_codegen_definitions/robot_env_IC.sh
 
 # Korrigiere mit Maple generierte Matlab-Code-Dateien
 ./robot_codegen_matlabcode_postprocess_recursive.sh $repo_pfad/codeexport/$robot_name/tmp
+
+# Setze Teilausdrücke zu kompletten Ausdrücken zusammen
+./robot_codegen_matlab_assemble.sh
 
 # Erstelle Matlab-Funktionen der Kinematik
 ./robot_codegen_matlab_kinematics_ic_varpar.sh
