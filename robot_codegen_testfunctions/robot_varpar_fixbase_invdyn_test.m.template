@@ -1,5 +1,5 @@
 % Test function for inverse dynamics from symbolic calculations
-% 
+%
 % Quellen:
 % [KhalilDombre2002] Modeling, Identification and Control of Robots
 
@@ -17,10 +17,12 @@ NL = %NL%;
 robot_name = '%RN%';
 
 %% Init
+thrfac = 1; % Faktor zur Erhöhung der Schwellwerte für Fehlererkennung
 if NJ ~= NQJ
   KINCONSTR = true;
+  thrfac = 10; % bei ZB sind treten mehr Rechenfehler auf (da aufwändiger)
 else
-  KINCONSTR = false;  
+  KINCONSTR = false;
 end
 
 %% Parameter
@@ -44,7 +46,7 @@ for i = 1:n
 
   % compare both
   Delta = T_func-T_M;
-  if any(abs(Delta) > 1e6*eps(T_func))
+  if any(abs(Delta) > thrfac*1e6*eps(T_func))
     error('Kinetic Energy from Mass Matrix does not match with directly calculated. %1.5e', ...
       max(abs(Delta)));
   end
@@ -70,7 +72,7 @@ for i = 1:n
   % compare both
   Delta = cq-cq_mat;
   relErr = (cq_mat./ cq)-1; % bei großen Absolutwerten ist der relative Fehler verlässlicher
-  if any( abs(Delta) > 1e7*eps(1+max(abs(cq))) ) && max(abs(relErr)) > 1e-4
+  if any( abs(Delta) > thrfac*1e7*eps(1+max(abs(cq))) ) && max(abs(relErr)) > 1e-4
     error('coriolis torques from vector and matrix do not match. %1.5e', ...
       max(abs(Delta)));
   end
@@ -95,13 +97,13 @@ for i = 1:n
 
   % Calculate test expression
   Test = MqD-2*Cq;
-  
+
   % Test skew symmetry of Test-Matrix
   for ii = 1:NQJ
     for jj = 1:NQJ
       test_iijj_abs = Test(ii,jj) + Test(jj,ii);
       test_iijj_rel = Test(ii,jj) ./ Test(jj,ii) - 1;
-      if abs(test_iijj_abs) > 1e9*eps(1+max(abs(Cq(:)))) && abs(test_iijj_rel) > 1e-4
+      if abs(test_iijj_abs) > thrfac*1e9*eps(1+max(abs(Cq(:)))) && abs(test_iijj_rel) > 1e-4
         error('Test-Matrix is not skew-symmetric');
       end
     end
@@ -121,7 +123,7 @@ for i = 1:n
     pkin, m, rSges);
   taug_par2 = %RN%_gravloadJ_floatb_twist_slag_vp2(q, g_base, ...
     pkin, m, mrSges);
-  if any( abs(taug_par1 - taug_par2) > 1e6*eps(1+max(abs(taug_par1))) )
+  if any( abs(taug_par1 - taug_par2) > thrfac*1e6*eps(1+max(abs(taug_par1))) )
     error('gravity torques do not match between par1/par2.');
   end
   % Coriolis
@@ -129,14 +131,14 @@ for i = 1:n
     pkin, m, rSges, Icges);
   tauc_par2 = %RN%_coriolisvecJ_fixb_slag_vp2(q, qD, ...
     pkin, m, mrSges, Ifges);
-  if any( abs(tauc_par1-tauc_par2) > 1e8*eps(1+max(abs(tauc_par1))) )
+  if any( abs(tauc_par1-tauc_par2) > thrfac*1e8*eps(1+max(abs(tauc_par1))) )
     error('coriolis vectors do not match between par1/par2.');
   end
   Cq_par1 = %RN%_coriolismatJ_fixb_slag_vp1(q, qD, ...
     pkin, m, rSges, Icges);
   Cq_par2 = %RN%_coriolismatJ_fixb_slag_vp2(q, qD, ...
-    pkin, m, mrSges, Ifges); 
-  if any( abs(Cq_par1(:)-Cq_par2(:)) > 2e6*eps(1+max(abs(Cq_par1(:)))) )
+    pkin, m, mrSges, Ifges);
+  if any( abs(Cq_par1(:)-Cq_par2(:)) > thrfac*2e6*eps(1+max(abs(Cq_par1(:)))) )
     error('coriolis matrices do not match between par1/par2.');
   end
   % Inertia
@@ -144,7 +146,7 @@ for i = 1:n
     pkin, m, rSges, Icges);
   Mq_par2 = %RN%_inertiaJ_slag_vp2(q, ...
     pkin, m, mrSges, Ifges);
-  if any( abs(Mq_par1(:)-Mq_par2(:)) > 1e6*eps(1+max(abs(Mq_par1(:)))) )
+  if any( abs(Mq_par1(:)-Mq_par2(:)) > thrfac*1e6*eps(1+max(abs(Mq_par1(:)))) )
     error('inertia matrices do not match between par1/par2.');
   end
   % Inverse Dynamics
@@ -152,7 +154,9 @@ for i = 1:n
     pkin, m, rSges, Icges);
   tau_par2 = %RN%_invdynJ_fixb_slag_vp2(q, qD, qDD, g_base, ...
     pkin, m, mrSges, Ifges);
-  if any( abs(tau_par1-tau_par2) > 1e7*eps(1+max(abs(tau_par1))) )
+  Delta_tau = tau_par1-tau_par2;
+  Delta_tau_rel = Delta_tau./tau_par2; % Lasse auch einen relativen Fehler zu, da bei einigen Systemen dieser Term anfällig für Rechenfehler ist
+  if any( abs(Delta_tau) > thrfac*1e7*eps(1+max(abs(tau_par1))) & abs(Delta_tau_rel) > 1e-4)
     error('inverse dynamics joint torque vectors do not match between par1/par2.');
   end
   % Potentielle Energie
@@ -160,7 +164,7 @@ for i = 1:n
     pkin, m, rSges);
   U_par2 = %RN%_energypot_fixb_slag_vp2(q, g_base, ...
     pkin, m, mrSges);
-  if any(abs(U_par1-U_par2) > 1e6*eps(U_par1))
+  if any(abs(U_par1-U_par2) > thrfac*1e6*eps(U_par1))
     error('Potential energies do not match between par1/par2.');
   end
   % Kinetische Energie
@@ -168,7 +172,7 @@ for i = 1:n
     pkin, m, rSges, Icges);
   T_par2 = %RN%_energykin_fixb_slag_vp2(q, qD, ...
     pkin, m, mrSges, Ifges);
-  if any(abs(T_par1-T_par2) > 1e6*eps(1+T_par1))
+  if any(abs(T_par1-T_par2) > thrfac*1e6*eps(1+T_par1))
     error('Kinetic energies do not match between par1/par2.');
   end
 end
@@ -187,22 +191,22 @@ for i = 1:n
   taug_sp = %RN%_gravloadJ_floatb_twist_slag_vp1(q, g_base, ...
     pkin, m, rSges);
   Delta = taug_id - taug_sp;
-  if any(abs(Delta) > 1e6*eps(max(abs(taug_id))) )
+  if any(abs(Delta) > thrfac*1e6*eps(max(abs(taug_id))) )
     error('gravity torques from inverse dynamics and dedicated function do not match. %1.5e', ...
       max(abs(Delta)));
   end
-  
+
   % Coriolis
   tauc_id = %RN%_invdynJ_fixb_slag_vp1(q, qD, zeros(NQJ,1), zeros(3,1), ...
     pkin, m, rSges, Icges);
   tauc_sp = %RN%_coriolisvecJ_fixb_slag_vp1(q, qD, ...
     pkin, m, rSges, Icges);
   Delta = tauc_id - tauc_sp;
-  if any(abs(Delta) > 5e6*eps(1+max(abs([tauc_id;tauc_sp]))) )
+  if any(abs(Delta) > thrfac*5e6*eps(1+max(abs([tauc_id;tauc_sp]))) )
     error('Coriolis torques from inverse dynamics and dedicated function do not match. %1.5e', ...
       max(abs(Delta)));
   end
-  
+
   % Inertia
   taua_id = %RN%_invdynJ_fixb_slag_vp1(q, zeros(NQJ,1), qDD, zeros(3,1), ...
     pkin, m, rSges, Icges);
@@ -210,7 +214,7 @@ for i = 1:n
     pkin, m, rSges, Icges);
   taua_sp = Mq*qDD;
   Delta = taua_id - taua_sp;
-  if any(abs(Delta) > 1e6*eps(max(abs(taua_sp))) )
+  if any(abs(Delta) > thrfac*1e6*eps(max(abs(taua_sp))) )
     error('Inertial torques from inverse dynamics and dedicated function do not match. %1.5e', ...
       max(abs(Delta)));
   end
@@ -273,14 +277,13 @@ for ii = 1:n
   plot(t, SolverOutput.y(NQJ+1:2*NQJ,:)'); ylabel('Geschwindigkeit [rad/s]');
   subplot(2,2,4);
   plot(t, tau_Acc); ylabel('Beschleunigungsmoment [Nm]');
-
-  if abs(E(1,3) - E(end,3)) > 5e-4
+  E_Delta = E(1,3) - E(end,3);
+  E_Delta_Rel = E_Delta/max(abs(E(:))); % beziehen relativen Fehler auf maximale Teilkomponente
+  if (~KINCONSTR && abs(E(1,3) - E(end,3)) > 5e-4) ... % Nutze absoluten Fehler für Systeme ohne Zwangsbedingungen
+  || (KINCONSTR  && abs(E_Delta_Rel) > 5e-2) % mit Zwangsbed. sind die Systeme komplizierter. Relativer Fehler da mehr Rundungsfehler bei Rechnung möglich
     error('Das System ist nicht energetisch konsistent');
   end
   n_complete = n_complete + 1;
 end
-fprintf('Tested energetic consistency for free movement with %d starting configurations for %s. %d configurations not successful.\n', ...  
+fprintf('Tested energetic consistency for free movement with %d starting configurations for %s. %d configurations not successful.\n', ...
   n_complete, robot_name, n-n_complete);
-
-
-
