@@ -9,7 +9,7 @@
 % 
 % Output:
 % MMD_reg [((%NQJ%+1)*%NQJ%/2)x(%NQJ%*10)]
-%   inertial parameter regressor of inerta matrix time derivative
+%   inertial parameter regressor of inertia matrix time derivative
 %   (only lower left triangular matrix (including diagonal) due to symmetry
 
 % %VERSIONINFO%
