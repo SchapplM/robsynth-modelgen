@@ -96,7 +96,8 @@ for iq = 1:TSSc.n
 
   % Teste implizite Zwangsbedingungen
   h = %RN%_kinconstr_impl_mdh_sym_varpar(q, TSSo.pkin);
-  if any(abs(h) > 1e-10) && any(abs(h(abs(h) > 1e-10)) - 2*pi > 1e-10) % Für die Orientierugszwangsbedingung ist auch +-2*Pi erlaubt
+  h_viol = h(abs(h) > 1e-10);
+  if any(abs(h) > 1e-10) && any(abs(abs(h_viol) - 2*pi) > 1e-10) % Für die Orientierungszwangsbedingung ist auch +-2*Pi erlaubt
     error('Implizite Zwangsbedingungen werden nicht erfüllt!');
   end
 
