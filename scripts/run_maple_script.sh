@@ -15,7 +15,7 @@ mpl_file="${mpl_filepath##*/}" # Dateiname
 # Umgebungsvariable prüfen: Pfad zu Maple
 if [ "$MAPLE_BIN" == "" ]; then
   # Standard-Pfad unter Linux
-  MAPLE_BIN=/opt/maple2017/bin/maple
+  MAPLE_BIN=/opt/maple2019/bin/maple
 fi
 maple_path=${MAPLE_BIN%/*}   # Verzeichnis
 maple_exc="${MAPLE_BIN##*/}" # Dateiname
