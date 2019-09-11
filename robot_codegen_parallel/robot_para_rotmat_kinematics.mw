@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="2018" minor="0"/>
+<Version major="2019" minor="1"/>
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" compactdisplay="false" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" historytimestamp="false" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="[10, 10]" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" ansicolor="[]" elisiondigitsthreshold="10000" showassumed="1" ansilprint="false" trailingsemicolon="true" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -125,7 +125,7 @@ restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet
 #with(ArrayTools):
 with(codegen):
 with(CodeGeneration):
-with(StringTools):</Text-field>
+<Font encoding="UTF-8">with(StringTools): # F\303\274r Zeitausgabe</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L2976" drawlabel="true">
@@ -222,22 +222,27 @@ alphaxs_base, betays_base, gammazs_base := 0, 0, 0:
 rxs_base, rys_base, rzs_base := 0, 0, 0:</Text-field>
 </Input>
 </Group>
+<Group labelreference="L3323" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Merke Startzeit f\303\274r Debug-Ausgabe</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L3324" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">st := time():</Text-field>
+</Input>
+</Group>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Additional Kinematics</Text-field></Title>
 <Group labelreference="L3220" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Definition der Koppelpunkte f\303\274r jedes Bein </Font>und der EE-Koordinaten/-Geschwindigkeiten/-Beschleunigungen</Text-field>
 </Input>
-</Group>
-<Group hide-input="false" labelreference="L3269" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tmp := Matrix(3,1,[xP[1],yP[1],zP[1]]):
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3314" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion11" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">tmp := Matrix(3,1,[xP[1],yP[1],zP[1]]):
 for j to 3 do:
     if (xE_s(j) = 0) then
       tmp(j,1) := 0:
     end if:
   end do:
-for i to N_LEGS do</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  P||i := &lt;xP[i];yP[i];zP[i]&gt;;
+for i to N_LEGS do
+  P||i := &lt;xP[i];yP[i];zP[i]&gt;;
   for j to 3 do:
     if (xE_s(j) = 0) then
       P||i(j,1) := 0:
@@ -246,78 +251,60 @@ for i to N_LEGS do</Text-field>
   j := i+1:
   if i &lt;&gt; 1 then
      tmp := &lt;tmp | P||i&gt;:
-  end:</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">end do:
+  end:
+end do:
 P_i := tmp:
 #rhs||i := parse(sprintf(&quot;eul%s2r&quot;,angleConvLeg))(xE_s(4..6)).P||i+Matrix(xE_s(1..3,1)):
-</Text-field>
-</Input>
-</Group>
+</EC-CodeEditor></CodeEditor-ExecGroup>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Jacobi Matrices (JB1/U1) + Derivates</Text-field></Title>
 <Group labelreference="L3271" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">Berechnung der Jacobi-Matrix der inversen Kinematik: Koppelpunktgeschwindigkeiten P -&gt; Gelenkgeschwindigkeiten
 Abdellatif2007 S.37 unten</Text-field>
 </Input>
-</Group>
-<Group hide-input="false" labelreference="L3239" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">transDOF := nops(indets(xE_s(1..3,1))):
-JB1 := (parse(sprintf(&quot;eul%s2r&quot;,angleConvLeg))(frame_A_i(1..3,1)).b_transl)(1..transDOF,1..NQJ_parallel):</Text-field>
-</Input>
-</Group>
-<Group hide-input="false" labelreference="L3255" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">JB1inv := MatrixInverse(JB1):
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3310" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion10" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">transDOF := nops(indets(xE_s(1..3,1))):
+JB1 := (parse(sprintf(&quot;eul%s2r&quot;,angleConvLeg))(frame_A_i(1..3,1)).b_transl)(1..transDOF,1..NQJ_parallel):
+JB1inv := MatrixInverse(JB1):
 for i from 1 to 3-transDOF do
   JB1inv := &lt;JB1inv|ZeroMatrix(NQJ_parallel,1)&gt;;
-end do:</Text-field>
-</Input>
-</Group>
-<Group hide-input="false" labelreference="L3253" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to 3-transDOF do
+end do:
+for i from 1 to 3-transDOF do
   JB1 := &lt;JB1;ZeroMatrix(1,NQJ_parallel)&gt;;
 end do:
 JB1inv := simplify(JB1inv):
-JB1 := simplify(JB1):</Text-field>
+JB1 := simplify(JB1):
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group hide-input="false" labelreference="L3239" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 <Group labelreference="L3017" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">Berechnung der Matrix Ui: EE-Geschwindigkeiten -&gt; <Font encoding="UTF-8">Koppelpunktgeschwindigkeiten P. i steht f\303\274r den Index des jeweiligen Beines
 </Font>Abdellatif2007 S.21 (2.21)</Text-field>
 </Input>
-</Group>
-<Group hide-input="false" labelreference="L3258" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i to N_LEGS do</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  r||i := P||i:
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3290" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion5" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">for i to N_LEGS do
+  r||i := P||i:
   if angleConv = X_Y_Z then
      r||i := vec2skew(rotx(xE_t(4)).roty(xE_t(5)).rotz(xE_t(6)).r||i):
   elif angleConv = Z_Y_X then
      r||i := vec2skew(rotz(xE_t(4)).roty(xE_t(5)).rotx(xE_t(6)).r||i):
-  end:</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  
-  r||i := vec2skew(parse(sprintf(&quot;eul%s2r&quot;,angleConvLeg))(xE_t(4..6)).P||i);</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  ones := Matrix(3,3,shape=identity):</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  U||i := simplify(&lt;ones|-r||i&gt;):</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  U||i||D := simplify(diff~(U||i,t)):      #dU berechnen</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  #U||i||D := convert_t_s(U||i||D): #dU berechnen</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  #U||i := convert_t_s(U||i):</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">end do:</Text-field>
+  end:
+  
+  r||i := vec2skew(parse(sprintf(&quot;eul%s2r&quot;,angleConvLeg))(xE_t(4..6)).P||i);
+  ones := Matrix(3,3,shape=identity):
+  U||i := simplify(&lt;ones|-r||i&gt;):
+  U||i||D := simplify(diff~(U||i,t)):      #dU berechnen
+  #U||i||D := convert_t_s(U||i||D): #dU berechnen
+  #U||i := convert_t_s(U||i):
+end do:</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group hide-input="false" labelreference="L3258" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 <Group labelreference="L3272" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ermittlung des Robotertyps, um sp\303\244ter die Gesamt-Jacobi-Matrix reduzieren zu k\303\266nnen</Font></Text-field>
 </Input>
-</Group>
-<Group hide-input="false" labelreference="L3248" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">robotType := 1:
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3294" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion6" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">robotType := 1:
 counter := 0:
 for i from 4 to 6 do
   if xE_t(i) = 0 then
@@ -333,9 +320,10 @@ if counter = 2 then
   end do:
 elif counter = 3 then
   robotType := 3:
-end if:</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" spaceabove="0" linebreak="space" rightmargin="0" linespacing="0.0" initial="0" firstindent="0" leftmargin="0" bulletsuffix="" alignment="left" bullet="none" spacebelow="0" pagebreak-before="false">rotPlanar:</Text-field>
+end if:
+rotPlanar:</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group hide-input="false" labelreference="L3248" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 <Group labelreference="L3273" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -365,30 +353,30 @@ COLUMN := ColumnDimension(U1):</Text-field>
   UD_i(1..ROW,1..COLUMN,i) := U||i||D:
 end do:
 </EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L3316" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;[%s] Koppelpunkt-Jacobi-Matrizen (bezogen auf B) der Beinketten berechnet. CPU-Zeit bis hier: %1.2fs.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Font></Text-field>
+</Input>
+</Group>
 <Group labelreference="L3191" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">Berechnung von JB1D</Text-field>
 </Input>
-</Group>
-<Group hide-input="false" labelreference="L3190" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">JB1 := convert_s_t(JB1):</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">JB1D := diff~(JB1,t):</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">JB1D := simplify(JB1D):</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">JB1D := simplify(convert_t_s(JB1D)):</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">JB1 := simplify(convert_t_s(JB1)):
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3298" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion7" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">JB1 := convert_s_t(JB1):
+JB1D := diff~(JB1,t):
+JB1D := simplify(JB1D):
+JB1D := simplify(convert_t_s(JB1D)):
+JB1 := simplify(convert_t_s(JB1)):
 
-JB1inv := convert_s_t(JB1inv):</Text-field>
+
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L3318" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;[%s] Zeitableitung der Koppelpunkt-Jacobi-Matrizen (bezogen auf B) der Beinketten berechnet. CPU-Zeit bis hier: %1.2fs.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Font></Text-field>
 </Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">JB1Dinv := diff~(JB1inv,t):</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">JB1Dinv := simplify(JB1Dinv):</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">JB1Dinv := simplify(convert_t_s(JB1Dinv)):</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">JB1inv := simplify(convert_t_s(JB1inv)):</Text-field>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3320" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion12" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">JB1inv := convert_s_t(JB1inv):
+JB1Dinv := diff~(JB1inv,t):
+JB1Dinv := convert_t_s(JB1Dinv):
+JB1inv := convert_t_s(JB1inv):</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L3299" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;[%s] Zeitableitung der inversen Koppelpunkt-Jacobi-Matrizen (bezogen auf B) der Beinketten berechnet. CPU-Zeit bis hier: %1.2fs.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Font></Text-field>
 </Input>
 </Group>
 </Section>
@@ -401,27 +389,25 @@ JB1inv := convert_s_t(JB1inv):</Text-field>
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Dupliziere alle berechneten Matrizen. i steht f\303\274r den Index des jeweiligen Beines</Font></Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L3168" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">JBinv_i := Copy(JB1inv):
+<Group labelreference="L3300" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3302" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion8" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">JBinv_i := Copy(JB1inv):
 JBD_i := Copy(JB1D):
 JBDinv_i := Copy(JB1Dinv):
 JB_i := Copy(JB1):
 #Jinv_DoThanh_i := Copy(Jinv_DoThanh||1):
 ROW := RowDimension(JB1):
-COLUMN := ColumnDimension(JB1):</Text-field>
-</Input>
-</Group>
-<Group hide-input="false" labelreference="L3170" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i to N_LEGS do</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  JB||i||D := Copy(JB1D):
-  JB||i||Dinv := Copy(JB1Dinv):</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  JB||i||inv := Copy(JB1inv):</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  JB||i := Copy(JB1):</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">end do:</Text-field>
+COLUMN := ColumnDimension(JB1):
+for i to N_LEGS do
+  JB||i||D := Copy(JB1D):
+  JB||i||Dinv := Copy(JB1Dinv):
+  JB||i||inv := Copy(JB1inv):
+  JB||i := Copy(JB1):
+end do:
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group hide-input="false" labelreference="L3168" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 <Group labelreference="L3133" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -461,6 +447,10 @@ COLUMN := ColumnDimension(JB1):</Text-field>
 	end do:
 	#Jinv_DoThanh_i(1..COLUMN,1..ROW,k) := Jinv_DoThanh||k:
 end do:</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L3303" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;[%s] Jacobi-Matrizen der Beinketten berechnet. CPU-Zeit bis hier: %1.2fs.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Font></Text-field>
+</Input>
+</Group>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Gesamt Jacobi-Matrix</Text-field></Title>
 <Group labelreference="L2953" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -471,30 +461,27 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Input><Text-field style="Text" layout="Normal">Berechnung der inv. Jacobi-Matrix: EE-Geschwindigkeiten -&gt; aktive Gelenkgeschwindigkeiten
 Abdellatif2007 S.21 (2.22)</Text-field>
 </Input>
-</Group>
-<Group hide-input="false" labelreference="L3281" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if type(AKTIV,scalar) then
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3306" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion9" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if type(AKTIV,scalar) then
   AKTIV := Matrix(N_LEGS,1,AKTIV);
-end if:</Text-field>
-</Input>
-</Group>
-<Group hide-input="false" labelreference="L3275" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Tmp := simplify(JB1inv[AKTIV(1,1),1..3].U1):</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 2 to N_LEGS do</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  Tmp := &lt;Tmp;JB||i||inv[AKTIV(i,1),1..3].U||i&gt;:</Text-field>
-</Input>
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">end do:
-Jinv := Tmp:</Text-field>
+end if:
+Tmp := simplify(JB1inv[AKTIV(1,1),1..3].U1):
+for i from 2 to N_LEGS do
+  Tmp := &lt;Tmp;JB||i||inv[AKTIV(i,1),1..3].U||i&gt;:
+end do:
+Jinv := Tmp:
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group hide-input="false" labelreference="L3281" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 <Group labelreference="L3276" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">Reduziere die Gesamt-Jacobi-Matrix auf Freiheitsgrade des Roboters</Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L3278" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">IdentMat := IdentityMatrix(6,6):
+<Group labelreference="L3284" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3286" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion4" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">IdentMat := IdentityMatrix(6,6):
 IdentMatMas := IdentityMatrix(6,6):
 counter := 0:
 for i to 3 do
@@ -540,9 +527,8 @@ for i from 1 to 6 do
     end if;
   end if:
 end do:
-Jinv := JinvRed:</Text-field>
-</Input>
-</Group>
+Jinv := JinvRed:
+</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group hide-input="false" labelreference="L3231" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Jinv := simplify(Jinv):</Text-field>
 </Input>
@@ -551,6 +537,10 @@ Jinv := JinvRed:</Text-field>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Export</Text-field></Title>
 <Group labelreference="L2941" drawlabel="true">
 <Input>
+</Input>
+</Group>
+<Group labelreference="L3283" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;[%s] Beginne mit Code-Export. CPU-Zeit bis hier: %1.2fs.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L3148" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">

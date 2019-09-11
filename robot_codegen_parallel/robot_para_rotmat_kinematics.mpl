@@ -23,7 +23,8 @@ with(LinearAlgebra):
 #with(ArrayTools):
 with(codegen):
 with(CodeGeneration):
-with(StringTools):
+with(StringTools): # Für Zeitausgabe
+;
 # Einstellungen für Code-Export: Optimierungsgrad (2=höchster) und Aktivierung jedes Terms.
 #codegen_act := true: # noch nicht implementiert
 codegen_debug := false:
@@ -57,6 +58,8 @@ b_transl := b_transl:
 px, py, pz := 0, 0, 0:
 alphaxs_base, betays_base, gammazs_base := 0, 0, 0: 
 rxs_base, rys_base, rzs_base := 0, 0, 0:
+# Merke Startzeit für Debug-Ausgabe
+st := time():
 # Additional Kinematics
 # Definition der Koppelpunkte für jedes Bein und der EE-Koordinaten/-Geschwindigkeiten/-Beschleunigungen
 tmp := Matrix(3,1,[xP[1],yP[1],zP[1]]):
@@ -79,7 +82,6 @@ for i to N_LEGS do
 end do:
 P_i := tmp:
 #rhs||i := parse(sprintf("eul%s2r",angleConvLeg))(xE_s(4..6)).P||i+Matrix(xE_s(1..3,1)):
-
 # Jacobi Matrices (JB1/U1) + Derivates
 # Berechnung der Jacobi-Matrix der inversen Kinematik: Koppelpunktgeschwindigkeiten P -> Gelenkgeschwindigkeiten
 # Abdellatif2007 S.37 unten
@@ -94,6 +96,7 @@ for i from 1 to 3-transDOF do
 end do:
 JB1inv := simplify(JB1inv):
 JB1 := simplify(JB1):
+
 # Berechnung der Matrix Ui: EE-Geschwindigkeiten -> Koppelpunktgeschwindigkeiten P. i steht für den Index des jeweiligen Beines
 # Abdellatif2007 S.21 (2.21)
 for i to N_LEGS do
@@ -111,6 +114,7 @@ for i to N_LEGS do
   #U||i||D := convert_t_s(U||i||D): #dU berechnen
   #U||i := convert_t_s(U||i):
 end do:
+
 # Ermittlung des Robotertyps, um später die Gesamt-Jacobi-Matrix reduzieren zu können
 robotType := 1:
 counter := 0:
@@ -130,6 +134,7 @@ elif counter = 3 then
   robotType := 3:
 end if:
 rotPlanar:
+
 # Erstelle die Matrizen für jedes Bein.
 U_i := Copy(U1):
 UD_i := Copy(U1D):
@@ -148,20 +153,22 @@ for i to N_LEGS do
   U_i(1..ROW,1..COLUMN,i) := U||i:
   UD_i(1..ROW,1..COLUMN,i) := U||i||D:
 end do:
+printf("[%s] Koppelpunkt-Jacobi-Matrizen (bezogen auf B) der Beinketten berechnet. CPU-Zeit bis hier: %1.2fs.\n", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
 # Berechnung von JB1D
 JB1 := convert_s_t(JB1):
 JB1D := diff~(JB1,t):
 JB1D := simplify(JB1D):
 JB1D := simplify(convert_t_s(JB1D)):
 JB1 := simplify(convert_t_s(JB1)):
-
+printf("[%s] Zeitableitung der Koppelpunkt-Jacobi-Matrizen (bezogen auf B) der Beinketten berechnet. CPU-Zeit bis hier: %1.2fs.\n", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
 JB1inv := convert_s_t(JB1inv):
 JB1Dinv := diff~(JB1inv,t):
-JB1Dinv := simplify(JB1Dinv):
-JB1Dinv := simplify(convert_t_s(JB1Dinv)):
-JB1inv := simplify(convert_t_s(JB1inv)):
+JB1Dinv := convert_t_s(JB1Dinv):
+JB1inv := convert_t_s(JB1inv):
+printf("[%s] Zeitableitung der inversen Koppelpunkt-Jacobi-Matrizen (bezogen auf B) der Beinketten berechnet. CPU-Zeit bis hier: %1.2fs.\n", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
 # Berechne Jacobi-Matrizen für jedes Bein
 # Dupliziere alle berechneten Matrizen. i steht für den Index des jeweiligen Beines
+
 JBinv_i := Copy(JB1inv):
 JBD_i := Copy(JB1D):
 JBDinv_i := Copy(JB1Dinv):
@@ -175,6 +182,7 @@ for i to N_LEGS do
   JB||i||inv := Copy(JB1inv):
   JB||i := Copy(JB1):
 end do:
+
 # Substituiere in jeder Matrix den Winkel Alpha (Verdrehung in der Basis) und die Gelenkkoordinaten und -geschwindigkeiten
 for k from 1 by 1 to N_LEGS do  
 	for i to ROW do
@@ -210,6 +218,7 @@ for k from 1 by 1 to N_LEGS do
 	end do:
 	#Jinv_DoThanh_i(1..COLUMN,1..ROW,k) := Jinv_DoThanh||k:
 end do:
+printf("[%s] Jacobi-Matrizen der Beinketten berechnet. CPU-Zeit bis hier: %1.2fs.\n", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
 # Gesamt Jacobi-Matrix
 # Berechnung der inv. Jacobi-Matrix: EE-Geschwindigkeiten -> aktive Gelenkgeschwindigkeiten
 # Abdellatif2007 S.21 (2.22)
@@ -221,7 +230,9 @@ for i from 2 to N_LEGS do
   Tmp := <Tmp;JB||i||inv[AKTIV(i,1),1..3].U||i>:
 end do:
 Jinv := Tmp:
+
 # Reduziere die Gesamt-Jacobi-Matrix auf Freiheitsgrade des Roboters
+
 IdentMat := IdentityMatrix(6,6):
 IdentMatMas := IdentityMatrix(6,6):
 counter := 0:
@@ -271,6 +282,7 @@ end do:
 Jinv := JinvRed:
 Jinv := simplify(Jinv):
 # Export
+printf("[%s] Beginne mit Code-Export. CPU-Zeit bis hier: %1.2fs.\n", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
 # Maple-Export
 save pivotMat, pivotMatMas, P_i, Jinv, JB_i, JBD_i, JBinv_i, JBDinv_i, U_i, UD_i, sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
 MatlabExport(Jinv, sprintf("../codeexport/%s/tmp/Jinv_para_matlab.m", robot_name), codegen_opt):

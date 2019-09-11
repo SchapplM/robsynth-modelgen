@@ -1,28 +1,35 @@
 
 # Definitions for Parallel Robot Dynamics Code Generation
-# Init
-# Erstelle Definitionen für die Maple-Skripte zur Berechnung von Kinematik und Dynamik des parallelen Roboters
+# Einleitung
+# Erstelle Definitionen fÃ¼r die Maple-Skripte zur Berechnung von Kinematik und Dynamik des parallelen Roboters
 # 
-# Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
-# (C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
-interface(warnlevel=0): # Unterdrücke die folgende Warnung.
-restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
+# Dateiname:
+# robot -> Berechnung fÃ¼r allgemeinen Roboter
+# para -> Berechnung fÃ¼r eine parallelen Roboter
+# definitions -> Definitionen
+# Autor
+# Tim Job (Studienarbeit bei Moritz Schappler), 2018-12
+# Moritz Schappler, moritz.schappler@imes.uni-hannover.de
+# (C) Institut fÃ¼r Mechatronische Systeme, UniversitÃ¤t Hannover
+# Init
+interface(warnlevel=0): # UnterdrÃ¼cke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn Ã¼ber Terminal-Maple mit read gestartet wird.
 interface(warnlevel=3):
 with(LinearAlgebra):
 read "../helper/proc_MatlabExport":
 read "../helper/proc_convert_t_s":
-# Lese Umgebungsvariable für Codegenerierung.
+# Lese Umgebungsvariable fÃ¼r Codegenerierung.
 read "../robot_codegen_definitions/robot_env_par":
-printf("Generiere Parameter für %s\n",robot_name):
+printf("Generiere Parameter fÃ¼r %s\n",robot_name):
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
-# Link-Index, für den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber für beliebige Segmente aufgestellt werden. (0=Basis)
+# Link-Index, fÃ¼r den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber fÃ¼r beliebige Segmente aufgestellt werden. (0=Basis)
 LIJAC:=NL-1:
 # Ergebnisse der analytischen Jacobi-Matrix (Translatorisch)
 px, py, pz := 0, 0, 0:
 alphaxs_base, betays_base, gammazs_base := 0, 0, 0: 
 read sprintf("../codeexport/%s/tmp/jacobia_transl_%d_maple.m", leg_name, LIJAC):
 b_transl := b_transl:
-# Lese Umgebungsvariable für Codegenerierung.
+# Lese Umgebungsvariable fÃ¼r Codegenerierung.
 read "../robot_codegen_definitions/robot_env_par":
 # Additional Definitions
 # Parameter definieren, wenn nicht vorher schon geschehen
@@ -37,7 +44,7 @@ if not assigned(xE_s) then
 end if:
 gvec := Matrix(3,1,[g1,g2,g3]):
 # Parallel Robotics Definitions
-# Erstelle für Gelenkkoordinaten, -geschwindigkeiten und -beschleunigungen für jedes Bein
+# Erstelle fÃ¼r Gelenkkoordinaten, -geschwindigkeiten und -beschleunigungen fÃ¼r jedes Bein
 J := simplify(b_transl):
 vars := indets(J):
 counter := 0:
@@ -60,6 +67,7 @@ for i to ColumnDimension(J) do
   end if:
 end do:
 NQJ_parallel := counter:
+
 qJ_i_s := Matrix(NQJ_parallel,N_LEGS):
 qJD_i_s := Matrix(NQJ_parallel,N_LEGS):
 qJDD_i_s := Matrix(NQJ_parallel,N_LEGS):
@@ -87,12 +95,12 @@ r_P_sP := Vector(3,symbol=r_sP):
 s_P_sP := Vector(3,symbol=s_sP):
 angleConvLeg := leg_frame(7):
 angleConv := xE_s(7):
-# Erstelle EE-Koordinaten: xE_t, xED_t, xEDD_t -> Variablen mit Zeitabhängigkeit
-#                                          xE_s, xED_s, xEDD_s -> Variablen ohne Zeitabhängigkeit
+# Erstelle EE-Koordinaten: xE_t, xED_t, xEDD_t -> Variablen mit ZeitabhÃ¤ngigkeit
+#                                          xE_s, xED_s, xEDD_s -> Variablen ohne ZeitabhÃ¤ngigkeit
 xE_t:=<xE(t);yE(t);zE(t);PsiE(t);ThetaE(t);PhiE(t)>:
 xED_t:=diff~(xE_t,t):
 xEDD_t:=diff~(xED_t,t):
-# Zähle Freiheitsgrade des Roboters und setze nicht benötigte zu null.
+# ZÃ¤hle Freiheitsgrade des Roboters und setze nicht benÃ¶tigte zu null.
 xE_s := Matrix(xE_s(1..6,1)):
 xED_s := copy(xE_s):
 xEDD_s := copy(xE_s):
