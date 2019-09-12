@@ -37,18 +37,19 @@ read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
 # Kennung des Parametersatzes, für den die Dynamikfunktionen erstellt werden sollen. Muss im Repo und in der mpl-Datei auf 1 gelassen werden, da die folgende Zeile mit einem Skript verarbeitet wird.
 codegen_dynpar := 1:
-# Link-Index, für den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber für beliebige Segmente aufgestellt werden. (0=Basis)
-LIJAC:=NL-1: # TODO: Kann das weg?
-;
 # Ergebnisse der zusätzlichen Definitionen für parallele Roboter laden
 read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
-# Ergebnisse der Plattform-Dynamik laden
+# Ergebnisse der Plattform-Dynamik laden (aus robot_para_plattform_rotmat_dynamics.mw)
 read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/floatb_platform_dynamic_maple.m", robot_name):
-# Ergebnisse der Dynamik der Gelenkkette laden
-#read sprintf("../codeexport/%s/tmp/invdyn_%s_par%d_maple.m", leg_name, base_method_name, codegen_dynpar)
-;
+# Neu-Definition der geladenen Variablen
+MME:=MME:
+cvecE:=cvecE:
+gE:=gE:
+tauE:=tauE:
+H:=H:
+dH:=dH:
 # Ergebnisse der Kinematik für parallelen Roboter laden
 read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
@@ -101,7 +102,8 @@ for i from NQJ_parallel+1 to NQJ do
 	MZ||i := 0:
 	M||i := 0:
 end do:
-# Ergebnisse G-Vektor laden. Die Rotation der Basis wird nur in der Jacobi-Matrix der inverse Kinematik berücksichtigt. Deshalb muss der Gravitationsvektor ebenfalls an die Rotation angepasst werden.
+# Ergebnisse G-Vektor der Beinkette  laden.
+# Die Rotation der Basis wird nur in der Jacobi-Matrix der inverse Kinematik berücksichtigt. Deshalb muss der Gravitationsvektor ebenfalls an die Rotation angepasst werden.
 g1 := gtmp1:
 g2 := gtmp2:
 g3 := gtmp3:
@@ -114,11 +116,11 @@ gtmp1 := (Rmat.g)(1):
 gtmp2 := (Rmat.g)(2):
 gtmp3 := (Rmat.g)(3):
 G := G:
-# Ergebnisse C-Vektor laden
+# Ergebnisse C-Vektor der Beinkette laden
 read sprintf("../codeexport/%s/tmp/coriolisvec_par%d_maple.m", leg_name, codegen_dynpar):
 Cvec := simplify(Matrix(tauCC_s(7..NQ,1))):
 Cvec := Cvec:
-# Ergebnisse M-Matrix laden
+# Ergebnisse M-Matrix der Beinkette laden
 read sprintf("../codeexport/%s/tmp/inertia_par%d_maple.m", leg_name, codegen_dynpar):
 MM := simplify(MM_s(7..NQ,7..NQ)):
 MM := simplify(MM):
@@ -126,9 +128,10 @@ MME := simplify(MME):
 gE := simplify(gE):
 # Ergebnisse der Kinematik für parallen Roboter laden
 read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
-printf("Generiere Dynamik für PKM %s mit Parametersatz %d\n", robot_name, codegen_dynpar, base_method_name):
+printf("%s. Alle Daten geladen. Generiere Dynamik für PKM %s mit Parametersatz %d\n", FormatTime("%Y-%m-%d %H:%M:%S"), robot_name, codegen_dynpar, base_method_name):
 # Berechne Dynamik-Matrizen für alle Beine
 # Dupliziere alle berechneten Matrizen. i steht für den Index des jeweiligen Beines
+
 for i to N_LEGS do
   MM||i := Copy(MM):
   Cvec||i := Copy(Cvec):
@@ -157,6 +160,7 @@ for k from 1 by 1 to N_LEGS do
     		end do:
   	end do:
 end do:
+
 
 # Berechnung, Projektion und Addition der Dynamikgleichungen
 # Berechnung der Kräfte/Momente an den Gelenken der jeweiligen Beine und Projektion auf EE-Plattform
@@ -274,6 +278,7 @@ save tau_x,     sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_par%d_maple.m
 save MMGes_x,   sprintf("../codeexport/%s/tmp/inertia_para_plfcoord_par%d_maple.m",     robot_name, codegen_dynpar):
 save cvecGes_x, sprintf("../codeexport/%s/tmp/coriolisvec_para_plfcoord_par%d_maple.m", robot_name, codegen_dynpar):
 save gGes_x,    sprintf("../codeexport/%s/tmp/gravvec_para_plfcoord_par%d_maple.m",     robot_name, codegen_dynpar):
+printf("%s. Speicherung der Dynamik-Terme in symbolischer Form beendet. Starte Code-Export in Matlab\n", FormatTime("%Y-%m-%d %H:%M:%S")):
 # Matlab Export
 if codeexport_invdyn then
   printf("%s. Beginne Code-Export Inverse Dynamik in Plattform-Koordinaten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):

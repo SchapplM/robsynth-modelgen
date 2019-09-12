@@ -232,7 +232,7 @@ end do:
 Jinv := Tmp:
 
 # Reduziere die Gesamt-Jacobi-Matrix auf Freiheitsgrade des Roboters
-
+printf("[%s] Starte Reduzierung der Gesamt-Jacobi-Matrix. CPU-Zeit bis hier: %1.2fs.\n", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
 IdentMat := IdentityMatrix(6,6):
 IdentMatMas := IdentityMatrix(6,6):
 counter := 0:

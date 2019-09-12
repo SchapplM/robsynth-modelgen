@@ -51,6 +51,7 @@ read(sprintf("%s/transformation/maple/proc_eul%s2r", robotics_repo_path, angleCo
 read(sprintf("%s/transformation/maple/proc_eul%sjac", robotics_repo_path, angleConv)):
 # Additional Kinematics
 # Berechnung der Rotationsmatrizen
+
 R_0_0_E_t := parse(sprintf("eul%s2r",angleConv))(xE_t(4..6)):
 R_0_0_E_s := parse(sprintf("eul%s2r",angleConv))(xE_s(4..6)):
 RPYjac_0_t := parse(sprintf("eul%sjac",angleConv))(xE_t(4..6)):
@@ -62,6 +63,7 @@ else
   J_P_P := J_P_P:
 end if:
 J_0_P := R_0_0_E_s.J_P_P.Transpose(R_0_0_E_s):
+
 r_0_sP_P := R_0_0_E_t.r_P_sP_P:
 rD_0_sP_P := diff~(r_0_sP_P,t):
 s_0_P_sP := R_0_0_E_t.s_P_P_sP:
@@ -98,7 +100,9 @@ end do:
 
 wD_E_0_E_s := simplify(dRPYjac_E_s.xED_s(4..6,1)+RPYjac_E_s.xEDD_s(4..6,1)):
 wD_0_0_E_s := simplify(dRPYjac_0_s.xED_s(4..6,1)+RPYjac_0_s.xEDD_s(4..6,1)):
+
 # Abdellatif2007 S.20 (2.19)
+
 H := <IdentityMatrix(3,3),ZeroMatrix(3);
       ZeroMatrix(3),RPYjac_0_s>:
 Hinv := MatrixInverse(H):
@@ -138,12 +142,15 @@ for j to 6 do
   end do:
 end do:
 gE := simplify(Transpose(Hinv).dgEdz_final):
+
 if codeexport_grav then
   MatlabExport(gE, sprintf("../codeexport/%s/tmp/gravload_platform_eul%s_matlab.m", robot_name, angleConv), codegen_opt):
 end if:
+
 # Mass-Matrix ME of the platform
 # Berechnung Massenmatrix für die EE-Plattform und die Winkelgeschwindigkeit
 # Abdellatif2007 S.39 (3.30)
+
 if codegen_dynpar = 1 then
   ME := simplify(<mE*Matrix(3,shape=identity),mE*vec2skew(r_0_sP_P);
          mE*Transpose(vec2skew(r_0_sP_P)),J_0_P>):
@@ -151,12 +158,15 @@ else
   ME := simplify(<mE*Matrix(3,shape=identity),vec2skew(-s_0_P_sP);
          Transpose(vec2skew(-s_0_P_sP)),J_0_P>):
 end if:
+
 if codeexport_inertia then
   MatlabExport(ME, sprintf("../codeexport/%s/tmp/inertia_platform_eul%s_matlab.m", robot_name, angleConv), codegen_opt):
 end if:
+
 # Coriolis-Vector cE of the platform
 # Coriolis-Matrix
 # Abdellatif2007 S.39 (3.31)
+
 if codegen_dynpar = 1 then
   cE := simplify(<ZeroMatrix(3,3),mE*vec2skew(rD_0_sP_P);
          ZeroMatrix(3,3),Multiply(vec2skew(w_0_0_E_s),J_0_P)>):
@@ -164,21 +174,24 @@ else
   cE := simplify(<ZeroMatrix(3,3),vec2skew(-sD_0_P_sP);
          ZeroMatrix(3,3),Multiply(vec2skew(w_0_0_E_s),J_0_P)>):
 end if:
+
 if codeexport_corvec then
   # Der Term ist nicht der Coriolis-Vektor, sondern eine Matrix, die dazu führt. Daher kein Export.
   # MatlabExport(cE, sprintf("../codeexport/%s/tmp/coriolisvec_platform_eul%s_matlab.m", robot_name, angleConv), codegen_opt):
 end if:
+
 # Torque at the platform
 # Inverse Dynamik der Plattform
 # Abdellatif2007 S.39 (3.29)
+
 MME := ME.H:
 cvecE := Multiply(ME.dH+cE.H,xED_s):
 tauE := Multiply(MME,xEDD_s) + cvecE - gE:
-# Code Export
+# Maple-Export
+save MME, cvecE , gE, tauE, H, dH, sprintf("../codeexport/%s/tmp/floatb_platform_dynamic_maple.m", robot_name):
+# Matlab Code Export
 if codeexport_invdyn then
   MatlabExport(tauE, sprintf("../codeexport/%s/tmp/invdyn_platform_eul%s_matlab.m", robot_name, angleConv), codegen_opt):
 end if:
-# Maple-Export
-save MME, cvecE , gE, tauE, H, dH, sprintf("../codeexport/%s/tmp/floatb_platform_dynamic_maple.m", robot_name):
-
+# 
 

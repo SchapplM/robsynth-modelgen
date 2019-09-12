@@ -31,7 +31,8 @@ interface(rtablesize=100):
 with(LinearAlgebra):
 with(codegen):
 with(CodeGeneration):
-with(StringTools):
+with(StringTools): # Für Zeitausgabe
+;
 # Einstellungen für Code-Export: Optimierungsgrad (2=höchster) und Aktivierung jedes Terms.
 #codegen_act := true: # noch nicht implementiert
 codegen_opt := 2:
@@ -219,7 +220,7 @@ for k from 1 by 1 to N_LEGS do
     end do:
   end do:
 end do:
-
+printf("%s. Dynamik-Matrizen bestimmt. Beginne Projektion/Addition.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
 # Berechnung, Projektion und Addition der Dynamikgleichungen
 # Berechnung der Kräfte/Momente an den Gelenken der jeweiligen Beine und Projektion auf EE-Plattform
 A_E := A_E:
@@ -282,7 +283,7 @@ for i to RowDimension(paramMin) do
 		j := j + 1:
 	end if:
 end do:
-
+printf("%s. Beginne Ersetzung der Geschwindigkeiten und Bestimmung der Plattform-Terme.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
 # Replace Joint Velocities
 # Substituiere die Gelenkgeschwindigkeiten über H-, Ui- und JBi-Matrix mit EE-Geschwindikeiten
 Tmp := 0:
@@ -376,6 +377,7 @@ PV := Matrix(nMDP,1):
 for i from 1 to nMDP do
   PV(i,1) := parse(sprintf("MDP%d%", i)):
 end do:
+
 tau_x_mdp := tau_x.PV:
 MMreg_x_mdp := MMreg_x.PV:
 Creg_x_mdp := Creg_x.PV:
@@ -385,8 +387,10 @@ tau_qa_mdp := tau_qa.PV:
 MMreg_qa_mdp := MMreg_qa.PV:
 Creg_qa_mdp := Creg_qa.PV:
 greg_qa_mdp := greg_qa.PV:
+
 # Export
 # Maple-Export (zur eventuellen späteren Verarbeitung in Maple)
+
 save tau_x,   sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_reg_maple.m",     robot_name):
 save MMreg_x, sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_MMreg_maple.m",   robot_name):
 save Creg_x,  sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_tauCreg_maple.m", robot_name):
@@ -396,20 +400,29 @@ save greg_x,  sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_taugreg_maple.m
 # Berechnung der Basis-Belastung ist für manche Basis-Darstellungen falsch (siehe oben unter Gravitationslast). (TODO: Ist das noch aktuell?)
 
 if codeexport_invdyn then
+  printf("%s. Beginne Code-Export Inverse Dynamik (Regressor) in Plattform-Koordinaten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
   MatlabExport(tau_x, sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_reg_matlab.m", robot_name), codegen_opt):
+  printf("%s. Beginne Code-Export Massenmatrix (MDP eingesetzt) in Plattform-Koordinaten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
   MatlabExport(MMreg_x, sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_MMreg_matlab.m", robot_name), codegen_opt):
+  printf("%s. Beginne Code-Export Coriolis-Vektor (MDP eingesetzt) in Plattform-Koordinaten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
   MatlabExport(Creg_x, sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_tauCreg_matlab.m", robot_name), codegen_opt):
+  printf("%s. Beginne Code-Export Gravitations-Vektor (MDP eingesetzt) in Plattform-Koordinaten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
   MatlabExport(greg_x, sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_taugreg_matlab.m", robot_name), codegen_opt):
 end if:
 
 if codeexport_invdyn and RowDimension(Jinv) < 5 and codeexport_actcoord then
+  printf("%s. Beginne Code-Export Inverse Dynamik (Regressor) in Antriebs-Koordinaten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
   MatlabExport(tau_qa, sprintf("../codeexport/%s/tmp/invdyn_para_actcoord_reg_matlab.m", robot_name), codegen_opt):
+  printf("%s. Beginne Code-Export Massenmatrix (Regressor) in Antriebs-Koordinaten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
   MatlabExport(MMreg_qa, sprintf("../codeexport/%s/tmp/invdyn_para_actcoord_MMreg_matlab.m", robot_name), codegen_opt):
+  printf("%s. Beginne Code-Export Coriolis-Vektor (Regressor) in Antriebs-Koordinaten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
   MatlabExport(Creg_qa, sprintf("../codeexport/%s/tmp/invdyn_para_actcoord_tauCreg_matlab.m", robot_name), codegen_opt):
+  printf("%s. Beginne Code-Export Gravitations-Vektor (Regressor) in Antriebs-Koordinaten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
   MatlabExport(greg_qa, sprintf("../codeexport/%s/tmp/invdyn_para_actcoord_taugreg_matlab.m", robot_name), codegen_opt):
 end if:
 
 # Maple-Export
+
 save paramMinRed, sprintf("../codeexport/%s/tmp/minimal_parameter_parrob_maple.m", robot_name):
 save RowParamMin, sprintf("../codeexport/%s/tmp/RowMinPar_parallel_maple.m",       robot_name):
 
@@ -419,22 +432,32 @@ MatlabExport(RowParamMin, sprintf("../codeexport/%s/tmp/RowMinPar_parallel.m", r
 # PKM-Dynamik-Funktionen mit MPV bereits eingesetzt
 
 # Maple-Export
+
 save tau_x_mdp,   sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_reg_mdp_maple.m",     robot_name):
 save MMreg_x_mdp, sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_MMreg_mdp_maple.m",   robot_name):
 save Creg_x_mdp,  sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_tauCreg_mdp_maple.m", robot_name):
 save greg_x_mdp,  sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_taugreg_mdp_maple.m", robot_name):
+
 # Matlab Export: 
 if codeexport_invdyn then
+  printf("%s. Beginne Code-Export Inverse Dynamik (MDP eingesetzt) in Plattform-Koordinaten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
   MatlabExport(tau_x_mdp, sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_reg_mdp_matlab.m", robot_name), codegen_opt):
+  printf("%s. Beginne Code-Export Massenmatrix (MDP eingesetzt) in Plattform-Koordinaten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
   MatlabExport(MMreg_x_mdp, sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_MMreg_mdp_matlab.m", robot_name), codegen_opt):
+  printf("%s. Beginne Code-Export Coriolis-Vektor (MDP eingesetzt) in Plattform-Koordinaten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
   MatlabExport(Creg_x_mdp, sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_tauCreg_mdp_matlab.m", robot_name), codegen_opt):
+  printf("%s. Beginne Code-Export Gravitations-Vektor (MDP eingesetzt) in Plattform-Koordinaten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
   MatlabExport(greg_x_mdp, sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_taugreg_mdp_matlab.m", robot_name), codegen_opt):
 end if:
 
 if codeexport_invdyn and RowDimension(Jinv) < 5 and codeexport_actcoord then
+  printf("%s. Beginne Code-Export Inverse Dynamik (MDP eingesetzt) in Antriebs-Koordinaten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
   MatlabExport(tau_qa_mdp, sprintf("../codeexport/%s/tmp/invdyn_para_actcoord_reg_mdp_matlab.m", robot_name), codegen_opt):
+  printf("%s. Beginne Code-Export Massenmatrix (MDP eingesetzt) in Antriebs-Koordinaten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
   MatlabExport(MMreg_qa_mdp, sprintf("../codeexport/%s/tmp/invdyn_para_actcoord_MMreg_mdp_matlab.m", robot_name), codegen_opt):
+  printf("%s. Beginne Code-Export Coriolis-Vektor (MDP eingesetzt) in Antriebs-Koordinaten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
   MatlabExport(Creg_qa_mdp, sprintf("../codeexport/%s/tmp/invdyn_para_actcoord_tauCreg_mdp_matlab.m", robot_name), codegen_opt):
+  printf("%s. Beginne Code-Export Gravitations-Vektor (MDP eingesetzt) in Antriebs-Koordinaten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
   MatlabExport(greg_qa_mdp, sprintf("../codeexport/%s/tmp/invdyn_para_actcoord_taugreg_mdp_matlab.m", robot_name), codegen_opt):
 end if:
 

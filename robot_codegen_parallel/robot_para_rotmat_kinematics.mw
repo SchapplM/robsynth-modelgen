@@ -479,7 +479,7 @@ Jinv := Tmp:
 </Input>
 </Group>
 <Group labelreference="L3284" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;[%s] Starte Reduzierung der Gesamt-Jacobi-Matrix. CPU-Zeit bis hier: <Font encoding="UTF-8">%1.2fs.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Font></Text-field>
 </Input>
 </Group><CodeEditor-ExecGroup view="presentation" labelreference="L3286" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion4" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">IdentMat := IdentityMatrix(6,6):
 IdentMatMas := IdentityMatrix(6,6):
