@@ -25,8 +25,19 @@ clear NQJ
 
 %% Start Simulation
 t1 = tic;
-simOut = sim(sl_Modellname, 'StopTime', '5', ...
-  'SimulationMode', 'normal'); % normal
+try
+  simOut = sim(sl_Modellname, 'StopTime', '5', ...
+    'SimulationMode', 'normal'); % normal
+catch err
+  if KINCONSTR
+    warning('Keine Lösung im Simulinkmodell möglich. Wahrscheinlich Verlassen des gültigen Gelenkraums');
+    return;
+  else
+    % Es gibt keine kinematischen Zwangsbedingungen, die direkte Dynamik
+    % muss also funktionieren
+    raise(err);
+  end
+end
 sl = get_simulink_outputs(simOut, sl_Modellname);
 fprintf('Simulink-Modell berechnet. Rechenzeit: %1.1fs\n', toc(t1));
 
@@ -49,8 +60,15 @@ ylabel('qD');grid on;
 E_start = sum(sl.E(1,1:2));
 E_end = sum(sl.E(end,1:2));
 if abs(E_start-E_end) > 1e-6
-  error('Simulink-Modell ist nicht energetisch konsistent. Fehler: %1.1e', ...
-    E_start-E_end);
+  if KINCONSTR
+    warning('Simulink-Modell ist nicht energetisch konsistent. Fehler: %1.1e, Wahrscheinlich Verlassen des gültigen Gelenkraums', ...
+      E_start-E_end);
+  else
+    % Es gibt keine kinematischen Zwangsbedingungen, die direkte Dynamik
+    % muss also funktionieren
+    error('Simulink-Modell ist nicht energetisch konsistent. Fehler: %1.1e', ...
+      E_start-E_end);
+  end
 else
   fprintf('Modell %s energetisch konsistent\n', sl_Modellname);
 end

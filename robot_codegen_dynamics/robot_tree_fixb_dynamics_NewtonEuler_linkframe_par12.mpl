@@ -49,7 +49,7 @@ read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s": 
 read "../helper/proc_MatlabExport":
 read "../robot_codegen_definitions/robot_env":
-printf("Generiere Geschwindigkeit für %s (Herleitung im Körper-KS)\n", robot_name):
+printf("Generiere Dynamikgleichungen für %s (Herleitung im Körper-KS)\n", robot_name):
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
 read "../helper/proc_index_symmat2vector":
 read "../helper/proc_symmat2vector":
@@ -80,7 +80,6 @@ rD_i_i:= rD_i_i:
 omegaD_i_i:= omegaD_i_i: 
 rDD_i_i:= rDD_i_i:
 rDD_i_Si:= rDD_i_Si:
-# 
 # Mit diesem Arbeitsblatt werden die Vorwärtsrekursive für Fixed-Base Modelle generiert. Erkenne welche Basis-Modellierung aktiv ist
 if base_method_name="twist" then # Basis-Methode "twist" wird (hier) nur für fixed Base benutzt
   expstring:="fixb":
@@ -94,14 +93,14 @@ end if:
 OutputNewtonEuler:= NewtonEuler(f_i_i,m_i_i):
 # Backward recursive computation
 # Force exerted on link i by link i-1(unbekannte Kraft zwischen Teilkörper n-1 und Teilkörper n)
-f_i_i:= Matrix(3,NL):
+f_i_i:= Matrix(3,NJ+1):
 # Moment exerted on link i by link i-1(unbekannte Moment zwischen Teilkörper n-1 und Teilkörper n)
-m_i_i:=Matrix(3,NL):
+m_i_i:=Matrix(3,NJ+1):
 
 # Schnittmomente/Kräfte
 tau_B := Matrix(6,1):
-tau_J := Matrix(NJ,1):
-tau := Matrix(6+NJ,1):
+tau_J := Matrix(NQJ,1):
+tau := Matrix(6+NQJ,1):
 
 
 I_i_i_m:= Matrix(3,3,NL):
@@ -134,24 +133,44 @@ end do :
 # Forces and moment exerted on link i by link i-1
 
 for i from NL by -1 to 1 do
-  f_i_i(1..3,i):= F_i(1..3,i):
-  m_i_i(1..3,i):= M_i(1..3,i):# + CrossProduct(r_i_i_Si(1..3,i),(F_i(1..3,i))):
+  f_i_i_part:= F_i(1..3,i):
+  m_i_i_part:= M_i(1..3,i):# + CrossProduct(r_i_i_Si(1..3,i),(F_i(1..3,i))):
 
-  if i < NL then
-    j := v(i) + 2:
-    # printf("i=%d, j=%d\n", i, j):
-    R_j_i := Matrix(Trf(1..3,1..3,i)): 
-    r_j_j_i := Matrix( Trf(1 .. 3, 4, i)):
-    f_i_i(1..3,i) := f_i_i(1..3,i) + R_j_i.f_i_i(1..3,j):
-    m_i_i(1..3,i) := m_i_i(1..3,i) + R_j_i.m_i_i(1..3,j)+ CrossProduct(r_j_j_i, R_j_i.f_i_i(1..3,j) ):
+  I_nf := Matrix([ListTools[SearchAll](i-1,convert(v,list))]):
+ 
+  for tmp from 1 to ColumnDimension(I_nf) do
+    I_nf(tmp) := I_nf(tmp)+1:
+  end do:
+
+  if ColumnDimension(I_nf) <> 0 then
+    for tmp from 1 to RowDimension(v) do
+      j := I_nf(tmp): 
+      
+      R_i_j := Matrix(Trf(1..3,1..3,j-1)): 
+      r_i_i_j := Matrix(Trf(1 .. 3, 4, j-1)):
+      f_j_j := f_i_i(1..3,j):
+      m_j_j := m_i_i(1..3,j):
+    
+      f_i_i_part := f_i_i_part + R_i_j.f_j_j:
+      m_i_i_part := m_i_i_part + R_i_j.m_j_j + CrossProduct(r_i_i_j, R_i_j.f_j_j):
+      
+      if tmp = ColumnDimension(I_nf) then
+        break: #Abbruch. Alle Nachfolger untersucht.
+      end if:
+    end do:
   end if:
+
+  f_i_i(1..3,i) := f_i_i_part;
+  m_i_i(1..3,i) := m_i_i_part;
 end do:
 
-for i from 1 to NJ do
-  if sigma(i) = 0 then # Drehgelenk
-    tau_J(i,1) := <0,0,1>.m_i_i(1..3,i+1):
-  else # Schubgelenk
-    tau_J(i,1) := <0,0,1>.f_i_i(1..3,i+1):
+for i from 2 to NL do # Schleife über Anzahl der Körper
+  if sigma(i-1) <> 2 then
+    if sigma(i-1) = 0 then # Drehgelenk
+      tau_J(i-1,1) := <0,0,1>.m_i_i(1..3,i):
+    else # Schubgelenk
+      tau_J(i-1,1) := <0,0,1>.f_i_i(1..3,i):
+    end if:
   end if:
 end do:
 # Unbekannten Kräfte und Momente zwischen den Teilkörpern bestimmen
@@ -159,7 +178,7 @@ tau_B [1..3,1]:= Transpose(Trf_c(1..3, 1..3, 1)).f_i_i(1..3,1) :
 tau_B [4..6,1]:= Transpose(T_basevel).Trf_c(1..3, 1..3, 1).m_i_i(1..3,1):
 
 tau[1..6,1]:= tau_B:
-tau[7..6+NJ,1]:= tau_J:
+tau[7..6+NQJ,1]:= tau_J:
 # Export
 f_i_i := convert_t_s(f_i_i):
 m_i_i := convert_t_s(m_i_i):
@@ -223,7 +242,7 @@ for i from 1 to 6 do
   tau := subs({VD_base_s[i,1]=var},tau):
 end do:
 # Maple Export
-save  f_i_i,m_i_i,tau_J, tau_B, tau,sprintf("../codeexport/%s/tmp/invdyn_%s_NewtonEuler_linkframe_maple.m", robot_name, base_method_name):
+save  f_i_i,m_i_i,tau_J, tau_B, tau,sprintf("../codeexport/%s/tmp/invdyn_%s_NewtonEuler_linkframe_par%d_maple.m", robot_name, base_method_name, codegen_dynpar):
 printf("Maple-Ausdrücke exportiert. %s\n", FormatTime("%Y-%m-%d %H:%M:%S")):
 # Matlab Export
 if codegen_act and codeexport_invdyn  then
@@ -233,4 +252,5 @@ if codegen_act and codeexport_invdyn  then
   MatlabExport(tau_B, sprintf("../codeexport/%s/tmp/invdyn_fixb_NewtonEuler_linkframe_tauB_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt):
   MatlabExport(tau, sprintf("../codeexport/%s/tmp/invdyn_fixb_NewtonEuler_linkframe_tauJB_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt):
 end if:
+
 # 

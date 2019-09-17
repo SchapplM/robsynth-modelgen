@@ -1,0 +1,10 @@
+
+%% Function calls and calculation
+tauOL = %RNOL%_matlabtmp_invdynJ_fixb_par1(qJ, qJD, qJDD, g, ...
+  pkin, m, rSges, Icges);
+  
+Phia = %RN%_kinconstr_impl_act_jacobian_mdh_sym_varpar(q, pkin);
+Phip = %RN%_kinconstr_impl_pas_jacobian_mdh_sym_varpar(q, pkin);
+W = -inv(Phip) * Phia;
+
+tau = W*tauOL;

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="2018" minor="0"/>
+<Version major="2017" minor="0"/>
 <Label-Scheme value="2" prefix=""/>
-<View-Properties presentation="true" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
+<View-Properties presentation="true" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="30" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1080" rtablesize="30" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -151,15 +151,16 @@ read &quot;../helper/proc_convert_t_s&quot;:</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L2244" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal">Definition und Zwangsbedingeun</Text-field>
+<Input><Text-field style="Text" layout="Normal">Definition und Zwangsbedingungen</Text-field>
 </Input>
 </Group>
 <Group view="code" hide-output="false" labelreference="L2099" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env_IC&quot;:</Text-field>
 </Input>
 </Group>
 <Group hide-output="false" labelreference="L1572" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_definitions&quot;, robot_name):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_definitions&quot;, robot_name_OL):
+read &quot;../robot_codegen_definitions/robot_env_IC&quot;:</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -167,7 +168,7 @@ read &quot;../helper/proc_convert_t_s&quot;:</Text-field>
 <Group hide-output="false" labelreference="L2194" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">kin_constraints_exist := false:</Text-field>
 </Input>
-</Group></Presentation-Block><Presentation-Block><CodeEditor-ExecGroup view="presentation" inline-output="false" labelreference="L2352" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">constrfile := sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_implicit_maple.m&quot;, robot_name):
+</Group></Presentation-Block><Presentation-Block><CodeEditor-ExecGroup view="presentation" inline-output="false" labelreference="L2352" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autoexpand="true" wrapping="true" show-border="true" code-line-numbers="true">constrfile := sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_implicit_maple.m&quot;, robot_name):
 if FileTools[Exists](constrfile) then
   read constrfile:
   implconstr_s := implconstr_s: # F\303\274r Sichtbarkeit der Variablen
@@ -225,6 +226,21 @@ Transpose(IndAct);
 <Font encoding="UTF-8">printf(&quot;Indizes der %d passiven Gelenke:\134n&quot;, </Font>NPJ);
 Transpose(IndPass);
 <Font encoding="UTF-8">printf(&quot;%d Zwangsbedingungsgleichungen\134n&quot;, </Font>NIZB);</Text-field>
+</Input>
+</Group></Presentation-Block>
+</Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Positionsvektor der Minimalkoordinaten zur Umrechnung OL zu TE/DE</Text-field></Title><Presentation-Block>
+<Group view="presentation" inline-output="false" labelreference="L2357" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Zum Vergleich des Ergebnisses aus den expliziten Zwangsbedingungen und den des offenen Systems</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" hide-input="false" labelreference="L2356" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">posNQJ := Matrix(NJ,1):
+for i from 1 to NJ do
+  if SearchText(&quot;qJ&quot;,convert(theta(i),string)) = 1 or SearchText(&quot;qJ&quot;,convert(d(i),string)) = 1 then
+    posNQJ(i) := 1:
+  end if:
+end do:</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -330,9 +346,13 @@ end do:</Text-field>
 save PhiaD_s, sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_explicit_active_jacobian_time_derivative_maple.m&quot;, robot_name):</Text-field>
 </Input>
 </Group>
-<Group view="code" labelreference="L2312" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group view="code" labelreference="L2359" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save Phip_s, sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_explicit_passive_jacobian_maple.m&quot;, robot_name):
 save PhipD_s, sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_explicit_passive_jacobian_time_derivative_maple.m&quot;, robot_name):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2312" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save posNQJ, IndAct, IndPass, sprintf(&quot;../codeexport/%s/tmp/positionVector_NQJ_maple.m&quot;, robot_name):</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L2021" drawlabel="true">
@@ -346,6 +366,7 @@ save PhipD_s, sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_explicit_
   MatlabExport(PhiaD_s, sprintf(&quot;../codeexport/%s/tmp/kinconstr_impl_active_jacobianD_matlab.m&quot;, robot_name), codegen_opt):
   MatlabExport(Phip_s, sprintf(&quot;../codeexport/%s/tmp/kinconstr_impl_passive_jacobian_matlab.m&quot;, robot_name), codegen_opt):
   MatlabExport(PhipD_s, sprintf(&quot;../codeexport/%s/tmp/kinconstr_impl_passive_jacobianD_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(posNQJ, sprintf(&quot;../codeexport/%s/tmp/positionVector_NQJ_matlab.m&quot;, robot_name), codegen_opt):
   <Font encoding="UTF-8">printf(&quot;Ausdr\303\274cke f\303\274r </Font>Kinematische ZB<Font encoding="UTF-8"> gespeichert (Matlab)\134n&quot;):</Font>
 end if:</Text-field>
 </Input>
@@ -479,6 +500,10 @@ end if:</Text-field>
 </Group>
 <Group view="code" labelreference="L2286" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="presentation" inline-output="false" labelreference="L3" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Equation executable="true" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYlLUkjbWlHRiQ2I1EhRicvJStleGVjdXRhYmxlR1EmZmFsc2VGJy8lLG1hdGh2YXJpYW50R1Enbm9ybWFsRic=">JSFH</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Worksheet>

@@ -21,6 +21,13 @@ source $repo_pfad/robot_codegen_definitions/robot_env.sh
 
 fcn_pfad=$repo_pfad/codeexport/$robot_name/matlabfcn
 
+blacklist_constraints="
+gravload
+inertia
+invdyn
+jacobi
+"
+
 # Alle Vorlagen an den Roboter anpassen und kopieren
 for f in $(find $template_pfad -name "*.template")
 do
@@ -32,6 +39,22 @@ do
   tmp="${filename/robot/$robot_name}"
   filename_new="${tmp/.template/}"
   
+  # Prüfe, ob die Datei für dieses System nicht generiert werden sollte:
+  # Für Systeme mit kinematischen Zwangsbedingungen funktionieren einige Ansätze der nicht
+  # (z.B. Inverse Dynamik mit Newton-Euler und Jacobi-Matrix mit geometrischer Berechnung).
+  if [ "$robot_kinconstr_exist" == "1" ] || [ "$robot_NQJ" != "$robot_NJ" ]; then
+    donotgenerate=0
+    for blstr in $blacklist_constraints; do
+      if [[ $f == *"$blstr"* ]]; then
+        donotgenerate=1
+        break
+      fi
+    done
+    if [ "$donotgenerate" == "1" ]; then
+      continue
+    fi
+  fi
+
   # Datei kopieren
   cp $dir/$filename $fcn_pfad/$filename_new
 

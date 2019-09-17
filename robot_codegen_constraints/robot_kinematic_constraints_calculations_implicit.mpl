@@ -1,12 +1,12 @@
 
-# Berechnungen fÃ¼r Systeme mit impliziten kinematischen Zwangsbedingungen
+# Berechnungen für Systeme mit impliziten kinematischen Zwangsbedingungen
 # Beschreibung
 # Allgemeine Berechnungen zu den impliziten Zwangsbedingungen
-# Die Bedingungen mÃ¼ssen vorher in einer Roboterspezifischen Datei berechnet werden (hÃ¤ndische Erstellung der kinematischen Schleifen und sonstigen Zwangsbedingungen
+# Die Bedingungen müssen vorher in einer Roboterspezifischen Datei berechnet werden (händische Erstellung der kinematischen Schleifen und sonstigen Zwangsbedingungen
 # 
 # Dateiname:
-# robot -> Berechnung fÃ¼r allgemeinen Roboter
-# kinematic_constraints_calculations_implicit -> Berechnungen bezÃ¼glich implizit definierter kinematischer Zwangsbedingungen
+# robot -> Berechnung für allgemeinen Roboter
+# kinematic_constraints_calculations_implicit -> Berechnungen bezüglich implizit definierter kinematischer Zwangsbedingungen
 # Quellen
 # [Docquier2013] Docquier, Nicolas and Poncelet, Antoine and Fisette, Paul: ROBOTRAN: a powerful symbolic gnerator of multibody models (2013)
 # [DoThanhKotHeiOrt2009b] Do Thanh et al.: On the inverse dynamics problem of general parallel robots (2009)
@@ -15,11 +15,11 @@
 # Moritz Schappler, schappler@imes.uni-hannover.de, 2018-02
 # Institut fuer Mechatronische Systeme, Leibniz Universitaet Hannover
 # Initialisierung
-interface(warnlevel=0): # UnterdrÃ¼cke die folgende Warnung.
-restart: # Gibt eine Warnung, wenn Ã¼ber Terminal-Maple mit read gestartet wird.
+interface(warnlevel=0): # Unterdrücke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
 interface(warnlevel=3):
 interface(rtablesize=30):
-with(StringTools): # FÃ¼r Zeitausgabe
+with(StringTools): # Für Zeitausgabe
 with(LinearAlgebra):
 with(codegen):
 with(CodeGeneration):
@@ -29,20 +29,21 @@ codegen_opt := 2: # Hoher Optimierungsgrad.
 read "../helper/proc_MatlabExport":
 read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s":
-with(RealDomain): # SchrÃ¤nkt alle Funktionen auf den reellen Bereich ein. Muss nach Definition von MatlabExport kommen. Sonst geht dieses nicht.
+with(RealDomain): # Schränkt alle Funktionen auf den reellen Bereich ein. Muss nach Definition von MatlabExport kommen. Sonst geht dieses nicht.
 ;
 read "../robot_codegen_constraints/proc_subs_kintmp_exp":
-# Definition und Zwangsbedingeun
-read "../robot_codegen_definitions/robot_env":
-read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
+# Definition und Zwangsbedingungen
+read "../robot_codegen_definitions/robot_env_IC":
+read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name_OL):
+read "../robot_codegen_definitions/robot_env_IC":
 # Lesen der Zwangsbedingungen
 kin_constraints_exist := false:
 constrfile := sprintf("../codeexport/%s/tmp/kinematic_constraints_implicit_maple.m", robot_name):
 if FileTools[Exists](constrfile) then
   read constrfile:
-  implconstr_s := implconstr_s: # FÃ¼r Sichtbarkeit der Variablen
-  implconstr_t := implconstr_t: # FÃ¼r Sichtbarkeit der Variablen
-  kin_constraints_exist := kin_constraints_exist: # FÃ¼r Sichtbarkeit der Variablen
+  implconstr_s := implconstr_s: # Für Sichtbarkeit der Variablen
+  implconstr_t := implconstr_t: # Für Sichtbarkeit der Variablen
+  kin_constraints_exist := kin_constraints_exist: # Für Sichtbarkeit der Variablen
 end if:
 
 if kin_constraints_exist = true then:
@@ -50,7 +51,7 @@ if kin_constraints_exist = true then:
 else
   printf("Es gibt keine impliziten Zwangsbedingungen. Offene Struktur oder nur explizit definierte Bedingungen. Keine weiteren Berechnungen notwendig."):
   restart: # Funktioniert nicht. Gedacht, damit im worksheet-Modus nichts mehr passieren kann.
-  robot_name := "": # Damit werden die Export-Befehle ungÃ¼ltig
+  robot_name := "": # Damit werden die Export-Befehle ungültig
   codegen_act := false:
   quit:
 end if:
@@ -78,7 +79,15 @@ Transpose(IndAct);
 printf("Indizes der %d passiven Gelenke:\n", NPJ);
 Transpose(IndPass);
 printf("%d Zwangsbedingungsgleichungen\n", NIZB);
-# Jacobi-Matrix der Impliziten Zwangsbedingungen in AbhÃ¤ngigkeit der unabhÃ¤ngigen Koordinaten
+# Positionsvektor der Minimalkoordinaten zur Umrechnung OL zu TE/DE
+# Zum Vergleich des Ergebnisses aus den expliziten Zwangsbedingungen und den des offenen Systems
+posNQJ := Matrix(NJ,1):
+for i from 1 to NJ do
+  if SearchText("qJ",convert(theta(i),string)) = 1 or SearchText("qJ",convert(d(i),string)) = 1 then
+    posNQJ(i) := 1:
+  end if:
+end do:
+# Jacobi-Matrix der Impliziten Zwangsbedingungen in Abhängigkeit der unabhängigen Koordinaten
 # 
 # Entspricht J1 in [Docquier2013], A in [ParkChoPlo1999]
 Phia_s := Matrix(NIZB, NAJ):
@@ -89,7 +98,7 @@ for i from 1 to NIZB do
     Phia_s(i,j) := diff(implconstr_s(i,1), qJ_s(k,1)):
   end do:
 end do:
-# Jacobi-Matrix der Impliziten Zwangsbedingungen in AbhÃ¤ngigkeit der abhÃ¤ngigen Koordinaten
+# Jacobi-Matrix der Impliziten Zwangsbedingungen in Abhängigkeit der abhängigen Koordinaten
 # 
 # Entspricht J2 in [Docquier2013], P in [ParkChoPlo1999]
 Phip_s := Matrix(NIZB, NPJ):
@@ -101,7 +110,7 @@ for i from 1 to NIZB do
   end do:
 end do:
 # Zeitableitung der Jacobi-Matrix
-# Wird benÃ¶tigt, um die Beschleunigung der Gelenkkoordinaten der offenen Struktur zu berechnen.
+# Wird benötigt, um die Beschleunigung der Gelenkkoordinaten der offenen Struktur zu berechnen.
 Phia_t := convert_s_t(Phia_s):
 PhiaD_t := diff~(Phia_t, t):
 PhiaD_s := convert_t_s(PhiaD_t):
@@ -110,24 +119,26 @@ Phip_t := convert_s_t(Phip_s):
 PhipD_t := diff~(Phip_t, t):
 PhipD_s := convert_t_s(PhipD_t):
 
-# Exportiere Code fÃ¼r folgende Skripte
+# Exportiere Code für folgende Skripte
 # Speichere Maple-Ausdruck (Eingabe-Format und internes Format)
 save Phia_s, sprintf("../codeexport/%s/tmp/kinematic_constraints_explicit_active_jacobian_maple.m", robot_name):
 save PhiaD_s, sprintf("../codeexport/%s/tmp/kinematic_constraints_explicit_active_jacobian_time_derivative_maple.m", robot_name):
 save Phip_s, sprintf("../codeexport/%s/tmp/kinematic_constraints_explicit_passive_jacobian_maple.m", robot_name):
 save PhipD_s, sprintf("../codeexport/%s/tmp/kinematic_constraints_explicit_passive_jacobian_time_derivative_maple.m", robot_name):
-printf("AusdrÃ¼cke fÃ¼r Kinematische ZB gespeichert (Maple)\n"):
+save posNQJ, IndAct, IndPass, sprintf("../codeexport/%s/tmp/positionVector_NQJ_maple.m", robot_name):
+printf("Ausdrücke für Kinematische ZB gespeichert (Maple)\n"):
 if codegen_act then
   MatlabExport(implconstr_s, sprintf("../codeexport/%s/tmp/kinconstr_impl_matlab.m", robot_name), codegen_opt):
   MatlabExport(Phia_s, sprintf("../codeexport/%s/tmp/kinconstr_impl_active_jacobian_matlab.m", robot_name), codegen_opt):
   MatlabExport(PhiaD_s, sprintf("../codeexport/%s/tmp/kinconstr_impl_active_jacobianD_matlab.m", robot_name), codegen_opt):
   MatlabExport(Phip_s, sprintf("../codeexport/%s/tmp/kinconstr_impl_passive_jacobian_matlab.m", robot_name), codegen_opt):
   MatlabExport(PhipD_s, sprintf("../codeexport/%s/tmp/kinconstr_impl_passive_jacobianD_matlab.m", robot_name), codegen_opt):
-  printf("AusdrÃ¼cke fÃ¼r Kinematische ZB gespeichert (Matlab)\n"):
+  MatlabExport(posNQJ, sprintf("../codeexport/%s/tmp/positionVector_NQJ_matlab.m", robot_name), codegen_opt):
+  printf("Ausdrücke für Kinematische ZB gespeichert (Matlab)\n"):
 end if:
 
 # Invertierung der Gradientenmatrix
-# Invertiere die Gradientenmatrix bezÃ¼glich der passiven Gelenke
+# Invertiere die Gradientenmatrix bezüglich der passiven Gelenke
 n1 := RowDimension(Phip_s):
 n2 := ColumnDimension(Phip_s):
 # Erstelle Matrix ppf mit der Form der Gradientmatrix Phip_s
@@ -139,7 +150,7 @@ for i from 1 to n1 do
     end if:
   end do:
 end do:
-# Invertiere die allgemeine Form der Matrix und setze dann die EintrÃ¤ge ein.
+# Invertiere die allgemeine Form der Matrix und setze dann die Einträge ein.
 InvPhip_sf := MatrixInverse(ppf):
 InvPhip_s := InvPhip_sf:
 for i from 1 to n1 do
@@ -173,4 +184,5 @@ if codegen_act then
 end if:
 
 printf("Fertig\n"):
+
 

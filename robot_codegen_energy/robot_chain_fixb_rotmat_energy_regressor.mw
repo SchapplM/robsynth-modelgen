@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="2018" minor="0"/>
+<Version major="2017" minor="0"/>
 <Label-Scheme value="2" prefix=""/>
-<View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
+<View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1080" rtablesize="100" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -156,6 +156,8 @@ read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:
 <Font encoding="UTF-8">printf(&quot;Generiere Minimalparameterregressor der Energie f\303\274r %s\134n&quot;, robot_name, codegen_dynpar):</Font></Text-field>
 </Input>
+<Output><Text-field style="Line Printed Output" layout="Line Printed Output"><Font encoding="UTF-8">Generiere Minimalparameterregressor der Energie f\303\274r fourbar1TE</Font></Text-field>
+</Output>
 </Group>
 <Group hide-output="false" labelreference="L1803" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_definitions&quot;, robot_name, base_method_name):</Text-field>
@@ -175,7 +177,7 @@ U_floatb := U_grav:</Text-field>
 <Group hide-output="false" labelreference="L1783" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal">Einfluss der Basis-Geschwindigkeit und -Position entfernen</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L2" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion10" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">T_fixb:=T_floatb:
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L2" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion10" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">T_fixb:=T_floatb:
 U_fixb:=U_floatb:
 for i from 1 to 6 do
   T_fixb := subs({V_base_t[i,1]=0},T_fixb):
@@ -194,10 +196,10 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 </Group>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2">Linearisierung</Text-field></Title>
 <Group hide-output="false" labelreference="L1656" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">t_ges := Matrix(1, 10*NJ):
-u_ges := Matrix(1, 10*NJ):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">t_ges := Matrix(1, 10*(NL-1)):
+u_ges := Matrix(1, 10*(NL-1)):</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L4" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion11" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">for i to 10*NJ do 
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L4" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion11" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">for i to 10*(NL-1) do 
   t_ges[1,i] := diff(T_fixb,PV2_vec[10+i,1]);
   u_ges[1,i] := diff(U_fixb,PV2_vec[10+i,1]);
 end do:</EC-CodeEditor></CodeEditor-ExecGroup>
@@ -213,12 +215,16 @@ save u_ges, sprintf(&quot;../codeexport/%s/tmp/energy_potential_fixb_regressor_m
   MatlabExport(convert_t_s(t_ges), sprintf(&quot;../codeexport/%s/tmp/energy_kinetic_fixb_regressor_matlab.m&quot;, robot_name), codegen_opt):
 end if:</Text-field>
 </Input>
+<Output><Text-field style="Line Printed Output" layout="Line Printed Output">Exported Matlab code to ../codeexport/fourbar1TE/tmp/energy_kinetic_fixb_regressor_matlab.m (CPUTime: 0.78s)</Text-field>
+</Output>
 </Group>
 <Group hide-output="false" labelreference="L1806" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
   MatlabExport(convert_t_s(u_ges), sprintf(&quot;../codeexport/%s/tmp/energy_potential_fixb_regressor_matlab.m&quot;, robot_name), codegen_opt):
 end if:</Text-field>
 </Input>
+<Output><Text-field style="Line Printed Output" layout="Line Printed Output">Exported Matlab code to ../codeexport/fourbar1TE/tmp/energy_potential_fixb_regressor_matlab.m (CPUTime: 0.19s)</Text-field>
+</Output>
 </Group>
 </Section>
 </Section>
@@ -228,7 +234,7 @@ end if:</Text-field>
 <Group hide-output="false" labelreference="L1842" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">Nehme nur die Inertialparameter der bewegten Segmente, nicht die Basis.</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L6" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion9" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">XX := Matrix(NJ, 1, PV2_mat[2 .. NL, 1]):
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L6" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion9" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">XX := Matrix(NJ, 1, PV2_mat[2 .. NL, 1]):
 XY := Matrix(NJ, 1, PV2_mat[2 .. NL, 2]):
 XZ := Matrix(NJ, 1, PV2_mat[2 .. NL, 3]):
 YY := Matrix(NJ, 1, PV2_mat[2 .. NL, 4]):
@@ -244,7 +250,7 @@ m :=  Matrix(NJ, 1, PV2_mat[2 .. NL, 10]):</EC-CodeEditor></CodeEditor-ExecGroup
 <Input><Text-field style="Text" layout="Normal">Rekursive Berechnung der Minimalparameter mit [HRL_IDR] (23), siehe Abbildung 1.
 [GautierKhalil1990] (eq. 15,16)</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L8" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="1494" pixel-height="1062" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">for i from NJ by -1 to 2 do
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L8" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="1508" pixel-height="1244" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">for i from NJ by -1 to 2 do
   # printf(&quot;i=%d, sigma=%d\134n&quot;, i, sigma[i,1]): 
   if sigma[i,1] = 0 then # Drehgelenk (eq. 15)
     XX[i,  1] := XX[i,  1]-YY[i,1]:
@@ -313,7 +319,7 @@ end do: </EC-CodeEditor>
 <Group hide-output="false" labelreference="L1692" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal">Markierung von Parametern ohne Einfluss an Hand von [HRL_IDR] (18)</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L10" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="972" pixel-height="594" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">printf(&quot;The following parameters don't have any effect:\134n&quot;):
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L10" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="972" pixel-height="594" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">printf(&quot;The following parameters don't have any effect:\134n&quot;):
 
 for i to 10*NJ do 
   effect := 0:
@@ -344,7 +350,49 @@ for i to 10*NJ do
        if `mod`(i, 10) = 9 then mZ[trunc((1/10)*i)+1, 1] := 0; printf(&quot;MZ%d \134n&quot;, trunc((1/10)*i)+1): end if:
        if `mod`(i, 10) = 0 then m[trunc((1/10)*i), 1] := 0;    printf(&quot; M%d \134n&quot;, trunc((1/10)*i)):   end if:
   end if:
-end do:</EC-CodeEditor></CodeEditor-ExecGroup>
+end do:</EC-CodeEditor>
+<Output><Text-field style="Line Printed Output" layout="Line Printed Output">The following parameters don't have any effect:
+XX1 
+XY1 
+XZ1 
+YY1 
+YZ1 
+MZ1 
+ M1 
+XX2 
+XY2 
+XZ2 
+YY2 
+YZ2 
+MZ2 
+XX3 
+XY3 
+XZ3 
+YY3 
+YZ3 
+MZ3 
+ M3 
+XX4 
+XY4 
+XZ4 
+YY4 
+YZ4 
+ZZ4 
+MX4 
+MY4 
+MZ4 
+ M4 
+XX5 
+XY5 
+XZ5 
+YY5 
+YZ5 
+ZZ5 
+MX5 
+MY5 
+MZ5 
+ M5 </Text-field>
+</Output></CodeEditor-ExecGroup>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 3" layout="Heading 3">Parametervektor in Richtiger Reihenfolge aufstellen und Entfernen von mZ, YY, m</Text-field></Title>
 <Group hide-output="false" labelreference="L1695" drawlabel="true">
@@ -362,7 +410,7 @@ nr:=NJ-nt: # Anzahl rotatorische Gelenke</Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">#Anzahl der Eintr\303\244ge im Minimalparametervektor
 </Font>MPV_n_max := 7*nr+4*nt:<Font encoding="UTF-8"> # ignoriere Abz\303\274ge in der Formel</Font></Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L12" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion2" expanded="true" visible="true" pixel-width="1179" pixel-height="378" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">Paramvec := Matrix(MPV_n_max, 1):
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L12" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion2" expanded="true" visible="true" pixel-width="1179" pixel-height="378" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">Paramvec := Matrix(MPV_n_max, 1):
 ii := 1:
 for i to NJ do
   if sigma[i,1] = 0 then # Drehgelenk (eq. 15)
@@ -388,18 +436,20 @@ for i to NJ do
     Paramvec[ii, 1] := mZ[i, 1]: ii:= ii+1:
     Paramvec[ii, 1] := m[i, 1]:  ii:= ii+1:
   end if:
-end do:</EC-CodeEditor></CodeEditor-ExecGroup>
+end do:</EC-CodeEditor>
+<Output><Text-field style="HyperlinkError" layout="HyperlinkError"><Hyperlink linktarget="http://www.maplesoft.com/support/help/errors/view.aspx?path=Error,%20Matrix%20index%20out%20of%20range" hyperlink="true"><Font style="HyperlinkError">Error, Matrix index out of range</Font></Hyperlink></Text-field>
+</Output></CodeEditor-ExecGroup>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 3" layout="Heading 3">Entfernung von Nullelementen</Text-field></Title>
 <Group labelreference="L1763" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal">Durch Entfernung der Nullelemente erfolgt 'beta_b' aus [HRL_IDR] (22)</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L14" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion7" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">p := 0:
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L14" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion7" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">p := 0:
 for i to MPV_n_max do 
   if Paramvec[i, 1] = 0 then 
     p := p+1 
   end if:
-end do:</EC-CodeEditor></CodeEditor-ExecGroup><CodeEditor-ExecGroup view="presentation" hide-input="false" labelreference="L16" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion8" expanded="true" visible="true" pixel-width="639" pixel-height="288" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true"># Determine size of matrix dependent on number of Zeroes
+end do:</EC-CodeEditor></CodeEditor-ExecGroup><CodeEditor-ExecGroup view="presentation" hide-input="false" labelreference="L16" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion8" expanded="true" visible="true" pixel-width="639" pixel-height="288" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true"># Determine size of matrix dependent on number of Zeroes
 Paramvec_size := MPV_n_max-p:
 Paramvec2 := Matrix(Paramvec_size, 1):
 p := 0:
@@ -413,7 +463,11 @@ for i to MPV_n_max do
   end if:
 end do: 
 printf(&quot;Dimension des Minimalparametervektors: %dx1\134n&quot;, Paramvec_size):
-Paramvec2;</EC-CodeEditor></CodeEditor-ExecGroup>
+Paramvec2;</EC-CodeEditor>
+<Output><Text-field style="Line Printed Output" layout="Line Printed Output">Dimension des Minimalparametervektors: 9x1</Text-field>
+</Output>
+<Output><Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUkobWZlbmNlZEc2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYoLUknbXRhYmxlR0YkNj0tSSRtdHJHRiQ2Ji1JJG10ZEdGJDYoLUklbXJvd0dGJDYmLUkjbWlHRiQ2JVEkWloxRicvJSdpdGFsaWNHUSV0cnVlRicvJSxtYXRodmFyaWFudEdRJ2l0YWxpY0YnLUkjbW9HRiQ2LVEnJnBsdXM7RicvRj9RJ25vcm1hbEYnLyUmZmVuY2VHUSZmYWxzZUYnLyUqc2VwYXJhdG9yR0ZJLyUpc3RyZXRjaHlHRkkvJSpzeW1tZXRyaWNHRkkvJShsYXJnZW9wR0ZJLyUubW92YWJsZWxpbWl0c0dGSS8lJ2FjY2VudEdGSS8lJ2xzcGFjZUdRLDAuMjIyMjIyMmVtRicvJSdyc3BhY2VHRlgtRjU2Ji1JJW1zdXBHRiQ2JS1GODYlUSNsMkYnRjtGPi1JI21uR0YkNiRRIjJGJ0ZFLyUxc3VwZXJzY3JpcHRzaGlmdEdRIjBGJy1GQjYtUTEmSW52aXNpYmxlVGltZXM7RidGRUZHRkpGTEZORlBGUkZUL0ZXUSYwLjBlbUYnL0ZaRmhvLUYjNiQtRjU2Ji1GODYlUSNNMkYnRjtGPkZBLUY4NiVRI00zRidGO0Y+RkVGRUZFRkUvJSlyb3dhbGlnbkdRIUYnLyUsY29sdW1uYWxpZ25HRmZwLyUrZ3JvdXBhbGlnbkdGZnAvJShyb3dzcGFuR1EiMUYnLyUrY29sdW1uc3BhbkdGXXFGZHBGZ3BGaXAtRi82Ji1GMjYoLUY1NiYtRjU2JkZqbkZkb0Zqb0ZFRkEtRjg2JVEkTVgxRidGO0Y+RkVGZHBGZ3BGaXBGW3FGXnFGZHBGZ3BGaXAtRi82Ji1GMjYoLUY4NiVRJE1ZMUYnRjtGPkZkcEZncEZpcEZbcUZecUZkcEZncEZpcC1GLzYmLUYyNigtRjU2Ji1GNTYmLUZobjYlLUY4NiVRI2wxRidGO0Y+Rl1vRmFvRmRvRmFwRkVGQS1GODYlUSRaWjJGJ0Y7Rj5GRUZkcEZncEZpcEZbcUZecUZkcEZncEZpcC1GLzYmLUYyNigtRjU2Ji1GNTYmRmFwRmRvRlxzRkVGQS1GODYlUSRNWDJGJ0Y7Rj5GRUZkcEZncEZpcEZbcUZecUZkcEZncEZpcC1GLzYmLUYyNigtRjg2JVEkTVkyRidGO0Y+RmRwRmdwRmlwRltxRl5xRmRwRmdwRmlwLUYvNiYtRjI2KC1GODYlUSRaWjNGJ0Y7Rj5GZHBGZ3BGaXBGW3FGXnFGZHBGZ3BGaXAtRi82Ji1GMjYoLUY4NiVRJE1YM0YnRjtGPkZkcEZncEZpcEZbcUZecUZkcEZncEZpcC1GLzYmLUYyNigtRjg2JVEkTVkzRidGO0Y+RmRwRmdwRmlwRltxRl5xRmRwRmdwRmlwLyUmYWxpZ25HUSVheGlzRicvRmVwUSliYXNlbGluZUYnL0ZocFEnY2VudGVyRicvRmpwUSd8ZnJsZWZ0fGhyRicvJS9hbGlnbm1lbnRzY29wZUdGPS8lLGNvbHVtbndpZHRoR1ElYXV0b0YnLyUmd2lkdGhHRmZ2LyUrcm93c3BhY2luZ0dRJjEuMGV4RicvJS5jb2x1bW5zcGFjaW5nR1EmMC44ZW1GJy8lKXJvd2xpbmVzR1Elbm9uZUYnLyUsY29sdW1ubGluZXNHRmF3LyUmZnJhbWVHRmF3LyUtZnJhbWVzcGFjaW5nR1EsMC40ZW1+MC41ZXhGJy8lKmVxdWFscm93c0dGSS8lLWVxdWFsY29sdW1uc0dGSS8lLWRpc3BsYXlzdHlsZUdGSS8lJXNpZGVHUSZyaWdodEYnLyUwbWlubGFiZWxzcGFjaW5nR0Zed0ZFL0krbXNlbWFudGljc0dGJFEnTWF0cml4RicvJSVvcGVuR1EnJmxzcWI7RicvJSZjbG9zZUdRJyZyc3FiO0YnRmR4">LV9JLFR5cGVzZXR0aW5nRzYkJSpwcm90ZWN0ZWRHSShfc3lzbGliRzYiSSxtcHJpbnRzbGFzaEdGKDYkNyNYLEkpYW55dGhpbmdHRiZGKEYoW2dsISIlISEhIyoiKiIiLCZJJFpaMUdGKCIiIiomSSNsMkdGKCIiIywmSSNNMkdGKEYwSSNNM0dGKEYwRjBGMCwmKiZGMkYwRjRGMEYwSSRNWDFHRihGMEkkTVkxR0YoLCYqJkY2RjBJI2wxR0YoRjNGMEkkWloyR0YoRjAsJiomRjZGMEY9RjBGMEkkTVgyR0YoRjBJJE1ZMkdGKEkkWlozR0YoSSRNWDNHRihJJE1ZM0dGKDcjLUknTWF0cml4R0YlNiMvSSQlaWRHRigiNSlSLj1rdGN1WSU9</Equation></Text-field>
+</Output></CodeEditor-ExecGroup>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 3" layout="Heading 3">Export - Minimalparametervektor</Text-field></Title>
 <Group hide-output="false" labelreference="L1799" drawlabel="true">
@@ -425,6 +479,8 @@ Paramvec2;</EC-CodeEditor></CodeEditor-ExecGroup>
    MatlabExport(Paramvec2, sprintf(&quot;../codeexport/%s/tmp/minimal_parameter_vector_fixb_matlab.m&quot;, robot_name), codegen_opt):
 end if;</Text-field>
 </Input>
+<Output><Text-field style="Line Printed Output" layout="Line Printed Output">Exported Matlab code to ../codeexport/fourbar1TE/tmp/minimal_parameter_vector_fixb_matlab.m (CPUTime: 0.05s)</Text-field>
+</Output>
 </Group>
 </Section>
 </Section>
@@ -435,7 +491,7 @@ end if;</Text-field>
 <Font encoding="UTF-8">Der Basis-K\303\266rper wird nicht gez\303\244hlt. Daher ignorieren der ersten zehn Eintr\303\244ge in </Font>t_ges
 [GautierKhalil1990], p.369 (rechts: &quot;As a conclusion ...&quot;</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L18" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion3" expanded="true" visible="true" pixel-width="1179" pixel-height="558" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">for i from 0 to NJ-1 do 
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L18" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion3" expanded="true" visible="true" pixel-width="1179" pixel-height="558" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">for i from 0 to NJ-1 do 
   if sigma[i+1,1] = 0 then: # Drehgelenk
     t_ges[1,i*10+ 4]:=REMOVE; # YY
     t_ges[1,i*10+ 9]:=REMOVE; # mZ
@@ -475,17 +531,19 @@ end do: </EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L1764" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Durch Entfernung der markierten Elemente, \303\244quivalent zum Minimalparametervektor beta_b, haben t und u die gleiche Spaltenanzahl wie 'C_b'.</Font></Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L20" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion4" expanded="true" visible="true" pixel-width="837" pixel-height="200" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">p:=0:
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L20" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion4" expanded="true" visible="true" pixel-width="837" pixel-height="200" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">p:=0:
 for i from 1 to 10*NJ do       #Nullen Z\303\244hlen um die Matrixgr\303\266\303\237e von t_ges zu bestimmen   
   if t_ges[1,i]=REMOVE and u_ges[1,i]=REMOVE then       
     p:=p+1;
   end if
 end do: 
-</EC-CodeEditor></CodeEditor-ExecGroup><CodeEditor-ExecGroup view="presentation" labelreference="L22" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion5" expanded="true" visible="true" pixel-width="549" pixel-height="200" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">size_Matrix:=10*NJ-p: 
+</EC-CodeEditor></CodeEditor-ExecGroup><CodeEditor-ExecGroup view="presentation" labelreference="L22" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion5" expanded="true" visible="true" pixel-width="549" pixel-height="200" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">size_Matrix:=10*NJ-p: 
 t_ges_minpar:=Matrix(1,size_Matrix):
 u_ges_minpar:=Matrix(1,size_Matrix):
 printf(&quot;Dimension der Regressormatrix: 1x%d\134n&quot;, size_Matrix):
-</EC-CodeEditor></CodeEditor-ExecGroup><CodeEditor-ExecGroup view="presentation" labelreference="L24" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion6" expanded="true" visible="true" pixel-width="972" pixel-height="200" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">p:=0:
+</EC-CodeEditor>
+<Output><Text-field style="Line Printed Output" layout="Line Printed Output">Dimension der Regressormatrix: 1x9</Text-field>
+</Output></CodeEditor-ExecGroup><CodeEditor-ExecGroup view="presentation" labelreference="L24" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion6" expanded="true" visible="true" pixel-width="972" pixel-height="200" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">p:=0:
 for i from 1 to 10*NJ do       #Nullen Z\303\244hlen     
    if t_ges[1,i]=REMOVE and u_ges[1,i]=REMOVE then       
       p:=p+1; 
@@ -507,12 +565,16 @@ save u_ges_minpar, sprintf(&quot;../codeexport/%s/tmp/energy_potential_fixb_regr
   MatlabExport(convert_t_s(t_ges_minpar), sprintf(&quot;../codeexport/%s/tmp/energy_kinetic_fixb_regressor_minpar_matlab.m&quot;, robot_name), codegen_opt):
 end if:</Text-field>
 </Input>
+<Output><Text-field style="Line Printed Output" layout="Line Printed Output">Exported Matlab code to ../codeexport/fourbar1TE/tmp/energy_kinetic_fixb_regressor_minpar_matlab.m (CPUTime: 0.80s)</Text-field>
+</Output>
 </Group>
 <Group labelreference="L1800" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
   MatlabExport(convert_t_s(u_ges_minpar), sprintf(&quot;../codeexport/%s/tmp/energy_potential_fixb_regressor_minpar_matlab.m&quot;, robot_name), codegen_opt):
 end if:</Text-field>
 </Input>
+<Output><Text-field style="Line Printed Output" layout="Line Printed Output">Exported Matlab code to ../codeexport/fourbar1TE/tmp/energy_potential_fixb_regressor_minpar_matlab.m (CPUTime: 0.19s)</Text-field>
+</Output>
 </Group>
 <Group labelreference="L1843" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>

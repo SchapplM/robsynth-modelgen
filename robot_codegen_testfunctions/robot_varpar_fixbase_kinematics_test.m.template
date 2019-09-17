@@ -235,8 +235,10 @@ for iq = 1:size(Q, 1) % Über Zufallsposen
 
     % Vergleiche die auf zwei Wegen berechnete geometrische Jacobi-Matrix
     Diff = Jg_rot_test - Jg_rot;
-    if any(abs(Diff(:)) > 1e-10)
-      error('Geometrische und Analytische Jacobi-Matrizen stimmen nicht überein (Körper %d)', jb);
+    Diff_rel = Jg_rot_test./ Jg_rot - 1; % prüfe auch relativen Fehler, da bei komplizierten Systemen höhere Toleranzen auftreten
+    if any(abs(Diff(:)) > 1e-10 & abs(Diff_rel(:)) > 5e-2)
+      error('Geometrische und analytische Jacobi-Matrizen stimmen nicht überein (Körper %d). Fehler: abs. %e, rel. %e', ...
+        jb, max(abs(Diff(:))), max(abs(Diff_rel(:))));
     end
     
     % Berechne Zeitableitung der analytischen und geometrischen

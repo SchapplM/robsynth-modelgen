@@ -21,9 +21,11 @@ robot_name = '%RN%';
 
 % Prüfe, ob kinematische Zwangsbedingungen vorliegen.
 % Dann entfallen alle folgenden Tests (noch nicht implementiert)
+thrfac = 1; % Faktor zur Erhöhung der Schwellwerte für Fehlererkennung
 if NJ ~= NQJ
   KINCONSTR = true;
-  fprintf('Tests entfallen aufgrund der Existenz kinematischer Zwangsbedingungen\n');
+  fprintf('Einige Tests entfallen aufgrund der Existenz kinematischer Zwangsbedingungen\n');
+  thrfac = 10; % bei ZB sind treten mehr Rechenfehler auf (da aufwändiger)
 else
   KINCONSTR = false;
 end
@@ -35,7 +37,7 @@ for f = fields(TSS)'
 end
 
 if any(diff(TSS.v) ~= 1)
-  fprintf('Tests entfallen aufgrund der Baumstruktur (noch nicht implementiert)\n');
+  fprintf('Einige Tests entfallen aufgrund der Baumstruktur (noch nicht implementiert)\n');
   TREE = 1;
 else
   TREE = 0;
@@ -47,8 +49,8 @@ if ~KINCONSTR && ~TREE
 end
 
 % Vektor mit Inertialparametern
-PV2fixb = NaN(10*NJ,1);
-for i = 1:NJ
+PV2fixb = NaN(10*(NL-1),1);
+for i = 1:(NL-1)
   % different order:
   % Ifges_num_mdh: XX,YY,ZZ,XY,XZ,YZ
   % PV2: XX,XY,XZ,YY,YZ,ZZ
@@ -57,7 +59,7 @@ for i = 1:NJ
   PV2fixb(10*i) = m(i+1);
 end
 
-% Vektor mit Inertialparametern mit Basisparametern
+% Vektor der Inertialparametern mit Dynamikparametern der Basis (für Newton-Euler-Dynamik)
 PV2fixbBase = NaN(10*NL,1);
 for i = 1:NL
   % different order:
@@ -96,14 +98,16 @@ for i = 1:n
     t_regmin = %RN%_energykin_fixb_regmin_slag_vp(q, qD, ...
       pkin);
     T_mpv = t_regmin*MPV;
-    if abs(T_mpv-T_func) > 1e6*eps(max(abs([T_mpv;T_func])))
+    if abs(T_mpv-T_func) > thrfac*1e6*eps(max(abs([T_mpv;T_func])))
       error('Kinetic Energy from base parameter vector does not match with direct form.');
     end
   end
   t_reg2 = %RN%_energykin_fixb_reg2_slag_vp(q, qD, ...
     pkin);
   T_pv2 = t_reg2*PV2fixb;
-  if abs(T_pv2-T_func) > 1e6*eps(max(abs([T_pv2;T_func])))
+  delta_abs = T_pv2-T_func;
+  delta_rel = delta_abs/T_func;
+  if abs(delta_abs) > thrfac*1e6*eps(max(abs([T_pv2;T_func]))) && delta_rel > 1e-5
     error('Kinetic Energy from inertial parameter vector does not match with direct form.');
   end
 end
@@ -129,7 +133,7 @@ for i = 1:n
       pkin);
     U_mpv = u_regmin*MPV;
     U_mpv0 = u_regmin0*MPV;
-    if abs((U_mpv-U_mpv0)-(U_func-U_func0)) > 1e6*eps(max(abs([U_mpv;U_mpv0;U_func;U_func0])))
+    if abs((U_mpv-U_mpv0)-(U_func-U_func0)) > thrfac*1e6*eps(max(abs([U_mpv;U_mpv0;U_func;U_func0])))
       error('Potential Energy from base parameter vector does not match with direct form.');
     end
   end
@@ -141,7 +145,7 @@ for i = 1:n
     pkin);
   U_pv2 = u_reg2*PV2fixb;
   U_pv20 = u_reg20*PV2fixb;
-  if abs((U_pv2-U_pv20)-(U_func-U_func0)) > 1e6*eps(max(abs([U_pv2;U_pv20;U_func;U_func0])))
+  if abs((U_pv2-U_pv20)-(U_func-U_func0)) > thrfac*1e6*eps(max(abs([U_pv2;U_pv20;U_func;U_func0])))
     error('Potential Energy from inertial parameter vector does not match with direct form.');
   end
 end
@@ -160,7 +164,7 @@ for i = 1:n
     taug_regmin = %RN%_gravloadJ_regmin_slag_vp(q, g_base, ...
       pkin);
     taug_mpv = taug_regmin*MPV;
-    if any( abs(taug_mpv-taug_func) > 1e6*eps(max(abs(taug_func))) )
+    if any( abs(taug_mpv-taug_func) > thrfac*1e6*eps(max(abs(taug_func))) )
       error('Gravitation joint torque from base parameter vector does not match with direct form.');
     end
   end
@@ -168,7 +172,9 @@ for i = 1:n
   taug_reg2 = %RN%_gravloadJ_reg2_slag_vp(q, g_base, ...
     pkin);
   taug_pv2 = taug_reg2*PV2fixb;
-  if any (abs(taug_pv2-taug_func) > 1e6*eps(max(abs(taug_func))) )
+  delta_abs = taug_pv2-taug_func;
+  delta_rel = delta_abs ./ taug_func;
+  if any (abs(delta_abs) > thrfac*1e6*eps(max(abs(taug_func))) & delta_rel > 1e-4 )
     error('Gravitation joint torque from inertial parameter vector does not match with direct form.');
   end
 end
@@ -179,7 +185,7 @@ fprintf('Tested gravitation joint torque for %d random joint angles for %s\n', .
 for i = 1:n
   q = Q(i,:)';
   qD = QD(i,:)';
-  tauc_func = %RN%_coriolisvecJ_fixb_slag_vp1(q, qD, ...
+  tauc_func = %RN%_coriolisvecJ_fixb_slag_vp1(q, qD, ...NEW
     pkin, m, rSges, Icges);
   % calculate coriolis torques with optimized function
   if ~KINCONSTR && ~TREE
@@ -187,7 +193,7 @@ for i = 1:n
     tauc_regmin = %RN%_coriolisvecJ_fixb_regmin_slag_vp(q, qD, ...
       pkin);
     tauc_mpv = tauc_regmin*MPV;
-    if any (abs(tauc_mpv-tauc_func) > 1e6*eps(1+max(abs([tauc_mpv;tauc_func]))))
+    if any (abs(tauc_mpv-tauc_func) > thrfac*1e6*eps(1+max(abs([tauc_mpv;tauc_func]))))
       error('Coriolis joint torque from base parameter vector does not match with direct form.');
     end
   end
@@ -195,7 +201,9 @@ for i = 1:n
   tauc_reg2 = %RN%_coriolisvecJ_fixb_reg2_slag_vp(q, qD, ...
     pkin);
   tauc_pv2 = tauc_reg2*PV2fixb;
-  if any( abs(tauc_pv2-tauc_func) > 1e6*eps(1+max(abs([tauc_pv2;tauc_func]))) )
+  delta_abs = tauc_pv2-tauc_func;
+  delta_rel = delta_abs ./ max(abs(tauc_func));
+  if any( abs(delta_abs) > thrfac*1e6*eps(1+max(abs([tauc_pv2;tauc_func]))) & delta_rel > thrfac*5e-3)
     error('Coriolis joint torque from inertial parameter vector does not match with direct form.');
   end
 end
@@ -215,7 +223,7 @@ for i = 1:n
       pkin);
     Cq_mpv_vec = Cq_regmin*MPV;
     Cq_mpv = reshape(Cq_mpv_vec, NQJ, NQJ)';
-    if any( abs(Cq_func(:)-Cq_mpv(:)) > 1e6*eps(max(abs(Cq_func(:)))) )
+    if any( abs(Cq_func(:)-Cq_mpv(:)) > thrfac*1e6*eps(max(abs(Cq_func(:)))) )
       error('Coriolis matrix from base parameter vector does not match with direct form.');
     end
   end
@@ -224,7 +232,9 @@ for i = 1:n
     pkin);
   Cq_pv2_vec = Cq_reg2*PV2fixb;
   Cq_pv2 = reshape(Cq_pv2_vec, NQJ, NQJ)';
-  if any( abs(Cq_func(:)-Cq_pv2(:)) > 1e6*eps(max(abs(Cq_func(:)))) )
+  delta_abs = Cq_func(:)-Cq_pv2(:);
+  delta_rel = delta_abs ./ Cq_func(:);
+  if any( abs(delta_abs) > thrfac*1e6*eps(1+max(abs(Cq_func(:)))) & delta_rel > 5e-5)
     error('Coriolis matrix from inertial parameter vector does not match with direct form.');
   end
 end
@@ -234,15 +244,14 @@ fprintf('Tested Coriolis matrix for %d random joint angles for %s\n', ...
 %% Teste Massenmatrix
 for i = 1:n
   q = Q(i,:)';
-  Mq_func = %RN%_inertiaJ_slag_vp1(q, ...
-    pkin, m, rSges, Icges);
+  Mq_func = %RN%_inertiaJ_slag_vp1(q, pkin, m, rSges, Icges);
   % calculate inertia with optimized function
   if ~KINCONSTR && ~TREE
     % calculate inertia with base parameter regressor
     Mq_regmin = %RN%_inertiaJ_regmin_slag_vp(q, pkin);
     Mq_mpv_vec = Mq_regmin*MPV;
     Mq_mpv = vec2symmat(Mq_mpv_vec);
-    if any( abs(Mq_func(:)-Mq_mpv(:)) > 1e6*eps(max(abs(Mq_func(:)))) )
+    if any( abs(Mq_func(:)-Mq_mpv(:)) > thrfac*1e6*eps(max(abs(Mq_func(:)))) )
       error('Joint inertia matrix from base parameter vector does not match with direct form.');
     end
   end
@@ -250,7 +259,9 @@ for i = 1:n
   Mq_reg2 = %RN%_inertiaJ_reg2_slag_vp(q, pkin);
   Mq_pv2_vec = Mq_reg2*PV2fixb;
   Mq_pv2 = vec2symmat(Mq_pv2_vec);
-  if any( abs(Mq_func(:)-Mq_pv2(:)) > 1e6*eps(max(abs(Mq_func(:)))) )
+  delta_abs = abs(Mq_func(:)-Mq_pv2(:));
+  delta_rel = delta_abs ./ Mq_func(:);
+  if any( delta_abs > thrfac*1e6*eps(max(abs(Mq_func(:)))) & delta_rel > 1e-5)
     error('Joint inertia matrix from inertial parameter vector does not match with direct form.');
   end
 end
@@ -261,16 +272,14 @@ fprintf('Tested Joint inertia matrix for %d random joint angles for %s\n', ...
 for i = 1:n
   q = Q(i,:)';
   qD = QD(i,:)';
-  MqD_func = %RN%_inertiaDJ_slag_vp1(q, qD, ...
-    pkin, m, rSges, Icges);
+  MqD_func = %RN%_inertiaDJ_slag_vp1(q, qD, pkin, m, rSges, Icges);
   % calculate inertia time derivative with optimized function
   if ~KINCONSTR && ~TREE
     % calculate inertia time derivative with base parameter regressor
-    MqD_regmin = %RN%_inertiaDJ_regmin_slag_vp(q, qD, ...
-      pkin);
+    MqD_regmin = %RN%_inertiaDJ_regmin_slag_vp(q, qD, pkin);
     MqD_mpv_vec = MqD_regmin*MPV;
     MqD_mpv = vec2symmat(MqD_mpv_vec);
-    if any( abs(MqD_func(:)-MqD_mpv(:)) > 1e6*eps(1+max(abs(MqD_func(:)))) )
+    if any( abs(MqD_func(:)-MqD_mpv(:)) > thrfac*1e6*eps(1+max(abs(MqD_func(:)))) )
       error('Joint inertia matrix time derivative from base parameter vector does not match with direct form.');
     end
   end
@@ -278,7 +287,9 @@ for i = 1:n
   MqD_reg2 = %RN%_inertiaDJ_reg2_slag_vp(q, qD, pkin);
   MqD_pv2_vec = MqD_reg2*PV2fixb;
   MqD_pv2 = vec2symmat(MqD_pv2_vec);
-  if any( abs(MqD_func(:)-MqD_pv2(:)) > 1e6*eps(1+max(abs(MqD_func(:)))) )
+  delta_abs = MqD_func(:)-MqD_pv2(:);
+  delta_rel = delta_abs ./ max(abs(MqD_func(:)));
+  if any( abs(delta_abs) > thrfac*1e6*eps(1+max(abs(MqD_func(:)))) & delta_rel > thrfac*5e-3)
     error('Joint inertia matrix time derivative from inertial parameter vector does not match with direct form.');
   end
 end
@@ -296,18 +307,18 @@ for i = 1:n
   % calculate inverse dynamics with optimized function
   if ~KINCONSTR && ~TREE
     % calculate inverse dynamics with base parameter regressor
-    tau_regmin = %RN%_invdynJ_fixb_regmin_slag_vp(q, qD, qDD, g_base, ...
-      pkin);
+    tau_regmin = %RN%_invdynJ_fixb_regmin_slag_vp(q, qD, qDD, g_base, pkin);
     tau_mpv = tau_regmin*MPV;
-    if any( abs(tau_func-tau_mpv) > 1e6*eps(max(abs(tau_func))) )
+    if any( abs(tau_func-tau_mpv) > thrfac*1e6*eps(max(abs(tau_func))) )
       error('Inverse dynamics from base parameter vector does not match with direct form.');
     end
   end
   % calculate inverse dynamics with inertial parameter regressor
-  tau_reg2 = %RN%_invdynJ_fixb_reg2_slag_vp(q, qD, qDD, g_base, ...
-    pkin);
+  tau_reg2 = %RN%_invdynJ_fixb_reg2_slag_vp(q, qD, qDD, g_base, pkin);
   tau_pv2 = tau_reg2*PV2fixb;
-  if any( abs(tau_func-tau_pv2) > 1e6*eps(max(abs(tau_func))) )
+  delta_abs = tau_func-tau_pv2;
+  delta_rel = delta_abs./tau_func;
+  if any( abs(delta_abs) > thrfac*1e6*eps(max(abs(tau_func))) & delta_rel > thrfac*1e-4 )
     error('Inverse dynamics from inertial parameter vector does not match with direct form.');
   end
 end
@@ -315,81 +326,82 @@ fprintf('Tested inverse dynamics for %d random joint angles for %s\n', ...
   n, robot_name);
 
 %% Teste inverse Dynamik aus Newton-Euler
-for i = 1:n
-  q = Q(i,:)';
-  qD = QD(i,:)';
-  qDD = QDD(i,:)';
-  g_base = G(i,:)';
-  tauJ_neweul_func = %RN%_invdynJ_fixb_snew_vp2(q, qD, qDD, g_base, ...
-    pkin, m, mrSges, Ifges);
-  % calculate inverse dynamics with inertial parameter regressor
-  tauJ_neweul_reg2 = %RN%_invdynJ_fixb_reg2_snew_vp(q, qD, qDD, g_base, ...
-    pkin);
-  tauJ_neweul_pv2 = tauJ_neweul_reg2*PV2fixb;
-  if any( abs(tauJ_neweul_func-tauJ_neweul_pv2) > 1e6*eps(max(abs(tauJ_neweul_func))) )
-    error('Inverse dynamics from inertial parameter vector from Newton-Euler does not match with direct form.');
+if ~KINCONSTR
+  for i = 1:n
+    q = Q(i,:)';
+    qD = QD(i,:)';
+    qDD = QDD(i,:)';
+    g_base = G(i,:)';
+    tauJ_neweul_func = %RN%_invdynJ_fixb_snew_vp2(q, qD, qDD, g_base, ...
+      pkin, m, mrSges, Ifges);
+    % calculate inverse dynamics with inertial parameter regressor
+    tauJ_neweul_reg2 = %RN%_invdynJ_fixb_reg2_snew_vp(q, qD, qDD, g_base, ...
+      pkin);
+    tauJ_neweul_pv2 = tauJ_neweul_reg2*PV2fixb;
+    if any( abs(tauJ_neweul_func-tauJ_neweul_pv2) > thrfac*1e6*eps(max(abs(tauJ_neweul_func))) )
+      error('Inverse dynamics from inertial parameter vector from Newton-Euler does not match with direct form.');
+    end
   end
-end
-fprintf('Tested inverse dynamics from Newton-Euler for %d random joint angles for %s\n', ...
-  n, robot_name);
+  fprintf('Tested inverse dynamics from Newton-Euler for %d random joint angles for %s\n', ...
+    n, robot_name);
 
-%% Teste Basis-Reaktionskräfte aus inverser Dynamik aus Newton-Euler
-for i = 1:n
-  q = Q(i,:)';
-  qD = QD(i,:)';
-  qDD = QDD(i,:)';
-  g_base = G(i,:)';
-  tauB_neweul_func = %RN%_invdynB_fixb_snew_vp2(q, qD, qDD, g_base, ...
-    pkin, m, mrSges, Ifges);
-  % calculate base forces with inertial parameter regressor
-  tauB_neweul_reg2 = %RN%_invdynB_fixb_reg2_snew_vp(q, qD, qDD, g_base, ...
-    pkin);
-  tauB_neweul_pv2 = tauB_neweul_reg2*PV2fixbBase;
-  if any( abs(tauB_neweul_func-tauB_neweul_pv2) > 1e6*eps(max(abs(tauB_neweul_func))) )
-    error('Base forces from inertial parameter vector from Newton-Euler does not match with direct form.');
+  % Teste Basis-Reaktionskräfte aus inverser Dynamik aus Newton-Euler
+  for i = 1:n
+    q = Q(i,:)';
+    qD = QD(i,:)';
+    qDD = QDD(i,:)';
+    g_base = G(i,:)';
+    tauB_neweul_func = %RN%_invdynB_fixb_snew_vp2(q, qD, qDD, g_base, ...
+      pkin, m, mrSges, Ifges);
+    % calculate base forces with inertial parameter regressor
+    tauB_neweul_reg2 = %RN%_invdynB_fixb_reg2_snew_vp(q, qD, qDD, g_base, ...
+      pkin);
+    tauB_neweul_pv2 = tauB_neweul_reg2*PV2fixbBase;
+    if any( abs(tauB_neweul_func-tauB_neweul_pv2) > thrfac*1e6*eps(max(abs(tauB_neweul_func))) )
+      error('Base forces from inertial parameter vector from Newton-Euler does not match with direct form.');
+    end
   end
-end
-fprintf('Tested base forces from Newton-Euler for %d random joint angles for %s\n', ...
-  n, robot_name);
+  fprintf('Tested base forces from Newton-Euler for %d random joint angles for %s\n', ...
+    n, robot_name);
 
-%% Teste Schnittkräfte/-momente aus Newton-Euler
-for i = 1:n
-  q = Q(i,:)';
-  qD = QD(i,:)';
-  qDD = QDD(i,:)';
-  g_base = G(i,:)';
-  f_neweul_func = %RN%_invdynf_fixb_snew_vp2(q, qD, qDD, g_base, ...
-    pkin, m, mrSges, Ifges);
-  % calculate cutting forces with inertial parameter regressor
-  f_neweul_reg2 = %RN%_invdynf_fixb_reg2_snew_vp(q, qD, qDD, g_base, ...
-    pkin);
-  f_neweul_pv2 = f_neweul_reg2*PV2fixbBase;
-  f_neweul_pv2 = reshape(f_neweul_pv2,[3,%NL%]);
-  if any( abs(f_neweul_func(:)-f_neweul_pv2(:)) > 1e6*eps(max(abs(f_neweul_func(:)))) )
-    error('Cutting forces from inertial parameter vector from Newton-Euler does not match with direct form.');
+  % Teste Schnittkräfte/-momente aus Newton-Euler
+  for i = 1:n
+    q = Q(i,:)';
+    qD = QD(i,:)';
+    qDD = QDD(i,:)';
+    g_base = G(i,:)';
+    f_neweul_func = %RN%_invdynf_fixb_snew_vp2(q, qD, qDD, g_base, ...
+      pkin, m, mrSges, Ifges);
+    % calculate cutting forces with inertial parameter regressor
+    f_neweul_reg2 = %RN%_invdynf_fixb_reg2_snew_vp(q, qD, qDD, g_base, ...
+      pkin);
+    f_neweul_pv2 = f_neweul_reg2*PV2fixbBase;
+    f_neweul_pv2 = reshape(f_neweul_pv2,[3,%NL%]);
+    if any( abs(f_neweul_func(:)-f_neweul_pv2(:)) > thrfac*1e6*eps(max(abs(f_neweul_func(:)))) )
+      error('Cutting forces from inertial parameter vector from Newton-Euler does not match with direct form.');
+    end
   end
-end
-fprintf('Tested cutting forces inverse dynamics from Newton-Euler for %d random joint angles for %s\n', ...
-  n, robot_name);
-for i = 1:n
-  q = Q(i,:)';
-  qD = QD(i,:)';
-  qDD = QDD(i,:)';
-  g_base = G(i,:)';
-  m_neweul_func = %RN%_invdynm_fixb_snew_vp2(q, qD, qDD, g_base, ...
-    pkin, m, mrSges, Ifges);
-  % calculate cutting torques with inertial parameter regressor
-  m_neweul_reg2 = %RN%_invdynm_fixb_reg2_snew_vp(q, qD, qDD, g_base, ...
-    pkin);
-  m_neweul_pv2 = m_neweul_reg2*PV2fixbBase;
-  m_neweul_pv2 = reshape(m_neweul_pv2,[3,%NL%]);
-  if any( abs(m_neweul_func(:)-m_neweul_pv2(:)) > 1e6*eps(max(abs(m_neweul_func(:)))) )
-    error('Cutting torques from inertial parameter vector from Newton-Euler does not match with direct form.');
+  fprintf('Tested cutting forces inverse dynamics from Newton-Euler for %d random joint angles for %s\n', ...
+    n, robot_name);
+  for i = 1:n
+    q = Q(i,:)';
+    qD = QD(i,:)';
+    qDD = QDD(i,:)';
+    g_base = G(i,:)';
+    m_neweul_func = %RN%_invdynm_fixb_snew_vp2(q, qD, qDD, g_base, ...
+      pkin, m, mrSges, Ifges);
+    % calculate cutting torques with inertial parameter regressor
+    m_neweul_reg2 = %RN%_invdynm_fixb_reg2_snew_vp(q, qD, qDD, g_base, ...
+      pkin);
+    m_neweul_pv2 = m_neweul_reg2*PV2fixbBase;
+    m_neweul_pv2 = reshape(m_neweul_pv2,[3,%NL%]);
+    if any( abs(m_neweul_func(:)-m_neweul_pv2(:)) > thrfac*1e6*eps(max(abs(m_neweul_func(:)))) )
+      error('Cutting torques from inertial parameter vector from Newton-Euler does not match with direct form.');
+    end
   end
+  fprintf('Tested cutting torques inverse dynamics from Newton-Euler for %d random joint angles for %s\n', ...
+    n, robot_name);
 end
-fprintf('Tested cutting torques inverse dynamics from Newton-Euler for %d random joint angles for %s\n', ...
-  n, robot_name);
-
 
 %% Teste Funktionsaufruf mit übergebenem Regressor gegen Regressormatrix
 % Die direkte Übergabe des Dynamik-Parametervektors ist effizienter als die
@@ -401,34 +413,34 @@ if ~KINCONSTR && ~TREE
     qD = QD(i,:)';
     qDD = QDD(i,:)';
     g_base = G(i,:)';
-    
+
     taug_regmin = %RN%_gravloadJ_regmin_slag_vp(q, g_base, pkin);
     taug_mpv = taug_regmin*MPV;
     taug_func = %RN%_gravloadJ_floatb_twist_mdp_slag_vp(q, g_base, pkin, MPV);
-    if any( abs(taug_func-taug_mpv) > 1e6*eps(max(abs(taug_func))) )
+    if any( abs(taug_func-taug_mpv) > thrfac*1e6*eps(max(abs(taug_func))) )
       error('Grav Load from base parameter regressor does not match with pre-multiplied calculation.');
     end
-    
+
     tauc_regmin = %RN%_coriolisvecJ_fixb_regmin_slag_vp(q, qD, pkin);
     tauc_mpv = tauc_regmin*MPV;
     tauc_func = %RN%_coriolisvecJ_fixb_mdp_slag_vp(q, qD, pkin, MPV);
-    if any( abs(tauc_func-tauc_mpv) > 1e6*eps(max(abs(tauc_func))) )
+    if any( abs(tauc_func-tauc_mpv) > thrfac*1e6*eps(max(abs(tauc_func))) )
       error('Coriolis-vector from base parameter regressor does not match with pre-multiplied calculation.');
     end
-    
+
     Mq_regmin = %RN%_inertiaJ_regmin_slag_vp(q, pkin);
     Mq_mpv_vec = Mq_regmin*MPV;
     Mq_mpv = vec2symmat(Mq_mpv_vec);
     Mq_func = %RN%_inertiaJ_mdp_slag_vp(q, pkin, MPV);
-    if any( abs(Mq_func(:)-Mq_mpv(:)) > 1e6*eps(max(abs(Mq_func(:)))) )
+    if any( abs(Mq_func(:)-Mq_mpv(:)) > thrfac*1e6*eps(max(abs(Mq_func(:)))) )
       error('Inertia matrix from base parameter regressor does not match with pre-multiplied calculation.');
     end
-    
+
     tau_regmin = %RN%_invdynJ_fixb_regmin_slag_vp(q, qD, qDD, g_base, ...
       pkin);
     tau_mpv = tau_regmin*MPV;
     tau_func = %RN%_invdynJ_fixb_mdp_slag_vp(q, qD, qDD, g_base, pkin, MPV);
-    if any( abs(tau_func-tau_mpv) > 1e6*eps(max(abs(tau_func))) )
+    if any( abs(tau_func-tau_mpv) > thrfac*1e6*eps(max(abs(tau_func))) )
       error('Inverse dynamics from base parameter regressor does not match with pre-multiplied calculation.');
     end
   end
@@ -437,21 +449,23 @@ fprintf('Tested inverse dynamics functions with parameter vector input for %d ra
   n, robot_name);
 
 %% Prüfe Trajektorien-Funktionen
-% Zeitreihe der Regressor-Matrizen
-RV_Traj = %RN%_invdynJ_fixb_regmin_slag_vp_traj(Q, QD, QDD, g_base, pkin);
-% Damit Zeitreihe der Momente berechnen
-TAU_vr = %RN%_invdynJ_fixb_mdp_slag_vr_traj(RV_Traj, MPV);
-% Zeitreihe der Momente über direkten Funktionsaufruf
-TAU_vp = %RN%_invdynJ_fixb_mdp_slag_vp_traj(Q, QD, QDD, g_base, pkin, MPV);
-% Vergleich der Ergebnisse
-test_vr_vp = TAU_vr - TAU_vp;
-if max(abs(test_vr_vp(:))) > 1e-10
-  error('Keine Übereinstimmung zwischen Traj.-Dyn.-Funktionen mit Regressor und MPV als Eingang');
+if ~KINCONSTR && ~TREE
+  % Zeitreihe der Regressor-Matrizen
+  RV_Traj = %RN%_invdynJ_fixb_regmin_slag_vp_traj(Q, QD, QDD, g_base, pkin);
+  % Damit Zeitreihe der Momente berechnen
+  TAU_vr = %RN%_invdynJ_fixb_mdp_slag_vr_traj(RV_Traj, MPV);
+  % Zeitreihe der Momente über direkten Funktionsaufruf
+  TAU_vp = %RN%_invdynJ_fixb_mdp_slag_vp_traj(Q, QD, QDD, g_base, pkin, MPV);
+  % Vergleich der Ergebnisse
+  test_vr_vp = TAU_vr - TAU_vp;
+  if max(abs(test_vr_vp(:))) > 1e-10
+    error('Keine Übereinstimmung zwischen Traj.-Dyn.-Funktionen mit Regressor und MPV als Eingang');
+  end
+  % Beteiligte Funktionen kompilieren
+  matlabfcn2mex({ '%RN%_invdynJ_fixb_regmin_slag_vp_traj', ...
+                  '%RN%_invdynJ_fixb_mdp_slag_vr_traj', ...
+                  '%RN%_invdynJ_fixb_mdp_slag_vp_traj'});
 end
-% Beteiligte Funktionen kompilieren
-matlabfcn2mex({ '%RN%_invdynJ_fixb_regmin_slag_vp_traj', ...
-                '%RN%_invdynJ_fixb_mdp_slag_vr_traj', ...
-                '%RN%_invdynJ_fixb_mdp_slag_vp_traj'});
 
 %% Abbruch bei kinematischen Zwangsbedingungen
 % TODO: Test durchführen, wenn Minimalparameterform dafür implementiert
@@ -514,4 +528,5 @@ plin_num_test_struct.W = W_g_invdyn;
 robot_paramlin_test_reg_num(plin_num_test_struct);
 
 fprintf('Symbolisch berechnete Minimalparameterform gegen numerische Form geprüft\n');
+
 
