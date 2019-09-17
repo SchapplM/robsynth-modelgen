@@ -11,11 +11,11 @@ Unterstützte Systemtypen sind:
 
 Diese Anleitung enthält eine Übersicht über die Bedienung und die Funktionsweise der Toolbox. Detailierte Informationen sollten immer der Implementierung entnommen werden.
 
-Die theoretischen Hintergründe der einzelnen Schritte können der angegebenen Literatur und insbesondere den Kommentaren in den Maple-Arbeitsblättern und den Matlab-Testskripten entnommen werden.
+Die theoretischen Hintergründe der einzelnen Schritte können der [angegebenen Literatur](#quellen) und insbesondere den Kommentaren in den Maple-Arbeitsblättern und den Matlab-Testskripten entnommen werden.
 
 Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03  
 (C) Institut für Regelungstechnik, Universität Hannover  
-Moritz Schappler, schappler@imes.uni-hannover.de, 2018-03  
+Moritz Schappler, moritz.schappler@imes.uni-hannover.de, 2018-03  
 (C) Institut für mechatronische Systeme, Universität Hannover
 
 ## Inhalt
@@ -104,32 +104,37 @@ Mit folgendem Aufruf werden alle Maple-Ausdrücke erzeugt und Matlab-Funktionen 
 Folgende Argumente sind möglich:
 
 * Parallele Berechnung der Maple-Arbeitsblätter (schnellere Berechnung):
-```
--p, --parallel
-```
+  ```
+  -p, --parallel
+  ```
 * Minimale Anzahl der generierten Matlabfunktionen (nur g(q), c(q,qD), M(q)):
-```
---minimal
+  ```
+  --minimal
+  ```
 * Keine Ausführung der Matlab-Testskripte. Nützlich, wenn die Code-Generierung aus einem anderen Skript heraus (evtl über viele Roboterstrukturen) ausgeführt wird:
-```
---notest
-```
+  ```
+  --notest
+  ```
 * Nur Berechnung der Fixed-Base Funktionen (kürzere Berechnung, sinnvoll wenn Floating-Base-Modell nicht relevant ist)
-```
---fixb_only
-```
+  ```
+  --fixb_only
+  ```
 * Nur Berechnung der Floating-Base Funktionen (sinnvoll, falls fixed-Base Modell schon vorhanden ist)
-```
---floatb_only
-```
+  ```
+  --floatb_only
+  ```
 * Berechnungen für parallelen Roboter durchführen (berechnet auch die Dynamik für den dazugehörigen seriellen Roboter)
-```
---parrob
-```
-* Die Berechnungen für die serielle Beinkette des parallelen Roboters nicht durchführen.
-```
---not_gen_serial
-```
+  ```
+  --parrob
+  ```
+* Berechnungen für seriell-hybride Roboter durchführen, bei denen die kinematischen Zwangsbedingungen in impliziter Form gegeben sind (berechnet auch die Dynamik für den dazugehörigen seriellen Roboter)
+  ```
+  --ic
+  ```
+* Die Berechnungen für die serielle Beinkette des parallelen Roboters oder der offenen Beinkette des Roboters mit geschlossenen kinematischen Ketten nicht durchführen.
+  ```
+  --not_gen_serial
+  ```
 
 Zum Speicherort der Ergebnisse siehe [Ergebnisordner](#ergebnisordner).
 
@@ -211,7 +216,7 @@ Beim Durchlaufen der Tests sollten keine Fehler auftreten.
 
 ### Systeme mit kinematischen Zwangsbedingungen (Explizite Darstellung) <a name="start_zwangsbed_expl"></a> 
 
-Neben seriellen und verzweigten kinematischen Strukturen, können auch geschlossene Ketten behandelt werden, wenn die daraus resultierenden kinematischen Zwangsbedingungen vollständig eliminiert werden können. Dies wird z.B. in [NakamuraGho1989](#quellen) beschrieben. In [UdwadiaKal1992](#quellen), [ParkChoPlo1999](#quellen) und [Docquier2013](#quellen) werden Systeme mit Zwangsbedingungen behandelt, bei der diese nur mit impliziten Gleichungen berücksichtigt werden. Das wird in dieser Toolbox teilweise unterstützt und im nächsten Teilkapitel beschrieben.
+Neben seriellen und verzweigten kinematischen Strukturen, können auch geschlossene Ketten behandelt werden, wenn die daraus resultierenden kinematischen Zwangsbedingungen vollständig eliminiert werden können. Dies wird z.B. in [SchapplerLilHad2019](#quellen) und [NakamuraGho1989](#quellen) beschrieben. In [UdwadiaKal1992](#quellen), [ParkChoPlo1999](#quellen) und [Docquier2013](#quellen) werden Systeme mit Zwangsbedingungen behandelt, bei der diese nur mit impliziten Gleichungen berücksichtigt werden. Das wird in dieser Toolbox auch unterstützt und im nächsten Teilkapitel beschrieben.
 
 Die Struktur eines verzweigten Systems wird mit MDH-Parametern in der Datei robot_env eingegeben.
 Einige MDH-Parameter sind nun aber keine verallgemeinerten Koordinaten des Systems mehr, sondern z.B. zeitabhängige Winkel, die von den verallgemeinerten Koordinaten abhängen (beschrieben durch die kinematischen Zwangsbedingungen).
@@ -268,6 +273,10 @@ Da Systeme mit kinematischen Zwangsbedingungen sich stark unterscheiden können,
 
 ### Systeme mit kinematischen Zwangsbedingungen (implizite Darstellung) <a name="start_zwangsbed_impl"></a> 
 
+Für Roboter mit implizit definierten Zwangsbedingungen muss eine Datei robot_env mit Informationen zur offenen Baumstruktur ohne Zwangsbedingungen und eine Datei robot_env_IC im Ordner robot_codegen_definitions vorliegen. Letztere enthält nur Verweise auf die Namen der Roboter mit offener Struktur oder durch explizite Form eliminierte Zwangsbedingungen.
+
+Die Berechnung erfolgt mit dem Startargument --ic. Falls die offene Baumstruktur bereits berechnet wurde, kann dieser Schritt mit --not_gen_serial übersprungen werden. Die Vorgehensweise ist ähnlich wie bei parallelen Robotern (s.u.).
+
 Zur Darstellung der Zwangsbedingungen in impliziter Form muss ein Arbeitsblatt mit diesen Zwangsbedingungen für den untersuchten Roboter erstellt werden:
 
 ```
@@ -281,11 +290,11 @@ Damit die automatische Erkennung der Zwangsbedingungen in Zukunft funktioniert, 
 * die Schnitt-KS stehen immer am Ende und sind der Reihe nach automatisch den Schnittgelenken von davor zugeordnet.
 * Es müssen also die Anzahl der Körper **NL** und die Anzahl der Gelenke **NJ** entsprechend angepasst werden.
 
-Für jede Roboterdefinition ("robot_env") sollten entweder implizite, oder explizite Zwangsbedingungen definiert werden. Beides zusammen ist in der Regel nicht sinnvoll, auch wenn es prinzipiell möglich ist.
+Für jede Roboterdefinition ("robot_env") sollten entweder implizite, oder explizite Zwangsbedingungen definiert werden. Beides zusammen ist in der Regel nicht sinnvoll, auch wenn es prinzipiell möglich ist. Vielmehr sollte für eine Roboterkinematik unterschiedliche Eingabedateien erstellt werden (für explizit und implizit) und deren Ergebnisse dann gegeneinander getestet werden.
 
 #### Beispiele
 
-Beispiele für die Implementierung von Zwangsbedingungen in impliziter Form finden sich in den Dateien für *KAS5m7u* (Kraftassistenzsystem 3. Arm). Die Endung "u" hinter dem Roboter bezeichnet das System ohne Zwangsbedingungen "u", dass zunächst aufgestellt wird.
+Beispiele für die Implementierung von Zwangsbedingungen in impliziter Form finden sich in den Dateien für *KAS5m7u* (Kraftassistenzsystem 3. Arm). Die Endung "u" hinter dem Roboter bezeichnet das System ohne Zwangsbedingungen "u", dass zunächst aufgestellt wird. Weitere Beispiele mit dem vollständigen Aufruf der Toolbox befinden sich im Repo serhybrob-mdl.
 
 ### Parallele Roboter
 
@@ -642,6 +651,7 @@ Anschließend erfolgt wie bei den expliziten Zwangsbedingungen eine allgemeine B
 Implizite Zwangsbedingungen sollten nur für die Modelle der offenen Baumstruktur angegeben werden.
 Siehe dazu auch [KhalilBen1995](#quellen), [Docquier2013](#quellen), [DoThanhKotHeiOrt2009b](#quellen)
 Der Ordner examples enthält Beispiele für die Datei %RN%_kinematic_constraints_implicit.mw.
+Weitere Beispiele sind im Repo "serhybrob-mdl" zu finden.
 
 ```
 /robot_codegen_constraints
@@ -821,3 +831,4 @@ Textbausteine für Funktionsköpfe:
 * [KhalilVijKhoMuk2014] Khalil, W. and Vijayalingam, A. and Khomutenko, B. and Mukhanov, I. and Lemoine, P. and Ecorchard, G.: "OpenSYMORO: An open-source software package for Symbolic Modelling of Robots" (2014)
 * [AbdellatifHei2009] Abdellatif, H. and Heimann, B.: Computational efficient inverse dynamics of 6-DOF fully parallel manipulators by using the Lagrangian formalism (2009)
 * [Job2018_S759] Job, T. (Studienarbeit; Betreuer Moritz Schappler): Implementierung einer strukturunabhängigen Dynamikmodellierung für parallelkinematische Maschinen (2018)
+* [SchapplerLilHad2019] Schappler, M. and Lilge, T. and Haddadin, S.: Kinematics and Dynamics Model via Explicit Trigonometric Elimination of Kinematic Constraints for a Force Assistance Exoskeleton (2019)
