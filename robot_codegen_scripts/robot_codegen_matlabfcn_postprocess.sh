@@ -89,7 +89,7 @@ sed -i "s/%NTAUJFIXBREGNN%/$robot_NTAUJFIXBREGNN/g" $mfcndat
 if [ "$replacelastassignment" != "0" ]; then # vergleiche strings, da das Argument auch leer sein könnte
   # Ersetze Variablennamen des letzten Ergebnisses des generierten Codes
   # prüfe, welches die Ausgabevariable der Funktion ist (steht oben im Funktionskopf)
-  varname_fcn=`grep "function .*=" $mfcndat | sed 's/function \(.*\)=.*/\1/'`
+  varname_fcn=`grep "function .*=" $mfcndat | sed 's/function \(.*\)\s=.*/\1/'`
   # prüfe, welches die Ausgabevariable des Maple-exportierten Codes ist (letzte Zuweisung im Code, ganz unten).
   # Die Variable kann entweder direkt, oder indiziert vor dem Gleichheitszeichen stehen.
   varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $mfcndat`
@@ -97,7 +97,12 @@ if [ "$replacelastassignment" != "0" ]; then # vergleiche strings, da das Argume
   if [ "$lastassignmentvector" == "1" ]; then
     echo "$varname_fcn = $varname_tmp(:);" >> $mfcndat
   else
-    echo "$varname_fcn = $varname_tmp;" >> $mfcndat
+    if [ "${varname_tmp:0:1}" == $'\t' ]; then # Einrückung der letzten Zuweisung berücksichtigen
+      printf "\t" >> $mfcndat
+      echo "$varname_fcn = ${varname_tmp:1:10};" >> $mfcndat
+    else
+      echo "$varname_fcn = $varname_tmp;" >> $mfcndat
+    fi
   fi
 fi
 
