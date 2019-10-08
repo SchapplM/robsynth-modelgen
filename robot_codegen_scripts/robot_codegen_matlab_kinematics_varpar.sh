@@ -510,20 +510,20 @@ else
     else # Funktionsaufruf bei den vollständigen Funktionen
       printf "\n%% Function calls\n" >> $zieldat
       if [ "$jacart" -eq "8" ]; then
-        printf "Ja_transl = S_RRR_jacobia_transl_sym_varpar(qJ, link_index, r_i_i_C, ...\n  pkin);\n" >> $zieldat
-        printf "Jg_rot = S_RRR_jacobig_rot_sym_varpar(qJ, link_index, ...\n  pkin);\n\n" >> $zieldat
+        printf "Ja_transl = ${robot_name}_jacobia_transl_sym_varpar(qJ, link_index, r_i_i_C, ...\n  pkin);\n" >> $zieldat
+        printf "Jg_rot = ${robot_name}_jacobig_rot_sym_varpar(qJ, link_index, ...\n  pkin);\n\n" >> $zieldat
         printf "Jg = [Ja_transl; Jg_rot];\nend" >> $zieldat
       elif [ "$jacart" -eq "9" ]; then
-        printf "Ja_transl = S_RRR_jacobia_transl_sym_varpar(qJ, link_index, r_i_i_C, ...\n  pkin);\n" >> $zieldat
-        printf "Ja_rot = S_RRR_jacobia_rot_sym_varpar(qJ, link_index, ...\n  pkin);\n\n" >> $zieldat
+        printf "Ja_transl = ${robot_name}_jacobia_transl_sym_varpar(qJ, link_index, r_i_i_C, ...\n  pkin);\n" >> $zieldat
+        printf "Ja_rot = ${robot_name}_jacobia_rot_sym_varpar(qJ, link_index, ...\n  pkin);\n\n" >> $zieldat
         printf "Ja = [Ja_transl; Ja_rot];\nend" >> $zieldat
       elif [ "$jacart" -eq "10" ]; then
-        printf "JaD_transl = S_RRR_jacobiaD_transl_sym_varpar(qJ, qJD, link_index, r_i_i_C, ...\n  pkin);\n" >> $zieldat
-        printf "JgD_rot = S_RRR_jacobigD_rot_sym_varpar(qJ, qJD, link_index, ...\n  pkin);\n\n" >> $zieldat
+        printf "JaD_transl = ${robot_name}_jacobiaD_transl_sym_varpar(qJ, qJD, link_index, r_i_i_C, ...\n  pkin);\n" >> $zieldat
+        printf "JgD_rot = ${robot_name}_jacobigD_rot_sym_varpar(qJ, qJD, link_index, ...\n  pkin);\n\n" >> $zieldat
         printf "JgD = [JaD_transl; JgD_rot];\nend" >> $zieldat
       elif [ "$jacart" -eq "11" ]; then
-        printf "JaD_transl = S_RRR_jacobiaD_transl_sym_varpar(qJ, qJD, link_index, r_i_i_C, ...\n  pkin);\n" >> $zieldat
-        printf "JaD_rot = S_RRR_jacobiaD_rot_sym_varpar(qJ, qJD, link_index, ...\n  pkin);\n\n" >> $zieldat
+        printf "JaD_transl = ${robot_name}_jacobiaD_transl_sym_varpar(qJ, qJD, link_index, r_i_i_C, ...\n  pkin);\n" >> $zieldat
+        printf "JaD_rot = ${robot_name}_jacobiaD_rot_sym_varpar(qJ, qJD, link_index, ...\n  pkin);\n\n" >> $zieldat
         printf "JaD = [JaD_transl; JaD_rot];\nend" >> $zieldat
       fi;
     fi;
