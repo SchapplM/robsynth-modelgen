@@ -7,5 +7,6 @@
 # Moritz Schappler, moritz.schappler@imes.uni-hannover.de, 2018-05
 # (C) Institut für mechatronische Systeme, Leibniz Universität Hannover
 
-varname_tmp=`grep "=" $1 | tail -1 | sed 's/\([a-zA-Z0-9_]*\).*/\1/'`
-echo $varname_tmp
+varname_tmp=`grep "=" $1 | tail -1 | sed 's/\(\s*[a-zA-Z0-9_]*\).*/\1/'`
+
+echo "$varname_tmp"
