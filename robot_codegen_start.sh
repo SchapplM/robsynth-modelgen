@@ -156,9 +156,9 @@ if [ "$CG_NOTGENSERIAL" == "0" ]; then
   if [ "$CG_MINIMAL" == "0" ] && [ "$CG_NOTEST" != "1" ]; then
    #Matlab-Testfunktionen starten
      if [ ! "$CG_FIXBONLY" == "1" ]; then
-       matlab -nodesktop -nosplash -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything');quit;"
+       matlab -nodesktop -nosplash -useStartupFolderPref -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything');quit;"
      else
-       matlab -nodesktop -nosplash -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything_fixbase');quit;"
+       matlab -nodesktop -nosplash -useStartupFolderPref -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything_fixbase');quit;"
      fi;
      echo "Funktionsgenerierung abgeschlossen. Alle Tests erfolgreich."
    else
@@ -194,7 +194,7 @@ if [ "$CG_IC" == "1" ]; then
 
   # Matlab-Testfunktionen starten
   if [ "$CG_NOTEST" != "1" ]; then
-    matlab -nodesktop -nosplash -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything');quit;"
+    matlab -nodesktop -nosplash -useStartupFolderPref -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything');quit;"
   fi;
   echo "Funktionsgenerierung abgeschlossen. Alle Tests erfolgreich."
 fi;
@@ -233,7 +233,7 @@ if [ "$CG_PARROB" == "1" ]; then
 
   # Matlab-Testfunktionen starten
   if [ "$CG_NOTEST" != "1" ]; then
-    matlab -nodesktop -nosplash -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything_par');quit;"
+    matlab -nodesktop -nosplash -useStartupFolderPref -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything_par');quit;"
   fi;
   echo "Funktionsgenerierung abgeschlossen. Alle Tests erfolgreich."
 fi;

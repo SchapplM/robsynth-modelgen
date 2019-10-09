@@ -210,18 +210,17 @@ do
   wait
   echo "FERTIG mit Geschwindigkeit für ${basemeth}"
   if [ "$robot_kinconstr_exist" == "0" ]; then
-    for wsvel in ${dateiliste_acc[@]}
+    for wsacc in ${dateiliste_acc[@]}
     do
-      mpldat_full=$workdir/$wsvel
+      mpldat_full=$workdir/$wsacc
       filename="${mpldat_full##*/}"
       dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
       echo "Starte Maple-Skript $filename"
       $repo_pfad/scripts/run_maple_script.sh $dir/$filename &
     done
-  
-  wait
-  echo "FERTIG mit Beschleunigung für ${basemeth}"
-fi;
+    wait
+    echo "FERTIG mit Beschleunigung für ${basemeth}"
+  fi;
   for wsen in ${dateiliste_en[@]}
   do
     mpldat_full=$workdir/$wsen
