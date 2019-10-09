@@ -465,9 +465,9 @@ else
         elif [ "$jacart" -eq "4" ]; then
           quelldat=$repo_pfad/codeexport/${robot_name}/tmp/jacobia_transl_${ib}_floatb_twist_matlab.m
         elif [ "$jacart" -eq "5" ]; then
-          quelldat=$repo_pfad/codeexport/${robot_name}/tmp/jacobiaD_rot_${ib}_floatb_twist_matlab.m
-        elif [ "$jacart" -eq "6" ]; then
           quelldat=$repo_pfad/codeexport/${robot_name}/tmp/jacobigD_rot_${ib}_floatb_twist_matlab.m
+        elif [ "$jacart" -eq "6" ]; then
+          quelldat=$repo_pfad/codeexport/${robot_name}/tmp/jacobiaD_rot_${ib}_floatb_twist_matlab.m
         elif [ "$jacart" -eq "7" ]; then
           quelldat=$repo_pfad/codeexport/${robot_name}/tmp/jacobiaD_transl_${ib}_floatb_twist_matlab.m
         fi;
