@@ -125,11 +125,9 @@ for iq = 1:TSSc.n
   end
   % Vergleiche Geschwindigkeit und Jacobi-Matrizen
   for jj = 0:TSSc.NL-1 % 0=Basis
-    fcn_name_c = ['%RNTE%_jacobig_' int2str(jj) '_sym_varpar'];
-    fcn_name_o = ['%RNOL%_jacobig_' int2str(jj) '_sym_varpar'];
     r_i_i_C = rand(3,1); % Jacobi-Matrix für zufälligen Punkt
-    Jgc = feval(fcn_name_c, q1, r_i_i_C, TSSc.pkin);
-    Jgo = feval(fcn_name_o, q, r_i_i_C, TSSo.pkin);
+    Jgc = %RNTE%_jacobig_sym_varpar(q1, uint8(jj), r_i_i_C, TSSc.pkin);
+    Jgo = %RNOL%_jacobig_sym_varpar(q,  uint8(jj), r_i_i_C, TSSo.pkin);
     % Geschwindigkeit des Punktes mit/ohne ZB
     Vc = Jgc*qD1;
     Vo = Jgo*qD;
@@ -344,4 +342,5 @@ for iq = 1:TSSc.n
 end
 
 fprintf('Test der Zwangsbedingungen mit impliziter und expliziter Form für %d Kombinationen nach [UdwadiaKal1992] erfolgreich\n', TSSc.n);
+
 
