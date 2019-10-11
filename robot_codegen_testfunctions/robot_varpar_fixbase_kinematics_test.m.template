@@ -26,12 +26,13 @@ for f = fields(TSS)'
 end
 
 %% Init
-
+thrfac = 1; % Faktor zur Erhöhung der Schwellwerte für Fehlererkennung
 % Prüfe, ob kinematische Zwangsbedingungen vorliegen.
 % Dann entfallen die Tests der numerischen Funktionen
 if NJ ~= NQJ
   KINCONSTR = true;
   fprintf('Einige Tests entfallen aufgrund der Existenz kinematischer Zwangsbedingungen\n');
+  thrfac = 10; % bei ZB sind treten mehr Rechenfehler auf (da aufwändiger)
 else
   KINCONSTR = false;  
 end
@@ -73,7 +74,6 @@ fprintf('Tested Jacobian (fixed base) against forward kinematics for %d random j
 	size(Q, 1));
  
 %% Teste Jacobi-Matrix für unterschiedliche Punkte mit der Adjungierten
-if ~KINCONSTR
 for i = 1:size(Q, 1)
   for j  = 0:NQJ % Jacobi für jeden Körper
     q = Q(i,:)';
@@ -91,17 +91,16 @@ for i = 1:size(Q, 1)
     R_0_j = Tc(1:3,1:3,j+1);
     r_0_Oj_P = R_0_j*r_j_Oj_P;
     A_0_P_Oj = adjoint_jacobian(r_0_Oj_P);
-    JG_P_test = A_0_P_Oj * JG_Oj;
-    
-    if any(abs(JG_P(:) - JG_P_test(:)) > 1e-10)
+    JG_P_a = A_0_P_Oj * JG_Oj;
+    test_JG_P_abs = JG_P - JG_P_a;
+    test_JG_P_rel = test_JG_P_abs ./ JG_P;
+    if any(abs(test_JG_P_abs(:)) > thrfac*1e-9 & abs(test_JG_P_rel(:)) > thrfac^3*1e-5)
       error('Berechnung der Jacobi-Matrix mit Adjungierten stimmt nicht mit Funktion überein');
     end
   end
 end
 fprintf('Tested Jacobian direct vs adjoint calculation for fixed base.\n');
-end
 %% Teste Jacobi-Matrix-Zeitableitung für unterschiedliche Punkte mit der Adjungierten
-if ~KINCONSTR
 for i = 1:size(Q, 1)
   for j  = 0:NQJ % Jacobi für jeden Körper
     q = Q(i,:)';
@@ -128,16 +127,17 @@ for i = 1:size(Q, 1)
     omega_0_i = V_0_i(4:6);
 
     AD_0_P_Oj = adjointD_jacobian(r_j_Oj_P, R_0_j, omega_0_i);
-
-    JGD_P_test = AD_0_P_Oj * JG_Oj + A_0_P_Oj * JGD_Oj;
-
-    if any(abs(JGD_P(:) - JGD_P_test(:)) > 1e-10)
+    % Jacobi-Zeitableitung aus Ableitung der Adjunktmatrix-Gleichung
+    JGD_P_a = AD_0_P_Oj * JG_Oj + A_0_P_Oj * JGD_Oj;
+    
+    test_JGD_abs = JGD_P - JGD_P_a;
+    test_JGD_rel = test_JGD_abs ./ JGD_P;
+    if any(abs(test_JGD_abs(:)) > thrfac*1e-10 & abs(test_JGD_rel(:)) > thrfac^4*1e-4) % TODO: Toleranz für fivebar1 noch sehr hoch eingestellt
       error('Berechnung der Jacobi-Matrix-Zeitableitung mit Adjungierten stimmt nicht mit Funktion überein');
     end
   end
 end
 fprintf('Tested Jacobian time derivate from direct vs adjoint calculation for fixed base.\n');
-end
 %% Test Time Derivate of Jacobian
 if ~KINCONSTR && ~any(sigma)
 matlabfcn2mex({'%RN%_jacobig_mdh_num', '%RN%_jacobigD_mdh_num'});
@@ -249,19 +249,21 @@ for iq = 1:size(Q, 1) % Über Zufallsposen
     % (Berechnung der geometrischen Jacobi-Matrix aus der analytischen)
     rpyD = Ja_rot*qD;
     JD_rpy = eulxyzjacD(rpy, rpyD);
-    JgD_rot_test = JD_rpy * Ja_rot + J_rpy * JaD_rot;
+    JgD_rot_euljac = JD_rpy * Ja_rot + J_rpy * JaD_rot;
     % Vergleiche die auf zwei Wegen berechnete Zeitableitung der geometrischen Jacobi-Matrix
-    DiffgD = JgD_rot_test - JgD_rot;
-    if any( abs(DiffgD(:)) > 1e9*eps(1+max(abs(JgD_rot(:)))) )
+    DiffgD_abs = JgD_rot_euljac - JgD_rot;
+    DiffgD_rel = DiffgD_abs ./ JgD_rot;
+    if any( abs(DiffgD_abs(:)) > 1e9*eps(1+max(abs(JgD_rot(:)))) & abs(DiffgD_rel(:)) > 1e-3)
       error('Zeitableitung der geometrischen und analytischen Jacobi-Matrizen stimmen nicht überein (Körper %d)', jb);
     end
     % Berechnung der analytischen Jacobi-Matrix aus der geometrischen (d/dt)
     % Zeitableitung der inversen Euler-Transformationsmatrix 
     JD_rpy_inv = -J_rpy\JD_rpy/J_rpy; % [2], Gl. 20
     % Zeitableitung der analytischen Jacobi (Rotationsteil)
-    JaD_rot_test = J_rpy\JgD_rot + JD_rpy_inv *Jg_rot;
-    DiffaD = JaD_rot - JaD_rot_test;
-    if any( abs(DiffaD(:)) > 1e9*eps(1+max(abs(JaD_rot(:)))) )
+    JaD_rot_euljac = J_rpy\JgD_rot + JD_rpy_inv *Jg_rot;
+    DiffaD_abs = JaD_rot - JaD_rot_euljac;
+    DiffaD_rel = DiffaD_abs ./ JaD_rot;
+    if any( abs(DiffaD_abs(:)) > 1e9*eps(1+max(abs(JaD_rot(:)))) & abs(DiffaD_rel(:)) > 1e-3 )
       error('Zeitableitung der analytischen und geometrischen Jacobi-Matrizen stimmen nicht überein (Körper %d)', jb);
     end
   end
@@ -303,8 +305,11 @@ for ie = uint8(1:12) % Über alle Euler-Konventionen
       % Testausdruck für Zusammenhang zwischen den beiden Jacobi-Matrizen:
       % Berechnung der analytischen Jacobi aus der Rotationsmatrix-Jacobi
       % Herleitung: Kettenregel bei Ableitung Euler-Winkel nach Gelenkkoord.
-      test = J_phi\Jg_rot - eul_diff_rotmat(t2r(T_jb), ie)*JR;
-      if max(abs(test(:))) > 1e-10
+      test_lhs = J_phi\Jg_rot;
+      test_rhs = eul_diff_rotmat(t2r(T_jb), ie)*JR;
+      test_abs = test_lhs - test_rhs;
+      test_rel = test_abs ./ test_rhs;
+      if any(abs(test_abs(:)) > 1e-10*thrfac^2 & abs(test_rel(:)) > 1e-5)
         error('Geometrische und Rotationsmatrix-Jacobi stimmen nicht überein');
       end
       
@@ -316,8 +321,9 @@ for ie = uint8(1:12) % Über alle Euler-Konventionen
       dPidRb1 = [b11 0 0 b21 0 0 b31 0 0; 0 b11 0 0 b21 0 0 b31 0; 0 0 b11 0 0 b21 0 0 b31; b12 0 0 b22 0 0 b32 0 0; 0 b12 0 0 b22 0 0 b32 0; 0 0 b12 0 0 b22 0 0 b32; b13 0 0 b23 0 0 b33 0 0; 0 b13 0 0 b23 0 0 b33 0; 0 0 b13 0 0 b23 0 0 b33;];
       skewgrad = [0 0 0; 0 0 1; 0 -1 0; 0 0 -1; 0 0 0; 1 0 0; 0 1 0; -1 0 0; 0 0 0;];
       JR_test = dPidRb1 * skewgrad * Jg_rot; % Terme I, II, III in [3]/(A14)
-      test2 = JR_test - JR;
-      if max(abs(test2(:))) > 1e-10
+      test2_abs = JR_test - JR;
+      test2_rel = test2_abs ./ JR;
+      if any(abs(test2_abs(:)) > 1e-10 & abs(test2_rel(:)) > 1e-5)
         error('Berechnung der Rotationsmatrix-Jacobi aus geometrischer Jacobi stimmt nicht');
       end
 
@@ -337,8 +343,8 @@ for ie = uint8(1:12) % Über alle Euler-Konventionen
       test1_rel = test1_abs ./ JR2;
       test2_abs = JRD_diff - JRD1;
       test2_rel = test2_abs ./ JRD1;
-      if any(abs(test1_abs(:)) > 1e-10 & abs(test1_rel(:)) > 1e-8) || ...
-         any(abs(test2_abs(:)) >  1e-5 & abs(test2_rel(:)) > 1e-3)
+      if any(abs(test1_abs(:)) > 1e-10 & abs(test1_rel(:)) > thrfac^2*1e-8) || ...
+         any(abs(test2_abs(:)) >  thrfac*1e-5 & abs(test2_rel(:)) > thrfac^4*1e-3) % TODO: Toleranz muss für fivebar1 sehr groß sein
         error('Zeitableitung der Rotationsmatrix-Jacobi stimmt nicht');
       end
     end
