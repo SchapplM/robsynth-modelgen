@@ -316,8 +316,8 @@ for ii = 1:n
   end
   E(:,3) = sum(E(:,1:2),2); % Gesamtenergie
   % Ergebnisse zeichnen
-  figure(1);clf;
-  sgtitle(sprintf('Energie: %s', robot_name), 'interpreter', 'none'); grid on;
+  change_current_figure(1);clf;
+  sgtitle(sprintf('Energie-Test: %s', robot_name), 'interpreter', 'none'); grid on;
   subplot(2,2,1); hold on; grid on;
   hdl1=plot(t(1:I_end), E(1:I_end,:));ylabel('Energie [J]');
   set(gca, 'ColorOrderIndex', 1); hdl2=plot(t(I_end+1:end), E(I_end+1:end,:), '--');
@@ -338,12 +338,13 @@ for ii = 1:n
   % innerhalb der Definitionsgrenzen liegt (bei Systemen mit ZB)
   E_Delta = E(1,3) - E(I_end,3);
   E_Delta_Rel = E_Delta/max(abs(E(:))); % beziehen relativen Fehler auf maximale Teilkomponente
-  if (~KINCONSTR && abs(E(1,3) - E(I_end,3)) > 5e-4) ... % Nutze absoluten Fehler für Systeme ohne Zwangsbedingungen
-  || (KINCONSTR  && abs(E_Delta_Rel) > 5e-2) % mit Zwangsbed. sind die Systeme komplizierter. Relativer Fehler da mehr Rundungsfehler bei Rechnung möglich
+  if (~KINCONSTR && (abs(E_Delta) > 5e-4 && abs(E_Delta_Rel) > 5e-2) ) ... % Nutze absoluten und relativen Fehler für Systeme ohne Zwangsbedingungen
+  || (KINCONSTR  && abs(E_Delta_Rel) > 5e-2) % mit Zwangsbed. sind die Systeme komplizierter. Nur relativer Fehler da mehr Rundungsfehler bei Rechnung möglich
     error('Das System ist nicht energetisch konsistent');
   end
   n_complete = n_complete + 1;
 end
 fprintf('Tested energetic consistency for free movement with %d starting configurations for %s. %d configurations not successful.\n', ...
   n_complete, robot_name, n-n_complete);
+
 
