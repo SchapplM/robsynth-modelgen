@@ -223,7 +223,7 @@ for i = 1:n
       pkin);
     Cq_mpv_vec = Cq_regmin*MPV;
     Cq_mpv = reshape(Cq_mpv_vec, NQJ, NQJ)';
-    if any( abs(Cq_func(:)-Cq_mpv(:)) > thrfac*1e6*eps(max(abs(Cq_func(:)))) )
+    if any( abs(Cq_func(:)-Cq_mpv(:)) > thrfac*1e6*eps(1+max(abs(Cq_func(:)))) )
       error('Coriolis matrix from base parameter vector does not match with direct form.');
     end
   end
