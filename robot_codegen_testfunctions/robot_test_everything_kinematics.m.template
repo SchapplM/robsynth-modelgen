@@ -1,0 +1,17 @@
+% Test script for Matlab/Simulink kinematic-functions for 
+% %RN%
+
+% Tim-David Job, 2019-11, HiWi bei
+% Moritz Schappler, schappler@irt.uni-hannover.de
+% (C) Institut für mechatronische Systeme, Universität Hannover
+
+clc
+clear
+
+%RN%_testfunctions_path_init
+
+%RN%_varpar_fixbase_kinematics_test
+%RN%_varpar_floatbase_kinematics_test
+%RN%_compile_test
+
+fprintf('Tests aller Kinematik-Funktionen für %RN% abgeschlossen.\n');

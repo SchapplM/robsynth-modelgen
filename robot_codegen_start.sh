@@ -31,6 +31,7 @@ CG_NOTEST=0
 CG_IC=0
 CG_PARROB=0
 CG_NOTGENSERIAL=0
+CG_KINEMATICSONLY=0
 
 # Argumente verarbeiten
 # http://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
@@ -48,6 +49,7 @@ case $key in
     echo "--parrob: Es handelt sich um einen parallelen Roboter"
     echo "--not_gen_serial: Neuberechnung serieller/verzweigter Roboter bei parallelem/hybriden Roboter unterbinden"
     echo "--notest: Kein Start der Matlab-Gesamt- und Modultests"
+    echo "--kinematics_only: Nur Berechnung der Kinematikfunktionen"
     echo "Die Optionen fixb_only und floatb_only sind exklusiv (nur eine ist möglich)"
     exit 0
     ;;
@@ -75,6 +77,9 @@ case $key in
     --not_gen_serial)
     CG_NOTGENSERIAL=1
     ;;
+    --kinematics_only)
+    CG_KINEMATICSONLY=1
+    ;;
     *)
     echo "Unbekannte Option: $key"
     ./robot_codegen_start.sh --help
@@ -92,6 +97,7 @@ echo CG_IC            = "${CG_IC}"
 echo CG_PARROB        = "${CG_PARROB}"
 echo CG_NOTGENSERIAL  = "${CG_NOTGENSERIAL}"
 echo CG_NOTEST        = "${CG_NOTEST}"
+echo CG_KINEMATICSONLY = "${CG_KINEMATICSONLY}"
 
 if [ "$CG_FIXBONLY" == "1" ] && [ "$CG_FLOATBONLY" == "1" ]; then
   echo "Nicht beide Optionen gleichzeitig möglich: fixb_only, floatb_only"
@@ -108,6 +114,9 @@ else
 fi;
 if [ "$CG_MINIMAL" == "1" ]; then
   CG_BASE_ARGUMENT="$CG_BASE_ARGUMENT --minimal"
+fi;
+if [ "$CG_KINEMATICSONLY" == "1" ]; then
+  CG_BASE_ARGUMENT="$CG_BASE_ARGUMENT --kinematics_only"
 fi;
 
 cd $repo_pfad/robot_codegen_scripts/
@@ -147,7 +156,7 @@ if [ "$CG_NOTGENSERIAL" == "0" ]; then
 
   # Matlab-Funktionen generieren
   cd $repo_pfad/robot_codegen_scripts/
-  source $repo_pfad/robot_codegen_scripts/robot_codegen_matlab_varpar.sh
+  source $repo_pfad/robot_codegen_scripts/robot_codegen_matlab_varpar.sh $CG_BASE_ARGUMENT
 
   # Testfunktionen generieren
   cd $repo_pfad/robot_codegen_scripts/
@@ -155,10 +164,18 @@ if [ "$CG_NOTGENSERIAL" == "0" ]; then
 
   if [ "$CG_MINIMAL" == "0" ] && [ "$CG_NOTEST" != "1" ]; then
    #Matlab-Testfunktionen starten
-     if [ ! "$CG_FIXBONLY" == "1" ]; then
-       matlab -nodesktop -nosplash -useStartupFolderPref -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything');quit;"
+     if [ "$CG_KINEMATICSONLY" == "0" ]; then
+      if [ ! "$CG_FIXBONLY" == "1" ]; then
+        matlab -nodesktop -nosplash -useStartupFolderPref -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything');quit;"
+      else
+        matlab -nodesktop -nosplash -useStartupFolderPref -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything_fixbase');quit;"
+      fi;
      else
-       matlab -nodesktop -nosplash -useStartupFolderPref -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything_fixbase');quit;"
+      if [ ! "$CG_FIXBONLY" == "1" ]; then
+        matlab -nodesktop -nosplash -useStartupFolderPref -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything_kinematics');quit;"
+      else
+        matlab -nodesktop -nosplash -useStartupFolderPref -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything_fixbase_kinematics');quit;"
+      fi;
      fi;
      echo "Funktionsgenerierung abgeschlossen. Alle Tests erfolgreich."
    else
@@ -193,10 +210,12 @@ if [ "$CG_IC" == "1" ]; then
   source $repo_pfad/robot_codegen_scripts/testfunctions_generate_ic.sh
 
   # Matlab-Testfunktionen starten
-  if [ "$CG_NOTEST" != "1" ]; then
+  if [ "$CG_NOTEST" != "1" ] && [ "$CG_KINEMATICSONLY" == "0" ]; then
     matlab -nodesktop -nosplash -useStartupFolderPref -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything');quit;"
-  fi;
-  echo "Funktionsgenerierung abgeschlossen. Alle Tests erfolgreich."
+    echo "Funktionsgenerierung abgeschlossen. Alle Tests erfolgreich."
+  else
+     echo "Funktionsgenerierung abgeschlossen. Keine Tests durchgeführt."
+   fi;
 fi;
 
 ### parallelen Roboter berechnen ###
@@ -232,8 +251,10 @@ if [ "$CG_PARROB" == "1" ]; then
   source $repo_pfad/robot_codegen_scripts/testfunctions_generate_par.sh
 
   # Matlab-Testfunktionen starten
-  if [ "$CG_NOTEST" != "1" ]; then
+  if [ "$CG_NOTEST" != "1" ] && [ "$CG_KINEMATICSONLY" == "0" ]; then
     matlab -nodesktop -nosplash -useStartupFolderPref -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything_par');quit;"
-  fi;
-  echo "Funktionsgenerierung abgeschlossen. Alle Tests erfolgreich."
+    echo "Funktionsgenerierung abgeschlossen. Alle Tests erfolgreich."
+  else
+     echo "Funktionsgenerierung abgeschlossen. Keine Tests durchgeführt."
+   fi;
 fi;
