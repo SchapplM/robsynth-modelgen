@@ -54,6 +54,7 @@ QDD = (0.5-rand(n, NQJ))*pi;
 
 % Gravitation
 G = (0.5-rand(n, 3))*10;
+G(:,~[%GVEC%]) = 0;
 
 % Basisposition
 RB = (0.5-rand(n, 3))*10;
