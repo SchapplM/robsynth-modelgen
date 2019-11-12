@@ -81,6 +81,7 @@ sed -i "s/%NMPVFLOATB%/$robot_NMPVFLOATB/g" $mfcndat
 sed -i "s/%FN%/$FN/g" $mfcndat
 sed -i "s/%NKP%/$robot_NKP/g" $mfcndat
 sed -i "s/%NKCP%/$robot_NKCP/g" $mfcndat
+sed -i "s/%GVEC%/$robot_gVec/g" $mfcndat
 kpstring="pkin=[$(echo "$robot_KP" | sed "s/ /,/g")]';"
 sed -i "s/%KPDEF%/$kpstring/g" $mfcndat
 sed -i "s/%NTAUJFIXBREGNN%/$robot_NTAUJFIXBREGNN/g" $mfcndat

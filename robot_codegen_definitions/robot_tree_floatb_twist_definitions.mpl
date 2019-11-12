@@ -38,8 +38,10 @@ end do:
 qJD_t := diff~(qJ_t, t):
 qJDD_t := diff~(qJD_t, t):
 # Gravity vector in world frame
-g_world := Matrix(3, 1):
-g_world(1 .. 3, 1) := <g1, g2, g3>:
+if not assigned(g_world) then
+  g_world := Matrix(3, 1):
+  g_world(1 .. 3, 1) := <g1, g2, g3>:
+end if:
 # Position und Orientierung der Basis. Die Orientierung ist mit XYZ-Euler-Winkeln definiert, die aber nicht im weiteren Algorithmus verwendet werden (nur Platzhalter).
 # Eine Invertierung der Orientierungsdarstellung sollte nicht notwendig werden, von daher kein Problem mit Orientierungsrepräsentationssingularität.
 # gem. [2], S. 4 X_base_t SE(3): Position und Orientierung.

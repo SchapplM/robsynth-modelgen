@@ -52,3 +52,4 @@ XPDD = (0.5-rand(n, N_XP))*pi;
 
 % Gravitation
 G = (0.5-rand(n, 3))*10;
+G(:,~[%GVEC%]) = 0;

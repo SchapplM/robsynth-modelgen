@@ -578,6 +578,7 @@ In der Datei robot_env können folgende Variablen definiert werden:
 Die Datei stellt eine Maple-Eingabe dar. Die Variablen müssen daher mit "__:=__" definiert werden und jede Zeile mit "__:__" abgeschlossen werden.
 Da die Definitionen in jedem Maple-Arbeitsblatt am Ende der Initialisierung geladen werden, ist es möglich, hier Standardeinstellungen zu überschreiben, wie z.B. durch die Definition der Variablen
 * __codegen_opt__: (Optionen: [2], 1, 0) Der Grad der Code-Optimierung für den Export lässt sich steuern und die Rechenzeit der Generierung damit erhöhen (Standardmäßig auf 2, geringere Optimierung mit 1 oder 0).
+* __g_world__: Standardmäßig wird der Gravitationsvektor mit `g_world := <g1;g2;g3>:` definiert (bei weggelassenem Eintrag). Durch die Wahl von `g_world := <0;0;g3>:` kann z.B. ein senkrecht stehender Roboter modelliert werden. Es müssen die Bezeichnungen g1, g2, g3 verwendet werden.
 
 Weitere Möglichkeiten sind:
 * __codegen_kinematics_opt__: (Optionen: [true], false) Verhindert mit false in robot_tree_floatb_rotmat_mdh_kinematics.mw die Zusammenfassung paralleler Gelenke; sinnvoll bei Elimination von kinematischen Zwangsbedingungen
