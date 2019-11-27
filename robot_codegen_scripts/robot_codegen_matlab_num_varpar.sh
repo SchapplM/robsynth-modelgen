@@ -15,6 +15,13 @@ echo "Generiere Dynamikfunktion (numerisch)"
 repo_pfad=$(pwd)/..
 template_pfad=$repo_pfad/robot_codegen_scripts/templates_num
 
+kinematicsOnly=$1
+
+# Standardwerte für Eingabe
+if [ "$kinematicsOnly" == "" ]; then
+  kinematicsOnly=0
+fi
+
 # Initialisiere Variablen
 source robot_codegen_tmpvar_bash.sh
 source $repo_pfad/robot_codegen_definitions/robot_env.sh
@@ -27,6 +34,14 @@ inertia
 invdyn
 jacobi
 "
+
+if [ "$kinematicsOnly" == 1 ]; then
+  blacklist_constraints="
+  gravload
+  inertia
+  invdyn
+  "
+fi;
 
 # Alle Vorlagen an den Roboter anpassen und kopieren
 for f in $(find $template_pfad -name "*.template")
@@ -42,13 +57,13 @@ do
   # Prüfe, ob die Datei für dieses System nicht generiert werden sollte:
   # Für Systeme mit kinematischen Zwangsbedingungen funktionieren einige Ansätze der nicht
   # (z.B. Inverse Dynamik mit Newton-Euler und Jacobi-Matrix mit geometrischer Berechnung).
-  if [ "$robot_kinconstr_exist" == "1" ] || [ "$robot_NQJ" != "$robot_NJ" ]; then
+  if [ "$robot_kinconstr_exist" == "1" ] || [ "$robot_NQJ" != "$robot_NJ" ] || [ "$kinematicsOnly" == 1 ]; then
     donotgenerate=0
     for blstr in $blacklist_constraints; do
       if [[ $f == *"$blstr"* ]]; then
         donotgenerate=1
         break
-      fi
+      fi 
     done
     if [ "$donotgenerate" == "1" ]; then
       continue

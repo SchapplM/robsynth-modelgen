@@ -14,6 +14,7 @@ echo $repo_pfad
 CG_MINIMAL=0
 CG_FIXBONLY=0
 CG_FLOATBONLY=0
+CG_KINEMATICSONLY=0
 
 # Argumente verarbeiten
 # http://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
@@ -29,6 +30,9 @@ case $key in
     ;;
     --floatb_only)
     CG_FLOATBONLY=1
+    ;;
+    --kinematics_only)
+    CG_KINEMATICSONLY=1
     ;;
     *)
             # unknown option
@@ -51,7 +55,7 @@ dateiliste_kindyn="
   robot_kinematic_constraints_calculations_implicit.mpl
   "
 
-if [ "$CG_MINIMAL" == "0" ]; then
+if [ "$CG_MINIMAL" == "0" ] && [ "$CG_KINEMATICSONLY" == "0" ]; then
   dateiliste_kindyn="$dateiliste_kindyn
       robot_implicit_contraints_rotmat_dynamics_worldframe_par1_invdyn.mpl
       robot_implicit_contraints_rotmat_dynamics_worldframe_par2_invdyn.mpl
@@ -60,10 +64,12 @@ if [ "$CG_MINIMAL" == "0" ]; then
   "
 fi;
 
-dateiliste_kindyn="$dateiliste_kindyn
-    robot_implicit_contraints_rotmat_dynamics_worldframe_par2_grav_inertia.mpl
-    robot_implicit_contraints_rotmat_dynamics_worldframe_snew_par2.mpl
-"
+if [ "$CG_KINEMATICSONLY" == "0" ]; then
+  dateiliste_kindyn="$dateiliste_kindyn
+      robot_implicit_contraints_rotmat_dynamics_worldframe_par2_grav_inertia.mpl
+      robot_implicit_contraints_rotmat_dynamics_worldframe_snew_par2.mpl
+  "
+fi;
 
 # Alle Maple-Dateien der Reihe nach ausführen
 for mpldat in $dateiliste_kindyn

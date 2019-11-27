@@ -135,6 +135,10 @@ Folgende Argumente sind möglich:
   ```
   --not_gen_serial
   ```
+* Reine Berechnung der Kinematik-Funktionen
+  ```
+  --kinematics_only
+  ```
 
 Zum Speicherort der Ergebnisse siehe [Ergebnisordner](#ergebnisordner).
 
