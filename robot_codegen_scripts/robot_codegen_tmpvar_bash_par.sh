@@ -41,7 +41,7 @@ fi
 # Extrahiere den G-Vektor aus der Definitionsdatei (zur Vorgabe eines reduzierten g-Vektors)
 robot_def_pfad=$repo_pfad/codeexport/$robot_name/tmp/para_definitions
 if [ -f $robot_def_pfad ]; then
-  robot_gVec=`grep "gvec := Matrix(3, 1, " $robot_def_pfad | tail -1 | sed 's/.*\[\[\([a-z,0-9]*\)\]\(,\)\[\([a-z,0-9]*\)\]\(,\)\[\([a-z,0-9]*\).*;/\1\2\3,\5/'`
+  robot_gVec=`grep "g_world := Matrix(3, 1, " $robot_def_pfad | tail -1 | sed 's/.*\[\[\([a-z,0-9]*\)\]\(,\)\[\([a-z,0-9]*\)\]\(,\)\[\([a-z,0-9]*\).*;/\1\2\3,\5/'`
   robot_gVec="$(sed s/[a-z][0-9]/1/g <<<$robot_gVec)"
 else
   robot_gVec="UNDEFINED"

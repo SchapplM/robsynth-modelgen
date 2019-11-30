@@ -131,9 +131,9 @@ for j to 6 do
      dgEdz(i) := diff(gE_z(i),xAll(j)):
   end do:
   if codegen_dynpar = 1 then
-    dgEdz_final(j) := mE*Transpose(gvec(..,1)).dgEdz(..,1):
+    dgEdz_final(j) := mE*Transpose(g_world(..,1)).dgEdz(..,1):
   else 
-    dgEdz_final(j) := Transpose(gvec(..,1)).dgEdz(..,1):
+    dgEdz_final(j) := Transpose(g_world(..,1)).dgEdz(..,1):
   end if:
 end do:
 for j to 6 do
