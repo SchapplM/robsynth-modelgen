@@ -42,7 +42,13 @@ end if:
 if not assigned(xE_s) then
    xE_s:=<x_all[1];x_all[2];x_all[3];x_all[4];x_all[5];x_all[6]>:
 end if:
-gvec := Matrix(3,1,[g1,g2,g3]):
+
+# Gravity vector in world frame. TODO: Konsistente Benennung wie serielle Roboter ("g_world" statt "gvec")
+if not assigned(gvec) then
+  gvec := Matrix(3, 1):
+  gvec(1 .. 3, 1) := <g1, g2, g3>:
+end if:
+
 # Parallel Robotics Definitions
 # Erstelle für Gelenkkoordinaten, -geschwindigkeiten und -beschleunigungen für jedes Bein
 J := simplify(b_transl):
