@@ -1,7 +1,7 @@
 # Beispiel für Codegenerierung:
 # SCARA (3DOF)
 
-robot_name := "SCARA3DOF":
+robot_name := "scara3dof":
 
 NJ := 3:
 NQJ := 3:

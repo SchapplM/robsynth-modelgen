@@ -1,7 +1,7 @@
 # Beispiel für Codegenerierung:
 # SCARA (4DOF)
 
-robot_name := "SCARA4DOF":
+robot_name := "scara4dof":
 
 NJ := 4:
 NQJ := 4:

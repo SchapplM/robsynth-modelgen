@@ -5,7 +5,7 @@
 # Die letzte Verschiebung (d7=78mm) ist im Modell nicht enthalten (ist für Dynamik irrelevant).
 # [ZachariasHowHulHir2010] Workspace comparisons of setup configurations for human-robot interaction (2010)
 
-robot_name := "lwr4p":
+robot_name := "lbr4p":
 NJ := 7:
 NQJ := 7:
 
