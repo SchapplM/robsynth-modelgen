@@ -1,34 +1,34 @@
 
 # Konvertierung Vektor zu symmetrischer Matrix
 # Einleitung
-# Generiere die Umwandlung von Vektor mit oberem rechten Teil einer Symmetrischen Matrix zur Matrix selbst für die Dimensionen des Roboters.
-# Diese Umwandlung verursacht weniger Rechenoperationen als die Verwendung der numerischen Funktion vec2symmat in Matlab, da dort jedes Mal die Indizes beim Zusammenbauen der Matrix getestet werden müssen.
+# Generiere die Umwandlung von Vektor mit oberem rechten Teil einer Symmetrischen Matrix zur Matrix selbst fÃ¼r die Dimensionen des Roboters.
+# Diese Umwandlung verursacht weniger Rechenoperationen als die Verwendung der numerischen Funktion vec2symmat in Matlab, da dort jedes Mal die Indizes beim Zusammenbauen der Matrix getestet werden mÃ¼ssen.
 # Autor
 # Tim Job (Studienarbeit bei Moritz Schappler), 2019-4
 # Moritz Schappler, moritz.schappler@imes.uni-hannover.de
-# (C) Institut für Mechatronische Systeme, Universität Hannover
+# (C) Institut fÃ¼r Mechatronische Systeme, UniversitÃ¤t Hannover
 # Initialization
-interface(warnlevel=0): # Unterdrücke die folgende Warnung.
-restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
+interface(warnlevel=0): # UnterdrÃ¼cke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn Ã¼ber Terminal-Maple mit read gestartet wird.
 interface(warnlevel=3):
 with(LinearAlgebra):
 with(ArrayTools):
 with(codegen):
 with(CodeGeneration):
 with(StringTools):
-# Einstellungen für Code-Export: Optimierungsgrad (2=höchster) und Aktivierung jedes Terms.
+# Einstellungen fÃ¼r Code-Export: Optimierungsgrad (2=hÃ¶chster) und Aktivierung jedes Terms.
 read "../helper/proc_MatlabExport":
 read "../helper/proc_vector2mat":
 read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
-printf("Generiere Symmat2Vector-Funktionen für %s\n", robot_name):
-codegen_opt := 0: # Soll nicht von Einstellung in robot_env überschrieben werden.
+printf("Generiere Symmat2Vector-Funktionen fÃ¼r %s\n", robot_name):
+codegen_opt := 0: # Soll nicht von Einstellung in robot_env Ã¼berschrieben werden.
 ;
-# Funktion symmat2vector für den Roboter definieren
-# Erstelle eine Dummy-Variable (mv), die als temporäre Variable in Matlab dient (zum Zusammensetzen der Matrix).
+# Funktion symmat2vector fÃ¼r den Roboter definieren
+# Erstelle eine Dummy-Variable (mv), die als temporÃ¤re Variable in Matlab dient (zum Zusammensetzen der Matrix).
 clear('mv'):
 M_NX:= vec2mat(mv, NX):
-# Warnungen bei Code-Generierung unterdrücken. Die Meldung das der Ausdruck mv() in Matlab nicht bekannt ist, spielt keine Rolle, da diese Variable nach dem Einsetzen des Codes vorher definiert sein wird.
+# Warnungen bei Code-Generierung unterdrÃ¼cken. Die Meldung das der Ausdruck mv() in Matlab nicht bekannt ist, spielt keine Rolle, da diese Variable nach dem Einsetzen des Codes vorher definiert sein wird.
 interface(warnlevel=0):
 MatlabExport(M_NX, sprintf("../codeexport/%s/tmp/vec2mat_%d_matlab.m", robot_name, NX), codegen_opt):
 

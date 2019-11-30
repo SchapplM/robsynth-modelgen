@@ -4,14 +4,14 @@
 # Erstellung einer parameterlinearen und -minimalen Regressorform
 # 
 # Dateiname:
-# robot -> Berechnung für allgemeinen Roboter
-# chain -> Berechnung für eine serielle Struktur (nicht: Baumstruktur)
-# fixb -> fixed base. Kein Floating base Modell. Dort ist diese Form der Minimalparameterform nicht möglich.
+# robot -> Berechnung fÃ¼r allgemeinen Roboter
+# chain -> Berechnung fÃ¼r eine serielle Struktur (nicht: Baumstruktur)
+# fixb -> fixed base. Kein Floating base Modell. Dort ist diese Form der Minimalparameterform nicht mÃ¶glich.
 # rotmat -> Kinematik wird mit Rotationsmatrizen berechnet
 # energy -> Berechnung der Energie
 # regressor -> Regressorform (parameterlinear)
 # Authors
-# Alexander Tödtheide, toedtheide@irt.uni-hannover.de
+# Alexander TÃ¶dtheide, toedtheide@irt.uni-hannover.de
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03
 # 
 # (C) Institut fuer Regelungstechnik, Leibniz Universitaet Hannover
@@ -20,10 +20,10 @@
 # [GautierKhalil1988] A Direct Determination of Minimum Inertial Parameters of Robots
 # [GautierKhalil1990] Direct Calculation of Minimum Set of Inertial Parameters of Serial Robots
 # Initialisierung
-interface(warnlevel=0): # Unterdrücke die folgende Warnung.
-restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
+interface(warnlevel=0): # UnterdrÃ¼cke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn Ã¼ber Terminal-Maple mit read gestartet wird.
 interface(warnlevel=3):
-interface(rtablesize=100): # Zur Anzeige von größeren Vektoren
+interface(rtablesize=100): # Zur Anzeige von grÃ¶ÃŸeren Vektoren
 ;
 with(LinearAlgebra):
 with(ArrayTools):
@@ -36,7 +36,7 @@ read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s": 
 read "../helper/proc_MatlabExport":
 read "../robot_codegen_definitions/robot_env":
-printf("Generiere Minimalparameterregressor der Energie für %s\n", robot_name, codegen_dynpar):
+printf("Generiere Minimalparameterregressor der Energie fÃ¼r %s\n", robot_name, codegen_dynpar):
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name, base_method_name):
 # Ergebnisse der Energie laden
 read sprintf("../codeexport/%s/tmp/energy_potential_floatb_%s_worldframe_par2_maple.m", robot_name, base_method_name):
@@ -50,7 +50,7 @@ for i from 1 to 6 do
   T_fixb := subs({V_base_t[i,1]=0},T_fixb):
   U_fixb := subs({X_base_t[i,1]=0},U_fixb):
 end do:
-# Die kinetischen und potentiellen Energien aus (2) und (3) stehen ab hier durch T_fixb und U_fixb zur Verfügung. 
+# Die kinetischen und potentiellen Energien aus (2) und (3) stehen ab hier durch T_fixb und U_fixb zur VerfÃ¼gung. 
 # Der Parametervektor 'PV2_vec' aus (13) wurde in 'robot_tree_floatb_twist_definitions.mw' aufgestellt. 
 # Parameterlinearisierung
 # Parameterlinearisierung auf Basis von [HRL_IDR] (14) und (15)
@@ -71,13 +71,6 @@ if codegen_act then
   MatlabExport(convert_t_s(u_ges), sprintf("../codeexport/%s/tmp/energy_potential_fixb_regressor_matlab.m", robot_name), codegen_opt):
 end if:
 # Parameterminimierung
-# Linearisierung
-t_ges := Matrix(1, 10*NJ):
-u_ges := Matrix(1, 10*NJ):
-for i to 10*NJ do 
-  t_ges[1,i] := diff(T_fixb,PV2_vec[10+i,1]);
-  u_ges[1,i] := diff(U_fixb,PV2_vec[10+i,1]);
-end do:
 # Minimalparametervekor
 # Definiere Parametermatrix
 # Nehme nur die Inertialparameter der bewegten Segmente, nicht die Basis.
@@ -193,13 +186,13 @@ for i to 10*NJ do
 end do:
 # Parametervektor in Richtiger Reihenfolge aufstellen und Entfernen von mZ, YY, m
 # Anwendung von [HRL_IDR] Regel 3 (S. 5) auf den Parametervektor
-# Bei Drehgelenken werden die Parameter YY, mZ und m mit denen des folgenden Körpers gruppiert. Bei Schubgelenken werden alle Trägheitsmomente gruppiert (da die Trägheitsmomente keinen Einfluss auf die translatorische Bewegung des Schubgelenkes haben).
+# Bei Drehgelenken werden die Parameter YY, mZ und m mit denen des folgenden KÃ¶rpers gruppiert. Bei Schubgelenken werden alle TrÃ¤gheitsmomente gruppiert (da die TrÃ¤gheitsmomente keinen Einfluss auf die translatorische Bewegung des Schubgelenkes haben).
 # [GautierKhalil1990] (eq. 18)
 nt:=add(sigma[i,1],i=1..NJ): # Anzahl Translatorische Gelenke
 nr:=NJ-nt: # Anzahl rotatorische Gelenke
 ;
-#Anzahl der Einträge im Minimalparametervektor
-MPV_n_max := 7*nr+4*nt: # ignoriere Abzüge in der Formel
+#Anzahl der EintrÃ¤ge im Minimalparametervektor
+MPV_n_max := 7*nr+4*nt: # ignoriere AbzÃ¼ge in der Formel
 ;
 Paramvec := Matrix(MPV_n_max, 1):
 ii := 1:
@@ -215,7 +208,7 @@ for i to NJ do
   else: # Schubgelenk (eq. 16)
     if not sin(alpha[i,1]) = 0 then
       # Sonderregel senkrechte Achsen
-      # [GautierKhalil1990] (eq. 19). Parameter wurden mit denen der Basisnäheren Achse zusammengelegt und werden hier nicht betrachtet.
+      # [GautierKhalil1990] (eq. 19). Parameter wurden mit denen der BasisnÃ¤heren Achse zusammengelegt und werden hier nicht betrachtet.
       Paramvec[ii, 1] := mX[i, 1]: ii:= ii+1:
       Paramvec[ii, 1] := mY[i, 1]: ii:= ii+1:
     end if:
@@ -259,7 +252,7 @@ end if;
 # Minimal geometrievektor t_i und u_i
 # Markieren von t_mZ, t_YY, t_m, u_mZ, u_YY, u_m_j
 # Anwendung von [HRL_IDR] Regel 3 (S. 5) auf die Geometrievektoren t und u der Energien T und U
-# Der Basis-Körper wird nicht gezählt. Daher ignorieren der ersten zehn Einträge in t_ges
+# Der Basis-KÃ¶rper wird nicht gezÃ¤hlt. Daher ignorieren der ersten zehn EintrÃ¤ge in t_ges
 # [GautierKhalil1990], p.369 (rechts: "As a conclusion ..."
 for i from 0 to NJ-1 do 
   if sigma[i+1,1] = 0 then: # Drehgelenk
@@ -297,9 +290,9 @@ for i from 0 to NJ-1 do
   end if:
 end do: 
 # Entfernungen von markierten Elementen
-# Durch Entfernung der markierten Elemente, äquivalent zum Minimalparametervektor beta_b, haben t und u die gleiche Spaltenanzahl wie 'C_b'.
+# Durch Entfernung der markierten Elemente, Ã¤quivalent zum Minimalparametervektor beta_b, haben t und u die gleiche Spaltenanzahl wie 'C_b'.
 p:=0:
-for i from 1 to 10*NJ do       #Nullen Zählen um die Matrixgröße von t_ges zu bestimmen   
+for i from 1 to 10*NJ do       #Nullen ZÃ¤hlen um die MatrixgrÃ¶ÃŸe von t_ges zu bestimmen   
   if t_ges[1,i]=REMOVE and u_ges[1,i]=REMOVE then       
     p:=p+1;
   end if
@@ -309,12 +302,12 @@ t_ges_minpar:=Matrix(1,size_Matrix):
 u_ges_minpar:=Matrix(1,size_Matrix):
 printf("Dimension der Regressormatrix: 1x%d\n", size_Matrix):
 p:=0:
-for i from 1 to 10*NJ do       #Nullen Zählen     
+for i from 1 to 10*NJ do       #Nullen ZÃ¤hlen     
    if t_ges[1,i]=REMOVE and u_ges[1,i]=REMOVE then       
       p:=p+1; 
    else 
-      t_ges_minpar[1,i-p]:=t_ges[1,i]; #Um die Anzahl der im Iterationsschritt gezählten Nullen verschieben
-      u_ges_minpar[1,i-p]:=u_ges[1,i]; #Um die Anzahl der im Iterationsschritt gezählten Nullen verschieben
+      t_ges_minpar[1,i-p]:=t_ges[1,i]; #Um die Anzahl der im Iterationsschritt gezÃ¤hlten Nullen verschieben
+      u_ges_minpar[1,i-p]:=u_ges[1,i]; #Um die Anzahl der im Iterationsschritt gezÃ¤hlten Nullen verschieben
    end if
 end do: 
 save t_ges_minpar, sprintf("../codeexport/%s/tmp/energy_kinetic_fixb_regressor_minpar_maple.m", robot_name):
