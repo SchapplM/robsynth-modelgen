@@ -125,8 +125,8 @@ H := <IdentityMatrix(3,3),ZeroMatrix(3);
 Hinv := MatrixInverse(H):
 dH := <ZeroMatrix(3),ZeroMatrix(3);
       ZeroMatrix(3),dRPYjac_0_s>:
-a_E := Matrix(xEDD_s(1..3,1)) - gvec:
-a_E := Transpose(R_0_0_E_s).(Matrix(xEDD_s(1..3,1)) - gvec):
+a_E := Matrix(xEDD_s(1..3,1)) - g_world:
+a_E := Transpose(R_0_0_E_s).(Matrix(xEDD_s(1..3,1)) - g_world):
 w_0_0_E_s_stern := Matrix(3,6,[w_0_0_E_s(1),w_0_0_E_s(2),w_0_0_E_s(3),0,0,0,0,w_0_0_E_s(1),0,w_0_0_E_s(2),w_0_0_E_s(3),0,0,0,w_0_0_E_s(1),0,w_0_0_E_s(2),w_0_0_E_s(3)]):
 wD_0_0_E_s_stern := Matrix(3,6,[wD_0_0_E_s(1),wD_0_0_E_s(2),wD_0_0_E_s(3),0,0,0,0,wD_0_0_E_s(1),0,wD_0_0_E_s(2),wD_0_0_E_s(3),0,0,0,wD_0_0_E_s(1),0,wD_0_0_E_s(2),wD_0_0_E_s(3)]):
 w_E_0_E_s_stern := Matrix(3,6,[w_E_0_E_s(1),w_E_0_E_s(2),w_E_0_E_s(3),0,0,0,0,w_E_0_E_s(1),0,w_E_0_E_s(2),w_E_0_E_s(3),0,0,0,w_E_0_E_s(1),0,w_E_0_E_s(2),w_E_0_E_s(3)]):
@@ -172,8 +172,8 @@ end do:
 c_regmin := <JT_T|JR_T>.<ZeroMatrix(3,6),Multiply(vec2skew(w_E_0_E_s),vec2skew(w_E_0_E_s)),ZeroMatrix(3,1);
              Multiply(vec2skew(w_E_0_E_s),w_E_0_E_s_stern),ZeroMatrix(3,3),ZeroMatrix(3,1)>:
 # Graviational Vector
-g_regmin := <JT_T|JR_T>.<ZeroMatrix(3,6),ZeroMatrix(3,3),-Transpose(R_0_0_E_s).gvec;
-             ZeroMatrix(3,6),-vec2skew(-Transpose(R_0_0_E_s).gvec),ZeroMatrix(3,1)>:
+g_regmin := <JT_T|JR_T>.<ZeroMatrix(3,6),ZeroMatrix(3,3),-Transpose(R_0_0_E_s).g_world;
+             ZeroMatrix(3,6),-vec2skew(-Transpose(R_0_0_E_s).g_world),ZeroMatrix(3,1)>:
 # Torque at the platform
 # Code Export
 if codeexport_invdyn then

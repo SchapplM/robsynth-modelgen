@@ -38,7 +38,14 @@ else
 	parallel_NQJ_leg="NOTDEFINED"
 	parallel_angles_leg="NOTDEFINED"
 fi
-
+# Extrahiere den G-Vektor aus der Definitionsdatei (zur Vorgabe eines reduzierten g-Vektors)
+robot_def_pfad=$repo_pfad/codeexport/$robot_name/tmp/para_definitions
+if [ -f $robot_def_pfad ]; then
+  robot_gVec=`grep "g_world := Matrix(3, 1, " $robot_def_pfad | tail -1 | sed 's/.*\[\[\([a-z,0-9]*\)\]\(,\)\[\([a-z,0-9]*\)\]\(,\)\[\([a-z,0-9]*\).*;/\1\2\3,\5/'`
+  robot_gVec="$(sed s/[a-z][0-9]/1/g <<<$robot_gVec)"
+else
+  robot_gVec="UNDEFINED"
+fi
 robot_system_q=$(( parallel_NQJ_leg * parallel_NLEGS ))
 
 echo "parallel_NX=$parallel_NX" > $robot_env_pfad.sh
@@ -48,6 +55,7 @@ echo "robot_system_q=$robot_system_q" >> $robot_env_pfad.sh
 echo "parallel_NLEGS=$parallel_NLEGS" >> $robot_env_pfad.sh
 echo "robot_name=\"$robot_name\"" >> $robot_env_pfad.sh
 echo "robot_leg_name=\"$robot_leg_name\"" >> $robot_env_pfad.sh
+echo "robot_gVec=$robot_gVec" >> $robot_env_pfad.sh
 
 if [ -d "$repo_pfad/codeexport/${robot_name}/" ]; then
 	cp $repo_pfad/robot_codegen_definitions/robot_env_par $repo_pfad/codeexport/${robot_name}/tmp/

@@ -42,7 +42,13 @@ end if:
 if not assigned(xE_s) then
    xE_s:=<x_all[1];x_all[2];x_all[3];x_all[4];x_all[5];x_all[6]>:
 end if:
-gvec := Matrix(3,1,[g1,g2,g3]):
+
+# Gravity vector in world frame
+if not assigned(g_world) then
+  g_world := Matrix(3, 1):
+  g_world(1 .. 3, 1) := <g1, g2, g3>:
+end if:
+
 # Parallel Robotics Definitions
 # Erstelle für Gelenkkoordinaten, -geschwindigkeiten und -beschleunigungen für jedes Bein
 J := simplify(b_transl):
@@ -130,7 +136,7 @@ end do:
 legAngles := counter:
 # Export
 # Maple-Export
-save gvec, J_P_P, s_P_sP, NX, NQJ_parallel, angleConvLeg, angleConv, r_P_sP, frame_A_i, qJ_i_s, qJD_i_s, qJDD_i_s, xE_t, xED_t, xEDD_t, xE_s, xED_s, xEDD_s, J_SP, sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
+save g_world, J_P_P, s_P_sP, NX, NQJ_parallel, angleConvLeg, angleConv, r_P_sP, frame_A_i, qJ_i_s, qJD_i_s, qJDD_i_s, xE_t, xED_t, xEDD_t, xE_s, xED_s, xEDD_s, J_SP, sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
 varScript := <NX;NQJ_parallel;legAngles>:
 MatlabExport(varScript, sprintf("../codeexport/%s/tmp/var_parallel.m", robot_name), 1);
 
