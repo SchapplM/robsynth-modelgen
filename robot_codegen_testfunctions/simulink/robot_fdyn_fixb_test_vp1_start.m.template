@@ -26,8 +26,19 @@ clear NQJ
 %% Start Simulation
 t1 = tic;
 try
+  % TODO: Bei Baumstrukturen von hybriden Robotern gibt es virtuelle
+  % Gelenke, die zu einer singulären Massenmatrix führen.
+  % Die massenhaft erzeugten Warnungen bringen das Konsolen-Matlab zum
+  % Absturz. Vermeidung der Warnung wie in varpar_fixbase_invdyn_test.m
+  % wäre besser.
+  if any(TSS.sigma==2)
+    warning('off', 'MATLAB:singularMatrix')
+  end
   simOut = sim(sl_Modellname, 'StopTime', '5', ...
-    'SimulationMode', 'normal'); % normal
+    'SimulationMode', 'normal');
+  if any(TSS.sigma==2)
+    warning('on', 'MATLAB:singularMatrix')
+  end
 catch err
   if KINCONSTR
     warning('Keine Lösung im Simulinkmodell möglich. Wahrscheinlich Verlassen des gültigen Gelenkraums');
