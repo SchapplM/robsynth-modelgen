@@ -155,12 +155,18 @@ end do:
 # Platzhalter-Vektor zur Ersetzung der gestapelten MDH-Parameter
 pkt1_ph := <a_ph;alpha_ph;d_ph;theta_ph; qoffset_ph;b_ph;beta_ph>:
 # Kinematikparameter für kinematische Zwangsbedingungen hinzufügen (falls vorhanden)
-#TODO
+#TODO (aktuell wird das Problem mit der NaN-Ersetzung unten umgangen).
 ;
 # Parameter-Indizes mit den Platzhaltern für die Matlab-Funktion ersetzen
 for i from 1 to RowDimension(pkin_subs_mdh) do
   for j from 1 to RowDimension(pkt1_ph) do
     pkin_subs_mdh(i) := subs( {pkt3i(j)=pkt1_ph(j)}, pkin_subs_mdh(i) ):
+  end do:
+end do:
+# Ersetze alle noch nicht ersetzten Kinematikparameter mit NaN. Ansonsten ist der Matlab-Code nicht lauffähig und es treten nachgelagerte Probleme auf.
+for i from 1 to RowDimension(pkin_subs_mdh) do
+  for j from 1 to RowDimension(pkt3i) do
+    pkin_subs_mdh(i) := subs( {pkt3i(j)=NaN}, pkin_subs_mdh(i) ):
   end do:
 end do:
 if codegen_act then
