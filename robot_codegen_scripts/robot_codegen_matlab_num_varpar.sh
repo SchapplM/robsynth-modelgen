@@ -6,6 +6,9 @@
 # sind nicht kompilierbar und damit etwas langsamer.
 #
 # Dieses Skript im Ordner ausführen, in dem es im Repo liegt
+#
+# Eingabeargumente:
+# Argument 1: "1", wenn nur Kinematik generiert werden soll
 
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-06
 # (C) Institut für Regelungstechnik, Leibniz Universität Hannover
@@ -28,15 +31,22 @@ source $repo_pfad/robot_codegen_definitions/robot_env.sh
 
 fcn_pfad=$repo_pfad/codeexport/$robot_name/matlabfcn
 
-blacklist_constraints="
-gravload
-inertia
-invdyn
-jacobi
-"
+# Erstelle Liste mit nicht zu generierenden Dateien
+blacklist=""
+# Für Systeme mit kinematischen Zwangsbedingungen funktionieren einige Ansätze der nicht
+# (z.B. Inverse Dynamik mit Newton-Euler und Jacobi-Matrix mit geometrischer Berechnung).
+if [ "$robot_kinconstr_exist" == "1" ] || [ "$robot_NQJ" != "$robot_NJ" ]; then
+  blacklist="$blacklist
+  gravload
+  inertia
+  invdyn
+  jacobi
+  "
+fi
 
+# Falls nur die Kinematik generiert werden soll, liegen teilweise nicht genug Informationen vor.
 if [ "$kinematicsOnly" == 1 ]; then
-  blacklist_constraints="
+  blacklist="$blacklist
   gravload
   inertia
   invdyn
@@ -55,19 +65,15 @@ do
   filename_new="${tmp/.template/}"
   
   # Prüfe, ob die Datei für dieses System nicht generiert werden sollte:
-  # Für Systeme mit kinematischen Zwangsbedingungen funktionieren einige Ansätze der nicht
-  # (z.B. Inverse Dynamik mit Newton-Euler und Jacobi-Matrix mit geometrischer Berechnung).
-  if [ "$robot_kinconstr_exist" == "1" ] || [ "$robot_NQJ" != "$robot_NJ" ] || [ "$kinematicsOnly" == 1 ]; then
-    donotgenerate=0
-    for blstr in $blacklist_constraints; do
-      if [[ $f == *"$blstr"* ]]; then
-        donotgenerate=1
-        break
-      fi 
-    done
-    if [ "$donotgenerate" == "1" ]; then
-      continue
+  donotgenerate=0
+  for blstr in $blacklist; do
+    if [[ $f == *"$blstr"* ]]; then
+      donotgenerate=1
+      break
     fi
+  done
+  if [ "$donotgenerate" == "1" ]; then
+    continue
   fi
 
   # Datei kopieren
@@ -134,3 +140,4 @@ source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0
 if [ "$robot_KP" == "dummy" ]; then
   printf "pkin = NaN;%% Dummy-Wert, da pkin nicht leer sein soll\n" >> $zieldat
 fi
+
