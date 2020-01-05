@@ -34,14 +34,15 @@ codegen_act := true:
 codegen_debug := false:
 codegen_opt := 2:
 # Funktionen aus Robotik-Repo
-read("../robotics_repo_path"):
+read("../robotics_repo_path"): # Lädt Variable robotics_repo_path
+;
 read(sprintf("%s/transformation/maple/proc_r2eulxyz_inert", robotics_repo_path)):
-
-# Funktionen aus IRT-Maple-Repo
-read sprintf("../helper/proc_MatlabExport", maple_repo_path):
-read sprintf("../transformation/proc_transl", maple_repo_path):
+# Funktionen aus diesem Repo
+read sprintf("../helper/proc_MatlabExport"):
+read sprintf("../transformation/proc_transl"):
 read "../helper/proc_convert_s_t":
-read "../helper/proc_convert_t_s": 
+read "../helper/proc_convert_t_s":
+# Roboter-Definitionen
 read "../robot_codegen_definitions/robot_env":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
 # Ergebnisse der Kinematik laden
