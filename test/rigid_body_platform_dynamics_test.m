@@ -80,13 +80,15 @@ H = [eye(3), zeros(3,3); zeros(3,3), Tw];
 c1 = rigidbody_coriolisvecB_floatb_eulxyz_slag_vp1(phi, xD, m, r_S, I_S);
 M1 = rigidbody_inertiaB_floatb_eulxyz_slag_vp1(phi, m, r_S, I_S);
 g1 = rigidbody_gravloadB_floatb_eulxyz_slag_vp1(phi, g_W, m, r_S);
-tau1 = M1*xDD + c1 + g1;
+tau1 = rigidbody_invdynB_floatb_eulxyz_slag_vp1(phi, xD, xDD, g_W, m, r_S, I_S);
+tau1_sum = M1*xDD + c1 + g1;
 
 c1t = rigidbody_coriolisvecB_floatb_eulxyz_slag_vp2(phi, xD, m, m*r_S, I_O);
 M1t = rigidbody_inertiaB_floatb_eulxyz_slag_vp2(phi, m, m*r_S, I_O);
 g1t = rigidbody_gravloadB_floatb_eulxyz_slag_vp2(phi, g_W, m, m*r_S);
-tau1_test = M1t*xDD + c1t + g1t;
-if any(abs(tau1-tau1_test) > 1e-10)
+tau1t = rigidbody_invdynB_floatb_eulxyz_slag_vp2(phi, xD, xDD, g_W, m, m*r_S, I_O);
+tau1_test_sum = M1t*xDD + c1t + g1t;
+if any(abs(tau1_sum-tau1_test_sum) > 1e-10) || any(abs(tau1-tau1t) > 1e-10) || any(abs(tau1-tau1_sum) > 1e-10)
   error('Herleitung Floating Base Starrkörper stimmt nicht mit Parametersatz 1 vs 2');
 end
 
