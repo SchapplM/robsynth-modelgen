@@ -836,4 +836,4 @@ Textbausteine für Funktionsköpfe:
 * [KhalilVijKhoMuk2014] Khalil, W. and Vijayalingam, A. and Khomutenko, B. and Mukhanov, I. and Lemoine, P. and Ecorchard, G.: "OpenSYMORO: An open-source software package for Symbolic Modelling of Robots" (2014)
 * [AbdellatifHei2009] Abdellatif, H. and Heimann, B.: Computational efficient inverse dynamics of 6-DOF fully parallel manipulators by using the Lagrangian formalism (2009)
 * [Job2018_S759] Job, T. (Studienarbeit; Betreuer Moritz Schappler): Implementierung einer strukturunabhängigen Dynamikmodellierung für parallelkinematische Maschinen (2018)
-* [SchapplerLilHad2019] Schappler, M. and Lilge, T. and Haddadin, S.: Kinematics and Dynamics Model via Explicit Trigonometric Elimination of Kinematic Constraints for a Force Assistance Exoskeleton (2019)
+* [SchapplerLilHad2019] Schappler, M. and Lilge, T. and Haddadin, S.: Kinematics and Dynamics Model via Explicit Trigonometric Elimination of Kinematic Constraints (2019)
