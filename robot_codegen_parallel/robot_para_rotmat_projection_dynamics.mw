@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="2019" minor="1"/>
+<Version major="2019" minor="2"/>
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" compactdisplay="false" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" historytimestamp="false" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="[10, 10]" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" ansicolor="[]" elisiondigitsthreshold="10000" showassumed="1" ansilprint="false" trailingsemicolon="true" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" compactdisplay="false" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" historytimestamp="false" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1050" rtablesize="[10, 10]" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" ansicolor="[]" elisiondigitsthreshold="10000" showassumed="1" ansilprint="false" trailingsemicolon="true" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -573,7 +573,12 @@ end do:
 </Group><CodeEditor-ExecGroup view="presentation" labelreference="L3384" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion4" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">tau_x := pivotMat.tauGes:
 MMGes_x := pivotMat.MMGes.Transpose(pivotMatMas):
 cvecGes_x := pivotMat.cvecGes:
-gGes_x := pivotMat.gGes:</EC-CodeEditor></CodeEditor-ExecGroup>
+gGes_x := pivotMat.gGes:
+# Maple-Export (zur eventuellen sp\303\244teren Verarbeitung in Maple)
+save tau_x,     sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_par%d_maple.m&quot;,      robot_name, codegen_dynpar):
+save MMGes_x,   sprintf(&quot;../codeexport/%s/tmp/inertia_para_plfcoord_par%d_maple.m&quot;,     robot_name, codegen_dynpar):
+save cvecGes_x, sprintf(&quot;../codeexport/%s/tmp/coriolisvec_para_plfcoord_par%d_maple.m&quot;, robot_name, codegen_dynpar):
+save gGes_x,    sprintf(&quot;../codeexport/%s/tmp/gravvec_para_plfcoord_par%d_maple.m&quot;,     robot_name, codegen_dynpar):</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L3369" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">Dynamik in Antriebs-Koordinaten umrechnen. Nur machen, wenn die Jacobi-Matrix einfach genug ist. Sonst ist die symbolische Invertierung zu teuer und sollte numerisch gemacht werden
 [Job2018_S759], S. 30; Gl. 3.53, 3.54</Text-field>
@@ -589,27 +594,12 @@ gGes_x := pivotMat.gGes:</EC-CodeEditor></CodeEditor-ExecGroup>
   MMGes_qa   := Transpose(J) . MMGes_x:
   cvecGes_qa := Transpose(J) . cvecGes_x:
   gGes_qa    := Transpose(J) . gGes_x:
+  # Maple-Export (zur eventuellen sp\303\244teren Verarbeitung in Maple)
+  save tau_qa,     sprintf(&quot;../codeexport/%s/tmp/invdyn_para_actcoord_par%d_maple.m&quot;,      robot_name, codegen_dynpar):
+  save MMGes_qa,   sprintf(&quot;../codeexport/%s/tmp/inertia_para_actcoord_par%d_maple.m&quot;,     robot_name, codegen_dynpar):
+  save cvecGes_qa, sprintf(&quot;../codeexport/%s/tmp/coriolisvec_para_actcoord_par%d_maple.m&quot;, robot_name, codegen_dynpar):
+  save gGes_qa,    sprintf(&quot;../codeexport/%s/tmp/gravvec_para_actcoord_par%d_maple.m&quot;,     robot_name, codegen_dynpar):
 end if:</EC-CodeEditor></CodeEditor-ExecGroup>
-<Group labelreference="L3399" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Maple-Export (zur eventuellen sp\303\244teren Verarbeitung in Maple)</Font></Text-field>
-</Input>
-</Group>
-<Group labelreference="L3403" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save tau_x,     sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_par%d_maple.m&quot;,      robot_name, codegen_dynpar):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L3404" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save MMGes_x,   sprintf(&quot;../codeexport/%s/tmp/inertia_para_plfcoord_par%d_maple.m&quot;,     robot_name, codegen_dynpar):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L3405" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save cvecGes_x, sprintf(&quot;../codeexport/%s/tmp/coriolisvec_para_plfcoord_par%d_maple.m&quot;, robot_name, codegen_dynpar):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L3406" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save gGes_x,    sprintf(&quot;../codeexport/%s/tmp/gravvec_para_plfcoord_par%d_maple.m&quot;,     robot_name, codegen_dynpar):</Text-field>
-</Input>
-</Group>
 <Group labelreference="L3407" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;%s. Speicherung der Dynamik-Terme in symbolischer Form beendet. Starte Code-Export in Matlab\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Font></Text-field>
 </Input>

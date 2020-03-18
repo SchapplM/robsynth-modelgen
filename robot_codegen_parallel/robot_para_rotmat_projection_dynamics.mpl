@@ -259,6 +259,11 @@ tau_x := pivotMat.tauGes:
 MMGes_x := pivotMat.MMGes.Transpose(pivotMatMas):
 cvecGes_x := pivotMat.cvecGes:
 gGes_x := pivotMat.gGes:
+# Maple-Export (zur eventuellen späteren Verarbeitung in Maple)
+save tau_x,     sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_par%d_maple.m",      robot_name, codegen_dynpar):
+save MMGes_x,   sprintf("../codeexport/%s/tmp/inertia_para_plfcoord_par%d_maple.m",     robot_name, codegen_dynpar):
+save cvecGes_x, sprintf("../codeexport/%s/tmp/coriolisvec_para_plfcoord_par%d_maple.m", robot_name, codegen_dynpar):
+save gGes_x,    sprintf("../codeexport/%s/tmp/gravvec_para_plfcoord_par%d_maple.m",     robot_name, codegen_dynpar):
 # Dynamik in Antriebs-Koordinaten umrechnen. Nur machen, wenn die Jacobi-Matrix einfach genug ist. Sonst ist die symbolische Invertierung zu teuer und sollte numerisch gemacht werden
 # [Job2018_S759], S. 30; Gl. 3.53, 3.54
 if RowDimension(Jinv) < 5 and codeexport_actcoord then
@@ -272,12 +277,12 @@ if RowDimension(Jinv) < 5 and codeexport_actcoord then
   MMGes_qa   := Transpose(J) . MMGes_x:
   cvecGes_qa := Transpose(J) . cvecGes_x:
   gGes_qa    := Transpose(J) . gGes_x:
+  # Maple-Export (zur eventuellen späteren Verarbeitung in Maple)
+  save tau_qa,     sprintf("../codeexport/%s/tmp/invdyn_para_actcoord_par%d_maple.m",      robot_name, codegen_dynpar):
+  save MMGes_qa,   sprintf("../codeexport/%s/tmp/inertia_para_actcoord_par%d_maple.m",     robot_name, codegen_dynpar):
+  save cvecGes_qa, sprintf("../codeexport/%s/tmp/coriolisvec_para_actcoord_par%d_maple.m", robot_name, codegen_dynpar):
+  save gGes_qa,    sprintf("../codeexport/%s/tmp/gravvec_para_actcoord_par%d_maple.m",     robot_name, codegen_dynpar):
 end if:
-# Maple-Export (zur eventuellen späteren Verarbeitung in Maple)
-save tau_x,     sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_par%d_maple.m",      robot_name, codegen_dynpar):
-save MMGes_x,   sprintf("../codeexport/%s/tmp/inertia_para_plfcoord_par%d_maple.m",     robot_name, codegen_dynpar):
-save cvecGes_x, sprintf("../codeexport/%s/tmp/coriolisvec_para_plfcoord_par%d_maple.m", robot_name, codegen_dynpar):
-save gGes_x,    sprintf("../codeexport/%s/tmp/gravvec_para_plfcoord_par%d_maple.m",     robot_name, codegen_dynpar):
 printf("%s. Speicherung der Dynamik-Terme in symbolischer Form beendet. Starte Code-Export in Matlab\n", FormatTime("%Y-%m-%d %H:%M:%S")):
 # Matlab Export
 if codeexport_invdyn then
