@@ -83,7 +83,7 @@ do
   source robot_codegen_matlabfcn_postprocess.sh $fcn_pfad/$filename_new 0
 done
 
-# Erzeuge Parameter-Funktion. Diese Funktion kann aufgerufen, um die strukturabhängigen
+# Erzeuge Kinematik-Parameter-Funktion. Diese Funktion kann aufgerufen, um die strukturabhängigen
 # Parameter des Roboters in einer kompilierbaren Funktion zu erhalten (Topologie)
 zieldat=$fcn_pfad/${robot_name}_structural_kinematic_parameters.m
 printf "\n%% Aus parameters_mdh_v_matlab.m\n" >> $zieldat
@@ -141,3 +141,53 @@ if [ "$robot_KP" == "dummy" ]; then
   printf "pkin = NaN;%% Dummy-Wert, da pkin nicht leer sein soll\n" >> $zieldat
 fi
 
+# Erzeuge Dynamik-Parameter-Funktion. Damit werden benutzerspezifische Dynamikparameter
+# für die Testskripte erzeugt (z.B. wenn einzelne Parameter Null gesetzt werden)
+zieldat=$fcn_pfad/${robot_name}_dynamics_parameters_modification.m
+printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
+cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
+cat $tmp_pfad/robot_matlabtmp_assert_rcom.m >> $zieldat
+cat $tmp_pfad/robot_matlabtmp_assert_Ic.m >> $zieldat
+cat $tmp_pfad/robot_matlabtmp_assert_mrcom.m >> $zieldat
+cat $tmp_pfad/robot_matlabtmp_assert_If.m >> $zieldat
+
+printf "\n%%%% Variable Initialization" >> $zieldat
+printf "\n%% Complete set of dynamics parameters that can be reduced by the user." >> $zieldat
+cat $tmp_pfad/robot_matlabtmp_par_KP.m >> $zieldat
+cat $tmp_pfad/robot_matlabtmp_par_m.m >> $zieldat
+cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> $zieldat
+cat $tmp_pfad/robot_matlabtmp_par_Ic.m >> $zieldat
+cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> $zieldat
+cat $tmp_pfad/robot_matlabtmp_par_If.m >> $zieldat
+
+printf "\n%%%% Parameter Postprocessing / Set Output" >> $zieldat
+printf "\n%% Create the reduced set of dynamics parameters that is also used for generation of the dynamics equations." >> $zieldat
+
+printf "\n%% Aus parameters_dyn_mges_matlab.m\n" >> $zieldat
+cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_dyn_mges_matlab.m >> $zieldat
+varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat`
+echo "m = $varname_tmp;" >> $zieldat
+
+printf "\n%% Aus parameters_dyn_rSges_matlab.m\n" >> $zieldat
+cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_dyn_rSges_matlab.m >> $zieldat
+varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat`
+echo "rSges = $varname_tmp;" >> $zieldat
+
+printf "\n%% Aus parameters_dyn_Icges_matlab.m\n" >> $zieldat
+cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_dyn_Icges_matlab.m >> $zieldat
+varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat`
+echo "Icges = $varname_tmp;" >> $zieldat
+
+printf "\n%% Aus parameters_dyn_mrSges_matlab.m\n" >> $zieldat
+cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_dyn_mrSges_matlab.m >> $zieldat
+varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat`
+echo "mrSges = $varname_tmp;" >> $zieldat
+
+printf "\n%% Aus parameters_dyn_Ifges_matlab.m\n" >> $zieldat
+cat $repo_pfad/codeexport/${robot_name}/tmp/parameters_dyn_Ifges_matlab.m >> $zieldat
+varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat`
+echo "Ifges = $varname_tmp;" >> $zieldat
+# Platzhalter ersetzen
+source robot_codegen_matlabfcn_postprocess.sh $zieldat 0

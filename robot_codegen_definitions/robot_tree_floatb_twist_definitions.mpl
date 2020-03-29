@@ -104,28 +104,62 @@ if not assigned(beta) then
   beta := Matrix(NJ,1):
   printf("Variable beta ist nicht gegeben. zusätzliche Verschiebung auf Null\n"):
 end if:
-# Dynamic Parameters
+# Dynamics Parameters
 # Mass of each link
-M := Matrix(NL, 1):
+M_generic := Matrix(NL, 1):
 for i from 1 to NL do
-  M[i,1]:=parse(sprintf("M%d", i-1)):
+  M_generic[i,1]:=parse(sprintf("M%d", i-1)):
 end do:
+M := copy(M_generic):
+if assigned(user_M) then
+  if not RowDimension(user_M) = NL then
+    printf("Input user_M is not of size %dx1. Error.\n", NL):
+  end if:
+  # Mass parameter given by user. Some entries can be zero or equal
+  for i from 1 to NL do
+    M[i,1]:=user_M[i,1]:
+  end do:
+end if:
 # Center of Mass of each link (in link frame)
 r_i_i_Si := Matrix(3, NL):
-for i from 1 to NL do
-  r_i_i_Si[1,i]:=parse(sprintf("SX%d", i-1)):
-  r_i_i_Si[2,i]:=parse(sprintf("SY%d", i-1)):
-  r_i_i_Si[3,i]:=parse(sprintf("SZ%d", i-1)):
-end do:
+if not assigned(user_CoM) then
+  for i from 1 to NL do
+    r_i_i_Si[1,i]:=parse(sprintf("SX%d", i-1)):
+    r_i_i_Si[2,i]:=parse(sprintf("SY%d", i-1)):
+    r_i_i_Si[3,i]:=parse(sprintf("SZ%d", i-1)):
+  end do:
+else
+  if RowDimension(user_CoM) != NL or ColumnDimension(user_CoM) != 3 then
+    printf("Input user_CoM is not of size %dx3. Error.\n", NL):
+  end if:
+  for i from 1 to NL do
+    r_i_i_Si[1..3,i]:=user_CoM[1..3,i]:
+  end do:
+end if:
+# First Moment (mass and center of mass)
 mr_i_i_Si := Matrix(3, NL):
+mr_i_i_Si_generic := Matrix(3, NL):
+xyzstrings := ["X", "Y", "Z"]:
 for i from 1 to NL do
-  mr_i_i_Si[1,i]:=parse(sprintf("MX%d", i-1)):
-  mr_i_i_Si[2,i]:=parse(sprintf("MY%d", i-1)):
-  mr_i_i_Si[3,i]:=parse(sprintf("MZ%d", i-1)):
+  for j from 1 to 3 do # loop over x-, y-, z-coordinates of the CoM
+    mr_i_i_Si_generic[j,i]:= parse(sprintf("M%s%d", xyzstrings[j], i-1)):
+  end do:
+  if M[i,1] = 0 then next; end if: # Zero Mass can be set by the user. Then the first moment stays zero
+  for j from 1 to 3 do # loop over x-, y-, z-coordinates of the CoM
+    if r_i_i_Si[j,i] = parse(sprintf("S%s%d", xyzstrings[j], i-1)) then
+    	 # default value for CoM is set (not overwritten by user input).
+    	 # Set default value for first moment
+      mr_i_i_Si[j,i]:= parse(sprintf("M%s%d", xyzstrings[j], i-1)):
+    else
+      # CoM is written by the user. Put this assumption also in the first moment to reduce dynamics parameters
+    	 mr_i_i_Si[j,i] := M[i,1]*r_i_i_Si[j,i]:
+    end if:
+  end do:
 end do:
 # Inertia of each link (about the center of mass, in link frame)
 I_i_Si := Matrix(6, NL):
 for i from 1 to NL do
+  if M[i,1] = 0 then next; end if: # Zero Mass can be set by the user. Then the inertia stays zero
   I_i_Si[1,i]:=parse(sprintf("XXC%d", i-1)):
   I_i_Si[2,i]:=parse(sprintf("XYC%d", i-1)):
   I_i_Si[3,i]:=parse(sprintf("XZC%d", i-1)):
@@ -136,6 +170,7 @@ end do:
 # Inertia of each link (about the origin of body frame, in link frame)
 I_i_i := Matrix(6, NL):
 for i from 1 to NL do
+  if M[i,1] = 0 then next; end if: # Zero Mass can be set by the user. Then the inertia stays zero
   I_i_i[1,i]:=parse(sprintf("XX%d", i-1)):
   I_i_i[2,i]:=parse(sprintf("XY%d", i-1)):
   I_i_i[3,i]:=parse(sprintf("XZ%d", i-1)):
@@ -143,20 +178,26 @@ for i from 1 to NL do
   I_i_i[5,i]:=parse(sprintf("YZ%d", i-1)):
   I_i_i[6,i]:=parse(sprintf("ZZ%d", i-1)):
 end do:
-# Matrix of link inertial parameters, stacked link parameter vectors
+# Matrix of link inertial parameters, stacked link parameter vectors.
+# Diese Parameter-Matrix wird nur benutzt, um für die Generierung der Regressorform danach abzuleiten.
+# Hier stehen also die allgemeinen ("generic") Parameter drin. Es ist egal, ob diese bereits durch den Benutzer zu Null gesetzt sind.
+# Dann würden die allgemeinen Parameter nicht in der Dynamik vorkommen und die Ableitung wäre Null.
 PV2_mat := Matrix(NL, 10):
 for i to NL do 
   PV2_mat[i, 1 .. 6] := I_i_i[1 .. 6, i]:
-  PV2_mat[i, 7 .. 9] := mr_i_i_Si[1 .. 3, i]:
-  PV2_mat[i, 10] := M[i, 1]:
+  PV2_mat[i, 7 .. 9] := mr_i_i_Si_generic[1 .. 3, i]:
+  PV2_mat[i, 10] := M_generic[i, 1]:
 end do:
+
 # Parameter-Vektor Erstellen: vector of link inertial parameters (delta in [1]).
+# Gleiche Überlegung wie für Parameter-Matrix
 PV2_vec := Matrix(10*(NL), 1):
 for i to NL do 
   for j to 10 do 
     PV2_vec[10*(i-1)+j] := PV2_mat[i, j]:
   end do:
 end do:
+
 # Kinematische Zwangsbedingungen
 # Prüfe, ob kinematische Zwangsbedingungen in der Roboterkonfiguration genannt sind durch Prüfung der Existenz der entsprechenden Variablen.
 if type( kintmp_t, 'Matrix') = false then
@@ -183,4 +224,18 @@ if codegen_act then
   MatlabExport(sigma, sprintf("../codeexport/%s/tmp/parameters_mdh_sigma_matlab.m", robot_name), 2):
   MatlabExport(mu, sprintf("../codeexport/%s/tmp/parameters_mdh_mu_matlab.m", robot_name), 2):
 end:
+# Einzelne Dynamikparameter als Matlab-Code exportieren. Wenn die Parameter durch Benutzereingaben verändert wurden, lässt sich diese Information so weiter benutzen.
+# (z.B. in der Definition von Eingabeparametern in den Testskripten).
+# In den Maple-Variablen ist die Spalte der Index der Körper und die Zeilen sind die Indizes für die xyz-Komponenten (einfacherer Aufruf der Variablen)
+# In Matlab ist es umgekehrt (führt zu konsistenterem Code in Matlab): Die Zeilen entsprechen dem Körper-Index. Daher hier Transponierung.
+# Zusätzlich ist die Reihenfolge der Komponenten der Trägheitstensoren in Matlab und Maple unterschiedlich (daher die Indizierung).
+# Matlab: xx, yy, zz, xy, xz, yz (erst Hauptmomente, dann Deviationsmomente)
+# Maple: xx, xy, xz, yy, yz, zz (Dreiecksform)
+if codegen_act then
+  MatlabExport(M, sprintf("../codeexport/%s/tmp/parameters_dyn_mges_matlab.m", robot_name), 2):
+  MatlabExport(Transpose(r_i_i_Si), sprintf("../codeexport/%s/tmp/parameters_dyn_rSges_matlab.m", robot_name), 2):
+  MatlabExport(Transpose(I_i_Si([1,4,6,2,3,5],..)), sprintf("../codeexport/%s/tmp/parameters_dyn_Icges_matlab.m", robot_name), 2):
+  MatlabExport(Transpose(mr_i_i_Si), sprintf("../codeexport/%s/tmp/parameters_dyn_mrSges_matlab.m", robot_name), 2):
+  MatlabExport(Transpose(I_i_i([1,4,6,2,3,5],..)), sprintf("../codeexport/%s/tmp/parameters_dyn_Ifges_matlab.m", robot_name), 2):
+end if:
 

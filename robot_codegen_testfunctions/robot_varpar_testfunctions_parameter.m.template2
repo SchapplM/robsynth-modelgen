@@ -1,3 +1,14 @@
+%% Dynamik-Parameter mit vorgegebenen Werten überschreiben
+% Parameter reduzieren, falls durch Benutzereingabe gefordert.
+% Notwendig, damit Dynamikmodell konsistent ist mit den Eingabeparametern
+[m,rSges,Icges,mrSges,Ifges]=%RN%_dynamics_parameters_modification(pkin,m,rSges,Icges,mrSges,Ifges);
+% Prüfe, ob die Reduktion konsistent ist. Es dürfen keine zyklischen
+% Abhängigkeiten zwischen Masse, Schwerpunkt und Trägheit gesetzt sein.
+[m2,rSges2,Icges2,mrSges2,Ifges2]=%RN%_dynamics_parameters_modification(pkin,m,rSges,Icges,mrSges,Ifges);
+if any(abs([m-m2;rSges(:)-rSges2(:);Icges(:)-Icges2(:);mrSges(:)-mrSges2(:);Ifges(:)-Ifges2(:)])>1e-10)
+  error('Bei zweifacher Durchführung der Parameterreduktion ändern sich die Parameter. Nicht konsistent!');
+end
+
 %% Set Outputs
 TSS = struct('type', 'Test Settings Structure');
 % Allgemeine Definitionen
