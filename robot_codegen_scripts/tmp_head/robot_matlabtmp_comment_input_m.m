@@ -1,2 +1,2 @@
-% m_mdh [%NL%x1]
+% m [%NL%x1]
 %   mass of all robot links (including the base)

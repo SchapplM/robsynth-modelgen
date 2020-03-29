@@ -3,7 +3,7 @@
 % Eingabe:
 % phi [3x1]
 %   XYZ-Euler-Winkel des Plattform-KS
-% m_num_mdh [1x1], rSges_num_mdh [1x3], Icges_num_mdh [1x6]
+% m_num [1x1], rSges_num_mdh [1x3], Icges_num_mdh [1x6]
 %   dynamic parameters (parameter set 1: center of mass and inertia about center of mass)
 % 
 % Ausgabe:

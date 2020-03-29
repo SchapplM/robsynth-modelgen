@@ -11,7 +11,7 @@
 %   2. Ableitung der Euler-Winkel)
 % g [3x1]
 %   Gravitationsvektor im Basis-KS
-% m_num_mdh [1x1], rSges_num_mdh [1x3], Icges_num_mdh [1x6]
+% m_num [1x1], rSges_num_mdh [1x3], Icges_num_mdh [1x6]
 %   dynamic parameters (parameter set 1: center of mass and inertia about center of mass)
 % 
 % Ausgabe:
