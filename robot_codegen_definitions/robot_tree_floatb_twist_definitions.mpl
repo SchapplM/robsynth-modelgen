@@ -118,25 +118,40 @@ if assigned(user_M) then
   end if:
   # Mass parameter given by user. Some entries can be zero or equal
   for i from 1 to NL do
+    if user_M[i,1]<>M_generic[i,1] and user_M[i,1]<>0 then # check input
+      printf("User input for mass %d should be either \"%s\" or zero. Not \"%s\". Continue anyway. \n", i-1, M_generic[i,1], user_M[i,1]):
+    end if:
     M[i,1]:=user_M[i,1]:
   end do:
+  printf("Masseparameter von Benutzer gesetzt. Eingabe für M:\n"):
+  print(M);
 end if:
 # Center of Mass of each link (in link frame)
 r_i_i_Si := Matrix(3, NL):
+r_i_i_Si_generic := Matrix(3, NL):
+for i from 1 to NL do
+  r_i_i_Si_generic[1,i]:=parse(sprintf("SX%d", i-1)):
+  r_i_i_Si_generic[2,i]:=parse(sprintf("SY%d", i-1)):
+  r_i_i_Si_generic[3,i]:=parse(sprintf("SZ%d", i-1)):
+end do:
 if not assigned(user_CoM) then
-  for i from 1 to NL do
-    r_i_i_Si[1,i]:=parse(sprintf("SX%d", i-1)):
-    r_i_i_Si[2,i]:=parse(sprintf("SY%d", i-1)):
-    r_i_i_Si[3,i]:=parse(sprintf("SZ%d", i-1)):
-  end do:
+  r_i_i_Si := r_i_i_Si_generic:
 else
-  if RowDimension(user_CoM) != NL or ColumnDimension(user_CoM) != 3 then
-    printf("Input user_CoM is not of size %dx3. Error.\n", NL):
+  if RowDimension(user_CoM) <> 3 or ColumnDimension(user_CoM) <> NL then
+    printf("Input user_CoM is not of size 3x%d. Error.\n", NL):
   end if:
   for i from 1 to NL do
+    for j from 1 to 3 do
+      if user_CoM[j,i]<>r_i_i_Si_generic[j,i] and user_CoM[j,i]<>0 then # check input
+        printf("User input for CoM %d,%d should be either \"%s\" or zero. Not \"%s\". Continue anyway. \n", j, i-1, r_i_i_Si_generic[j,i], convert(user_CoM[j,i],string)):
+      end if:
+    end do:
     r_i_i_Si[1..3,i]:=user_CoM[1..3,i]:
   end do:
+  printf("Schwerpunktsparameter von Benutzer gesetzt. Eingabe für r_i_i_Si:\n"):
+  print(r_i_i_Si);
 end if:
+
 # First Moment (mass and center of mass)
 mr_i_i_Si := Matrix(3, NL):
 mr_i_i_Si_generic := Matrix(3, NL):
@@ -157,17 +172,37 @@ for i from 1 to NL do
     end if:
   end do:
 end do:
+
 # Inertia of each link (about the center of mass, in link frame)
 I_i_Si := Matrix(6, NL):
+I_i_Si_generic := Matrix(6, NL):
 for i from 1 to NL do
   if M[i,1] = 0 then next; end if: # Zero Mass can be set by the user. Then the inertia stays zero
-  I_i_Si[1,i]:=parse(sprintf("XXC%d", i-1)):
-  I_i_Si[2,i]:=parse(sprintf("XYC%d", i-1)):
-  I_i_Si[3,i]:=parse(sprintf("XZC%d", i-1)):
-  I_i_Si[4,i]:=parse(sprintf("YYC%d", i-1)):
-  I_i_Si[5,i]:=parse(sprintf("YZC%d", i-1)):
-  I_i_Si[6,i]:=parse(sprintf("ZZC%d", i-1)):
+  I_i_Si_generic[1,i]:=parse(sprintf("XXC%d", i-1)):
+  I_i_Si_generic[2,i]:=parse(sprintf("XYC%d", i-1)):
+  I_i_Si_generic[3,i]:=parse(sprintf("XZC%d", i-1)):
+  I_i_Si_generic[4,i]:=parse(sprintf("YYC%d", i-1)):
+  I_i_Si_generic[5,i]:=parse(sprintf("YZC%d", i-1)):
+  I_i_Si_generic[6,i]:=parse(sprintf("ZZC%d", i-1)):
 end do:
+if not assigned(user_inertia) then
+  I_i_Si := I_i_Si_generic:
+else
+  if RowDimension(user_inertia) <> 6 or ColumnDimension(user_inertia) <> NL then
+    printf("Input user_inertia is not of size 6x%d. Error.\n", NL):
+  end if:
+  for i from 1 to NL do
+    for j from 1 to 6 do
+      if user_inertia[j,i]<>I_i_Si_generic[j,i] and user_inertia[j,i]<>0 then # check input
+        printf("User input for inertia %d,%d should be either \"%s\" or zero. Not \"%s\". Continue anyway. \n", j, i-1, convert(I_i_Si_generic[j,i],string), convert(user_inertia[j,i],string)):
+      end if:
+    end do:
+    I_i_Si[1..6,i]:=user_inertia[1..6,i]:
+  end do:
+  printf("Trägheitsparameter von Benutzer gesetzt. Eingabe für I_i_Si:\n"):
+  print(I_i_Si);
+end if:
+
 # Inertia of each link (about the origin of body frame, in link frame)
 # Berechne die Inertial-Trägheitsmomente mit dem Steinerschen Verschiebungssatz
 I_i_i_calc := Matrix(6, NL):
@@ -179,6 +214,7 @@ for i from 1 to NL do
   # Wieder als Matrix abspeichern
   I_i_i_calc[..,i] := <I_i_i_Tensor[1,1]; I_i_i_Tensor[1,2]; I_i_i_Tensor[1,3]; I_i_i_Tensor[2,2]; I_i_i_Tensor[2,3]; I_i_i_Tensor[3,3]>:
 end do:
+
 # Allgemeine Form des Trägheitstensors (Einträge sind unabhängige Parameter)
 I_i_i_generic := Matrix(6, NL):
 for i from 1 to NL do
@@ -189,6 +225,7 @@ for i from 1 to NL do
   I_i_i_generic[5,i]:=parse(sprintf("YZ%d", i-1)):
   I_i_i_generic[6,i]:=parse(sprintf("ZZ%d", i-1)):
 end do:
+
 # Prüfe, welche Einträge des Trägheitstensors noch Schwerpunkts-Parameter enthalten. Diese müssen wieder auf die Standard-Werte mit unabhängigen Parametern gesetzt werden
 I_i_i := Matrix(6, NL):
 compstrings := ["XX", "XY", "XZ", "YY", "YZ", "ZZ"]:
@@ -197,12 +234,25 @@ for i from 1 to NL do
   for j from 1 to 6 do # Alle Komponenten des Tensors
     # Nicht Null. Setze erstmal allgemeinen Eintrag:
     I_i_i[j,i] := I_i_i_generic[j,i]:
-    if not diff(I_i_i_calc[j,i], parse(sprintf("%sC%d", compstrings[j], i-1))) = 0 then
-    	 next: # Der Tensor hat einen allgemeinen Eintrag des Schwerpunktbezogenen Trägheitstensors
+    # Prüfe, ob Schwerpunktsparameter vorkommt (durch Verschiebungssatz s.o.)
+    IhasCoM := false:
+    for k from 1 to 3 do
+      if has(I_i_i_calc[j,i], r_i_i_Si_generic[k,i]) then
+    	   IhasCoM := true: # Der Eintrag enthält die Schwerpunktskoordinaten. Nicht zulässig für weitere Rechnung.
+    	   break:
+      end if:
+    end do:
+    if has(I_i_i_calc[j,i], I_i_Si_generic[j,i]) then
+    	 IhasCoM := true: # Es steht der Schwerpunktsbezogene Trägheitsterm drin. Weitere Rechnung damit nicht möglich.
+    end if:
+    if IhasCoM = true then
+      next: # Es kommt ein Schwerpunktsparameter vor. Belasse Parameter auf allgemeinem Wert.
     end if:
     I_i_i[j,i] := I_i_i_calc[j,i]:
-  end do
+  end do:
 end do:
+
+# Vector of stacked dynamics parameters for regressor form
 # Matrix of link inertial parameters, stacked link parameter vectors.
 # Diese Parameter-Matrix wird nur benutzt, um für die Generierung der Regressorform danach abzuleiten.
 # Hier stehen also die allgemeinen ("generic") Parameter drin. Es ist egal, ob diese bereits durch den Benutzer zu Null gesetzt sind.
@@ -249,6 +299,7 @@ if codegen_act then
   MatlabExport(sigma, sprintf("../codeexport/%s/tmp/parameters_mdh_sigma_matlab.m", robot_name), 2):
   MatlabExport(mu, sprintf("../codeexport/%s/tmp/parameters_mdh_mu_matlab.m", robot_name), 2):
 end:
+
 # Einzelne Dynamikparameter als Matlab-Code exportieren. Wenn die Parameter durch Benutzereingaben verändert wurden, lässt sich diese Information so weiter benutzen.
 # (z.B. in der Definition von Eingabeparametern in den Testskripten).
 # In den Maple-Variablen ist die Spalte der Index der Körper und die Zeilen sind die Indizes für die xyz-Komponenten (einfacherer Aufruf der Variablen)
