@@ -17,6 +17,7 @@ interface(warnlevel=3):
 with(LinearAlgebra):
 read "../helper/proc_MatlabExport":
 read "../helper/proc_convert_t_s":
+read "../helper/proc_vec2skew":
 codegen_act := true:
 # Lese Umgebungsvariable für Codegenerierung.
 read "../robot_codegen_definitions/robot_env":
@@ -168,15 +169,39 @@ for i from 1 to NL do
   I_i_Si[6,i]:=parse(sprintf("ZZC%d", i-1)):
 end do:
 # Inertia of each link (about the origin of body frame, in link frame)
+# Berechne die Inertial-Trägheitsmomente mit dem Steinerschen Verschiebungssatz
+I_i_i_calc := Matrix(6, NL):
+for i from 1 to NL do
+  # Trägheitstensor (3x3) um den Körperschwerpunkt in Körper-KS
+  I_i_Si_Tensor := Matrix([[I_i_Si[1, i], I_i_Si[2, i], I_i_Si[3, i]], [I_i_Si[2, i], I_i_Si[4, i], I_i_Si[5, i]], [I_i_Si[3, i], I_i_Si[5, i], I_i_Si[6, i]]]):
+  # Steinerschen Satz anwenden
+  I_i_i_Tensor := I_i_Si_Tensor + M[i,1]*Transpose(vec2skew(r_i_i_Si[1..3,i])) . vec2skew(r_i_i_Si[1..3,i]):
+  # Wieder als Matrix abspeichern
+  I_i_i_calc[..,i] := <I_i_i_Tensor[1,1]; I_i_i_Tensor[1,2]; I_i_i_Tensor[1,3]; I_i_i_Tensor[2,2]; I_i_i_Tensor[2,3]; I_i_i_Tensor[3,3]>:
+end do:
+# Allgemeine Form des Trägheitstensors (Einträge sind unabhängige Parameter)
+I_i_i_generic := Matrix(6, NL):
+for i from 1 to NL do
+  I_i_i_generic[1,i]:=parse(sprintf("XX%d", i-1)):
+  I_i_i_generic[2,i]:=parse(sprintf("XY%d", i-1)):
+  I_i_i_generic[3,i]:=parse(sprintf("XZ%d", i-1)):
+  I_i_i_generic[4,i]:=parse(sprintf("YY%d", i-1)):
+  I_i_i_generic[5,i]:=parse(sprintf("YZ%d", i-1)):
+  I_i_i_generic[6,i]:=parse(sprintf("ZZ%d", i-1)):
+end do:
+# Prüfe, welche Einträge des Trägheitstensors noch Schwerpunkts-Parameter enthalten. Diese müssen wieder auf die Standard-Werte mit unabhängigen Parametern gesetzt werden
 I_i_i := Matrix(6, NL):
+compstrings := ["XX", "XY", "XZ", "YY", "YZ", "ZZ"]:
 for i from 1 to NL do
   if M[i,1] = 0 then next; end if: # Zero Mass can be set by the user. Then the inertia stays zero
-  I_i_i[1,i]:=parse(sprintf("XX%d", i-1)):
-  I_i_i[2,i]:=parse(sprintf("XY%d", i-1)):
-  I_i_i[3,i]:=parse(sprintf("XZ%d", i-1)):
-  I_i_i[4,i]:=parse(sprintf("YY%d", i-1)):
-  I_i_i[5,i]:=parse(sprintf("YZ%d", i-1)):
-  I_i_i[6,i]:=parse(sprintf("ZZ%d", i-1)):
+  for j from 1 to 6 do # Alle Komponenten des Tensors
+    # Nicht Null. Setze erstmal allgemeinen Eintrag:
+    I_i_i[j,i] := I_i_i_generic[j,i]:
+    if not diff(I_i_i_calc[j,i], parse(sprintf("%sC%d", compstrings[j], i-1))) = 0 then
+    	 next: # Der Tensor hat einen allgemeinen Eintrag des Schwerpunktbezogenen Trägheitstensors
+    end if:
+    I_i_i[j,i] := I_i_i_calc[j,i]:
+  end do
 end do:
 # Matrix of link inertial parameters, stacked link parameter vectors.
 # Diese Parameter-Matrix wird nur benutzt, um für die Generierung der Regressorform danach abzuleiten.
@@ -184,7 +209,7 @@ end do:
 # Dann würden die allgemeinen Parameter nicht in der Dynamik vorkommen und die Ableitung wäre Null.
 PV2_mat := Matrix(NL, 10):
 for i to NL do 
-  PV2_mat[i, 1 .. 6] := I_i_i[1 .. 6, i]:
+  PV2_mat[i, 1 .. 6] := I_i_i_generic[1 .. 6, i]:
   PV2_mat[i, 7 .. 9] := mr_i_i_Si_generic[1 .. 3, i]:
   PV2_mat[i, 10] := M_generic[i, 1]:
 end do:
