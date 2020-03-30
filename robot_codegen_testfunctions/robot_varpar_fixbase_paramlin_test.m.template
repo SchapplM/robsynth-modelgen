@@ -72,18 +72,18 @@ end
 
 % Liste der Namen der Dynamikparameter. Basis wird hier nicht betrachtet
 % (Index "0"), aber bei den Körpern NL mitgezählt.
-PV2_Names = cell(10*NL,1);
+PV2fixb_Names = cell(10*(NL-1),1);
 for i = 1:NL-1
-  PV2_Names{10*(i-1)+ 1} = sprintf('XX%d',i);
-  PV2_Names{10*(i-1)+ 2} = sprintf('XY%d',i);
-  PV2_Names{10*(i-1)+ 3} = sprintf('XZ%d',i);
-  PV2_Names{10*(i-1)+ 4} = sprintf('YY%d',i);
-  PV2_Names{10*(i-1)+ 5} = sprintf('YZ%d',i);
-  PV2_Names{10*(i-1)+ 6} = sprintf('ZZ%d',i);
-  PV2_Names{10*(i-1)+ 7} = sprintf('MX%d',i);
-  PV2_Names{10*(i-1)+ 8} = sprintf('MY%d',i);
-  PV2_Names{10*(i-1)+ 9} = sprintf('MZ%d',i);
-  PV2_Names{10*(i-1)+10} = sprintf('M%d', i);
+  PV2fixb_Names{10*(i-1)+ 1} = sprintf('XX%d',i);
+  PV2fixb_Names{10*(i-1)+ 2} = sprintf('XY%d',i);
+  PV2fixb_Names{10*(i-1)+ 3} = sprintf('XZ%d',i);
+  PV2fixb_Names{10*(i-1)+ 4} = sprintf('YY%d',i);
+  PV2fixb_Names{10*(i-1)+ 5} = sprintf('YZ%d',i);
+  PV2fixb_Names{10*(i-1)+ 6} = sprintf('ZZ%d',i);
+  PV2fixb_Names{10*(i-1)+ 7} = sprintf('MX%d',i);
+  PV2fixb_Names{10*(i-1)+ 8} = sprintf('MY%d',i);
+  PV2fixb_Names{10*(i-1)+ 9} = sprintf('MZ%d',i);
+  PV2fixb_Names{10*(i-1)+10} = sprintf('M%d', i);
 end
 
 %% Test kinetic Energy
@@ -517,7 +517,7 @@ end
 [Ksym, K_dsym, P1sym, P2sym] = %RN%_PV2_MPV_transformations_fixb(pkin);
 plin_num_test_struct = struct('W', W_g_energy, 'PV2', PV2fixb, 'MPV', MPV, ...
   'P1sym', P1sym, 'P2sym', P2sym, 'K_dsym', K_dsym, 'Ksym', Ksym, ...
-  'NQ', NQJ, 'PV2_Names', {PV2_Names});
+  'NQ', NQJ, 'PV2_Names', {PV2fixb_Names});
 % Aufruf des Test-Algorithmus als Funktion (der Test kann genauso für
 % Floating Base durchgeführt werden und wird deshalb ausgelagert. Die
 % Übergabeargumente unterscheiden sich nur minimal)
