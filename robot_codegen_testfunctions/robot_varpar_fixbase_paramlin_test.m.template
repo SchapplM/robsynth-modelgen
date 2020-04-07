@@ -116,20 +116,23 @@ fprintf('Tested kinetic energy for %d random joint angles for %s\n', ...
 %% Test Potential Energy
 % Die potentielle Energie hat aufgrund des wegstreichens von Parametern
 % einen unterschiedlichen statischen Anteil bei der Minimalparameterform
+% Wähle die erste Winkelkonfiguration als virtuelle Null-Lage
+% (Null-Werte können bei einigen geschlossenen kinematischen Ketten
+% eine ungültige Lösung darstellen)
 for i = 1:n
   q = Q(i,:)';
   g_base = G(i,:)';
 
   U_func = %RN%_energypot_fixb_slag_vp1(q, g_base, ...
     pkin, m, rSges);
-  U_func0 = %RN%_energypot_fixb_slag_vp1(zeros(NQJ,1), g_base, ...
+  U_func0 = %RN%_energypot_fixb_slag_vp1(Q(1,:)', g_base, ...
     pkin, m, rSges);
   % calculate potential energy with optimized function
   if ~KINCONSTR && ~TREE
     % calculate potential energy with minimal regressor
     u_regmin = %RN%_energypot_fixb_regmin_slag_vp(q, g_base, ...
       pkin);
-    u_regmin0 = %RN%_energypot_fixb_regmin_slag_vp(zeros(NQJ,1), g_base, ...
+    u_regmin0 = %RN%_energypot_fixb_regmin_slag_vp(Q(1,:)', g_base, ...
       pkin);
     U_mpv = u_regmin*MPV;
     U_mpv0 = u_regmin0*MPV;
@@ -141,7 +144,7 @@ for i = 1:n
   % calculate potential energy with inertial parameters regressor
   u_reg2 = %RN%_energypot_fixb_reg2_slag_vp(q, g_base, ...
     pkin);
-  u_reg20 = %RN%_energypot_fixb_reg2_slag_vp(zeros(NQJ,1), g_base, ...
+  u_reg20 = %RN%_energypot_fixb_reg2_slag_vp(Q(1,:)', g_base, ...
     pkin);
   U_pv2 = u_reg2*PV2fixb;
   U_pv20 = u_reg20*PV2fixb;
@@ -509,7 +512,7 @@ for i = 1:n
   % [Gautier1990] Gl. (6) (Füllen mit Energie-Regressor)
   % Der konstante Anteil der potentiellen Energie muss abgezogen werden
   u_reg2 = %RN%_energypot_fixb_reg2_slag_vp(q, g_base, pkin);
-  u_reg20 = %RN%_energypot_fixb_reg2_slag_vp(zeros(NQJ,1), g_base, pkin);
+  u_reg20 = %RN%_energypot_fixb_reg2_slag_vp(Q(1,:)', g_base, pkin);
   t_reg2 = %RN%_energykin_fixb_reg2_slag_vp(q, qD, pkin);
   W_g_energy(i,:) = t_reg2 + u_reg2 - u_reg20;
 end
