@@ -49,14 +49,19 @@ zieldat=$testfcn_pfad/${robot_name}_varpar_testfunctions_parameter.m
 # Winkelgrenzen in Parameter-Skript berücksichtigen
 qlim_dat=$repo_pfad/robot_codegen_constraints/${robot_name}_kinematic_constraints_matlab.m
 if [ -f "$qlim_dat" ]; then
-  # TODO: Zeilenumbrüche nach Einsetzen wiederherstellen, Einrückung schön machen.
+  # Ersetzungsausdruck für Winkelausdruck in Vorlage eintragen.
+  # Setze kompletten Inhalt der gegebenen Einfüge-Datei an die Stelle
   REPSTR=`tr "\n" " " < $qlim_dat`
+  versionfile=$tmp_pfad/version_info.head.m
+  sed -i "/%REPLACE_QDEF%/r $qlim_dat" $zieldat
+  sed -i "s/%REPLACE_QDEF%/% Aus Datei ${robot_name}_kinematic_constraints_matlab.m eingefügt:/g" $zieldat
 else
-  # nur zufällige Winkel
+  # nur zufällige Winkel einsetzen
   REPSTR="q_min = -pi*ones(NQJ,1);q_max = pi*ones(NQJ,1);"
+  sed -i "s|%REPLACE_QDEF%|$REPSTR|" $zieldat
 fi;
-# Ersetzungsausdruck für Winkelausdruck in Vorlage ersetzen.
-sed -i "s|%REPLACE_QDEF%|$REPSTR|" $zieldat
+
+
 
 # Parameter-Generierungsskript anpassen (damit nicht MDH-Parameter mit Zufallswerten belegt sind, die einen bestimmten Wert haben sollen)
 printf "\n\n%%%% MDH-Parametereinträge auf Zufallswerte setzen" >> $zieldat
