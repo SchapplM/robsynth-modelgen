@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="2017" minor="3"/>
+<Version major="2019" minor="2"/>
 <Label-Scheme value="2" prefix=""/>
-<View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false">
+<View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" compactdisplay="false" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" historytimestamp="false" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1050" rtablesize="[10, 10]" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" ansicolor="[]" elisiondigitsthreshold="10000" showassumed="1" ansilprint="false" trailingsemicolon="true" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -200,7 +200,7 @@ rD_W_Si := rD_W_Si:</Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">U_b := Matrix(NL, 1):
 U_grav := 0:</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L2" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="1071" pixel-height="200" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">for i to NL do 
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L2" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="1071" pixel-height="200" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">for i to NL do 
   U_b[i] := -M[i, 1]*Multiply(Transpose(g_world), r_W_W_Si(1 .. 3, i)):
   U_grav := U_grav+U_b[i, 1]:
   printf(&quot;Potentielle Energie aus Gravitation f\303\274r K\303\266rper %d berechnet (im Welt-KS, Parametersatz 1).\134n&quot;, i-1): #0=Basis
@@ -222,7 +222,7 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L1584" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Berechne kinetische Energie aller durch Gelenkwinkel bewegter K\303\266rper.</Font></Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L4" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="1557" pixel-height="252" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">T_b := Matrix(NL, 1):
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L4" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="1557" pixel-height="252" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">T_b := Matrix(NL, 1):
 T := 0:
 for i to NL do 
   # Tr\303\244gheitstensor (3x3) um den K\303\266rperschwerpunkt in K\303\266rper-KS
@@ -274,8 +274,16 @@ end do:</Text-field>
 </Group>
 <Group labelreference="L1688" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(U_s_fixb, sprintf(&quot;../codeexport/%s/tmp/energy_potential_fixb_worldframe_par1_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
+  MatlabExport(U_s_fixb, sprintf(&quot;../codeexport/%s/tmp/energy_potential_fixb_worldframe_par1_matlab.m&quot;, robot_name), codegen_opt):
 end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1693" drawlabel="true">
+<Input><Text-field style="Text" layout="Normal">Maple Export (Fixed-Base)</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1694" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save U_s_fixb, sprintf(&quot;../codeexport/%s/tmp/energy_potential_fixb_worldframe_par1_maple.m&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 </Section>
@@ -317,6 +325,14 @@ end do:</Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
   MatlabExport(T_s_fixb, sprintf(&quot;../codeexport/%s/tmp/energy_kinetic_fixb_worldframe_par1_matlab.m&quot;, robot_name), codegen_opt):
 end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1697" drawlabel="true">
+<Input><Text-field style="Text" layout="Normal">Maple Export (Fixed-Base)</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1696" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save T_s_fixb, sprintf(&quot;../codeexport/%s/tmp/energy_kinetic_fixb_worldframe_par1_maple.m&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1684" drawlabel="true">

@@ -96,8 +96,10 @@ for i from 1 to NQB do
   U_s_fixb := subs({X_base_s[i,1]=0},U_s_fixb):
 end do:
 if codegen_act then
-  MatlabExport(U_s_fixb, sprintf("../codeexport/%s/tmp/energy_potential_fixb_worldframe_par1_matlab.m", robot_name, base_method_name), codegen_opt):
+  MatlabExport(U_s_fixb, sprintf("../codeexport/%s/tmp/energy_potential_fixb_worldframe_par1_matlab.m", robot_name), codegen_opt):
 end if:
+# Maple Export (Fixed-Base)
+save U_s_fixb, sprintf("../codeexport/%s/tmp/energy_potential_fixb_worldframe_par1_maple.m", robot_name):
 # Kinetic Energy
 # Floating Base
 # Eliminiere die Basis-Position (nicht: Orientierung). Die kinetische Energie kann nicht davon abhängen.
@@ -120,4 +122,6 @@ end do:
 if codegen_act then
   MatlabExport(T_s_fixb, sprintf("../codeexport/%s/tmp/energy_kinetic_fixb_worldframe_par1_matlab.m", robot_name), codegen_opt):
 end if:
+# Maple Export (Fixed-Base)
+save T_s_fixb, sprintf("../codeexport/%s/tmp/energy_kinetic_fixb_worldframe_par1_maple.m", robot_name):
 
