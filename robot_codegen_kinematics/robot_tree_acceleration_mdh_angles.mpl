@@ -29,6 +29,10 @@ printf("Generiere Beschleunigung für %s\n", robot_name):
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
 # Lade Ausdrücke für kinematische Zwangsbedingungen (Verknüpfung von MDH-Gelenkwinkeln durch verallgemeinerte Koordinaten)
 read sprintf("../codeexport/%s/tmp/kinematic_constraints_maple_inert.m", robot_name):
+kintmp_qt := kintmp_qt:
+kintmp_qt := kintmp_qt:
+kin_constraints_exist := kin_constraints_exist:
+kintmp_subsexp := kintmp_subsexp:
 # Ergebnisse der Geschwindigkeit laden
 read sprintf("../codeexport/%s/tmp/velocity_mdh_angles_maple.m", robot_name):
 thetaD:= thetaD:
@@ -70,3 +74,4 @@ end if:
 # Ausdruck für Maple speichern
 save thetaDD, dDD, sprintf("../codeexport/%s/tmp/acceleration_mdh_angles_maple.m", robot_name):
 save thetaDD, dDD, sprintf("../codeexport/%s/tmp/acceleration_mdh_angles_maple", robot_name):
+

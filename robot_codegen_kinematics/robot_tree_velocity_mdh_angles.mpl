@@ -35,6 +35,10 @@ printf("Generiere Geschwindigkeit für %s\n", robot_name):
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
 # Lade Ausdrücke für kinematische Zwangsbedingungen (Verknüpfung von MDH-Gelenkwinkeln durch verallgemeinerte Koordinaten)
 read sprintf("../codeexport/%s/tmp/kinematic_constraints_maple_inert.m", robot_name):
+kintmp_qt := kintmp_qt:
+kintmp_qt := kintmp_qt:
+kin_constraints_exist := kin_constraints_exist:
+kintmp_subsexp := kintmp_subsexp:
 # Zeitableitung der Drehwinkel berechnen
 # Ersetze die MDH-Winkel durch verallgemeinerte Koordinaten
 # Falls die Gelenkwinkel nicht direkt mit verallgemeinerten Koordinaten überstimmen (bei Kopplungen, kinematischen Schleifen) steht hier eine längere Berechnung. Ansonsten reicht das triviale Einsetzen:
