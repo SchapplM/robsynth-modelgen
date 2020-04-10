@@ -89,6 +89,12 @@ esac
 shift # past argument or value
 done
 
+if [ "$CG_KINEMATICSONLY" == "1" ] && [ "$CG_MINIMAL" == "1" ]; then
+  echo "Nicht beide Optionen gleichzeitig implementiert: minimal, kinematics_only"
+  echo "Entferne Option minimal und berechne nur die Kinematik"
+  CG_MINIMAL="0"
+fi;
+
 echo CG_PARALLEL      = "${CG_PARALLEL}"
 echo CG_MINIMAL       = "${CG_MINIMAL}"
 echo CG_FIXBONLY      = "${CG_FIXBONLY}"
