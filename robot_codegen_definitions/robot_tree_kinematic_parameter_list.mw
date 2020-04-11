@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="2019" minor="1"/>
+<Version major="2019" minor="2"/>
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
 </View-Properties>
@@ -436,7 +436,17 @@ end do:</Text-field>
 </Input>
 </Group><CodeEditor-ExecGroup view="presentation" labelreference="L1924" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion2" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">for i from 1 to RowDimension(pkin_subs_mdh) do
   for j from 1 to RowDimension(pkt3i) do
-    pkin_subs_mdh(i) := subs( {pkt3i(j)=NaN}, pkin_subs_mdh(i) ):
+    if has(pkin_subs_mdh(i), pkt3i(j)) then
+      printf(&quot;Die Variable %s kommt noch in der Umrechnung mdh-&gt;pkin vor. Vermutlich Fehler beim substituieren. Setze NaN.\134n&quot;, String(pkt3i(j))):
+      pkin_subs_mdh(i) := subs( {pkt3i(j)=NaN}, pkin_subs_mdh(i) ):
+    end if:
+  end do:
+  for j from 1 to RowDimension(kintmp_s) do
+    if has(pkin_subs_mdh(i), kintmp_s(j)) then
+      printf(&quot;Die Variable %s kommt noch in der Umrechnung mdh-&gt;pkin vor. Vermutlich Fehler beim substituieren. Setze NaN.\134n&quot;, String(kintmp_s(j))):
+      pkin_subs_mdh(i) := subs( {kintmp_s(j)=NaN}, pkin_subs_mdh(i) ):
+    end if:
+
   end do:
 end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L1908" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">

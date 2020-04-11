@@ -166,7 +166,17 @@ end do:
 # Ersetze alle noch nicht ersetzten Kinematikparameter mit NaN. Ansonsten ist der Matlab-Code nicht lauffähig und es treten nachgelagerte Probleme auf.
 for i from 1 to RowDimension(pkin_subs_mdh) do
   for j from 1 to RowDimension(pkt3i) do
-    pkin_subs_mdh(i) := subs( {pkt3i(j)=NaN}, pkin_subs_mdh(i) ):
+    if has(pkin_subs_mdh(i), pkt3i(j)) then
+      printf("Die Variable %s kommt noch in der Umrechnung mdh->pkin vor. Vermutlich Fehler beim substituieren. Setze NaN.\n", String(pkt3i(j))):
+      pkin_subs_mdh(i) := subs( {pkt3i(j)=NaN}, pkin_subs_mdh(i) ):
+    end if:
+  end do:
+  for j from 1 to RowDimension(kintmp_s) do
+    if has(pkin_subs_mdh(i), kintmp_s(j)) then
+      printf("Die Variable %s kommt noch in der Umrechnung mdh->pkin vor. Vermutlich Fehler beim substituieren. Setze NaN.\n", String(kintmp_s(j))):
+      pkin_subs_mdh(i) := subs( {kintmp_s(j)=NaN}, pkin_subs_mdh(i) ):
+    end if:
+
   end do:
 end do:
 if codegen_act then
