@@ -326,7 +326,7 @@ end:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1707" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;%s. Beginne direkte Kinematik. Nutze die Methode %s f\303\274r die Basis-Orientierung.\134n&quot;, </Font>base_method_name, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;%s. Beginne direkte Kinematik. Nutze die Methode %s f\303\274r die Basis-Orientierung.\134n&quot;, </Font>FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), base_method_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1710" drawlabel="true">

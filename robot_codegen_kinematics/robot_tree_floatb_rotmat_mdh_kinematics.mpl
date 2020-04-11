@@ -130,7 +130,7 @@ end:
 if base_method_name = "eulxyz" then:
   Trf_c(1 .. 4, 1 .. 4, 1) := transl(X_base_t[1..3,1]) . eulxyztr(X_base_t[4,1], X_base_t[5,1], X_base_t[6,1]):
 end:
-printf("%s. Beginne direkte Kinematik. Nutze die Methode %s für die Basis-Orientierung.\n", base_method_name, FormatTime("%Y-%m-%d %H:%M:%S")):
+printf("%s. Beginne direkte Kinematik. Nutze die Methode %s für die Basis-Orientierung.\n", FormatTime("%Y-%m-%d %H:%M:%S"), base_method_name):
 # Kinematik aller Körper mit MDH-Ansatz Bestimmen. [KhalilKle1986].
 # Einfache Kinematik: Multiplikation an vorherige Transformationsmatrix
 if not(codegen_kinematics_opt) then
