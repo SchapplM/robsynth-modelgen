@@ -107,6 +107,14 @@ for i to NL do
   rD_W_Si(1 .. 3, i) := Matrix(rD_W_i(1 .. 3, i)) + Matrix(CrossProduct(omega_W_i(1 .. 3, i), r_W_i_Si(1 .. 3, i))):
   printf("Geschwindigkeit für Körperschwerpunkt %d aufgestellt. %s\n", i-1, FormatTime("%Y-%m-%d %H:%M:%S")):#0=Basis
 end do:
+# Exportieren
+# Basis-Position aus Termen entfernen. Die Basis-Position kann keinen Einfluss auf die Geschwindigkeiten der einzelnen Körper haben.
+# Bei manchen komplexen Systemen scheint der Term aber trotzdem nicht zu verschwinden, da Maple die Vereinfachung nicht erkennt
+for i from 1 to 3 do
+  omega_W_i := subs({X_base_s[i,1]=0},omega_W_i):
+  rD_W_i := subs({X_base_s[i,1]=0},rD_W_i):
+  rD_W_Si := subs({X_base_s[i,1]=0},rD_W_Si):
+end do:
 # Maple Export
 save omega_W_i, rD_W_i, rD_W_Si, sprintf("../codeexport/%s/tmp/velocity_worldframe_floatbase_%s_par1_maple.m", robot_name, base_method_name):
 printf("Maple-Ausdrücke exportiert. %s\n", FormatTime("%Y-%m-%d %H:%M:%S")):
@@ -117,4 +125,5 @@ if codegen_act then
   MatlabExport(convert_t_s(rD_W_Si), sprintf("../codeexport/%s/tmp/velocity_rDSi0_floatb_%s_worldframe_par1_matlab.m", robot_name, base_method_name), codegen_opt):
   printf("Geschwindigkeiten in Matlab exportiert. %s\n", FormatTime("%Y-%m-%d %H:%M:%S")):
 end if:
+
 

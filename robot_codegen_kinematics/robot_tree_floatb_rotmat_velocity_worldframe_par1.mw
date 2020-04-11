@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="2017" minor="3"/>
+<Version major="2019" minor="2"/>
 <Label-Scheme value="2" prefix=""/>
-<View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false">
+<View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" compactdisplay="false" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" historytimestamp="false" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1050" rtablesize="[10, 10]" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" ansicolor="[]" elisiondigitsthreshold="10000" showassumed="1" ansilprint="false" trailingsemicolon="true" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -252,7 +252,7 @@ end:</Text-field>
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Erh\303\266he die Geschwindigkeit jedes K\303\266rpers
 Betrachte dazu nur die durch Gelenke angetriebenen K\303\266rper, nicht die Basis</Font></Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L2" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="1323" pixel-height="432" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">for i from 1 to NJ do # Gelenke durchgehen
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L2" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="1323" pixel-height="432" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">for i from 1 to NJ do # Gelenke durchgehen
   # K\303\266rper der von Gelenkwinkel i bewegt wird: Index i+1
   # Vorg\303\244ngerk\303\266rper bestimmen
   j := v(i) + 1:
@@ -287,20 +287,36 @@ for i to NL do
 end do:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1662" drawlabel="true">
+</Section>
+</Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Exportieren</Text-field></Title>
+<Group labelreference="L1727" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Basis-Position aus Termen entfernen. Die Basis-Position kann keinen Einfluss auf die Geschwindigkeiten der einzelnen K\303\266rper haben.
+</Font>Bei manchen komplexen Systemen scheint der Term aber trotzdem nicht zu verschwinden, da Maple die Vereinfachung nicht erkennt</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1726" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to 3 do
+  omega_W_i := subs({X_base_s[i,1]=0},omega_W_i):
+  rD_W_i := subs({X_base_s[i,1]=0},rD_W_i):
+  rD_W_Si := subs({X_base_s[i,1]=0},rD_W_Si):
+end do:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1729" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal">Maple Export</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1664" drawlabel="true">
+<Group labelreference="L1728" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save omega_W_i, rD_W_i, rD_W_Si, sprintf(&quot;../codeexport/%s/tmp/velocity_worldframe_floatbase_%s_par1_maple.m&quot;, robot_name, base_method_name):
 <Font encoding="UTF-8">printf(&quot;Maple-Ausdr\303\274cke exportiert. %s\134n&quot;, </Font>FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1666" drawlabel="true">
+<Group labelreference="L1730" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal">Matlab Export</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1665" drawlabel="true">
+<Group labelreference="L1731" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
   MatlabExport(convert_t_s(omega_W_i), sprintf(&quot;../codeexport/%s/tmp/velocity_omegai0_floatb_%s_worldframe_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
   MatlabExport(convert_t_s(rD_W_i), sprintf(&quot;../codeexport/%s/tmp/velocity_rDi0_floatb_%s_worldframe_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
@@ -309,10 +325,13 @@ end do:</Text-field>
 end if:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1667" drawlabel="true">
+<Group labelreference="L1724" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>
-</Section>
+<Group labelreference="L1725" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
 </Worksheet>
