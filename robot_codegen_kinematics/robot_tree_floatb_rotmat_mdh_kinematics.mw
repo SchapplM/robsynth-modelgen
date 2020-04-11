@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="2018" minor="0"/>
+<Version major="2019" minor="2"/>
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" compactdisplay="false" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" historytimestamp="false" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1050" rtablesize="[10, 10]" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" ansicolor="[]" elisiondigitsthreshold="10000" showassumed="1" ansilprint="false" trailingsemicolon="true" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -205,6 +205,10 @@ end proc:</Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group>
+<Group labelreference="L2213" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;%s. Alle Daten geladen. Generiere Kinematik f\303\274r %s\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), </Font>robot_name):</Text-field>
+</Input>
+</Group>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Kinematische Zwangsbedingungen</Text-field></Title>
 <Group labelreference="L1700" drawlabel="true">
@@ -235,8 +239,8 @@ end if:</Text-field>
   kintmp_qs := kintmp_qs: # gelesene Variable sonst nicht sichtbar
   kintmp_qt := kintmp_qt: # gelesene Variable sonst nicht sichtbar
   kintmp_subsexp := kintmp_subsexp:
-<Font encoding="UTF-8">  printf(&quot;Kinematische Zwangsbedingungen gelesen.\134n&quot;):
-</Font>else
+  printf(&quot;%s. <Font encoding="UTF-8">Kinematische Zwangsbedingungen gelesen.\134n&quot;</Font>, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+else
   kintmp_qs := Matrix(1,1):
   kintmp_qt := Matrix(1,1):
   kintmp_subsexp := Matrix(1,2):
@@ -251,6 +255,10 @@ end if:</Text-field>
 <Group labelreference="L1124" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal">Trf is the Matrix of Transformation from i-1 to i
 Trf_c is the cummulated Matrix of Transformation from 0 to i</Text-field>
+</Input>
+</Group>
+<Group labelreference="L2215" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;%s. Beginne Berechnung der Kinematik f\303\274r einzelne Gelenk-Transformationen.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1680" drawlabel="true">
@@ -290,7 +298,7 @@ end do:</Text-field>
       end do:
     end do:
   end do:
-  printf(&quot;Ersetzungen der MDH-Parameter mit Ergebnissen der Parallelstruktur in verallgemeinerten Koordinaten erfolgreich (vor Berechnung der Gesamt-Transformation).\134n&quot;):
+  printf(&quot;%s. Ersetzungen der MDH-Parameter mit Ergebnissen der Parallelstruktur in verallgemeinerten Koordinaten erfolgreich (vor Berechnung der Gesamt-Transformation).\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
 end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Calculate Forward Kinematics (Multi-Joint Transformation)</Text-field></Title>
@@ -318,21 +326,18 @@ end:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1707" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Nutze die Methode %s f\303\274r die Basis-Orientierung\134n&quot;, </Font>base_method_name):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;%s. Beginne direkte Kinematik. Nutze die Methode %s f\303\274r die Basis-Orientierung.\134n&quot;, </Font>base_method_name, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1710" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Kinematik aller K\303\266rper mit MDH-Ansatz Bestimmen. </Font>[KhalilKle1986].</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1708" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
-</Input>
-</Group>
 <Group labelreference="L1727" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">Einfache Kinematik: Multiplikation an vorherige Transformationsmatrix</Text-field>
 </Input>
 </Group><CodeEditor-ExecGroup view="presentation" labelreference="L4" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="837" pixel-height="200" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">if not(codegen_kinematics_opt) then
+  printf(&quot;%s. Berechne Vorw\303\244rts-Transformation der Kinematik ohne spezielle Optimierung.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
   for i from 1 to NJ do 
     # Index des vorherigen Koordinatensystems
     j := v(i)+1:
@@ -353,6 +358,7 @@ Bei Verwendung dieser Optimierung funktioniert die Substitution mit trigonometri
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group><CodeEditor-ExecGroup view="presentation" hide-input="false" labelreference="L6" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion3" expanded="true" visible="true" pixel-width="1170" pixel-height="702" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">if codegen_kinematics_opt then
+  printf(&quot;%s. Beginne mit der Optimierung der Kinematik f\303\274r parallele Gelenke.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
   for i from 1 to NJ do
     #printf(&quot;----------------------\134ni=%d\134n&quot;,i):
     # Bestimme Vorw\303\244rtskinematik f\303\274r das Koordinatensystem i (0=Basis)
@@ -404,7 +410,9 @@ Bei Verwendung dieser Optimierung funktioniert die Substitution mit trigonometri
     #printf(&quot;Trf_tmp an Trf_c angeh\303\244ngt (Eintrag zu K\303\266rper %d. %d -&gt; %d mit Kette %s)\134n&quot;, i, j2, i, convert(Kette_akt, string)):
     #print(Trf_c(1 .. 4, 1 .. 4, i+1)):
   end do:
-end if;</EC-CodeEditor></CodeEditor-ExecGroup>
+  printf(&quot;%s. Ersetzungen der MDH-Parameter mit Ergebnissen der Parallelstruktur in verallgemeinerten Koordinaten erfolgreich (vor Berechnung der Gesamt-Transformation).\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)
+):
+end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
 <Group labelreference="L2206" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input>
@@ -415,6 +423,7 @@ end if;</EC-CodeEditor></CodeEditor-ExecGroup>
 Da die Gesamt-Transformation Trf_c an dieser Stelle schon berechnet wurde, m\303\274ssen die Ausdr\303\274cke hier in Trf und Trf_c ersetzt werden.</Font></Text-field>
 </Input>
 </Group><CodeEditor-ExecGroup view="presentation" labelreference="L2201" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion2" expanded="true" visible="true" pixel-width="1584" pixel-height="288" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">if kin_constraints_exist and codegen_kinematics_subsorder = 2 then
+  printf(&quot;%s. Beginne Einsetzung der kinematischen Zwangsbedingungen in die direkte Kinematik (Gesamt-Transformation).\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
   for i from 1 to NJ do # Index \303\274ber Transformationsmatrizen aller K\303\266rper
     for ix from 1 to 4 do # Index \303\274ber Zeilen der Transformationsmatrizen
       for iy from 1 to 4 do # Index \303\274ber Spalten der Transformationsmatrizen
@@ -434,10 +443,14 @@ Da die Gesamt-Transformation Trf_c an dieser Stelle schon berechnet wurde, m\303
       end do:
     end do:
   end do:
-  printf(&quot;Ersetzungen der MDH-Parameter mit Ergebnissen der Parallelstruktur in verallgemeinerten Koordinaten erfolgreich (nach Berechnung der Gesamt-Transformation).\134n&quot;):
+  printf(&quot;%s. Ersetzungen der MDH-Parameter mit Ergebnissen der Parallelstruktur in verallgemeinerten Koordinaten erfolgreich (nach Berechnung der Gesamt-Transformation).\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
 end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Export</Text-field></Title>
+<Group labelreference="L2214" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;%s. Berechnung der Kinematik beendet. Beginne Matlab-Export.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Font></Text-field>
+</Input>
+</Group>
 <Group labelreference="L1840" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal">Maple-Export</Text-field>
 </Input>

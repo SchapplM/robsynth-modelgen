@@ -63,6 +63,7 @@ end proc:
 read "../robot_codegen_definitions/robot_env":
 printf("Generiere Kinematik für %s\n", robot_name):
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
+printf("%s. Alle Daten geladen. Generiere Kinematik für %s\n", FormatTime("%Y-%m-%d %H:%M:%S"), robot_name):
 # Kinematische Zwangsbedingungen
 # Lade Ausdrücke für kinematische Zwangsbedingungen (Verknüpfung von MDH-Gelenkwinkeln durch verallgemeinerte Koordinaten)
 # Lese Variablen: kintmp_subsexp, kintmp_qs, kintmp_qt
@@ -76,7 +77,7 @@ if kin_constraints_exist = true then:
   kintmp_qs := kintmp_qs: # gelesene Variable sonst nicht sichtbar
   kintmp_qt := kintmp_qt: # gelesene Variable sonst nicht sichtbar
   kintmp_subsexp := kintmp_subsexp:
-  printf("Kinematische Zwangsbedingungen gelesen.\n"):
+  printf("%s. Kinematische Zwangsbedingungen gelesen.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
 else
   kintmp_qs := Matrix(1,1):
   kintmp_qt := Matrix(1,1):
@@ -88,6 +89,7 @@ end if:
 # Calculate Forward Kinematics (Single-Joint Transformation)
 # Trf is the Matrix of Transformation from i-1 to i
 # Trf_c is the cummulated Matrix of Transformation from 0 to i
+printf("%s. Beginne Berechnung der Kinematik für einzelne Gelenk-Transformationen.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
 Trf := Matrix(4, 4, NJ): # Diese Initialisierung bringt nichts (initialisiert nur 4x4-Matrix)
 ;
 for i from 1 to NJ do 
@@ -114,7 +116,7 @@ if kin_constraints_exist and codegen_kinematics_subsorder = 1 then
       end do:
     end do:
   end do:
-  printf("Ersetzungen der MDH-Parameter mit Ergebnissen der Parallelstruktur in verallgemeinerten Koordinaten erfolgreich (vor Berechnung der Gesamt-Transformation).\n"):
+  printf("%s. Ersetzungen der MDH-Parameter mit Ergebnissen der Parallelstruktur in verallgemeinerten Koordinaten erfolgreich (vor Berechnung der Gesamt-Transformation).\n", FormatTime("%Y-%m-%d %H:%M:%S")):
 end if:
 # Calculate Forward Kinematics (Multi-Joint Transformation)
 Trf_c := Matrix(4, 4, NJ+1): # Diese Initialisierung bringt nichts (initialisiert nur 4x4-Matrix)
@@ -128,11 +130,11 @@ end:
 if base_method_name = "eulxyz" then:
   Trf_c(1 .. 4, 1 .. 4, 1) := transl(X_base_t[1..3,1]) . eulxyztr(X_base_t[4,1], X_base_t[5,1], X_base_t[6,1]):
 end:
-printf("Nutze die Methode %s für die Basis-Orientierung\n", base_method_name):
+printf("%s. Beginne direkte Kinematik. Nutze die Methode %s für die Basis-Orientierung.\n", base_method_name, FormatTime("%Y-%m-%d %H:%M:%S")):
 # Kinematik aller Körper mit MDH-Ansatz Bestimmen. [KhalilKle1986].
-
 # Einfache Kinematik: Multiplikation an vorherige Transformationsmatrix
 if not(codegen_kinematics_opt) then
+  printf("%s. Berechne Vorwärts-Transformation der Kinematik ohne spezielle Optimierung.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
   for i from 1 to NJ do 
     # Index des vorherigen Koordinatensystems
     j := v(i)+1:
@@ -146,6 +148,7 @@ end if:
 # Die Funktionsweise kann mit aktivierten print-Befehlen nachvollzogen werden.
 
 if codegen_kinematics_opt then
+  printf("%s. Beginne mit der Optimierung der Kinematik für parallele Gelenke.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
   for i from 1 to NJ do
     #printf("----------------------\ni=%d\n",i):
     # Bestimme Vorwärtskinematik für das Koordinatensystem i (0=Basis)
@@ -197,11 +200,14 @@ if codegen_kinematics_opt then
     #printf("Trf_tmp an Trf_c angehängt (Eintrag zu Körper %d. %d -> %d mit Kette %s)\n", i, j2, i, convert(Kette_akt, string)):
     #print(Trf_c(1 .. 4, 1 .. 4, i+1)):
   end do:
-end if;
+  printf("%s. Ersetzungen der MDH-Parameter mit Ergebnissen der Parallelstruktur in verallgemeinerten Koordinaten erfolgreich (vor Berechnung der Gesamt-Transformation).\n", FormatTime("%Y-%m-%d %H:%M:%S")
+):
+end if:
 # Kinematische Zwangsbedingungen ersetzen (nach Berechnung der Gesamt-Transformation)
 # Substituiere allgemeine Ausdrücke der Winkel der Parallelstruktur mit kinematischen Zwangsbedingungen in Abhängigkeit der Haupt-Gelenkwinkel
 # Da die Gesamt-Transformation Trf_c an dieser Stelle schon berechnet wurde, müssen die Ausdrücke hier in Trf und Trf_c ersetzt werden.
 if kin_constraints_exist and codegen_kinematics_subsorder = 2 then
+  printf("%s. Beginne Einsetzung der kinematischen Zwangsbedingungen in die direkte Kinematik (Gesamt-Transformation).\n", FormatTime("%Y-%m-%d %H:%M:%S")):
   for i from 1 to NJ do # Index über Transformationsmatrizen aller Körper
     for ix from 1 to 4 do # Index über Zeilen der Transformationsmatrizen
       for iy from 1 to 4 do # Index über Spalten der Transformationsmatrizen
@@ -221,9 +227,10 @@ if kin_constraints_exist and codegen_kinematics_subsorder = 2 then
       end do:
     end do:
   end do:
-  printf("Ersetzungen der MDH-Parameter mit Ergebnissen der Parallelstruktur in verallgemeinerten Koordinaten erfolgreich (nach Berechnung der Gesamt-Transformation).\n"):
+  printf("%s. Ersetzungen der MDH-Parameter mit Ergebnissen der Parallelstruktur in verallgemeinerten Koordinaten erfolgreich (nach Berechnung der Gesamt-Transformation).\n", FormatTime("%Y-%m-%d %H:%M:%S")):
 end if:
 # Export
+printf("%s. Berechnung der Kinematik beendet. Beginne Matlab-Export.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
 # Maple-Export
 save Trf, Trf_c, sprintf("../codeexport/%s/tmp/kinematics_floatb_%s_rotmat_maple.m", robot_name, base_method_name):
 # Export des symbolischen Ausdrucks für alle kumulierten Transformationsmatrizen auf einmal.
