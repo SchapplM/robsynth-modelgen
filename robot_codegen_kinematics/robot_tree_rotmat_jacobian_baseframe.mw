@@ -4,7 +4,7 @@
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="0" compactdisplay="false" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" historytimestamp="false" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1050" rtablesize="[10, 10]" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" ansicolor="[]" elisiondigitsthreshold="10000" showassumed="1" ansilprint="false" trailingsemicolon="true" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" compactdisplay="false" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" historytimestamp="false" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1050" rtablesize="[10, 10]" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" ansicolor="[]" elisiondigitsthreshold="10000" showassumed="1" ansilprint="false" trailingsemicolon="true" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -137,7 +137,8 @@ printlevel := 2:</Text-field>
 <Group labelreference="L2177" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_act := true:
 codegen_debug := false:
-codegen_opt := 2:</Text-field>
+codegen_opt := 2:
+codegen_jacobi := 3: # 1=nur Position, 2=Rotationsmatrix-Jacobi, 3=mit Zeitableitung</Text-field>
 </Input>
 </Group><Presentation-Block>
 <Group view="code" labelreference="L2195" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -465,7 +466,7 @@ end do:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2190" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act and codegen_jacobi &gt; 1 then
   MatlabExport(J_Rb_s, sprintf(&quot;../codeexport/%s/tmp/jacobiR_rot_%d_floatb_%s_matlab.m&quot;, robot_name, LIJAC, base_method_name), codegen_opt):
 end if:</Text-field>
 </Input>
@@ -504,7 +505,7 @@ JD_Rb_s := convert_t_s(JD_Rb_t):</Text-field>
 <Group labelreference="L2203" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">Matlab-Export</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L2206" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if codegen_act then
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L2206" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if codegen_act and codegen_jacobi &gt; 2 then
   MatlabExport(JD_rotg_s, sprintf(&quot;../codeexport/%s/tmp/jacobigD_rot_%d_floatb_%s_matlab.m&quot;, robot_name, LIJAC, base_method_name), codegen_opt):
   interface(warnlevel=0): # Unterdr\303\274cke die Warnung f\303\274r arctan
   MatlabExport(JD_rota_s, sprintf(&quot;../codeexport/%s/tmp/jacobiaD_rot_%d_floatb_%s_matlab.m&quot;, robot_name, LIJAC, base_method_name), codegen_opt):

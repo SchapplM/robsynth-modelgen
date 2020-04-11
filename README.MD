@@ -587,6 +587,7 @@ Da die Definitionen in jedem Maple-Arbeitsblatt am Ende der Initialisierung gela
 Weitere Möglichkeiten sind:
 * __codegen_kinematics_opt__: (Optionen: [true], false) Verhindert mit false in robot_tree_floatb_rotmat_mdh_kinematics.mw die Zusammenfassung paralleler Gelenke; sinnvoll bei Elimination von kinematischen Zwangsbedingungen
 * __codegen_kinematics_subsorder__: (Optionen: [1], 2) (beeinflusst, ob in robot_tree_floatb_rotmat_mdh_kinematics.mw die Substitution der abhängigen Gelenke bei Existenz entsprechender kinematischer Zwangsbedingungen vor (1) oder nach (2) der Berechnung der Gesamt-Transformationsmatrix durchgeführt wird).
+* __codegen_jacobi__: (Optionen: [3], 2, 1) Steuert den Umfang der Matlab-Code-Generierung für Jacobi-Matrizen. 3: Alles (Zeitableitungen, Rotationsmatrix), 2: keine Zeitableitungen, 1: Keine Rotationsmatrix-Jacobi. Diese Option kann genutzt werden, wenn die Berechnung der Jacobi sehr lange dauert.
 
 Zu beachten ist, dass in die Maple-Vektoren am einfachsten nur symbolische Ausdrücke eingesetzt werden sollten, die so heißen, wie das Vektorelement selbst. Also __a1__, __a2__ in __a__, __d1__, __d2__ in __d__, __qoffset3__, __qoffset4__ in __qoffset__ und so weiter. Zusätzlich können Nullen und Winkelangaben ("__Pi__", großgeschrieben) eingesetzt werden (vereinfacht die Ergebnisse).
 Sollen die Geometrieparameter anders benannt sein (z.B. __l1__, __l2__), dann sind die Hinweise aus dem Abschnitt [Werte für Kinematikparameter](#werte_kinematikparameter) zu beachten.

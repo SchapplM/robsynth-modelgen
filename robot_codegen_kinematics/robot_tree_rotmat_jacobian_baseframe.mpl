@@ -33,6 +33,8 @@ printlevel := 2:
 codegen_act := true:
 codegen_debug := false:
 codegen_opt := 2:
+codegen_jacobi := 3: # 1=nur Position, 2=Rotationsmatrix-Jacobi, 3=mit Zeitableitung
+;
 # Funktionen aus Robotik-Repo
 read("../robotics_repo_path"): # Lädt Variable robotics_repo_path
 ;
@@ -165,7 +167,7 @@ for i from 1 to 9 do
   end do:
 end do:
 save J_Rb_s, sprintf("../codeexport/%s/tmp/jacobiR_rot_%d_floatb_%s_maple.m", robot_name, LIJAC, base_method_name):
-if codegen_act then
+if codegen_act and codegen_jacobi > 1 then
   MatlabExport(J_Rb_s, sprintf("../codeexport/%s/tmp/jacobiR_rot_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
 end if:
 # Jacobi-Zeitableitungen
@@ -181,7 +183,7 @@ JD_transla_s := convert_t_s(JD_transla_t):
 JD_Rb_t := diff~(convert_s_t(J_Rb_s), t):
 JD_Rb_s := convert_t_s(JD_Rb_t):
 # Matlab-Export
-if codegen_act then
+if codegen_act and codegen_jacobi > 2 then
   MatlabExport(JD_rotg_s, sprintf("../codeexport/%s/tmp/jacobigD_rot_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
   interface(warnlevel=0): # Unterdrücke die Warnung für arctan
   MatlabExport(JD_rota_s, sprintf("../codeexport/%s/tmp/jacobiaD_rot_%d_floatb_%s_matlab.m", robot_name, LIJAC, base_method_name), codegen_opt):
