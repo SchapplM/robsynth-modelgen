@@ -100,6 +100,17 @@ for i = 1:size(Q, 1)
   end
 end
 fprintf('Tested Jacobian direct vs adjoint calculation for fixed base.\n');
+
+%% Prüfe, ob die Zeitableitung der Jacobi berechnet wurde.
+% Falls nicht, kann der nachfolgende Test nicht durchgeführt werden.
+% Das passiert mit der Option "codegen_jacobi:=1" in der Maple-Definition
+% Berechne dafür Jacobi-Matrix für das Basis-Segment. Muss immer Null sein.
+JD_test = %RN%_jacobigD_sym_varpar(Q(1,:)', QD(1,:)', uint8(0), zeros(3,1), pkin);
+if any(isnan(JD_test(:)))
+  warning('Jacobi-Zeitableitung wurde wahrscheinlich nicht generiert. Abbruch des Tests.');
+  return
+end
+
 %% Teste Jacobi-Matrix-Zeitableitung für unterschiedliche Punkte mit der Adjungierten
 for i = 1:size(Q, 1)
   for j  = 0:NQJ % Jacobi für jeden Körper

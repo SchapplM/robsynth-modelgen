@@ -465,7 +465,26 @@ else
     printf "assert(isa(link_index,'uint8') && all(size(link_index) == [1 1]), ..." >> $zieldat
     printf "\n\t'%%FN%%: link_index has to be [1x1] uint8');\n" >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
-
+    # Definition der Ausgabevariable
+    if [ "$jacart" -eq "1" ]; then
+      printf "Jg_rot=NaN(3,$robot_NQJ);\n" >> $zieldat
+    elif [ "$jacart" -eq "2" ]; then
+      printf "Ja_rot=NaN(3,$robot_NQJ);\n" >> $zieldat
+    elif [ "$jacart" -eq "3" ]; then
+      printf "JR_rot=NaN(9,$robot_NQJ);\n" >> $zieldat
+    elif [ "$jacart" -eq "4" ]; then
+      printf "JRD_rot=NaN(9,$robot_NQJ);\n" >> $zieldat
+    elif [ "$jacart" -eq "5" ]; then
+      printf "Ja_transl=NaN(3,$robot_NQJ);\n" >> $zieldat
+    elif [ "$jacart" -eq "6" ]; then
+      printf "JgD_rot=NaN(3,$robot_NQJ);\n" >> $zieldat
+    elif [ "$jacart" -eq "7" ]; then
+      printf "JaD_rot=NaN(3,$robot_NQJ);\n" >> $zieldat
+    elif [ "$jacart" -eq "8" ]; then
+      printf "JaD_transl=NaN(3,$robot_NQJ);\n" >> $zieldat
+    fi;
+    
+    # Fallunterscheidung für einzelne Körper
     if [ "$jacart" -lt "9" ]; then # Kopieren des symbolischen Codes der einzelnen Teilkörper für rot und transl
       for (( ib=0; ib<$robot_NL; ib++ ))
       do
@@ -509,26 +528,11 @@ else
           source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
         else
           echo "Code in ${quelldat##*/} nicht gefunden."
+          printf "\t%% Symbolic code from ${quelldat##*/} not found\n" >> $zieldat
           continue
         fi;
       done
-      if [ "$jacart" -eq "1" ]; then
-        printf "else\n\tJg_rot=NaN(3,$robot_NQJ);\nend" >> $zieldat
-      elif [ "$jacart" -eq "2" ]; then
-        printf "else\n\tJa_rot=NaN(3,$robot_NQJ);\nend" >> $zieldat
-      elif [ "$jacart" -eq "3" ]; then
-        printf "else\n\tJR_rot=NaN(9,$robot_NQJ);\nend" >> $zieldat
-      elif [ "$jacart" -eq "4" ]; then
-        printf "else\n\tJRD_rot=NaN(9,$robot_NQJ);\nend" >> $zieldat
-      elif [ "$jacart" -eq "5" ]; then
-        printf "else\n\tJa_transl=NaN(3,$robot_NQJ);\nend" >> $zieldat
-      elif [ "$jacart" -eq "6" ]; then
-        printf "else\n\tJgD_rot=NaN(3,$robot_NQJ);\nend" >> $zieldat
-      elif [ "$jacart" -eq "7" ]; then
-        printf "else\n\tJaD_rot=NaN(3,$robot_NQJ);\nend" >> $zieldat
-      elif [ "$jacart" -eq "8" ]; then
-        printf "else\n\tJaD_transl=NaN(3,$robot_NQJ);\nend" >> $zieldat
-      fi;
+      printf "end" >> $zieldat
     else # Funktionsaufruf bei den vollständigen Funktionen
       printf "\n%% Function calls\n" >> $zieldat
       if [ "$jacart" -eq "9" ]; then
