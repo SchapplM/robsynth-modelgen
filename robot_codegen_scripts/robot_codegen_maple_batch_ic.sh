@@ -45,7 +45,10 @@ done
 source robot_codegen_tmpvar_bash_ic.sh
 source $repo_pfad/robot_codegen_definitions/robot_env_IC.sh
 
-# Liste mit Maple-Skripten in der richtigen Reihenfolge für parallelen Roboter
+# Aktuellen Modus speichern (für Arbeitsblätter, die im IC- oder Normal-Modus benutzt werden)
+echo "tbmode := \"implicit\":" > $repo_pfad/workdir/tbmode
+
+# Liste mit Maple-Skripten in der richtigen Reihenfolge für hybride Roboter
 
 # Kinematische Zwangsbedingungen in impliziter Form
 # Werden nach der Kinematik gerechnet. Können also auch hier am Ende kommen
@@ -54,6 +57,12 @@ dateiliste_kindyn="
   ${robot_name}_kinematic_constraints_implicit.mpl
   robot_kinematic_constraints_calculations_implicit.mpl
   "
+# Liste der Kinematikparameter. Kann sich bei manuell eingefügten Zwangsbedingungen
+# von den Parametern der offenen Baumstruktur unterscheiden.
+# Tritt normalerweise nicht bei geschlossenen kinematischen Ketten auf.
+dateiliste_kindyn="$dateiliste_kindyn
+  robot_tree_kinematic_parameter_list.mpl
+"
 
 if [ "$CG_MINIMAL" == "0" ] && [ "$CG_KINEMATICSONLY" == "0" ]; then
   dateiliste_kindyn="$dateiliste_kindyn

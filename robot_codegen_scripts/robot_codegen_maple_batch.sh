@@ -57,6 +57,9 @@ fi;
 source robot_codegen_tmpvar_bash.sh
 source $repo_pfad/robot_codegen_definitions/robot_env.sh
 
+# Aktuellen Modus speichern (für Arbeitsblätter, die im IC- oder Normal-Modus benutzt werden)
+echo "tbmode := \"serial\":" > $repo_pfad/workdir/tbmode
+
 # Liste mit Maple-Skripten in der richtigen Reihenfolge
 # Skripte für Fixed-Base-Modellierung
 dateiliste_kindyn="

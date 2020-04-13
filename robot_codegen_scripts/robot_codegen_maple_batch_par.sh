@@ -59,6 +59,8 @@ fi;
 source robot_codegen_tmpvar_bash.sh
 source $repo_pfad/robot_codegen_definitions/robot_env.sh
 
+# Aktuellen Modus speichern (für Arbeitsblätter, die im IC- oder Normal-Modus benutzt werden)
+echo "tbmode := \"serial\":" > $repo_pfad/workdir/tbmode
 
 if [ "$CG_FIXBONLY" == "1" ]; then
   # Berechne alles nur für fixed-base Modellierung (dafür reicht die Methode "twist")
