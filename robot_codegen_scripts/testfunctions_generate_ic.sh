@@ -37,7 +37,7 @@ do
   cp $dir1/$filename $dir2/$filename_new
 
   # Platzhalter in Datei ersetzen
-  source robot_codegen_matlabfcn_postprocess_ic.sh $dir2/$filename_new 0
+  source robot_codegen_matlabfcn_postprocess_ic.sh $dir2/$filename_new
   source robot_codegen_matlabfcn_postprocess.sh $dir2/$filename_new 0
   source $repo_pfad/robot_codegen_definitions/robot_env_IC.sh
 done

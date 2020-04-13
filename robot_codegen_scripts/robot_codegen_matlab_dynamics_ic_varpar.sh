@@ -15,6 +15,7 @@ head_pfad=$repo_pfad/robot_codegen_scripts/tmp_head
 template_pfad=$repo_pfad/robot_codegen_scripts/templates_sym
 # Initialisiere Variablen
 source robot_codegen_tmpvar_bash_ic.sh
+source $repo_pfad/robot_codegen_definitions/robot_env.sh
 source $repo_pfad/robot_codegen_definitions/robot_env_IC.sh
 
 # Schleife für beide Basis-Darstellungen durchgehen.
@@ -37,7 +38,8 @@ do
       cat $head_pfad/robot_matlabtmp_invdynJ_floatb_ic_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
       sed -i "s/%RN%/$robot_name/g" $zieldat
-      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      ./robot_codegen_matlabfcn_postprocess_ic.sh $zieldat
+      ./robot_codegen_matlabfcn_postprocess.sh $zieldat 0
       source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
@@ -87,7 +89,7 @@ do
       printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
       sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
-      source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 1 ${quelldat}.subsvar
+      ./robot_codegen_matlabfcn_postprocess.sh $zieldat 1 1 ${quelldat}.subsvar
       sed -i "s/%NAJ%/$robot_NAJ/g" $zieldat
     else
       echo "Code in ${quelldat##*/} nicht gefunden."
@@ -101,7 +103,8 @@ do
       cat $head_pfad/robot_matlabtmp_invdynJ_fixb_ic_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
       sed -i "s/%RN%/$robot_name/g" $zieldat
-      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      ./robot_codegen_matlabfcn_postprocess_ic.sh $zieldat
+      ./robot_codegen_matlabfcn_postprocess.sh $zieldat 0
       source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
@@ -135,7 +138,7 @@ do
       printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
       sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
-      source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 1 ${quelldat}.subsvar
+      ./robot_codegen_matlabfcn_postprocess.sh $zieldat 1 1 ${quelldat}.subsvar
       sed -i "s/%NAJ%/$robot_NAJ/g" $zieldat
     else
       echo "Code in ${quelldat##*/} nicht gefunden."
@@ -149,7 +152,8 @@ do
       cat $head_pfad/robot_matlabtmp_inertiaJ_ic_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
       sed -i "s/%RN%/$robot_name/g" $zieldat
-      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      ./robot_codegen_matlabfcn_postprocess_ic.sh $zieldat
+      ./robot_codegen_matlabfcn_postprocess.sh $zieldat 0
       source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
@@ -177,7 +181,7 @@ do
       printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
       sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
-      source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
+      ./robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
       sed -i "s/%NAJ%/$robot_NAJ/g" $zieldat
     else
       echo "Code in ${quelldat##*/} nicht gefunden."
@@ -191,7 +195,7 @@ do
       # cat $head_pfad/robot_matlabtmp_coriolisvecJ_fixb_ic_par${dynpar}.head.m > $zieldat
       # printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
       # sed -i "s/%RN%/$robot_name/g" $zieldat
-      # source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      # ./robot_codegen_matlabfcn_postprocess.sh $zieldat 0
       # source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
       # cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       # cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
@@ -221,7 +225,7 @@ do
       # printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
       # sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       # cat $quelldat >> $zieldat
-      # source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 1 ${quelldat}.subsvar
+      # ./robot_codegen_matlabfcn_postprocess.sh $zieldat 1 1 ${quelldat}.subsvar
       # sed -i "s/%NAJ%/$robot_NAJ/g" $zieldat
     # else
       # echo "Code in ${quelldat##*/} nicht gefunden."
@@ -235,7 +239,8 @@ do
       cat $head_pfad/robot_matlabtmp_gravloadJ_floatb_${basemeth}_ic_par${dynpar}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
       sed -i "s/%RN%/$robot_name/g" $zieldat
-      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      ./robot_codegen_matlabfcn_postprocess_ic.sh $zieldat
+      ./robot_codegen_matlabfcn_postprocess.sh $zieldat 0
       source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       if [ $basemeth == "twist" ]; then
@@ -271,7 +276,7 @@ do
       printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
       sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
-      source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 1 ${quelldat}.subsvar
+      ./robot_codegen_matlabfcn_postprocess.sh $zieldat 1 1 ${quelldat}.subsvar
       sed -i "s/%NAJ%/$robot_NAJ/g" $zieldat
     else
       echo "Code in ${quelldat##*/} nicht gefunden."
@@ -301,7 +306,8 @@ do
       cat $head_pfad/robot_matlabtmp_invdynJ_floatb_${basemeth}_ic_${matlab_string}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
       sed -i "s/%RN%/$robot_name/g" $zieldat
-      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      ./robot_codegen_matlabfcn_postprocess_ic.sh $zieldat
+      ./robot_codegen_matlabfcn_postprocess.sh $zieldat 0
       source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
@@ -335,7 +341,7 @@ do
       printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
       sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
-      source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
+      ./robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
       sed -i "s/%NAJ%/$robot_NAJ/g" $zieldat
     else
       echo "Code in ${quelldat##*/} nicht gefunden."
@@ -349,7 +355,8 @@ do
       cat $head_pfad/robot_matlabtmp_invdynJ_fixb_ic_${matlab_string_reg}.head.m > $zieldat
       printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
       sed -i "s/%RN%/$robot_name/g" $zieldat
-      source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+      ./robot_codegen_matlabfcn_postprocess_ic.sh $zieldat
+      ./robot_codegen_matlabfcn_postprocess.sh $zieldat 0
       source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
       cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
@@ -365,7 +372,7 @@ do
       printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
       sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
       cat $quelldat >> $zieldat
-      source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
+      ./robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
       sed -i "s/%NAJ%/$robot_NAJ/g" $zieldat
     else
       echo "Code in ${quelldat##*/} nicht gefunden."
@@ -385,7 +392,8 @@ do
     cat $head_pfad/robot_matlabtmp_invdynJ_fixb_snew_ic_par${dynpar}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
     sed -i "s/%RN%/$robot_name/g" $zieldat
-    source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+    ./robot_codegen_matlabfcn_postprocess_ic.sh $zieldat
+    ./robot_codegen_matlabfcn_postprocess.sh $zieldat 0
     source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_qJD.m >> $zieldat
@@ -419,7 +427,7 @@ do
     printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
     sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
     cat $quelldat >> $zieldat
-    source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 1 ${quelldat}.subsvar
+    ./robot_codegen_matlabfcn_postprocess.sh $zieldat 1 1 ${quelldat}.subsvar
     sed -i "s/%NAJ%/$robot_NAJ/g" $zieldat
   else
     echo "Code in ${quelldat##*/} nicht gefunden."
@@ -433,7 +441,8 @@ do
     cat $head_pfad/robot_matlabtmp_gravloadJ_floatb_twist_snew_ic_par${dynpar}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
     sed -i "s/%RN%/$robot_name/g" $zieldat
-    source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+    ./robot_codegen_matlabfcn_postprocess_ic.sh $zieldat
+    ./robot_codegen_matlabfcn_postprocess.sh $zieldat 0
     source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_g.m >> $zieldat
@@ -459,7 +468,7 @@ do
     printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
     sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
     cat $quelldat >> $zieldat
-    source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 1 ${quelldat}.subsvar
+    ./robot_codegen_matlabfcn_postprocess.sh $zieldat 1 1 ${quelldat}.subsvar
     sed -i "s/%NAJ%/$robot_NAJ/g" $zieldat
   else
     echo "Code in ${quelldat##*/} nicht gefunden."
@@ -473,7 +482,8 @@ do
     cat $head_pfad/robot_matlabtmp_inertiaJ_snew_ic_par${dynpar}.head.m > $zieldat
     printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
     sed -i "s/%RN%/$robot_name/g" $zieldat
-    source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+    ./robot_codegen_matlabfcn_postprocess_ic.sh $zieldat
+    ./robot_codegen_matlabfcn_postprocess.sh $zieldat 0
     source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
     cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
@@ -501,7 +511,7 @@ do
     printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
     sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
     cat $quelldat >> $zieldat
-    source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
+    ./robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
     sed -i "s/%NAJ%/$robot_NAJ/g" $zieldat
   else
     echo "Code in ${quelldat##*/} nicht gefunden."
