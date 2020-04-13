@@ -219,8 +219,12 @@ if [ "$CG_IC" == "1" ]; then
   source $repo_pfad/robot_codegen_scripts/testfunctions_generate_ic.sh
 
   # Matlab-Testfunktionen starten
-  if [ "$CG_NOTEST" != "1" ] && [ "$CG_KINEMATICSONLY" == "0" ]; then
-    matlab -nodesktop -nosplash -useStartupFolderPref -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything');quit;"
+  if [ "$CG_NOTEST" != "1" ]; then
+    if [ "$CG_KINEMATICSONLY" == "0" ]; then
+      matlab -nodesktop -nosplash -useStartupFolderPref -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything');quit;"
+    else
+      matlab -nodesktop -nosplash -useStartupFolderPref -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything_kinematics');quit;"
+    fi;
     echo "Funktionsgenerierung abgeschlossen. Alle Tests erfolgreich."
   else
     echo "Funktionsgenerierung abgeschlossen. Keine Tests durchgeführt."

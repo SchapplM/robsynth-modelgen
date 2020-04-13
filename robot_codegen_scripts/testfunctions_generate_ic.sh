@@ -62,7 +62,6 @@ printf "\n\n%%%% MDH-Parametereinträge auf Zufallswerte setzen" >> $zieldat
 printf "\n%% Aus robot_matlabtmp_par_mdh.m" >> $zieldat
 cat $tmp_pfad/robot_matlabtmp_par_mdh.m >> $zieldat
 
-
 # Werte für Kinematik-Parametervektor in Parameter-Generierungsskript eintragen
 # Setzt auch Zahlenwerte für die Kinematikparameter der MDH-Notation, falls gegeben.
 KCP_dat1=$repo_pfad/robot_codegen_constraints/${robot_name}_kinematic_parameter_values.m
@@ -77,9 +76,9 @@ else
     echo "$Kp = rand(1,1);" >> $zieldat
   done
 fi
-KP_dat2=$repo_pfad/codeexport/${robot_name_OL}/tmp/parameter_kin_matlab.m
+KP_dat2=$repo_pfad/codeexport/${robot_name}/tmp/parameter_kin_matlab.m
 if [ -f "$KP_dat2" ]; then
-  printf "\n%% Aus ${robot_name_OL}/parameter_kin_matlab.m\n" >> $zieldat
+  printf "\n%% Aus ${robot_name}/parameter_kin_matlab.m\n" >> $zieldat
   cat $KP_dat2 >> $zieldat
   varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat`
   echo "pkin = $varname_tmp;" >> $zieldat
