@@ -23,7 +23,8 @@ if isempty(fileparts(which('%RNTE%_varpar_testfunctions_parameter')))
     fprintf('Test für die impliziten ZB nicht ausgeführt, da die expliziten ZBs noch nicht vorliegen\n');
     return;
 end
-
+% Test-Definitionen für drei Fälle aufstellen. Die Kinematikparameter und
+% Gelenkkoordinaten können jeweils unterschiedlich sein.
 TSSc = %RNTE%_varpar_testfunctions_parameter; % mit expl. Zwangsbedingungen
 TSSi = %RN%_varpar_testfunctions_parameter; % mit impl. Zwangsbedingungen
 TSSo = %RNOL%_varpar_testfunctions_parameter; % ohne Zwangsbedingungen
@@ -31,13 +32,10 @@ TSSo = %RNOL%_varpar_testfunctions_parameter; % ohne Zwangsbedingungen
 % Indizes zur Umrechnung von Gelenken von o zu c
 % (für den offenen Kreis werden alle Gelenkvariablen ausgegeben, also auch
 % die virtuellen Schnittgelenke)
-
 [~, sigma_mdh, mu_mdh] = %RNOL%_structural_kinematic_parameters();
-
 posNQJ = %RN%_positionVector_NQJ();
 I_p = (mu_mdh==0);
 I_a = (mu_mdh==1);
-
 I_p = I_p(posNQJ==1);
 I_a = I_a(posNQJ==1);
 
@@ -92,9 +90,14 @@ for iq = 1:TSSc.n
   end
 
   % Vergleiche Gelenk-Transformationsmatrizen
+  % Keine Prüfung der Orientierung bei den Schließ-KS der kinematischen
+  % Ketten. Annahme: Wenn die impl. ZB Null sind, wird das schon richtig
+  % sein. Ansonsten wird bei Nicht-Betrachtung der Rotations-ZB ein Fehler
+  % aufgeworfen, obwohl die Modellierung richtig ist.
+  num_sigma2_end = find((TSSc.sigma(end:-1:1) == 2) == 0, 1)-1; % Anzahl sigma=2 am Ende
   Tc = %RNTE%_joint_trafo_rotmat_mdh_sym_varpar(q1, TSSc.pkin);
   Tu = %RNOL%_joint_trafo_rotmat_mdh_sym_varpar(q, TSSo.pkin);
-  for jj = 1:TSSc.NJ
+  for jj = 1:(TSSc.NJ - 2*num_sigma2_end)
     test = Tc(:,:,jj)\Tu(:,:,jj) - eye(4);
     if any( abs(test(:)) > 1e-7 )
       [Tc(:,:,jj),Tu(:,:,jj)] %#ok<NOPTS>
@@ -165,4 +168,3 @@ for iq = 1:TSSc.n
 end
 
 fprintf('Test der Kinematik der Zwangsbedingungen mit impliziter und expliziter Form für %d Kombinationen erfolgreich\n', TSSc.n);
-
