@@ -16,12 +16,18 @@ MatlabExport := proc (Term, filepath, optimierung)
     # Das Ergebnis der Code-Optimierung ist eine einzelne Gleichung, die Bestimmung des Rechenaufwands erfolgt elementweise
     c2:=add(cost~(Tmp));
   elif optimierung = 2 then
-    Tmp := eval([codegen:-optimize](Term,tryhard),pow = `^`):
-    # Ergebnis der Code-Optimierung ist eine Liste von Gleichungen. Zuerst temporäre Ausdrücke, dann als letztes der endgültige Ausdruck. Die Ermittlung des Rechenaufwands geht nur als Summe der einzelnen Teil-Ausdrücke.
-    for i from 1 to nops(Tmp) do
-      c2:=c2+add(cost~(rhs(Tmp[i])));
-      c2:=c2+1*assignments;
-    end do:
+    try
+      Tmp := eval([codegen:-optimize](Term,tryhard),pow = `^`):
+      # Ergebnis der Code-Optimierung ist eine Liste von Gleichungen. Zuerst temporäre Ausdrücke, dann als letztes der endgültige Ausdruck. Die Ermittlung des Rechenaufwands geht nur als Summe der einzelnen Teil-Ausdrücke.
+      for i from 1 to nops(Tmp) do
+        c2:=c2+add(cost~(rhs(Tmp[i])));
+        c2:=c2+1*assignments;
+      end do:
+    catch:
+      printf("Error using codegen/optimize with tryhard for %s: \n%s\n Use normal optimization algorithm instead. (CPUTime: %1.2fs)\n", filepath, String(lastexception), time()-starttime):
+      Tmp := eval([codegen:-optimize](Term),pow = `^`); # see above
+      c2:=add(cost~(Tmp)); # see above
+    end try:
   else 
     Tmp := Term ;
     c2:=c1;
