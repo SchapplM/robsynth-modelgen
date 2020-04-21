@@ -89,7 +89,7 @@
 </Task-table>
 <Task/>
 <Group labelreference="L1506" drawlabel="true">
-<Input><Text-field style="Title" layout="Title">Erstelle Liste aller Kinematikparameter</Text-field>
+<Input><Text-field style="Title" layout="Title"></Text-field><Text-field style="Title" layout="Title">Erstelle Liste aller Kinematikparameter</Text-field>
 </Input>
 </Group>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Init</Text-field></Title>
@@ -133,12 +133,31 @@ restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet
 </Input>
 </Group>
 <Group labelreference="L1782" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:
-<Font encoding="UTF-8">printf(&quot;Generiere Kinematik-Parametervektor f\303\274r %s\134n&quot;,robot_name):</Font></Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1811" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_twist_definitions&quot;, robot_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1927" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">robot_name_OL := robot_name: # Zus\303\244tzliche Variable zur Abgrenzung f\303\274r implizite Zwangsbedingungen</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1925" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"> Schalte um zwischen impliziten ZB und normalen Systemen</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1926" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../workdir/<Font encoding="UTF-8">tbmode&quot;: # Datei tbmode wird von Bash-Skripten erstellt und zeigt den aktuellen Modus an
+if tbmode = &quot;implicit&quot; then
+  printf(&quot;Modus f\303\274r IC ist aktiv. Bestimme Kinematikparameter f\303\274r System mit impliziten ZB.\134n&quot;):
+  </Font>read &quot;../robot_codegen_definitions/robot_env_IC&quot;:
+end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1928" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Generiere Kinematik-Parametervektor f\303\274r %s\134n&quot;,robot_name):</Font></Text-field>
 </Input>
 </Group>
 </Section>
@@ -153,7 +172,7 @@ kc_symbols2 := []:</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L1812" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">constrfile := sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_symbols_list_maple&quot;, robot_name):
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">constrfile := sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_symbols_list_maple&quot;, robot_name_OL):
 if FileTools[Exists](constrfile) then
   read constrfile:
 <Font encoding="UTF-8">  printf(&quot;Symbole der expliziten Zwangsbedingungen aus %s gelesen.\134n&quot;, </Font>constrfile):
@@ -167,7 +186,8 @@ end if:</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L1797" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">constrfile := sprintf(&quot;../codeexport/%s/tmp/kinematic_implicit_constraints_symbols_list_maple&quot;, robot_name):
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">constrfile := sprintf(&quot;../codeexport/%s/tmp/kinematic_implicit_constraints_symbols_list_maple&quot;, robot_name):
+# F\303\274r implizite Zwangsbedingungen ist &quot;robot_name&quot; das System mit IC und nicht mit OL o.\303\244.</Font>
 if FileTools[Exists](constrfile) then
   read constrfile:
   printf(&quot;Symbole der i<Font encoding="UTF-8">mpliziten Zwangsbedingungen aus %s gelesen.\134n&quot;, </Font>constrfile):

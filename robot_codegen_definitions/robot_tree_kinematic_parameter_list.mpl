@@ -1,4 +1,5 @@
 
+# 
 # Erstelle Liste aller Kinematikparameter
 # Init
 # Dieses Arbeitsblatt erstellt einen Vektor mit allen Kinematikparameter
@@ -19,13 +20,21 @@ read "../helper/proc_convert_t_s":
 codegen_act := true:
 # Lese Umgebungsvariable für Codegenerierung.
 read "../robot_codegen_definitions/robot_env":
-printf("Generiere Kinematik-Parametervektor für %s\n",robot_name):
 read sprintf("../codeexport/%s/tmp/tree_floatb_twist_definitions", robot_name):
+robot_name_OL := robot_name: # Zusätzliche Variable zur Abgrenzung für implizite Zwangsbedingungen
+;
+#  Schalte um zwischen impliziten ZB und normalen Systemen
+read "../workdir/tbmode": # Datei tbmode wird von Bash-Skripten erstellt und zeigt den aktuellen Modus an
+if tbmode = "implicit" then
+  printf("Modus für IC ist aktiv. Bestimme Kinematikparameter für System mit impliziten ZB.\n"):
+  read "../robot_codegen_definitions/robot_env_IC":
+end if:
+printf("Generiere Kinematik-Parametervektor für %s\n",robot_name):
 # Parameter der Zwangsbedingungen lesen
 kin_constraints_exist := false:
 kc_symbols2 := []:
 # Für explizite Zwangsbedingungen
-constrfile := sprintf("../codeexport/%s/tmp/kinematic_constraints_symbols_list_maple", robot_name):
+constrfile := sprintf("../codeexport/%s/tmp/kinematic_constraints_symbols_list_maple", robot_name_OL):
 if FileTools[Exists](constrfile) then
   read constrfile:
   printf("Symbole der expliziten Zwangsbedingungen aus %s gelesen.\n", constrfile):
@@ -34,6 +43,7 @@ if FileTools[Exists](constrfile) then
 end if:
 # Parameter für implizite Zwangsbedingungen (dadurch können auch neue Konstanten hinzugefügt werden)
 constrfile := sprintf("../codeexport/%s/tmp/kinematic_implicit_constraints_symbols_list_maple", robot_name):
+# Für implizite Zwangsbedingungen ist "robot_name" das System mit IC und nicht mit OL o.ä.
 if FileTools[Exists](constrfile) then
   read constrfile:
   printf("Symbole der impliziten Zwangsbedingungen aus %s gelesen.\n", constrfile):

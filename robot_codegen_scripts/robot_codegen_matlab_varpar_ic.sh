@@ -18,7 +18,9 @@ source $repo_pfad/robot_codegen_definitions/robot_env_IC.sh
 
 # Erstelle Matlab-Hilfsdateien
 source robot_codegen_tmpvar_matlab.sh
+source robot_codegen_tmpvar_matlab_ic.sh
 source robot_codegen_assert_matlab.sh
+source robot_codegen_assert_matlab_ic.sh
 source robot_codegen_matlab_preparation.sh
 source create_git_versioninfo.sh
 

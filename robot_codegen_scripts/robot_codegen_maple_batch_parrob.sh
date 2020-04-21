@@ -45,6 +45,9 @@ done
 source robot_codegen_tmpvar_bash_par.sh
 source $repo_pfad/robot_codegen_definitions/robot_env_par.sh
 
+# Aktuellen Modus speichern (für Arbeitsblätter, die im IC- oder Normal-Modus benutzt werden)
+echo "tbmode := \"parrob\":" > $repo_pfad/workdir/tbmode
+
 # Liste mit Maple-Skripten in der richtigen Reihenfolge für parallelen Roboter
 dateiliste_kindyn="
   robot_para_definitions.mpl
