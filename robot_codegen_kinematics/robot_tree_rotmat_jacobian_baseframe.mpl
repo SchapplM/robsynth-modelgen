@@ -29,7 +29,6 @@ with(ArrayTools):
 with(codegen):
 with(CodeGeneration):
 with(StringTools):
-printlevel := 2:
 codegen_act := true:
 codegen_debug := false:
 codegen_opt := 2:

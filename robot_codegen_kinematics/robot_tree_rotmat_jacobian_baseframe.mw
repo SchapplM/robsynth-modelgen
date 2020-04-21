@@ -130,8 +130,7 @@ restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet
 with(ArrayTools):
 with(codegen):
 with(CodeGeneration):
-with(StringTools):
-printlevel := 2:</Text-field>
+with(StringTools):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2177" drawlabel="true">
