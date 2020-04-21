@@ -334,7 +334,7 @@ for ie = uint8(1:12) % Über alle Euler-Konventionen
       JR_test = dPidRb1 * skewgrad * Jg_rot; % Terme I, II, III in [3]/(A14)
       test2_abs = JR_test - JR;
       test2_rel = test2_abs ./ JR;
-      if any(abs(test2_abs(:)) > 1e-10 & abs(test2_rel(:)) > 1e-5)
+      if any(abs(test2_abs(:)) > 1e-9 & abs(test2_rel(:)) > 1e-5)
         error('Berechnung der Rotationsmatrix-Jacobi aus geometrischer Jacobi stimmt nicht');
       end
 
