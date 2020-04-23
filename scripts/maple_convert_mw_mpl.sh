@@ -1,6 +1,7 @@
 #!/bin/bash 
 # Konvertiere ein Maple-Worksheet in eine mpl Datei
 # Argument: Pfad zur ws-Datei
+# Abhängigkeiten (Ubuntu): xautomation, xbindkeys
 
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-05
 # (C) Institut für Regelungstechnik, Leibniz Universität Hannover
@@ -47,14 +48,15 @@ rm -f $mpl_file
 cd /opt/maple2019/bin/
 ./xmaple $mw_file &
 # Warten bis geladen
-sleep 7
+sleep 10
 # Speicher-Dialog öffnen
 # Alt+F
+sleep 2
 xte 'keydown Alt_L'
+sleep 2
+xte 'keydown F' 'keyup F' 
 sleep 1
-xte 'keydown F' 
-sleep 1
-xte 'keyup F' 'keyup Alt_L'
+xte 'keyup Alt_L'
 # E    
 sleep 1             
 xte 'key E'
@@ -69,7 +71,7 @@ sleep 1
 xte 'keydown V' 
 xte 'keyup V' 'keyup Control_L'
 
-# Endung auswählen (Reihenfolge ist abhängig von Maple-Version. Hier für Maple 2017).
+# Endung auswählen (Reihenfolge ist abhängig von Maple-Version. Hier für Maple 2019).
 sleep 1
 xte 'key Tab'
 xte 'key Down'
@@ -84,13 +86,13 @@ xte 'key Tab'
 xte 'key Return'
 
 #Beenden
-sleep 1
+sleep 2
 xte 'keydown Alt_L'
+sleep 2
+xte 'keydown F' 'keyup F' 
 sleep 1
-xte 'keydown F' 
-sleep 1
-xte 'keyup F' 'keyup Alt_L'
+xte 'keyup Alt_L'
 sleep 1             
 xte 'key X'
-sleep 1
+sleep 2
 
