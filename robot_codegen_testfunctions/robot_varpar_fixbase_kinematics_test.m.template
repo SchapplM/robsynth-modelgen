@@ -354,7 +354,7 @@ for ie = uint8(1:12) % Über alle Euler-Konventionen
       test1_rel = test1_abs ./ JR2;
       test2_abs = JRD_diff - JRD1;
       test2_rel = test2_abs ./ JRD1;
-      if any(abs(test1_abs(:)) > 1e-10 & abs(test1_rel(:)) > thrfac^2*1e-8) || ...
+      if any(abs(test1_abs(:)) > 1e-10 & abs(test1_rel(:)) > thrfac^2*1e-7) || ...
          any(abs(test2_abs(:)) >  thrfac*1e-5 & abs(test2_rel(:)) > thrfac^4*1e-3) % TODO: Toleranz muss für fivebar1 sehr groß sein
         error('Zeitableitung der Rotationsmatrix-Jacobi stimmt nicht');
       end

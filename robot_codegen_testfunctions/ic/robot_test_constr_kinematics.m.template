@@ -109,11 +109,15 @@ for iq = 1:TSSc.n
   Tcc = %RNTE%_fkine_fixb_rotmat_mdh_sym_varpar(q1, TSSc.pkin);
   Tcu = %RNOL%_fkine_fixb_rotmat_mdh_sym_varpar(q, TSSo.pkin);
   for jj = 1:TSSc.NL % 1=Basis
-    test = Tcc(:,:,jj)\Tcu(:,:,jj) - eye(4);
-    if any( abs(test(:)) > 1e-8 )
+    test_abs = abs(Tcc(:,:,jj)\Tcu(:,:,jj) - eye(4));
+    % betrachte auch relativen Fehler. Bei Fünfgelenkkette teilweise absoluter
+    % Fehler eher im Bereich 1e-7
+    test_rel = abs(ones(4,4)-Tcc(:,:,jj)./Tcu(:,:,jj));
+    if any( test_abs(:) > 1e-8 ) && any(test_rel(:)>1e-6)
       [Tcc(:,:,jj),Tcu(:,:,jj)] %#ok<NOPTS>
       r2eulxyz(Tcc(1:3,1:3,jj)' * Tcu(1:3,1:3,jj))*180/pi %#ok<NOPTS>
-      error('Kumulierte Koordinatentransformation %d stimmt nicht. Fehler: abs %e', jj, max(abs(test(:))));
+      error('Kumulierte Koordinatentransformation %d stimmt nicht. Fehler: abs %e.rel %e', ...
+        jj, max(test_abs(:)), max(test_rel(:)));
     end
   end
   % Vergleiche Geschwindigkeit und Jacobi-Matrizen
