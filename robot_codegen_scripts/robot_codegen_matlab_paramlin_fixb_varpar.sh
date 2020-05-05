@@ -105,6 +105,7 @@ if [ -f $quelldat ]; then
   printf "\n%%%% Variable Initialization" > ${quelldat}.subsvar
   cat $tmp_pfad/robot_matlabtmp_par_MDPFIXB.m >> ${quelldat}.subsvar
   printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+  sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
   cat $quelldat >> $zieldat
   source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
 else
@@ -215,6 +216,7 @@ do
     cat $tmp_pfad/robot_matlabtmp_qJ.m >> ${quelldat}.subsvar
     cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
     printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+    sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
     cat $quelldat >> $zieldat
     source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
   else
@@ -293,6 +295,7 @@ do
     cat $tmp_pfad/robot_matlabtmp_g.m >> ${quelldat}.subsvar
     cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
     printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+    sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
     cat $quelldat >> $zieldat
     source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
   else
