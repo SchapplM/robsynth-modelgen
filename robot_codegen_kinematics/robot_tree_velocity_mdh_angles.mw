@@ -145,12 +145,13 @@ codegen_opt := 2:</Text-field>
 <Group labelreference="L1651" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_convert_s_t&quot;:
 read &quot;../helper/proc_convert_t_s&quot;: 
-read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
+read &quot;../helper/proc_MatlabExport&quot;:
+read &quot;../helper/proc_simplify2&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1648" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:
-<Font encoding="UTF-8">printf(&quot;Generiere Geschwindigkeit f\303\274r %s\134n&quot;, robot_name):</Font></Text-field>
+<Font encoding="UTF-8">printf(&quot;%s. Generiere Geschwindigkeit f\303\274r %s\134n&quot;, </Font>FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), robot_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1647" drawlabel="true">
@@ -167,6 +168,23 @@ kintmp_qt := kintmp_qt:
 kintmp_qt := kintmp_qt:
 kin_constraints_exist := kin_constraints_exist:
 kintmp_subsexp := kintmp_subsexp:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1730" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Term-Vereinfachungen einstellen</Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1732" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion2" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if not assigned(simplify_options) or simplify_options(4)=-1 then # Standard-Einstellungen:
+  if not kin_constraints_exist then # normale serielle Ketten und Baumstrukturen
+    use_simplify := 0: # Standardm\303\244\303\237ig aus
+  else # mit kinematischen Zwangsbedingungen
+    use_simplify := 1: # standardm\303\244\303\237ig simplify-Befehle anwenden
+  end if:
+else # Benutzer-Einstellungen:
+  use_simplify := simplify_options(4): # vierter Eintrag ist f\303\274r Geschwindigkeit
+end if:
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L1733" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>
@@ -207,11 +225,46 @@ end do:</Text-field>
 dD := Matrix(NJ, 1):</Text-field>
 </Input>
 </Group>
-<Group hide-output="false" labelreference="L1707" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NJ do
+<Group labelreference="L1717" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1719" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">for i from 1 to NJ do
   thetaD(i,1) := diff(theta_qt(i,1), t):
   dD(i,1)     := diff(d_qt(i,1), t):
-end do:</Text-field>
+end do:
+if kin_constraints_exist then # ist nur rechenaufw\303\244ndig, wenn ZB vorliegen
+  printf(&quot;%s. Zeitableitung der MDH-Winkel gebildet.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+end if:</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L1721" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Terme vereinfachen</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1722" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1724" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if use_simplify&gt;=1 and kin_constraints_exist then # ist nur sinnvoll, wenn ZB vorliegen
+  tmp_t0 := time():
+  tmp_l0 := length(thetaD)+length(dD):
+  printf(&quot;%s: Vereinfache MDH-Geschwindigkeiten. L\303\244nge: %d.\134n&quot;, \134
+    FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), tmp_l0):
+  for i from 1 to NJ do
+    tmp_t1 := time():
+    tmp_l1 := length(thetaD(i,1)) + length(dD(i,1)): # es kann sowieso nur einer der beiden Informationen enthalten
+    printf(&quot;%s: Vereinfache MDH-Geschw. %d. L\303\244nge: %d.\134n&quot;, \134
+      FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), i, tmp_l1):
+    thetaD(i,1) := simplify2(thetaD(i,1)):
+    dD(i,1)     := simplify2(dD(i,1)):
+    tmp_t2 := time():
+    tmp_l2 := length(thetaD(i,1)) + length(dD(i,1)):
+    printf(&quot;%s: MDH-Geschw. %d vereinfacht. L\303\244nge: %d-&gt;%d. Rechenzeit %1.1fs.\134n&quot;, \134
+      FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), i, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+  end do:
+  tmp_l3 := length(thetaD)+length(dD):
+  printf(&quot;%s: MDH-Geschwindigkeiten vereinfacht. L\303\244nge: %d-&gt;%d. Rechenzeit %1.1fs.\134n&quot;, \134
+    FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), tmp_l0, tmp_l3, tmp_t2-tmp_t0):
+end if:</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group hide-output="false" labelreference="L1707" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1700" drawlabel="true">
@@ -234,6 +287,14 @@ end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1715" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1720" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1725" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>

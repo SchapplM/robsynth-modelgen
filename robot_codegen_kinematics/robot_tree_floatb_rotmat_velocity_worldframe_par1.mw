@@ -150,7 +150,8 @@ codegen_opt := 2:</Text-field>
 <Group labelreference="L1651" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_convert_s_t&quot;:
 read &quot;../helper/proc_convert_t_s&quot;: 
-read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
+read &quot;../helper/proc_MatlabExport&quot;:
+read &quot;../helper/proc_simplify2&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1650" drawlabel="true">
@@ -166,11 +167,33 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Group>
 <Group labelreference="L1648" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:
-<Font encoding="UTF-8">printf(&quot;Generiere Geschwindigkeit f\303\274r %s (Herleitung im Welt-KS)\134n&quot;, robot_name):</Font></Text-field>
+<Font encoding="UTF-8">printf(&quot;%s. Generiere Geschwindigkeit f\303\274r %s (Herleitung im Welt-KS)\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), robot_name):</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1647" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_definitions&quot;, robot_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1738" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_maple_inert.m&quot;, robot_name):  
+kin_constraints_exist := kin_constraints_exist:<Font encoding="UTF-8"> # nur zum Absch\303\244tzen der Komplexit\303\244t</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1739" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Term-Vereinfachungen einstellen</Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1742" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion2" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if not assigned(simplify_options) or simplify_options(4)=-1 then # Standard-Einstellungen:
+  if not kin_constraints_exist then # normale serielle Ketten und Baumstrukturen
+    use_simplify := 0: # Standardm\303\244\303\237ig aus
+  else # mit kinematischen Zwangsbedingungen
+    use_simplify := 1: # standardm\303\244\303\237ig simplify-Befehle anwenden
+  end if:
+else
+  use_simplify := simplify_options(4): # vierter Eintrag ist f\303\274r Geschwindigkeit
+end if:
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L1732" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1431" drawlabel="true">
@@ -200,6 +223,10 @@ Die Berechnung soll nur an einer Stelle erfolgen. Siehe robot_tree_velocity_mdh_
 </Group>
 <Group labelreference="L1712" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">thetaD := thetaD:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1743" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>
@@ -245,7 +272,7 @@ end:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1688" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Nutze die Methode %s f\303\274r die Basis-Drehgeschwindigkeit\134n&quot;, </Font>base_method_name):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;%s. Nutze die Methode %s f\303\274r die Basis-Drehgeschwindigkeit\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), </Font>base_method_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1657" drawlabel="true">
@@ -264,6 +291,14 @@ Betrachte dazu nur die durch Gelenke angetriebenen K\303\266rper, nicht die Basi
     # [Ortmaier2014] (7.12) (S.116)
     omega_W_i(1 .. 3, i+1) := omega_W_i(1 .. 3, j):
   end if:
+  # Terme vereinfachen (Teil 1)
+  if use_simplify=1 then
+    tmp_t11:=time():
+    tmp_l11 := length(omega_W_i(1 .. 3, i+1)):
+    omega_W_i(1 .. 3, i+1) := simplify2(omega_W_i(1 .. 3, i+1)):
+    tmp_l21 := length(omega_W_i(1 .. 3, i+1)):
+    tmp_t21:=time():
+  end if:
   # Vektor vom Ursprung des vorherigen Koordinatensystems zu diesem KS
   r_W_im1_i := -Trf_c(1 .. 3, 4, j) + Trf_c(1 .. 3, 4, i+1):
   if sigma(i) = 0 then # Drehgelenk
@@ -273,18 +308,43 @@ Betrachte dazu nur die durch Gelenke angetriebenen K\303\266rper, nicht die Basi
     # [Ortmaier2014] (7.15) (S.116), [KhalilDombre2002] (9.15)
     rD_W_i(1 .. 3, i+1) := rD_W_i(1 .. 3, j) + CrossProduct(omega_W_i(1 .. 3, j), r_W_im1_i) + dD(i,1)*Trf_c(1 .. 3, 3, i+1):
   end if:
-  printf(&quot;Geschwindigkeit f\303\274r K\303\266rperkoordinatensystem %d aufgestellt (Herleitung im Welt-KS). %s\134n&quot;, i-1, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):#0=Basis
+  printf(&quot;%s. Geschwindigkeit f\303\274r K\303\266rperkoordinatensystem %d aufgestellt (Herleitung im Welt-KS).\134n&quot;,\134
+    FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), i-1):#0=Basis
+  # Terme vereinfachen (Teil 2)
+  if use_simplify=1 then
+    tmp_t12:=time():
+    tmp_l12 := length(rD_W_i(1 .. 3, i+1)):
+    rD_W_i(1 .. 3, i+1) := simplify2(rD_W_i(1 .. 3, i+1)):
+    tmp_l22 := length(rD_W_i(1 .. 3, i+1)):
+    tmp_t22:=time():
+    printf(&quot;%s: Terme f\303\274r Geschwindigkeiten vereinfacht. L\303\244nge: %d-&gt;%d / %d-&gt;%d. Rechenzeit %1.1fs und %1.1fs.\134n&quot;, \134
+      FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), tmp_l11, tmp_l21, tmp_l12, tmp_l22, tmp_t21-tmp_t11, tmp_t22-tmp_t12):
+  end if:
 end do:
 </EC-CodeEditor></CodeEditor-ExecGroup>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2">Velocities of Center of Mass</Text-field></Title>
-<Group labelreference="L1660" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">rD_W_Si := Matrix(3, NL):
+<Group labelreference="L1733" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1736" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">rD_W_Si := Matrix(3, NL):
 for i to NL do
   # [Ortmaier2014] (7.17) (S.118), [KhalilDombre2002] (9.15)
   rD_W_Si(1 .. 3, i) := Matrix(rD_W_i(1 .. 3, i)) + Matrix(CrossProduct(omega_W_i(1 .. 3, i), r_W_i_Si(1 .. 3, i))):
-  <Font encoding="UTF-8">printf(&quot;Geschwindigkeit f\303\274r K\303\266rperschwerpunkt %d aufgestellt. %s\134n&quot;, i-1</Font>, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):#0=Basis
-end do:</Text-field>
+  printf(&quot;%s. Geschwindigkeit f\303\274r K\303\266rperschwerpunkt %d aufgestellt.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), i-1):#0=Basis
+  if use_simplify=1 then
+    tmp_t1:=time():
+    tmp_l1 := length(rD_W_Si(1 .. 3, i)):
+    rD_W_Si(1 .. 3, i) := simplify2(rD_W_Si(1 .. 3, i)):
+    tmp_l2 := length(rD_W_Si(1 .. 3, i)):
+    tmp_t2:=time():
+    printf(&quot;%s: Terme f\303\274r Schwerpunkts-Geschwindigkeiten vereinfacht. L\303\244nge: %d-&gt;%d. Rechenzeit %1.1fs.\134n&quot;, \134
+      FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+  end if:
+end do:
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L1737" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>
@@ -309,7 +369,7 @@ end do:</Text-field>
 </Group>
 <Group labelreference="L1728" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save omega_W_i, rD_W_i, rD_W_Si, sprintf(&quot;../codeexport/%s/tmp/velocity_worldframe_floatbase_%s_par1_maple.m&quot;, robot_name, base_method_name):
-<Font encoding="UTF-8">printf(&quot;Maple-Ausdr\303\274cke exportiert. %s\134n&quot;, </Font>FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Text-field>
+<Font encoding="UTF-8">printf(&quot;%s. Maple-Ausdr\303\274cke exportiert.\134n&quot;, </Font>FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1730" drawlabel="true">

@@ -1,3 +1,4 @@
+
 # Center of Mass Jacobian for the Robot based on MDH frames
 # Introduction
 # Berechnung der Schwerpunkts-Jacobi-Matrix (Veränderung des Schwerpunktes in Abhängigkeit der Gelenkwinkel).

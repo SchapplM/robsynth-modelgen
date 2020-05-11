@@ -28,6 +28,7 @@ codegen_act := true:
 codegen_opt := 2: # Hoher Optimierungsgrad.
 ;
 read "../helper/proc_MatlabExport":
+read "../helper/proc_simplify2":
 read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s":
 with(RealDomain): # Schränkt alle Funktionen auf den reellen Bereich ein. Muss nach Definition von MatlabExport kommen. Sonst geht dieses nicht.
@@ -36,6 +37,15 @@ read "../robot_codegen_constraints/proc_subs_kintmp_exp":
 # Definition und Zwangsbedingeun
 read "../robot_codegen_definitions/robot_env":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
+if not assigned(simplify_options) or simplify_options(1)=-1 then
+  if NJ <= 5 then
+    use_simplify := 1: # Nur bei sehr einfachen Systemen (Viergelenkkette). Sonst hängt es sich auf.
+  else
+    use_simplify := 0: # Sonst keine Vereinfachung.
+  end if:
+else
+  use_simplify := simplify_options(1): # erster Eintrag ist für Zwangsbedingungen
+end if:
 # Lesen der Zwangsbedingungen
 kin_constraints_exist := false:
 constrfile := sprintf("../codeexport/%s/tmp/kinematic_constraints_maple_inert.m", robot_name):
@@ -46,9 +56,9 @@ if kin_constraints_exist = true then:
   kintmp_qs := kintmp_qs: # gelesene Variable sonst nicht sichtbar
   kintmp_qt := kintmp_qt: # gelesene Variable sonst nicht sichtbar
   kintmp_subsexp := kintmp_subsexp: # gelesene Variable sonst nicht sichtbar
-  printf("Kinematische Zwangsbedingungen gelesen.\n"):
+  printf("%s. Kinematische Zwangsbedingungen gelesen.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
 else
-  printf("Es gibt keine Zwangsbedingungen. Offene Struktur. Keine weiteren Berechnungen notwendig."):
+  printf("%s. Es gibt keine Zwangsbedingungen. Offene Struktur. Keine weiteren Berechnungen notwendig.", FormatTime("%Y-%m-%d %H:%M:%S")):
   restart: # Funktioniert nicht. Gedacht, damit im worksheet-Modus nichts mehr passieren kann.
   robot_name := "": # Damit werden die Export-Befehle ungültig
   codegen_act := false:
@@ -72,7 +82,7 @@ for i from 1 to NSE do
   end if:
 end do:
 # Zähle, welche Gelenke abhängig sind (durch ZB beschrieben).
-# (in der Gelenkvariablen stehen die Inhalte von kintmp
+# (in der Gelenkvariablen stehen die Inhalte von kintmp)
 jv_zaehler := Matrix(NJ,1):
 for i from 1 to NJ do
   if has(has~(theta_s(i,1), kintmp_s), true) or has(has~(d_s(i,1), kintmp_s), true) then
@@ -87,19 +97,19 @@ for i from 1 to NJ do
   end if:
 end do:
 # Anzahl der abhängigen Gelenkvariablen (Zählmethode: Gelenkkoordinaten durchgehen)
-NC1 := add(jv_zaehler(n), n = 1 .. NJ);
+NC1 := add(jv_zaehler(n), n = 1 .. NJ):
 # Anzahl der abhängigen Gelenkvariablen (Zählmethode: Zwangsbedingungen durchgehen)
-NC2 := add(kintmp_zaehler(n), n = 1 .. NSE);
+NC2 := add(kintmp_zaehler(n), n = 1 .. NSE):
 # Anzahl der konstanten Transformationen
-NS := add(sigma2_zaehler(n), n = 1 .. NJ);
+NS := add(sigma2_zaehler(n), n = 1 .. NJ):
 # Anzahl der "realen" Gelenke (statische Transformationen herausrechnen)
-NRJ := NJ - NS;
+NRJ := NJ - NS:
 # Es gibt (NL - 1) durch Gelenke bewegte Körper, NVJ/2 Koordinatensysteme (hier als "Gelenk" gezählt) sind statisch aufgrund der Schleifenschlussbedingungen
 if NQJ+NC1 <> NRJ then
-  printf("Fehler: Anzahl der Abhängigen Gelenke %d (aus Gelenkvariablen) passt nicht zur Anzahl der Gelenke %d und der Minimalkoordinaten %d\n", NC1, NRJ, NQJ):
+  printf("%s. Fehler: Anzahl der Abhängigen Gelenke %d (aus Gelenkvariablen) passt nicht zur Anzahl der Gelenke %d und der Minimalkoordinaten %d\n", FormatTime("%Y-%m-%d %H:%M:%S"), NC1, NRJ, NQJ):
 end if:
 if NC1 <> NC2 then
-  printf("Fehler: Anzahl der Abhängigen Gelenke %d (aus Gelenkvariablen) passt nicht zur Anzahl der Zwangsbedingungen %d (aus Verwendung der Zwangsbedingungs-Variablen)\n", NC1, NC2):
+  printf("%s. Fehler: Anzahl der Abhängigen Gelenke %d (aus Gelenkvariablen) passt nicht zur Anzahl der Zwangsbedingungen %d (aus Verwendung der Zwangsbedingungs-Variablen)\n", FormatTime("%Y-%m-%d %H:%M:%S"), NC1, NC2):
 end if:
 # Indizes der Zwangsbedingungen (in kintmp_s), die wirklich verwendet werden. Wird später nicht mehr benötigt.
 Ind_ZB := Matrix(NC,1):
@@ -131,6 +141,7 @@ end do:
 # Wird benötigt, um die Geschwindigkeit der Gelenkkoordinaten der offenen Struktur zu berechnen und um die Momente der offenen Struktur auf die geschlossene Struktur umzurechnen.
 # Ist Matrix Phi aus [ParkChoPlo1999]. qJ hier ist qa dort. qr dort entspricht den Koordinaten desselben Systems ohne Zwangsbedingungen.
 # Entspricht der Matrix W aus [NakamuraGho1989] (nur dass hier die Aufteilung q1,q2 nicht gestapelt in q auftreten muss).
+# Wenn statische Transformationen definiert sind (mit sigma=2), dann werden die entsprechenden Spalten hier trotzdem angegeben (das ist nicht unbedingt intuitiv, aber von der Programmierung bedeutend einfach)
 Phi_s := Matrix(NJ, NQJ):
 # Jacobi-Matrix berechnen
 for i from 1 to NJ do
@@ -138,6 +149,26 @@ for i from 1 to NJ do
     Phi_s(i,j) := diff(jv_qs(i,1), qJ_s(j,1)):
   end do:
 end do:
+# Term vereinfachen
+if use_simplify >= 1 then
+  tmp_t1 := time(): tmp_l1 := length(Phi_s):
+  printf("%s. Vereinfache Passiv-Gelenk-Jacobi (Dimension %d x %d). Länge: %d.\n", \
+    FormatTime("%Y-%m-%d %H:%M:%S"), NJ, NQJ, tmp_l1):
+  for i from 1 to NJ do
+    for j from 1 to NQJ do
+      tmp_t1ij := time(): tmp_l1ij := length(Phi_s(i,j)):
+      printf("%s. Vereinfache Passiv-Gelenk-Jacobi Eintrag %d,%d. Länge: %d.\n", \
+        FormatTime("%Y-%m-%d %H:%M:%S"), i, j, tmp_l1ij):
+      Phi_s(i,j) := simplify2(Phi_s(i,j)):
+      tmp_t2ij := time(): tmp_l2ij := length(Phi_s(i,j)):
+      printf("%s. Passiv-Gelenk-Jacobi der ZB Eintrag %d,%d vereinfacht. Länge: %d->%d. Rechenzeit %1.1fs.\n", \
+        FormatTime("%Y-%m-%d %H:%M:%S"), i, j, tmp_l1ij, tmp_l2ij, tmp_t2ij-tmp_t1ij):
+    end do:
+  end do:
+  tmp_t2 := time(): tmp_l2 := length(Phi_s):
+  printf("%s. Passiv-Gelenk-Jacobi der ZB vereinfacht. Länge: %d->%d. Rechenzeit %1.1fs.\n", \
+    FormatTime("%Y-%m-%d %H:%M:%S"), tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+end if:
 # Zeitableitung der Jacobi-Matrix
 # Wird benötigt, um die Beschleunigung der Gelenkkoordinaten der offenen Struktur zu berechnen.
 Phi_t := convert_s_t(Phi_s):
@@ -148,13 +179,14 @@ PhiD_s := convert_t_s(PhiD_t):
 save jv_s, jv_qs, jv_qt, sprintf("../codeexport/%s/tmp/kinematic_constraints_explicit_maple.m", robot_name):
 save Phi_s, sprintf("../codeexport/%s/tmp/kinematic_constraints_explicit_jacobian_maple.m", robot_name):
 save PhiD_s, sprintf("../codeexport/%s/tmp/kinematic_constraints_explicit_jacobian_time_derivative_maple.m", robot_name):
-printf("Ausdrücke für Kinematische ZB gespeichert (Maple)\n"):
+printf("%s. Ausdrücke für Kinematische ZB gespeichert (Maple)\n", FormatTime("%Y-%m-%d %H:%M:%S")):
 if codegen_act = true then
   MatlabExport(jv_zaehler, sprintf("../codeexport/%s/tmp/kinconstr_index_dependant_joints_matlab.m", robot_name), 2):
   MatlabExport(jv_qs, sprintf("../codeexport/%s/tmp/kinconstr_expl_matlab.m", robot_name), 2):
   MatlabExport(Phi_s, sprintf("../codeexport/%s/tmp/kinconstr_expl_jacobian_matlab.m", robot_name), 2):
   MatlabExport(PhiD_s, sprintf("../codeexport/%s/tmp/kinconstr_expl_jacobianD_matlab.m", robot_name), 2):
-  printf("Ausdrücke für Kinematische ZB gespeichert (Matlab)\n"):
+  printf("%s. Ausdrücke für Kinematische ZB gespeichert (Matlab)\n", FormatTime("%Y-%m-%d %H:%M:%S")):
 end if:
-printf("Fertig\n"):
+
+
 

@@ -42,6 +42,7 @@ codeexport_invdyn := true:
 read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s": 
 read "../helper/proc_MatlabExport":
+read "../helper/proc_simplify2":
 read "../helper/proc_LagrangeN":
 read "../helper/proc_index_symmat2vector":
 read "../transformation/proc_rotx": 
@@ -54,6 +55,19 @@ read "../transformation/proc_transl":
 read "../transformation/proc_trafo_mdh": 
 read "../robot_codegen_definitions/robot_env":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
+read sprintf("../codeexport/%s/tmp/kinematic_constraints_maple_inert.m", robot_name):  
+kin_constraints_exist := kin_constraints_exist: # nur zum Abschätzen der Komplexität
+;
+# Term-Vereinfachungen einstellen
+if not assigned(simplify_options) or simplify_options(10)=-1 then # Standard-Einstellungen:
+  if not kin_constraints_exist then # normale serielle Ketten und Baumstrukturen
+    use_simplify := 0: # Standardmäßig aus
+  else # mit kinematischen Zwangsbedingungen
+    use_simplify := 1: # standardmäßig simplify-Befehle anwenden
+  end if:
+else # Benutzer-Einstellungen:
+  use_simplify := simplify_options(10): # zehnter Eintrag ist für Dynamik-Regressor
+end if:
 # Mit diesem Arbeitsblatt werden die Regressor-Ausdrücke für Fixed-Base und Floating-Base Modelle generiert. Erkenne welche Basis-Modellierung aktiv ist
 if base_method_name="twist" then # Basis-Methode "twist" wird (hier) nur für fixed Base benutzt
   expstring:="fixb":
@@ -71,14 +85,14 @@ if regressor_modus = "regressor_minpar" then
   read sprintf("../codeexport/%s/tmp/energy_potential_%s_regressor_minpar_maple.m", robot_name, expstring):
   t_ges := t_ges_minpar:
   u_ges := u_ges_minpar:
-  printf("Generiere Minimalparameterregressor der Dynamik für %s\n", robot_name):
+  printf("%s. Generiere Minimalparameterregressor der Dynamik für %s\n", FormatTime("%Y-%m-%d %H:%M:%S"), robot_name):
 end if:
 if regressor_modus = "regressor" then
   read sprintf("../codeexport/%s/tmp/energy_kinetic_%s_regressor_maple.m", robot_name, expstring):
   read sprintf("../codeexport/%s/tmp/energy_potential_%s_regressor_maple.m", robot_name, expstring):
   t_ges := t_ges:
   u_ges := u_ges:
-  printf("Generiere Regressor der Dynamik für %s (nicht Minimalparameter)\n", robot_name):
+  printf("%s. Generiere Regressor der Dynamik für %s (nicht Minimalparameter)\n", FormatTime("%Y-%m-%d %H:%M:%S"), robot_name):
 end if:
 # Schalter zur Auswahl der unterschiedlichen Terme, die exportiert werden sollen. Für parallele Berechnung interessant.
 DynString := "Term:":
@@ -100,7 +114,7 @@ end if:
 if codeexport_invdyn then
   DynString := sprintf("%s tau",DynString):
 end if:
-printf("Generiere Dynamik-Regressor (%s) für %s und %s\n", DynString, robot_name, base_method_name):
+printf("%s. Generiere Dynamik-Regressor (%s) für %s und %s\n", FormatTime("%Y-%m-%d %H:%M:%S"), DynString, robot_name, base_method_name):
 # Platzhalter-Vektor der Dynamik-Parameter aufstellen
 nDP := ColumnDimension(u_ges):
 PV := Matrix(nDP,1):
@@ -118,6 +132,7 @@ if regressor_modus = "regressor_minpar" then
 elif regressor_modus = "regressor" then
   regshortname := "dp":
 end if:
+
 # Lagrange Formalismus (mit Funktion)
 OutputLagrange := LagrangeN(t_ges, u_ges):
 dTdqDdt_s := OutputLagrange[1]:
@@ -130,6 +145,18 @@ save dTdqDdt_s, sprintf("../codeexport/%s/tmp/floatb_lagrange_dTdqDdt_s_%s_maple
 # Gravitational Load
 # Generate
 taug_regressor_s := dUdq_s:
+# Terme vereinfachen
+if codeexport_grav then
+  if use_simplify=1 then
+    tmp_t1:=time():
+    tmp_l1 := length(taug_regressor_s):
+    taug_regressor_s := simplify2(taug_regressor_s):
+    tmp_t2:=time():
+    tmp_l2 := length(taug_regressor_s):
+    printf("%s: Gravitationsmoment-Regressor vereinfacht. Länge: %d->%d. Rechenzeit %1.1fs.\n", \
+      FormatTime("%Y-%m-%d %H:%M:%S"), tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+  end if:
+end if:
 save taug_regressor_s, sprintf("../codeexport/%s/tmp/gravload_%s_maple.m", robot_name, regressor_modus):
 # Matlab Export
 # Belastung der Basis (nur Floating Base)
@@ -149,6 +176,7 @@ if codegen_act and codeexport_grav and not(base_method_name="twist") then
   MatlabExport(taug_regressor_s(1..NQ,..), sprintf("../codeexport/%s/tmp/gravload_floatb_%s_%s_matlab.m", robot_name, base_method_name, regressor_modus), codegen_opt):
   MatlabExport(taug(1..NQ,..), sprintf("../codeexport/%s/tmp/gravload_floatb_%s_%s_matlab.m", robot_name, expstring, regshortname), codegen_opt):
 end if:
+
 # Mass Matrix
 # Berechnung vollständige Massenmatrix
 # Generiere die Massenmatrix erst für Floating-Base-Komplettsystem, dann entnehme die Teilmatrizen für Gelenk-Gelenk, Gelenk-Basis zum separaten Export
@@ -158,6 +186,7 @@ Paramvec_size := ColumnDimension(t_ges):
 # Siehe: https://de.wikipedia.org/wiki/Symmetrische_Matrix
 tauMM_regressor_s := dTdqDdt_s(1..NQ,..):
 MM_regressor_s := Matrix(NQ*(NQ+1)/2, Paramvec_size):
+if codeexport_inertia or codeexport_inertiaD or codeexport_cormat then
 i_rr := 0:
 for i to NQ do # Zeilenindex der Massenmatrix
   for j to NQ do  # Spaltenindex der Massenmatrix
@@ -170,6 +199,19 @@ for i to NQ do # Zeilenindex der Massenmatrix
     end do:
   end do:
 end do:
+# Terme vereinfachen
+if use_simplify>=1 then
+  tmp_t1:=time():
+  tmp_l1 := length(MM_regressor_s):
+  printf("%s. Beginne Vereinfachung: Massenmatrix-Regressor (%s). Länge: %d.\n", \
+    FormatTime("%Y-%m-%d %H:%M:%S"), regressor_modus, tmp_l1):
+  MM_regressor_s := simplify2(MM_regressor_s):
+  tmp_t2:=time():
+  tmp_l2 := length(MM_regressor_s):
+  printf("%s. Massenmatrix-Regressor (%s) vereinfacht. Länge: %d->%d. Rechenzeit %1.1fs.\n", \
+    FormatTime("%Y-%m-%d %H:%M:%S"), regressor_modus, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+end if:
+end if:
 # Export Gesamt-Massenmatrix
 if codegen_act and codeexport_inertia and not(base_method_name="twist") then
   MatlabExport(MM_regressor_s, sprintf("../codeexport/%s/tmp/inertia_floatb_%s_%s_matlab.m", robot_name, base_method_name, regressor_modus), codegen_opt):
@@ -292,6 +334,7 @@ end proc:
 # Initialisierung. Speichere die vollständige Coriolismatrix (nicht symmetrisch/schiefsymmetrisch). Unterschied zum Vorgehen bei der Massenmatrix
 C_regressor_s := Matrix(NQ*NQ, Paramvec_size):
 # Berechnung
+if codeexport_cormat then:
 i_rr := 0: # Vektor-Index für den Regressor der Coriolismatrix (Ausgabe)
 for i to NQ do # Zeilenindex der Coriolismatrix
   for j to NQ do  # Spaltenindex der Coriolismatrix
@@ -310,6 +353,19 @@ for i to NQ do # Zeilenindex der Coriolismatrix
     end do:
   end do:
 end do:
+# Terme vereinfachen
+if use_simplify>=1 then
+  tmp_t1:=time():
+  tmp_l1 := length(C_regressor_s):
+  printf("%s. Beginne Vereinfachung: Coriolis-Matrix-Regressor (%s). Länge: %d.\n", \
+    FormatTime("%Y-%m-%d %H:%M:%S"), regressor_modus, tmp_l1):
+  C_regressor_s := simplify2(C_regressor_s):
+  tmp_t2:=time():
+  tmp_l2 := length(C_regressor_s):
+  printf("%s: Coriolis-Matrix-Regressor (%s) vereinfacht. Länge: %d->%d. Rechenzeit %1.1fs.\n", \
+    FormatTime("%Y-%m-%d %H:%M:%S"), regressor_modus, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+end if:
+end if:
 save C_regressor_s, sprintf("../codeexport/%s/tmp/coriolismat_%s_%s_maple.m", robot_name, expstring, regressor_modus):
 # Matlab Export: Floating Base Gesamt
 if codegen_act and codeexport_cormat and not(base_method_name="twist") then

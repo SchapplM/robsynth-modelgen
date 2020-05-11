@@ -158,7 +158,8 @@ Die Terme werden aber auf jeden Fall \303\274bersichtlicher.</Font></Text-field>
 <Group labelreference="L1583" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_convert_s_t&quot;:
 read &quot;../helper/proc_convert_t_s&quot;: 
-read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
+read &quot;../helper/proc_MatlabExport&quot;:
+read &quot;../helper/proc_simplify2&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1523" drawlabel="true">
@@ -198,7 +199,7 @@ end proc:</Text-field>
 </Group>
 <Group labelreference="L1577" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:
-<Font encoding="UTF-8">printf(&quot;Generiere Kinematik f\303\274r %s\134n&quot;, robot_name):</Font></Text-field>
+<Font encoding="UTF-8">printf(&quot;%s. Generiere Kinematik f\303\274r %s\134n&quot;, </Font>FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), robot_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1645" drawlabel="true">
@@ -207,6 +208,19 @@ end proc:</Text-field>
 </Group>
 <Group labelreference="L2213" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;%s. Alle Daten geladen. Generiere Kinematik f\303\274r %s\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), </Font>robot_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L2218" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Term-Vereinfachungen einstellen</Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L2220" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion4" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if not assigned(simplify_options) or simplify_options(2)=-1 then
+  use_simplify := 1: # standardm\303\244\303\237ig simplify-Befehle anwenden. Sind meistens sinnvoll und in Ausnahmen nicht allzu sch\303\244dlich
+else
+  use_simplify := simplify_options(2): # zweiter Eintrag ist f\303\274r Kinematik
+end if:
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L2221" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>
@@ -297,6 +311,13 @@ end do:</Text-field>
         Trf(ix, iy, i) := convert_s_t( Trf(ix, iy, i) ):
       end do:
     end do:
+    if use_simplify&gt;=1 then
+    	 tmp_l1 := length(Trf(1 .. 4, 1 .. 4, i)): tmp_t1:=time():
+    	 Trf(1 .. 4, 1 .. 4, i) := simplify2(Trf(1 .. 4, 1 .. 4, i)):
+    	 tmp_l2 := length(Trf(1 .. 4, 1 .. 4, i)): tmp_t2:=time():
+    	 printf(&quot;%s: Term f\303\274r (Einzel-)Trafo-Matrix %d-&gt;%d vereinfacht. L\303\244nge: %d-&gt;%d. Rechenzeit %1.1fs.\134n&quot;, \134
+    	   FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), v(i), i, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+    end if:
   end do:
   printf(&quot;%s. Ersetzungen der MDH-Parameter mit Ergebnissen der Parallelstruktur in verallgemeinerten Koordinaten erfolgreich (vor Berechnung der Gesamt-Transformation).\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
 end if:</EC-CodeEditor></CodeEditor-ExecGroup>
@@ -342,6 +363,13 @@ end:</Text-field>
     # Index des vorherigen Koordinatensystems
     j := v(i)+1:
     Trf_c(1 .. 4, 1 .. 4, i+1) := Multiply(Trf_c(1 .. 4, 1 .. 4, j), Trf(1 .. 4, 1 .. 4, i)):
+    if use_simplify&gt;=1 then
+    	 tmp_l1 := length(Trf_c(1 .. 4, 1 .. 4, i+1)): tmp_t1:=time():
+    	 Trf_c(1 .. 4, 1 .. 4, i+1) := simplify2(Trf_c(1 .. 4, 1 .. 4, i+1)):
+    	 tmp_l2 := length(Trf_c(1 .. 4, 1 .. 4, i+1)): tmp_t2:=time():
+    	 printf(&quot;%s: Term f\303\274r (Gesamt-)Trafo-Matrix 0-&gt;%d vereinfacht. L\303\244nge: %d-&gt;%d. Rechenzeit %1.1fs.\134n&quot;, \134
+    	   FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), i, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+    end if:
   end do:
 end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L1759" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -407,10 +435,18 @@ Bei Verwendung dieser Optimierung funktioniert die Substitution mit trigonometri
       j := v(j): # Nehme das Vorg\303\244nger-Segment
     end do:
     Trf_c(1 .. 4, 1 .. 4, i+1) := Matrix(Trf_c(1 .. 4, 1 .. 4, j2+1)) . Trf_tmp:
+    if use_simplify&gt;=1 then
+    	 tmp_l1 := length(Trf_c(1 .. 4, 1 .. 4, i+1)): tmp_t1:=time():
+    	 Trf_c(1 .. 4, 1 .. 4, i+1) := simplify2(Trf_c(1 .. 4, 1 .. 4, i+1)):
+    	 tmp_l2 := length(Trf_c(1 .. 4, 1 .. 4, i+1)): tmp_t2:=time():
+    	 printf(&quot;%s: Term f\303\274r (Gesamt-)Trafo-Matrix 0-&gt;%d vereinfacht. L\303\244nge: %d-&gt;%d. Rechenzeit %1.1fs\134n&quot;, \134
+    	   FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), i, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+    end if:
     #printf(&quot;Trf_tmp an Trf_c angeh\303\244ngt (Eintrag zu K\303\266rper %d. %d -&gt; %d mit Kette %s)\134n&quot;, i, j2, i, convert(Kette_akt, string)):
     #print(Trf_c(1 .. 4, 1 .. 4, i+1)):
   end do:
-  printf(&quot;%s. Ersetzungen der MDH-Parameter mit Ergebnissen der Parallelstruktur in verallgemeinerten Koordinaten erfolgreich (vor Berechnung der Gesamt-Transformation).\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)
+  printf(&quot;%s. Berechnung der direkten Kinematik mit Vereinfachungen f\303\274r parallele Achsen erfolgreich.\134n&quot;, \134
+    FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)
 ):
 end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title>
@@ -442,8 +478,21 @@ Da die Gesamt-Transformation Trf_c an dieser Stelle schon berechnet wurde, m\303
         Trf_c(ix, iy, i+1) := convert_s_t( Trf_c(ix, iy, i+1) ):
       end do:
     end do:
+    if use_simplify&gt;=1 then
+    	 tmp_l1 := length(Trf(1 .. 4, 1 .. 4, i)): tmp_t1:=time():
+    	 Trf(1 .. 4, 1 .. 4, i) := simplify2(Trf(1 .. 4, 1 .. 4, i)):
+    	 tmp_l2 := length(Trf(1 .. 4, 1 .. 4, i)): tmp_t2:=time():
+    	 printf(&quot;%s. Term f\303\274r Einzel-Trafo-Matrix %d-&gt;%d vereinfacht. L\303\244nge: %d-&gt;%d Rechenzeit %1.1fs.\134n&quot;, \134
+    	   FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), v(i), i, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+    	 tmp_l1 := length(Trf_c(1 .. 4, 1 .. 4, i+1)): tmp_t1:=time():
+    	 Trf_c(1 .. 4, 1 .. 4, i+1) := simplify2(Trf_c(1 .. 4, 1 .. 4, i+1)):
+    	 tmp_l2 := length(Trf_c(1 .. 4, 1 .. 4, i+1)): tmp_t2:=time():
+    	 printf(&quot;%s. Term f\303\274r Gesamt-Trafo-Matrix 0-&gt;%d vereinfacht. L\303\244nge: %d-&gt;%d Rechenzeit %1.1fs.\134n&quot;, \134 
+    	   FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), i, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+    end if:
   end do:
-  printf(&quot;%s. Ersetzungen der MDH-Parameter mit Ergebnissen der Parallelstruktur in verallgemeinerten Koordinaten erfolgreich (nach Berechnung der Gesamt-Transformation).\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+  printf(&quot;%s. Ersetzungen der MDH-Parameter mit Ergebnissen der Parallelstruktur in verallgemeinerten Koordinaten erfolgreich (nach Berechnung der Gesamt-Transformation).\134n&quot;, \134
+    FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
 end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Export</Text-field></Title>

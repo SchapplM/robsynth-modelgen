@@ -35,9 +35,24 @@ codegen_opt := 2:
 read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s": 
 read "../helper/proc_MatlabExport":
+read "../helper/proc_simplify2":
 read "../robot_codegen_definitions/robot_env":
 printf("Generiere Minimalparameterregressor der Energie für %s\n", robot_name, codegen_dynpar):
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name, base_method_name):
+read sprintf("../codeexport/%s/tmp/kinematic_constraints_maple_inert.m", robot_name):  
+kin_constraints_exist := kin_constraints_exist: # nur zum Abschätzen der Komplexität
+;
+# Term-Vereinfachungen einstellen
+if not assigned(simplify_options) or simplify_options(7)=-1 then # Standard-Einstellungen:
+  if not kin_constraints_exist then # normale serielle Ketten und Baumstrukturen
+    use_simplify := 0: # Standardmäßig aus
+  else # mit kinematischen Zwangsbedingungen
+    use_simplify := 1: # standardmäßig simplify-Befehle anwenden
+  end if:
+else # Benutzer-Einstellungen:
+  use_simplify := simplify_options(7): # siebter Eintrag ist für Energie-Regressor
+end if:
+
 # Ergebnisse der Energie laden
 read sprintf("../codeexport/%s/tmp/energy_potential_floatb_%s_worldframe_par2_maple.m", robot_name, base_method_name):
 read sprintf("../codeexport/%s/tmp/energy_kinetic_floatb_%s_linkframe_par2_maple.m", robot_name, base_method_name):
@@ -52,6 +67,7 @@ for i from 1 to 6 do
 end do:
 # Die kinetischen und potentiellen Energien aus (2) und (3) stehen ab hier durch T_fixb und U_fixb zur Verfügung. 
 # Der Parametervektor 'PV2_vec' aus (13) wurde in 'robot_tree_floatb_twist_definitions.mw' aufgestellt. 
+
 # Parameterlinearisierung
 # Parameterlinearisierung auf Basis von [HRL_IDR] (14) und (15)
 # Linearisierung
@@ -61,6 +77,19 @@ for i to 10*(NL-1) do
   t_ges[1,i] := diff(T_fixb,PV2_vec[10+i,1]);
   u_ges[1,i] := diff(U_fixb,PV2_vec[10+i,1]);
 end do:
+# Terme vereinfachen
+if use_simplify=1 then
+  tmp_t1:=time():
+  tmp_l11 := length(t_ges):
+  tmp_l12 := length(u_ges):
+  t_ges := simplify2(t_ges):
+  u_ges := simplify2(u_ges):
+  tmp_t2:=time():
+  tmp_l21 := length(t_ges):
+  tmp_l22 := length(u_ges):
+  printf("%s: Terme für Energie-Regressor vereinfacht. Länge: %d->%d / %d->%d. Rechenzeit %1.1fs.\n", \
+    FormatTime("%Y-%m-%d %H:%M:%S"), tmp_l11, tmp_l21, tmp_l12, tmp_l22, tmp_t2-tmp_t1):
+end if:
 # Export
 save t_ges, sprintf("../codeexport/%s/tmp/energy_kinetic_fixb_regressor_maple.m", robot_name):
 save u_ges, sprintf("../codeexport/%s/tmp/energy_potential_fixb_regressor_maple.m", robot_name):

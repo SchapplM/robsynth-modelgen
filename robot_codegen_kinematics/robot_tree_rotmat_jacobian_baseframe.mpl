@@ -50,6 +50,11 @@ read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
 read sprintf("../codeexport/%s/tmp/kinematics_floatb_%s_rotmat_maple.m", robot_name, base_method_name):
 Trf := Trf:
 Trf_c := Trf_c:
+# Eliminiere die Basis-Position und Orientierung. Darf keinen Einfluss auf die Jacobi-Matrix haben.
+# Bei komplizierten Ausdrücken (insbesondere bei kinematischen Zwangsbedingungen) können die Symbole manchmal nicht eliminiert werden
+for i from 1 to NQB do
+  Trf_c := subs({X_base_t[i,1]=0},Trf_c):
+end do:
 # Link-Index, für den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber für beliebige Segmente aufgestellt werden. (0=Basis)
 LIJAC:=NL-1:
 printf("Generiere Jacobi-Matrix für %s (Körper %d)\n", robot_name, LIJAC):
@@ -126,7 +131,15 @@ end if:
 # Zusammenhang zwischen Geschwindigkeit der verallgemeinerten Koordinaten und Winkelgeschwindigkeit des Endeffektors ausgedrückt im Basis-Koordinatensystems
 read sprintf("../codeexport/%s/tmp/velocity_worldframe_floatbase_%s_par1_maple.m", robot_name, base_method_name):
 omega_W_i := omega_W_i:
+# Basis-Terme entfernen (falls durch Maple später nicht möglich, s.o.)
+for i from 1 to NQB do
+  omega_W_i := subs({X_base_t[i,1]=0},omega_W_i):
+  omega_W_i := subs({V_base_t[i,1]=0},omega_W_i):
+end do:
+# Winkelgeschwindigkeit als allgemeiner Ausdruck (nicht über Gelenk-Konfiguration)
+# (fällt später sowieso weg)
 omega_EE := Matrix(3,1,<omega_xEE; omega_yEE; omega_zEE>):
+# Differenz als kinematische Zwangsbedingung aufstellen
 h_rotg := Matrix(omega_W_i(1..3,LIJAC+1)) - omega_EE:
 h_rotg_s :=convert_t_s(h_rotg):
 # Jacobi-Matrix der inversen Kinematik

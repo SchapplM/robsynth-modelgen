@@ -34,6 +34,7 @@ codegen_opt := 2:
 read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s": 
 read "../helper/proc_MatlabExport":
+read "../helper/proc_simplify2":
 read "../transformation/proc_rotx": 
 read "../transformation/proc_roty": 
 read "../transformation/proc_rotz": 
@@ -44,6 +45,29 @@ read "../transformation/proc_transl":
 read "../transformation/proc_trafo_mdh": 
 read "../robot_codegen_definitions/robot_env":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
+read sprintf("../codeexport/%s/tmp/kinematic_constraints_maple_inert.m", robot_name):
+kin_constraints_exist := kin_constraints_exist: # Laden zur Einstellung der Term-Vereinfachung
+;
+# Einstellungen für Term-Vereinfachungen: 0=keine, 1=E_pot, 2=auch E_kin (einzelne), 3=auch E_kin (komplett)
+if not assigned(simplify_options) or simplify_options(6)=-1 then
+  # Die Vereinfachung ist ein Kompromiss aus Laufzeit des Programms und Güte der Ergebnisse
+  # Bei zu komplizierten Termen stürzt Maple bei der Vereinfachung unvorhersehbar ab.
+  # Die folgenden Regeln sind konservative Einstellungen, damit die Code-Generierung nicht zu lange dauert.
+  if not kin_constraints_exist then # ohne Zwangsbedingungen. Annahme: Bringt dann sowieso nicht so viel
+    use_simplify := 0:
+  else # für Systeme mit Zwangsbedingungen
+    if NJ <= 7 then
+      use_simplify := 3: # standardmäßig bei einfachen Systemen alle simplify-Befehle anwenden
+    elif NJ <= 11 then # das ist nur eine grobe Abschätzung
+      use_simplify := 2: # Simplify reduzieren (Annahme: Optimierung Gesamt-Energie dauer länger)
+    else
+      use_simplify := 1: # simplify-Befehle weiter begrenzen (sonst hängt Maple sich auf)
+    end if:
+  end if:
+else
+  use_simplify := simplify_options(6): # sechster Eintrag ist für Energie
+end if:
+
 # Ergebnisse der Kinematik laden (Rotationsmatrizen, Schwerpunktskoordinaten, Geschwindigkeiten)
 read sprintf("../codeexport/%s/tmp/kinematics_floatb_%s_rotmat_maple.m", robot_name, base_method_name):
 Trf := Trf:
@@ -55,13 +79,36 @@ read sprintf("../codeexport/%s/tmp/velocity_worldframe_floatbase_%s_par1_maple.m
 omega_W_i := omega_W_i: 
 rD_W_i := rD_W_i:
 rD_W_Si := rD_W_Si:
+
 # Potential Energy
 U_b := Matrix(NL, 1):
 U_grav := 0:
 for i to NL do 
   U_b[i] := -M[i, 1]*Multiply(Transpose(g_world), r_W_W_Si(1 .. 3, i)):
+  printf("%s. Potentielle Energie aus Gravitation für Körper %d berechnet (im Welt-KS, Parametersatz 1).\n", \
+    FormatTime("%Y-%m-%d %H:%M:%S"), i-1): #0=Basis
+  # Terme vereinfachen (nur einzelne Energien und nicht die Summe.
+  # Annahme: Zusammenfassung verschiedener Körper nicht zielführend
+  if use_simplify>=1 then
+    tmp_t1:=time(): tmp_l1 := length(U_b[i,1]):
+    printf("%s. Beginne Vereinfachung für potentielle Energie (Param. 1; Körper %d). Länge: %d.\n", \
+      FormatTime("%Y-%m-%d %H:%M:%S"), i-1, tmp_l1):
+    U_b[i,1] := simplify2(U_b[i,1]):
+    tmp_t2:=time(): tmp_l2 := length(U_b[i,1]):
+    printf("%s. Terme für potentielle Energie (Param. 1) vereinfacht (Körper %d). Länge: %d->%d. Rechenzeit %1.1fs.\n", \
+      FormatTime("%Y-%m-%d %H:%M:%S"), i-1, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+  end if:
   U_grav := U_grav+U_b[i, 1]:
-  printf("Potentielle Energie aus Gravitation für Körper %d berechnet (im Welt-KS, Parametersatz 1).\n", i-1): #0=Basis
+  # Terme vereinfachen
+  if use_simplify>=1 then
+    tmp_t1:=time(): tmp_l1 := length(U_grav):
+    printf("%s. Beginne Vereinfachung für potentielle Energie (Param. 1; Summe bis Körper %d). Länge: %d.\n", \
+      FormatTime("%Y-%m-%d %H:%M:%S"), i-1, tmp_l1):
+    U_grav := simplify2(U_grav):
+    tmp_t2:=time(): tmp_l2 := length(U_grav):
+    printf("%s. Terme für potentielle Energie vereinfacht (Param. 1; Summe bis Körper %d). Länge: %d->%d. Rechenzeit %1.1fs.\n", \
+      FormatTime("%Y-%m-%d %H:%M:%S"), i-1, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+  end if:
 end do:
 # Maple Export
 save U_grav, sprintf("../codeexport/%s/tmp/energy_potential_floatb_%s_worldframe_par1_maple.m", robot_name, base_method_name):
@@ -78,12 +125,37 @@ for i to NL do
   # Trägheitstensor (3x3) um den Körperschwerpunkt in Basis-KS
   I_i_W := Multiply(R_W_i, Multiply(I_i_Si_Tensor, Transpose(R_W_i))):
   T_b[i] := (1/2)*M[i, 1]*Multiply(Transpose(rD_W_Si(1 .. 3, i)), rD_W_Si(1 .. 3, i))+(1/2)*Multiply(Transpose(omega_W_i(1 .. 3, i)), Multiply(I_i_W, omega_W_i(1 .. 3, i))):
+  printf("%s. Kinetische Energie für Körper %d berechnet (im Welt-KS, Parametersatz 1)\n", FormatTime("%Y-%m-%d %H:%M:%S"), i-1):#0=Basis
+  # Terme vereinfachen (nur einzelne Energien und nicht die Summe.
+  # Annahme: Zusammenfassung verschiedener Körper nicht zielführend
+  if use_simplify>=2 then
+    tmp_t1:=time(): tmp_l1 := length(T_b[i,1]):
+    printf("%s. Beginne Vereinfachung für kinetische Energie (Param. 1; Körper %d). Länge: %d.\n", \
+      FormatTime("%Y-%m-%d %H:%M:%S"), i-1, tmp_l1):
+    T_b[i,1] := simplify2(T_b[i,1]):
+    tmp_t2:=time(): tmp_l2 := length(T_b[i,1]):
+    printf("%s. Terme für kinetische Energie (Param. 1) vereinfacht (Körper %d). Länge: %d->%d. Rechenzeit %1.1fs.\n", \
+      FormatTime("%Y-%m-%d %H:%M:%S"), i-1, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+  end if:
   T := T+T_b[i, 1]:
-  printf("Kinetische Energie für Körper %d berechnet (im Welt-KS, Parametersatz 1)\n", i-1):#0=Basis
+
+  # Terme vereinfachen (optional, Standardmäßig nur kinetische Energie einzelner Körper optimieren)
+  # Für komplizierte Systeme hängt sich Maple hier auf.
+  if use_simplify>=3 then
+    tmp_t1:=time(): tmp_l1 := length(T):
+    printf("%s. Beginne Vereinfachung für kinetische Energie (Param. 1; Summe bis Körper %d). Länge: %d.\n", \
+      FormatTime("%Y-%m-%d %H:%M:%S"), i-1, tmp_l1):
+    T := simplify2(T):
+    tmp_t2:=time(): tmp_l2 := length(T):
+    printf("%s. Terme für kinetische Energie (Param. 1; Summe bis Körper %d) vereinfacht. Länge: %d->%d. Rechenzeit %1.1fs\n", \
+      FormatTime("%Y-%m-%d %H:%M:%S"), i-1, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+  end if:
 end do:
 # Maple Export
 save T, sprintf("../codeexport/%s/tmp/energy_kinetic_floatb_%s_worldframe_par1_maple.m", robot_name, base_method_name):
 # Matlab Export
+printf("%s: Energie (Param. 1) berechnet und gespeichert. Beginne Matlab-Export.\n", \
+      FormatTime("%Y-%m-%d %H:%M:%S")):
 # Potential Energy
 # Floating Base
 U_s:=convert_t_s(U_grav):

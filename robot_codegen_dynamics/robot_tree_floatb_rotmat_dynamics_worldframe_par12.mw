@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="2018" minor="0"/>
+<Version major="2019" minor="2"/>
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" compactdisplay="false" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" historytimestamp="false" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1050" rtablesize="[10, 10]" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" ansicolor="[]" elisiondigitsthreshold="10000" showassumed="1" ansilprint="false" trailingsemicolon="true" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -149,7 +149,8 @@ codeexport_invdyn := true:</Text-field>
 <Group labelreference="L1688" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_convert_s_t&quot;:
 read &quot;../helper/proc_convert_t_s&quot;: 
-read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
+read &quot;../helper/proc_MatlabExport&quot;:
+read &quot;../helper/proc_simplify2&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1708" drawlabel="true">
@@ -174,6 +175,32 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Group>
 <Group labelreference="L1686" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_definitions&quot;, robot_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1753" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_maple_inert.m&quot;, robot_name):  
+<Font encoding="UTF-8">kin_constraints_exist := kin_constraints_exist: # nur zum Absch\303\244tzen der Komplexit\303\244t</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1752" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Einstellungen f\303\274r Term-Vereinfachungen: 0=keine, 1=Massenmatrix, 2=Coriolis-Matrix, 3=</Font>Massenmatrix-Zeitableitung, Coriolis-Vektor, Invers-Dynamik
+<Font encoding="UTF-8">Motivation: Massenmatrix ist Voraussetzung f\303\274r andere symbolische Berechnungen (lohnt sich damit mehr)
+Coriolis-Matrix l\303\244sst sich besser vereinfachen, da viele Eintr\303\244ge getrennt voneinander betrachtet werden.
+</Font>Coriolis-Vektor bzw. Invers-Dynamik am kompliziertesten.</Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1756" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion7" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if not assigned(simplify_options) or simplify_options(9)=-1 then # Standard-Einstellungen:
+  if not kin_constraints_exist then # normale serielle Ketten und Baumstrukturen
+    use_simplify := 0: # Standardm\303\244\303\237ig aus
+  else # mit kinematischen Zwangsbedingungen
+    # pauschale Annahme f\303\274r kinematische Zwangsbedingungen.
+    use_simplify := 1: # nur Massenmatrix
+  end if:
+else # Benutzer-Einstellungen:
+ use_simplify := simplify_options(9): # neunter Eintrag ist f\303\274r Dynamik
+end if:
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L1723" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1697" drawlabel="true">
@@ -227,7 +254,12 @@ end if:
 if codeexport_invdyn then
   DynString := sprintf(&quot;%s tau&quot;,DynString):
 end if:
-<Font encoding="UTF-8">printf(&quot;Generiere Dynamik (%s) f\303\274r %s mit Parametersatz %d und %s\134n&quot;, </Font>DynString, robot_name, codegen_dynpar, base_method_name):</Text-field>
+<Font encoding="UTF-8">printf(&quot;%s. Generiere Dynamik (%s) f\303\274r %s mit Parametersatz %d und %s\134n&quot;, \134</Font>
+  FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), DynString, robot_name, codegen_dynpar, base_method_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1757" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>
@@ -292,16 +324,48 @@ MM_s := Matrix(NQ, NQ):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1585" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertia or codeexport_inertiaD or codeexport_cormat then
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1726" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if codeexport_inertia then
   for i to NQ do 
-    for j to NQ do 
+    for j to NQ do
+    	 if i &gt; j then # linke untere Dreiecksmatrix
+    	   MM_s[i, j] := MM_s[j,i]: # nehme symmetrischen Teil (wurde schon berechnet)
+    	   next:
+    	 end if:
       MM_s[i, j] := diff(tauMM_s[i, 1], qDD_s[j, 1]):
     end do:
   end do:
+  # Terme vereinfachen
+  if use_simplify&gt;=1 then
+    tmp_t0:=time():
+    tmp_l0 := length(MM_s):
+    printf(&quot;%s: Beginne Elementweise Vereinfachung Massenmatrix (Param. %d). L\303\244nge: %d.\134n&quot;, \134
+      FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), codegen_dynpar, tmp_l0):
+    for i to NQ do 
+      for j to NQ do
+    	   if i &gt; j then # linke untere Dreiecksmatrix
+    	     MM_s[i, j] := MM_s[j,i]: # nehme symmetrischen Teil (wurde schon vereinfacht)
+    	     next:
+    	   end if:
+        tmp_t1:=time():
+        tmp_l1 := length(MM_s[i,j]):
+        printf(&quot;%s: Beginne Vereinfachung Massenmatrix (Param. %d; Elem. %d,%d). L\303\244nge: %d.\134n&quot;, \134
+          FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), codegen_dynpar, i, j, tmp_l1):
+        MM_s[i,j] := simplify2(MM_s[i,j]):
+        tmp_t2:=time():
+        tmp_l2 := length(MM_s[i,j]):
+        printf(&quot;%s: Massenmatrix (Param. %d; Elem. %d,%d) vereinfacht. L\303\244nge: %d-&gt;%d. Rechenzeit %1.1fs.\134n&quot;, \134
+          FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), codegen_dynpar, i, j, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+      end do:
+    end do:
+    tmp_l2 := length(MM_s):
+    printf(&quot;%s: Massenmatrix (Param. %d) vereinfacht. L\303\244nge: %d-&gt;%d. Rechenzeit %1.1fs.\134n&quot;, \134
+      FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), codegen_dynpar, tmp_l0, tmp_l2, tmp_t2-tmp_t0):
+  end if:
   save MM_s, sprintf(&quot;../codeexport/%s/tmp/inertia_par%d_maple.m&quot;, robot_name, codegen_dynpar):
-end if:</Text-field>
-</Input>
-</Group>
+end if:
+</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L1107" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Matlab Export (nur linke untere Dreiecksmatrix bei vollst\303\244ndigen Matrizen)</Font></Text-field>
 </Input>
@@ -368,38 +432,71 @@ end if:</Text-field>
 end if:</Text-field>
 </Input>
 </Group>
+<Group labelreference="L1727" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Mass Matrix Time Derivative</Text-field></Title>
 <Group labelreference="L1601" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Konvertiere Massenmatrix in zeitabh\303\244ngige Variablen, um Zeitableitung zu berechnen</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L1599" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MM_t := convert_s_t(MM_s):</Text-field>
+<Group labelreference="L1732" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
-</Group>
-<Group labelreference="L1598" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MMD_t := diff~(MM_t, t):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1705" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MMD_s := convert_t_s(MMD_t):</Text-field>
-</Input>
-</Group>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1734" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion2" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if codeexport_inertiaD then
+  read sprintf(&quot;../codeexport/%s/tmp/inertia_par%d_maple.m&quot;, robot_name, codegen_dynpar):
+  MM_s := MM_s: # Annahme: Massenmatrix wurde vorher generiert.
+  MM_t := convert_s_t(MM_s):
+  MMD_t := diff~(MM_t, t):
+  MMD_s := convert_t_s(MMD_t):
+  # Terme vereinfachen
+  # Terme vereinfachen
+  if use_simplify&gt;=3 then
+    tmp_t0:=time():
+    tmp_l0 := length(MMD_s):
+    printf(&quot;%s: Beginne Elementweise Vereinfachung Massenmatrix-Zeitableitung (Param. %d). L\303\244nge: %d.\134n&quot;, \134
+      FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), codegen_dynpar, tmp_l0):
+    for i to NQ do 
+      for j to NQ do
+    	   if i &gt; j then # linke untere Dreiecksmatrix
+    	     MMD_s[i, j] := MMD_s[j,i]: # nehme symmetrischen Teil (wurde schon vereinfacht)
+    	     next:
+    	   end if:
+        tmp_t1:=time():
+        tmp_l1 := length(MMD_s[i,j]):
+        printf(&quot;%s: Beginne Vereinfachung Massenmatrix-Zeitableitung (Param. %d; Elem. %d,%d). L\303\244nge: %d.\134n&quot;, \134
+          FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), codegen_dynpar, i, j, tmp_l1):
+        MMD_s[i,j] := simplify2(MMD_s[i,j]):
+        tmp_t2:=time():
+        tmp_l2 := length(MMD_s[i,j]):
+        printf(&quot;%s: Massenmatrix-Zeitableitung (Param. %d; Elem. %d,%d) vereinfacht. L\303\244nge: %d-&gt;%d. Rechenzeit %1.1fs.\134n&quot;, \134
+          FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), codegen_dynpar, i, j, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+      end do:
+    end do:
+    tmp_l2 := length(MMD_s):
+    printf(&quot;%s: Massenmatrix-Zeitableitung (Param. %d) vereinfacht. L\303\244nge: %d-&gt;%d. Rechenzeit %1.1fs.\134n&quot;, \134
+      FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), codegen_dynpar, tmp_l0, tmp_l2, tmp_t2-tmp_t0):
+  end if:
+end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L1602" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal">Matlab Export</Text-field>
 </Input>
-</Group>
-<Group labelreference="L1600" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_inertiaD and not(base_method_name=&quot;twist&quot;) then
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1730" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if codeexport_inertiaD and not(base_method_name=&quot;twist&quot;) then
   MMD_s_vek := symmat2vec(MMD_s):
-  filename_tmp := sprintf(&quot;../codeexport/%s/tmp/inertia_time_derivative_floatb_%s_par%d_maple_symvec.m&quot;, robot_name, base_method_name, codegen_dynpar):
+  filename_tmp := sprintf(&quot;../codeexport/%s/tmp/inertia_time_derivative_floatb_%s_par%d_maple_symvec.m&quot;, \134
+    robot_name, base_method_name, codegen_dynpar):
   save MMD_s_vek, filename_tmp:
   read filename_tmp:
   if codegen_act then
-    MatlabExport(MMD_s_vek, sprintf(&quot;../codeexport/%s/tmp/inertia_time_derivative_floatb_%s_par%d_matlab.m&quot;, robot_name, base_method_name, codegen_dynpar), codegen_opt):
+    MatlabExport(MMD_s_vek, sprintf(&quot;../codeexport/%s/tmp/inertia_time_derivative_floatb_%s_par%d_matlab.m&quot;, \134
+      robot_name, base_method_name, codegen_dynpar), codegen_opt):
   end if:
-end if:</Text-field>
+end if:
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L1600" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1694" drawlabel="true">
@@ -431,6 +528,14 @@ end do:</Text-field>
 end if:</Text-field>
 </Input>
 </Group>
+<Group labelreference="L1731" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1735" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Coriolis Vector</Text-field></Title>
 <Group labelreference="L1110" drawlabel="true">
@@ -441,14 +546,32 @@ end if:</Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tauCC_s := Matrix(NQ,1): # Platzhalter</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1714" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_corvec then
+<Group labelreference="L1736" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1738" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion3" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if codeexport_corvec then
   tauCC_s := dTdqDdt_s-dTdq_s:
   for i to NQ do 
     tauCC_s := subs({qDD_s(i, 1) = 0}, tauCC_s):
   end do:
+  # Terme vereinfachen
+  if use_simplify&gt;=3 then
+    for i to NQ do 
+      tmp_t1:=time():
+      tmp_l1 := length(tauCC_s[i,1]):
+      printf(&quot;%s: Beginne Vereinfachung Coriolis-Vektor (Param. %d; Elem. %d). L\303\244nge: %d.\134n&quot;, \134
+        FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), codegen_dynpar, i, tmp_l1):
+      tauCC_s[i,1] := simplify2(tauCC_s[i,1]):
+      tmp_t2:=time():
+      tmp_l2 := length(tauCC_s[i,1]):
+      printf(&quot;%s: Coriolis-Vektor (Param %d; Elem. %d) vereinfacht. L\303\244nge: %d-&gt;%d. Rechenzeit %1.1fs.\134n&quot;, \134
+        FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), codegen_dynpar, i, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+   end do:
+  end if:
   save tauCC_s, sprintf(&quot;../codeexport/%s/tmp/coriolisvec_par%d_maple.m&quot;, robot_name, codegen_dynpar):
-end if:</Text-field>
+end if:</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L1714" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1681" drawlabel="true">
@@ -502,6 +625,10 @@ end do:</Text-field>
 end if:</Text-field>
 </Input>
 </Group>
+<Group labelreference="L1739" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Coriolis Matrix</Text-field></Title>
 <Group labelreference="L989" drawlabel="true">
@@ -509,16 +636,20 @@ end if:</Text-field>
 [KhalilDombre2002], equ. (9.7) (p. 195)</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1589" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">cijk := proc (i::integer, j::integer, k::integer, A, qs)
+<Group labelreference="L1744" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1746" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion5" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">cijk := proc (i::integer, j::integer, k::integer, A, qs)
   local c:
   c := (1/2)*(diff(A[i, j], qs(k, 1)))+(1/2)*(diff(A[i, k], qs(j, 1)))-(1/2)*(diff(A[j, k], qs(i, 1))):
   return c:
-end proc:</Text-field>
+end proc:</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L1740" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
-</Group>
-<Group labelreference="L1590" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_cormat then
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1742" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion4" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if codeexport_cormat then
+  read sprintf(&quot;../codeexport/%s/tmp/inertia_par%d_maple.m&quot;, robot_name, codegen_dynpar):
+  MM_s := MM_s: # Annahme: Massenmatrix wurde vorher generiert.
   Cqs:=Matrix(NQ,NQ): 
   for i  from 1 to NQ do
     for j from 1 to NQ do
@@ -528,7 +659,21 @@ end proc:</Text-field>
       end do:
     end do:
   end do:
-end if:</Text-field>
+  # Terme vereinfachen
+  if use_simplify&gt;=2 then
+    tmp_t1:=time():
+    tmp_l1 := length(Cqs):
+    printf(&quot;%s: Beginne Vereinfachung Coriols-Matrix (Param. %d). L\303\244nge: %d.\134n&quot;, \134
+      FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), codegen_dynpar, tmp_l1):
+    Cqs := simplify2(Cqs):
+    tmp_t2:=time():
+    tmp_l2 := length(Cqs):
+    printf(&quot;%s: Coriolis-Matrix vereinfacht (Param. %d). L\303\244nge: %d-&gt;%d. Rechenzeit %1.1fs.\134n&quot;, \134
+      FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), codegen_dynpar, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+  end if:
+end if:</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L1590" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 <Group labelreference="L990" drawlabel="true">
@@ -572,14 +717,35 @@ end if:</Text-field>
 end if:</Text-field>
 </Input>
 </Group>
-</Section>
-<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Joint Torques</Text-field></Title>
-<Group labelreference="L1592" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_invdyn then
-  tau := dTdqDdt_s-dTdq_s+dUdq_s:
-end if:</Text-field>
+<Group labelreference="L1743" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
+<Group labelreference="L1747" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
+</Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Joint Torques</Text-field></Title>
+<Group labelreference="L1748" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1750" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion6" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if codeexport_invdyn then
+  tau := dTdqDdt_s-dTdq_s+dUdq_s:
+  # Terme vereinfachen
+  if use_simplify&gt;=3 then
+    tmp_t1:=time():
+    tmp_l1 := length(tau):
+    printf(&quot;%s: Beginne Vereinfachung Invers-Dynamik (Param. %d). L\303\244nge: %d.\134n&quot;, \134
+      FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), codegen_dynpar, tmp_l1):
+    tau := simplify2(tau):
+    tmp_t2:=time():
+    tmp_l2 := length(tau):
+    printf(&quot;%s: Invers-Dynamik (Param. %d) vereinfacht. L\303\244nge: %d-&gt;%d. Rechenzeit %1.1fs.\134n&quot;, \134
+      FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), codegen_dynpar, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+  end if:
+end if:
+</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L1611" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal">Matlab Export: Floating base
 <Font encoding="UTF-8">Berechnung der Basis-Belastung ist f\303\274r manche Basis-Darstellungen falsch (siehe oben unter Gravitationslast).</Font></Text-field>
@@ -628,6 +794,10 @@ end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1722" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1751" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>

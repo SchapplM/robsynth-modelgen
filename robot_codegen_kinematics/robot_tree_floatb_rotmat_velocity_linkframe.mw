@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="2017" minor="3"/>
+<Version major="2019" minor="2"/>
 <Label-Scheme value="2" prefix=""/>
-<View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false">
+<View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" compactdisplay="false" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" historytimestamp="false" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1050" rtablesize="[10, 10]" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" ansicolor="[]" elisiondigitsthreshold="10000" showassumed="1" ansilprint="false" trailingsemicolon="true" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -150,7 +150,8 @@ codegen_opt := 2:</Text-field>
 <Group labelreference="L1651" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_convert_s_t&quot;:
 read &quot;../helper/proc_convert_t_s&quot;: 
-read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
+read &quot;../helper/proc_MatlabExport&quot;:
+read &quot;../helper/proc_simplify2&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1650" drawlabel="true">
@@ -166,11 +167,33 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Group>
 <Group labelreference="L1648" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:
-<Font encoding="UTF-8">printf(&quot;Generiere Geschwindigkeit f\303\274r %s (Herleitung im K\303\266rper-KS)\134n&quot;, robot_name):</Font></Text-field>
+<Font encoding="UTF-8">printf(&quot;%s. Generiere Geschwindigkeit f\303\274r %s (Herleitung im K\303\266rper-KS)\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), robot_name):</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1647" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_definitions&quot;, robot_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1707" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_maple_inert.m&quot;, robot_name):  
+kin_constraints_exist := kin_constraints_exist:<Font encoding="UTF-8"> # nur zum Absch\303\244tzen der Komplexit\303\244t</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1708" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Term-Vereinfachungen einstellen</Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1710" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if not assigned(simplify_options) or simplify_options(4)=-1 then # Standard-Einstellungen:
+  if not kin_constraints_exist then # normale serielle Ketten und Baumstrukturen
+    use_simplify := 0: # Standardm\303\244\303\237ig aus
+  else # mit kinematischen Zwangsbedingungen
+    use_simplify := 1: # standardm\303\244\303\237ig simplify-Befehle anwenden
+  end if:
+else # Benutzer-Einstellungen:
+  use_simplify := simplify_options(4): # vierter Eintrag ist f\303\274r Geschwindigkeit
+end if:
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L1706" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1431" drawlabel="true">
@@ -194,6 +217,10 @@ Die Berechnung soll nur an einer Stelle erfolgen. Siehe robot_tree_velocity_mdh_
 </Group>
 <Group labelreference="L1701" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">thetaD := thetaD:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1711" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>
@@ -249,7 +276,7 @@ end:</Text-field>
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Erh\303\266he die Geschwindigkeit jedes K\303\266rpers
 Betrachte dazu nur die durch Gelenke angetriebenen K\303\266rper, nicht die Basis</Font></Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L2" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="1350" pixel-height="450" code-language="text/maple" autoexpand="true" wrapping="false" show-border="true" code-line-numbers="true">for i from 1 to NJ do # Gelenke durchgehen
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L2" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="1350" pixel-height="450" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">for i from 1 to NJ do # Gelenke durchgehen
   # K\303\266rper der von Gelenkwinkel i bewegt wird: K\303\266rperindex i+1
   # Vorg\303\244ngerk\303\266rper bestimmen
   j := v(i) + 1:
@@ -263,6 +290,14 @@ Betrachte dazu nur die durch Gelenke angetriebenen K\303\266rper, nicht die Basi
   else: # Schubgelenk
     omega_i_i(1 .. 3, i+1) := Multiply(R_i_j,Matrix(3,1,omega_i_i(1 .. 3, j)))
   end if:
+  # Terme vereinfachen (Teil 1)
+  if use_simplify&gt;=1 then
+    tmp_t11:=time():
+    tmp_l11 := length(omega_i_i(1 .. 3, i+1)):
+    omega_i_i(1 .. 3, i+1) := simplify2(omega_i_i(1 .. 3, i+1)):
+    tmp_l21 := length(omega_i_i(1 .. 3, i+1)):
+    tmp_t21:=time():
+  end if:
   # Vektor vom Ursprung des vorherigen Koordinatensystems zu diesem KS
   r_j_j_i := Trf(1 .. 3, 4, i):
   # [GautierKhalil1988], equ.8: v_jj aus [GautierKhalil1988] entspricht rD_i_i(1 .. 3, i+1) hier
@@ -271,7 +306,18 @@ Betrachte dazu nur die durch Gelenke angetriebenen K\303\266rper, nicht die Basi
   else: # Schubgelenk
     rD_i_i(1 .. 3, i+1) := Matrix(Multiply( R_i_j, ( rD_i_i(1 .. 3, j) + CrossProduct(omega_i_i(1 .. 3, j), r_j_j_i) ) ) ) + Matrix(dD(i,1)*&lt;0;0;1&gt;):
   end if:
-  printf(&quot;Geschwindigkeit f\303\274r K\303\266rperkoordinatensystem %d aufgestellt (Herleitung im K\303\266rper-KS). %s\134n&quot;, i-1, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)): #0=Basis
+  printf(&quot;%s. Geschwindigkeit f\303\274r K\303\266rperkoordinatensystem %d aufgestellt (Herleitung im K\303\266rper-KS).\134n&quot;, \134
+     FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), i-1): #0=Basis
+  # Terme vereinfachen (Teil 2)
+  if use_simplify&gt;=1 then
+    tmp_t12:=time():
+    tmp_l12 := length(rD_i_i(1 .. 3, i+1)):
+    rD_i_i(1 .. 3, i+1) := simplify2(rD_i_i(1 .. 3, i+1)):
+    tmp_l22 := length(rD_i_i(1 .. 3, i+1)):
+    tmp_t22:=time():
+    printf(&quot;%s: Terme f\303\274r Geschwindigkeiten vereinfacht. L\303\244nge: %d-&gt;%d / %d-&gt;%d. Rechenzeit %1.1fs und %1.1fs.\134n&quot;, \134
+      FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), tmp_l11, tmp_l21, tmp_l12, tmp_l22, tmp_t21-tmp_t11, tmp_t22-tmp_t12):
+  end if:
 end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 </Section>
 </Section>
@@ -282,7 +328,7 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 </Group>
 <Group labelreference="L1676" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save omega_i_i, rD_i_i, sprintf(&quot;../codeexport/%s/tmp/velocity_linkframe_floatb_%s_maple.m&quot;, robot_name, base_method_name):
-<Font encoding="UTF-8">printf(&quot;Maple-Ausdr\303\274cke exportiert. %s\134n&quot;, </Font>FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Text-field>
+<Font encoding="UTF-8">printf(&quot;%s. Maple-Ausdr\303\274cke exportiert.\134n&quot;, </Font>FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1705" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -297,7 +343,7 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
   MatlabExport(convert_t_s(omega_i_i), sprintf(&quot;../codeexport/%s/tmp/velocity_omegaii_floatb_%s_linkframe_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
   MatlabExport(convert_t_s(rD_i_i), sprintf(&quot;../codeexport/%s/tmp/velocity_rDii_floatb_%s_linkframe_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
-  <Font encoding="UTF-8">printf(&quot;Geschwindigkeiten in Matlab exportiert. %s\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Font>
+  <Font encoding="UTF-8">printf(&quot;%s. Geschwindigkeiten in Matlab exportiert.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Font>
 end if:</Text-field>
 </Input>
 </Group>

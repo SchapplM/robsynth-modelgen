@@ -28,6 +28,7 @@ codegen_opt := 2:
 read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s": 
 read "../helper/proc_MatlabExport":
+read "../helper/proc_simplify2":
 read "../transformation/proc_rotx":
 read "../transformation/proc_roty":
 read "../transformation/proc_rotz":
@@ -39,6 +40,23 @@ read "../transformation/proc_trafo_mdh":
 read "../robot_codegen_definitions/robot_env":
 printf("Generiere Beschleunigung für %s (Herleitung im Körper-KS)\n", robot_name):
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
+read sprintf("../codeexport/%s/tmp/kinematic_constraints_maple_inert.m", robot_name):  
+kin_constraints_exist := kin_constraints_exist: # nur zum Abschätzen der Komplexität
+;
+# Term-Vereinfachungen einstellen
+if not assigned(simplify_options) or simplify_options(5)=-1 then # Standard-Einstellungen:
+  if not kin_constraints_exist then # normale serielle Ketten und Baumstrukturen
+    use_simplify := 0: # Standardmäßig aus
+  else # mit kinematischen Zwangsbedingungen
+    if NJ <= 5 then # bei einfachen Systemen vereinfachungen vornehmen
+      use_simplify := 1
+    else # bei längeren kinematischen Ketten dauert es zu lange / bringt zu wenig
+      use_simplify := 0:
+    end if:
+  end if:
+else # Benutzer-Einstellungen:
+  use_simplify := simplify_options(5): # fünfter Eintrag ist für Beschleunigung
+end if:
 # Ergebnisse der Kinematik laden
 read sprintf("../codeexport/%s/tmp/kinematics_floatb_%s_rotmat_maple.m", robot_name, base_method_name):
 Trf := Trf:
@@ -57,6 +75,7 @@ dD :=dD:
 read sprintf("../codeexport/%s/tmp/acceleration_mdh_angles_maple.m", robot_name):
 thetaDD :=thetaDD:
 dDD := dDD:
+
 # Calculate Acceleration
 # First assume fixed base model with base velocity and acceleration set to zero
 # Anfangsgeschwindigkeit definieren für floating base model
@@ -94,7 +113,14 @@ for i from 1 to NJ do # Gelenke durchgehen
   else: # Schubgelenk
     omegaD_i_i(1 .. 3, i+1) := Multiply(R_i_j, Matrix(3,1,omegaD_i_i(1 .. 3, j))): 
   end if:
-  
+  # Terme vereinfachen (Teil 1)
+  if use_simplify>=1 then
+    tmp_t11:=time():
+    tmp_l11 := length(omegaD_i_i(1 .. 3, i+1)):
+    omegaD_i_i(1 .. 3, i+1) := simplify2(omegaD_i_i(1 .. 3, i+1)):
+    tmp_l21 := length(omegaD_i_i(1 .. 3, i+1)):
+    tmp_t21:=time():
+  end if:
   # Vektor vom Ursprung des vorherigen Koordinatensystems zu diesem KS
   r_j_j_i := Trf(1 .. 3, 4, i):
   # [GautierKhalil1988], equ.8: v_jj aus [GautierKhalil1988] entspricht rD_i_i(1 .. 3, i+1) hier
@@ -105,6 +131,16 @@ for i from 1 to NJ do # Gelenke durchgehen
     rDD_i_i(1 .. 3, i+1) := Matrix( Multiply( R_i_j, ( rDD_i_i(1 .. 3, j)  + CrossProduct(omega_i_i(1..3,j), (omega_i_i(1..3,j) &x r_j_j_i )) + CrossProduct(omegaD_i_i(1..3,j), r_j_j_i)))) + Matrix( 2* dD(i,1) * CrossProduct(R_i_j.omega_i_i(1..3,j),<0;0;1>)) + Matrix(dDD(i,1)*<0;0;1>)  : 
   end if:
   printf("Beschleunigung für Körperkoordinatensystem %d aufgestellt (Herleitung im Körper-KS). %s\n", i, FormatTime("%Y-%m-%d %H:%M:%S")): #0=Basis
+  # Terme vereinfachen (Teil 2)
+  if use_simplify>=1 then
+    tmp_t12:=time():
+    tmp_l12 := length(rDD_i_i(1 .. 3, i+1)):
+    rDD_i_i(1 .. 3, i+1) := simplify2(rDD_i_i(1 .. 3, i+1)):
+    tmp_l22 := length(rDD_i_i(1 .. 3, i+1)):
+    tmp_t22:=time():
+    printf("%s: Terme für Beschleunigungen vereinfacht. Länge: %d->%d / %d->%d. Rechenzeit %1.1fs und %1.1fs.\n", \
+      FormatTime("%Y-%m-%d %H:%M:%S"), tmp_l11, tmp_l21, tmp_l12, tmp_l22, tmp_t21-tmp_t11, tmp_t22-tmp_t12):
+  end if:
 end do:
 
 # Acceleration of Center of Mass
@@ -113,7 +149,15 @@ rDD_i_Si := Matrix(3, NL):
 
 for i to NL do 
   rDD_i_Si(1 .. 3, i) := Matrix(rDD_i_i(1 .. 3, i))+Matrix(CrossProduct(omegaD_i_i(1 .. 3, i), r_i_i_Si(1 .. 3, i)))+Matrix(CrossProduct(omega_i_i(1 .. 3, i), CrossProduct(omega_i_i(1 .. 3, i), r_i_i_Si(1 .. 3, i)))): 
-  printf("Beschleunigung für Körperschwerpunkt %d aufgestellt. %s\n", i-1, FormatTime("%Y-%m-%d %H:%M:%S")) 
+  printf("Beschleunigung für Körperschwerpunkt %d aufgestellt. %s\n", i-1, FormatTime("%Y-%m-%d %H:%M:%S")):
+  # Terme vereinfachen
+  if use_simplify>=1 then
+    tmp_t1:=time(): tmp_l1 := length(rDD_i_Si(1 .. 3, i)):
+    rDD_i_Si(1 .. 3, i) := simplify2(rDD_i_Si(1 .. 3, i)):
+    tmp_t2:=time(): tmp_l2 := length(rDD_i_Si(1 .. 3, i)):
+    printf("%s: Terme für Schwerpunkts-Beschleunigungen vereinfacht. Länge: %d->%d. Rechenzeit %1.1fs.\n", \
+      FormatTime("%Y-%m-%d %H:%M:%S"), tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+  end if:
 end do:
 # Export
 # Maple Export

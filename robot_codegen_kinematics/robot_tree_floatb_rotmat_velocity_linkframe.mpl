@@ -35,6 +35,7 @@ codegen_opt := 2:
 read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s": 
 read "../helper/proc_MatlabExport":
+read "../helper/proc_simplify2":
 read "../transformation/proc_rotx": 
 read "../transformation/proc_roty": 
 read "../transformation/proc_rotz": 
@@ -44,8 +45,22 @@ read "../transformation/proc_trotz":
 read "../transformation/proc_transl": 
 read "../transformation/proc_trafo_mdh": 
 read "../robot_codegen_definitions/robot_env":
-printf("Generiere Geschwindigkeit für %s (Herleitung im Körper-KS)\n", robot_name):
+printf("%s. Generiere Geschwindigkeit für %s (Herleitung im Körper-KS)\n", FormatTime("%Y-%m-%d %H:%M:%S"), robot_name):
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
+read sprintf("../codeexport/%s/tmp/kinematic_constraints_maple_inert.m", robot_name):  
+kin_constraints_exist := kin_constraints_exist: # nur zum Abschätzen der Komplexität
+;
+# Term-Vereinfachungen einstellen
+if not assigned(simplify_options) or simplify_options(4)=-1 then # Standard-Einstellungen:
+  if not kin_constraints_exist then # normale serielle Ketten und Baumstrukturen
+    use_simplify := 0: # Standardmäßig aus
+  else # mit kinematischen Zwangsbedingungen
+    use_simplify := 1: # standardmäßig simplify-Befehle anwenden
+  end if:
+else # Benutzer-Einstellungen:
+  use_simplify := simplify_options(4): # vierter Eintrag ist für Geschwindigkeit
+end if:
+
 # Ergebnisse der Kinematik laden
 read sprintf("../codeexport/%s/tmp/kinematics_floatb_%s_rotmat_maple.m", robot_name, base_method_name):
 Trf := Trf:
@@ -54,6 +69,7 @@ Trf_c := Trf_c:
 # Die Berechnung soll nur an einer Stelle erfolgen. Siehe robot_tree_velocity_mdh_angles.mw.
 read sprintf("../codeexport/%s/tmp/velocity_mdh_angles_maple.m", robot_name):
 thetaD := thetaD:
+
 # Calculate Velocities
 # First assume fixed base model with base velocity and acceleration set to zero
 # Anfangsgeschwindigkeit definieren für floating base model
@@ -91,6 +107,14 @@ for i from 1 to NJ do # Gelenke durchgehen
   else: # Schubgelenk
     omega_i_i(1 .. 3, i+1) := Multiply(R_i_j,Matrix(3,1,omega_i_i(1 .. 3, j)))
   end if:
+  # Terme vereinfachen (Teil 1)
+  if use_simplify>=1 then
+    tmp_t11:=time():
+    tmp_l11 := length(omega_i_i(1 .. 3, i+1)):
+    omega_i_i(1 .. 3, i+1) := simplify2(omega_i_i(1 .. 3, i+1)):
+    tmp_l21 := length(omega_i_i(1 .. 3, i+1)):
+    tmp_t21:=time():
+  end if:
   # Vektor vom Ursprung des vorherigen Koordinatensystems zu diesem KS
   r_j_j_i := Trf(1 .. 3, 4, i):
   # [GautierKhalil1988], equ.8: v_jj aus [GautierKhalil1988] entspricht rD_i_i(1 .. 3, i+1) hier
@@ -99,17 +123,28 @@ for i from 1 to NJ do # Gelenke durchgehen
   else: # Schubgelenk
     rD_i_i(1 .. 3, i+1) := Matrix(Multiply( R_i_j, ( rD_i_i(1 .. 3, j) + CrossProduct(omega_i_i(1 .. 3, j), r_j_j_i) ) ) ) + Matrix(dD(i,1)*<0;0;1>):
   end if:
-  printf("Geschwindigkeit für Körperkoordinatensystem %d aufgestellt (Herleitung im Körper-KS). %s\n", i-1, FormatTime("%Y-%m-%d %H:%M:%S")): #0=Basis
+  printf("%s. Geschwindigkeit für Körperkoordinatensystem %d aufgestellt (Herleitung im Körper-KS).\n", \
+     FormatTime("%Y-%m-%d %H:%M:%S"), i-1): #0=Basis
+  # Terme vereinfachen (Teil 2)
+  if use_simplify>=1 then
+    tmp_t12:=time():
+    tmp_l12 := length(rD_i_i(1 .. 3, i+1)):
+    rD_i_i(1 .. 3, i+1) := simplify2(rD_i_i(1 .. 3, i+1)):
+    tmp_l22 := length(rD_i_i(1 .. 3, i+1)):
+    tmp_t22:=time():
+    printf("%s: Terme für Geschwindigkeiten vereinfacht. Länge: %d->%d / %d->%d. Rechenzeit %1.1fs und %1.1fs.\n", \
+      FormatTime("%Y-%m-%d %H:%M:%S"), tmp_l11, tmp_l21, tmp_l12, tmp_l22, tmp_t21-tmp_t11, tmp_t22-tmp_t12):
+  end if:
 end do:
 # Export
 # Maple Export
 save omega_i_i, rD_i_i, sprintf("../codeexport/%s/tmp/velocity_linkframe_floatb_%s_maple.m", robot_name, base_method_name):
-printf("Maple-Ausdrücke exportiert. %s\n", FormatTime("%Y-%m-%d %H:%M:%S")):
+printf("%s. Maple-Ausdrücke exportiert.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
 
 # Matlab Export
 if codegen_act then
   MatlabExport(convert_t_s(omega_i_i), sprintf("../codeexport/%s/tmp/velocity_omegaii_floatb_%s_linkframe_matlab.m", robot_name, base_method_name), codegen_opt):
   MatlabExport(convert_t_s(rD_i_i), sprintf("../codeexport/%s/tmp/velocity_rDii_floatb_%s_linkframe_matlab.m", robot_name, base_method_name), codegen_opt):
-  printf("Geschwindigkeiten in Matlab exportiert. %s\n", FormatTime("%Y-%m-%d %H:%M:%S")):
+  printf("%s. Geschwindigkeiten in Matlab exportiert.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
 end if:
 

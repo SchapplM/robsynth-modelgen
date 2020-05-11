@@ -48,9 +48,28 @@ codegen_dynpar := 2:
 read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s": 
 read "../helper/proc_MatlabExport":
+read "../helper/proc_simplify2":
 read "../robot_codegen_definitions/robot_env":
 printf("Generiere Dynamikgleichungen für %s (Herleitung im Körper-KS)\n", robot_name):
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
+read sprintf("../codeexport/%s/tmp/kinematic_constraints_maple_inert.m", robot_name):  
+kin_constraints_exist := kin_constraints_exist: # nur zum Abschätzen der Komplexität
+;
+# Term-Vereinfachungen einstellen
+if not assigned(simplify_options) or simplify_options(9)=-1 then # Standard-Einstellungen:
+  if not kin_constraints_exist then # normale serielle Ketten und Baumstrukturen
+    use_simplify := 0: # Standardmäßig aus
+  else # mit kinematischen Zwangsbedingungen
+    if NJ <= 5 then # nur bei einfachen Systemen Term-Vereinfachung durchführen
+      use_simplify := 1:
+    else
+      use_simplify := 0: # Annahme: Dauert zu lange bzw. zu rechenintensiv (nicht geprüft)
+    end if:
+  end if:
+else # Benutzer-Einstellungen:
+  use_simplify := simplify_options(9): # neunter Eintrag ist für Dynamik
+end if:
+
 read "../helper/proc_index_symmat2vector":
 read "../helper/proc_symmat2vector":
 # Ergebnisse der Kinematik laden
@@ -89,6 +108,7 @@ else
   printf("Nicht behandelte Basis-Methode: %s\n", base_method_name):
 end if:
 # Schalter zur Auswahl der unterschiedlichen Terme, die exportiert werden sollen.
+
 # Newton-Euler formulation(mit Funktion)
 OutputNewtonEuler:= NewtonEuler(f_i_i,m_i_i):
 # Backward recursive computation
@@ -128,6 +148,19 @@ for i from 1 to NL do
   # [Khali2002](9.5.3) (9.88) & (9.89)
   F_i(1..3,i):= M(i,1)*rDD_i_i(1..3,i)+CrossProduct(omegaD_i_i(1..3,i),mr_i_i_Si(1..3,i))+ CrossProduct(omega_i_i(1..3,i), CrossProduct(omega_i_i(1..3,i), mr_i_i_Si(1..3,i))):
   M_i(1..3,i):= I_i_i_m(1..3,1..3,i).omegaD_i_i(1..3,i)+ CrossProduct(omega_i_i(1..3,i),(I_i_i_m(1..3,1..3,i).omega_i_i(1..3,i))) + CrossProduct(mr_i_i_Si(1..3,i),rDD_i_i(1..3,i)):#CrossProduct(r,F_i(1..3,i)):####
+  # Terme vereinfachen
+  if use_simplify>=1 then
+    tmp_t1:=time():
+    tmp_l11 := length(F_i(1..3,i)):
+    tmp_l12 := length(M_i(1..3,i)):
+    F_i(1..3,i) := simplify2(F_i(1..3,i)):
+    M_i(1..3,i) := simplify2(M_i(1..3,i)):
+    tmp_l21 := length(F_i(1..3,i)):
+    tmp_l22 := length(M_i(1..3,i)):
+    tmp_t2:=time():
+    printf("%s: Terme für inneres Kraft/Moment %d vereinfacht. Länge: %d->%d / %d->%d. Rechenzeit %1.1fs.\n", \
+      FormatTime("%Y-%m-%d %H:%M:%S"), i, tmp_l11, tmp_l21, tmp_l12, tmp_l22, tmp_t2-tmp_t1):
+  end if:
 end do :
 
 # Forces and moment exerted on link i by link i-1
@@ -162,6 +195,19 @@ for i from NL by -1 to 1 do
 
   f_i_i(1..3,i) := f_i_i_part;
   m_i_i(1..3,i) := m_i_i_part;
+  # Terme vereinfachen
+  if use_simplify>=1 then
+    tmp_t1:=time():
+    tmp_l11 := length(f_i_i(1..3,i)):
+    tmp_l12 := length(m_i_i(1..3,i)):
+    f_i_i(1..3,i) := simplify2(f_i_i(1..3,i)):
+    m_i_i(1..3,i) := simplify2(m_i_i(1..3,i)):
+    tmp_l21 := length(f_i_i(1..3,i)):
+    tmp_l22 := length(m_i_i(1..3,i)):
+    tmp_t2:=time():
+    printf("%s: Rekursive Terme für Kraft/Moment %d vereinfacht. Länge: %d->%d / %d->%d. Rechenzeit %1.1fs.\n", \
+      FormatTime("%Y-%m-%d %H:%M:%S"), i-1, tmp_l11, tmp_l21, tmp_l12, tmp_l22, tmp_t2-tmp_t1):
+  end if:
 end do:
 
 for i from 2 to NL do # Schleife über Anzahl der Körper
@@ -253,4 +299,3 @@ if codegen_act and codeexport_invdyn  then
   MatlabExport(tau, sprintf("../codeexport/%s/tmp/invdyn_fixb_NewtonEuler_linkframe_tauJB_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt):
 end if:
 
-# 

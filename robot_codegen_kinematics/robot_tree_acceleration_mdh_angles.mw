@@ -140,7 +140,8 @@ codegen_opt := 2:</Text-field>
 <Group labelreference="L1651" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_convert_s_t&quot;:
 read &quot;../helper/proc_convert_t_s&quot;: 
-read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
+read &quot;../helper/proc_MatlabExport&quot;:
+read &quot;../helper/proc_simplify2&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1648" drawlabel="true">
@@ -152,16 +153,26 @@ read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1710" drawlabel="true">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Lade Ausdr\303\274cke f\303\274r kinematische Zwangsbedingungen (Verkn\303\274pfung von MDH-Gelenkwinkeln durch verallgemeinerte Koordinaten)</Font></Text-field>
+<Group labelreference="L1738" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_maple_inert.m&quot;, robot_name):  
+kin_constraints_exist := kin_constraints_exist:<Font encoding="UTF-8"> # nur zum Absch\303\244tzen der Komplexit\303\244t</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L1711" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_maple_inert.m&quot;, robot_name):
-kintmp_qt := kintmp_qt:
-kintmp_qt := kintmp_qt:
-kin_constraints_exist := kin_constraints_exist:
-kintmp_subsexp := kintmp_subsexp:</Text-field>
+<Group labelreference="L1743" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Term-Vereinfachungen einstellen</Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1741" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion2" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if not assigned(simplify_options) or simplify_options(5)=-1 then # Standard-Einstellungen:
+  if not kin_constraints_exist then # normale serielle Ketten und Baumstrukturen
+    use_simplify := 0: # Standardm\303\244\303\237ig aus
+  else # mit kinematischen Zwangsbedingungen
+    use_simplify := 1: # standardm\303\244\303\237ig simplify-Befehle anwenden
+  end if:
+else # Benutzer-Einstellungen:
+  use_simplify := simplify_options(5): # f\303\274nfter Eintrag ist f\303\274r Beschleunigung
+end if:
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L1724" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1716" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -174,49 +185,28 @@ thetaD:= thetaD:
 dD:=dD:</Text-field>
 </Input>
 </Group>
+<Group labelreference="L1732" drawlabel="true">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Lade Marker f\303\274r Existenz kinematischer Zwangsbedingungen (Verkn\303\274pfung von MDH-Gelenkwinkeln durch verallgemeinerte Koordinaten)</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1731" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_maple_inert.m&quot;, robot_name):
+kin_constraints_exist := kin_constraints_exist:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1730" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1742" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Zeitableitung der Drehwinkelgeschwindigkeit berechnen</Text-field></Title>
-<Group labelreference="L1670" drawlabel="true">
-<Input><Text-field style="Text" layout="Normal">Ersetze die MDH-Winkel durch verallgemeinerte Koordinaten
-<Font encoding="UTF-8">Falls die Gelenkwinkel nicht direkt mit verallgemeinerten Koordinaten \303\274berstimmen (bei Kopplungen, kinematischen Schleifen) steht hier eine l\303\244ngere Berechnung. Ansonsten reicht das triviale Einsetzen:</Font></Text-field>
-</Input>
-</Group>
-<Group labelreference="L1709" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"># thetaDD := qJDD_t:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1702" drawlabel="true">
-<Input><Text-field style="Text" layout="Normal">Ersetze die MDH-Drehung und Verschiebung entlang der z-Achse durch verallgemeinerte Koordinaten</Text-field>
-</Input>
-</Group>
-<Group hide-output="false" labelreference="L1703" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">theta_qt := theta:
-d_qt := d:</Text-field>
-</Input>
-</Group>
-<Group hide-output="false" labelreference="L1705" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for ii from 1 to NJ do
-  for jj from 1 to RowDimension(kintmp_qt) do
-    theta_qt(ii, 1) := subs( { kintmp_t(jj, 1) = kintmp_qt(jj, 1) }, theta_qt(ii, 1) ):
-    d_qt(ii, 1)     := subs( { kintmp_t(jj, 1) = kintmp_qt(jj, 1) }, d_qt(ii, 1) ): 
-  end do:
-end do:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1704" drawlabel="true">
-<Input><Text-field style="Text" layout="Normal">Zeitableitung der MDH-Drehung und Verschiebung entlang der z-Achse <Font encoding="UTF-8">in Abh\303\244ngigkeit der verallgemeinerten Koordinaten</Font></Text-field>
-</Input>
-</Group>
-<Group hide-output="false" labelreference="L1701" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">thetaD := Matrix(NJ, 1):
-dD := Matrix(NJ, 1):</Text-field>
-</Input>
-</Group>
-<Group hide-output="false" labelreference="L1707" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NJ do
-  thetaD(i,1) := diff(theta_qt(i,1), t):
-  dD(i,1)     := diff(d_qt(i,1), t):
-end do:</Text-field>
+<Group labelreference="L1725" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Im Falle kinematischer Zwangsbedingungen wurden diese schon im Arbeitsblatt f\303\274r die Geschwindigkeit eingesetzt
+und m\303\274ssen hier nicht mehr betrachtet werden.</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1718" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -233,15 +223,46 @@ dD_qt := dD:</Text-field>
 dDD:= Matrix(NJ, 1):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1720" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NJ do:
+<Group labelreference="L1726" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1728" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">for i from 1 to NJ do:
   thetaDD(i,1):= diff(thetaD_qt(i,1),t):
-  dDD(i,1)     := diff(dD_qt(i,1),t):
-end do:</Text-field>
+  dDD(i,1)    := diff(dD_qt(i,1),t):
+end do:
+if kin_constraints_exist then # ist nur rechenaufw\303\244ndig, wenn ZB vorliegen
+  printf(&quot;%s. Zweite Zeitableitung der MDH-Winkel gebildet.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+end if:</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L1734" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Terme vereinfachen</Text-field>
 </Input>
 </Group>
+<Group labelreference="L1733" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1736" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if use_simplify&gt;=1 and kin_constraints_exist then # ist nur sinnvoll, wenn ZB vorliegen
+  tmp_t0 := time():
+  tmp_l0 := length(thetaDD)+length(dDD):
+  printf(&quot;%s: Vereinfache MDH-Beschleunigungen. L\303\244nge: %d.\134n&quot;, \134
+    FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), tmp_l0):
+  for i from 1 to NJ do
+    tmp_t1 := time():
+    tmp_l1 := length(thetaDD(i,1)) + length(dDD(i,1)): # es kann sowieso nur einer der beiden Informationen enthalten
+    printf(&quot;%s: Vereinfache MDH-Beschl. %d. L\303\244nge: %d.\134n&quot;, \134
+      FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), i, tmp_l1):
+    thetaDD(i,1) := simplify2(thetaDD(i,1)):
+    dDD(i,1)     := simplify2(dDD(i,1)):
+    tmp_t2 := time():
+    tmp_l2 := length(thetaDD(i,1)) + length(dDD(i,1)):
+    printf(&quot;%s: MDH-Beschl. %d vereinfacht. L\303\244nge: %d-&gt;%d. Rechenzeit %1.1fs.\134n&quot;, \134
+      FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), i, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+  end do:
+  tmp_l3 := length(thetaDD)+length(dDD):
+  printf(&quot;%s: MDH-Beschleunigungen vereinfacht. L\303\244nge: %d-&gt;%d. Rechenzeit %1.1fs.\134n&quot;, \134
+    FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), tmp_l0, tmp_l3, tmp_t2-tmp_t0):
+end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L1700" drawlabel="true">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ausdruck f\303\274r Zeitableitungen der Geschwindigkeit exportieren</Font></Text-field>
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ausdruck f\303\274r Zeitableitungen der Beschleunigungen exportieren</Font></Text-field>
 </Input>
 </Group>
 <Group hide-output="false" labelreference="L1706" drawlabel="true">
@@ -263,7 +284,7 @@ end if:</Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save thetaDD, dDD, sprintf(&quot;../codeexport/%s/tmp/acceleration_mdh_angles_maple&quot;, robot_name):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1723" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group labelreference="L1737" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>

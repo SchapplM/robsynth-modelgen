@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="2017" minor="0"/>
+<Version major="2019" minor="2"/>
 <Label-Scheme value="2" prefix=""/>
-<View-Properties presentation="true" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false">
+<View-Properties presentation="true" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" contextmenusize="automatic" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1080" rtablesize="30" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" compactdisplay="false" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" historytimestamp="false" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1050" rtablesize="[10, 10]" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" ansicolor="[]" elisiondigitsthreshold="10000" showassumed="1" ansilprint="false" trailingsemicolon="true" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -134,7 +134,8 @@ codegen_opt := 2: # Hoher Optimierungsgrad.</Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group hide-output="false" labelreference="L2097" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_MatlabExport&quot;:
+read &quot;../helper/proc_simplify2&quot;:</Text-field>
 </Input>
 </Group>
 <Group view="code" hide-output="false" labelreference="L2209" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -162,13 +163,26 @@ read &quot;../helper/proc_convert_t_s&quot;:</Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_definitions&quot;, robot_name_OL):
 read &quot;../robot_codegen_definitions/robot_env_IC&quot;:</Text-field>
 </Input>
+</Group>
+<Group view="code" labelreference="L2397" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Term-Vereinfachungen: 0=keine; 1=fast alle; 2=auch Zeitableitung der Projektionsmatrix</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block><CodeEditor-ExecGroup view="presentation" inline-output="false" labelreference="L2400" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion8" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if not assigned(simplify_options) or simplify_options(1)=-1 then
+  use_simplify := 1: # standardm\303\244\303\237ig simplify-Befehle anwenden.
+else
+  use_simplify := simplify_options(1): # erster Eintrag ist f\303\274r Zwangsbedingungen
+end if:
+</EC-CodeEditor></CodeEditor-ExecGroup></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2360" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
 </Group></Presentation-Block>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Lesen der Zwangsbedingungen</Text-field></Title><Presentation-Block>
 <Group hide-output="false" labelreference="L2194" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">kin_constraints_exist := false:</Text-field>
 </Input>
-</Group></Presentation-Block><Presentation-Block><CodeEditor-ExecGroup view="presentation" inline-output="false" labelreference="L2352" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autoexpand="true" wrapping="true" show-border="true" code-line-numbers="true">constrfile := sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_implicit_maple.m&quot;, robot_name):
+</Group></Presentation-Block><Presentation-Block><CodeEditor-ExecGroup view="presentation" inline-output="false" labelreference="L2352" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">constrfile := sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_implicit_maple.m&quot;, robot_name):
 if FileTools[Exists](constrfile) then
   read constrfile:
   implconstr_s := implconstr_s: # F\303\274r Sichtbarkeit der Variablen
@@ -298,6 +312,28 @@ end do:</Text-field>
 </Input>
 </Group>
 </Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1"><Font encoding="UTF-8">Vereinfache die Ausdr\303\274cke</Font></Text-field></Title><Presentation-Block>
+<Group view="presentation" inline-output="false" labelreference="L2368" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"></Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block><CodeEditor-ExecGroup view="presentation" inline-output="false" labelreference="L2371" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion2" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if use_simplify &gt;= 1 then
+  tmp_t11 := time():
+  tmp_l11 := length(Phia_s):
+  printf(&quot;%s: Beginne Term-Vereinfachung der %dx%d Zwangsbedingungs-Jacobi f\303\274r aktive Gelenke. L\303\244nge: %d.\134n&quot;, \134
+     FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), RowDimension(Phia_s), ColumnDimension(Phia_s), tmp_l11):
+  Phia_s := simplify2(Phia_s):
+  tmp_l21 := length(Phia_s):
+  tmp_t21 := time():
+  tmp_l12 := length(Phip_s):
+  printf(&quot;%s: Beginne Term-Vereinfachung der %dx%d Zwangsbedingungs-Jacobi f\303\274r passive Gelenke. L\303\244nge: %d.\134n&quot;, \134
+     FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), RowDimension(Phip_s), ColumnDimension(Phip_s), tmp_l12):
+  Phip_s := simplify2(Phip_s):
+  tmp_l22 := length(Phip_s):
+  tmp_t22 := time():
+  printf(&quot;%s: Terme f\303\274r Zwangsbedingungs-Jacobis vereinfacht. L\303\244nge (aktiv/passiv): %d-&gt;%d / %d-&gt;%d. Rechenzeit %1.1fs und %1.1fs.\134n&quot;, \134
+    FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), tmp_l11, tmp_l21, tmp_l12, tmp_l22, tmp_t21-tmp_t11, tmp_t22-tmp_t21):
+end if:</EC-CodeEditor></CodeEditor-ExecGroup></Presentation-Block>
+</Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Zeitableitung der Jacobi-Matrix</Text-field></Title><Presentation-Block>
 <Group view="presentation" inline-output="false" labelreference="L2225" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Wird ben\303\266tigt, um die Beschleunigung der Gelenkkoordinaten der offenen Struktur zu berechnen.</Font></Text-field>
@@ -336,6 +372,32 @@ end do:</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1"><Font encoding="UTF-8">Vereinfache die Ausdr\303\274cke</Font></Text-field></Title><Presentation-Block>
+<Group view="presentation" inline-output="false" labelreference="L2362" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2363" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block><CodeEditor-ExecGroup view="presentation" inline-output="false" labelreference="L2365" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if use_simplify &gt;= 1 then
+  tmp_t11 := time():
+  tmp_l11 := length(PhiaD_s):
+  printf(&quot;%s: Beginne Term-Vereinfachung der Zeitableitung der %dx%d Zwangsbedingungs-Jacobi f\303\274r aktive Gelenke. L\303\244nge: %d.\134n&quot;, \134
+     FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), RowDimension(PhiaD_s), ColumnDimension(PhiaD_s), tmp_l11):
+  PhiaD_s := simplify2(PhiaD_s):
+  tmp_l21 := length(PhiaD_s):
+  tmp_t21 := time():
+  tmp_l12 := length(PhipD_s):
+  printf(&quot;%s: Beginne Term-Vereinfachung der Zeitableitung der %dx%d Zwangsbedingungs-Jacobi f\303\274r passive Gelenke. L\303\244nge: %d.\134n&quot;, \134
+     FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), RowDimension(PhipD_s), ColumnDimension(PhipD_s), tmp_l12):
+  PhipD_s := simplify2(PhipD_s):
+  tmp_l22 := length(PhipD_s):
+  tmp_t22 := time():
+  printf(&quot;%s: Terme f\303\274r Zwangsbedingungs-Jacobis (Zeitableitung) vereinfacht. L\303\244nge (aktiv/passiv): %d-&gt;%d / %d-&gt;%d. Rechenzeit %1.1fs und %1.1fs.\134n&quot;, \134
+    FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), tmp_l11, tmp_l21, tmp_l12, tmp_l22, tmp_t21-tmp_t11, tmp_t22-tmp_t21):
+end if:</EC-CodeEditor></CodeEditor-ExecGroup></Presentation-Block>
+</Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1"><Font encoding="UTF-8">Exportiere Code f\303\274r folgende Skripte</Font></Text-field></Title><Presentation-Block>
 <Group view="code" labelreference="L1714" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal">Speichere Maple-Ausdruck (Eingabe-Format und internes Format)</Text-field>
@@ -358,20 +420,17 @@ save PhipD_s, sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_explicit_
 <Group view="code" labelreference="L2021" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Ausdr\303\274cke f\303\274r </Font>Kinematische ZB<Font encoding="UTF-8"> gespeichert (Maple)\134n&quot;):</Font></Text-field>
 </Input>
-</Group></Presentation-Block><Presentation-Block>
-<Group view="code" hide-output="false" labelreference="L2120" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
+</Group></Presentation-Block><Presentation-Block><CodeEditor-ExecGroup view="presentation" inline-output="false" labelreference="L2391" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion6" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if codegen_act then
   MatlabExport(implconstr_s, sprintf(&quot;../codeexport/%s/tmp/kinconstr_impl_matlab.m&quot;, robot_name), codegen_opt):
   MatlabExport(Phia_s, sprintf(&quot;../codeexport/%s/tmp/kinconstr_impl_active_jacobian_matlab.m&quot;, robot_name), codegen_opt):
   MatlabExport(PhiaD_s, sprintf(&quot;../codeexport/%s/tmp/kinconstr_impl_active_jacobianD_matlab.m&quot;, robot_name), codegen_opt):
   MatlabExport(Phip_s, sprintf(&quot;../codeexport/%s/tmp/kinconstr_impl_passive_jacobian_matlab.m&quot;, robot_name), codegen_opt):
   MatlabExport(PhipD_s, sprintf(&quot;../codeexport/%s/tmp/kinconstr_impl_passive_jacobianD_matlab.m&quot;, robot_name), codegen_opt):
   MatlabExport(posNQJ, sprintf(&quot;../codeexport/%s/tmp/positionVector_NQJ_matlab.m&quot;, robot_name), codegen_opt):
-  <Font encoding="UTF-8">printf(&quot;Ausdr\303\274cke f\303\274r </Font>Kinematische ZB<Font encoding="UTF-8"> gespeichert (Matlab)\134n&quot;):</Font>
-end if:</Text-field>
-</Input>
-</Group>
-<Group view="code" labelreference="L2313" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+  printf(&quot;Ausdr\303\274cke f\303\274r Kinematische ZB gespeichert (Matlab)\134n&quot;):
+end if:
+</EC-CodeEditor></CodeEditor-ExecGroup></Presentation-Block><Presentation-Block>
+<Group view="code" hide-output="false" labelreference="L2120" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group></Presentation-Block>
@@ -416,16 +475,32 @@ end do:</Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">InvPhip_s := InvPhip_sf:</Text-field>
 </Input>
 </Group>
-<Group view="code" labelreference="L2322" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to n1 do
+<Group view="code" labelreference="L2393" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block><CodeEditor-ExecGroup view="presentation" inline-output="false" labelreference="L2395" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion7" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">for i from 1 to n1 do
   for j from 1 to n2 do
     if not Phip_s(i,j) = 0 then
       InvPhip_s := subs({ppf(i,j)=Phip_s(i,j)}, InvPhip_s):
     end if:
   end do:
-end do:</Text-field>
+end do:</EC-CodeEditor></CodeEditor-ExecGroup></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2322" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
+<Group view="code" labelreference="L2373" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Vereinfache den Ausdruck</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block><CodeEditor-ExecGroup view="presentation" inline-output="false" labelreference="L2375" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion3" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if use_simplify &gt;= 1 then
+  tmp_t1 := time(): tmp_l1 := length(InvPhip_s):
+  printf(&quot;%s: Beginne Term-Vereinfachung der inversen %dx%d Zwangsbedingungs-Jacobi f\303\274r passive Gelenke. L\303\244nge: %d.\134n&quot;, \134
+     FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), RowDimension(InvPhip_s), ColumnDimension(InvPhip_s), tmp_l1):
+  InvPhip_s := simplify2(InvPhip_s):
+  tmp_t2 := time(): tmp_l2 := length(InvPhip_s):
+  printf(&quot;%s. Inverse Passiv-Gelenk-Jacobi der ZB vereinfacht. L\303\244nge: %d-&gt;%d. Rechenzeit %1.1fs.\134n&quot;, \134
+    FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), tmp_l1, tmp_l2, tmp_t2-tmp_t11):
+end if:</EC-CodeEditor></CodeEditor-ExecGroup></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L2323" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save InvPhip_s, sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_explicit_passive_jacobian_inv_maple&quot;, robot_name):</Text-field>
 </Input>
@@ -434,6 +509,14 @@ end do:</Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
   MatlabExport(InvPhip_sf, sprintf(&quot;../codeexport/%s/tmp/kinconstr_impl_passive_jacobian_inv_matlab.m&quot;, robot_name), codegen_opt):
 end if:</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2388" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="presentation" inline-output="false" labelreference="L2396" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Equation executable="true" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYlLUkjbWlHRiQ2I1EhRicvJStleGVjdXRhYmxlR1EmZmFsc2VGJy8lLG1hdGh2YXJpYW50R1Enbm9ybWFsRic=">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -457,7 +540,19 @@ end if:</Text-field>
 <Group view="code" hide-input="false" labelreference="L2331" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">B21 := -InvPhip_s.Phia_s:</Text-field>
 </Input>
-</Group></Presentation-Block><Presentation-Block>
+</Group>
+<Group view="code" labelreference="L2377" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Vereinfache den Ausdruck</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block><CodeEditor-ExecGroup view="presentation" inline-output="false" labelreference="L2379" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion4" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if use_simplify &gt;= 1 then
+  tmp_t1 := time(): tmp_l1 := length(B21):
+  printf(&quot;%s: Beginne Term-Vereinfachung der %dx%d Zwangsbedingungs-Projektionsmatrix. L\303\244nge: %d.\134n&quot;, \134
+     FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), RowDimension(B21), ColumnDimension(B21), tmp_l1):
+  B21 := simplify2(B21):
+  tmp_t2 := time(): tmp_l2 := length(B21):
+  printf(&quot;%s. ZB-Projektionsmatrix vereinfacht. L\303\244nge: %d-&gt;%d. Rechenzeit %1.1fs.\134n&quot;, \134
+    FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), tmp_l1, tmp_l2, tmp_t2-tmp_t11):
+end if:</EC-CodeEditor></CodeEditor-ExecGroup></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L2334" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save B21, sprintf(&quot;../codeexport/%s/tmp/kinconstr_impl_projection_jacobian_maple&quot;, robot_name):</Text-field>
 </Input>
@@ -466,6 +561,10 @@ end if:</Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
   MatlabExport(B21, sprintf(&quot;../codeexport/%s/tmp/kinconstr_impl_projection_jacobian_matlab.m&quot;, robot_name), codegen_opt):
 end if:</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2387" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section>
@@ -478,7 +577,19 @@ end if:</Text-field>
 <Group view="code" hide-input="false" labelreference="L2343" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">B21D := (InvPhip_s . PhipD_s . InvPhip_s . Phia_s ) + (-InvPhip_s.PhiaD_s):</Text-field>
 </Input>
-</Group></Presentation-Block><Presentation-Block>
+</Group>
+<Group view="code" labelreference="L2381" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Vereinfache den Ausdruck</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block><CodeEditor-ExecGroup view="presentation" inline-output="false" labelreference="L2385" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion5" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if use_simplify &gt;= 2 then
+  tmp_t1 := time(): tmp_l1 := length(B21D):
+  printf(&quot;%s: Beginne Term-Vereinfachung der Zeitableitung der %dx%d Zwangsbedingungs-Projektionsmatrix. L\303\244nge: %d.\134n&quot;, \134
+     FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), RowDimension(B21D), ColumnDimension(B21D), tmp_l1):
+  B21D := simplify2(B21D):
+  tmp_t2 := time(): tmp_l2 := length(B21D):
+  printf(&quot;%s. ZB-Projektionsmatrix-Zeitableitung vereinfacht. L\303\244nge: %d-&gt;%d. Rechenzeit %1.1fs.\134n&quot;, \134
+    FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), tmp_l1, tmp_l2, tmp_t2-tmp_t11):
+end if:</EC-CodeEditor></CodeEditor-ExecGroup></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L2345" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save B21D, sprintf(&quot;../codeexport/%s/tmp/kinconstr_impl_projection_jacobian_derivative_maple&quot;, robot_name):</Text-field>
 </Input>
@@ -500,10 +611,6 @@ end if:</Text-field>
 </Group>
 <Group view="code" labelreference="L2286" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
-</Input>
-</Group></Presentation-Block><Presentation-Block>
-<Group view="presentation" inline-output="false" labelreference="L3" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"><Equation executable="true" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYlLUkjbWlHRiQ2I1EhRicvJStleGVjdXRhYmxlR1EmZmFsc2VGJy8lLG1hdGh2YXJpYW50R1Enbm9ybWFsRic=">JSFH</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Worksheet>

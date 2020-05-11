@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="2018" minor="0"/>
+<Version major="2019" minor="2"/>
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" compactdisplay="false" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" historytimestamp="false" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1050" rtablesize="[10, 10]" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" ansicolor="[]" elisiondigitsthreshold="10000" showassumed="1" ansilprint="false" trailingsemicolon="true" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -150,6 +150,7 @@ codeexport_invdyn := true:</Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_convert_s_t&quot;:
 read &quot;../helper/proc_convert_t_s&quot;: 
 read &quot;../helper/proc_MatlabExport&quot;:
+read &quot;../helper/proc_simplify2&quot;:
 read &quot;../helper/proc_LagrangeN&quot;:</Text-field>
 </Input>
 </Group>
@@ -176,6 +177,24 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group>
+<Group labelreference="L1908" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_maple_inert.m&quot;, robot_name):  
+kin_constraints_exist := kin_constraints_exist:<Font encoding="UTF-8"> # nur zum Absch\303\244tzen der Komplexit\303\244t</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1909" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Term-Vereinfachungen einstellen</Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1911" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion8" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if not assigned(simplify_options) or simplify_options(10)=-1 then # Standard-Einstellungen:
+  if not kin_constraints_exist then # normale serielle Ketten und Baumstrukturen
+    use_simplify := 0: # Standardm\303\244\303\237ig aus
+  else # mit kinematischen Zwangsbedingungen
+    use_simplify := 1: # standardm\303\244\303\237ig simplify-Befehle anwenden
+  end if:
+else # Benutzer-Einstellungen:
+  use_simplify := simplify_options(10): # zehnter Eintrag ist f\303\274r Dynamik-Regressor
+end if:
+</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L1774" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Mit diesem Arbeitsblatt werden die Regressor-Ausdr\303\274cke f\303\274r Fixed-Base und Floating-Base Modelle generiert. Erkenne welche Basis-Modellierung aktiv ist</Font></Text-field>
 </Input>
@@ -205,7 +224,7 @@ Der folgende Befehl muss immer auf &quot;regressor_minpar&quot; gesetzt sein, da
   read sprintf(&quot;../codeexport/%s/tmp/energy_potential_%s_regressor_minpar_maple.m&quot;, robot_name, expstring):
   t_ges := t_ges_minpar:
   u_ges := u_ges_minpar:
-  <Font encoding="UTF-8">printf(&quot;Generiere Minimalparameterregressor der Dynamik f\303\274r %s\134n&quot;, robot_name):</Font>
+  <Font encoding="UTF-8">printf(&quot;%s. Generiere Minimalparameterregressor der Dynamik f\303\274r %s\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), robot_name):</Font>
 end if:</Text-field>
 </Input>
 </Group>
@@ -215,7 +234,7 @@ end if:</Text-field>
   read sprintf(&quot;../codeexport/%s/tmp/energy_potential_%s_regressor_maple.m&quot;, robot_name, expstring):
   t_ges := t_ges:
   u_ges := u_ges:
-  <Font encoding="UTF-8">printf(&quot;Generiere Regressor der Dynamik f\303\274r %s (nicht Minimalparameter)\134n&quot;, robot_name):</Font>
+  <Font encoding="UTF-8">printf(&quot;%s. Generiere Regressor der Dynamik f\303\274r %s (nicht Minimalparameter)\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), robot_name):</Font>
 end if:</Text-field>
 </Input>
 </Group>
@@ -243,7 +262,7 @@ end if:
 if codeexport_invdyn then
   DynString := sprintf(&quot;%s tau&quot;,DynString):
 end if:
-<Font encoding="UTF-8">printf(&quot;Generiere Dynamik-Regressor (%s) f\303\274r %s und %s\134n&quot;, </Font>DynString, robot_name, base_method_name):</Text-field>
+<Font encoding="UTF-8">printf(&quot;%s. Generiere Dynamik-Regressor (%s) f\303\274r %s und %s\134n&quot;, </Font>FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), DynString, robot_name, base_method_name):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1873" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -278,6 +297,10 @@ elif regressor_modus = &quot;regressor&quot; then
 end if:</Text-field>
 </Input>
 </Group>
+<Group labelreference="L1912" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Lagrange Formalismus (mit Funktion)</Text-field></Title>
 <Group labelreference="L1582" drawlabel="true">
@@ -307,6 +330,21 @@ save dTdqDdt_s, sprintf(&quot;../codeexport/%s/tmp/floatb_lagrange_dTdqDdt_s_%s_
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">taug_regressor_s := dUdq_s:</Text-field>
 </Input>
 </Group>
+<Group labelreference="L1902" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Terme vereinfachen</Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1906" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion7" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if codeexport_grav then
+  if use_simplify=1 then
+    tmp_t1:=time():
+    tmp_l1 := length(taug_regressor_s):
+    taug_regressor_s := simplify2(taug_regressor_s):
+    tmp_t2:=time():
+    tmp_l2 := length(taug_regressor_s):
+    printf(&quot;%s: Gravitationsmoment-Regressor vereinfacht. L\303\244nge: %d-&gt;%d. Rechenzeit %1.1fs.\134n&quot;, \134
+      FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+  end if:
+end if:
+</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L1674" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save taug_regressor_s, sprintf(&quot;../codeexport/%s/tmp/gravload_%s_maple.m&quot;, robot_name, regressor_modus):</Text-field>
 </Input>
@@ -353,6 +391,10 @@ end if:</Text-field>
 end if:</Text-field>
 </Input>
 </Group>
+<Group labelreference="L1907" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Mass Matrix</Text-field></Title>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2"><Font encoding="UTF-8">Berechnung vollst\303\244ndige Massenmatrix</Font></Text-field></Title>
@@ -377,7 +419,8 @@ Siehe: https://de.wikipedia.org/wiki/Symmetrische_Matrix</Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tauMM_regressor_s := dTdqDdt_s(1..NQ,..):
 MM_regressor_s := Matrix(NQ*(NQ+1)/2, Paramvec_size):</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="1026" pixel-height="234" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">i_rr := 0:
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="1026" pixel-height="234" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">if codeexport_inertia or codeexport_inertiaD or codeexport_cormat then
+i_rr := 0:
 for i to NQ do # Zeilenindex der Massenmatrix
   for j to NQ do  # Spaltenindex der Massenmatrix
     if j &gt; i then
@@ -388,7 +431,20 @@ for i to NQ do # Zeilenindex der Massenmatrix
       MM_regressor_s[i_rr, k] := diff(tauMM_regressor_s[i, k], qDD_s[j, 1]):
     end do:
   end do:
-end do:</EC-CodeEditor></CodeEditor-ExecGroup>
+end do:
+# Terme vereinfachen
+if use_simplify&gt;=1 then
+  tmp_t1:=time():
+  tmp_l1 := length(MM_regressor_s):
+  printf(&quot;%s. Beginne Vereinfachung: Massenmatrix-Regressor (%s). L\303\244nge: %d.\134n&quot;, \134
+    FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), regressor_modus, tmp_l1):
+  MM_regressor_s := simplify2(MM_regressor_s):
+  tmp_t2:=time():
+  tmp_l2 := length(MM_regressor_s):
+  printf(&quot;%s. Massenmatrix-Regressor (%s) vereinfacht. L\303\244nge: %d-&gt;%d. Rechenzeit %1.1fs.\134n&quot;, \134
+    FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), regressor_modus, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+end if:
+end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L1830" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal">Export Gesamt-Massenmatrix</Text-field>
 </Input>
@@ -633,7 +689,8 @@ end proc:</Text-field>
 <Group labelreference="L1853" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal">Berechnung</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L11" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion4" expanded="true" visible="true" pixel-width="963" pixel-height="342" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">i_rr := 0: # Vektor-Index f\303\274r den Regressor der Coriolismatrix (Ausgabe)
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L11" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion4" expanded="true" visible="true" pixel-width="963" pixel-height="342" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">if codeexport_cormat then:
+i_rr := 0: # Vektor-Index f\303\274r den Regressor der Coriolismatrix (Ausgabe)
 for i to NQ do # Zeilenindex der Coriolismatrix
   for j to NQ do  # Spaltenindex der Coriolismatrix
     i_rr := i_rr + 1: # Gehe zeilenweise durch den unteren linken Teil der Coriolismatrix (inkl. Diagonale)
@@ -650,7 +707,20 @@ for i to NQ do # Zeilenindex der Coriolismatrix
       end do:
     end do:
   end do:
-end do:</EC-CodeEditor></CodeEditor-ExecGroup>
+end do:
+# Terme vereinfachen
+if use_simplify&gt;=1 then
+  tmp_t1:=time():
+  tmp_l1 := length(C_regressor_s):
+  printf(&quot;%s. Beginne Vereinfachung: Coriolis-Matrix-Regressor (%s). L\303\244nge: %d.\134n&quot;, \134
+    FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), regressor_modus, tmp_l1):
+  C_regressor_s := simplify2(C_regressor_s):
+  tmp_t2:=time():
+  tmp_l2 := length(C_regressor_s):
+  printf(&quot;%s: Coriolis-Matrix-Regressor (%s) vereinfacht. L\303\244nge: %d-&gt;%d. Rechenzeit %1.1fs.\134n&quot;, \134
+    FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), regressor_modus, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+end if:
+end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L1857" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save C_regressor_s, sprintf(&quot;../codeexport/%s/tmp/coriolismat_%s_%s_maple.m&quot;, robot_name, expstring, regressor_modus):</Text-field>
 </Input>

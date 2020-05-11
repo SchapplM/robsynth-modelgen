@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="2018" minor="0"/>
+<Version major="2019" minor="2"/>
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" compactdisplay="false" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" historytimestamp="false" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1050" rtablesize="[10, 10]" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" ansicolor="[]" elisiondigitsthreshold="10000" showassumed="1" ansilprint="false" trailingsemicolon="true" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -142,6 +142,7 @@ with(StringTools):</Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_convert_s_t&quot;:
 read &quot;../helper/proc_convert_t_s&quot;: 
 read &quot;../helper/proc_MatlabExport&quot;:
+read &quot;../helper/proc_simplify2&quot;:
 read &quot;../helper/proc_Lagrange1&quot;:</Text-field>
 </Input>
 </Group>
@@ -162,6 +163,31 @@ read &quot;../transformation/proc_trafo_mdh&quot;: </Text-field>
 </Group>
 <Group labelreference="L1686" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_definitions&quot;, robot_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1728" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_maple_inert.m&quot;, robot_name):  
+kin_constraints_exist := kin_constraints_exist:<Font encoding="UTF-8"> # nur zum Absch\303\244tzen der Komplexit\303\244t</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1727" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Einstellungen f\303\274r Term-Vereinfachungen: 0=keine, 1=dTdq_s, 2=auch dTdq_s, 3=auch </Font>dTdqDdt_s</Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1731" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if not assigned(simplify_options) or simplify_options(8)=-1 then # Standard-Einstellungen:
+  # Die Vereinfachung ist ein Kompromiss aus Laufzeit des Programms und G\303\274te der Ergebnisse
+  # Bei zu komplizierten Termen st\303\274rzt Maple bei der Vereinfachung unvorhersehbar ab.
+  # Annahme: Bei kinematischen Zwangsbedingungen werden die Terme zu kompliziert.
+  if not kin_constraints_exist then # normale serielle Ketten und Baumstrukturen
+    use_simplify := 0: # Standardm\303\244\303\237ig aus
+  else # mit kinematischen Zwangsbedingungen
+    use_simplify := 1: # Annahme, dass Optimierung der Gravitations-Terme noch m\303\266glich ist
+  end if:
+else # Benutzer-Einstellungen:
+  use_simplify := simplify_options(8): # achter Eintrag ist f\303\274r Lagrange
+end if:
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L1719" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1697" drawlabel="true">
@@ -191,11 +217,20 @@ U_grav := U_grav:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1700" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Generiere Terme des Lagrange-Formalismus f\303\274r %s mit Parametersatz %d und %s\134n&quot;, </Font>robot_name, codegen_dynpar, base_method_name):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;%s. Generiere Terme des Lagrange-Formalismus f\303\274r %s mit Parametersatz %d und %s\134n&quot;, \134
+</Font>  FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), robot_name, codegen_dynpar, base_method_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1732" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Lagrange Formalismus (mit Funktion)</Text-field></Title>
+<Group labelreference="L1726" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">tmp_t1:=time():</Text-field>
+</Input>
+</Group>
 <Group labelreference="L1582" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">OutputLagrange := Lagrange1(T, U_grav, NQ):
 dTdqDdt_s := OutputLagrange[1]:
@@ -203,6 +238,48 @@ dTdq_s := OutputLagrange[2]:
 dUdq_s := OutputLagrange[3]:</Text-field>
 </Input>
 </Group>
+<Group labelreference="L1725" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;%s. Lagrange-Formalismus f\303\274r %s mit Parametersatz %d und %s berechnet. Rechenzeit %1.1fs.\134n&quot;, \134
+</Font>  FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), robot_name, codegen_dynpar, base_method_name, time()-tmp_t1):</Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1723" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true"># Terme vereinfachen: Einzeln und komponentenweise
+if use_simplify&gt;=1 then
+  # Term dUdq_s
+  tmp_t1:=time(): tmp_l1 := length(dUdq_s):
+  printf(&quot;%s. Beginne Vereinfachung: Lagrange-Term dU/dq (Param. %d). L\303\244nge: %d.\134n&quot;, \134
+    FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), codegen_dynpar, tmp_l1):
+  for i from 1 to NQ do
+    dUdq_s[i,1] := simplify2(dUdq_s[i,1]):
+  end do:
+  tmp_t2:=time(): tmp_l2 := length(dUdq_s):
+  printf(&quot;%s. Lagrange-Term dU/dq (Param. %d) vereinfacht. L\303\244nge: %d-&gt;%d. Rechenzeit %1.1fs.\134n&quot;, \134
+    FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), codegen_dynpar, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+end if:
+if use_simplify&gt;=2 then # Die Terme k\303\266nnen sehr kompliziert sein. Daher nicht immer vereinfachen.
+  # Term dTdq_s
+  for i from 1 to NQ do
+    tmp_t1:=time(): tmp_l1 := length(dTdq_s[i,1]):
+    printf(&quot;%s. Beginne mit Vereinfachung von Lagrange-Term dT/dq (Param. %d; Komponente %d/%d). L\303\244nge: %d.\134n&quot;, \134
+      FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), codegen_dynpar, i, NQ, tmp_l1):
+    dTdq_s[i,1] := simplify2(dTdq_s[i,1]):
+    tmp_t2:=time(): tmp_l2 := length(dTdq_s[i,1]):
+    printf(&quot;%s. Lagrange-Term dT/dq (Param. %d; Komponente %d/%d) vereinfacht. L\303\244nge: %d-&gt;%d. Rechenzeit %1.1fs.\134n&quot;, \134
+      FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), codegen_dynpar, i, NQ, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+  end do:
+end if:
+if use_simplify&gt;=3 then
+  # Term dTdqDdt_s
+  for i from 1 to NQ do
+    tmp_t1:=time(): tmp_l1 := length(dTdqDdt_s[i,1]):
+    printf(&quot;%s. Beginne mit Vereinfachung von Lagrange-Term d(dT/dqD)/dt (Param. %d; Komponente %d/%d). L\303\244nge: %d.\134n&quot;, \134
+      FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), codegen_dynpar, i, NQ, tmp_l1):
+    dTdqDdt_s[i,1] := simplify2(dTdqDdt_s[i,1]):
+    tmp_t2:=time(): tmp_l2 := length(dTdqDdt_s[i,1]):
+    printf(&quot;%s. Lagrange-Term d(dT/dqD)/dt (Param. %d; Komponente %d/%d) vereinfacht. L\303\244nge: %d-&gt;%d. Rechenzeit %1.1fs.\134n&quot;, \134
+      FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), codegen_dynpar, i, NQ, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+  end do:
+end if:
+</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L1629" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save dUdq_s, sprintf(&quot;../codeexport/%s/tmp/floatb_%s_lagrange_dUdq_s_par%d_maple.m&quot;, robot_name, base_method_name, codegen_dynpar):
 save dTdq_s, sprintf(&quot;../codeexport/%s/tmp/floatb_%s_lagrange_dTdq_s_par%d_maple.m&quot;, robot_name, base_method_name, codegen_dynpar):
@@ -210,10 +287,15 @@ save dTdqDdt_s, sprintf(&quot;../codeexport/%s/tmp/floatb_%s_lagrange_dTdqDdt_s_
 </Input>
 </Group>
 <Group labelreference="L1717" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Lagrange-Formalismus durchgef\303\274hrt und Ergebnisse gespeichert (Dynamik-Parametersatz %d)\134n&quot;, </Font>codegen_dynpar):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;%s. Lagrange-Formalismus durchgef\303\274hrt und Ergebnisse gespeichert (Dynamik-Parametersatz %d)\134n&quot;, \134
+</Font>  FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), codegen_dynpar):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1718" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1724" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>

@@ -191,6 +191,17 @@ Trf := Trf:
 Trf_c := Trf_c:</Text-field>
 </Input>
 </Group>
+<Group labelreference="L2209" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Eliminiere die Basis-Position und Orientierung. Darf keinen Einfluss auf die Jacobi-Matrix haben.
+<Font encoding="UTF-8">Bei komplizierten Ausdr\303\274cken (insbesondere bei kinematischen Zwangsbedingungen) k\303\266nnen die Symbole manchmal nicht eliminiert werden</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L2210" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NQB do
+  Trf_c := subs({X_base_t[i,1]=0},Trf_c):
+end do:</Text-field>
+</Input>
+</Group>
 <Group labelreference="L2151" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Link-Index, f\303\274r den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber f\303\274r beliebige Segmente aufgestellt werden. (0=Basis)</Font></Text-field>
 </Input>
@@ -362,15 +373,32 @@ end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2174" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/velocity_worldframe_floatbase_%s_par1_maple.m&quot;, robot_name, base_method_name):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/velocity_worldframe_floatbase_%s_par1_maple.m&quot;, robot_name, base_method_name):
+omega_W_i := omega_W_i:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L2180" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">omega_W_i := omega_W_i:</Text-field>
+<Group labelreference="L2212" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Basis-Terme entfernen (falls durch Maple sp\303\244ter nicht m\303\266glich, s.o.)</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L2213" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NQB do
+  omega_W_i := subs({X_base_t[i,1]=0},omega_W_i):
+  omega_W_i := subs({V_base_t[i,1]=0},omega_W_i):
+end do:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L2216" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Winkelgeschwindigkeit als allgemeiner Ausdruck (nicht \303\274ber Gelenk-Konfiguration)
+(f\303\244llt sp\303\244ter sowieso weg)</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L2170" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">omega_EE := Matrix(3,1,&lt;omega_xEE; omega_yEE; omega_zEE&gt;):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L2217" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Differenz als kinematische Zwangsbedingung aufstellen</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2134" drawlabel="true">

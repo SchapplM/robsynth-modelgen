@@ -43,6 +43,7 @@ codegen_kinematics_subsorder := 1:
 read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s": 
 read "../helper/proc_MatlabExport":
+read "../helper/proc_simplify2":
 read "../transformation/proc_rotx": 
 read "../transformation/proc_roty": 
 read "../transformation/proc_rotz": 
@@ -61,9 +62,16 @@ eulxyztr := proc (alpha, beta, gamma)
   return T 
 end proc:
 read "../robot_codegen_definitions/robot_env":
-printf("Generiere Kinematik für %s\n", robot_name):
+printf("%s. Generiere Kinematik für %s\n", FormatTime("%Y-%m-%d %H:%M:%S"), robot_name):
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
 printf("%s. Alle Daten geladen. Generiere Kinematik für %s\n", FormatTime("%Y-%m-%d %H:%M:%S"), robot_name):
+# Term-Vereinfachungen einstellen
+if not assigned(simplify_options) or simplify_options(2)=-1 then
+  use_simplify := 1: # standardmäßig simplify-Befehle anwenden. Sind meistens sinnvoll und in Ausnahmen nicht allzu schädlich
+else
+  use_simplify := simplify_options(2): # zweiter Eintrag ist für Kinematik
+end if:
+
 # Kinematische Zwangsbedingungen
 # Lade Ausdrücke für kinematische Zwangsbedingungen (Verknüpfung von MDH-Gelenkwinkeln durch verallgemeinerte Koordinaten)
 # Lese Variablen: kintmp_subsexp, kintmp_qs, kintmp_qt
@@ -115,6 +123,13 @@ if kin_constraints_exist and codegen_kinematics_subsorder = 1 then
         Trf(ix, iy, i) := convert_s_t( Trf(ix, iy, i) ):
       end do:
     end do:
+    if use_simplify>=1 then
+    	 tmp_l1 := length(Trf(1 .. 4, 1 .. 4, i)): tmp_t1:=time():
+    	 Trf(1 .. 4, 1 .. 4, i) := simplify2(Trf(1 .. 4, 1 .. 4, i)):
+    	 tmp_l2 := length(Trf(1 .. 4, 1 .. 4, i)): tmp_t2:=time():
+    	 printf("%s: Term für (Einzel-)Trafo-Matrix %d->%d vereinfacht. Länge: %d->%d. Rechenzeit %1.1fs.\n", \
+    	   FormatTime("%Y-%m-%d %H:%M:%S"), v(i), i, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+    end if:
   end do:
   printf("%s. Ersetzungen der MDH-Parameter mit Ergebnissen der Parallelstruktur in verallgemeinerten Koordinaten erfolgreich (vor Berechnung der Gesamt-Transformation).\n", FormatTime("%Y-%m-%d %H:%M:%S")):
 end if:
@@ -139,6 +154,13 @@ if not(codegen_kinematics_opt) then
     # Index des vorherigen Koordinatensystems
     j := v(i)+1:
     Trf_c(1 .. 4, 1 .. 4, i+1) := Multiply(Trf_c(1 .. 4, 1 .. 4, j), Trf(1 .. 4, 1 .. 4, i)):
+    if use_simplify>=1 then
+    	 tmp_l1 := length(Trf_c(1 .. 4, 1 .. 4, i+1)): tmp_t1:=time():
+    	 Trf_c(1 .. 4, 1 .. 4, i+1) := simplify2(Trf_c(1 .. 4, 1 .. 4, i+1)):
+    	 tmp_l2 := length(Trf_c(1 .. 4, 1 .. 4, i+1)): tmp_t2:=time():
+    	 printf("%s: Term für (Gesamt-)Trafo-Matrix 0->%d vereinfacht. Länge: %d->%d. Rechenzeit %1.1fs.\n", \
+    	   FormatTime("%Y-%m-%d %H:%M:%S"), i, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+    end if:
   end do:
 end if:
 #Trf_c_orig := copy(Trf_c): # Debug-Ausdruck zum Vergleich der obigen mit der unteren Methode
@@ -197,10 +219,18 @@ if codegen_kinematics_opt then
       j := v(j): # Nehme das Vorgänger-Segment
     end do:
     Trf_c(1 .. 4, 1 .. 4, i+1) := Matrix(Trf_c(1 .. 4, 1 .. 4, j2+1)) . Trf_tmp:
+    if use_simplify>=1 then
+    	 tmp_l1 := length(Trf_c(1 .. 4, 1 .. 4, i+1)): tmp_t1:=time():
+    	 Trf_c(1 .. 4, 1 .. 4, i+1) := simplify2(Trf_c(1 .. 4, 1 .. 4, i+1)):
+    	 tmp_l2 := length(Trf_c(1 .. 4, 1 .. 4, i+1)): tmp_t2:=time():
+    	 printf("%s: Term für (Gesamt-)Trafo-Matrix 0->%d vereinfacht. Länge: %d->%d. Rechenzeit %1.1fs\n", \
+    	   FormatTime("%Y-%m-%d %H:%M:%S"), i, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+    end if:
     #printf("Trf_tmp an Trf_c angehängt (Eintrag zu Körper %d. %d -> %d mit Kette %s)\n", i, j2, i, convert(Kette_akt, string)):
     #print(Trf_c(1 .. 4, 1 .. 4, i+1)):
   end do:
-  printf("%s. Ersetzungen der MDH-Parameter mit Ergebnissen der Parallelstruktur in verallgemeinerten Koordinaten erfolgreich (vor Berechnung der Gesamt-Transformation).\n", FormatTime("%Y-%m-%d %H:%M:%S")
+  printf("%s. Berechnung der direkten Kinematik mit Vereinfachungen für parallele Achsen erfolgreich.\n", \
+    FormatTime("%Y-%m-%d %H:%M:%S")
 ):
 end if:
 # Kinematische Zwangsbedingungen ersetzen (nach Berechnung der Gesamt-Transformation)
@@ -226,8 +256,21 @@ if kin_constraints_exist and codegen_kinematics_subsorder = 2 then
         Trf_c(ix, iy, i+1) := convert_s_t( Trf_c(ix, iy, i+1) ):
       end do:
     end do:
+    if use_simplify>=1 then
+    	 tmp_l1 := length(Trf(1 .. 4, 1 .. 4, i)): tmp_t1:=time():
+    	 Trf(1 .. 4, 1 .. 4, i) := simplify2(Trf(1 .. 4, 1 .. 4, i)):
+    	 tmp_l2 := length(Trf(1 .. 4, 1 .. 4, i)): tmp_t2:=time():
+    	 printf("%s. Term für Einzel-Trafo-Matrix %d->%d vereinfacht. Länge: %d->%d Rechenzeit %1.1fs.\n", \
+    	   FormatTime("%Y-%m-%d %H:%M:%S"), v(i), i, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+    	 tmp_l1 := length(Trf_c(1 .. 4, 1 .. 4, i+1)): tmp_t1:=time():
+    	 Trf_c(1 .. 4, 1 .. 4, i+1) := simplify2(Trf_c(1 .. 4, 1 .. 4, i+1)):
+    	 tmp_l2 := length(Trf_c(1 .. 4, 1 .. 4, i+1)): tmp_t2:=time():
+    	 printf("%s. Term für Gesamt-Trafo-Matrix 0->%d vereinfacht. Länge: %d->%d Rechenzeit %1.1fs.\n", \ 
+    	   FormatTime("%Y-%m-%d %H:%M:%S"), i, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+    end if:
   end do:
-  printf("%s. Ersetzungen der MDH-Parameter mit Ergebnissen der Parallelstruktur in verallgemeinerten Koordinaten erfolgreich (nach Berechnung der Gesamt-Transformation).\n", FormatTime("%Y-%m-%d %H:%M:%S")):
+  printf("%s. Ersetzungen der MDH-Parameter mit Ergebnissen der Parallelstruktur in verallgemeinerten Koordinaten erfolgreich (nach Berechnung der Gesamt-Transformation).\n", \
+    FormatTime("%Y-%m-%d %H:%M:%S")):
 end if:
 # Export
 printf("%s. Berechnung der Kinematik beendet. Beginne Matlab-Export.\n", FormatTime("%Y-%m-%d %H:%M:%S")):

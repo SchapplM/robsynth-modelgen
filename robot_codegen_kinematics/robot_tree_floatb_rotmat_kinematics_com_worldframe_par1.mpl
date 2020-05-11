@@ -35,6 +35,7 @@ codegen_opt := 2:
 read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s": 
 read "../helper/proc_MatlabExport":
+read "../helper/proc_simplify2":
 read "../transformation/proc_rotx": 
 read "../transformation/proc_roty": 
 read "../transformation/proc_rotz": 
@@ -44,12 +45,26 @@ read "../transformation/proc_trotz":
 read "../transformation/proc_transl": 
 read "../transformation/proc_trafo_mdh": 
 read "../robot_codegen_definitions/robot_env":
-printf("Generiere Schwerpunktskinematik für %s\n", robot_name):
+printf("%s. Generiere Schwerpunktskinematik für %s\n", FormatTime("%Y-%m-%d %H:%M:%S"), robot_name):
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
+read sprintf("../codeexport/%s/tmp/kinematic_constraints_maple_inert.m", robot_name):  
+kin_constraints_exist := kin_constraints_exist: # nur zum Abschätzen der Komplexität
+;
+if not assigned(simplify_options) or simplify_options(3)=-1 then # Standard-Einstellungen:
+  if not kin_constraints_exist then # normale serielle Ketten und Baumstrukturen
+    use_simplify := 0: # Standardmäßig aus
+  else # mit kinematischen Zwangsbedingungen
+    use_simplify := 1: # standardmäßig simplify-Befehle anwenden
+  end if:
+else # Benutzer-Einstellungen:
+  use_simplify := simplify_options(3): # dritter Eintrag ist für CoM-Kinematik
+end if:
+
 # Ergebnisse der Kinematik laden
 read sprintf("../codeexport/%s/tmp/kinematics_floatb_%s_rotmat_maple.m", robot_name, base_method_name):
 Trf := Trf:
 Trf_c := Trf_c:
+
 # Positions of Center of Mass
 r_W_i_Si := Matrix(3, NL):
 r_W_W_Si := Matrix(3, NL):
@@ -62,9 +77,32 @@ mr_W_i_Si := Matrix(3, NL):
 # Trf_c(1 .. 3, 1 .. 3, i) ist das Körperkoordinatensystem zu Körper i im Basis KS.
 for i to NL do
   r_W_i_Si(1 .. 3, i) :=  Multiply(Matrix(Trf_c(1 .. 3, 1 .. 3, i)), r_i_i_Si(1 .. 3, i)):
+  if use_simplify>=1 then
+    tmp_t11:=time():
+    tmp_l11 := length(r_W_i_Si(1 .. 3, i)):
+    printf("%s. Vereinfache Schwerpunktskoordinaten. Länge: %d (r_i_i_Si).\n", \
+      FormatTime("%Y-%m-%d %H:%M:%S"), tmp_l11):
+    r_W_i_Si(1 .. 3, i) := simplify2(r_W_i_Si(1 .. 3, i)):
+    tmp_l21 := length(r_W_i_Si(1 .. 3, i)):
+    tmp_t21:=time():
+  end if:
   mr_W_i_Si(1 .. 3, i) := Multiply(Matrix(Trf_c(1 .. 3, 1 .. 3, i)), mr_i_i_Si(1 .. 3, i)):
   r_W_W_Si(1 .. 3, i) :=  Matrix(Trf_c(1 .. 3, 4, i)) + Matrix(r_W_i_Si(1 .. 3, i)):
-  printf("Schwerpunktsposition in Weltkoordinaten für Körper %d aufgestellt.\n", i-1):#0=Basis
+  printf("%s. Schwerpunktsposition in Weltkoordinaten für Körper %d aufgestellt.\n", FormatTime("%Y-%m-%d %H:%M:%S"), i-1):#0=Basis
+  if use_simplify>=1 then
+    tmp_t12:=time():
+    tmp_l12 := length(mr_W_i_Si(1 .. 3, i)):
+    tmp_l13 := length(r_W_W_Si(1 .. 3, i)):
+    printf("%s. Vereinfache Schwerpunktskoordinaten. Länge: %d/%d (r_W_W_Si/mr_W_i_Si).\n", \
+      FormatTime("%Y-%m-%d %H:%M:%S"), tmp_l13, tmp_l12):
+    mr_W_i_Si(1 .. 3, i) := simplify2(mr_W_i_Si(1 .. 3, i)):
+    r_W_W_Si(1 .. 3, i) := simplify2(r_W_W_Si(1 .. 3, i)):
+    tmp_l22 := length(mr_W_i_Si(1 .. 3, i)):
+    tmp_l23 := length(r_W_W_Si(1 .. 3, i)):
+    tmp_t22:=time():
+    printf("%s. Terme für Schwerpunktskoord. vereinfacht. Länge: %d->%d / %d->%d / %d->%d (r_W_i_Si / mr_W_i_Si / r_W_W_Si). Rechenzeit %1.1fs und %1.1fs.\n", \
+      FormatTime("%Y-%m-%d %H:%M:%S"), tmp_l11, tmp_l21, tmp_l12, tmp_l22, tmp_l13, tmp_l23, tmp_t21-tmp_t11, tmp_t22-tmp_t12):
+  end if:
 end do:
 # Maple Export
 save mr_W_i_Si, r_W_W_Si, r_W_i_Si, sprintf("../codeexport/%s/tmp/kinematics_com_worldframe_floatb_%s_par1_maple.m", robot_name, base_method_name):
@@ -87,3 +125,4 @@ save c, sprintf("../codeexport/%s/tmp/kinematics_com_total_worldframe_floatb_%s_
 if codegen_act then
   MatlabExport(convert_t_s(c), sprintf("../codeexport/%s/tmp/com_total_worldframe_floatb_%s_par1_matlab.m", robot_name, base_method_name), codegen_opt):
 end if:
+

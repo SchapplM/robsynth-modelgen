@@ -121,26 +121,42 @@ do
           robot_tree_floatb_rotmat_lagrange_worldframe_par1.mpl
       "
     fi;
-    dateiliste_dyn="
-        robot_tree_floatb_rotmat_dynamics_worldframe_par2_corvec.mpl
-        robot_tree_floatb_rotmat_dynamics_worldframe_par2_grav.mpl
+    dateiliste_dyn1="
         robot_tree_floatb_rotmat_dynamics_worldframe_par2_inertia.mpl
     "
+    dateiliste_dyn2="
+        robot_tree_floatb_rotmat_dynamics_worldframe_par2_corvec.mpl
+        robot_tree_floatb_rotmat_dynamics_worldframe_par2_grav.mpl
+    "
     if [ "$robot_kinconstr_exist" == "0" ]; then
-          dateiliste_dyn="$dateiliste_dyn
+          dateiliste_dyn2="$dateiliste_dyn2
           robot_tree_fixb_dynamics_NewtonEuler_linkframe_par12.mpl
       "
         dateiliste_acc="
           robot_tree_floatb_rotmat_acceleration_linkframe.mpl
       "
     fi;
+    if [ "$CG_MINIMAL" == "1" ]; then
+      # Im Minimal-Modus wird nichts berechnet, das von der Massenmatrix abhängt.
+      # Es kann alles parallel gerechnet werden.
+      dateiliste_dyn1="
+          $dateiliste_dyn1
+          $dateiliste_dyn2
+      "
+      dateiliste_dyn2=""
+    fi
     if [ "$CG_MINIMAL" == "0" ]; then
-      dateiliste_dyn="
-          $dateiliste_dyn
+      # Nur Massenmatrix in erstem Skript berechnen
+      dateiliste_dyn1="
+          $dateiliste_dyn1
+          robot_tree_floatb_rotmat_dynamics_worldframe_par1_inertia.mpl
+      "
+      # Danach alles andere berechnen (cormat und inertiaD von inertia abhängig)
+      dateiliste_dyn2="
+          $dateiliste_dyn2
           robot_tree_floatb_rotmat_dynamics_worldframe_par1_corvec.mpl
           robot_tree_floatb_rotmat_dynamics_worldframe_par1_cormat.mpl
           robot_tree_floatb_rotmat_dynamics_worldframe_par1_grav.mpl
-          robot_tree_floatb_rotmat_dynamics_worldframe_par1_inertia.mpl
           robot_tree_floatb_rotmat_dynamics_worldframe_par1_inertiaD.mpl
           robot_tree_floatb_rotmat_dynamics_worldframe_par1_invdyn.mpl
           robot_tree_floatb_rotmat_dynamics_worldframe_par2_cormat.mpl
@@ -251,7 +267,7 @@ do
   wait
   echo "FERTIG mit Lagrange für ${basemeth}"
 
-  for wsdyn in ${dateiliste_dyn[@]}
+  for wsdyn in ${dateiliste_dyn1[@]}
   do
     mpldat_full=$workdir/$wsdyn
     filename="${mpldat_full##*/}"
@@ -260,8 +276,17 @@ do
     $repo_pfad/scripts/run_maple_script.sh $dir/$filename &
   done
   wait
-  echo "FERTIG mit Dynamik für ${basemeth}"
-
+  echo "FERTIG mit Dynamik Teil 1 für ${basemeth}"
+  for wsdyn in ${dateiliste_dyn2[@]}
+  do
+    mpldat_full=$workdir/$wsdyn
+    filename="${mpldat_full##*/}"
+    dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
+    echo "Starte Maple-Skript $filename"
+    $repo_pfad/scripts/run_maple_script.sh $dir/$filename &
+  done
+  wait
+  echo "FERTIG mit Dynamik Teil 2 für ${basemeth}"
   erster=1 # Merker für ersten Durchlauf von plin
   for wsplin in ${dateiliste_plin[@]}
   do
