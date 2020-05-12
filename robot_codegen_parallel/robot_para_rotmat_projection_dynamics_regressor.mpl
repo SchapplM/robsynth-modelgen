@@ -70,8 +70,6 @@ read "../robot_codegen_definitions/robot_env_par": # Nochmal laden, um Standard-
 ;
 # Ergebnisse der zusätzlichen Definitionen für parallele Roboter laden
 read sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
-# Ergebnisse der Kinematik für parallen Roboter laden
-read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
 printf("Generiere Parameterlineare Form der Dynamik für PKM %s mit Minimal-Parametersatz\n", robot_name):
 # Lade "robotics_repo_path"-File mit Link zum "imes-robotics-matlab"-Repo
 read("../robotics_repo_path"):
@@ -98,6 +96,7 @@ vDzs_base := 0:
 alphaDDx_base := 0:
 betaDDy_base := 0:
 gammaDDz_base := 0:
+
 
 # Ergebnisse der Kinematik für parallelen Roboter laden
 read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
@@ -220,6 +219,7 @@ for k from 1 by 1 to N_LEGS do
     end do:
   end do:
 end do:
+
 printf("%s. Dynamik-Matrizen bestimmt. Beginne Projektion/Addition.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
 # Berechnung, Projektion und Addition der Dynamikgleichungen
 # Berechnung der Kräfte/Momente an den Gelenken der jeweiligen Beine und Projektion auf EE-Plattform

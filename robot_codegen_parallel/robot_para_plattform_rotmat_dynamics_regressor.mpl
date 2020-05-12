@@ -58,6 +58,8 @@ r_P_sP_P := -r_P_sP:
 s_P_P_sP := s_P_sP:
 # Ergebnisse der Kinematik für parallen Roboter laden
 read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
+P_i := P_i: # nur diese Variable wird benötigt. Alle anderen zur Übersichtlichkeit löschen.
+unassign('pivotMat', 'pivotMatMas', 'Jinv', 'JB_i', 'JBD_i', 'JBinv_i', 'JBDinv_i', 'U_i', 'UD_i'):
 # Lade "robotics_repo_path"-File mit Link zum "imes-robotics-matlab"-Repo
 read("../robotics_repo_path"):
 # Lade die Funktionen aus dem "imes-robotics-matlab"-Repo
@@ -74,6 +76,7 @@ J_P_P := J_P_P:
 J_0_P := R_0_0_E_s.J_P_P.Transpose(R_0_0_E_s):
 J_0_P_raute := Matrix(6,1,[J_0_P(1,1),J_0_P(1,2),J_0_P(1,3),J_0_P(2,2),J_0_P(2,3),J_0_P(3,3)]):
 J_P_P_raute := Matrix(6,1,[J_P_P(1,1),J_P_P(1,2),J_P_P(1,3),J_P_P(2,2),J_P_P(2,3),J_P_P(3,3)]):
+
 r_0_sP_P := R_0_0_E_t.r_P_sP_P:
 r_0_P_sP := -r_0_sP_P:
 #rD_0_sP_P := diff~(r_0_sP_P,t):
@@ -89,7 +92,8 @@ r_P_P_sP := -r_P_sP_P:
 #sE := Matrix(mE*r_0_P_sP):
 #sE := Matrix(mE*r_P_P_sP):
 sE := s_P_P_sP:
-# Berechnung der H-Matrix und deren Ableitung nach Abdellatif S.20 aus "Modellierung, Identifikation und robuste Regelung von Robotern mit parallelkinematischen Strukturen"
+
+# Berechnung der H-Matrix und deren Ableitung nach [Abdel2007] S.20
 RPYjac_E_t := simplify(Multiply(Transpose(R_0_0_E_t),RPYjac_0_t)):
 RPYjac_E_s := simplify(Multiply(Transpose(R_0_0_E_s),RPYjac_0_s)):
 w_E_0_E_s := RPYjac_E_s.xED_s(4..6,1):
@@ -101,13 +105,14 @@ dRPYjac_E_s := Copy(dRPYjac_E_t):
 dRPYjac_0_s := Copy(dRPYjac_0_t):
 # Substituiere die zeitabhängigen Koordinaten in der H-Matrix mit zeitunabhängigen Koordinaten 
 for i to 3 do
-	for j to 3 do
-		for k from 4 to 6 do
-			dRPYjac_E_s(i,j) := subs({xEDD_t(k)=xEDD_s(k),xED_t(k)=xED_s(k),xE_t(k)=xE_s(k)},dRPYjac_E_s(i,j)):
-			dRPYjac_0_s(i,j) := subs({xEDD_t(k)=xEDD_s(k),xED_t(k)=xED_s(k),xE_t(k)=xE_s(k)},dRPYjac_0_s(i,j)):
-		end do:
-	end do:
+  for j to 3 do
+    for k from 4 to 6 do
+      dRPYjac_E_s(i,j) := subs({xEDD_t(k)=xEDD_s(k),xED_t(k)=xED_s(k),xE_t(k)=xE_s(k)},dRPYjac_E_s(i,j)):
+      dRPYjac_0_s(i,j) := subs({xEDD_t(k)=xEDD_s(k),xED_t(k)=xED_s(k),xE_t(k)=xE_s(k)},dRPYjac_0_s(i,j)):
+    end do:
+  end do:
 end do:
+
 omegaE := <omega1;omega2;omega3>:
 xED_dummy := <xE,yE,zE>:
 omega0 := Transpose(R_0_0_E_s).omegaE:
@@ -117,14 +122,17 @@ JR_T := Transpose(JR):
 vel0 := Transpose(R_0_0_E_s).xED_dummy:
 JT := Jacobian(convert(vel0,list),convert(<xED_dummy;omegaE>,list)):
 JT_T := Transpose(JT):
+
 wD_E_0_E_s := dRPYjac_E_s.xED_s(4..6,1)+RPYjac_E_s.xEDD_s(4..6,1):
 wD_0_0_E_s := dRPYjac_0_s.xED_s(4..6,1)+RPYjac_0_s.xEDD_s(4..6,1):
+
 H := <IdentityMatrix(3,3),ZeroMatrix(3);
       ZeroMatrix(3),RPYjac_0_s>:
-#MatlabExport(H, "H.m",2);
+
 Hinv := MatrixInverse(H):
 dH := <ZeroMatrix(3),ZeroMatrix(3);
       ZeroMatrix(3),dRPYjac_0_s>:
+
 a_E := Matrix(xEDD_s(1..3,1)) - g_world:
 a_E := Transpose(R_0_0_E_s).(Matrix(xEDD_s(1..3,1)) - g_world):
 w_0_0_E_s_stern := Matrix(3,6,[w_0_0_E_s(1),w_0_0_E_s(2),w_0_0_E_s(3),0,0,0,0,w_0_0_E_s(1),0,w_0_0_E_s(2),w_0_0_E_s(3),0,0,0,w_0_0_E_s(1),0,w_0_0_E_s(2),w_0_0_E_s(3)]):
@@ -138,22 +146,22 @@ paramVecP := <J_P_P_raute;sE;mE>:
 paramVecP_M := Copy(paramVecP):
 tmp := Matrix(10,1):
 for i to N_LEGS do
-   tmpSt := M(NQJ_parallel+1,1)*Multiply(Transpose(vec2skew(P_i(1..3,i))),vec2skew(P_i(1..3,i))):
-   tmpSt_raute := Matrix(6,1,[tmpSt(1,1),tmpSt(1,2),tmpSt(1,3),tmpSt(2,2),tmpSt(2,3),tmpSt(3,3)]):
-   tmp := <tmpSt_raute,M(NQJ_parallel+1,1)*P_i(1..3,i),M(NQJ_parallel+1,1)>:
-   paramVecP_M := paramVecP_M + tmp:
+  tmpSt := M(NQJ_parallel+1,1)*Multiply(Transpose(vec2skew(P_i(1..3,i))),vec2skew(P_i(1..3,i))):
+  tmpSt_raute := Matrix(6,1,[tmpSt(1,1),tmpSt(1,2),tmpSt(1,3),tmpSt(2,2),tmpSt(2,3),tmpSt(3,3)]):
+  tmp := <tmpSt_raute,M(NQJ_parallel+1,1)*P_i(1..3,i),M(NQJ_parallel+1,1)>:
+  paramVecP_M := paramVecP_M + tmp:
 end do:
-A_E := <ZeroMatrix(3,6),vec2skew(wD_0_0_E_s)+Multiply(vec2skew(w_0_0_E_s),vec2skew(w_0_0_E_s)),a_E;
-        wD_0_0_E_s_stern + Multiply(vec2skew(w_0_0_E_s),w_0_0_E_s_stern),-vec2skew(a_E),ZeroMatrix(3,1)>:
+
 A_E := <JT_T|JR_T>.<ZeroMatrix(3,6),vec2skew(wD_E_0_E_s)+Multiply(vec2skew(w_E_0_E_s),vec2skew(w_E_0_E_s)),a_E;
         wD_E_0_E_s_stern + Multiply(vec2skew(w_E_0_E_s),w_E_0_E_s_stern),-vec2skew(a_E),ZeroMatrix(3,1)>:
-#tau_regressor := A_E.paramVecP:
-#MatlabExport(tau_regressor, "taureg.m", 2):
+# Term-Vereinfachungen vornehmen: Im planaren Fall kommt sin²+cos² vor:
+A_E := combine(A_E):
 # Mass Matrix
+# 
 M_regmin := <JT_T|JR_T>.<ZeroMatrix(3,6),vec2skew(wD_E_0_E_s),Transpose(R_0_0_E_s).Matrix(xEDD_s(1..3,1));
              wD_E_0_E_s_stern,-vec2skew(Transpose(R_0_0_E_s).Matrix(xEDD_s(1..3,1))),ZeroMatrix(3,1)>:
-
 MM_regmin := Matrix(6*6, RowDimension(paramVecP)):
+
 i_rr := 0:
 for i to 6 do # Zeilenindex der Massenmatrix
   for j to 6 do  # Spaltenindex der Massenmatrix
@@ -167,15 +175,21 @@ for i to 6 do # Zeilenindex der Massenmatrix
     end do:
   end do:
 end do:
+# Term-Vereinfachungen vornehmen: Im planaren Fall kommt sin²+cos² vor:
+MM_regmin := combine(MM_regmin):
 
 # Coriolis Vector
+# Nur Fliehkraft-Komponente aus Gesamtkraft.
 c_regmin := <JT_T|JR_T>.<ZeroMatrix(3,6),Multiply(vec2skew(w_E_0_E_s),vec2skew(w_E_0_E_s)),ZeroMatrix(3,1);
              Multiply(vec2skew(w_E_0_E_s),w_E_0_E_s_stern),ZeroMatrix(3,3),ZeroMatrix(3,1)>:
-# Graviational Vector
+
+# Gravitional Vector
+# Gravitationskomponente aus Gesamtkraft.
 g_regmin := <JT_T|JR_T>.<ZeroMatrix(3,6),ZeroMatrix(3,3),-Transpose(R_0_0_E_s).g_world;
              ZeroMatrix(3,6),-vec2skew(-Transpose(R_0_0_E_s).g_world),ZeroMatrix(3,1)>:
-# Torque at the platform
+
 # Code Export
+# Matlab
 if codeexport_invdyn then
   MatlabExport(A_E, sprintf("../codeexport/%s/tmp/invdyn_floatb_%s_platform_matlab.m", robot_name, base_method_name), codegen_opt):
   MatlabExport(M_regmin, sprintf("../codeexport/%s/tmp/invdyn_floatb_%s_Mplatform_matlab.m", robot_name, base_method_name), codegen_opt):
@@ -183,6 +197,7 @@ if codeexport_invdyn then
   MatlabExport(c_regmin, sprintf("../codeexport/%s/tmp/invdyn_floatb_%s_cplatform_matlab.m", robot_name, base_method_name), codegen_opt):
   MatlabExport(g_regmin, sprintf("../codeexport/%s/tmp/invdyn_floatb_%s_gplatform_matlab.m", robot_name, base_method_name), codegen_opt):
 end if:
+
 # Maple-Export
 save paramVecP, paramVecP_M, A_E, M_regmin, c_regmin, g_regmin, H, dH, sprintf("../codeexport/%s/tmp/floatb_%s_platform_dynamic_reg_maple.m", robot_name, base_method_name):
 

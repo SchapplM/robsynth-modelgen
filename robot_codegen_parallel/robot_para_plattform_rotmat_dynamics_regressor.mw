@@ -192,7 +192,9 @@ s_P_P_sP := s_P_sP:</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3156" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/kinematics_%s_platform_maple.m&quot;, robot_name, base_method_name):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/kinematics_%s_platform_maple.m&quot;, robot_name, base_method_name):
+P_i := P_i:<Font encoding="UTF-8"> # nur diese Variable wird ben\303\266tigt. Alle anderen zur \303\234bersichtlichkeit l\303\266schen.
+</Font>unassign('pivotMat', 'pivotMatMas', 'Jinv', 'JB_i', 'JBD_i', 'JBinv_i', 'JBDinv_i', 'U_i', 'UD_i'):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3259" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -215,9 +217,7 @@ read(sprintf(&quot;%s/transformation/maple/proc_eul%sjac&quot;, robotics_repo_pa
 <Group labelreference="L2984" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">Berechnung der Rotationsmatrizen</Text-field>
 </Input>
-</Group>
-<Group hide-input="false" labelreference="L3132" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">R_0_0_E_t := parse(sprintf(&quot;eul%s2r&quot;,angleConvLeg))(xE_t(4..6)):
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3279" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion5" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">R_0_0_E_t := parse(sprintf(&quot;eul%s2r&quot;,angleConvLeg))(xE_t(4..6)):
 R_0_0_E_s := parse(sprintf(&quot;eul%s2r&quot;,angleConvLeg))(xE_s(4..6)):
 RPYjac_0_t := parse(sprintf(&quot;eul%sjac&quot;,angleConvLeg))(xE_t(4..6)):
 RPYjac_0_s := parse(sprintf(&quot;eul%sjac&quot;,angleConvLeg))(xE_s(4..6)):
@@ -225,11 +225,12 @@ r_0_sP_P := R_0_0_E_s.r_P_sP_P:
 J_P_P := J_P_P:
 J_0_P := R_0_0_E_s.J_P_P.Transpose(R_0_0_E_s):
 J_0_P_raute := Matrix(6,1,[J_0_P(1,1),J_0_P(1,2),J_0_P(1,3),J_0_P(2,2),J_0_P(2,3),J_0_P(3,3)]):
-J_P_P_raute := Matrix(6,1,[J_P_P(1,1),J_P_P(1,2),J_P_P(1,3),J_P_P(2,2),J_P_P(2,3),J_P_P(3,3)]):</Text-field>
+J_P_P_raute := Matrix(6,1,[J_P_P(1,1),J_P_P(1,2),J_P_P(1,3),J_P_P(2,2),J_P_P(2,3),J_P_P(3,3)]):
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group hide-input="false" labelreference="L3132" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
-</Group>
-<Group hide-input="false" labelreference="L3045" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" spaceabove="0" linebreak="space" rightmargin="0" linespacing="0.0" initial="0" firstindent="0" leftmargin="0" bulletsuffix="" alignment="left" bullet="none" spacebelow="0" pagebreak-before="false">r_0_sP_P := R_0_0_E_t.r_P_sP_P:
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3283" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion6" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">r_0_sP_P := R_0_0_E_t.r_P_sP_P:
 r_0_P_sP := -r_0_sP_P:
 #rD_0_sP_P := diff~(r_0_sP_P,t):
 #for i to 3 do
@@ -243,11 +244,14 @@ r_0_P_sP := -r_0_sP_P:
 r_P_P_sP := -r_P_sP_P:
 #sE := Matrix(mE*r_0_P_sP):
 #sE := Matrix(mE*r_P_P_sP):
-sE := s_P_P_sP:</Text-field>
+sE := s_P_P_sP:
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group hide-input="false" labelreference="L3045" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" spaceabove="0" linebreak="space" rightmargin="0" linespacing="0.0" initial="0" firstindent="0" leftmargin="0" bulletsuffix="" alignment="left" bullet="none" spacebelow="0" pagebreak-before="false"></Text-field>
 </Input>
 </Group>
 <Group labelreference="L3004" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal">Berechnung der H-Matrix und deren Ableitung nach Abdellatif S.20 aus &quot;Modellierung, Identifikation und robuste Regelung von Robotern mit parallelkinematischen Strukturen&quot;</Text-field>
+<Input><Text-field style="Text" layout="Normal">Berechnung der H-Matrix und deren Ableitung nach [Abdel2007] S.20</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3059" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -272,15 +276,17 @@ dRPYjac_0_s := Copy(dRPYjac_0_t):</Text-field>
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Substituiere die zeitabh\303\244ngigen Koordinaten in der </Font>H-Matrix mit <Font encoding="UTF-8">zeitunabh\303\244ngigen Koordinaten </Font></Text-field>
 </Input>
 </Group><CodeEditor-ExecGroup view="presentation" labelreference="L2" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion3" expanded="true" visible="true" pixel-width="1129" pixel-height="197" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">for i to 3 do
-	for j to 3 do
-		for k from 4 to 6 do
-			dRPYjac_E_s(i,j) := subs({xEDD_t(k)=xEDD_s(k),xED_t(k)=xED_s(k),xE_t(k)=xE_s(k)},dRPYjac_E_s(i,j)):
-			dRPYjac_0_s(i,j) := subs({xEDD_t(k)=xEDD_s(k),xED_t(k)=xED_s(k),xE_t(k)=xE_s(k)},dRPYjac_0_s(i,j)):
-		end do:
-	end do:
+  for j to 3 do
+    for k from 4 to 6 do
+      dRPYjac_E_s(i,j) := subs({xEDD_t(k)=xEDD_s(k),xED_t(k)=xED_s(k),xE_t(k)=xE_s(k)},dRPYjac_E_s(i,j)):
+      dRPYjac_0_s(i,j) := subs({xEDD_t(k)=xEDD_s(k),xED_t(k)=xED_s(k),xE_t(k)=xE_s(k)},dRPYjac_0_s(i,j)):
+    end do:
+  end do:
 end do:</EC-CodeEditor></CodeEditor-ExecGroup>
-<Group hide-input="false" labelreference="L2905" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">omegaE := &lt;omega1;omega2;omega3&gt;:
+<Group labelreference="L3286" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3289" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion7" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">omegaE := &lt;omega1;omega2;omega3&gt;:
 xED_dummy := &lt;xE,yE,zE&gt;:
 omega0 := Transpose(R_0_0_E_s).omegaE:
 &lt;xED_dummy;omegaE&gt;:
@@ -288,31 +294,34 @@ JR := Jacobian(convert(omega0,list),convert(&lt;xED_dummy;omegaE&gt;,list)):
 JR_T := Transpose(JR):
 vel0 := Transpose(R_0_0_E_s).xED_dummy:
 JT := Jacobian(convert(vel0,list),convert(&lt;xED_dummy;omegaE&gt;,list)):
-JT_T := Transpose(JT):</Text-field>
+JT_T := Transpose(JT):
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group hide-input="false" labelreference="L2905" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
-</Group>
-<Group hide-input="false" labelreference="L2903" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" spaceabove="0" linebreak="space" rightmargin="0" linespacing="0.0" initial="0" firstindent="0" leftmargin="0" bulletsuffix="" alignment="left" bullet="none" spacebelow="0" pagebreak-before="false">wD_E_0_E_s := dRPYjac_E_s.xED_s(4..6,1)+RPYjac_E_s.xEDD_s(4..6,1):
-wD_0_0_E_s := dRPYjac_0_s.xED_s(4..6,1)+RPYjac_0_s.xEDD_s(4..6,1):</Text-field>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3293" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion8" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">wD_E_0_E_s := dRPYjac_E_s.xED_s(4..6,1)+RPYjac_E_s.xEDD_s(4..6,1):
+wD_0_0_E_s := dRPYjac_0_s.xED_s(4..6,1)+RPYjac_0_s.xEDD_s(4..6,1):
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L3295" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
-</Group>
-<Group hide-input="false" labelreference="L3100" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">H := &lt;IdentityMatrix(3,3),ZeroMatrix(3);
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3297" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion9" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">H := &lt;IdentityMatrix(3,3),ZeroMatrix(3);
       ZeroMatrix(3),RPYjac_0_s&gt;:
-#MatlabExport(H, &quot;H.m&quot;,2);</Text-field>
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group hide-input="false" labelreference="L3100" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L3066" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group labelreference="L3299" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Hinv := MatrixInverse(H):</Text-field>
 </Input>
-</Group>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3301" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion10" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">dH := &lt;ZeroMatrix(3),ZeroMatrix(3);
+      ZeroMatrix(3),dRPYjac_0_s&gt;:
+</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group hide-input="false" labelreference="L3093" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">dH := &lt;ZeroMatrix(3),ZeroMatrix(3);
-      ZeroMatrix(3),dRPYjac_0_s&gt;:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
-</Group>
-<Group hide-input="false" labelreference="L3154" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">a_E := Matrix(xEDD_s(1..3,1)) - g_world:
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3305" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion11" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">a_E := Matrix(xEDD_s(1..3,1)) - g_world:
 a_E := Transpose(R_0_0_E_s).(Matrix(xEDD_s(1..3,1)) - g_world):
 w_0_0_E_s_stern := Matrix(3,6,[w_0_0_E_s(1),w_0_0_E_s(2),w_0_0_E_s(3),0,0,0,0,w_0_0_E_s(1),0,w_0_0_E_s(2),w_0_0_E_s(3),0,0,0,w_0_0_E_s(1),0,w_0_0_E_s(2),w_0_0_E_s(3)]):
 wD_0_0_E_s_stern := Matrix(3,6,[wD_0_0_E_s(1),wD_0_0_E_s(2),wD_0_0_E_s(3),0,0,0,0,wD_0_0_E_s(1),0,wD_0_0_E_s(2),wD_0_0_E_s(3),0,0,0,wD_0_0_E_s(1),0,wD_0_0_E_s(2),wD_0_0_E_s(3)]):
@@ -325,34 +334,30 @@ paramVecP := &lt;J_P_P_raute;sE;mE&gt;:
 paramVecP_M := Copy(paramVecP):
 tmp := Matrix(10,1):
 for i to N_LEGS do
-   tmpSt := M(NQJ_parallel+1,1)*Multiply(Transpose(vec2skew(P_i(1..3,i))),vec2skew(P_i(1..3,i))):
-   tmpSt_raute := Matrix(6,1,[tmpSt(1,1),tmpSt(1,2),tmpSt(1,3),tmpSt(2,2),tmpSt(2,3),tmpSt(3,3)]):
-   tmp := &lt;tmpSt_raute,M(NQJ_parallel+1,1)*P_i(1..3,i),M(NQJ_parallel+1,1)&gt;:
-   paramVecP_M := paramVecP_M + tmp:
-end do:</Text-field>
+  tmpSt := M(NQJ_parallel+1,1)*Multiply(Transpose(vec2skew(P_i(1..3,i))),vec2skew(P_i(1..3,i))):
+  tmpSt_raute := Matrix(6,1,[tmpSt(1,1),tmpSt(1,2),tmpSt(1,3),tmpSt(2,2),tmpSt(2,3),tmpSt(3,3)]):
+  tmp := &lt;tmpSt_raute,M(NQJ_parallel+1,1)*P_i(1..3,i),M(NQJ_parallel+1,1)&gt;:
+  paramVecP_M := paramVecP_M + tmp:
+end do:
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L3344" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
-</Group>
-<Group hide-input="false" labelreference="L3081" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">A_E := &lt;ZeroMatrix(3,6),vec2skew(wD_0_0_E_s)+Multiply(vec2skew(w_0_0_E_s),vec2skew(w_0_0_E_s)),a_E;
-        wD_0_0_E_s_stern + Multiply(vec2skew(w_0_0_E_s),w_0_0_E_s_stern),-vec2skew(a_E),ZeroMatrix(3,1)&gt;:
-A_E := &lt;JT_T|JR_T&gt;.&lt;ZeroMatrix(3,6),vec2skew(wD_E_0_E_s)+Multiply(vec2skew(w_E_0_E_s),vec2skew(w_E_0_E_s)),a_E;
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3346" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion17" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">A_E := &lt;JT_T|JR_T&gt;.&lt;ZeroMatrix(3,6),vec2skew(wD_E_0_E_s)+Multiply(vec2skew(w_E_0_E_s),vec2skew(w_E_0_E_s)),a_E;
         wD_E_0_E_s_stern + Multiply(vec2skew(w_E_0_E_s),w_E_0_E_s_stern),-vec2skew(a_E),ZeroMatrix(3,1)&gt;:
-#tau_regressor := A_E.paramVecP:
-#MatlabExport(tau_regressor, &quot;taureg.m&quot;, 2):</Text-field>
-</Input>
-</Group>
+# Term-Vereinfachungen vornehmen: Im planaren Fall kommt sin\302\262+cos\302\262 vor:
+A_E := combine(A_E):
+</EC-CodeEditor></CodeEditor-ExecGroup>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Mass Matrix</Text-field></Title>
 <Group hide-input="false" labelreference="L3273" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">M_regmin := &lt;JT_T|JR_T&gt;.&lt;ZeroMatrix(3,6),vec2skew(wD_E_0_E_s),Transpose(R_0_0_E_s).Matrix(xEDD_s(1..3,1));
+<Input><Text-field style="Text" layout="Normal"></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" hide-input="false" labelreference="L3" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion4" expanded="true" visible="true" pixel-width="1040" pixel-height="264" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">M_regmin := &lt;JT_T|JR_T&gt;.&lt;ZeroMatrix(3,6),vec2skew(wD_E_0_E_s),Transpose(R_0_0_E_s).Matrix(xEDD_s(1..3,1));
              wD_E_0_E_s_stern,-vec2skew(Transpose(R_0_0_E_s).Matrix(xEDD_s(1..3,1))),ZeroMatrix(3,1)&gt;:
-</Text-field>
-</Input>
-</Group>
-<Group hide-input="false" labelreference="L3275" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MM_regmin := Matrix(6*6, RowDimension(paramVecP)):</Text-field>
-</Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion4" expanded="true" visible="true" pixel-width="1040" pixel-height="264" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">i_rr := 0:
+MM_regmin := Matrix(6*6, RowDimension(paramVecP)):
+
+i_rr := 0:
 for i to 6 do # Zeilenindex der Massenmatrix
   for j to 6 do  # Spaltenindex der Massenmatrix
     i_rr := i_rr + 1: # Gehe zeilenweise durch den unteren linken Teil der Massenmatrix (inkl. Diagonale)
@@ -364,43 +369,54 @@ for i to 6 do # Zeilenindex der Massenmatrix
       end if:
     end do:
   end do:
-end do:</EC-CodeEditor></CodeEditor-ExecGroup>
-<Group hide-input="false" labelreference="L3264" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+end do:
+# Term-Vereinfachungen vornehmen: Im planaren Fall kommt sin\302\262+cos\302\262 vor:
+MM_regmin := combine(MM_regmin):</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L3320" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Coriolis Vector</Text-field></Title>
-<Group hide-input="false" labelreference="L3267" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">c_regmin := &lt;JT_T|JR_T&gt;.&lt;ZeroMatrix(3,6),Multiply(vec2skew(w_E_0_E_s),vec2skew(w_E_0_E_s)),ZeroMatrix(3,1);
-             Multiply(vec2skew(w_E_0_E_s),w_E_0_E_s_stern),ZeroMatrix(3,3),ZeroMatrix(3,1)&gt;:</Text-field>
+<Group labelreference="L3322" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Nur Fliehkraft-Komponente aus Gesamtkraft.</Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3324" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion14" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">c_regmin := &lt;JT_T|JR_T&gt;.&lt;ZeroMatrix(3,6),Multiply(vec2skew(w_E_0_E_s),vec2skew(w_E_0_E_s)),ZeroMatrix(3,1);
+             Multiply(vec2skew(w_E_0_E_s),w_E_0_E_s_stern),ZeroMatrix(3,3),ZeroMatrix(3,1)&gt;:</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L3348" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>
-<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Graviational Vector</Text-field></Title>
-<Group hide-input="false" labelreference="L3271" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">g_regmin := &lt;JT_T|JR_T&gt;.&lt;ZeroMatrix(3,6),ZeroMatrix(3,3),-Transpose(R_0_0_E_s).g_world;
-             ZeroMatrix(3,6),-vec2skew(-Transpose(R_0_0_E_s).g_world),ZeroMatrix(3,1)&gt;:</Text-field>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Gravitional Vector</Text-field></Title>
+<Group labelreference="L3327" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Gravitationskomponente aus Gesamtkraft.</Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3329" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion15" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">g_regmin := &lt;JT_T|JR_T&gt;.&lt;ZeroMatrix(3,6),ZeroMatrix(3,3),-Transpose(R_0_0_E_s).g_world;
+             ZeroMatrix(3,6),-vec2skew(-Transpose(R_0_0_E_s).g_world),ZeroMatrix(3,1)&gt;:</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L3349" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>
-<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Torque at the platform</Text-field></Title>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Code Export</Text-field></Title>
 <Group labelreference="L2972" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input>
 </Input>
 </Group>
 <Group labelreference="L2941" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal">Code Export</Text-field>
+<Input><Text-field style="Text" layout="Normal">Matlab</Text-field>
 </Input>
-</Group>
-<Group labelreference="L2929" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codeexport_invdyn then
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3313" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion13" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if codeexport_invdyn then
   MatlabExport(A_E, sprintf(&quot;../codeexport/%s/tmp/invdyn_floatb_%s_platform_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
   MatlabExport(M_regmin, sprintf(&quot;../codeexport/%s/tmp/invdyn_floatb_%s_Mplatform_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
   MatlabExport(MM_regmin, sprintf(&quot;../codeexport/%s/tmp/invdyn_floatb_%s_MMplatform_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
   MatlabExport(c_regmin, sprintf(&quot;../codeexport/%s/tmp/invdyn_floatb_%s_cplatform_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
   MatlabExport(g_regmin, sprintf(&quot;../codeexport/%s/tmp/invdyn_floatb_%s_gplatform_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
-end if:</Text-field>
+end if:
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L2929" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 <Group labelreference="L3019" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
