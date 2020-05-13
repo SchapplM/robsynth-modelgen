@@ -5,7 +5,7 @@ simplify2 := proc (Term)
   # see also: https://www.mapleprimes.com/questions/229401-Prevent-Procedure-From-Accessing-global
   local simplify_tmpvar_c1, simplify_tmpvar_c1sum, simplify_tmpvar_c2, simplify_tmpvar_c2sum, simplify_tmpvar_weighting, Term2:
   # Get computational effort before simplification
-  simplify_tmpvar_weighting := [':-functions'=1,':-additions'=1, ':-multiplications'=1,':-divisions'=1];
+  simplify_tmpvar_weighting := [':-functions'=1,':-additions'=1, ':-multiplications'=1,':-divisions'=1,':-subscripts'=0];
   simplify_tmpvar_c1 := add(codegen:-cost~(Term)): 
   simplify_tmpvar_c1sum := eval(simplify_tmpvar_c1, simplify_tmpvar_weighting):
   # Perform simplification. Attention: tries to use global variables to simplify the expression
