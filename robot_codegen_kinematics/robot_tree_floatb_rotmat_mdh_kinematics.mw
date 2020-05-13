@@ -159,7 +159,8 @@ Die Terme werden aber auf jeden Fall \303\274bersichtlicher.</Font></Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_convert_s_t&quot;:
 read &quot;../helper/proc_convert_t_s&quot;: 
 read &quot;../helper/proc_MatlabExport&quot;:
-read &quot;../helper/proc_simplify2&quot;:</Text-field>
+read &quot;../helper/proc_simplify2&quot;:
+read &quot;../helper/proc_combine2&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1523" drawlabel="true">
@@ -400,25 +401,11 @@ Bei Verwendung dieser Optimierung funktioniert die Substitution mit trigonometri
     for k from 1 to NJ do # Schleife mit Dummy-L\303\244nge. Wird abgebrochen, falls beendet.
       #printf(&quot;j=%d\134n&quot;,j):
       Kette_akt := [j, op(Kette_akt)]:
-      Trf_tmp_sc := simplify(combine( Matrix(Trf(1 .. 4, 1 .. 4, j) . Trf_tmp) )): # Additionstheorem f\303\274r Drehung um parallele Achsen (combine)
-      Trf_tmp_wo := Matrix(Trf(1 .. 4, 1 .. 4, j) . Trf_tmp): # ignoriere Additionstheoreme
-      # Pr\303\274fe, welche Form rechentechnisch am g\303\274nstigsten ist und w\303\244hle diese
-      c1:=add(cost~(Trf_tmp_sc)):
-      cc1:=diff(c1,additions)+diff(c1,multiplications):
-      c2:=add(cost~(Trf_tmp_wo)):
-      cc2:=diff(c2,additions)+diff(c2,multiplications):
-      if cc2 &gt; cc1 then
-        # optimierte Form ist g\303\274nstiger
-        Trf_tmp := Trf_tmp_sc: 
-      else
-        # Optimierung bringt keinen Vorteil. 
-        # Das kann durch zus\303\244tzliche symbolische Parameter alpha/theta verursacht werden.
-        # Der combine-Befehl bringt dann nichts, da es sich nicht um additierte Rotationen um die selbe Achse handelt.
-        Trf_tmp := Trf_tmp_wo: 
-      end if:
+      # Additionstheorem f\303\274r Drehung um parallele Achsen (combine)
+      # Pr\303\274fe, welche Form rechentechnisch am g\303\274nstigsten ist und w\303\244hle diese (wrapper combine2)
+      Trf_tmp := simplify2(combine2(Matrix(Trf(1 .. 4, 1 .. 4, j) . Trf_tmp))):
       #printf(&quot;Trf_tmp aktualisiert mit Trf %d. Aktuelle Kette: %s\134n&quot;, j, convert(Kette_akt, string)):
       #print(Trf_tmp);
-      #printf(&quot;Kosten der optimierten Form (add/mult/fcn): %d (%d/%d/%d), ohne Optimierung: %d (%d/%d/%d)\134n&quot;, cc1, diff(c1,additions), diff(c1,multiplications), diff(c1,functions), cc2, diff(c2,additions), diff(c2,multiplications), diff(c2,functions)):
       if not(alpha(j) = 0) then
         # Die vorherige Achse ist nicht parallel zu dieser
         # Weitere Vereinfachungen ergeben keinen Sinn

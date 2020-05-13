@@ -44,6 +44,7 @@ read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s": 
 read "../helper/proc_MatlabExport":
 read "../helper/proc_simplify2":
+read "../helper/proc_combine2":
 read "../transformation/proc_rotx": 
 read "../transformation/proc_roty": 
 read "../transformation/proc_rotz": 
@@ -184,25 +185,11 @@ if codegen_kinematics_opt then
     for k from 1 to NJ do # Schleife mit Dummy-Länge. Wird abgebrochen, falls beendet.
       #printf("j=%d\n",j):
       Kette_akt := [j, op(Kette_akt)]:
-      Trf_tmp_sc := simplify(combine( Matrix(Trf(1 .. 4, 1 .. 4, j) . Trf_tmp) )): # Additionstheorem für Drehung um parallele Achsen (combine)
-      Trf_tmp_wo := Matrix(Trf(1 .. 4, 1 .. 4, j) . Trf_tmp): # ignoriere Additionstheoreme
-      # Prüfe, welche Form rechentechnisch am günstigsten ist und wähle diese
-      c1:=add(cost~(Trf_tmp_sc)):
-      cc1:=diff(c1,additions)+diff(c1,multiplications):
-      c2:=add(cost~(Trf_tmp_wo)):
-      cc2:=diff(c2,additions)+diff(c2,multiplications):
-      if cc2 > cc1 then
-        # optimierte Form ist günstiger
-        Trf_tmp := Trf_tmp_sc: 
-      else
-        # Optimierung bringt keinen Vorteil. 
-        # Das kann durch zusätzliche symbolische Parameter alpha/theta verursacht werden.
-        # Der combine-Befehl bringt dann nichts, da es sich nicht um additierte Rotationen um die selbe Achse handelt.
-        Trf_tmp := Trf_tmp_wo: 
-      end if:
+      # Additionstheorem für Drehung um parallele Achsen (combine)
+      # Prüfe, welche Form rechentechnisch am günstigsten ist und wähle diese (wrapper combine2)
+      Trf_tmp := simplify2(combine2(Matrix(Trf(1 .. 4, 1 .. 4, j) . Trf_tmp))):
       #printf("Trf_tmp aktualisiert mit Trf %d. Aktuelle Kette: %s\n", j, convert(Kette_akt, string)):
       #print(Trf_tmp);
-      #printf("Kosten der optimierten Form (add/mult/fcn): %d (%d/%d/%d), ohne Optimierung: %d (%d/%d/%d)\n", cc1, diff(c1,additions), diff(c1,multiplications), diff(c1,functions), cc2, diff(c2,additions), diff(c2,multiplications), diff(c2,functions)):
       if not(alpha(j) = 0) then
         # Die vorherige Achse ist nicht parallel zu dieser
         # Weitere Vereinfachungen ergeben keinen Sinn

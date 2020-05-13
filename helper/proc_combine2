@@ -1,0 +1,22 @@
+combine2 := proc (Term)
+  # Combine trigonometric expressions in a term. Additionally check if this is advantageous.
+  # This is a wrapper for the Maple command `combine`
+  # In many cases the term gets longer after the simplification. Then discard.
+  # Give the local procedure variable a long name. They must not be identical in Term.
+  # see also: https://www.mapleprimes.com/questions/229401-Prevent-Procedure-From-Accessing-global
+  local combine_tmpvar_c1, combine_tmpvar_c1sum, combine_tmpvar_c2, combine_tmpvar_c2sum, combine_tmpvar_weighting, Term2:
+  # Get computational effort before simplification
+  combine_tmpvar_weighting := [':-functions'=1,':-additions'=1, ':-multiplications'=1,':-divisions'=1,':-subscripts'=0];
+  combine_tmpvar_c1 := add(codegen:-cost~(Term)): 
+  combine_tmpvar_c1sum := eval(combine_tmpvar_c1, combine_tmpvar_weighting):
+  # Perform combination.
+  Term2 := combine(Term):
+  # Get effort after simplification
+  combine_tmpvar_c2 := add(codegen:-cost~(Term2)): 
+  combine_tmpvar_c2sum := eval(combine_tmpvar_c2, combine_tmpvar_weighting):
+  if combine_tmpvar_c2sum > combine_tmpvar_c1sum then
+    # The simplification was not successful. Take old version.
+    Term2 := Term:
+  end if:
+  return Term2:
+end proc:

@@ -41,6 +41,7 @@ read "../helper/proc_index_symmat2vector":
 read "../helper/proc_symmat2vector":
 read "../helper/proc_skew2vec":
 read "../helper/proc_vec2skew":
+read "../helper/proc_combine2":
 read "../transformation/proc_rotx": 
 read "../transformation/proc_roty": 
 read "../transformation/proc_rotz": 
@@ -125,6 +126,9 @@ JT_T := Transpose(JT):
 
 wD_E_0_E_s := dRPYjac_E_s.xED_s(4..6,1)+RPYjac_E_s.xEDD_s(4..6,1):
 wD_0_0_E_s := dRPYjac_0_s.xED_s(4..6,1)+RPYjac_0_s.xEDD_s(4..6,1):
+# Trigonometrische Ausdrücke zusammenfassen.
+w_E_0_E_s := combine2(w_E_0_E_s):
+wD_E_0_E_s := combine2(wD_E_0_E_s):
 
 H := <IdentityMatrix(3,3),ZeroMatrix(3);
       ZeroMatrix(3),RPYjac_0_s>:
@@ -135,10 +139,18 @@ dH := <ZeroMatrix(3),ZeroMatrix(3);
 
 a_E := Matrix(xEDD_s(1..3,1)) - g_world:
 a_E := Transpose(R_0_0_E_s).(Matrix(xEDD_s(1..3,1)) - g_world):
-w_0_0_E_s_stern := Matrix(3,6,[w_0_0_E_s(1),w_0_0_E_s(2),w_0_0_E_s(3),0,0,0,0,w_0_0_E_s(1),0,w_0_0_E_s(2),w_0_0_E_s(3),0,0,0,w_0_0_E_s(1),0,w_0_0_E_s(2),w_0_0_E_s(3)]):
-wD_0_0_E_s_stern := Matrix(3,6,[wD_0_0_E_s(1),wD_0_0_E_s(2),wD_0_0_E_s(3),0,0,0,0,wD_0_0_E_s(1),0,wD_0_0_E_s(2),wD_0_0_E_s(3),0,0,0,wD_0_0_E_s(1),0,wD_0_0_E_s(2),wD_0_0_E_s(3)]):
-w_E_0_E_s_stern := Matrix(3,6,[w_E_0_E_s(1),w_E_0_E_s(2),w_E_0_E_s(3),0,0,0,0,w_E_0_E_s(1),0,w_E_0_E_s(2),w_E_0_E_s(3),0,0,0,w_E_0_E_s(1),0,w_E_0_E_s(2),w_E_0_E_s(3)]):
-wD_E_0_E_s_stern := Matrix(3,6,[wD_E_0_E_s(1),wD_E_0_E_s(2),wD_E_0_E_s(3),0,0,0,0,wD_E_0_E_s(1),0,wD_E_0_E_s(2),wD_E_0_E_s(3),0,0,0,wD_E_0_E_s(1),0,wD_E_0_E_s(2),wD_E_0_E_s(3)]):
+w_0_0_E_s_stern := Matrix(3,6,[w_0_0_E_s(1),w_0_0_E_s(2),w_0_0_E_s(3),0,0,0, \
+                               0,w_0_0_E_s(1),0,w_0_0_E_s(2),w_0_0_E_s(3),0, \
+                               0,0,w_0_0_E_s(1),0,w_0_0_E_s(2),w_0_0_E_s(3)]):
+wD_0_0_E_s_stern := Matrix(3,6,[wD_0_0_E_s(1),wD_0_0_E_s(2),wD_0_0_E_s(3),0,0,0,\
+                                0,wD_0_0_E_s(1),0,wD_0_0_E_s(2),wD_0_0_E_s(3),0,\
+                                0,0,wD_0_0_E_s(1),0,wD_0_0_E_s(2),wD_0_0_E_s(3)]):
+w_E_0_E_s_stern := Matrix(3,6,[w_E_0_E_s(1),w_E_0_E_s(2),w_E_0_E_s(3),0,0,0,\
+                               0,w_E_0_E_s(1),0,w_E_0_E_s(2),w_E_0_E_s(3),0,\
+                               0,0,w_E_0_E_s(1),0,w_E_0_E_s(2),w_E_0_E_s(3)]):
+wD_E_0_E_s_stern := Matrix(3,6,[wD_E_0_E_s(1),wD_E_0_E_s(2),wD_E_0_E_s(3),0,0,0,\
+                                0,wD_E_0_E_s(1),0,wD_E_0_E_s(2),wD_E_0_E_s(3),0,\
+                                0,0,wD_E_0_E_s(1),0,wD_E_0_E_s(2),wD_E_0_E_s(3)]):
 paramVecP_old := <J_0_P_raute;sE;mE>:
 paramVecP_old := <J_P_P_raute;sE;mE>:
 paramVecP := <J_0_P_raute;sE;mE>:
@@ -151,11 +163,15 @@ for i to N_LEGS do
   tmp := <tmpSt_raute,M(NQJ_parallel+1,1)*P_i(1..3,i),M(NQJ_parallel+1,1)>:
   paramVecP_M := paramVecP_M + tmp:
 end do:
+# Trigonometrische Ausdrücke zusammenfassen.
+wD_E_0_E_s_stern := combine2(wD_E_0_E_s_stern):
 
 A_E := <JT_T|JR_T>.<ZeroMatrix(3,6),vec2skew(wD_E_0_E_s)+Multiply(vec2skew(w_E_0_E_s),vec2skew(w_E_0_E_s)),a_E;
         wD_E_0_E_s_stern + Multiply(vec2skew(w_E_0_E_s),w_E_0_E_s_stern),-vec2skew(a_E),ZeroMatrix(3,1)>:
-# Term-Vereinfachungen vornehmen: Im planaren Fall kommt sin²+cos² vor:
-A_E := combine(A_E):
+# Term-Vereinfachungen vornehmen: Im planaren Fall kommt sin²+cos² vor.
+# Im räumlichen Fall ist die Vereinfachung nachteilig. Dann wird der Term so gelassen.
+A_E := combine2(A_E):
+
 # Mass Matrix
 # 
 M_regmin := <JT_T|JR_T>.<ZeroMatrix(3,6),vec2skew(wD_E_0_E_s),Transpose(R_0_0_E_s).Matrix(xEDD_s(1..3,1));
@@ -176,7 +192,7 @@ for i to 6 do # Zeilenindex der Massenmatrix
   end do:
 end do:
 # Term-Vereinfachungen vornehmen: Im planaren Fall kommt sin²+cos² vor:
-MM_regmin := combine(MM_regmin):
+MM_regmin := combine2(MM_regmin):
 
 # Coriolis Vector
 # Nur Fliehkraft-Komponente aus Gesamtkraft.
