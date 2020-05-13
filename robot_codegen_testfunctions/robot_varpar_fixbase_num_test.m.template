@@ -211,7 +211,23 @@ for i = 1:n
       error('Jacobi-Matrix unterscheidet sich bei robot_tree_jacobig_cutforce_m');
     end
   end
-  
+  % Vergleiche zwei Implementierungen der Schnittkraft-Jacobi
+  matlabfcn2mex({'%RN%_jacobig_cutforce_mdh_num'});
+  for j = uint8(0:NL-1)
+    r_i_i_C = rand(3,1);
+    Jg_C1 = robot_tree_jacobig_cutforce_m(Tc_stack, v, j, r_i_i_C);
+    Jg_C2 = %RN%_jacobig_cutforce_mdh_num(qJ, j, r_i_i_C, pkin);
+    test_JC = Jg_C1 - Jg_C2;
+    if max(abs(test_JC(:))) > 1e-10
+      error('Schnittkraft-Jacobi-Matrix unterscheidet sich zwischen zwei Implementierungen');
+    end
+    Jg_C2m = %RN%_jacobig_cutforce_mdh_num_mex(qJ, j, r_i_i_C, pkin);
+    test_JCm = Jg_C2m - Jg_C2;
+    if max(abs(test_JCm(:))) > 1e-10
+      error('Schnittkraft-Jacobi-Matrix hat kompiliert anderes Ergebnis');
+    end
+  end
+
   % Teste allgemeine Schnittkraft-Jacobi gegen Schnittkraft-Funktionen
   % Ansatz: Definiere Gravitationskraft des einzigen massebehafteten
   % Segmentes als externe Kraft. Berechne resultierende Schnittkräfte
