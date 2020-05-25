@@ -38,13 +38,13 @@ if [ -f $quelldat ]; then
   cat $quelldat >> $zieldat
   # Benenne die Ergebnisvariable des exportierten Codes um (zusätzlich zu Hilfsskript robot_codegen_matlabfcn_postprocess.sh)
   varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat`
-  echo "T_ges = $varname_tmp;" >> $zieldat
+  echo "Tc_stack = $varname_tmp;" >> $zieldat
   echo "%% Postprocessing: Reshape Output" >> $zieldat
   printf "%% Convert Maple format (2-dimensional tensor) to Matlab format (3-dimensional tensor)\n" >> $zieldat
   printf "%% Fallunterscheidung der Initialisierung für symbolische Eingabe\n" >> $zieldat
-  printf "if isa([qJ; pkin], 'double'), T_c_mdh = NaN(4,4,%%NJ%%+1);               %% numerisch\n" >> $zieldat
-  printf "else,                         T_c_mdh = sym('xx', [4,4,%%NJ%%+1]); end %% symbolisch\n" >> $zieldat
-  printf "for i = 1:%%NJ%%+1\n  T_c_mdh(:,:,i) = T_ges((i-1)*4+1 : 4*i, :);\nend\n" >> $zieldat
+  printf "if isa([qJ; pkin], 'double'), Tc_mdh = NaN(4,4,%%NJ%%+1);               %% numerisch\n" >> $zieldat
+  printf "else,                         Tc_mdh = sym('xx', [4,4,%%NJ%%+1]); end %% symbolisch\n" >> $zieldat
+  printf "for i = 1:%%NJ%%+1\n  Tc_mdh(:,:,i) = [Tc_stack((i-1)*3+1 : 3*i, :);[0 0 0 1]];\nend\n" >> $zieldat
   source robot_codegen_matlabfcn_postprocess.sh $zieldat 0 0 ${quelldat}.subsvar
 else
   echo "Code in ${quelldat##*/} nicht gefunden."
@@ -74,10 +74,10 @@ if [ -f $quelldat ]; then
   cat $quelldat >> $zieldat
   # Benenne die Ergebnisvariable des exportierten Codes um (zusätzlich zu Hilfsskript robot_codegen_matlabfcn_postprocess.sh)
   varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat`
-  echo "T_ges = $varname_tmp;" >> $zieldat
+  echo "Tc_stack = $varname_tmp;" >> $zieldat
   echo "%% Postprocessing: Reshape Output" >> $zieldat
   printf "%% Convert Maple format (2-dimensional tensor) to Matlab format (3-dimensional tensor)\n" >> $zieldat
-  printf "T_c_mdh = NaN(4,4,%%NL%%);\nfor i = 1:%%NL%%\n  T_c_mdh(:,:,i) = T_ges((i-1)*4+1 : 4*i, :);\nend\n" >> $zieldat
+  printf "Tc_mdh = NaN(4,4,%%NL%%);\nfor i = 1:%%NL%%\n  Tc_mdh(:,:,i) = [Tc_stack((i-1)*4+1 : 4*i, :); [0 0 0 1]];\nend\n" >> $zieldat
   source robot_codegen_matlabfcn_postprocess.sh $zieldat 0 0 ${quelldat}.subsvar
 else
   echo "Code in ${quelldat##*/} nicht gefunden."
@@ -103,14 +103,14 @@ if [ -f $quelldat ]; then
   cat $quelldat >> $zieldat
   # Benenne die Ergebnisvariable des exportierten Codes um (zusätzlich zu Hilfsskript robot_codegen_matlabfcn_postprocess.sh)
   varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat`
-  echo "T_ges = $varname_tmp;" >> $zieldat
+  echo "T_stack = $varname_tmp;" >> $zieldat
   echo "%% Postprocessing: Reshape Output" >> $zieldat
   printf "%% Convert Maple format (2-dimensional tensor) to Matlab format (3-dimensional tensor)\n" >> $zieldat
 
   printf "%% Fallunterscheidung der Initialisierung für symbolische Eingabe\n" >> $zieldat
   printf "if isa([qJ; pkin], 'double'), T_mdh = NaN(4,4,%%NJ%%);             %% numerisch\n" >> $zieldat
   printf "else,                         T_mdh = sym('xx', [4,4,%%NJ%%]); end %% symbolisch\n" >> $zieldat
-  printf "\nfor i = 1:%%NJ%%\n  T_mdh(:,:,i) = T_ges((i-1)*4+1 : 4*i, :);\nend\n" >> $zieldat
+  printf "\nfor i = 1:%%NJ%%\n  T_mdh(:,:,i) = [T_stack((i-1)*3+1 : 3*i, :);[0 0 0 1]];\nend\n" >> $zieldat
   source robot_codegen_matlabfcn_postprocess.sh $zieldat 0 0 ${quelldat}.subsvar
 else
   echo "Code in ${quelldat##*/} nicht gefunden."

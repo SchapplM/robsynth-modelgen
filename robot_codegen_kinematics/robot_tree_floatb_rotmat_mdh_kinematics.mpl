@@ -263,34 +263,32 @@ end if:
 printf("%s. Berechnung der Kinematik beendet. Beginne Matlab-Export.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
 # Maple-Export
 save Trf, Trf_c, sprintf("../codeexport/%s/tmp/kinematics_floatb_%s_rotmat_maple.m", robot_name, base_method_name):
+
 # Export des symbolischen Ausdrucks für alle kumulierten Transformationsmatrizen auf einmal.
-Trf_c_Export := Matrix((NJ+1)*4, 4):
+# Export ohne letzte Zeile mit [0 0 0 1]
+Trf_c_Export := Matrix((NJ+1)*3, 4):
 for i from 1 to NJ+1 do 
-  Trf_c_Export((i-1)*4+1 .. 4*i, 1..4) := Trf_c(1..4, 1..4, i):
+  Trf_c_Export((i-1)*3+1 .. 3*i, 1..4) := Trf_c(1..3, 1..4, i):
 end do:
 if codegen_act then
   MatlabExport(convert_t_s(Trf_c_Export), sprintf("../codeexport/%s/tmp/fkine_mdh_floatb_%s_rotmat_matlab.m", robot_name, base_method_name), codegen_opt):
 end if:
+
 # Export des symbolischen Ausdrucks für alle Gelenk-Transformationsmatrizen auf einmal.
-Trf_Export := Matrix((NJ)*4, 4):
+# Export ohne letzte Zeile mit [0 0 0 1]
+Trf_Export := Matrix((NJ)*3, 4):
 for i from 1 to NJ do 
-  Trf_Export((i-1)*4+1 .. 4*i, 1..4) := Trf(1..4, 1..4, i):
+  Trf_Export((i-1)*3+1 .. 3*i, 1..4) := Trf(1..3, 1..4, i):
 end do:
 if codegen_act then
   MatlabExport(convert_t_s(Trf_Export), sprintf("../codeexport/%s/tmp/joint_transformation_mdh_rotmat_matlab.m", robot_name), codegen_opt):
 end if:
-# Export ohne letzte Zeile
-Trf_Export_m := Matrix((NJ)*3, 4):
-for i from 1 to NL do 
-  Trf_Export_m((i-1)*3+1 .. 3*i, 1..4) := Trf_c(1..3, 1..4, i):
-end do:
-if codegen_act then
-  MatlabExport(convert_t_s(Trf_Export_m), sprintf("../codeexport/%s/tmp/joint_transformation_mdh_rotmat_m_matlab.m", robot_name), codegen_opt):
-end if:
+
 # Export des symbolischen Ausdrucks für jede Transformationsmatrix einzeln
 for i from 1 to NJ+1 do
   if codegen_act and codegen_debug then
     MatlabExport(convert_t_s(Trf_c(1 .. 4, 1 .. 4, i)), sprintf("../codeexport/%s/tmp/fkine_%d_floatb_%s_rotmat_matlab.m", robot_name, i, base_method_name), codegen_opt):
   end if:
 end do:
+
 

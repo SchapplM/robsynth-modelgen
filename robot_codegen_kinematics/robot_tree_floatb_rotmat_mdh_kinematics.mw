@@ -482,84 +482,78 @@ Da die Gesamt-Transformation Trf_c an dieser Stelle schon berechnet wurde, m\303
     FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
 end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 </Section>
+</Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Export</Text-field></Title>
-<Group labelreference="L2214" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group labelreference="L2243" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;%s. Berechnung der Kinematik beendet. Beginne Matlab-Export.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Font></Text-field>
 </Input>
 </Group>
-<Group labelreference="L1840" drawlabel="true">
+<Group labelreference="L2244" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal">Maple-Export</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1849" drawlabel="true">
+<Group labelreference="L2246" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save Trf, Trf_c, sprintf(&quot;../codeexport/%s/tmp/kinematics_floatb_%s_rotmat_maple.m&quot;, robot_name, base_method_name):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1839" drawlabel="true">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Export des symbolischen Ausdrucks f\303\274r alle kumulierten Transformationsmatrizen auf einmal.</Font></Text-field>
+<Group labelreference="L2241" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
-<Group labelreference="L1841" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Trf_c_Export := Matrix((NJ+1)*4, 4):</Text-field>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2"><Font encoding="UTF-8">Export des symbolischen Ausdrucks f\303\274r alle kumulierten Transformationsmatrizen auf einmal.</Font></Text-field></Title>
+<Group labelreference="L2247" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Export ohne letzte Zeile mit [0 0 0 1]</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1854" drawlabel="true">
+<Group labelreference="L2253" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Trf_c_Export := Matrix((NJ+1)*3, 4):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L2254" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NJ+1 do 
-  Trf_c_Export((i-1)*4+1 .. 4*i, 1..4) := Trf_c(1..4, 1..4, i):
+  Trf_c_Export((i-1)*3+1 .. 3*i, 1..4) := Trf_c(1..3, 1..4, i):
 end do:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1842" drawlabel="true">
+<Group labelreference="L2252" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
   MatlabExport(convert_t_s(Trf_c_Export), sprintf(&quot;../codeexport/%s/tmp/fkine_mdh_floatb_%s_rotmat_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1838" drawlabel="true">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Export des symbolischen Ausdrucks f\303\274r alle Gelenk-Transformationsmatrizen auf einmal.</Font></Text-field>
+<Group labelreference="L2251" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
-<Group labelreference="L1843" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Trf_Export := Matrix((NJ)*4, 4):</Text-field>
+</Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2"><Font encoding="UTF-8">Export des symbolischen Ausdrucks f\303\274r alle Gelenk-Transformationsmatrizen auf einmal.</Font></Text-field></Title>
+<Group labelreference="L2249" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Export ohne letzte Zeile mit [0 0 0 1]</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1848" drawlabel="true">
+<Group labelreference="L2257" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Trf_Export := Matrix((NJ)*3, 4):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L2256" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NJ do 
-  Trf_Export((i-1)*4+1 .. 4*i, 1..4) := Trf(1..4, 1..4, i):
+  Trf_Export((i-1)*3+1 .. 3*i, 1..4) := Trf(1..3, 1..4, i):
 end do:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1853" drawlabel="true">
+<Group labelreference="L2258" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
   MatlabExport(convert_t_s(Trf_Export), sprintf(&quot;../codeexport/%s/tmp/joint_transformation_mdh_rotmat_matlab.m&quot;, robot_name), codegen_opt):
 end if:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1844" drawlabel="true">
-<Input><Text-field style="Text" layout="Normal">Export ohne letzte Zeile</Text-field>
+<Group labelreference="L2255" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
-<Group labelreference="L1846" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Trf_Export_m := Matrix((NJ)*3, 4):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1850" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NL do 
-  Trf_Export_m((i-1)*3+1 .. 3*i, 1..4) := Trf_c(1..3, 1..4, i):
-end do:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1851" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-  MatlabExport(convert_t_s(Trf_Export_m), sprintf(&quot;../codeexport/%s/tmp/joint_transformation_mdh_rotmat_m_matlab.m&quot;, robot_name), codegen_opt):
-end if:</Text-field>
-</Input>
-</Group>
-<Group labelreference="L1845" drawlabel="true">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Export des symbolischen Ausdrucks f\303\274r jede Transformationsmatrix einzeln</Font></Text-field>
-</Input>
-</Group>
-<Group labelreference="L1852" drawlabel="true">
+</Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2"><Font encoding="UTF-8">Export des symbolischen Ausdrucks f\303\274r jede Transformationsmatrix einzeln</Font></Text-field></Title>
+<Group labelreference="L2250" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NJ+1 do
   if codegen_act and codegen_debug then
     MatlabExport(convert_t_s(Trf_c(1 .. 4, 1 .. 4, i)), sprintf(&quot;../codeexport/%s/tmp/fkine_%d_floatb_%s_rotmat_matlab.m&quot;, robot_name, i, base_method_name), codegen_opt):
@@ -567,10 +561,14 @@ end if:</Text-field>
 end do:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1847" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+</Section>
+<Group labelreference="L2248" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>
-</Section>
+<Group labelreference="L2242" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
 </Worksheet>
