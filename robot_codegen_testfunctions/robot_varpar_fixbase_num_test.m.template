@@ -15,12 +15,12 @@ clear
 NQJ = %NQJ%;
 NJ = %NJ%;
 NL = %NL%;
+KINCONSTR = logical(%KINCONSTR%); %#ok<LOGL>
 robot_name = '%RN%';
 
 % Prüfe, ob kinematische Zwangsbedingungen vorliegen.
 % Dann entfallen alle folgenden Tests (noch nicht implementiert)
-if NJ ~= NQJ
-  KINCONSTR = true;
+if KINCONSTR
   fprintf('Tests entfallen aufgrund der Existenz kinematischer Zwangsbedingungen\n');
   return
 end

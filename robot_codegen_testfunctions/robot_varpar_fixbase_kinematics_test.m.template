@@ -17,6 +17,7 @@ clear
 NQJ = %NQJ%;
 NJ = %NJ%;
 NL = %NL%;
+KINCONSTR = logical(%KINCONSTR%); %#ok<LOGL>
 robot_name = '%RN%';
 
 %% Parameter
@@ -29,12 +30,9 @@ end
 thrfac = 1; % Faktor zur Erhöhung der Schwellwerte für Fehlererkennung
 % Prüfe, ob kinematische Zwangsbedingungen vorliegen.
 % Dann entfallen die Tests der numerischen Funktionen
-if NJ ~= NQJ
-  KINCONSTR = true;
+if KINCONSTR
   fprintf('Einige Tests entfallen aufgrund der Existenz kinematischer Zwangsbedingungen\n');
   thrfac = 10; % bei ZB sind treten mehr Rechenfehler auf (da aufwändiger)
-else
-  KINCONSTR = false;  
 end
 
 if any(sigma)

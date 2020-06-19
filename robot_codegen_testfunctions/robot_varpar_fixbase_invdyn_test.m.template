@@ -14,6 +14,7 @@ clear
 NQJ = %NQJ%;
 NJ = %NJ%;
 NL = %NL%;
+KINCONSTR = logical(%KINCONSTR%); %#ok<LOGL>
 robot_name = '%RN%';
 
 %% Parameter
@@ -28,11 +29,8 @@ end
 thrfac = 1; % Faktor zur Erhöhung der Schwellwerte für Fehlererkennung
 NJvirt = length(find(sigma==2));
 NJreal = NJ - NJvirt;
-if NQJ ~= NJreal
-  KINCONSTR = true;
+if KINCONSTR
   thrfac = 10; % bei ZB sind treten mehr Rechenfehler auf (da aufwändiger)
-else
-  KINCONSTR = false;
 end
 
 %% Test kinetic Energy

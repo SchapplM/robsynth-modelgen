@@ -7,15 +7,10 @@
 NQJ = %NQJ%;
 NJ = %NJ%;
 NL = %NL%;
+KINCONSTR = logical(%KINCONSTR%); %#ok<LOGL>
 robot_name = '%RN%';
 
 %% Init
-if NJ ~= NQJ
-  KINCONSTR = true;
-else
-  KINCONSTR = false;  
-end
-
 % Parameter
 TSS = %RN%_varpar_testfunctions_parameter();
 for f = fields(TSS)'
