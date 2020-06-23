@@ -46,6 +46,15 @@ for i = 1:size(Q, 1)
   [Tc, Tc_stack] = %RN%_fkine_fixb_rotmat_mdh_sym_varpar(q, pkin);
   for j = 1:NJ+1
     Tc_j_fromstack = [Tc_stack((j-1)*3+1:j*3,1:4); [0 0 0 1]];
+    if abs(det(Tc(1:3,1:3,j))-1) > 1e-10
+      error('Erste Ausgabe von fkine enthält keine gültige Rotationsmatrix');
+    end
+    if any(abs(Tc(4,1:4,j)-[0 0 0 1]) > 0)
+      error('Erste Ausgabe von fkine ist keine gültige homogene Transformationsmatrix');
+    end
+    if abs(det(Tc_j_fromstack(1:3,1:3))-1) > 1e-10
+      error('Zweite Ausgabe von fkine enthält keine gültige Rotationsmatrix');
+    end
     test_Tc_j = Tc(:,:,j) - Tc_j_fromstack;
     if any(abs(test_Tc_j(:)) > 1e-12)
       error('Verschiedene Ausgaben von fkine stimmen nicht');
@@ -55,6 +64,15 @@ for i = 1:size(Q, 1)
   [T, T_stack] = %RN%_joint_trafo_rotmat_mdh_sym_varpar(q, pkin);
   for j = 1:NJ
     T_j_fromstack = [T_stack((j-1)*3+1:j*3,1:4); [0 0 0 1]];
+    if abs(det(T(1:3,1:3,j))-1) > 1e-10
+      error('Erste Ausgabe von joint_trafo enthält keine gültige Rotationsmatrix');
+    end
+    if any(abs(T(4,1:4,j)-[0 0 0 1]) > 0)
+      error('Erste Ausgabe von joint_trafo ist keine gültige homogene Transformationsmatrix');
+    end
+    if abs(det(T_j_fromstack(1:3,1:3))-1) > 1e-10
+      error('Zweite Ausgabe von joint_trafo enthält keine gültige Rotationsmatrix');
+    end
     test_T_j = T(:,:,j) - T_j_fromstack;
     if any(abs(test_T_j(:)) > 1e-12)
       error('Verschiedene Ausgaben von joint_trafo stimmen nicht');
@@ -71,6 +89,7 @@ for i = 1:size(Q, 1)
   end
 end
 fprintf('Tested forward kinematics against joint transformations for %d random joint angles.\n', size(Q, 1));
+
 
 %% Kinematik gegen Jacobi-Matrix testen (fixed base)
 
