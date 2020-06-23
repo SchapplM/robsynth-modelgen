@@ -40,8 +40,16 @@ if [ "$robot_kinconstr_exist" == "1" ] || [ "$robot_NQJ" != "$robot_NJ" ]; then
   blacklist="$blacklist
   gravload
   inertia
-  invdyn
+  invdyn_floatb_eulxyz_nnew
   jacobi
+  "
+fi
+# Falls die Minimalparameterform nicht existiert, funktionieren die Trajektorien-Funktionen für Regressorform nicht
+if [ $robot_NMPVFIXB == "NOTDEFINED" ]; then
+  blacklist="$blacklist
+  invdynJ_fixb_mdp_slag_vp_traj
+  invdynJ_fixb_mdp_slag_vr_traj
+  invdynJ_fixb_regmin_slag_vp_traj
   "
 fi
 
