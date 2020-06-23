@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Worksheet>
+<Version major="2019" minor="2"/>
+<Label-Scheme value="2" prefix=""/>
+<View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
+</View-Properties>
+<MapleNet-Properties prettyprint="3" warnlevel="3" compactdisplay="false" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" historytimestamp="false" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1050" rtablesize="100" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" ansicolor="[]" elisiondigitsthreshold="10000" showassumed="1" ansilprint="false" trailingsemicolon="true" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<Styles>
+<Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="2D Output" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Heading 4" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="true" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Line Printed Output" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Heading 2" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="16" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Maple Output" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="2D Inert Output" background="[255,255,255]" bold="false" executable="true" family="Times New Roman" foreground="[144,144,144]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Heading 3" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="true" opaque="false" readonly="false" size="14" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Diagnostic" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[40,120,40]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Ordered List 1" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Maple Input" background="[255,255,255]" bold="true" executable="true" family="Courier New" foreground="[120,0,14]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Text Output" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Ordered List 2" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Ordered List 3" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Ordered List 4" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Ordered List 5" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Annotation Title" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Header and Footer" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="10" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="HyperlinkError" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[255,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="true" placeholder="false"/>
+<Font name="Atomic Variable" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[175,0,175]" italic="true" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="HyperlinkWarning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="true" placeholder="false"/>
+<Font name="Dictionary Hyperlink" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[147,0,15]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="true" placeholder="false"/>
+<Font name="2D Math" background="[255,255,255]" bold="false" executable="true" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Bullet Item" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Maple Plot" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Annotation Text" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="List Item" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Dash Item" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="2D Input" background="[255,255,255]" bold="false" executable="true" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Error" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[255,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Title" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Text" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Normal" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Caption Reference" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Code" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[255,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Maple Input Placeholder" background="[255,255,255]" bold="true" executable="true" family="Courier New" foreground="[200,0,200]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="true"/>
+<Font name="Equation Label" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Author" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Hyperlink" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,128,128]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="true" placeholder="false"/>
+<Font name="Caption Text" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Layout name="Heading 1" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="8" spacebelow="4" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Warning" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Heading 4" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Line Printed Output" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="any" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Heading 2" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="8" spacebelow="2" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Maple Output" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.3" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Heading 3" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Diagnostic" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="any" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Ordered List 1" alignment="left" bullet="numeric" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix=""/>
+<Layout name="Text Output" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="newline" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Ordered List 2" alignment="left" bullet="alphabetic" firstindent="0" leftmargin="36" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix=""/>
+<Layout name="Ordered List 3" alignment="left" bullet="roman" firstindent="0" leftmargin="72" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix=""/>
+<Layout name="Ordered List 4" alignment="left" bullet="ALPHABETIC" firstindent="0" leftmargin="108" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix=""/>
+<Layout name="Ordered List 5" alignment="left" bullet="ROMAN" firstindent="0" leftmargin="144" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix=""/>
+<Layout name="Annotation Title" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="12" spacebelow="12" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="HyperlinkError" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="HyperlinkWarning" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Bullet Item" alignment="left" bullet="dot" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Maple Plot" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="List Item" alignment="left" bullet="indent" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Dash Item" alignment="left" bullet="dash" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Error" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Title" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="12" spacebelow="12" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Normal" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Author" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="8" spacebelow="8" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Pencil-style name="Pencil 1" pen-color="[0,0,0]" pen-height="1.0" pen-width="1.0" pen-opacity="1.0"/>
+<Pencil-style name="Pencil 2" pen-color="[0,0,255]" pen-height="1.0" pen-width="1.0" pen-opacity="1.0"/>
+<Pencil-style name="Pencil 3" pen-color="[0,0,0]" pen-height="3.0" pen-width="3.0" pen-opacity="1.0"/>
+<Pencil-style name="Pencil 4" pen-color="[0,0,255]" pen-height="3.0" pen-width="3.0" pen-opacity="1.0"/>
+<Pencil-style name="Pencil 5" pen-color="[255,0,0]" pen-height="5.0" pen-width="5.0" pen-opacity="1.0"/>
+<Highlighter-style name="Highlighter 5" pen-color="[255,255,0]" pen-height="48.0" pen-width="48.0" pen-opacity="0.8"/>
+<Highlighter-style name="Highlighter 3" pen-color="[51,255,0]" pen-height="24.0" pen-width="24.0" pen-opacity="0.8"/>
+<Highlighter-style name="Highlighter 4" pen-color="[0,255,255]" pen-height="32.0" pen-width="32.0" pen-opacity="0.8"/>
+<Highlighter-style name="Highlighter 1" pen-color="[255,153,255]" pen-height="12.0" pen-width="8.0" pen-opacity="0.8"/>
+<Highlighter-style name="Highlighter 2" pen-color="[255,204,0]" pen-height="14.0" pen-width="14.0" pen-opacity="0.8"/>
+</Styles>
+<Startup-Code startupcode=""/>
+<Metadata-table>
+    <Metadata-category name="&lt;default&gt;"/>
+    <Metadata-tag id="0" category="&lt;default&gt;" name="Document Properties">
+        <Metadata-attribute name="Item List" value="true"/>
+        <Metadata-attribute name="Keywords" value="&lt;default&gt;"/>
+        <Metadata-attribute name="Author" value="&lt;default&gt;"/>
+        <Metadata-attribute name="Title" value="&lt;default&gt;"/>
+        <Metadata-attribute name="Subject" value="&lt;default&gt;"/>
+    </Metadata-tag>
+</Metadata-table>
+<Task-table>
+    <Task-category name="&lt;default&gt;"/>
+</Task-table>
+<Task/>
+<Group hide-output="false" labelreference="L1517" drawlabel="true">
+<Input><Text-field style="Title" layout="Title">Base Parameter Energy Regressor for Robot based on MDH frames</Text-field>
+</Input>
+</Group>
+<Group hide-output="false" labelreference="L1516" drawlabel="true">
+<Input><Text-field style="Heading 2" layout="Heading 2">Einleitung</Text-field><Text-field style="Text" layout="Heading 2">Erstellung einer parameterlinearen und -minimalen Regressorform</Text-field><Text-field style="Text" layout="Heading 2">
+Dateiname:
+<Font encoding="UTF-8">robot -&gt; Berechnung f\303\274r allgemeinen Roboter
+chain -&gt; Berechnung f\303\274r eine serielle Struktur (nicht: Baumstruktur)
+fixb -&gt; fixed base. Kein Floating base Modell. Dort ist diese Form der Minimalparameterform nicht m\303\266glich.
+</Font>energy -&gt; Berechnung bezogen auf Energie
+regressor -&gt; Regressorform (parameterlinear)
+linearsolve -&gt; Nicht geometrischer Ansatz nach Khalil, sondern symbolischer Ansatz mit LinearSolve</Text-field>
+</Input>
+</Group>
+<Group hide-output="false" labelreference="L1515" drawlabel="true">
+<Input><Text-field style="Heading 2" layout="Heading 2">Authors</Text-field><Text-field style="Normal" layout="Normal"><Font encoding="UTF-8">Jonas Diekmeyer (Studienarbeit bei Elias Kn\303\266chelmann)
+</Font>Moritz Schappler, moritz.schappler@imes.uni-hannover.de, 2020-06</Text-field><Text-field style="Normal" layout="Normal"></Text-field><Text-field style="Normal" layout="Normal">(C) Institut fuer Mechatronische Systeme, Leibniz Universitaet Hannover</Text-field>
+</Input>
+</Group>
+<Group hide-output="false" labelreference="L1518" drawlabel="true">
+<Input><Text-field style="Heading 2" layout="Heading 2">Quellen</Text-field><Text-field style="Normal" layout="Normal">[Diekmeyer2018_S678] Identifikation der inversen Dynamik eines seriellen Roboters im geschlossenen Regelkreis, Studienarbeit, imes, LUH, 2018</Text-field>
+</Input>
+</Group>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Initialisierung</Text-field></Title>
+<Group hide-output="false" labelreference="L1808" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">interface(warnlevel=0): # Unterdr\303\274cke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet wird.
+</Font>interface(warnlevel=3):</Text-field>
+</Input>
+</Group>
+<Group hide-output="false" labelreference="L1827" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">interface(rtablesize=100): # Zur Anzeige von gr\303\266\303\237eren Vektoren</Font></Text-field>
+</Input>
+</Group>
+<Group hide-output="false" labelreference="L1771" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(LinearAlgebra):
+with(ArrayTools):
+with(codegen):
+with(CodeGeneration):
+with(StringTools):</Text-field>
+</Input>
+</Group>
+<Group hide-output="false" labelreference="L1802" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_act := true:
+codegen_opt := 2:</Text-field>
+</Input>
+</Group>
+<Group hide-output="false" labelreference="L1773" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_convert_s_t&quot;:
+read &quot;../helper/proc_convert_t_s&quot;: 
+read &quot;../helper/proc_MatlabExport&quot;:
+read &quot;../helper/proc_simplify2&quot;:</Text-field>
+</Input>
+</Group>
+<Group hide-output="false" labelreference="L1769" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env&quot;:</Text-field>
+</Input>
+</Group>
+<Group hide-output="false" labelreference="L1803" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_definitions&quot;, robot_name, base_method_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1849" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/kinematic_constraints_maple_inert.m&quot;, robot_name):  
+kin_constraints_exist := kin_constraints_exist:<Font encoding="UTF-8"> # nur zum Absch\303\244tzen der Komplexit\303\244t</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1952" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Pr\303\274fe, ob die symbolische Berechnung der Parameterminimierung berechnet werden sollte</Font></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1955" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion24" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true"># Bestimme, ob es eine Baumstruktur ist. Wenn ja, funktioniert der andere Algorithmus nicht und dieser wird genommen.
+tree:=false:
+for i from 1 to NJ do
+  if v(i) ~= i-1 then
+    tree := true: break:
+  end if:
+end do:
+
+if not (assigned(user_CoM) or assigned(user_M) or assigned(user_inertia) \134
+  or kin_constraints_exist or tree) then
+  # es gibt keinen Sonderfall, diese Berechnung der Minimalparameter ist nicht notwendig.
+  printf(&quot;Keine analytische Berechnung der Minimalparameter notwendig\134n&quot;):
+  quit: # Funktioniert in GUI nicht richtig...
+  robot_name := &quot;&quot;: # ...Daher auch L\303\266schung des Roboternamens.
+end if:</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L1953" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;%s. Generiere Minimalparameterregressor der Energie f\303\274r %s (symbolischer Ansatz)\134n&quot;, \134 
+</Font>  FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), robot_name, codegen_dynpar):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1845" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Term-Vereinfachungen einstellen</Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1847" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion12" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if not assigned(simplify_options) or simplify_options(7)=-1 then # Standard-Einstellungen:
+  if not kin_constraints_exist then # normale serielle Ketten und Baumstrukturen
+    use_simplify := 0: # Standardm\303\244\303\237ig aus
+  else # mit kinematischen Zwangsbedingungen
+    use_simplify := 1: # standardm\303\244\303\237ig simplify-Befehle anwenden
+  end if:
+else # Benutzer-Einstellungen:
+  use_simplify := simplify_options(7): # siebter Eintrag ist f\303\274r Energie-Regressor
+end if:
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L1844" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
+<Group hide-output="false" labelreference="L1775" drawlabel="true">
+<Input><Text-field style="Text" layout="Normal">Ergebnisse der Energie laden (aus robot_chain_fixb_rotmat_energy_regressor.mw)</Text-field>
+</Input>
+</Group>
+<Group hide-output="false" labelreference="L1774" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/energy_kinetic_fixb_regressor_maple.m&quot;, robot_name):
+t_ges := t_ges:
+read sprintf(&quot;../codeexport/%s/tmp/energy_potential_fixb_regressor_maple.m&quot;, robot_name):
+u_ges := u_ges:</Text-field>
+</Input>
+</Group>
+</Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Parameterminimierung</Text-field></Title>
+<Group labelreference="L1867" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Siehe auch [Diekmeyer2018_S678] S. 19f. und 32ff.</Text-field>
+</Input>
+</Group>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2">Funktionen definieren</Text-field></Title>
+<Group labelreference="L1910" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1920" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion19" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">splitSummands := proc(input_expr)
+# Gibt eine Liste aller Summanden zur\303\274cachezur\303\274ck
+  local expr, sub_expr:
+
+  expr := expand(input_expr):
+  
+  if type(expr,'`+`') then
+    sub_expr := op(expr):
+    return sub_expr:
+  else
+    return expr:
+  end if:
+  
+end proc:</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L1912" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1929" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion20" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">splitFactors := proc(input_expr)
+# Gibt eine Liste aller Faktoren zur\303\274ck
+  local sub_expr:
+  
+  if type(input_expr,'`*`') then
+    sub_expr := op(input_expr):
+    return sub_expr:
+  else
+    return input_expr:
+  end if:
+  
+end proc:</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L1923" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1932" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion21" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">removeEmptyRows := proc(h,G)
+  local mh, mG, i, j, flag:
+  
+  flag := Vector[column](Size(G,1)):
+  for i from 1 to Size(G,1) do
+    flag(i) := 0:
+    for j from 1 to Size(G,2) do
+      if G(i,j) &lt;&gt; 0 then
+        flag(i) := 1:
+      end if:
+    end do:
+  end do:
+
+  mh := Vector[column](Norm(flag,1)):
+  mG := Matrix(Norm(flag,1),Size(G,2)):
+
+  j := 1:
+  for i from 1 to Size(G,1) do
+    if flag(i) = 1 then
+      mG(j,..) := G(i,..):
+      mh(j) := h(i):
+      j := j + 1:
+    end if:
+  end do:
+
+  return mh, mG:
+end proc:</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L1925" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1935" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion22" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">permuteEmptyRows := proc(G)
+  local Pb, Pd, i, j, k, flag:
+  
+  flag := Vector[column](Size(G,1)):
+  for i from 1 to Size(G,1) do
+    flag(i) := 0:
+    for j from 1 to Size(G,2) do
+      if G(i,j) &lt;&gt; 0 then
+        flag(i) := 1:
+      end if:
+    end do:
+  end do:
+
+  Pb := Matrix(Norm(flag,1),Size(G,1)):
+  Pd := Matrix(Size(G,1)-Norm(flag,1),Size(G,1)):
+
+  j := 0:
+  k := 0:
+  for i from 1 to Size(G,1) do
+    if flag(i) = 1 then
+      j := j + 1:
+      Pb(j,i) := 1:
+    elif flag(i) = 0 then
+      k := k + 1:
+      Pd(k,i) := 1:
+    end if:
+  end do:
+
+  return Pb, Pd:
+end proc:
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L1927" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1938" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion23" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">hasElement := proc(v, expr)
+# Gibt den Index des Vektorelements von &quot;v&quot; wieder, das dem Ausdruck &quot;expr&quot; entspricht.
+# Ist der Ausdruck nicht enthalten wird der h\303\266chste Index um eins erh\303\266ht wiedergegeben.
+  local i:
+
+  for i from 1 to NumElems(v) do
+    if verify(v(i),expr) then
+      return i:
+    end if:
+  end do:
+  
+  return NumElems(v)+1:
+end proc:
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L1921" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
+</Section>
+<Group labelreference="L1890" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1941" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Parameter gruppieren. Siehe [Diekmeyer2018_S678] Gl. 3.27
+Erstelle eine Matrix V, die die einzelnen Terme des Energie-Regressors gruppiert</Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" hide-input="false" labelreference="L1861" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion13" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">lagrange := Vector[column](t_ges[1,..] - u_ges[1,..]):
+
+V := Matrix():
+w := Vector[column]():
+for i from 1 to NumElems(lagrange) do
+# printf(&quot;i=%d\134n&quot;, i):
+  lagrange_term := simplify(expand(lagrange(i))):
+  lagrange_term := convert(lagrange_term,exp):
+  lagrange_term := simplify(expand(lagrange_term),size):
+  lagrange_summand := [splitSummands(lagrange_term)]:
+# print(lagrange_summand):
+  for j from 1 to nops(lagrange_summand) do
+#   printf(&quot;j=%d\134n&quot;, j):
+    # Konstante Ausdr\303\274cke werden nicht ber\303\274cksichtigt!
+    if not has(lagrange_summand[j],t) then
+      next:
+    end if:
+    lagrange_factor := [splitFactors(lagrange_summand[j])]:
+    lagrange_timeVar := 1:
+    lagrange_constant := 1:
+    for k from 1 to nops(lagrange_factor) do
+#     printf(&quot;k=%d\134n&quot;, k):
+      if has(lagrange_factor[k],t) then
+        lagrange_timeVar := lagrange_timeVar * lagrange_factor[k]:
+      else
+        lagrange_constant := lagrange_constant * lagrange_factor[k]:
+      end if
+    end do:
+    lagrange_timeVar := simplify(expand(lagrange_timeVar)):
+    index_timeVar := hasElement(w,lagrange_timeVar):
+    if index_timeVar &gt; NumElems(w) then
+      w(index_timeVar) := lagrange_timeVar:
+      V(i,index_timeVar) := lagrange_constant:
+    elif i &gt; Size(V,1) then
+      V(i,index_timeVar) := lagrange_constant:
+    else
+      V(i,index_timeVar) := V(i,index_timeVar) + lagrange_constant:
+    end if:
+  end do:
+end do:
+
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L1940" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Rang der </Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L1894" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">RankV := Rank(V):
+<Font encoding="UTF-8">printf(&quot;%s. Die Komponenten-Matrix des Energie-Regressors hat Rang %d\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), RankV):</Font></Text-field>
+</Input>
+<Input><Text-field prompt="&gt; " style="Maple Input" spaceabove="0" linebreak="space" rightmargin="0" linespacing="0.0" initial="0" firstindent="0" leftmargin="0" bulletsuffix="" alignment="left" bullet="none" spacebelow="0" pagebreak-before="false"></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1898" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">[Diekmeyer2018_S678] Gl. 3.27</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L1855" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">U := LinearSolve(Transpose(V),Transpose(V)):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1942" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Freie Variablen (&quot;_t&quot;) entfernen</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1900" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to Size(V,1) - RankV do
+  for j from 1 to Size(V,1) do
+<Font encoding="UTF-8">    # printf(&quot;subs %d,%d\134n&quot;, i,j):
+</Font>    U := subs([_t[i, j]=0],U):
+  end do:
+end do:</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L1903" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">[Diekmeyer2018_S678] Gl. 3.29</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1856" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Pb, Pd :=permuteEmptyRows(U):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1857" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">P := Matrix([[Pb],[Pd]]):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1943" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">[Diekmeyer2018_S678] Gl. 3.31 (links)</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L1862" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Paramvec2 := Pb.U.PV2_vec(11..,..):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1957" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Paramvec2 := simplify2(Paramvec2):</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L1946" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;%s. Dimension des Minimalparametervektors: %dx%d\134n&quot;, \134 
+</Font>  FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), RowDimension(Paramvec2), ColumnDimension(Paramvec2)):
+Paramvec2;</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1873" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">[Diekmeyer2018_S678] Gl. 3.31 (rechts)</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1877" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">t_ges_minpar:=Transpose(Pb.Transpose(t_ges)):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1882" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">u_ges_minpar:=Transpose(Pb.Transpose(u_ges)):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1905" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;%s. Dimension der Regressormatrix: %dx%d\134n&quot;, \134 
+</Font>  FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), RowDimension(t_ges_minpar), ColumnDimension(t_ges_minpar)):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1973" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Symbolischer Test des Erfolgs der Parameterminimierung: Ist konstant bzw. Null.</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L1961" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"># test_u := simplify2(u_ges_minpar.Paramvec2 - u_ges.PV2_vec(11..,..)):
+# test_t := simplify2(t_ges_minpar.Paramvec2 - t_ges.PV2_vec(11..,..)):</Text-field>
+</Input>
+</Group>
+</Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Code exportieren</Text-field></Title>
+<Group hide-output="false" labelreference="L1947" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save Paramvec2, sprintf(&quot;../codeexport/%s/tmp/minimal_parameter_vector_fixb_maple&quot;, robot_name):
+save Paramvec2, sprintf(&quot;../codeexport/%s/tmp/minimal_parameter_vector_fixb_maple_linsolve&quot;, robot_name): # zum Testen gegen andere Implementierung</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1948" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
+   MatlabExport(Paramvec2, sprintf(&quot;../codeexport/%s/tmp/minimal_parameter_vector_fixb_matlab.m&quot;, robot_name), codegen_opt):
+end if;</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1944" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save t_ges_minpar, sprintf(&quot;../codeexport/%s/tmp/energy_kinetic_fixb_regressor_minpar_maple.m&quot;, robot_name):
+save u_ges_minpar, sprintf(&quot;../codeexport/%s/tmp/energy_potential_fixb_regressor_minpar_maple.m&quot;, robot_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1951" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
+  MatlabExport(convert_t_s(t_ges_minpar), sprintf(&quot;../codeexport/%s/tmp/energy_kinetic_fixb_regressor_minpar_matlab.m&quot;, robot_name), codegen_opt):
+end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1950" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
+  MatlabExport(convert_t_s(u_ges_minpar), sprintf(&quot;../codeexport/%s/tmp/energy_potential_fixb_regressor_minpar_matlab.m&quot;, robot_name), codegen_opt):
+end if:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1949" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
+</Section>
+<Group labelreference="L1945" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
+</Worksheet>

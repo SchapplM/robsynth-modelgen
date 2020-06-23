@@ -166,13 +166,16 @@ do
     fi;
   
     if [ "$CG_MINIMAL" == "0" ]; then
+      # Nur Linearisierung und Parameterminimierung in erstem Skript
       if [ ${basemeth} == "twist" ]; then
-          dateiliste_plin="robot_chain_fixb_rotmat_energy_regressor.mpl"
+          dateiliste_plin1="
+              robot_chain_fixb_rotmat_energy_regressor.mpl
+              robot_chain_fixb_energy_regressor_linearsolve.mpl"
       else
-          dateiliste_plin="robot_chain_floatb_rotmat_energy_regressor.mpl"
+          dateiliste_plin1="robot_chain_floatb_rotmat_energy_regressor.mpl"
       fi;
-      dateiliste_plin="
-        $dateiliste_plin
+      # darauf aufbauende Berechnung der Dynamik in zweitem Durchlauf
+      dateiliste_plin2="
         robot_tree_base_parameter_transformations.mpl
         robot_chain_floatb_rotmat_dynamics_regressor_minpar_corvec.mpl
         robot_chain_floatb_rotmat_dynamics_regressor_minpar_cormat.mpl
@@ -188,7 +191,7 @@ do
         robot_chain_floatb_rotmat_dynamics_regressor_pv2_invdyn.mpl
       "
       if [ "$robot_kinconstr_exist" == "0" ]; then
-            dateiliste_plin="$dateiliste_plin
+            dateiliste_plin2="$dateiliste_plin2
               robot_chain_fixb_rotmat_NewtonEuler_regressor.mpl
         "
       fi;
@@ -287,20 +290,23 @@ do
   done
   wait
   echo "FERTIG mit Dynamik Teil 2 für ${basemeth}"
-  erster=1 # Merker für ersten Durchlauf von plin
-  for wsplin in ${dateiliste_plin[@]}
+  for wsplin in ${dateiliste_plin1[@]}
   do
     mpldat_full=$workdir/$wsplin
     filename="${mpldat_full##*/}"
     dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
-    if [ $erster == 1 ]; then
-      echo "Starte Maple-Skript $filename"
-      $repo_pfad/scripts/run_maple_script.sh $dir/$filename
-      erster=0 # nicht parallel, die folgenden Skripte sind hiervon abhängig
-    else # parallel ausführen
-      echo "Starte Maple-Skript $filename"
-      $repo_pfad/scripts/run_maple_script.sh $dir/$filename &
-    fi;
+    # nicht parallel ausführen
+    echo "Starte Maple-Skript $filename"
+    $repo_pfad/scripts/run_maple_script.sh $dir/$filename
+  done
+  for wsplin in ${dateiliste_plin2[@]}
+  do
+    mpldat_full=$workdir/$wsplin
+    filename="${mpldat_full##*/}"
+    dir="${mpldat_full:0:${#mpldat_full} - ${#filename} - 1}"
+    # parallel ausführen
+    echo "Starte Maple-Skript $filename"
+    $repo_pfad/scripts/run_maple_script.sh $dir/$filename &
   done
   wait
   echo "FERTIG mit Regressorform für ${basemeth}"
