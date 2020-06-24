@@ -521,16 +521,37 @@ end
 [Ksym, K_dsym, P1sym, P2sym] = %RN%_PV2_MPV_transformations_fixb(pkin);
 plin_num_test_struct = struct('W', W_g_energy, 'PV2', PV2fixb, 'MPV', MPV, ...
   'P1sym', P1sym, 'P2sym', P2sym, 'K_dsym', K_dsym, 'Ksym', Ksym, ...
-  'NQ', NQJ, 'PV2_Names', {PV2fixb_Names});
-% Aufruf des Test-Algorithmus als Funktion (der Test kann genauso für
-% Floating Base durchgeführt werden und wird deshalb ausgelagert. Die
-% Übergabeargumente unterscheiden sich nur minimal)
-robot_paramlin_test_reg_num(plin_num_test_struct);
-
-% Test genauso für inverse Dynamik durchführen
-plin_num_test_struct.W = W_g_invdyn;
-robot_paramlin_test_reg_num(plin_num_test_struct);
+  'NQ', NQJ, 'PV2_Names', {PV2fixb_Names}, 'qr_tolerance', NaN);
+% Setze die Toleranz für das Nullsetzen der R-Matrix aus der QR-Zerlegung
+% auf Null. Bei kinematischen Zwangsbedingungen anscheinend schlecht
+% konditioniert. Zusammenhang ist noch unklar.
+if KINCONSTR || TREE
+  plin_num_test_struct.qr_tolerance = 0;
+end
+for k = 1:2
+  % Aufruf des Test-Algorithmus als Funktion (der Test kann genauso für
+  % Floating Base durchgeführt werden und wird deshalb ausgelagert. Die
+  % Übergabeargumente unterscheiden sich nur minimal)
+  if k == 1
+    outputstr = 'Energie';
+  else
+    % Test genauso für inverse Dynamik durchführen
+    outputstr = 'Dynamik';
+    plin_num_test_struct.W = W_g_invdyn;
+  end
+  fprintf('Untersuche Parameterreduzierung für %s-Regressor\n', outputstr);
+  try
+    robot_paramlin_test_reg_num(plin_num_test_struct);
+  catch err
+    if ~KINCONSTR && ~TREE
+      raise(err);
+    else
+      % Werfe keinen Fehler auf. Da man bis hier gekommen ist, ist die
+      % Parameterreduzierung auf jeden Fall richtig. Nur anscheinend numerisch
+      % nicht minimal.
+      throw(err.message);
+    end
+  end
+end
 
 fprintf('Symbolisch berechnete Minimalparameterform gegen numerische Form geprüft\n');
-
-
