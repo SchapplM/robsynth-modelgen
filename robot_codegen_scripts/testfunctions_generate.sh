@@ -156,3 +156,7 @@ fi
 # Schreibe Ausgangsvariable (lese Teil aus Vorlage)
 quelldat=$repo_pfad/robot_codegen_testfunctions/robot_varpar_testfunctions_parameter.m.template2
 cat $quelldat >> $zieldat
+
+# Platzhalter (nochmal) in Datei ersetzen. Notwendig, weil auch Platzhalter in
+# der template2-Datei sind, die nicht automatisch ersetzt wurden. 
+source robot_codegen_matlabfcn_postprocess.sh $zieldat 0

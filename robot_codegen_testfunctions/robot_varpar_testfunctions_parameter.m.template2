@@ -1,3 +1,29 @@
+%% Dynamik-Parameter definieren
+rSges = rand(NL,3); % All center of mass coordinates in body frames
+m = rand(NL,1); % masses of all links (are positive due to rand() function)
+Ic_pa = rand(NL,3); % inertia of all links around their center of mass in principal axes
+Icges = NaN(NL,6); % inertial of all links around their center of mass in body frame
+for i = 1:NL
+  R_pa = eulxyz2r(rand(3,1)); % random principal axes
+  % inertia tensor in body frame: make sure the eigenvalues are positive and the tensor is positive definite
+  Icges(i,:) = inertiamatrix2vector(R_pa*diag(Ic_pa(i,:))*R_pa');
+end
+
+% Parameter reduzieren, falls durch Benutzereingabe gefordert.
+% Notwendig, damit Dynamikmodell konsistent ist mit den Eingabeparametern
+% Das betrifft nur die baryzentrischen Parameter (par1). Die Inertialparameter (par2) werden daraus berechnet.
+[m,rSges,Icges]=%RN%_dynamics_parameters_modification(pkin,m,rSges,Icges);
+% Prüfe, ob die Reduktion konsistent ist. Es dürfen keine zyklischen
+% Abhängigkeiten zwischen Masse, Schwerpunkt und Trägheit gesetzt sein.
+[m2,rSges2,Icges2]=%RN%_dynamics_parameters_modification(pkin,m,rSges,Icges);
+if any(abs([m-m2;rSges(:)-rSges2(:);Icges(:)-Icges2(:)])>1e-10)
+  error('Bei zweifacher Durchführung der Parameterreduktion ändern sich die Parameter. Nicht konsistent!');
+end
+% Inertialparameter aus baryzentrischen Parametern berechnen
+[mrSges, ... % first moment of all links (mass times center of mass)
+ Ifges] = ... % second moment of all links (inertia around body frame origins)
+  inertial_parameters_convert_par1_par2(rSges, Icges, m);
+
 %% Set Outputs
 TSS = struct('type', 'Test Settings Structure');
 % Allgemeine Definitionen

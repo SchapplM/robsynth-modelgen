@@ -132,6 +132,7 @@ if ! [ "$CG_FLOATBONLY" == "1" ]; then
     if [ "$CG_MINIMAL" == "0" ]; then
       dateiliste_kindyn="$dateiliste_kindyn
           robot_chain_fixb_rotmat_energy_regressor.mpl
+          robot_chain_fixb_energy_regressor_linearsolve.mpl
           robot_tree_base_parameter_transformations.mpl
           robot_chain_floatb_rotmat_dynamics_regressor_pv2.mpl
           robot_chain_floatb_rotmat_dynamics_regressor_minpar.mpl

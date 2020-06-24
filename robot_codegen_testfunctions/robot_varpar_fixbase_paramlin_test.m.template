@@ -21,12 +21,14 @@ KINCONSTR = logical(%KINCONSTR%); %#ok<LOGL>
 robot_name = '%RN%';
 
 % Prüfe, ob kinematische Zwangsbedingungen vorliegen.
-% Dann entfallen alle folgenden Tests (noch nicht implementiert)
+% Dann werden die Toleranzen etwas lockerer gesetzt (da größere numerische Fehler)
 thrfac = 1; % Faktor zur Erhöhung der Schwellwerte für Fehlererkennung
 if KINCONSTR
-  fprintf('Einige Tests entfallen aufgrund der Existenz kinematischer Zwangsbedingungen\n');
   thrfac = 10; % bei ZB sind treten mehr Rechenfehler auf (da aufwändiger)
 end
+% Prüfe, ob die parameterminimale Form generiert wurde. Je nach System
+% ist das noch nicht implementiert. In dem Fall wird "UNDEFINED" gesetzt
+MP_EXISTS=~isnan(str2double('%NMPVFIXB%'));
 
 %% Parameter
 TSS = %RN%_varpar_testfunctions_parameter();
@@ -42,7 +44,7 @@ else
 end
 
 % Minimalparametervektor
-if ~KINCONSTR && ~TREE
+if MP_EXISTS
   MPV = %RN%_convert_par2_MPV_fixb(pkin, m, mrSges, Ifges);
 end
 
@@ -91,7 +93,7 @@ for i = 1:n
   T_func = %RN%_energykin_fixb_slag_vp1(q, qD, ...
       pkin, m, rSges, Icges);
   % calculate kinetic energy with optimized function
-  if ~KINCONSTR && ~TREE
+  if MP_EXISTS
     % calculate kinetic energy with minimal parameter regressor
     t_regmin = %RN%_energykin_fixb_regmin_slag_vp(q, qD, ...
       pkin);
@@ -126,7 +128,7 @@ for i = 1:n
   U_func0 = %RN%_energypot_fixb_slag_vp1(Q(1,:)', g_base, ...
     pkin, m, rSges);
   % calculate potential energy with optimized function
-  if ~KINCONSTR && ~TREE
+  if MP_EXISTS
     % calculate potential energy with minimal regressor
     u_regmin = %RN%_energypot_fixb_regmin_slag_vp(q, g_base, ...
       pkin);
@@ -160,7 +162,7 @@ for i = 1:n
   taug_func = %RN%_gravloadJ_floatb_twist_slag_vp1(q, g_base, ...
     pkin, m, rSges);
   % calculate gravitational load with optimized function
-  if ~KINCONSTR && ~TREE
+  if MP_EXISTS
     % calculate gravitational load with base parameter regressor
     taug_regmin = %RN%_gravloadJ_regmin_slag_vp(q, g_base, ...
       pkin);
@@ -189,7 +191,7 @@ for i = 1:n
   tauc_func = %RN%_coriolisvecJ_fixb_slag_vp1(q, qD, ...NEW
     pkin, m, rSges, Icges);
   % calculate coriolis torques with optimized function
-  if ~KINCONSTR && ~TREE
+  if MP_EXISTS
     % calculate coriolis torques with base parameter regressor
     tauc_regmin = %RN%_coriolisvecJ_fixb_regmin_slag_vp(q, qD, ...
       pkin);
@@ -218,7 +220,7 @@ for i = 1:n
   Cq_func = %RN%_coriolismatJ_fixb_slag_vp1(q, qD, ...
     pkin, m, rSges, Icges);
   % calculate Coriolis-Matrix with optimized function
-  if ~KINCONSTR && ~TREE
+  if MP_EXISTS
     % calculate Coriolis-Matrix with base parameter regressor
     Cq_regmin = %RN%_coriolismatJ_fixb_regmin_slag_vp(q, qD, ...
       pkin);
@@ -247,7 +249,7 @@ for i = 1:n
   q = Q(i,:)';
   Mq_func = %RN%_inertiaJ_slag_vp1(q, pkin, m, rSges, Icges);
   % calculate inertia with optimized function
-  if ~KINCONSTR && ~TREE
+  if MP_EXISTS
     % calculate inertia with base parameter regressor
     Mq_regmin = %RN%_inertiaJ_regmin_slag_vp(q, pkin);
     Mq_mpv_vec = Mq_regmin*MPV;
@@ -275,7 +277,7 @@ for i = 1:n
   qD = QD(i,:)';
   MqD_func = %RN%_inertiaDJ_slag_vp1(q, qD, pkin, m, rSges, Icges);
   % calculate inertia time derivative with optimized function
-  if ~KINCONSTR && ~TREE
+  if MP_EXISTS
     % calculate inertia time derivative with base parameter regressor
     MqD_regmin = %RN%_inertiaDJ_regmin_slag_vp(q, qD, pkin);
     MqD_mpv_vec = MqD_regmin*MPV;
@@ -306,7 +308,7 @@ for i = 1:n
   tau_func = %RN%_invdynJ_fixb_slag_vp1(q, qD, qDD, g_base, ...
     pkin, m, rSges, Icges);
   % calculate inverse dynamics with optimized function
-  if ~KINCONSTR && ~TREE
+  if MP_EXISTS
     % calculate inverse dynamics with base parameter regressor
     tau_regmin = %RN%_invdynJ_fixb_regmin_slag_vp(q, qD, qDD, g_base, pkin);
     tau_mpv = tau_regmin*MPV;
@@ -373,6 +375,7 @@ if ~KINCONSTR
     g_base = G(i,:)';
     f_neweul_func = %RN%_invdynf_fixb_snew_vp2(q, qD, qDD, g_base, ...
       pkin, m, mrSges, Ifges);
+    f_neweul_func = f_neweul_func(:,1:%NL%); % für sigma=2 werden zu viele Spalten erzeugt.
     % calculate cutting forces with inertial parameter regressor
     f_neweul_reg2 = %RN%_invdynf_fixb_reg2_snew_vp(q, qD, qDD, g_base, ...
       pkin);
@@ -391,6 +394,7 @@ if ~KINCONSTR
     g_base = G(i,:)';
     m_neweul_func = %RN%_invdynm_fixb_snew_vp2(q, qD, qDD, g_base, ...
       pkin, m, mrSges, Ifges);
+    m_neweul_func = m_neweul_func(:,1:%NL%); % für sigma=2 werden zu viele Spalten erzeugt.
     % calculate cutting torques with inertial parameter regressor
     m_neweul_reg2 = %RN%_invdynm_fixb_reg2_snew_vp(q, qD, qDD, g_base, ...
       pkin);
@@ -408,7 +412,7 @@ end
 % Die direkte Übergabe des Dynamik-Parametervektors ist effizienter als die
 % nachträgliche Multiplikation des Regressors
 
-if ~KINCONSTR && ~TREE
+if MP_EXISTS
   for i = 1:n
     q = Q(i,:)';
     qD = QD(i,:)';
@@ -450,7 +454,7 @@ fprintf('Tested inverse dynamics functions with parameter vector input for %d ra
   n, robot_name);
 
 %% Prüfe Trajektorien-Funktionen
-if ~KINCONSTR && ~TREE
+if MP_EXISTS
   % Zeitreihe der Regressor-Matrizen
   RV_Traj = %RN%_invdynJ_fixb_regmin_slag_vp_traj(Q, QD, QDD, g_base, pkin);
   % Damit Zeitreihe der Momente berechnen
@@ -468,9 +472,8 @@ if ~KINCONSTR && ~TREE
                   '%RN%_invdynJ_fixb_mdp_slag_vp_traj'});
 end
 
-%% Abbruch bei kinematischen Zwangsbedingungen
-% TODO: Test durchführen, wenn Minimalparameterform dafür implementiert
-if KINCONSTR || TREE
+%% Abbruch, falls Minimalparameterform nicht erstellt wurde
+if ~MP_EXISTS
   return %#ok<*UNRCH>
 end
 

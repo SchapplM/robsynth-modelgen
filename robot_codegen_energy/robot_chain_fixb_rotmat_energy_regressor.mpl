@@ -37,7 +37,8 @@ read "../helper/proc_convert_t_s":
 read "../helper/proc_MatlabExport":
 read "../helper/proc_simplify2":
 read "../robot_codegen_definitions/robot_env":
-printf("Generiere Minimalparameterregressor der Energie für %s\n", robot_name, codegen_dynpar):
+printf("%s. Generiere Minimalparameterregressor der Energie für %s (geometrischer Ansatz)\n", \
+  FormatTime("%Y-%m-%d %H:%M:%S"), robot_name, codegen_dynpar):
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name, base_method_name):
 read sprintf("../codeexport/%s/tmp/kinematic_constraints_maple_inert.m", robot_name):  
 kin_constraints_exist := kin_constraints_exist: # nur zum Abschätzen der Komplexität
@@ -100,6 +101,22 @@ if codegen_act then
   MatlabExport(convert_t_s(u_ges), sprintf("../codeexport/%s/tmp/energy_potential_fixb_regressor_matlab.m", robot_name), codegen_opt):
 end if:
 # Parameterminimierung
+# Prüfe, ob der folgende Algorithmus funktionieren kann
+# Bestimme, ob es eine Baumstruktur ist. Wenn ja, funktioniert der Algorithmus (noch) nicht (nicht implementiert).
+tree:=false:
+for i from 1 to NJ do
+  if not v(i) = i-1 then
+    tree := true: break:
+  end if:
+end do:
+
+if assigned(user_CoM) or assigned(user_M) or assigned(user_inertia) \ 
+  or kin_constraints_exist or tree then
+  # es gibt einen Sonderfall, diese Berechnung der Minimalparameter funktioniert voraussichtlich nicht.
+  printf("%s. Geometrische Berechnung der Minimalparameter nicht möglich.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
+  quit: # Funktioniert in GUI nicht richtig...
+  robot_name := "": # ...Daher auch Löschung des Roboternamens.
+end if:
 # Minimalparametervekor
 # Definiere Parametermatrix
 # Nehme nur die Inertialparameter der bewegten Segmente, nicht die Basis.
@@ -113,6 +130,7 @@ mX := Matrix(NJ, 1, PV2_mat[2 .. NL, 7]):
 mY := Matrix(NJ, 1, PV2_mat[2 .. NL, 8]):
 mZ := Matrix(NJ, 1, PV2_mat[2 .. NL, 9]):
 m :=  Matrix(NJ, 1, PV2_mat[2 .. NL, 10]):
+
 # Rekursive Berechnung der Minimalparameter
 # Rekursive Berechnung der Minimalparameter mit [HRL_IDR] (23), siehe Abbildung 1.
 # [GautierKhalil1990] (eq. 15,16)
@@ -213,6 +231,9 @@ for i to 10*NJ do
        if `mod`(i, 10) = 0 then m[trunc((1/10)*i), 1] := 0;    printf(" M%d \n", trunc((1/10)*i)):   end if:
   end if:
 end do:
+# Speichere markierte Regressor-Vektoren
+save t_ges, sprintf("../codeexport/%s/tmp/energy_kinetic_fixb_regressor_marked_maple.m", robot_name):
+save u_ges, sprintf("../codeexport/%s/tmp/energy_potential_fixb_regressor_marked_maple.m", robot_name):
 # Parametervektor in Richtiger Reihenfolge aufstellen und Entfernen von mZ, YY, m
 # Anwendung von [HRL_IDR] Regel 3 (S. 5) auf den Parametervektor
 # Bei Drehgelenken werden die Parameter YY, mZ und m mit denen des folgenden Körpers gruppiert. Bei Schubgelenken werden alle Trägheitsmomente gruppiert (da die Trägheitsmomente keinen Einfluss auf die translatorische Bewegung des Schubgelenkes haben).
@@ -275,6 +296,7 @@ printf("Dimension des Minimalparametervektors: %dx1\n", Paramvec_size):
 Paramvec2;
 # Export - Minimalparametervektor
 save Paramvec2, sprintf("../codeexport/%s/tmp/minimal_parameter_vector_fixb_maple", robot_name):
+save Paramvec2, sprintf("../codeexport/%s/tmp/minimal_parameter_vector_fixb_maple_geom", robot_name): # zum Testen gegen andere Implementierung
 if codegen_act then
    MatlabExport(Paramvec2, sprintf("../codeexport/%s/tmp/minimal_parameter_vector_fixb_matlab.m", robot_name), codegen_opt):
 end if;
@@ -341,6 +363,17 @@ for i from 1 to 10*NJ do       #Nullen Zählen
 end do: 
 save t_ges_minpar, sprintf("../codeexport/%s/tmp/energy_kinetic_fixb_regressor_minpar_maple.m", robot_name):
 save u_ges_minpar, sprintf("../codeexport/%s/tmp/energy_potential_fixb_regressor_minpar_maple.m", robot_name):
+# Zum symbolischen Testen des minimierten Regressors gegen den ursprünglichen
+(*
+read sprintf("../codeexport/%s/tmp/energy_kinetic_fixb_regressor_maple.m", robot_name):
+t_ges := t_ges: # Variable wurde im Arbeitsblatt verändert. Neu laden.
+read sprintf("../codeexport/%s/tmp/energy_potential_fixb_regressor_maple.m", robot_name):
+u_ges := u_ges:
+# Muss Null sein.
+test_u := simplify(u_ges_minpar.Paramvec2 - u_ges.PV2_vec(11..,..)):
+test_t := simplify(t_ges_minpar.Paramvec2 - t_ges.PV2_vec(11..,..)):
+*)
+;
 # Export
 if codegen_act then
   MatlabExport(convert_t_s(t_ges_minpar), sprintf("../codeexport/%s/tmp/energy_kinetic_fixb_regressor_minpar_matlab.m", robot_name), codegen_opt):
@@ -348,4 +381,5 @@ end if:
 if codegen_act then
   MatlabExport(convert_t_s(u_ges_minpar), sprintf("../codeexport/%s/tmp/energy_potential_fixb_regressor_minpar_matlab.m", robot_name), codegen_opt):
 end if:
+
 
