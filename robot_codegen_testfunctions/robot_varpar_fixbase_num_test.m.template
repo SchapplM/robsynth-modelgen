@@ -172,6 +172,7 @@ fprintf('Numerische Dynamikfunktionen (Fixed Base) gegen symbolische erfolgreich
 
 
 %% Test gegen numerische Funktionen der Kinematik
+matlabfcn2mex({'%RN%_jacobig_cutforce_mdh_num'});
 for i = 1:n
   qJ = Q(i,:)';
   qJD = QD(i,:)';
@@ -204,7 +205,6 @@ for i = 1:n
     end
   end
   % Vergleiche zwei Implementierungen der Schnittkraft-Jacobi
-  matlabfcn2mex({'%RN%_jacobig_cutforce_mdh_num'});
   for j = uint8(0:NL-1)
     r_i_i_C = rand(3,1);
     Jg_C1 = robot_tree_jacobig_cutforce_m(Tc_stack, v, j, r_i_i_C);
