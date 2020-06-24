@@ -201,7 +201,7 @@ for i = 1:size(Q, 1)
 end
 fprintf('Tested Jacobian time derivate from direct vs adjoint calculation for fixed base.\n');
 %% Test Time Derivate of Jacobian
-if ~KINCONSTR && ~any(sigma)
+if ~KINCONSTR && ~any(sigma==2) && NJ==NQJ
 matlabfcn2mex({'%RN%_jacobig_mdh_num', '%RN%_jacobigD_mdh_num'});
 for kk = 1:NJ % Test for linear joint trajectory
   n = 1e5; % little steps -> small error
@@ -246,7 +246,7 @@ fprintf('Tested Jacobian Time derivative for fixed base.\n');
 end
 
 %% Symbolische gegen numerische (geometrische) Jacobi-Matrix testen
-if ~KINCONSTR
+if ~KINCONSTR && ~any(sigma==2) && NJ==NQJ
 for iq = 1:size(Q, 1) % Über Zufallsposen
   for jb  = 0:NL-1 % Über alle Körper
     r_i_i_C = rand(3,1);

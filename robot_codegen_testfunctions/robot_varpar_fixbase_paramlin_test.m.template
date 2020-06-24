@@ -375,6 +375,7 @@ if ~KINCONSTR
     g_base = G(i,:)';
     f_neweul_func = %RN%_invdynf_fixb_snew_vp2(q, qD, qDD, g_base, ...
       pkin, m, mrSges, Ifges);
+    f_neweul_func = f_neweul_func(:,1:%NL%); % für sigma=2 werden zu viele Spalten erzeugt.
     % calculate cutting forces with inertial parameter regressor
     f_neweul_reg2 = %RN%_invdynf_fixb_reg2_snew_vp(q, qD, qDD, g_base, ...
       pkin);
@@ -393,6 +394,7 @@ if ~KINCONSTR
     g_base = G(i,:)';
     m_neweul_func = %RN%_invdynm_fixb_snew_vp2(q, qD, qDD, g_base, ...
       pkin, m, mrSges, Ifges);
+    m_neweul_func = m_neweul_func(:,1:%NL%); % für sigma=2 werden zu viele Spalten erzeugt.
     % calculate cutting torques with inertial parameter regressor
     m_neweul_reg2 = %RN%_invdynm_fixb_reg2_snew_vp(q, qD, qDD, g_base, ...
       pkin);

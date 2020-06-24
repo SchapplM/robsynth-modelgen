@@ -24,6 +24,10 @@ if KINCONSTR
   fprintf('Tests entfallen aufgrund der Existenz kinematischer Zwangsbedingungen\n');
   return
 end
+if NJ ~= NQJ || any(sigma==2)
+  fprintf('Tests entfallen aufgrund der Existenz virtueller Gelenk-Transformationen (nicht implementiert)\n');
+  return
+end
 
 %% Parameter
 TSS = %RN%_varpar_testfunctions_parameter();

@@ -43,7 +43,7 @@ kin_constraints_exist := kin_constraints_exist: # nur zum Abschätzen der Komple
 # Bestimme, ob es eine Baumstruktur ist. Wenn ja, funktioniert der andere Algorithmus nicht und dieser wird genommen.
 tree:=false:
 for i from 1 to NJ do
-  if v(i) ~= i-1 then
+  if not v(i) = i-1 then
     tree := true: break:
   end if:
 end do:

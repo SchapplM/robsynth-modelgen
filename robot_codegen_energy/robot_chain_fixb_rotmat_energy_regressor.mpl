@@ -105,7 +105,7 @@ end if:
 # Bestimme, ob es eine Baumstruktur ist. Wenn ja, funktioniert der Algorithmus (noch) nicht (nicht implementiert).
 tree:=false:
 for i from 1 to NJ do
-  if v(i) ~= i-1 then
+  if not v(i) = i-1 then
     tree := true: break:
   end if:
 end do:
@@ -117,7 +117,6 @@ if assigned(user_CoM) or assigned(user_M) or assigned(user_inertia) \
   quit: # Funktioniert in GUI nicht richtig...
   robot_name := "": # ...Daher auch Löschung des Roboternamens.
 end if:
-
 # Minimalparametervekor
 # Definiere Parametermatrix
 # Nehme nur die Inertialparameter der bewegten Segmente, nicht die Basis.

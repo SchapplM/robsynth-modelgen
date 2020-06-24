@@ -270,7 +270,7 @@ end if:</Text-field>
 </Group><CodeEditor-ExecGroup view="presentation" labelreference="L1857" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion13" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true"># Bestimme, ob es eine Baumstruktur ist. Wenn ja, funktioniert der Algorithmus (noch) nicht (nicht implementiert).
 tree:=false:
 for i from 1 to NJ do
-  if v(i) ~= i-1 then
+  if not v(i) = i-1 then
     tree := true: break:
   end if:
 end do:
@@ -283,10 +283,6 @@ if assigned(user_CoM) or assigned(user_M) or assigned(user_inertia) \134
   robot_name := &quot;&quot;: # ...Daher auch L\303\266schung des Roboternamens.
 end if:
 </EC-CodeEditor></CodeEditor-ExecGroup>
-<Group hide-input="false" labelreference="L1866" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
-</Input>
-</Group>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2">Minimalparametervekor</Text-field></Title>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 3" layout="Heading 3">Definiere Parametermatrix</Text-field></Title>
 <Group hide-output="false" labelreference="L1842" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">

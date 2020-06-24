@@ -172,7 +172,7 @@ kin_constraints_exist := kin_constraints_exist:<Font encoding="UTF-8"> # nur zum
 </Group><CodeEditor-ExecGroup view="presentation" labelreference="L1955" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion24" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true"># Bestimme, ob es eine Baumstruktur ist. Wenn ja, funktioniert der andere Algorithmus nicht und dieser wird genommen.
 tree:=false:
 for i from 1 to NJ do
-  if v(i) ~= i-1 then
+  if not v(i) = i-1 then
     tree := true: break:
   end if:
 end do:
