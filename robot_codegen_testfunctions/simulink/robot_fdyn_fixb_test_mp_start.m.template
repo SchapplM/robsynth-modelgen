@@ -32,8 +32,25 @@ clear NQJ
 
 %% Start Simulation
 t1 = tic;
-simOut = sim(sl_Modellname, 'StopTime', '5', ...
-  'SimulationMode', 'normal'); % normal
+try
+  if any(TSS.sigma==2) % TODO: Besser. Siehe auch %RN%_fdyn_fixb_test_vp1_start.m
+    warning('off', 'MATLAB:singularMatrix')
+  end
+  simOut = sim(sl_Modellname, 'StopTime', '5', ...
+    'SimulationMode', 'normal'); % normal
+  if any(TSS.sigma==2)
+    warning('on', 'MATLAB:singularMatrix')
+  end
+catch err
+  if KINCONSTR
+    warning('Keine Lösung im Simulinkmodell möglich. Wahrscheinlich Verlassen des gültigen Gelenkraums');
+    return;
+  else
+    % Es gibt keine kinematischen Zwangsbedingungen, die direkte Dynamik
+    % muss also funktionieren
+    raise(err);
+  end
+end
 sl = get_simulink_outputs(simOut, sl_Modellname);
 fprintf('Simulink-Modell berechnet. Rechenzeit: %1.1fs\n', toc(t1));
 
