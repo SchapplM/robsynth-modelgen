@@ -182,13 +182,15 @@ end proc:
 # Parameter gruppieren. Siehe [Diekmeyer2018_S678] Gl. 3.27
 # Erstelle eine Matrix V, die die einzelnen Terme des Energie-Regressors gruppiert
 lagrange := Vector[column](t_ges[1,..] - u_ges[1,..]):
-
-V := Matrix():
-w := Vector[column]():
-for i from 1 to NumElems(lagrange) do
+# Komponentenmatrix für jeden Eintrag des Lagrange-Regressors.
+# Initialisierung mit voller Dimension (notwendig für geschlossene kinematische Ketten;
+# in dem Fall sind die Einträge der letzten Parameter Null/konstant. Bei rein seriellen Ketten nicht der Fall).
+V := Matrix(NumElems(lagrange),1):
+w := Vector[column](): # Hilfsvariable
+for i from 1 to NumElems(lagrange) do # Parameter-Einträge durchgehen
 # printf("i=%d\n", i):
   lagrange_term := simplify(expand(lagrange(i))):
-  lagrange_term := convert(lagrange_term,exp):
+  lagrange_term := convert(lagrange_term,exp): # Trigonometrische Funktion in Exponent-Darstellung.
   lagrange_term := simplify(expand(lagrange_term),size):
   lagrange_summand := [splitSummands(lagrange_term)]:
 # print(lagrange_summand):

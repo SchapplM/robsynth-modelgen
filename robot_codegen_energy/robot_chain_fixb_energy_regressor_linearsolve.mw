@@ -351,13 +351,15 @@ end proc:
 Erstelle eine Matrix V, die die einzelnen Terme des Energie-Regressors gruppiert</Text-field>
 </Input>
 </Group><CodeEditor-ExecGroup view="presentation" hide-input="false" labelreference="L1861" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion13" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">lagrange := Vector[column](t_ges[1,..] - u_ges[1,..]):
-
-V := Matrix():
-w := Vector[column]():
-for i from 1 to NumElems(lagrange) do
+# Komponentenmatrix f\303\274r jeden Eintrag des Lagrange-Regressors.
+# Initialisierung mit voller Dimension (notwendig f\303\274r geschlossene kinematische Ketten;
+# in dem Fall sind die Eintr\303\244ge der letzten Parameter Null/konstant. Bei rein seriellen Ketten nicht der Fall).
+V := Matrix(NumElems(lagrange),1):
+w := Vector[column](): # Hilfsvariable
+for i from 1 to NumElems(lagrange) do # Parameter-Eintr\303\244ge durchgehen
 # printf(&quot;i=%d\134n&quot;, i):
   lagrange_term := simplify(expand(lagrange(i))):
-  lagrange_term := convert(lagrange_term,exp):
+  lagrange_term := convert(lagrange_term,exp): # Trigonometrische Funktion in Exponent-Darstellung.
   lagrange_term := simplify(expand(lagrange_term),size):
   lagrange_summand := [splitSummands(lagrange_term)]:
 # print(lagrange_summand):
