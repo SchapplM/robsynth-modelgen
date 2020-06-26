@@ -178,19 +178,39 @@ hasElement := proc(v, expr)
   return NumElems(v)+1:
 end proc:
 
+tmp_tt1 := time(): tmp_timelastmessage := tmp_tt1:
+# Kinematikparameter, die als Argument von Sinus und Cosinus stehen ersetzen.
+# Ansonsten werden sie durch die Umwandlung in die Exponentialform mit ersetzt. Das ist aber nicht hilfreich.
+read sprintf("../codeexport/%s/tmp/parameter_kin", robot_name):
+pkin := pkin:
+
+lagrange := Vector[column](t_ges[1,..] - u_ges[1,..]):
+(*
+# TODO: Das scheint die Rechenzeit von LinearSolve in manchen Fällen stark zu verlängern
+for j from 1 to RowDimension(pkin) do
+  lagrange := subs(parse(sprintf("sin(%s)", pkin(j,1)))=parse(sprintf("sin_%s", pkin(j,1))), lagrange):
+  lagrange := subs(parse(sprintf("cos(%s)", pkin(j,1)))=parse(sprintf("cos_%s", pkin(j,1))), lagrange):
+end do:
+*)
 
 # Parameter gruppieren. Siehe [Diekmeyer2018_S678] Gl. 3.27
 # Erstelle eine Matrix V, die die einzelnen Terme des Energie-Regressors gruppiert
-lagrange := Vector[column](t_ges[1,..] - u_ges[1,..]):
 # Komponentenmatrix für jeden Eintrag des Lagrange-Regressors.
 # Initialisierung mit voller Dimension (notwendig für geschlossene kinematische Ketten;
 # in dem Fall sind die Einträge der letzten Parameter Null/konstant. Bei rein seriellen Ketten nicht der Fall).
 V := Matrix(NumElems(lagrange),1):
 w := Vector[column](): # Hilfsvariable
 for i from 1 to NumElems(lagrange) do # Parameter-Einträge durchgehen
-# printf("i=%d\n", i):
+  if i=1 or time()-tmp_timelastmessage > 10.0 then # min. alle 10s Status ausgeben.
+    printf("%s. Erstelle Komponentenmatrix für Lagrange-Regressor-Eintrag %d/%d\n", FormatTime("%Y-%m-%d %H:%M:%S"), i, NumElems(lagrange)):
+    tmp_timelastmessage := time():
+  end if:
   lagrange_term := simplify(expand(lagrange(i))):
-  lagrange_term := convert(lagrange_term,exp): # Trigonometrische Funktion in Exponent-Darstellung.
+  # Umrechnung der Trigonometrische Funktion in Exponent-Darstellung.
+  # Funktioniert nicht ganz wie erwartet, falls Parameter in sin/cos stehen. Dann treten Imaginärteile auf.
+  # Diese werden weiter unten wieder entfernt
+  # Durch diesen Befehl wird die Spalten-Dimension der Matrix stark reduziert (ca. auf ein Drittel)
+  lagrange_term := convert(lagrange_term,exp):
   lagrange_term := simplify(expand(lagrange_term),size):
   lagrange_summand := [splitSummands(lagrange_term)]:
 # print(lagrange_summand):
@@ -223,12 +243,31 @@ for i from 1 to NumElems(lagrange) do # Parameter-Einträge durchgehen
     end if:
   end do:
 end do:
-# Rang der 
-RankV := Rank(V):
-printf("%s. Die Komponenten-Matrix des Energie-Regressors hat Rang %d\n", FormatTime("%Y-%m-%d %H:%M:%S"), RankV):
+# Substitutierte sinus/cosinus-Terme der Kinematikparameter wieder zurückersetzen
 
+(* Nicht notwendig, wenn oben auskommentiert.
+for j from 1 to RowDimension(pkin) do
+  V := subs(parse(sprintf("sin_%s", pkin(j,1)))=parse(sprintf("sin(%s)", pkin(j,1))), V):
+  V := subs(parse(sprintf("cos_%s", pkin(j,1)))=parse(sprintf("cos(%s)", pkin(j,1))), V):
+end do:
+*)
+# 
+tmp_tt2 := time():
+printf("%s. Komponenten-Matrix des Energie-Regressors berechnet (%dx%d). Rechenzeit: %1.1fs\n", \
+  FormatTime("%Y-%m-%d %H:%M:%S"), RowDimension(V), ColumnDimension(V), tmp_tt2-tmp_tt1):
+save V, sprintf("../codeexport/%s/tmp/minimal_parameter_calculation_fixb_maple_linsolve_debug1.m", robot_name):
+# Rang der Matrix prüfen für Dimension des Parametervektors
+tmp_t1 := time():
+RankV := Rank(V):
+tmp_t2 := time():
+printf("%s. Die Komponenten-Matrix des Energie-Regressors hat Rang %d. Rechenzeit: %1.1fs\n", \
+  FormatTime("%Y-%m-%d %H:%M:%S"), RankV, tmp_t2-tmp_t1):
 # [Diekmeyer2018_S678] Gl. 3.27
+tmp_t1 := time():
 U := LinearSolve(Transpose(V),Transpose(V)):
+tmp_t2 := time():
+printf("%s. Basis der Komponenten-Matrix mit LinearSolve gelöst. Resultat ist %dx%d. Rechenzeit: %1.1fs\n", \
+  FormatTime("%Y-%m-%d %H:%M:%S"), RowDimension(U), ColumnDimension(U), tmp_t2-tmp_t1):
 # Freie Variablen ("_t") entfernen
 for i from 1 to Size(V,1) - RankV do
   for j from 1 to Size(V,1) do
@@ -239,9 +278,39 @@ end do:
 # [Diekmeyer2018_S678] Gl. 3.29
 Pb, Pd :=permuteEmptyRows(U):
 P := Matrix([[Pb],[Pd]]):
+save P, Pb, Pd, U, V, RankV, sprintf("../codeexport/%s/tmp/minimal_parameter_calculation_fixb_maple_linsolve_debug2.m", robot_name):
+read sprintf("../codeexport/%s/tmp/minimal_parameter_calculation_fixb_maple_linsolve_debug2.m", robot_name):
 # [Diekmeyer2018_S678] Gl. 3.31 (links)
 Paramvec2 := Pb.U.PV2_vec(11..,..):
-Paramvec2 := simplify2(Paramvec2):
+# Nachverarbeitung: Prüfe ob Imaginärteile aus Substitutionsalgorithmus vorhanden sind
+tmp_t1 := time():
+# Diese Prüfung ist nur notwendig, wenn oben die Lagrange-Terme in Exponent-Form gebracht wurden
+# Dann ist es möglich, dass imaginäre Ausdrücke im Parametervektor stehen.
+imagpart:=false:
+for i from 1 to RowDimension(Paramvec2) do
+  # Umrechnung der Exponentialform in trigonometrische Form
+  Paramvec2(i,1) := simplify(convert(expand(Paramvec2(i,1)), trig));
+
+  if not evalc(Im(Paramvec2[i,1])) = 0 then # müssen eckige Klammern sein, damit evalc funktioniert.
+    imagpart := true: # Imaginärteil erkannt. Annahme: Auch nachfolgende Vereinfachung kann daran nichts ändern.
+    break:
+  end if:
+  if has(Paramvec2(i,1), I) then # Prüfe auf Imaginärteil durch Existenz der imaginären Einheit
+    Paramvec2(i,1) := evalc(Re(Paramvec2[i,1])): # da Im() oben Null war, muss Re() den vollen Term enthalten.
+  end if:
+end do:
+if imagpart then
+  printf("Der Parametervektor hat trotz versuchter Substitution immer noch Imaginärteile aus dem Algorithmus. Verwerfe Lösung und Abbruch.\n"):
+  quit: # Funktioniert in GUI nicht richtig...
+  robot_name := "": # ...Daher auch Löschung des Roboternamens.
+end if:
+tmp_t2 := time():
+Paramvec2 := simplify2(Paramvec2): # nochmal vereinfachen
+;
+printf("%s. Parameter-Vektor nachverarbeitet. Rechenzeit: %1.1fs\n", \
+  FormatTime("%Y-%m-%d %H:%M:%S"), tmp_t2-tmp_t1):
+# Debug: Fertigen Parameter von anderem Durchlauf laden
+# read sprintf("../codeexport/%s/tmp/minimal_parameter_vector_fixb_maple_linsolve", robot_name):
 printf("%s. Dimension des Minimalparametervektors: %dx%d\n", \ 
   FormatTime("%Y-%m-%d %H:%M:%S"), RowDimension(Paramvec2), ColumnDimension(Paramvec2)):
 Paramvec2;

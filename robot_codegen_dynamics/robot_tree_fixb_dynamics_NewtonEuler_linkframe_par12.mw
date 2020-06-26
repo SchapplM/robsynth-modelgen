@@ -4,7 +4,7 @@
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" compactdisplay="false" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" historytimestamp="false" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1050" rtablesize="[10, 10]" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" ansicolor="[]" elisiondigitsthreshold="10000" showassumed="1" ansilprint="false" trailingsemicolon="true" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" compactdisplay="false" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" historytimestamp="false" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="[10, 10]" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" ansicolor="[]" elisiondigitsthreshold="10000" showassumed="1" ansilprint="false" trailingsemicolon="true" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -286,8 +286,18 @@ rD_i_i:= rD_i_i:</Text-field>
 <Input><Text-field style="Text" layout="Normal">Ergebnisse der Beschleunigung laden</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1729" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"> read sprintf(&quot;../codeexport/%s/tmp/acceleration_linkframe_floatb_%s_maple.m&quot;, robot_name, base_method_name):</Text-field>
+<Group labelreference="L1837" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">accfile := sprintf(&quot;../codeexport/%s/tmp/acceleration_linkframe_floatb_%s_maple.m&quot;, robot_name, base_method_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1836" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if FileTools[Exists](accfile) then
+  read accfile:
+else
+<Font encoding="UTF-8">  printf(&quot;%s. Schwerpunktsbeschleunigung wurde nicht berechnet. Abbruch der Newton-Euler-Berechnung.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+</Font>  quit: # Funktioniert in GUI nicht richtig...
+<Font encoding="UTF-8">  robot_name := &quot;&quot;: # ...Daher auch L\303\266schung des Roboternamens.
+</Font>end if:</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L1730" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -532,7 +542,7 @@ end do:</Text-field>
 <Group labelreference="L1826" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if not(base_method_name=&quot;twist&quot;) then
   save  f_i_i_floatb,m_i_i_floatb,tau_J_floatb, tau_B_floatb, tau_floatb,sprintf(&quot;../codeexport/%s/tmp/invdyn_%s_NewtonEuler_linkframe_maple.m&quot;, robot_name, base_method_name):
-  <Font encoding="UTF-8">printf(&quot;Maple-Ausdr\303\274cke exportiert. %s\134n&quot;, </Font>FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+  <Font encoding="UTF-8">printf(&quot;%s. Maple-Ausdr\303\274cke exportiert.\134n&quot;, </Font>FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
 end if:</Text-field>
 </Input>
 </Group>
@@ -587,7 +597,7 @@ end do:</Text-field>
 </Group>
 <Group labelreference="L1815" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save  f_i_i,m_i_i,tau_J, tau_B, tau,sprintf(&quot;../codeexport/%s/tmp/invdyn_%s_NewtonEuler_linkframe_par%d_maple.m&quot;, robot_name, base_method_name, codegen_dynpar):
-<Font encoding="UTF-8">printf(&quot;Maple-Ausdr\303\274cke exportiert. %s\134n&quot;, </Font>FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Text-field>
+<Font encoding="UTF-8">printf(&quot;%s. Maple-Ausdr\303\274cke exportiert.\134n&quot;, </Font>FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1819" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">

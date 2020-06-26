@@ -165,12 +165,14 @@ for iq = 1:TSSc.n
   end
 
   % Test inverse Dynmik Newton-Euler vs Lagrange
+  if ~isempty(which('%RN%_invdynJ_fixb_snew_vp2')) % in einigen Fällen kann die Newton-Euler-Dynamik nicht berechnet werden (z.B. sigma=2)
   tauICs_snew = %RN%_invdynJ_fixb_snew_vp2(q, qD, qDD, g, ...
     TSSi.pkin, TSSo.m, TSSo.mrSges, TSSo.Ifges);
 
   test = tauICs_snew-tauICs;
   if any( abs(test(:)) > 1e6*eps(max(abs(W))) )
     error('Dynamik Newton-Euler stimmt nicht mit Lagrange überein');
+  end
   end
 
   % Test Gravitationsmoment
@@ -184,10 +186,12 @@ for iq = 1:TSSc.n
   end
 
   % Test Gravitationsmoment mit Newton-Euler
+  if ~isempty(which('%RN%_invdynJ_fixb_snew_vp2')) % in einigen Fällen kann die Newton-Euler-Dynamik nicht berechnet werden (z.B. sigma=2)
   taug1_snew_impl = %RN%_gravloadJ_floatb_twist_snew_vp2(q, g, TSSi.pkin, TSSo.m, TSSo.mrSges);
 
   if any(abs(taug1_snew_impl-taug1_impl) > 1e-10)
     error('Gravitationsmoment mit ZB-Jacobi und Newton-Euler stimmt nicht mit Gravitationsmoment aus Lagrange');
+  end
   end
 
   % Test Massenmatrix

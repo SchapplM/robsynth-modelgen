@@ -90,6 +90,20 @@ else
   exit 1
 fi;
 
+KP_dat3=$repo_pfad/codeexport/${robot_name_OL}/tmp/parameter_kin_matlab.m
+if [ -f "$KP_dat3" ]; then
+  printf "\n%% Aus ${robot_name_OL}/parameter_kin_matlab.m\n" >> $zieldat
+  cat $KP_dat3 >> $zieldat
+  varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $zieldat`
+  echo "pkinOL = $varname_tmp;" >> $zieldat
+  echo "if isempty(pkinOL)" >> $zieldat
+  echo "  pkinOL = 0;%Platzhalter-Eingabe" >> $zieldat
+  echo "end" >> $zieldat
+else
+  echo "Kinematik-Parametervektor in $KP_dat3 nicht gefunden"
+  exit 1
+fi;
+
 # Hänge alle Ausdrücke für die MDH-Parameter an und ersetze die Ergebnisvariable
 # So werden nur die Bestandteile übernommen, die Werte enthalten
 # Null-Einträge werden automatisch zu Null gesetzt.
@@ -148,7 +162,7 @@ fi
 
 # Schreibe Ausgangsvariable (lese Teil aus Vorlage)
 quelldat=$repo_pfad/robot_codegen_testfunctions/robot_varpar_testfunctions_parameter.m.template2
-sed "s/RN/RNOL/g" $quelldat >> $zieldat
+sed "s/%RN%_dynamics_parameters_modification(pkin/%RNOL%_dynamics_parameters_modification(pkinOL/g" $quelldat >> $zieldat
 
 # Platzhalter (nochmal) in Datei ersetzen. Notwendig, weil auch Platzhalter in
 # der template2-Datei sind, die nicht automatisch ersetzt wurden. 

@@ -56,13 +56,15 @@ if herleitungsverfahren = "lagrange" then #Dynamik aus Lagrange
   if codeexport_invdyn then
     read sprintf("../codeexport/%s/tmp/invdyn_fixb_par%d_maple.m", robot_name_OL, codegen_dynpar):
     tau := Matrix(taus_fixb(7..NQ,1)):
-    printf("Generiere inverse Dynamik (%s) für %s basierend auf IC-Jacobi und OL-Dynamik mit Parametersatz %d  und %s\n", herleitungsverfahren, robot_name, codegen_dynpar, base_method_name):
+    printf("%s. Generiere inverse Dynamik (%s) für %s basierend auf IC-Jacobi und OL-Dynamik mit Parametersatz %d  und %s\n", \
+      FormatTime("%Y-%m-%d %H:%M:%S"), herleitungsverfahren, robot_name, codegen_dynpar, base_method_name):
   fi:
 # Ergebnisse der inversen Dynamik in Regressorform laden
   if codeexport_regressor then
     read sprintf("../codeexport/%s/tmp/invdyn_%s_%s_maple.m", robot_name_OL, expstring, regressor_modus):
     tau_regressor_s := tau_regressor_s(7..NQ,..):
-    printf("Generiere Dynamik in Regressorform (%s) für %s basierend auf IC-Jacobi und OL-Dynamik\n", herleitungsverfahren, robot_name):
+    printf("%s. Generiere Dynamik in Regressorform (%s) für %s basierend auf IC-Jacobi und OL-Dynamik\n", \
+      FormatTime("%Y-%m-%d %H:%M:%S"), herleitungsverfahren, robot_name):
   fi:
 # Ergebnisse der Massenmatrix und des Gravitationsvektors laden
   if codeexport_grav_inertia then
@@ -72,7 +74,8 @@ if herleitungsverfahren = "lagrange" then #Dynamik aus Lagrange
     MM := Matrix(MM_s(7..NQ,7..NQ)):
     read sprintf("../codeexport/%s/tmp/coriolisvec_par%d_maple.m", robot_name_OL, codegen_dynpar):
     tauCC := Matrix(tauCC_s(7..NQ,..)):
-    printf("Generiere Gravitationsvektor und Massenmatrix (%s) für %s basierend auf IC-Jacobi und OL-Dynamik mit Parametersatz %d und %s\n", herleitungsverfahren, robot_name, codegen_dynpar, base_method_name):
+    printf("%s. Generiere Gravitationsvektor und Massenmatrix (%s) für %s basierend auf IC-Jacobi und OL-Dynamik mit Parametersatz %d und %s\n",\
+      FormatTime("%Y-%m-%d %H:%M:%S"), herleitungsverfahren, robot_name, codegen_dynpar, base_method_name):
   fi:
 
 # Ergebnisse des Coriolisvektors laden. Noch nicht implementiert.
@@ -81,18 +84,28 @@ if herleitungsverfahren = "lagrange" then #Dynamik aus Lagrange
     tauCC := Matrix(tauCC_s(7..NQ,..)):
     read sprintf("../codeexport/%s/tmp/inertia_par%d_maple.m", robot_name_OL, codegen_dynpar):
     MM := Matrix(MM_s(7..NQ,7..NQ)):
-    printf("Generiere Coriolisvektor (%s) für %s basierend auf IC-Jacobi und OL-Dynamik mit Parametersatz %d und %s\n", herleitungsverfahren, robot_name, codegen_dynpar, base_method_name):
+    printf("%s. Generiere Coriolisvektor (%s) für %s basierend auf IC-Jacobi und OL-Dynamik mit Parametersatz %d und %s\n", \ 
+      FormatTime("%Y-%m-%d %H:%M:%S"), herleitungsverfahren, robot_name, codegen_dynpar, base_method_name):
   fi:
 else #Dynamik aus Newton-Euler
 # Ergebnisse der inversen Dynamik für par1/2 laden
-  read sprintf("../codeexport/%s/tmp/invdyn_twist_NewtonEuler_linkframe_par%d_maple.m", robot_name_OL, codegen_dynpar):
+  invdynfile:=sprintf("../codeexport/%s/tmp/invdyn_twist_NewtonEuler_linkframe_par%d_maple.m", robot_name_OL, codegen_dynpar):
+  if FileTools[Exists](invdynfile) then
+    read invdynfile:
+  else
+    printf("%s. Inversdynamik der offenen Kette wurde nicht berechnet. Abbruch der Newton-Euler-Berechnung (Regressorform).\n", \
+      FormatTime("%Y-%m-%d %H:%M:%S")):
+    quit: # Funktioniert in GUI nicht richtig...
+    robot_name := "": # ...Daher auch Löschung des Roboternamens.
+  end if:  
   tau := Matrix(tau_J(1..NQJ,..)):
   taug := copy(tau):
   for i from 1 to NQ do
     taug := subs({qD_s[i,1]=0},taug):
     taug := subs({qDD_s[i,1]=0},taug):
   end do:
-  printf("Generiere Gravitationsvektor und gesamte inverse Dynamik (%s) für %s basierend auf IC-Jacobi und OL-Dynamik mit Parametersatz %d\n", herleitungsverfahren, robot_name, codegen_dynpar):
+  printf("%s. Generiere Gravitationsvektor und gesamte inverse Dynamik (%s) für %s basierend auf IC-Jacobi und OL-Dynamik mit Parametersatz %d\n", \
+    FormatTime("%Y-%m-%d %H:%M:%S"), herleitungsverfahren, robot_name, codegen_dynpar):
 fi:
 # Ergebnisse der impliziten Zwangsbedingungen laden
 read sprintf("../codeexport/%s/tmp/kinconstr_impl_projection_jacobian_maple", robot_name):

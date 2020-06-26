@@ -87,6 +87,7 @@ for i = 1:NL-1
 end
 
 %% Test kinetic Energy
+t1 = tic();
 for i = 1:n
   q = Q(i,:)';
   qD = QD(i,:)';
@@ -111,14 +112,15 @@ for i = 1:n
     error('Kinetic Energy from inertial parameter vector does not match with direct form.');
   end
 end
-fprintf('Tested kinetic energy for %d random joint angles for %s\n', ...
-  n, robot_name);
+fprintf('Tested kinetic energy linear form for %d random joint angles for %s. Duration %1.1fs\n', ...
+  n, robot_name, toc(t1));
 %% Test Potential Energy
 % Die potentielle Energie hat aufgrund des wegstreichens von Parametern
 % einen unterschiedlichen statischen Anteil bei der Minimalparameterform
 % Wähle die erste Winkelkonfiguration als virtuelle Null-Lage
 % (Null-Werte können bei einigen geschlossenen kinematischen Ketten
 % eine ungültige Lösung darstellen)
+t1 = tic();
 for i = 1:n
   q = Q(i,:)';
   g_base = G(i,:)';
@@ -152,10 +154,11 @@ for i = 1:n
     error('Potential Energy from inertial parameter vector does not match with direct form.');
   end
 end
-fprintf('Tested potential energy for %d random joint angles for %s\n', ...
-  n, robot_name);
+fprintf('Tested potential energy linear form for %d random joint angles for %s. Duration %1.1fs.\n', ...
+  n, robot_name, toc(t1));
 
 %% Test Gravitational Load
+t1 = tic();
 for i = 1:n
   q = Q(i,:)';
   g_base = G(i,:)';
@@ -181,10 +184,11 @@ for i = 1:n
     error('Gravitation joint torque from inertial parameter vector does not match with direct form.');
   end
 end
-fprintf('Tested gravitation joint torque for %d random joint angles for %s\n', ...
-  n, robot_name);
+fprintf('Tested gravitation joint torque linear form for %d random joint angles for %s. Duration %1.1fs.\n', ...
+  n, robot_name, toc(t1));
 
 %% Teste Coriolis-Vektor
+t1 = tic();
 for i = 1:n
   q = Q(i,:)';
   qD = QD(i,:)';
@@ -210,10 +214,11 @@ for i = 1:n
     error('Coriolis joint torque from inertial parameter vector does not match with direct form.');
   end
 end
-fprintf('Tested Coriolis joint torque for %d random joint angles for %s\n', ...
-  n, robot_name);
+fprintf('Tested Coriolis joint torque linear form for %d random joint angles for %s. Duration %1.1fs.\n', ...
+  n, robot_name, toc(t1));
 
 %% Teste Coriolis-Matrix
+t1 = tic();
 for i = 1:n
   q = Q(i,:)';
   qD = QD(i,:)';
@@ -241,10 +246,11 @@ for i = 1:n
     error('Coriolis matrix from inertial parameter vector does not match with direct form.');
   end
 end
-fprintf('Tested Coriolis matrix for %d random joint angles for %s\n', ...
-  n, robot_name);
+fprintf('Tested Coriolis matrix linear form for %d random joint angles for %s. Duration %1.1fs.\n', ...
+  n, robot_name, toc(t1));
 
 %% Teste Massenmatrix
+t1 = tic();
 for i = 1:n
   q = Q(i,:)';
   Mq_func = %RN%_inertiaJ_slag_vp1(q, pkin, m, rSges, Icges);
@@ -268,10 +274,11 @@ for i = 1:n
     error('Joint inertia matrix from inertial parameter vector does not match with direct form.');
   end
 end
-fprintf('Tested Joint inertia matrix for %d random joint angles for %s\n', ...
-  n, robot_name);
+fprintf('Tested Joint inertia matrix linear form for %d random joint angles for %s. Duration %1.1fs.\n', ...
+  n, robot_name, toc(t1));
 
 %% Teste Massenmatrix-Zeitableitung
+t1 = tic();
 for i = 1:n
   q = Q(i,:)';
   qD = QD(i,:)';
@@ -296,10 +303,11 @@ for i = 1:n
     error('Joint inertia matrix time derivative from inertial parameter vector does not match with direct form.');
   end
 end
-fprintf('Tested Joint inertia matrix time derivative for %d random joint angles for %s\n', ...
-  n, robot_name);
+fprintf('Tested Joint inertia matrix time derivative linear form for %d random joint angles for %s. Duration %1.1fs.\n', ...
+  n, robot_name, toc(t1));
 
 %% Teste inverse Dynamik
+t1 = tic();
 for i = 1:n
   q = Q(i,:)';
   qD = QD(i,:)';
@@ -325,11 +333,12 @@ for i = 1:n
     error('Inverse dynamics from inertial parameter vector does not match with direct form.');
   end
 end
-fprintf('Tested inverse dynamics for %d random joint angles for %s\n', ...
-  n, robot_name);
+fprintf('Tested inverse dynamics linear form for %d random joint angles for %s. Duration %1.1fs.\n', ...
+  n, robot_name, toc(t1));
 
 %% Teste inverse Dynamik aus Newton-Euler
 if ~KINCONSTR
+  t1 = tic();
   for i = 1:n
     q = Q(i,:)';
     qD = QD(i,:)';
@@ -345,10 +354,11 @@ if ~KINCONSTR
       error('Inverse dynamics from inertial parameter vector from Newton-Euler does not match with direct form.');
     end
   end
-  fprintf('Tested inverse dynamics from Newton-Euler for %d random joint angles for %s\n', ...
-    n, robot_name);
+  fprintf('Tested inverse dynamics linear form from Newton-Euler for %d random joint angles for %s. Duration %1.1fs.\n', ...
+    n, robot_name, toc(t1));
 
   % Teste Basis-Reaktionskräfte aus inverser Dynamik aus Newton-Euler
+  t1 = tic();
   for i = 1:n
     q = Q(i,:)';
     qD = QD(i,:)';
@@ -364,10 +374,11 @@ if ~KINCONSTR
       error('Base forces from inertial parameter vector from Newton-Euler does not match with direct form.');
     end
   end
-  fprintf('Tested base forces from Newton-Euler for %d random joint angles for %s\n', ...
-    n, robot_name);
+  fprintf('Tested base forces linear form from Newton-Euler for %d random joint angles for %s. Duration %1.1fs.\n', ...
+    n, robot_name, toc(t1));
 
   % Teste Schnittkräfte/-momente aus Newton-Euler
+  t1 = tic();
   for i = 1:n
     q = Q(i,:)';
     qD = QD(i,:)';
@@ -385,8 +396,9 @@ if ~KINCONSTR
       error('Cutting forces from inertial parameter vector from Newton-Euler does not match with direct form.');
     end
   end
-  fprintf('Tested cutting forces inverse dynamics from Newton-Euler for %d random joint angles for %s\n', ...
-    n, robot_name);
+  fprintf('Tested cutting forces inverse dynamics linear form from Newton-Euler for %d random joint angles for %s. Duration %1.1fs.\n', ...
+    n, robot_name, toc(t1));
+  t1 = tic();
   for i = 1:n
     q = Q(i,:)';
     qD = QD(i,:)';
@@ -404,8 +416,8 @@ if ~KINCONSTR
       error('Cutting torques from inertial parameter vector from Newton-Euler does not match with direct form.');
     end
   end
-  fprintf('Tested cutting torques inverse dynamics from Newton-Euler for %d random joint angles for %s\n', ...
-    n, robot_name);
+  fprintf('Tested cutting torques inverse dynamics linear form from Newton-Euler for %d random joint angles for %s. Duration %1.1fs.\n', ...
+    n, robot_name, toc(t1));
 end
 
 %% Teste Funktionsaufruf mit übergebenem Regressor gegen Regressormatrix
@@ -558,7 +570,7 @@ for k = 1:2
       % Werfe keinen Fehler auf. Da man bis hier gekommen ist, ist die
       % Parameterreduzierung auf jeden Fall richtig. Nur anscheinend numerisch
       % nicht minimal.
-      throw(err.message);
+      warning('Es trat ein Fehler bei der Prüfung der Minimalität der Parameterreduktion auf (siehe vorherige Meldungen)');
     end
   end
 end

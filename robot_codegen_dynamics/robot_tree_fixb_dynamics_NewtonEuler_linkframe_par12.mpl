@@ -95,7 +95,14 @@ read sprintf("../codeexport/%s/tmp/velocity_linkframe_floatb_%s_maple.m", robot_
 omega_i_i:= omega_i_i:
 rD_i_i:= rD_i_i:
 # Ergebnisse der Beschleunigung laden
- read sprintf("../codeexport/%s/tmp/acceleration_linkframe_floatb_%s_maple.m", robot_name, base_method_name):
+accfile := sprintf("../codeexport/%s/tmp/acceleration_linkframe_floatb_%s_maple.m", robot_name, base_method_name):
+if FileTools[Exists](accfile) then
+  read accfile:
+else
+  printf("%s. Schwerpunktsbeschleunigung wurde nicht berechnet. Abbruch der Newton-Euler-Berechnung.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
+  quit: # Funktioniert in GUI nicht richtig...
+  robot_name := "": # ...Daher auch Löschung des Roboternamens.
+end if:
 omegaD_i_i:= omegaD_i_i: 
 rDD_i_i:= rDD_i_i:
 rDD_i_Si:= rDD_i_Si:
@@ -252,7 +259,7 @@ end do:
 # Maple Export # TODO: Wieso Bedingung "twist" gewählt?
 if not(base_method_name="twist") then
   save  f_i_i_floatb,m_i_i_floatb,tau_J_floatb, tau_B_floatb, tau_floatb,sprintf("../codeexport/%s/tmp/invdyn_%s_NewtonEuler_linkframe_maple.m", robot_name, base_method_name):
-  printf("Maple-Ausdrücke exportiert. %s\n", FormatTime("%Y-%m-%d %H:%M:%S")):
+  printf("%s. Maple-Ausdrücke exportiert.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
 end if:
 # Matlab Export
 if codegen_act and codeexport_invdyn and not(base_method_name="twist") then
@@ -289,7 +296,7 @@ for i from 1 to 6 do
 end do:
 # Maple Export
 save  f_i_i,m_i_i,tau_J, tau_B, tau,sprintf("../codeexport/%s/tmp/invdyn_%s_NewtonEuler_linkframe_par%d_maple.m", robot_name, base_method_name, codegen_dynpar):
-printf("Maple-Ausdrücke exportiert. %s\n", FormatTime("%Y-%m-%d %H:%M:%S")):
+printf("%s. Maple-Ausdrücke exportiert.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
 # Matlab Export
 if codegen_act and codeexport_invdyn  then
   MatlabExport(f_i_i, sprintf("../codeexport/%s/tmp/invdyn_fixb_NewtonEuler_linkframe_f_i_i_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt):
