@@ -1,0 +1,39 @@
+# Industrieroboter, Kuka (6 FG)
+# Bodenmontage, reduzierte Dynamikparameter
+
+robot_name := "kuka6dof_reddp":
+
+NJ := 6:
+NQJ := 6:
+qoffset := Matrix(6,1,[0,0,Pi/2,0,0,0]):
+alpha := Matrix(6,1,[0,Pi/2,0,Pi/2,-Pi/2,Pi/2]):
+d := Matrix(6,1,[L1,0,0,L5,0,L6]):
+a := Matrix(6,1,[0,L2,L3,L4,0,0]):
+v := Matrix(6,1,[0, 1, 2, 3, 4, 5]):
+b := Matrix(6,1,[0, 0, 0, 0, 0, 0]):
+beta := Matrix(6,1,[0, 0, 0, 0, 0, 0]):
+
+theta := qJ_t+qoffset:
+
+# Schwerkraft in nur eine Richtung
+g_world := <0;0;g3>:
+
+# Setze Massender Zwischensegmente des Handgelenks zu Null.
+user_M := <0;M1;M2;M3;M4;0;M6>:
+# Setze Schwerpunkt: Einige Komponenten Null setzen (Symmetrieüberlegung)
+user_CoM := <<0;0;0> | \
+             <0;SY1;SZ1> | \
+             <SX2;SY2;0> | \
+             <SX3;0;0> | \
+             <SX4;0;SZ4> | \
+             <0;0;0> | \
+             <0;0;SZ6>>:
+# Setze Trägheitsmomente: Reihenfolge: XX;XY,XZ,YY,YZ,ZZ
+# Allgemeine Vereinfachung: Nur Hauptachsen-Momenten
+user_inertia := <<0;0;0;0;0;0>| \
+                 <XXC1;0;0;YYC1;0;ZZC1>| \
+                 <XXC2;0;0;YYC2;0;ZZC2>| \
+                 <XXC3;0;0;YYC3;0;ZZC3>| \
+                 <0;0;0;YYC4;0;ZZC4>| \ # längliches Segment in X-Richtung
+                 <0;   0;0;0;0;0>| \
+                 <XXC6;0;0;YYC6;0;ZZC6>>:

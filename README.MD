@@ -583,6 +583,9 @@ Die Datei stellt eine Maple-Eingabe dar. Die Variablen müssen daher mit "__:=__
 Da die Definitionen in jedem Maple-Arbeitsblatt am Ende der Initialisierung geladen werden, ist es möglich, hier Standardeinstellungen zu überschreiben, wie z.B. durch die Definition der Variablen
 * __codegen_opt__: (Optionen: [2], 1, 0) Der Grad der Code-Optimierung für den Export lässt sich steuern und die Rechenzeit der Generierung damit erhöhen (Standardmäßig auf 2, geringere Optimierung mit 1 oder 0).
 * __g_world__: Standardmäßig wird der Gravitationsvektor mit `g_world := <g1;g2;g3>:` definiert (bei weggelassenem Eintrag). Durch die Wahl von `g_world := <0;0;g3>:` kann z.B. ein senkrecht stehender Roboter modelliert werden. Es müssen die Bezeichnungen g1, g2, g3 verwendet werden.
+* __user_M__: Definition von Massenparametern der Robotersegmente. Kann benutzt werden, um einzelne Massen zu Null zu setzen, um die Dynamik-Gleichungen zu vereinfachen. Format als Maple-Variable: `user_M := <0;M1;M2;0;M4>:` (einzelne Massen sollten als M1, M2, ... benannt werden).
+* __user_CoM__: Schwerpunktskomponenten zu Null setzen (z.B. aufgrund von Symmetrie). Beispiel: `user_CoM := <<0;0;0>|<0;SY1;SZ1>|<SX2;SY2;0>>:` (Komponenten sollten SX1,... heißen oder z.B. Längenparameter enthalten wie L1/2).
+* __user_inertia__: Einträge des (schwerpunktsbezogenen) Trägheitstensors zu Null setzen. Beispiel: `user_inertia := <<0;0;0;0;0;0>|<XXC1;0;0;YYC1;0;ZZC1>>:` (weitere Segmente in Maple-Syntax mit `|` anhängen. Aus Symmetrie können z.B. Deviationsmomente zu Null gesetzt werden).
 
 Weitere Möglichkeiten sind:
 * __codegen_kinematics_opt__: (Optionen: [true], false) Verhindert mit false in robot_tree_floatb_rotmat_mdh_kinematics.mw die Zusammenfassung paralleler Gelenke; sinnvoll bei Elimination von kinematischen Zwangsbedingungen
