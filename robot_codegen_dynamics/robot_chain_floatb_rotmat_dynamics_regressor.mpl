@@ -81,7 +81,15 @@ fi:
 # Der folgende Befehl muss immer auf "regressor_minpar" gesetzt sein, da diese Zeile durch das Skript robot_codegen_maple_preparation.sh ausgewertet und modifiziert wird.
 regressor_modus := "regressor_minpar":
 if regressor_modus = "regressor_minpar" then
-  read sprintf("../codeexport/%s/tmp/energy_kinetic_%s_regressor_minpar_maple.m", robot_name, expstring):
+  ekinfile := sprintf("../codeexport/%s/tmp/energy_kinetic_%s_regressor_minpar_maple.m", robot_name, expstring):
+  if FileTools[Exists](ekinfile) then
+    read ekinfile:
+  else
+    printf("%s. Energie-Regressor in Minimalparameterform wurde nicht berechnet. Abbruch der Dynamik-Minimalparameterregressor-Berechnung.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
+    quit: # Funktioniert in GUI nicht richtig...
+    robot_name := "": # ...Daher auch Löschung des Roboternamens.
+  end if:
+  read ekinfile:
   read sprintf("../codeexport/%s/tmp/energy_potential_%s_regressor_minpar_maple.m", robot_name, expstring):
   t_ges := t_ges_minpar:
   u_ges := u_ges_minpar:

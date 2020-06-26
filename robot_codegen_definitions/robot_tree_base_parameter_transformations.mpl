@@ -30,19 +30,29 @@ read "../helper/proc_MatlabExport":
 read "../robot_codegen_definitions/robot_env":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
 # Ergebnisse der Minimalparametergruppierung laden
+
 if base_method_name="twist" then
-  read sprintf("../codeexport/%s/tmp/minimal_parameter_vector_fixb_maple", robot_name):
+  paramfile := sprintf("../codeexport/%s/tmp/minimal_parameter_vector_fixb_maple", robot_name):
   expstring:="fixb":
   PV2:=Matrix(PV2_vec[11..10*NL,1]):
 elif base_method_name="eulxyz" then 
-  read sprintf("../codeexport/%s/tmp/minimal_parameter_vector_floatb_eulxyz_maple", robot_name):
+  paramfile := sprintf("../codeexport/%s/tmp/minimal_parameter_vector_floatb_eulxyz_maple", robot_name):
   expstring:="floatb_eulxyz":
   PV2:=PV2_vec:
 else
   printf("Nicht behandelte Basis-Methode: %s\n", base_method_name):
 fi:
+if FileTools[Exists](paramfile) then
+  read paramfile:
+else
+  printf("%s. Minimalparametervektor wurde nicht berechnet. Abbruch der Untersuchung der Parameter-Abhängigkeiten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
+  quit: # Funktioniert in GUI nicht richtig...
+  robot_name := "": # ...Daher auch Löschung des Roboternamens.
+end if:
 MPV := Paramvec2:
+
 printf("Generiere Minimalparameter-Transformationen für %s (%s)\n", robot_name, expstring):
+
 # Minimalparametervektor als Matrixdarstellung
 # Siehe [SousaCor2014] equ. (38)
 # Beispielrechnung:

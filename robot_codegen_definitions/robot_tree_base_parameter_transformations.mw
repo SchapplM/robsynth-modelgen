@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="2018" minor="0"/>
+<Version major="2019" minor="2"/>
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" elisiondigitsthreshold="10000" showassumed="1" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" compactdisplay="false" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" historytimestamp="false" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1050" rtablesize="[10, 10]" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" ansicolor="[]" elisiondigitsthreshold="10000" showassumed="1" ansilprint="false" trailingsemicolon="true" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -153,23 +153,39 @@ read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
 <Input><Text-field style="Text" layout="Normal">Ergebnisse der Minimalparametergruppierung laden</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1774" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if base_method_name=&quot;twist&quot; then
-  read sprintf(&quot;../codeexport/%s/tmp/minimal_parameter_vector_fixb_maple&quot;, robot_name):
+<Group labelreference="L1843" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1845" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion4" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if base_method_name=&quot;twist&quot; then
+  paramfile := sprintf(&quot;../codeexport/%s/tmp/minimal_parameter_vector_fixb_maple&quot;, robot_name):
   expstring:=&quot;fixb&quot;:
   PV2:=Matrix(PV2_vec[11..10*NL,1]):
 elif base_method_name=&quot;eulxyz&quot; then 
-  read sprintf(&quot;../codeexport/%s/tmp/minimal_parameter_vector_floatb_eulxyz_maple&quot;, robot_name):
+  paramfile := sprintf(&quot;../codeexport/%s/tmp/minimal_parameter_vector_floatb_eulxyz_maple&quot;, robot_name):
   expstring:=&quot;floatb_eulxyz&quot;:
   PV2:=PV2_vec:
 else
-<Font encoding="UTF-8">  printf(&quot;Nicht behandelte Basis-Methode: %s\134n&quot;, </Font>base_method_name):
+  printf(&quot;Nicht behandelte Basis-Methode: %s\134n&quot;, base_method_name):
 fi:
-MPV := Paramvec2:</Text-field>
+if FileTools[Exists](paramfile) then
+  read paramfile:
+else
+  printf(&quot;%s. Minimalparametervektor wurde nicht berechnet. Abbruch der Untersuchung der Parameter-Abh\303\244ngigkeiten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+  quit: # Funktioniert in GUI nicht richtig...
+  robot_name := &quot;&quot;: # ...Daher auch L\303\266schung des Roboternamens.
+end if:
+MPV := Paramvec2:
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L1774" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 <Group labelreference="L1841" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Generiere Minimalparameter-Transformationen f\303\274r %s (%s)\134n&quot;, robot_name, </Font>expstring):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1846" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>
@@ -298,7 +314,7 @@ end do:
 <Group labelreference="L1827" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1843" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="891" pixel-height="324" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">i_d := 0:
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1847" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="891" pixel-height="324" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">i_d := 0:
 for j from 1 to n do:
   # Pr\303\274fe ob der betrachtete Parameter in der Permutationsmatrix f\303\274r linear unabh\303\244ngige vorkommt
   # Summe \303\274ber die Zeilen von P_b: Pr\303\274fe, ob linear unabh\303\244ngig

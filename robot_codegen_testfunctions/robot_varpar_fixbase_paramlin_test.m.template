@@ -492,8 +492,11 @@ end
 %% Prüfe Minimalparametervektor gegen Matrix mit Inertialparameterzuordnung
 % [Sousa2014] Gl. (38)
 [K, K_d, P_b, P_d] = %RN%_PV2_MPV_transformations_fixb(pkin);
-
 MPV_test = K*PV2fixb;
+if length(MPV_test)~=length(MPV)
+  error('Dimension der MPV-Zerlegung stimmt nicht: %d vs %d Einträge.', ...
+    length(MPV_test), length(MPV));
+end
 test = MPV - MPV_test;
 if any(abs(test(:)) > 1e-10)
   error('Minimalparametervektor stimmt nicht mit MPV aus Inertialparametermatrix überein');

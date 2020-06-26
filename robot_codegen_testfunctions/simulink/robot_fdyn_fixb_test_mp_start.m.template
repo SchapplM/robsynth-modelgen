@@ -13,17 +13,17 @@ close all
 this_path = fileparts( mfilename('fullpath') );
 if ~isempty(this_path), cd(this_path); end
 
-%% Init
-% Standard-Einstellungen laden
-ParameterModus = 'mp';
-%RN%_fdyn_fixb_test_settings_default
-
 % Prüfe, ob die parameterminimale Form generiert wurde. Je nach System
 % ist das noch nicht implementiert. In dem Fall wird "UNDEFINED" gesetzt
 MP_EXISTS=~isnan(str2double('%NMPVFIXB%'));
 if ~MP_EXISTS
   return % nichts zu testen. Abbruch.
 end
+
+%% Init
+% Standard-Einstellungen laden
+ParameterModus = 'mp';
+%RN%_fdyn_fixb_test_settings_default
 
 % Workspace-Variable löschen, Modell darf nicht davon abhängen
 clear NQJ

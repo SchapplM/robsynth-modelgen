@@ -55,6 +55,12 @@ if not (assigned(user_CoM) or assigned(user_M) or assigned(user_inertia) \
   quit: # Funktioniert in GUI nicht richtig...
   robot_name := "": # ...Daher auch Löschung des Roboternamens.
 end if:
+
+if assigned(dynpar_minimization_linsolve) and not dynpar_minimization_linsolve then
+  printf("Analytische Berechnung der Minimalparameter manuell deaktiviert. Abbruch.\n"):
+  quit:
+  robot_name := "":
+end if:
 printf("%s. Generiere Minimalparameterregressor der Energie für %s (symbolischer Ansatz)\n", \ 
   FormatTime("%Y-%m-%d %H:%M:%S"), robot_name, codegen_dynpar):
 # Term-Vereinfachungen einstellen
