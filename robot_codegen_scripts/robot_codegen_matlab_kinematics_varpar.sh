@@ -77,7 +77,7 @@ if [ -f $quelldat ]; then
   echo "Tc_stack = $varname_tmp;" >> $zieldat
   echo "%% Postprocessing: Reshape Output" >> $zieldat
   printf "%% Convert Maple format (2-dimensional tensor) to Matlab format (3-dimensional tensor)\n" >> $zieldat
-  printf "Tc_mdh = NaN(4,4,%%NL%%);\nfor i = 1:%%NL%%\n  Tc_mdh(:,:,i) = [Tc_stack((i-1)*4+1 : 4*i, :); [0 0 0 1]];\nend\n" >> $zieldat
+  printf "Tc_mdh = NaN(4,4,%%NL%%);\nfor i = 1:%%NL%%\n  Tc_mdh(:,:,i) = [Tc_stack((i-1)*3+1 : 3*i, :); [0 0 0 1]];\nend\n" >> $zieldat
   source robot_codegen_matlabfcn_postprocess.sh $zieldat 0 0 ${quelldat}.subsvar
 else
   echo "Code in ${quelldat##*/} nicht gefunden."

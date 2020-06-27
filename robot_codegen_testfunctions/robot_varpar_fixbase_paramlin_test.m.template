@@ -568,7 +568,7 @@ for k = 1:2
     robot_paramlin_test_reg_num(plin_num_test_struct);
   catch err
     if ~KINCONSTR && ~TREE
-      raise(err);
+      throw(err);
     else
       % Werfe keinen Fehler auf. Da man bis hier gekommen ist, ist die
       % Parameterreduzierung auf jeden Fall richtig. Nur anscheinend numerisch

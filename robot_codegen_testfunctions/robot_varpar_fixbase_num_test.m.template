@@ -17,6 +17,7 @@ NJ = %NJ%;
 NL = %NL%;
 KINCONSTR = logical(%KINCONSTR%); %#ok<LOGL>
 robot_name = '%RN%';
+MP_EXISTS=~isnan(str2double('%NMPVFIXB%'));
 
 % Prüfe, ob kinematische Zwangsbedingungen vorliegen.
 % Dann entfallen alle folgenden Tests (noch nicht implementiert)
@@ -24,21 +25,21 @@ if KINCONSTR
   fprintf('Tests entfallen aufgrund der Existenz kinematischer Zwangsbedingungen\n');
   return
 end
-if NJ ~= NQJ || any(sigma==2)
-  fprintf('Tests entfallen aufgrund der Existenz virtueller Gelenk-Transformationen (nicht implementiert)\n');
-  return
-end
-
 %% Parameter
 TSS = %RN%_varpar_testfunctions_parameter();
 for f = fields(TSS)'
   eval(sprintf('%s=TSS.%s;',f{1},f{1}));
 end
-if any(sigma)
+if NJ ~= NQJ || any(sigma==2)
+  fprintf('Tests entfallen aufgrund der Existenz virtueller Gelenk-Transformationen (nicht implementiert)\n');
+  return
+end
+if any(sigma==1)
   fprintf('Schubgelenke noch nicht implementiert. Überspringe Test des CRBA.\n');
 end
-
-MPV = %RN%_convert_par2_MPV_fixb(pkin, m, mrSges, Ifges);
+if MP_EXISTS
+  MPV = %RN%_convert_par2_MPV_fixb(pkin, m, mrSges, Ifges);
+end
 RotAx_i = repmat([0;0;1]', NQJ, 1); % MDH: Drehachse ist immer die z-Achse (des gedrehten Körpers)
 
 %% Test gegen numerische Funktionen der fixed base Dynamik
@@ -294,6 +295,7 @@ for i = 1:n
     pkin, m, mrSges);
 end
 t_ber_g(2,2) = toc/n;
+if MP_EXISTS
 tic;
 for i = 1:n
   t_ber_g(2,2) = toc/n;
@@ -308,7 +310,7 @@ for i = 1:n
     taug_mpv = taug_reg*MPV;
 end
 t_ber_g(2,3) = toc/n;
-
+end
 tic;
 for i = 1:n
   taug_num1 = robot_tree_invdyn_floatb_eulxyz_mdh_nnew_vp1(qJ+i*1e-3, zeros(NJ,1), zeros(NJ,1), zeros(3,1), zeros(6,1), [-g_base;zeros(3,1)], ...
@@ -390,6 +392,7 @@ for i = 1:n
     pkin, m, mrSges, Ifges);
 end
 t_ber_c(2,2) = toc/n;
+if MP_EXISTS
 tic;
 for i = 1:n
   tauc_reg = %RN%_coriolisvecJ_fixb_regmin_slag_vp(qJ+i*1e-3, qJD, ...
@@ -404,6 +407,7 @@ for i = 1:n
   tauc_mpv = tauc_reg*MPV;
 end
 t_ber_c(2,3) = toc/n;
+end
 tic;
 for i = 1:n
   tauc_num1 = robot_tree_invdyn_floatb_eulxyz_mdh_nnew_vp1(qJ+i*1e-3, qJD, zeros(NJ,1), zeros(3,1), zeros(6,1),zeros(6,1), ...
@@ -469,6 +473,7 @@ for i = 1:n
     pkin, m, mrSges, Ifges);
 end
 t_ber_M(2,2) = toc/n;
+if MP_EXISTS
 tic;
 for i = 1:n
   Mq_reg = %RN%_inertiaJ_regmin_slag_vp(qJ, ...
@@ -485,6 +490,7 @@ for i = 1:n
   Mq_mpv = vec2symmat(Mq_mpv_vec);
 end
 t_ber_M(2,3) = toc/n;
+end
 
 tic
 for i = 1:n
