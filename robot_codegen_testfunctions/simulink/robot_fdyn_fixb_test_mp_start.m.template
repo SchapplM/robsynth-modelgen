@@ -33,14 +33,7 @@ clear NQJ
 %% Start Simulation
 t1 = tic;
 try
-  if any(TSS.sigma==2) % TODO: Besser. Siehe auch %RN%_fdyn_fixb_test_vp1_start.m
-    warning('off', 'MATLAB:singularMatrix')
-  end
-  simOut = sim(sl_Modellname, 'StopTime', '5', ...
-    'SimulationMode', 'normal'); % normal
-  if any(TSS.sigma==2)
-    warning('on', 'MATLAB:singularMatrix')
-  end
+  simOut = sim(sl_Modellname, 'StopTime', '5', 'SimulationMode', 'normal');
 catch err
   if KINCONSTR
     warning('Keine Lösung im Simulinkmodell möglich. Wahrscheinlich Verlassen des gültigen Gelenkraums');

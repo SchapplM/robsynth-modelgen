@@ -25,7 +25,7 @@ Library {
       $ObjectID		      2
       $ClassName	      "Simulink.WindowInfo"
       IsActive		      [1]
-      Location		      [53.0, -4.0, 1627.0, 1054.0]
+      Location		      [528.0, 131.0, 1607.0, 1034.0]
       Object {
 	$PropName		"ModelBrowserInfo"
 	$ObjectID		3
@@ -50,9 +50,9 @@ Library {
 	  IsActive		  [1]
 	  ViewObjType		  "SimulinkTopLevel"
 	  LoadSaveID		  "0"
-	  Extents		  [1589.0, 880.0]
-	  ZoomFactor		  [0.97261774370208121]
-	  Offset		  [-338.61999907026154, 100.35971293376292]
+	  Extents		  [1569.0, 860.0]
+	  ZoomFactor		  [1.0]
+	  Offset		  [0.0, 0.0]
 	}
 	Object {
 	  $ObjectID		  6
@@ -83,7 +83,7 @@ Library {
       "AAAAAAA+wAAABYARABvAGMAawBXAGkAZABnAGUAdAA0AAAAAAD/////AAAAAAAAAAD7AAAAUgBHAEwAVQBFADIAIAB0AHIAZQBlACAAYwBvAG0Ac"
       "ABvAG4AZQBuAHQALwBHAEwAVQBFADIAIAB0AHIAZQBlACAAYwBvAG0AcABvAG4AZQBuAHQAAAAAAP////8AAABiAP///wAAAAEAAAAAAAAAAPwCA"
       "AAAAfsAAABUAEcATABVAEUAMgA6AFAAcgBvAHAAZQByAHQAeQBJAG4AcwBwAGUAYwB0AG8AcgAvAFAAcgBvAHAAZQByAHQAeQAgAEkAbgBzAHAAZ"
-      "QBjAHQAbwByAAAAAAD/////AAAALAD///8AAAZbAAADtAAAAAEAAAACAAAAAQAAAAL8AAAAAQAAAAIAAAAP/////wAAAAAA/////wAAAAAAAAAA/"
+      "QBjAHQAbwByAAAAAAD/////AAAALAD///8AAAZHAAADoAAAAAEAAAACAAAAAQAAAAL8AAAAAQAAAAIAAAAP/////wAAAAAA/////wAAAAAAAAAA/"
       "////wEAAAAA/////wAAAAAAAAAA/////wAAAAAA/////wAAAAAAAAAA/////wAAAAAA/////wAAAAAAAAAA/////wAAAAAA/////wAAAAAAAAAA/"
       "////wEAAACA/////wAAAAAAAAAA/////wEAAADo/////wAAAAAAAAAA/////wAAAAAA/////wAAAAAAAAAA/////wAAAAAA/////wAAAAAAAAAA/"
       "////wAAAAAA/////wAAAAAAAAAA/////wAAAAAA/////wAAAAAAAAAA/////wAAAAAA/////wAAAAAAAAAA/////wEAAAE7/////wAAAAAAAAAA/"
@@ -97,9 +97,9 @@ Library {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "schappler"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Tue Jun 30 16:58:35 2020"
-  RTWModifiedTimeStamp	  409838041
-  ModelVersionFormat	  "1.%<AutoIncrement:201>"
+  LastModifiedDate	  "Tue Jun 30 17:14:02 2020"
+  RTWModifiedTimeStamp	  515438038
+  ModelVersionFormat	  "1.%<AutoIncrement:207>"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
   LibraryLinkDisplay	  "all"
@@ -1100,7 +1100,7 @@ Library {
   }
   System {
     Name		    "lib_%RN%_dynamics"
-    Location		    [53, -4, 1680, 1050]
+    Location		    [528, 131, 2135, 1165]
     Open		    on
     PortBlocksUseCompactNotation off
     ModelBrowserVisibility  off
@@ -1113,9 +1113,9 @@ Library {
     TiledPaperMargins	    [1.270000, 1.270000, 1.270000, 1.270000]
     TiledPageScale	    1
     ShowPageBoundaries	    off
-    ZoomFactor		    "97"
+    ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "623"
+    SIDHighWatermark	    "634"
     Block {
       BlockType		      SubSystem
       Name		      "%RN%_coriolisvec_fixb_mp"
@@ -6226,6 +6226,219 @@ Library {
     }
     Block {
       BlockType		      SubSystem
+      Name		      "%RN%_fixb_get_acceleration"
+      SID		      "624"
+      Ports		      [2, 1]
+      Position		      [575, 742, 635, 778]
+      ZOrder		      544
+      RequestExecContextInheritance off
+      Variant		      off
+      Object {
+	$PropName		"MaskObject"
+	$ObjectID		72
+	$ClassName		"Simulink.Mask"
+	Initialization		"NQJ=%NQJ%;"
+      }
+      System {
+	Name			"%RN%_fixb_get_acceleration"
+	Location		[528, 131, 2135, 1165]
+	Open			off
+	PortBlocksUseCompactNotation off
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"usletter"
+	PaperUnits		"inches"
+	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
+	TiledPageScale		1
+	ShowPageBoundaries	off
+	ZoomFactor		"100"
+	Block {
+	  BlockType		  Inport
+	  Name			  "M"
+	  SID			  "625"
+	  Position		  [55, 168, 85, 182]
+	  ZOrder		  11
+	  IconDisplay		  "Port number"
+	  PortDimensions	  "[NQJ NQJ]"
+	}
+	Block {
+	  BlockType		  Inport
+	  Name			  "tau"
+	  SID			  "631"
+	  Position		  [55, 223, 85, 237]
+	  ZOrder		  146
+	  Port			  "2"
+	  IconDisplay		  "Port number"
+	  PortDimensions	  "NQJ"
+	}
+	Block {
+	  BlockType		  SubSystem
+	  Name			  "mFcn_Minv"
+	  SID			  "630"
+	  Ports			  [2, 1]
+	  Position		  [210, 161, 295, 214]
+	  ZOrder		  145
+	  ErrorFcn		  "Stateflow.Translate.translate"
+	  PermitHierarchicalResolution "ExplicitOnly"
+	  TreatAsAtomicUnit	  on
+	  RequestExecContextInheritance	off
+	  SFBlockType		  "MATLAB Function"
+	  Variant		  off
+	  System {
+	    Name		    "mFcn_Minv"
+	    Location		    [223, 338, 826, 833]
+	    Open		    off
+	    PortBlocksUseCompactNotation off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "usletter"
+	    PaperUnits		    "inches"
+	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
+	    TiledPageScale	    1
+	    ShowPageBoundaries	    off
+	    ZoomFactor		    "100"
+	    SIDHighWatermark	    "93"
+	    Block {
+	      BlockType		      Inport
+	      Name		      "M"
+	      SID		      "630::1"
+	      Position		      [20, 101, 40, 119]
+	      ZOrder		      -1
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "tau"
+	      SID		      "630::21"
+	      Position		      [20, 136, 40, 154]
+	      ZOrder		      7
+	      Port		      "2"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Demux
+	      Name		      " Demux "
+	      SID		      "630::92"
+	      Ports		      [1, 1]
+	      Position		      [270, 230, 320, 270]
+	      ZOrder		      30
+	      Outputs		      "1"
+	    }
+	    Block {
+	      BlockType		      S-Function
+	      Name		      " SFunction "
+	      SID		      "630::91"
+	      Tag		      "Stateflow S-Function lib_%RN%_dynamics 24"
+	      Ports		      [2, 2]
+	      Position		      [180, 100, 230, 160]
+	      ZOrder		      29
+	      FunctionName	      "sf_sfun"
+	      PortCounts	      "[2 2]"
+	      SFunctionDeploymentMode off
+	      EnableBusSupport	      off
+	      SFcnIsStateOwnerBlock   off
+	      Port {
+		PortNumber		2
+		Name			"qDD"
+	      }
+	    }
+	    Block {
+	      BlockType		      Terminator
+	      Name		      " Terminator "
+	      SID		      "630::93"
+	      Position		      [460, 241, 480, 259]
+	      ZOrder		      31
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "qDD"
+	      SID		      "630::5"
+	      Position		      [460, 101, 480, 119]
+	      ZOrder		      -5
+	      IconDisplay	      "Port number"
+	    }
+	    Line {
+	      ZOrder		      6
+	      SrcBlock		      "M"
+	      SrcPort		      1
+	      Points		      [120, 0]
+	      DstBlock		      " SFunction "
+	      DstPort		      1
+	    }
+	    Line {
+	      ZOrder		      7
+	      SrcBlock		      "tau"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      2
+	    }
+	    Line {
+	      Name		      "qDD"
+	      ZOrder		      8
+	      Labels		      [0, 0]
+	      SrcBlock		      " SFunction "
+	      SrcPort		      2
+	      DstBlock		      "qDD"
+	      DstPort		      1
+	    }
+	    Line {
+	      ZOrder		      9
+	      SrcBlock		      " Demux "
+	      SrcPort		      1
+	      DstBlock		      " Terminator "
+	      DstPort		      1
+	    }
+	    Line {
+	      ZOrder		      10
+	      SrcBlock		      " SFunction "
+	      SrcPort		      1
+	      DstBlock		      " Demux "
+	      DstPort		      1
+	    }
+	  }
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "qDD"
+	  SID			  "629"
+	  Position		  [435, 175, 450, 205]
+	  ZOrder		  13
+	  NamePlacement		  "alternate"
+	  IconDisplay		  "Port number"
+	  PortDimensions	  "NQJ"
+	}
+	Line {
+	  ZOrder		  7
+	  SrcBlock		  "M"
+	  SrcPort		  1
+	  DstBlock		  "mFcn_Minv"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  6
+	  SrcBlock		  "mFcn_Minv"
+	  SrcPort		  1
+	  DstBlock		  "qDD"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  8
+	  SrcBlock		  "tau"
+	  SrcPort		  1
+	  Points		  [58, 0; 0, -30]
+	  DstBlock		  "mFcn_Minv"
+	  DstPort		  2
+	}
+      }
+    }
+    Block {
+      BlockType		      SubSystem
       Name		      "%RN%_fordyn_fixb_mp"
       SID		      "63"
       Ports		      [1, 3]
@@ -6235,42 +6448,42 @@ Library {
       Variant		      off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		72
+	$ObjectID		73
 	$ClassName		"Simulink.Mask"
 	Initialization		"NQJ=%NQJ%;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  5
 	  Object {
-	    $ObjectID		    73
+	    $ObjectID		    74
 	    Type		    "edit"
 	    Name		    "q_t0"
 	    Prompt		    "q0 (initial pose)"
 	    Value		    "q_t0"
 	  }
 	  Object {
-	    $ObjectID		    74
+	    $ObjectID		    75
 	    Type		    "edit"
 	    Name		    "qD_t0"
 	    Prompt		    "qD0 (initial velocity)"
 	    Value		    "qD_t0"
 	  }
 	  Object {
-	    $ObjectID		    75
+	    $ObjectID		    76
 	    Type		    "edit"
 	    Name		    "g_base"
 	    Prompt		    "g_base"
 	    Value		    "g_base"
 	  }
 	  Object {
-	    $ObjectID		    76
+	    $ObjectID		    77
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    77
+	    $ObjectID		    78
 	    Type		    "edit"
 	    Name		    "MPV"
 	    Prompt		    "Dynamik-Parameter (Minimalparametervektor fixed-base)"
@@ -6282,11 +6495,11 @@ Library {
 	  Type			  "Simulink.dialog.Group"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    78
+	    $ObjectID		    79
 	    Prompt		    "%<MaskType>"
 	    Object {
 	      $PropName		      "DialogControls"
-	      $ObjectID		      79
+	      $ObjectID		      80
 	      $ClassName	      "Simulink.dialog.Text"
 	      Prompt		      "%<MaskDescription>"
 	      Name		      "DescTextVar"
@@ -6294,29 +6507,29 @@ Library {
 	    Name		    "DescGroupVar"
 	  }
 	  Object {
-	    $ObjectID		    80
+	    $ObjectID		    81
 	    Prompt		    "Robot Parameters"
 	    Array {
 	      Type		      "Simulink.dialog.parameter.Edit"
 	      Dimension		      5
 	      Object {
-		$ObjectID		81
+		$ObjectID		82
 		Name			"q_t0"
 	      }
 	      Object {
-		$ObjectID		82
+		$ObjectID		83
 		Name			"qD_t0"
 	      }
 	      Object {
-		$ObjectID		83
+		$ObjectID		84
 		Name			"g_base"
 	      }
 	      Object {
-		$ObjectID		84
+		$ObjectID		85
 		Name			"pkin"
 	      }
 	      Object {
-		$ObjectID		85
+		$ObjectID		86
 		Name			"MPV"
 	      }
 	      PropName		      "DialogControls"
@@ -6328,7 +6541,7 @@ Library {
       }
       System {
 	Name			"%RN%_fordyn_fixb_mp"
-	Location		[49, 24, 1920, 1080]
+	Location		[528, 131, 2135, 1165]
 	Open			off
 	PortBlocksUseCompactNotation off
 	ModelBrowserVisibility	off
@@ -6408,140 +6621,6 @@ Library {
 	  }
 	}
 	Block {
-	  BlockType		  SubSystem
-	  Name			  "mFcn_Minv"
-	  SID			  "76"
-	  Ports			  [2, 1]
-	  Position		  [205, 71, 290, 124]
-	  ZOrder		  144
-	  LibraryVersion	  "1.190"
-	  ErrorFcn		  "Stateflow.Translate.translate"
-	  PermitHierarchicalResolution "ExplicitOnly"
-	  TreatAsAtomicUnit	  on
-	  RequestExecContextInheritance	off
-	  SFBlockType		  "MATLAB Function"
-	  Variant		  off
-	  Port {
-	    PortNumber		    1
-	    Name		    "qDD"
-	  }
-	  System {
-	    Name		    "mFcn_Minv"
-	    Location		    [223, 338, 826, 833]
-	    Open		    off
-	    PortBlocksUseCompactNotation off
-	    ModelBrowserVisibility  off
-	    ModelBrowserWidth	    200
-	    ScreenColor		    "white"
-	    PaperOrientation	    "landscape"
-	    PaperPositionMode	    "auto"
-	    PaperType		    "A4"
-	    PaperUnits		    "centimeters"
-	    TiledPaperMargins	    [1.270000, 1.270000, 1.270000, 1.270000]
-	    TiledPageScale	    1
-	    ShowPageBoundaries	    off
-	    ZoomFactor		    "100"
-	    SIDHighWatermark	    "90"
-	    Block {
-	      BlockType		      Inport
-	      Name		      "M"
-	      SID		      "76::1"
-	      Position		      [20, 101, 40, 119]
-	      ZOrder		      -1
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Inport
-	      Name		      "tau"
-	      SID		      "76::21"
-	      Position		      [20, 136, 40, 154]
-	      ZOrder		      7
-	      Port		      "2"
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Demux
-	      Name		      " Demux "
-	      SID		      "76::89"
-	      Ports		      [1, 1]
-	      Position		      [270, 230, 320, 270]
-	      ZOrder		      27
-	      Outputs		      "1"
-	    }
-	    Block {
-	      BlockType		      S-Function
-	      Name		      " SFunction "
-	      SID		      "76::88"
-	      Tag		      "Stateflow S-Function lib_%RN%_dynamics 38"
-	      Ports		      [2, 2]
-	      Position		      [180, 100, 230, 160]
-	      ZOrder		      26
-	      FunctionName	      "sf_sfun"
-	      PortCounts	      "[2 2]"
-	      SFunctionDeploymentMode off
-	      EnableBusSupport	      off
-	      SFcnIsStateOwnerBlock   off
-	      Port {
-		PortNumber		2
-		Name			"q_ddot"
-	      }
-	    }
-	    Block {
-	      BlockType		      Terminator
-	      Name		      " Terminator "
-	      SID		      "76::90"
-	      Position		      [460, 241, 480, 259]
-	      ZOrder		      28
-	    }
-	    Block {
-	      BlockType		      Outport
-	      Name		      "q_ddot"
-	      SID		      "76::5"
-	      Position		      [460, 101, 480, 119]
-	      ZOrder		      -5
-	      IconDisplay	      "Port number"
-	    }
-	    Line {
-	      ZOrder		      11
-	      SrcBlock		      "M"
-	      SrcPort		      1
-	      Points		      [120, 0]
-	      DstBlock		      " SFunction "
-	      DstPort		      1
-	    }
-	    Line {
-	      ZOrder		      12
-	      SrcBlock		      "tau"
-	      SrcPort		      1
-	      DstBlock		      " SFunction "
-	      DstPort		      2
-	    }
-	    Line {
-	      Name		      "q_ddot"
-	      ZOrder		      13
-	      Labels		      [0, 0]
-	      SrcBlock		      " SFunction "
-	      SrcPort		      2
-	      DstBlock		      "q_ddot"
-	      DstPort		      1
-	    }
-	    Line {
-	      ZOrder		      14
-	      SrcBlock		      " Demux "
-	      SrcPort		      1
-	      DstBlock		      " Terminator "
-	      DstPort		      1
-	    }
-	    Line {
-	      ZOrder		      15
-	      SrcBlock		      " SFunction "
-	      SrcPort		      1
-	      DstBlock		      " Demux "
-	      DstPort		      1
-	    }
-	  }
-	}
-	Block {
 	  BlockType		  Reference
 	  Name			  "%RN%_coriolisvec_fixb"
 	  SID			  "83"
@@ -6550,7 +6629,7 @@ Library {
 	  ZOrder		  234
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
-	  LibraryVersion	  "1.199"
+	  LibraryVersion	  "1.204"
 	  SourceBlock		  "lib_%RN%_dynamics/%RN%_coriolisvec_fixb_mp"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
@@ -6563,6 +6642,24 @@ Library {
 	}
 	Block {
 	  BlockType		  Reference
+	  Name			  "%RN%_get_acceleration"
+	  SID			  "632"
+	  Ports			  [2, 1]
+	  Position		  [225, 77, 285, 113]
+	  ZOrder		  545
+	  LibraryVersion	  "1.204"
+	  SourceBlock		  "lib_%RN%_dynamics/%RN%_fixb_get_acceleration"
+	  SourceType		  ""
+	  ContentPreviewEnabled	  off
+	  pkin			  "pkin"
+	  MPV			  "MPV"
+	  Port {
+	    PortNumber		    1
+	    Name		    "qDD"
+	  }
+	}
+	Block {
+	  BlockType		  Reference
 	  Name			  "%RN%_gravload"
 	  SID			  "84"
 	  Ports			  [2, 1]
@@ -6570,7 +6667,7 @@ Library {
 	  ZOrder		  235
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
-	  LibraryVersion	  "1.199"
+	  LibraryVersion	  "1.204"
 	  SourceBlock		  "lib_%RN%_dynamics/%RN%_gravload_mp"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
@@ -6588,7 +6685,7 @@ Library {
 	  Ports			  [1, 1]
 	  Position		  [95, 67, 155, 103]
 	  ZOrder		  233
-	  LibraryVersion	  "1.199"
+	  LibraryVersion	  "1.204"
 	  SourceBlock		  "lib_%RN%_dynamics/%RN%_inertiaJ_mp"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
@@ -6676,20 +6773,21 @@ Library {
 	}
 	Line {
 	  Name			  "qDD"
-	  ZOrder		  9
+	  ZOrder		  84
 	  Labels		  [0, 0]
-	  SrcBlock		  "mFcn_Minv"
+	  SrcBlock		  "%RN%_get_acceleration"
 	  SrcPort		  1
-	  Points		  [18, 0]
+	  Points		  [23, 0]
 	  Branch {
-	    ZOrder		    10
-	    Points		    [0, -45]
-	    DstBlock		    "qJDD"
+	    ZOrder		    85
+	    Points		    [0, 5]
+	    DstBlock		    "Integrator"
 	    DstPort		    1
 	  }
 	  Branch {
-	    ZOrder		    11
-	    DstBlock		    "Integrator"
+	    ZOrder		    10
+	    Points		    [0, -40]
+	    DstBlock		    "qJDD"
 	    DstPort		    1
 	  }
 	}
@@ -6741,18 +6839,19 @@ Library {
 	}
 	Line {
 	  Name			  "tau_acc"
-	  ZOrder		  25
+	  ZOrder		  82
 	  Labels		  [0, 0]
 	  SrcBlock		  "Sum3"
 	  SrcPort		  1
-	  DstBlock		  "mFcn_Minv"
+	  Points		  [0, -120]
+	  DstBlock		  "%RN%_get_acceleration"
 	  DstPort		  2
 	}
 	Line {
-	  ZOrder		  33
+	  ZOrder		  83
 	  SrcBlock		  "%RN%_inertiaJ"
 	  SrcPort		  1
-	  DstBlock		  "mFcn_Minv"
+	  DstBlock		  "%RN%_get_acceleration"
 	  DstPort		  1
 	}
 	Line {
@@ -6775,42 +6874,42 @@ Library {
       Variant		      off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		86
+	$ObjectID		87
 	$ClassName		"Simulink.Mask"
 	Initialization		"NQJ=%NQJ%;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  5
 	  Object {
-	    $ObjectID		    87
+	    $ObjectID		    88
 	    Type		    "edit"
 	    Name		    "q_t0"
 	    Prompt		    "q0 (initial pose)"
 	    Value		    "q_t0"
 	  }
 	  Object {
-	    $ObjectID		    88
+	    $ObjectID		    89
 	    Type		    "edit"
 	    Name		    "qD_t0"
 	    Prompt		    "qD0 (initial velocity)"
 	    Value		    "qD_t0"
 	  }
 	  Object {
-	    $ObjectID		    89
+	    $ObjectID		    90
 	    Type		    "edit"
 	    Name		    "g_base"
 	    Prompt		    "g_base"
 	    Value		    "g_base"
 	  }
 	  Object {
-	    $ObjectID		    90
+	    $ObjectID		    91
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    91
+	    $ObjectID		    92
 	    Type		    "edit"
 	    Name		    "DynPar1"
 	    Prompt		    "Dynamik-Parameter (Parametersatz 1)"
@@ -6822,11 +6921,11 @@ Library {
 	  Type			  "Simulink.dialog.Group"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    92
+	    $ObjectID		    93
 	    Prompt		    "%<MaskType>"
 	    Object {
 	      $PropName		      "DialogControls"
-	      $ObjectID		      93
+	      $ObjectID		      94
 	      $ClassName	      "Simulink.dialog.Text"
 	      Prompt		      "%<MaskDescription>"
 	      Name		      "DescTextVar"
@@ -6834,29 +6933,29 @@ Library {
 	    Name		    "DescGroupVar"
 	  }
 	  Object {
-	    $ObjectID		    94
+	    $ObjectID		    95
 	    Prompt		    "Robot Parameters"
 	    Array {
 	      Type		      "Simulink.dialog.parameter.Edit"
 	      Dimension		      5
 	      Object {
-		$ObjectID		95
+		$ObjectID		96
 		Name			"q_t0"
 	      }
 	      Object {
-		$ObjectID		96
+		$ObjectID		97
 		Name			"qD_t0"
 	      }
 	      Object {
-		$ObjectID		97
+		$ObjectID		98
 		Name			"g_base"
 	      }
 	      Object {
-		$ObjectID		98
+		$ObjectID		99
 		Name			"pkin"
 	      }
 	      Object {
-		$ObjectID		99
+		$ObjectID		100
 		Name			"DynPar1"
 	      }
 	      PropName		      "DialogControls"
@@ -6868,7 +6967,7 @@ Library {
       }
       System {
 	Name			"%RN%_fordyn_fixb_vp1"
-	Location		[992, 52, 1919, 1080]
+	Location		[528, 131, 2135, 1165]
 	Open			off
 	PortBlocksUseCompactNotation off
 	ModelBrowserVisibility	off
@@ -6948,140 +7047,6 @@ Library {
 	  }
 	}
 	Block {
-	  BlockType		  SubSystem
-	  Name			  "mFcn_Minv"
-	  SID			  "174"
-	  Ports			  [2, 1]
-	  Position		  [205, 71, 290, 124]
-	  ZOrder		  144
-	  LibraryVersion	  "1.190"
-	  ErrorFcn		  "Stateflow.Translate.translate"
-	  PermitHierarchicalResolution "ExplicitOnly"
-	  TreatAsAtomicUnit	  on
-	  RequestExecContextInheritance	off
-	  SFBlockType		  "MATLAB Function"
-	  Variant		  off
-	  Port {
-	    PortNumber		    1
-	    Name		    "qDD"
-	  }
-	  System {
-	    Name		    "mFcn_Minv"
-	    Location		    [223, 338, 826, 833]
-	    Open		    off
-	    PortBlocksUseCompactNotation off
-	    ModelBrowserVisibility  off
-	    ModelBrowserWidth	    200
-	    ScreenColor		    "white"
-	    PaperOrientation	    "landscape"
-	    PaperPositionMode	    "auto"
-	    PaperType		    "A4"
-	    PaperUnits		    "centimeters"
-	    TiledPaperMargins	    [1.270000, 1.270000, 1.270000, 1.270000]
-	    TiledPageScale	    1
-	    ShowPageBoundaries	    off
-	    ZoomFactor		    "100"
-	    SIDHighWatermark	    "93"
-	    Block {
-	      BlockType		      Inport
-	      Name		      "M"
-	      SID		      "174::1"
-	      Position		      [20, 101, 40, 119]
-	      ZOrder		      -1
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Inport
-	      Name		      "tau"
-	      SID		      "174::21"
-	      Position		      [20, 136, 40, 154]
-	      ZOrder		      7
-	      Port		      "2"
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Demux
-	      Name		      " Demux "
-	      SID		      "174::92"
-	      Ports		      [1, 1]
-	      Position		      [270, 230, 320, 270]
-	      ZOrder		      30
-	      Outputs		      "1"
-	    }
-	    Block {
-	      BlockType		      S-Function
-	      Name		      " SFunction "
-	      SID		      "174::91"
-	      Tag		      "Stateflow S-Function lib_%RN%_dynamics 11"
-	      Ports		      [2, 2]
-	      Position		      [180, 100, 230, 160]
-	      ZOrder		      29
-	      FunctionName	      "sf_sfun"
-	      PortCounts	      "[2 2]"
-	      SFunctionDeploymentMode off
-	      EnableBusSupport	      off
-	      SFcnIsStateOwnerBlock   off
-	      Port {
-		PortNumber		2
-		Name			"q_ddot"
-	      }
-	    }
-	    Block {
-	      BlockType		      Terminator
-	      Name		      " Terminator "
-	      SID		      "174::93"
-	      Position		      [460, 241, 480, 259]
-	      ZOrder		      31
-	    }
-	    Block {
-	      BlockType		      Outport
-	      Name		      "q_ddot"
-	      SID		      "174::5"
-	      Position		      [460, 101, 480, 119]
-	      ZOrder		      -5
-	      IconDisplay	      "Port number"
-	    }
-	    Line {
-	      ZOrder		      11
-	      SrcBlock		      "M"
-	      SrcPort		      1
-	      Points		      [120, 0]
-	      DstBlock		      " SFunction "
-	      DstPort		      1
-	    }
-	    Line {
-	      ZOrder		      12
-	      SrcBlock		      "tau"
-	      SrcPort		      1
-	      DstBlock		      " SFunction "
-	      DstPort		      2
-	    }
-	    Line {
-	      Name		      "q_ddot"
-	      ZOrder		      13
-	      Labels		      [0, 0]
-	      SrcBlock		      " SFunction "
-	      SrcPort		      2
-	      DstBlock		      "q_ddot"
-	      DstPort		      1
-	    }
-	    Line {
-	      ZOrder		      14
-	      SrcBlock		      " Demux "
-	      SrcPort		      1
-	      DstBlock		      " Terminator "
-	      DstPort		      1
-	    }
-	    Line {
-	      ZOrder		      15
-	      SrcBlock		      " SFunction "
-	      SrcPort		      1
-	      DstBlock		      " Demux "
-	      DstPort		      1
-	    }
-	  }
-	}
-	Block {
 	  BlockType		  Reference
 	  Name			  "%RN%_coriolisvec_fixb"
 	  SID			  "175"
@@ -7090,7 +7055,7 @@ Library {
 	  ZOrder		  234
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
-	  LibraryVersion	  "1.140"
+	  LibraryVersion	  "1.205"
 	  SourceBlock		  "lib_%RN%_dynamics/%RN%_coriolisvec_fixb_vp1"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
@@ -7103,6 +7068,24 @@ Library {
 	}
 	Block {
 	  BlockType		  Reference
+	  Name			  "%RN%_fixb_get_acceleration"
+	  SID			  "634"
+	  Ports			  [2, 1]
+	  Position		  [215, 79, 285, 121]
+	  ZOrder		  545
+	  LibraryVersion	  "1.205"
+	  SourceBlock		  "lib_%RN%_dynamics/%RN%_fixb_get_acceleration"
+	  SourceType		  ""
+	  ContentPreviewEnabled	  off
+	  pkin			  "pkin"
+	  MPV			  "MPV"
+	  Port {
+	    PortNumber		    1
+	    Name		    "qDD"
+	  }
+	}
+	Block {
+	  BlockType		  Reference
 	  Name			  "%RN%_gravload"
 	  SID			  "176"
 	  Ports			  [2, 1]
@@ -7110,7 +7093,7 @@ Library {
 	  ZOrder		  235
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
-	  LibraryVersion	  "1.140"
+	  LibraryVersion	  "1.205"
 	  SourceBlock		  "lib_%RN%_dynamics/%RN%_gravload_vp1"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
@@ -7126,9 +7109,9 @@ Library {
 	  Name			  "%RN%_inertiaJ"
 	  SID			  "177"
 	  Ports			  [1, 1]
-	  Position		  [95, 67, 155, 103]
+	  Position		  [95, 72, 155, 108]
 	  ZOrder		  233
-	  LibraryVersion	  "1.140"
+	  LibraryVersion	  "1.205"
 	  SourceBlock		  "lib_%RN%_dynamics/%RN%_inertiaJ_vp1"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
@@ -7216,19 +7199,19 @@ Library {
 	}
 	Line {
 	  Name			  "qDD"
-	  ZOrder		  8
+	  ZOrder		  44
 	  Labels		  [0, 0]
-	  SrcBlock		  "mFcn_Minv"
+	  SrcBlock		  "%RN%_fixb_get_acceleration"
 	  SrcPort		  1
-	  Points		  [18, 0]
+	  Points		  [23, 0]
 	  Branch {
-	    ZOrder		    9
+	    ZOrder		    47
 	    Points		    [0, -45]
 	    DstBlock		    "qJDD"
 	    DstPort		    1
 	  }
 	  Branch {
-	    ZOrder		    10
+	    ZOrder		    46
 	    DstBlock		    "Integrator"
 	    DstPort		    1
 	  }
@@ -7281,18 +7264,19 @@ Library {
 	}
 	Line {
 	  Name			  "tau_acc"
-	  ZOrder		  19
+	  ZOrder		  45
 	  Labels		  [0, 0]
 	  SrcBlock		  "Sum3"
 	  SrcPort		  1
-	  DstBlock		  "mFcn_Minv"
+	  Points		  [0, -115]
+	  DstBlock		  "%RN%_fixb_get_acceleration"
 	  DstPort		  2
 	}
 	Line {
-	  ZOrder		  20
+	  ZOrder		  43
 	  SrcBlock		  "%RN%_inertiaJ"
 	  SrcPort		  1
-	  DstBlock		  "mFcn_Minv"
+	  DstBlock		  "%RN%_fixb_get_acceleration"
 	  DstPort		  1
 	}
 	Line {
@@ -7315,7 +7299,7 @@ Library {
       Variant		      off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		100
+	$ObjectID		101
 	$ClassName		"Simulink.Mask"
 	Initialization		"NQJ=%NQJ%;"
 	Display			"port_label('input', 1, '_{(W)} F^{ext}', 'texmode', 'on')\nport_label('input', 2, '\\tau^{ext}_{J}', 'texm"
@@ -7324,63 +7308,63 @@ Library {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  9
 	  Object {
-	    $ObjectID		    101
+	    $ObjectID		    102
 	    Type		    "edit"
 	    Name		    "r_base_t0"
 	    Prompt		    "r_base_t0 (Basisposition im Welt-KS)"
 	    Value		    "r_base_t0"
 	  }
 	  Object {
-	    $ObjectID		    102
+	    $ObjectID		    103
 	    Type		    "edit"
 	    Name		    "rD_base_t0"
 	    Prompt		    "rD_base_t0"
 	    Value		    "rD_base_t0"
 	  }
 	  Object {
-	    $ObjectID		    103
+	    $ObjectID		    104
 	    Type		    "edit"
 	    Name		    "phi_base_t0"
 	    Prompt		    "phi_base_t0"
 	    Value		    "phi_base_t0"
 	  }
 	  Object {
-	    $ObjectID		    104
+	    $ObjectID		    105
 	    Type		    "edit"
 	    Name		    "phiD_base_t0"
 	    Prompt		    "phiD_base_t0"
 	    Value		    "phiD_base_t0"
 	  }
 	  Object {
-	    $ObjectID		    105
+	    $ObjectID		    106
 	    Type		    "edit"
 	    Name		    "qJ_t0"
 	    Prompt		    "q0 (initial pose)"
 	    Value		    "qJ_t0"
 	  }
 	  Object {
-	    $ObjectID		    106
+	    $ObjectID		    107
 	    Type		    "edit"
 	    Name		    "qJD_t0"
 	    Prompt		    "qD0 (initial velocity)"
 	    Value		    "qJD_t0"
 	  }
 	  Object {
-	    $ObjectID		    107
+	    $ObjectID		    108
 	    Type		    "edit"
 	    Name		    "g_world"
 	    Prompt		    "g_world"
 	    Value		    "g_world"
 	  }
 	  Object {
-	    $ObjectID		    108
+	    $ObjectID		    109
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    109
+	    $ObjectID		    110
 	    Type		    "edit"
 	    Name		    "MPV"
 	    Prompt		    "Dynamik-Parameter (Minimalparametervektor floating-base)"
@@ -7392,11 +7376,11 @@ Library {
 	  Type			  "Simulink.dialog.Group"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    110
+	    $ObjectID		    111
 	    Prompt		    "%<MaskType>"
 	    Object {
 	      $PropName		      "DialogControls"
-	      $ObjectID		      111
+	      $ObjectID		      112
 	      $ClassName	      "Simulink.dialog.Text"
 	      Prompt		      "%<MaskDescription>"
 	      Name		      "DescTextVar"
@@ -7404,45 +7388,45 @@ Library {
 	    Name		    "DescGroupVar"
 	  }
 	  Object {
-	    $ObjectID		    112
+	    $ObjectID		    113
 	    Prompt		    "Robot Parameters"
 	    Array {
 	      Type		      "Simulink.dialog.parameter.Edit"
 	      Dimension		      9
 	      Object {
-		$ObjectID		113
+		$ObjectID		114
 		Name			"r_base_t0"
 	      }
 	      Object {
-		$ObjectID		114
+		$ObjectID		115
 		Name			"rD_base_t0"
 	      }
 	      Object {
-		$ObjectID		115
+		$ObjectID		116
 		Name			"phi_base_t0"
 	      }
 	      Object {
-		$ObjectID		116
+		$ObjectID		117
 		Name			"phiD_base_t0"
 	      }
 	      Object {
-		$ObjectID		117
+		$ObjectID		118
 		Name			"qJ_t0"
 	      }
 	      Object {
-		$ObjectID		118
+		$ObjectID		119
 		Name			"qJD_t0"
 	      }
 	      Object {
-		$ObjectID		119
+		$ObjectID		120
 		Name			"g_world"
 	      }
 	      Object {
-		$ObjectID		120
+		$ObjectID		121
 		Name			"pkin"
 	      }
 	      Object {
-		$ObjectID		121
+		$ObjectID		122
 		Name			"MPV"
 	      }
 	      PropName		      "DialogControls"
@@ -7454,7 +7438,7 @@ Library {
       }
       System {
 	Name			"%RN%_fordyn_floatb_eulxyz_mp"
-	Location		[49, 24, 1920, 1080]
+	Location		[528, 131, 2135, 1165]
 	Open			on
 	PortBlocksUseCompactNotation off
 	ModelBrowserVisibility	off
@@ -7982,7 +7966,7 @@ Library {
 	  ZOrder		  547
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
-	  LibraryVersion	  "1.201"
+	  LibraryVersion	  "1.206"
 	  SourceBlock		  "lib_%RN%_dynamics/%RN%_coriolisvec_floatb_eulxyz_mp"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
@@ -8002,7 +7986,7 @@ Library {
 	  ZOrder		  548
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
-	  LibraryVersion	  "1.201"
+	  LibraryVersion	  "1.206"
 	  SourceBlock		  "lib_%RN%_dynamics/%RN%_gravload_floatb_eulxyz_mp"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
@@ -8020,7 +8004,7 @@ Library {
 	  Ports			  [2, 1]
 	  Position		  [580, 280, 620, 340]
 	  ZOrder		  546
-	  LibraryVersion	  "1.201"
+	  LibraryVersion	  "1.206"
 	  SourceBlock		  "lib_%RN%_dynamics/%RN%_inertia_floatb_eulxyz_mp"
 	  SourceType		  ""
 	  ContentPreviewEnabled	  off
@@ -8624,7 +8608,7 @@ Library {
       Variant		      off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		122
+	$ObjectID		123
 	$ClassName		"Simulink.Mask"
 	Initialization		"NQJ=%NQJ%;"
 	Display			"port_label('input', 1, '_{(W)} F^{ext}', 'texmode', 'on')\nport_label('input', 2, '\\tau^{ext}_{J}', 'texm"
@@ -8633,63 +8617,63 @@ Library {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  9
 	  Object {
-	    $ObjectID		    123
+	    $ObjectID		    124
 	    Type		    "edit"
 	    Name		    "r_base_t0"
 	    Prompt		    "r_base_t0 (Basisposition im Welt-KS)"
 	    Value		    "r_base_t0"
 	  }
 	  Object {
-	    $ObjectID		    124
+	    $ObjectID		    125
 	    Type		    "edit"
 	    Name		    "rD_base_t0"
 	    Prompt		    "rD_base_t0"
 	    Value		    "rD_base_t0"
 	  }
 	  Object {
-	    $ObjectID		    125
+	    $ObjectID		    126
 	    Type		    "edit"
 	    Name		    "phi_base_t0"
 	    Prompt		    "phi_base_t0"
 	    Value		    "phi_base_t0"
 	  }
 	  Object {
-	    $ObjectID		    126
+	    $ObjectID		    127
 	    Type		    "edit"
 	    Name		    "phiD_base_t0"
 	    Prompt		    "phiD_base_t0"
 	    Value		    "phiD_base_t0"
 	  }
 	  Object {
-	    $ObjectID		    127
+	    $ObjectID		    128
 	    Type		    "edit"
 	    Name		    "qJ_t0"
 	    Prompt		    "q0 (initial pose)"
 	    Value		    "qJ_t0"
 	  }
 	  Object {
-	    $ObjectID		    128
+	    $ObjectID		    129
 	    Type		    "edit"
 	    Name		    "qJD_t0"
 	    Prompt		    "qD0 (initial velocity)"
 	    Value		    "qJD_t0"
 	  }
 	  Object {
-	    $ObjectID		    129
+	    $ObjectID		    130
 	    Type		    "edit"
 	    Name		    "g_world"
 	    Prompt		    "g_world"
 	    Value		    "g_world"
 	  }
 	  Object {
-	    $ObjectID		    130
+	    $ObjectID		    131
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    131
+	    $ObjectID		    132
 	    Type		    "edit"
 	    Name		    "DynPar1"
 	    Prompt		    "Dynamik-Parameter (Parametersatz 1)"
@@ -8701,11 +8685,11 @@ Library {
 	  Type			  "Simulink.dialog.Group"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    132
+	    $ObjectID		    133
 	    Prompt		    "%<MaskType>"
 	    Object {
 	      $PropName		      "DialogControls"
-	      $ObjectID		      133
+	      $ObjectID		      134
 	      $ClassName	      "Simulink.dialog.Text"
 	      Prompt		      "%<MaskDescription>"
 	      Name		      "DescTextVar"
@@ -8713,45 +8697,45 @@ Library {
 	    Name		    "DescGroupVar"
 	  }
 	  Object {
-	    $ObjectID		    134
+	    $ObjectID		    135
 	    Prompt		    "Robot Parameters"
 	    Array {
 	      Type		      "Simulink.dialog.parameter.Edit"
 	      Dimension		      9
 	      Object {
-		$ObjectID		135
+		$ObjectID		136
 		Name			"r_base_t0"
 	      }
 	      Object {
-		$ObjectID		136
+		$ObjectID		137
 		Name			"rD_base_t0"
 	      }
 	      Object {
-		$ObjectID		137
+		$ObjectID		138
 		Name			"phi_base_t0"
 	      }
 	      Object {
-		$ObjectID		138
+		$ObjectID		139
 		Name			"phiD_base_t0"
 	      }
 	      Object {
-		$ObjectID		139
+		$ObjectID		140
 		Name			"qJ_t0"
 	      }
 	      Object {
-		$ObjectID		140
+		$ObjectID		141
 		Name			"qJD_t0"
 	      }
 	      Object {
-		$ObjectID		141
+		$ObjectID		142
 		Name			"g_world"
 	      }
 	      Object {
-		$ObjectID		142
+		$ObjectID		143
 		Name			"pkin"
 	      }
 	      Object {
-		$ObjectID		143
+		$ObjectID		144
 		Name			"DynPar1"
 	      }
 	      PropName		      "DialogControls"
@@ -9931,21 +9915,21 @@ Library {
       Variant		      off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		144
+	$ObjectID		145
 	$ClassName		"Simulink.Mask"
 	Initialization		"NQJ=%NQJ%;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    145
+	    $ObjectID		    146
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    146
+	    $ObjectID		    147
 	    Type		    "edit"
 	    Name		    "MPV"
 	    Prompt		    "Dynamik-Parameter (Minimalparametervektor floating-base)"
@@ -10262,21 +10246,21 @@ Library {
       Variant		      off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		147
+	$ObjectID		148
 	$ClassName		"Simulink.Mask"
 	Initialization		"NQJ=%NQJ%;\nm = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    148
+	    $ObjectID		    149
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    149
+	    $ObjectID		    150
 	    Type		    "edit"
 	    Name		    "DynPar1"
 	    Prompt		    "Dynamik-Parameter (Parametersatz 1)"
@@ -10622,21 +10606,21 @@ Library {
       Variant		      off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		150
+	$ObjectID		151
 	$ClassName		"Simulink.Mask"
 	Initialization		"NQJ=%NQJ%;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    151
+	    $ObjectID		    152
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    152
+	    $ObjectID		    153
 	    Type		    "edit"
 	    Name		    "MPV"
 	    Prompt		    "Dynamik-Parameter (Minimalparametervektor fixed-base)"
@@ -10914,21 +10898,21 @@ Library {
       Variant		      off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		153
+	$ObjectID		154
 	$ClassName		"Simulink.Mask"
 	Initialization		"NQJ=%NQJ%;\nm = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;\n"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    154
+	    $ObjectID		    155
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    155
+	    $ObjectID		    156
 	    Type		    "edit"
 	    Name		    "DynPar1"
 	    Prompt		    "Dynamik-Parameter (Parametersatz 1)"
@@ -11239,21 +11223,21 @@ Library {
       Variant		      off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		156
+	$ObjectID		157
 	$ClassName		"Simulink.Mask"
 	Initialization		"NQJ=%NQJ%;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    157
+	    $ObjectID		    158
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    158
+	    $ObjectID		    159
 	    Type		    "edit"
 	    Name		    "MPV"
 	    Prompt		    "Dynamik-Parameter (Minimalparametervektor fixed-base)"
@@ -11501,21 +11485,21 @@ Library {
       Variant		      off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		159
+	$ObjectID		160
 	$ClassName		"Simulink.Mask"
 	Initialization		"NQJ=%NQJ%;\nm = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    160
+	    $ObjectID		    161
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    161
+	    $ObjectID		    162
 	    Type		    "edit"
 	    Name		    "DynPar1"
 	    Prompt		    "Dynamik-Parameter (Parametersatz 1)"
@@ -11824,21 +11808,21 @@ Library {
       Variant		      off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		162
+	$ObjectID		163
 	$ClassName		"Simulink.Mask"
 	Initialization		"NQJ=%NQJ%;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    163
+	    $ObjectID		    164
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    164
+	    $ObjectID		    165
 	    Type		    "edit"
 	    Name		    "MPV"
 	    Prompt		    "Dynamik-Parameter (Minimalparametervektor floating-base)"
@@ -12117,21 +12101,21 @@ Library {
       Variant		      off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		165
+	$ObjectID		166
 	$ClassName		"Simulink.Mask"
 	Initialization		"NQJ=%NQJ%;\nm = DynPar1.m;\nr_S = DynPar1.r_S;\nI_S = DynPar1.I_S;"
 	Array {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    166
+	    $ObjectID		    167
 	    Type		    "edit"
 	    Name		    "pkin"
 	    Prompt		    "Kinematik-Parameter"
 	    Value		    "pkin"
 	  }
 	  Object {
-	    $ObjectID		    167
+	    $ObjectID		    168
 	    Type		    "edit"
 	    Name		    "DynPar1"
 	    Prompt		    "Dynamik-Parameter (Parametersatz 1)"
@@ -12469,7 +12453,7 @@ Library {
     Annotation {
       SID		      "87"
       Name		      "Vorwärtsdynamik"
-      Position		      [26, 697, 681, 982]
+      Position		      [26, 697, 756, 982]
       InternalMargins	      [0, 0, 0, 0]
       FixedHeight	      on
       FixedWidth	      on
@@ -12477,7 +12461,7 @@ Library {
       BackgroundColor	      "[0.901961, 0.901961, 1.000000]"
       DropShadow	      on
       AnnotationType	      "area_annotation"
-      ZOrder		      207
+      ZOrder		      227
       FontSize		      12
     }
     Annotation {
@@ -12491,7 +12475,7 @@ Library {
       BackgroundColor	      "[0.901961, 0.901961, 1.000000]"
       DropShadow	      on
       AnnotationType	      "area_annotation"
-      ZOrder		      203
+      ZOrder		      223
       FontSize		      12
     }
     Annotation {
@@ -12505,7 +12489,7 @@ Library {
       BackgroundColor	      "[0.901961, 0.901961, 1.000000]"
       DropShadow	      on
       AnnotationType	      "area_annotation"
-      ZOrder		      204
+      ZOrder		      224
       FontSize		      12
     }
     Annotation {
@@ -12519,7 +12503,7 @@ Library {
       BackgroundColor	      "[0.901961, 0.901961, 1.000000]"
       DropShadow	      on
       AnnotationType	      "area_annotation"
-      ZOrder		      206
+      ZOrder		      226
       FontSize		      12
     }
     Annotation {
@@ -12533,7 +12517,7 @@ Library {
       BackgroundColor	      "[0.901961, 0.901961, 1.000000]"
       DropShadow	      on
       AnnotationType	      "area_annotation"
-      ZOrder		      205
+      ZOrder		      225
       FontSize		      12
     }
   }
@@ -12550,7 +12534,7 @@ Stateflow {
     created		    "14-Apr-2016 18:44:56"
     isLibrary		    1
     sfVersion		    80000012
-    firstTarget		    262
+    firstTarget		    254
   }
   chart {
     id			    2
@@ -14705,24 +14689,24 @@ Stateflow {
   chart {
     id			    108
     machine		    1
-    name		    "%RN%_fordyn_fixb_vp1/mFcn_Minv"
-    windowPosition	    [357.331 483.407 167 391]
+    name		    "%RN%_gravload_floatb_eulxyz_vp1/MATLAB Function"
+    windowPosition	    [422 539.941 189 413]
     viewLimits		    [0 156.75 0 153.75]
-    screen		    [1 1 1280 1024 1.041050272174191]
+    screen		    [1 1 3600 1200 1.180555555555556]
     treeNode		    [0 109 0 0]
     viewObj		    108
     toolbarMode		    LIBRARY_TOOLBAR
-    ssIdHighWaterMark	    6
+    ssIdHighWaterMark	    16
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
-    chartFileNumber	    11
+    chartFileNumber	    12
     disableImplicitCasting  1
     eml {
-      name		      "fcn"
+      name		      "gravload"
     }
     firstData		    110
-    firstTransition	    114
-    firstJunction	    113
+    firstTransition	    118
+    firstJunction	    117
   }
   state {
     id			    109
@@ -14738,14 +14722,16 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function q_ddot = fcn(M,tau)\n%#codegen\nq_ddot=M\\tau;"
+      script		      "function taug = gravload(q, ob, g_world, pkin, m, r_S)\n%#codegen\n\ntaug_base = %RN%_gravlo"
+      "adB_floatb_eulxyz_slag_vp1(q, ob, g_world, ...\n  pkin, m, r_S);\ntaug_joints = %RN%_gravloadJ_floatb_eulxy"
+      "z_slag_vp1(q, ob, g_world,...\n  pkin, m, r_S);\ntaug = [taug_base; taug_joints];\n\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
   data {
     id			    110
     ssIdNumber		    4
-    name		    "M"
+    name		    "q"
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -14767,7 +14753,7 @@ Stateflow {
   data {
     id			    111
     ssIdNumber		    5
-    name		    "q_ddot"
+    name		    "taug"
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -14790,6 +14776,2551 @@ Stateflow {
   data {
     id			    112
     ssIdNumber		    6
+    name		    "ob"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [108 111 113]
+  }
+  data {
+    id			    113
+    ssIdNumber		    15
+    name		    "g_world"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [108 112 114]
+  }
+  data {
+    id			    114
+    ssIdNumber		    7
+    name		    "pkin"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [108 113 115]
+  }
+  data {
+    id			    115
+    ssIdNumber		    13
+    name		    "m"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [108 114 116]
+  }
+  data {
+    id			    116
+    ssIdNumber		    14
+    name		    "r_S"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [108 115 0]
+  }
+  junction {
+    id			    117
+    position		    [23.5747 49.5747 7]
+    chart		    108
+    subviewer		    108
+    ssIdNumber		    3
+    type		    CONNECTIVE_JUNCTION
+    linkNode		    [108 0 0]
+  }
+  transition {
+    id			    118
+    labelString		    "{eML_blk_kernel();}"
+    labelPosition	    [28.125 13.875 102.544 14.964]
+    fontSize		    12
+    src {
+      intersection	      [0 0 1 0 23.5747 14.625 0 0]
+    }
+    dst {
+      id		      117
+      intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
+    }
+    midPoint		    [23.5747 24.9468]
+    chart		    108
+    dataLimits		    [21.175 25.975 14.625 42.575]
+    subviewer		    108
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    2
+    linkNode		    [108 0 0]
+  }
+  instance {
+    id			    119
+    machine		    1
+    name		    "%RN%_gravload_floatb_eulxyz_vp1/MATLAB Function"
+    chart		    108
+  }
+  chart {
+    id			    120
+    machine		    1
+    name		    "%RN%_coriolisvec_floatb_eulxyz_vp1/coriolisvec_fcn"
+    windowPosition	    [422 539.941 189 413]
+    viewLimits		    [0 156.75 0 153.75]
+    screen		    [1 1 3600 1200 1.180555555555556]
+    treeNode		    [0 121 0 0]
+    viewObj		    120
+    toolbarMode		    LIBRARY_TOOLBAR
+    ssIdHighWaterMark	    18
+    decomposition	    CLUSTER_CHART
+    type		    EML_CHART
+    chartFileNumber	    13
+    disableImplicitCasting  1
+    eml {
+      name		      "coriolis"
+    }
+    firstData		    122
+    firstTransition	    132
+    firstJunction	    131
+  }
+  state {
+    id			    121
+    labelString		    "eML_blk_kernel()"
+    position		    [18 64.5 118 66]
+    fontSize		    12
+    chart		    120
+    treeNode		    [120 0 0 0]
+    superState		    SUBCHART
+    subviewer		    120
+    ssIdNumber		    1
+    type		    FUNC_STATE
+    decomposition	    CLUSTER_STATE
+    eml {
+      isEML		      1
+      script		      "function tauc = coriolis(qJ, qJD, phi_base, xD_base, pkin, m, r_S, I_S)\n%#codegen\ntauc = %RN%_coriolisvec_floatb_eulxyz_slag_vp1(qJ, qJD, phi_base, xD_base, ...\n  pkin, m, r_S, I_S);\n\n"
+      editorLayout	      "100 M4x1[10 5 700 500]"
+    }
+  }
+  data {
+    id			    122
+    ssIdNumber		    4
+    name		    "qJ"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [120 0 123]
+  }
+  data {
+    id			    123
+    ssIdNumber		    5
+    name		    "tauc"
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_NO
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [120 122 124]
+  }
+  data {
+    id			    124
+    ssIdNumber		    6
+    name		    "qJD"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [120 123 125]
+  }
+  data {
+    id			    125
+    ssIdNumber		    16
+    name		    "phi_base"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [120 124 126]
+  }
+  data {
+    id			    126
+    ssIdNumber		    17
+    name		    "xD_base"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [120 125 127]
+  }
+  data {
+    id			    127
+    ssIdNumber		    7
+    name		    "pkin"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [120 126 128]
+  }
+  data {
+    id			    128
+    ssIdNumber		    13
+    name		    "m"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [120 127 129]
+  }
+  data {
+    id			    129
+    ssIdNumber		    14
+    name		    "r_S"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [120 128 130]
+  }
+  data {
+    id			    130
+    ssIdNumber		    15
+    name		    "I_S"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [120 129 0]
+  }
+  junction {
+    id			    131
+    position		    [23.5747 49.5747 7]
+    chart		    120
+    subviewer		    120
+    ssIdNumber		    3
+    type		    CONNECTIVE_JUNCTION
+    linkNode		    [120 0 0]
+  }
+  transition {
+    id			    132
+    labelString		    "{eML_blk_kernel();}"
+    labelPosition	    [28.125 13.875 102.544 14.964]
+    fontSize		    12
+    src {
+      intersection	      [0 0 1 0 23.5747 14.625 0 0]
+    }
+    dst {
+      id		      131
+      intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
+    }
+    midPoint		    [23.5747 24.9468]
+    chart		    120
+    dataLimits		    [21.175 25.975 14.625 42.575]
+    subviewer		    120
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    2
+    linkNode		    [120 0 0]
+  }
+  instance {
+    id			    133
+    machine		    1
+    name		    "%RN%_coriolisvec_floatb_eulxyz_vp1/coriolisvec_fcn"
+    chart		    120
+  }
+  chart {
+    id			    134
+    machine		    1
+    name		    "%RN%_inertia_floatb_eulxyz_vp1/inertiajoint_fcn"
+    windowPosition	    [422 539.941 189 413]
+    viewLimits		    [0 156.75 0 153.75]
+    screen		    [1 1 3600 1200 1.180555555555556]
+    treeNode		    [0 135 0 0]
+    viewObj		    134
+    toolbarMode		    LIBRARY_TOOLBAR
+    ssIdHighWaterMark	    17
+    decomposition	    CLUSTER_CHART
+    type		    EML_CHART
+    chartFileNumber	    14
+    disableImplicitCasting  1
+    eml {
+      name		      "inertia"
+    }
+    firstData		    136
+    firstTransition	    144
+    firstJunction	    143
+  }
+  state {
+    id			    135
+    labelString		    "eML_blk_kernel()"
+    position		    [18 64.5 118 66]
+    fontSize		    12
+    chart		    134
+    treeNode		    [134 0 0 0]
+    superState		    SUBCHART
+    subviewer		    134
+    ssIdNumber		    1
+    type		    FUNC_STATE
+    decomposition	    CLUSTER_STATE
+    eml {
+      isEML		      1
+      script		      "function Mq = inertia(qJ, phi_base, pkin, m, r_S, I_S)\n%#codegen\nMq = %RN%_inertia_floatb_"
+      "eulxyz_slag_vp1(qJ, phi_base, ...\n  pkin, m, r_S, I_S);\n"
+      editorLayout	      "100 M4x1[10 5 700 500]"
+    }
+  }
+  data {
+    id			    136
+    ssIdNumber		    4
+    name		    "qJ"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [134 0 137]
+  }
+  data {
+    id			    137
+    ssIdNumber		    16
+    name		    "phi_base"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [134 136 138]
+  }
+  data {
+    id			    138
+    ssIdNumber		    5
+    name		    "Mq"
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_NO
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [134 137 139]
+  }
+  data {
+    id			    139
+    ssIdNumber		    7
+    name		    "pkin"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [134 138 140]
+  }
+  data {
+    id			    140
+    ssIdNumber		    13
+    name		    "m"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [134 139 141]
+  }
+  data {
+    id			    141
+    ssIdNumber		    14
+    name		    "r_S"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [134 140 142]
+  }
+  data {
+    id			    142
+    ssIdNumber		    15
+    name		    "I_S"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [134 141 0]
+  }
+  junction {
+    id			    143
+    position		    [23.5747 49.5747 7]
+    chart		    134
+    subviewer		    134
+    ssIdNumber		    3
+    type		    CONNECTIVE_JUNCTION
+    linkNode		    [134 0 0]
+  }
+  transition {
+    id			    144
+    labelString		    "{eML_blk_kernel();}"
+    labelPosition	    [28.125 13.875 102.544 14.964]
+    fontSize		    12
+    src {
+      intersection	      [0 0 1 0 23.5747 14.625 0 0]
+    }
+    dst {
+      id		      143
+      intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
+    }
+    midPoint		    [23.5747 24.9468]
+    chart		    134
+    dataLimits		    [21.175 25.975 14.625 42.575]
+    subviewer		    134
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    2
+    linkNode		    [134 0 0]
+  }
+  instance {
+    id			    145
+    machine		    1
+    name		    "%RN%_inertia_floatb_eulxyz_vp1/inertiajoint_fcn"
+    chart		    134
+  }
+  chart {
+    id			    146
+    machine		    1
+    name		    "%RN%_energypot_floatb_eulxyz_vp1/MATLAB Function"
+    windowPosition	    [422 539.941 189 413]
+    viewLimits		    [0 156.75 0 153.75]
+    screen		    [1 1 3600 1200 1.180555555555556]
+    treeNode		    [0 147 0 0]
+    viewObj		    146
+    toolbarMode		    LIBRARY_TOOLBAR
+    ssIdHighWaterMark	    17
+    decomposition	    CLUSTER_CHART
+    type		    EML_CHART
+    chartFileNumber	    15
+    disableImplicitCasting  1
+    eml {
+      name		      "energypot"
+    }
+    firstData		    148
+    firstTransition	    157
+    firstJunction	    156
+  }
+  state {
+    id			    147
+    labelString		    "eML_blk_kernel()"
+    position		    [18 64.5 118 66]
+    fontSize		    12
+    chart		    146
+    treeNode		    [146 0 0 0]
+    superState		    SUBCHART
+    subviewer		    146
+    ssIdNumber		    1
+    type		    FUNC_STATE
+    decomposition	    CLUSTER_STATE
+    eml {
+      isEML		      1
+      script		      "function U = energypot(qJ, r_base, phi_base, g_world, ...\n  pkin, m, r_S)\n%#codegen\nU = %RN%_energypot_floatb_eulxyz_slag_vp1(qJ, r_base, phi_base, g_world, ...\n  pkin, m, r_S);\n\n"
+      editorLayout	      "100 M4x1[10 5 700 500]"
+    }
+  }
+  data {
+    id			    148
+    ssIdNumber		    4
+    name		    "qJ"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [146 0 149]
+  }
+  data {
+    id			    149
+    ssIdNumber		    5
+    name		    "U"
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_NO
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [146 148 150]
+  }
+  data {
+    id			    150
+    ssIdNumber		    6
+    name		    "r_base"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [146 149 151]
+  }
+  data {
+    id			    151
+    ssIdNumber		    15
+    name		    "phi_base"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [146 150 152]
+  }
+  data {
+    id			    152
+    ssIdNumber		    16
+    name		    "g_world"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [146 151 153]
+  }
+  data {
+    id			    153
+    ssIdNumber		    7
+    name		    "pkin"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [146 152 154]
+  }
+  data {
+    id			    154
+    ssIdNumber		    13
+    name		    "m"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [146 153 155]
+  }
+  data {
+    id			    155
+    ssIdNumber		    14
+    name		    "r_S"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [146 154 0]
+  }
+  junction {
+    id			    156
+    position		    [23.5747 49.5747 7]
+    chart		    146
+    subviewer		    146
+    ssIdNumber		    3
+    type		    CONNECTIVE_JUNCTION
+    linkNode		    [146 0 0]
+  }
+  transition {
+    id			    157
+    labelString		    "{eML_blk_kernel();}"
+    labelPosition	    [28.125 13.875 102.544 14.964]
+    fontSize		    12
+    src {
+      intersection	      [0 0 1 0 23.5747 14.625 0 0]
+    }
+    dst {
+      id		      156
+      intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
+    }
+    midPoint		    [23.5747 24.9468]
+    chart		    146
+    dataLimits		    [21.175 25.975 14.625 42.575]
+    subviewer		    146
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    2
+    linkNode		    [146 0 0]
+  }
+  instance {
+    id			    158
+    machine		    1
+    name		    "%RN%_energypot_floatb_eulxyz_vp1/MATLAB Function"
+    chart		    146
+  }
+  chart {
+    id			    159
+    machine		    1
+    name		    "%RN%_energykin_floatb_eulxyz_vp1/MATLAB Function"
+    windowPosition	    [422 539.941 189 413]
+    viewLimits		    [0 156.75 0 153.75]
+    screen		    [1 1 3600 1200 1.180555555555556]
+    treeNode		    [0 160 0 0]
+    viewObj		    159
+    toolbarMode		    LIBRARY_TOOLBAR
+    ssIdHighWaterMark	    18
+    decomposition	    CLUSTER_CHART
+    type		    EML_CHART
+    chartFileNumber	    16
+    disableImplicitCasting  1
+    eml {
+      name		      "energykin"
+    }
+    firstData		    161
+    firstTransition	    171
+    firstJunction	    170
+  }
+  state {
+    id			    160
+    labelString		    "eML_blk_kernel()"
+    position		    [18 64.5 118 66]
+    fontSize		    12
+    chart		    159
+    treeNode		    [159 0 0 0]
+    superState		    SUBCHART
+    subviewer		    159
+    ssIdNumber		    1
+    type		    FUNC_STATE
+    decomposition	    CLUSTER_STATE
+    eml {
+      isEML		      1
+      script		      "function T = energykin(qJ, qD, phi_base, xD_base,  ...\n  pkin, m, r_S, I_S)\n%#codegen\nT = %RN%_energykin_floatb_eulxyz_slag_vp1(qJ, qD, phi_base, xD_base, ...\n  pkin, m, r_S, I_S);\n\n"
+      editorLayout	      "100 M4x1[10 5 700 500]"
+    }
+  }
+  data {
+    id			    161
+    ssIdNumber		    4
+    name		    "qJ"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [159 0 162]
+  }
+  data {
+    id			    162
+    ssIdNumber		    5
+    name		    "T"
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_NO
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [159 161 163]
+  }
+  data {
+    id			    163
+    ssIdNumber		    6
+    name		    "qD"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [159 162 164]
+  }
+  data {
+    id			    164
+    ssIdNumber		    16
+    name		    "phi_base"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [159 163 165]
+  }
+  data {
+    id			    165
+    ssIdNumber		    17
+    name		    "xD_base"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [159 164 166]
+  }
+  data {
+    id			    166
+    ssIdNumber		    7
+    name		    "pkin"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [159 165 167]
+  }
+  data {
+    id			    167
+    ssIdNumber		    13
+    name		    "m"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [159 166 168]
+  }
+  data {
+    id			    168
+    ssIdNumber		    14
+    name		    "r_S"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [159 167 169]
+  }
+  data {
+    id			    169
+    ssIdNumber		    15
+    name		    "I_S"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [159 168 0]
+  }
+  junction {
+    id			    170
+    position		    [23.5747 49.5747 7]
+    chart		    159
+    subviewer		    159
+    ssIdNumber		    3
+    type		    CONNECTIVE_JUNCTION
+    linkNode		    [159 0 0]
+  }
+  transition {
+    id			    171
+    labelString		    "{eML_blk_kernel();}"
+    labelPosition	    [28.125 13.875 102.544 14.964]
+    fontSize		    12
+    src {
+      intersection	      [0 0 1 0 23.5747 14.625 0 0]
+    }
+    dst {
+      id		      170
+      intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
+    }
+    midPoint		    [23.5747 24.9468]
+    chart		    159
+    dataLimits		    [21.175 25.975 14.625 42.575]
+    subviewer		    159
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    2
+    linkNode		    [159 0 0]
+  }
+  instance {
+    id			    172
+    machine		    1
+    name		    "%RN%_energykin_floatb_eulxyz_vp1/MATLAB Function"
+    chart		    159
+  }
+  chart {
+    id			    173
+    machine		    1
+    name		    "%RN%_gravload_floatb_eulxyz_mp/MATLAB Function"
+    windowPosition	    [422 539.941 189 413]
+    viewLimits		    [0 156.75 0 153.75]
+    screen		    [1 1 3600 1200 1.180555555555556]
+    treeNode		    [0 174 0 0]
+    viewObj		    173
+    toolbarMode		    LIBRARY_TOOLBAR
+    ssIdHighWaterMark	    16
+    decomposition	    CLUSTER_CHART
+    type		    EML_CHART
+    chartFileNumber	    17
+    disableImplicitCasting  1
+    eml {
+      name		      "gravload"
+    }
+    firstData		    175
+    firstTransition	    182
+    firstJunction	    181
+  }
+  state {
+    id			    174
+    labelString		    "eML_blk_kernel()"
+    position		    [18 64.5 118 66]
+    fontSize		    12
+    chart		    173
+    treeNode		    [173 0 0 0]
+    superState		    SUBCHART
+    subviewer		    173
+    ssIdNumber		    1
+    type		    FUNC_STATE
+    decomposition	    CLUSTER_STATE
+    eml {
+      isEML		      1
+      script		      "function taug = gravload(q, ob, g_world, pkin, MPV)\n%#codegen\n\ntauBg_reg = %RN%_gravloadB"
+      "_floatb_eulxyz_regmin_slag_vp(q, ob, g_world, pkin);\ntauJg_reg = %RN%_gravloadJ_floatb_eulxyz_regmin_slag_"
+      "vp(q, ob, g_world, pkin);    \ntaug_reg = [tauBg_reg;tauJg_reg];\ntaug = taug_reg*MPV;\n\n\n"
+      editorLayout	      "100 M4x1[10 5 700 500]"
+    }
+  }
+  data {
+    id			    175
+    ssIdNumber		    4
+    name		    "q"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [173 0 176]
+  }
+  data {
+    id			    176
+    ssIdNumber		    5
+    name		    "taug"
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_NO
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [173 175 177]
+  }
+  data {
+    id			    177
+    ssIdNumber		    6
+    name		    "ob"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [173 176 178]
+  }
+  data {
+    id			    178
+    ssIdNumber		    15
+    name		    "g_world"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [173 177 179]
+  }
+  data {
+    id			    179
+    ssIdNumber		    7
+    name		    "pkin"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [173 178 180]
+  }
+  data {
+    id			    180
+    ssIdNumber		    13
+    name		    "MPV"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [173 179 0]
+  }
+  junction {
+    id			    181
+    position		    [23.5747 49.5747 7]
+    chart		    173
+    subviewer		    173
+    ssIdNumber		    3
+    type		    CONNECTIVE_JUNCTION
+    linkNode		    [173 0 0]
+  }
+  transition {
+    id			    182
+    labelString		    "{eML_blk_kernel();}"
+    labelPosition	    [28.125 13.875 102.544 14.964]
+    fontSize		    12
+    src {
+      intersection	      [0 0 1 0 23.5747 14.625 0 0]
+    }
+    dst {
+      id		      181
+      intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
+    }
+    midPoint		    [23.5747 24.9468]
+    chart		    173
+    dataLimits		    [21.175 25.975 14.625 42.575]
+    subviewer		    173
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    2
+    linkNode		    [173 0 0]
+  }
+  instance {
+    id			    183
+    machine		    1
+    name		    "%RN%_gravload_floatb_eulxyz_mp/MATLAB Function"
+    chart		    173
+  }
+  chart {
+    id			    184
+    machine		    1
+    name		    "%RN%_coriolisvec_floatb_eulxyz_mp/coriolisvec_fcn"
+    windowPosition	    [422 539.941 189 413]
+    viewLimits		    [0 156.75 0 153.75]
+    screen		    [1 1 3600 1200 1.180555555555556]
+    treeNode		    [0 185 0 0]
+    viewObj		    184
+    toolbarMode		    LIBRARY_TOOLBAR
+    ssIdHighWaterMark	    18
+    decomposition	    CLUSTER_CHART
+    type		    EML_CHART
+    chartFileNumber	    18
+    disableImplicitCasting  1
+    eml {
+      name		      "coriolis"
+    }
+    firstData		    186
+    firstTransition	    194
+    firstJunction	    193
+  }
+  state {
+    id			    185
+    labelString		    "eML_blk_kernel()"
+    position		    [18 64.5 118 66]
+    fontSize		    12
+    chart		    184
+    treeNode		    [184 0 0 0]
+    superState		    SUBCHART
+    subviewer		    184
+    ssIdNumber		    1
+    type		    FUNC_STATE
+    decomposition	    CLUSTER_STATE
+    eml {
+      isEML		      1
+      script		      "function tauc = coriolis(qJ, qJD, phi_base, xD_base, pkin, MPV)\n%#codegen\ntauc_reg = %RN%_"
+      "coriolisvec_floatb_eulxyz_regmin_slag_vp(qJ, qJD, ...\n  phi_base, xD_base, pkin);\n\ntauc = tauc_reg*MPV;"
+      editorLayout	      "100 M4x1[10 5 700 500]"
+    }
+  }
+  data {
+    id			    186
+    ssIdNumber		    4
+    name		    "qJ"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [184 0 187]
+  }
+  data {
+    id			    187
+    ssIdNumber		    5
+    name		    "tauc"
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_NO
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [184 186 188]
+  }
+  data {
+    id			    188
+    ssIdNumber		    6
+    name		    "qJD"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [184 187 189]
+  }
+  data {
+    id			    189
+    ssIdNumber		    16
+    name		    "phi_base"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [184 188 190]
+  }
+  data {
+    id			    190
+    ssIdNumber		    17
+    name		    "xD_base"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [184 189 191]
+  }
+  data {
+    id			    191
+    ssIdNumber		    7
+    name		    "pkin"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [184 190 192]
+  }
+  data {
+    id			    192
+    ssIdNumber		    13
+    name		    "MPV"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [184 191 0]
+  }
+  junction {
+    id			    193
+    position		    [23.5747 49.5747 7]
+    chart		    184
+    subviewer		    184
+    ssIdNumber		    3
+    type		    CONNECTIVE_JUNCTION
+    linkNode		    [184 0 0]
+  }
+  transition {
+    id			    194
+    labelString		    "{eML_blk_kernel();}"
+    labelPosition	    [28.125 13.875 102.544 14.964]
+    fontSize		    12
+    src {
+      intersection	      [0 0 1 0 23.5747 14.625 0 0]
+    }
+    dst {
+      id		      193
+      intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
+    }
+    midPoint		    [23.5747 24.9468]
+    chart		    184
+    dataLimits		    [21.175 25.975 14.625 42.575]
+    subviewer		    184
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    2
+    linkNode		    [184 0 0]
+  }
+  instance {
+    id			    195
+    machine		    1
+    name		    "%RN%_coriolisvec_floatb_eulxyz_mp/coriolisvec_fcn"
+    chart		    184
+  }
+  chart {
+    id			    196
+    machine		    1
+    name		    "%RN%_inertia_floatb_eulxyz_mp/inertiajoint_fcn"
+    windowPosition	    [422 539.941 189 413]
+    viewLimits		    [0 156.75 0 153.75]
+    screen		    [1 1 3600 1200 1.180555555555556]
+    treeNode		    [0 197 0 0]
+    viewObj		    196
+    toolbarMode		    LIBRARY_TOOLBAR
+    ssIdHighWaterMark	    17
+    decomposition	    CLUSTER_CHART
+    type		    EML_CHART
+    chartFileNumber	    19
+    disableImplicitCasting  1
+    eml {
+      name		      "inertia"
+    }
+    firstData		    198
+    firstTransition	    204
+    firstJunction	    203
+  }
+  state {
+    id			    197
+    labelString		    "eML_blk_kernel()"
+    position		    [18 64.5 118 66]
+    fontSize		    12
+    chart		    196
+    treeNode		    [196 0 0 0]
+    superState		    SUBCHART
+    subviewer		    196
+    ssIdNumber		    1
+    type		    FUNC_STATE
+    decomposition	    CLUSTER_STATE
+    eml {
+      isEML		      1
+      script		      "function Mq = inertia(qJ, phi_base, pkin, MPV)\n%#codegen\nM_regmin = %RN%_inertia_floatb_eu"
+      "lxyz_regmin_slag_vp(qJ, phi_base, pkin);\nM_mpv_vec = M_regmin*MPV;\nMq = vec2symmat(M_mpv_vec);"
+      editorLayout	      "100 M4x1[10 5 700 500]"
+    }
+  }
+  data {
+    id			    198
+    ssIdNumber		    4
+    name		    "qJ"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [196 0 199]
+  }
+  data {
+    id			    199
+    ssIdNumber		    16
+    name		    "phi_base"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [196 198 200]
+  }
+  data {
+    id			    200
+    ssIdNumber		    5
+    name		    "Mq"
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_NO
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [196 199 201]
+  }
+  data {
+    id			    201
+    ssIdNumber		    7
+    name		    "pkin"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [196 200 202]
+  }
+  data {
+    id			    202
+    ssIdNumber		    13
+    name		    "MPV"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [196 201 0]
+  }
+  junction {
+    id			    203
+    position		    [23.5747 49.5747 7]
+    chart		    196
+    subviewer		    196
+    ssIdNumber		    3
+    type		    CONNECTIVE_JUNCTION
+    linkNode		    [196 0 0]
+  }
+  transition {
+    id			    204
+    labelString		    "{eML_blk_kernel();}"
+    labelPosition	    [28.125 13.875 102.544 14.964]
+    fontSize		    12
+    src {
+      intersection	      [0 0 1 0 23.5747 14.625 0 0]
+    }
+    dst {
+      id		      203
+      intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
+    }
+    midPoint		    [23.5747 24.9468]
+    chart		    196
+    dataLimits		    [21.175 25.975 14.625 42.575]
+    subviewer		    196
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    2
+    linkNode		    [196 0 0]
+  }
+  instance {
+    id			    205
+    machine		    1
+    name		    "%RN%_inertia_floatb_eulxyz_mp/inertiajoint_fcn"
+    chart		    196
+  }
+  chart {
+    id			    206
+    machine		    1
+    name		    "%RN%_energykin_floatb_eulxyz_mp/MATLAB Function"
+    windowPosition	    [422 539.941 189 413]
+    viewLimits		    [0 156.75 0 153.75]
+    screen		    [1 1 3600 1200 1.180555555555556]
+    treeNode		    [0 207 0 0]
+    viewObj		    206
+    toolbarMode		    LIBRARY_TOOLBAR
+    ssIdHighWaterMark	    18
+    decomposition	    CLUSTER_CHART
+    type		    EML_CHART
+    chartFileNumber	    20
+    disableImplicitCasting  1
+    eml {
+      name		      "energykin"
+    }
+    firstData		    208
+    firstTransition	    216
+    firstJunction	    215
+  }
+  state {
+    id			    207
+    labelString		    "eML_blk_kernel()"
+    position		    [18 64.5 118 66]
+    fontSize		    12
+    chart		    206
+    treeNode		    [206 0 0 0]
+    superState		    SUBCHART
+    subviewer		    206
+    ssIdNumber		    1
+    type		    FUNC_STATE
+    decomposition	    CLUSTER_STATE
+    eml {
+      isEML		      1
+      script		      "function T = energykin(qJ, qD, phi_base, xD_base,  ...\n  pkin, MPV)\n%#codegen\nT_reg = %RN%_energykin_floatb_eulxyz_regmin_slag_vp(qJ, qD, phi_base, xD_base, ...\n  pkin);\n\nT = T_reg*MPV;"
+      editorLayout	      "100 M4x1[10 5 700 500]"
+    }
+  }
+  data {
+    id			    208
+    ssIdNumber		    4
+    name		    "qJ"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [206 0 209]
+  }
+  data {
+    id			    209
+    ssIdNumber		    5
+    name		    "T"
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_NO
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [206 208 210]
+  }
+  data {
+    id			    210
+    ssIdNumber		    6
+    name		    "qD"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [206 209 211]
+  }
+  data {
+    id			    211
+    ssIdNumber		    16
+    name		    "phi_base"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [206 210 212]
+  }
+  data {
+    id			    212
+    ssIdNumber		    17
+    name		    "xD_base"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [206 211 213]
+  }
+  data {
+    id			    213
+    ssIdNumber		    7
+    name		    "pkin"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [206 212 214]
+  }
+  data {
+    id			    214
+    ssIdNumber		    13
+    name		    "MPV"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [206 213 0]
+  }
+  junction {
+    id			    215
+    position		    [23.5747 49.5747 7]
+    chart		    206
+    subviewer		    206
+    ssIdNumber		    3
+    type		    CONNECTIVE_JUNCTION
+    linkNode		    [206 0 0]
+  }
+  transition {
+    id			    216
+    labelString		    "{eML_blk_kernel();}"
+    labelPosition	    [28.125 13.875 102.544 14.964]
+    fontSize		    12
+    src {
+      intersection	      [0 0 1 0 23.5747 14.625 0 0]
+    }
+    dst {
+      id		      215
+      intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
+    }
+    midPoint		    [23.5747 24.9468]
+    chart		    206
+    dataLimits		    [21.175 25.975 14.625 42.575]
+    subviewer		    206
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    2
+    linkNode		    [206 0 0]
+  }
+  instance {
+    id			    217
+    machine		    1
+    name		    "%RN%_energykin_floatb_eulxyz_mp/MATLAB Function"
+    chart		    206
+  }
+  chart {
+    id			    218
+    machine		    1
+    name		    "%RN%_energypot_floatb_eulxyz_mp/MATLAB Function"
+    windowPosition	    [422 539.941 189 413]
+    viewLimits		    [0 156.75 0 153.75]
+    screen		    [1 1 3600 1200 1.180555555555556]
+    treeNode		    [0 219 0 0]
+    viewObj		    218
+    toolbarMode		    LIBRARY_TOOLBAR
+    ssIdHighWaterMark	    17
+    decomposition	    CLUSTER_CHART
+    type		    EML_CHART
+    chartFileNumber	    21
+    disableImplicitCasting  1
+    eml {
+      name		      "energypot"
+    }
+    firstData		    220
+    firstTransition	    228
+    firstJunction	    227
+  }
+  state {
+    id			    219
+    labelString		    "eML_blk_kernel()"
+    position		    [18 64.5 118 66]
+    fontSize		    12
+    chart		    218
+    treeNode		    [218 0 0 0]
+    superState		    SUBCHART
+    subviewer		    218
+    ssIdNumber		    1
+    type		    FUNC_STATE
+    decomposition	    CLUSTER_STATE
+    eml {
+      isEML		      1
+      script		      "function U = energypot(qJ, r_base, phi_base, g_world, ...\n  pkin, MPV)\n%#codegen\nU_reg = %RN%_energypot_floatb_eulxyz_regmin_slag_vp(qJ, r_base, phi_base, g_world, ...\n  pkin);\nU = U_reg*MPV;\n"
+      editorLayout	      "100 M4x1[10 5 700 500]"
+    }
+  }
+  data {
+    id			    220
+    ssIdNumber		    4
+    name		    "qJ"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [218 0 221]
+  }
+  data {
+    id			    221
+    ssIdNumber		    5
+    name		    "U"
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_NO
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [218 220 222]
+  }
+  data {
+    id			    222
+    ssIdNumber		    6
+    name		    "r_base"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [218 221 223]
+  }
+  data {
+    id			    223
+    ssIdNumber		    15
+    name		    "phi_base"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [218 222 224]
+  }
+  data {
+    id			    224
+    ssIdNumber		    16
+    name		    "g_world"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [218 223 225]
+  }
+  data {
+    id			    225
+    ssIdNumber		    7
+    name		    "pkin"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [218 224 226]
+  }
+  data {
+    id			    226
+    ssIdNumber		    13
+    name		    "MPV"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [218 225 0]
+  }
+  junction {
+    id			    227
+    position		    [23.5747 49.5747 7]
+    chart		    218
+    subviewer		    218
+    ssIdNumber		    3
+    type		    CONNECTIVE_JUNCTION
+    linkNode		    [218 0 0]
+  }
+  transition {
+    id			    228
+    labelString		    "{eML_blk_kernel();}"
+    labelPosition	    [28.125 13.875 102.544 14.964]
+    fontSize		    12
+    src {
+      intersection	      [0 0 1 0 23.5747 14.625 0 0]
+    }
+    dst {
+      id		      227
+      intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
+    }
+    midPoint		    [23.5747 24.9468]
+    chart		    218
+    dataLimits		    [21.175 25.975 14.625 42.575]
+    subviewer		    218
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    2
+    linkNode		    [218 0 0]
+  }
+  instance {
+    id			    229
+    machine		    1
+    name		    "%RN%_energypot_floatb_eulxyz_mp/MATLAB Function"
+    chart		    218
+  }
+  chart {
+    id			    230
+    machine		    1
+    name		    "%RN%_fordyn_floatb_eulxyz_mp/mFcn_Minv"
+    windowPosition	    [357.331 483.407 167 391]
+    viewLimits		    [0 156.75 0 153.75]
+    screen		    [1 1 1280 1024 1.041050272174191]
+    treeNode		    [0 231 0 0]
+    viewObj		    230
+    toolbarMode		    LIBRARY_TOOLBAR
+    ssIdHighWaterMark	    6
+    decomposition	    CLUSTER_CHART
+    type		    EML_CHART
+    chartFileNumber	    22
+    disableImplicitCasting  1
+    eml {
+      name		      "fcn"
+    }
+    firstData		    232
+    firstTransition	    236
+    firstJunction	    235
+  }
+  state {
+    id			    231
+    labelString		    "eML_blk_kernel()"
+    position		    [18 64.5 118 66]
+    fontSize		    12
+    chart		    230
+    treeNode		    [230 0 0 0]
+    superState		    SUBCHART
+    subviewer		    230
+    ssIdNumber		    1
+    type		    FUNC_STATE
+    decomposition	    CLUSTER_STATE
+    eml {
+      isEML		      1
+      script		      "function q_ddot = fcn(M,tau)\n%#codegen\nq_ddot=M\\tau;"
+      editorLayout	      "100 M4x1[10 5 700 500]"
+    }
+  }
+  data {
+    id			    232
+    ssIdNumber		    4
+    name		    "M"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [230 0 233]
+  }
+  data {
+    id			    233
+    ssIdNumber		    5
+    name		    "q_ddot"
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_NO
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [230 232 234]
+  }
+  data {
+    id			    234
+    ssIdNumber		    6
     name		    "tau"
     scope		    INPUT_DATA
     machine		    1
@@ -14810,2568 +17341,21 @@ Stateflow {
       }
     }
     dataType		    "Inherit: Same as Simulink"
-    linkNode		    [108 111 0]
-  }
-  junction {
-    id			    113
-    position		    [23.5747 49.5747 7]
-    chart		    108
-    subviewer		    108
-    ssIdNumber		    3
-    type		    CONNECTIVE_JUNCTION
-    linkNode		    [108 0 0]
-  }
-  transition {
-    id			    114
-    labelString		    "{eML_blk_kernel();}"
-    labelPosition	    [32.125 19.875 102.544 14.964]
-    fontSize		    12
-    src {
-      intersection	      [0 0 1 0 23.5747 14.625 0 0]
-    }
-    dst {
-      id		      113
-      intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
-    }
-    midPoint		    [23.5747 24.9468]
-    chart		    108
-    dataLimits		    [21.175 25.975 14.625 42.575]
-    subviewer		    108
-    drawStyle		    SMART
-    slide {
-      sticky		      BOTH_STICK
-    }
-    executionOrder	    1
-    ssIdNumber		    2
-    linkNode		    [108 0 0]
-  }
-  instance {
-    id			    115
-    machine		    1
-    name		    "%RN%_fordyn_fixb_vp1/mFcn_Minv"
-    chart		    108
-  }
-  chart {
-    id			    116
-    machine		    1
-    name		    "%RN%_gravload_floatb_eulxyz_vp1/MATLAB Function"
-    windowPosition	    [422 539.941 189 413]
-    viewLimits		    [0 156.75 0 153.75]
-    screen		    [1 1 3600 1200 1.180555555555556]
-    treeNode		    [0 117 0 0]
-    viewObj		    116
-    toolbarMode		    LIBRARY_TOOLBAR
-    ssIdHighWaterMark	    16
-    decomposition	    CLUSTER_CHART
-    type		    EML_CHART
-    chartFileNumber	    12
-    disableImplicitCasting  1
-    eml {
-      name		      "gravload"
-    }
-    firstData		    118
-    firstTransition	    126
-    firstJunction	    125
-  }
-  state {
-    id			    117
-    labelString		    "eML_blk_kernel()"
-    position		    [18 64.5 118 66]
-    fontSize		    12
-    chart		    116
-    treeNode		    [116 0 0 0]
-    superState		    SUBCHART
-    subviewer		    116
-    ssIdNumber		    1
-    type		    FUNC_STATE
-    decomposition	    CLUSTER_STATE
-    eml {
-      isEML		      1
-      script		      "function taug = gravload(q, ob, g_world, pkin, m, r_S)\n%#codegen\n\ntaug_base = %RN%_gravlo"
-      "adB_floatb_eulxyz_slag_vp1(q, ob, g_world, ...\n  pkin, m, r_S);\ntaug_joints = %RN%_gravloadJ_floatb_eulxy"
-      "z_slag_vp1(q, ob, g_world,...\n  pkin, m, r_S);\ntaug = [taug_base; taug_joints];\n\n\n"
-      editorLayout	      "100 M4x1[10 5 700 500]"
-    }
-  }
-  data {
-    id			    118
-    ssIdNumber		    4
-    name		    "q"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [116 0 119]
-  }
-  data {
-    id			    119
-    ssIdNumber		    5
-    name		    "taug"
-    scope		    OUTPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_NO
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [116 118 120]
-  }
-  data {
-    id			    120
-    ssIdNumber		    6
-    name		    "ob"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [116 119 121]
-  }
-  data {
-    id			    121
-    ssIdNumber		    15
-    name		    "g_world"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [116 120 122]
-  }
-  data {
-    id			    122
-    ssIdNumber		    7
-    name		    "pkin"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [116 121 123]
-  }
-  data {
-    id			    123
-    ssIdNumber		    13
-    name		    "m"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [116 122 124]
-  }
-  data {
-    id			    124
-    ssIdNumber		    14
-    name		    "r_S"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [116 123 0]
-  }
-  junction {
-    id			    125
-    position		    [23.5747 49.5747 7]
-    chart		    116
-    subviewer		    116
-    ssIdNumber		    3
-    type		    CONNECTIVE_JUNCTION
-    linkNode		    [116 0 0]
-  }
-  transition {
-    id			    126
-    labelString		    "{eML_blk_kernel();}"
-    labelPosition	    [28.125 13.875 102.544 14.964]
-    fontSize		    12
-    src {
-      intersection	      [0 0 1 0 23.5747 14.625 0 0]
-    }
-    dst {
-      id		      125
-      intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
-    }
-    midPoint		    [23.5747 24.9468]
-    chart		    116
-    dataLimits		    [21.175 25.975 14.625 42.575]
-    subviewer		    116
-    drawStyle		    SMART
-    slide {
-      sticky		      BOTH_STICK
-    }
-    executionOrder	    1
-    ssIdNumber		    2
-    linkNode		    [116 0 0]
-  }
-  instance {
-    id			    127
-    machine		    1
-    name		    "%RN%_gravload_floatb_eulxyz_vp1/MATLAB Function"
-    chart		    116
-  }
-  chart {
-    id			    128
-    machine		    1
-    name		    "%RN%_coriolisvec_floatb_eulxyz_vp1/coriolisvec_fcn"
-    windowPosition	    [422 539.941 189 413]
-    viewLimits		    [0 156.75 0 153.75]
-    screen		    [1 1 3600 1200 1.180555555555556]
-    treeNode		    [0 129 0 0]
-    viewObj		    128
-    toolbarMode		    LIBRARY_TOOLBAR
-    ssIdHighWaterMark	    18
-    decomposition	    CLUSTER_CHART
-    type		    EML_CHART
-    chartFileNumber	    13
-    disableImplicitCasting  1
-    eml {
-      name		      "coriolis"
-    }
-    firstData		    130
-    firstTransition	    140
-    firstJunction	    139
-  }
-  state {
-    id			    129
-    labelString		    "eML_blk_kernel()"
-    position		    [18 64.5 118 66]
-    fontSize		    12
-    chart		    128
-    treeNode		    [128 0 0 0]
-    superState		    SUBCHART
-    subviewer		    128
-    ssIdNumber		    1
-    type		    FUNC_STATE
-    decomposition	    CLUSTER_STATE
-    eml {
-      isEML		      1
-      script		      "function tauc = coriolis(qJ, qJD, phi_base, xD_base, pkin, m, r_S, I_S)\n%#codegen\ntauc = %RN%_coriolisvec_floatb_eulxyz_slag_vp1(qJ, qJD, phi_base, xD_base, ...\n  pkin, m, r_S, I_S);\n\n"
-      editorLayout	      "100 M4x1[10 5 700 500]"
-    }
-  }
-  data {
-    id			    130
-    ssIdNumber		    4
-    name		    "qJ"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [128 0 131]
-  }
-  data {
-    id			    131
-    ssIdNumber		    5
-    name		    "tauc"
-    scope		    OUTPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_NO
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [128 130 132]
-  }
-  data {
-    id			    132
-    ssIdNumber		    6
-    name		    "qJD"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [128 131 133]
-  }
-  data {
-    id			    133
-    ssIdNumber		    16
-    name		    "phi_base"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [128 132 134]
-  }
-  data {
-    id			    134
-    ssIdNumber		    17
-    name		    "xD_base"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [128 133 135]
-  }
-  data {
-    id			    135
-    ssIdNumber		    7
-    name		    "pkin"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [128 134 136]
-  }
-  data {
-    id			    136
-    ssIdNumber		    13
-    name		    "m"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [128 135 137]
-  }
-  data {
-    id			    137
-    ssIdNumber		    14
-    name		    "r_S"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [128 136 138]
-  }
-  data {
-    id			    138
-    ssIdNumber		    15
-    name		    "I_S"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [128 137 0]
-  }
-  junction {
-    id			    139
-    position		    [23.5747 49.5747 7]
-    chart		    128
-    subviewer		    128
-    ssIdNumber		    3
-    type		    CONNECTIVE_JUNCTION
-    linkNode		    [128 0 0]
-  }
-  transition {
-    id			    140
-    labelString		    "{eML_blk_kernel();}"
-    labelPosition	    [28.125 13.875 102.544 14.964]
-    fontSize		    12
-    src {
-      intersection	      [0 0 1 0 23.5747 14.625 0 0]
-    }
-    dst {
-      id		      139
-      intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
-    }
-    midPoint		    [23.5747 24.9468]
-    chart		    128
-    dataLimits		    [21.175 25.975 14.625 42.575]
-    subviewer		    128
-    drawStyle		    SMART
-    slide {
-      sticky		      BOTH_STICK
-    }
-    executionOrder	    1
-    ssIdNumber		    2
-    linkNode		    [128 0 0]
-  }
-  instance {
-    id			    141
-    machine		    1
-    name		    "%RN%_coriolisvec_floatb_eulxyz_vp1/coriolisvec_fcn"
-    chart		    128
-  }
-  chart {
-    id			    142
-    machine		    1
-    name		    "%RN%_inertia_floatb_eulxyz_vp1/inertiajoint_fcn"
-    windowPosition	    [422 539.941 189 413]
-    viewLimits		    [0 156.75 0 153.75]
-    screen		    [1 1 3600 1200 1.180555555555556]
-    treeNode		    [0 143 0 0]
-    viewObj		    142
-    toolbarMode		    LIBRARY_TOOLBAR
-    ssIdHighWaterMark	    17
-    decomposition	    CLUSTER_CHART
-    type		    EML_CHART
-    chartFileNumber	    14
-    disableImplicitCasting  1
-    eml {
-      name		      "inertia"
-    }
-    firstData		    144
-    firstTransition	    152
-    firstJunction	    151
-  }
-  state {
-    id			    143
-    labelString		    "eML_blk_kernel()"
-    position		    [18 64.5 118 66]
-    fontSize		    12
-    chart		    142
-    treeNode		    [142 0 0 0]
-    superState		    SUBCHART
-    subviewer		    142
-    ssIdNumber		    1
-    type		    FUNC_STATE
-    decomposition	    CLUSTER_STATE
-    eml {
-      isEML		      1
-      script		      "function Mq = inertia(qJ, phi_base, pkin, m, r_S, I_S)\n%#codegen\nMq = %RN%_inertia_floatb_"
-      "eulxyz_slag_vp1(qJ, phi_base, ...\n  pkin, m, r_S, I_S);\n"
-      editorLayout	      "100 M4x1[10 5 700 500]"
-    }
-  }
-  data {
-    id			    144
-    ssIdNumber		    4
-    name		    "qJ"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [142 0 145]
-  }
-  data {
-    id			    145
-    ssIdNumber		    16
-    name		    "phi_base"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [142 144 146]
-  }
-  data {
-    id			    146
-    ssIdNumber		    5
-    name		    "Mq"
-    scope		    OUTPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_NO
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [142 145 147]
-  }
-  data {
-    id			    147
-    ssIdNumber		    7
-    name		    "pkin"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [142 146 148]
-  }
-  data {
-    id			    148
-    ssIdNumber		    13
-    name		    "m"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [142 147 149]
-  }
-  data {
-    id			    149
-    ssIdNumber		    14
-    name		    "r_S"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [142 148 150]
-  }
-  data {
-    id			    150
-    ssIdNumber		    15
-    name		    "I_S"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [142 149 0]
-  }
-  junction {
-    id			    151
-    position		    [23.5747 49.5747 7]
-    chart		    142
-    subviewer		    142
-    ssIdNumber		    3
-    type		    CONNECTIVE_JUNCTION
-    linkNode		    [142 0 0]
-  }
-  transition {
-    id			    152
-    labelString		    "{eML_blk_kernel();}"
-    labelPosition	    [28.125 13.875 102.544 14.964]
-    fontSize		    12
-    src {
-      intersection	      [0 0 1 0 23.5747 14.625 0 0]
-    }
-    dst {
-      id		      151
-      intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
-    }
-    midPoint		    [23.5747 24.9468]
-    chart		    142
-    dataLimits		    [21.175 25.975 14.625 42.575]
-    subviewer		    142
-    drawStyle		    SMART
-    slide {
-      sticky		      BOTH_STICK
-    }
-    executionOrder	    1
-    ssIdNumber		    2
-    linkNode		    [142 0 0]
-  }
-  instance {
-    id			    153
-    machine		    1
-    name		    "%RN%_inertia_floatb_eulxyz_vp1/inertiajoint_fcn"
-    chart		    142
-  }
-  chart {
-    id			    154
-    machine		    1
-    name		    "%RN%_energypot_floatb_eulxyz_vp1/MATLAB Function"
-    windowPosition	    [422 539.941 189 413]
-    viewLimits		    [0 156.75 0 153.75]
-    screen		    [1 1 3600 1200 1.180555555555556]
-    treeNode		    [0 155 0 0]
-    viewObj		    154
-    toolbarMode		    LIBRARY_TOOLBAR
-    ssIdHighWaterMark	    17
-    decomposition	    CLUSTER_CHART
-    type		    EML_CHART
-    chartFileNumber	    15
-    disableImplicitCasting  1
-    eml {
-      name		      "energypot"
-    }
-    firstData		    156
-    firstTransition	    165
-    firstJunction	    164
-  }
-  state {
-    id			    155
-    labelString		    "eML_blk_kernel()"
-    position		    [18 64.5 118 66]
-    fontSize		    12
-    chart		    154
-    treeNode		    [154 0 0 0]
-    superState		    SUBCHART
-    subviewer		    154
-    ssIdNumber		    1
-    type		    FUNC_STATE
-    decomposition	    CLUSTER_STATE
-    eml {
-      isEML		      1
-      script		      "function U = energypot(qJ, r_base, phi_base, g_world, ...\n  pkin, m, r_S)\n%#codegen\nU = %RN%_energypot_floatb_eulxyz_slag_vp1(qJ, r_base, phi_base, g_world, ...\n  pkin, m, r_S);\n\n"
-      editorLayout	      "100 M4x1[10 5 700 500]"
-    }
-  }
-  data {
-    id			    156
-    ssIdNumber		    4
-    name		    "qJ"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [154 0 157]
-  }
-  data {
-    id			    157
-    ssIdNumber		    5
-    name		    "U"
-    scope		    OUTPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_NO
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [154 156 158]
-  }
-  data {
-    id			    158
-    ssIdNumber		    6
-    name		    "r_base"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [154 157 159]
-  }
-  data {
-    id			    159
-    ssIdNumber		    15
-    name		    "phi_base"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [154 158 160]
-  }
-  data {
-    id			    160
-    ssIdNumber		    16
-    name		    "g_world"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [154 159 161]
-  }
-  data {
-    id			    161
-    ssIdNumber		    7
-    name		    "pkin"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [154 160 162]
-  }
-  data {
-    id			    162
-    ssIdNumber		    13
-    name		    "m"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [154 161 163]
-  }
-  data {
-    id			    163
-    ssIdNumber		    14
-    name		    "r_S"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [154 162 0]
-  }
-  junction {
-    id			    164
-    position		    [23.5747 49.5747 7]
-    chart		    154
-    subviewer		    154
-    ssIdNumber		    3
-    type		    CONNECTIVE_JUNCTION
-    linkNode		    [154 0 0]
-  }
-  transition {
-    id			    165
-    labelString		    "{eML_blk_kernel();}"
-    labelPosition	    [28.125 13.875 102.544 14.964]
-    fontSize		    12
-    src {
-      intersection	      [0 0 1 0 23.5747 14.625 0 0]
-    }
-    dst {
-      id		      164
-      intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
-    }
-    midPoint		    [23.5747 24.9468]
-    chart		    154
-    dataLimits		    [21.175 25.975 14.625 42.575]
-    subviewer		    154
-    drawStyle		    SMART
-    slide {
-      sticky		      BOTH_STICK
-    }
-    executionOrder	    1
-    ssIdNumber		    2
-    linkNode		    [154 0 0]
-  }
-  instance {
-    id			    166
-    machine		    1
-    name		    "%RN%_energypot_floatb_eulxyz_vp1/MATLAB Function"
-    chart		    154
-  }
-  chart {
-    id			    167
-    machine		    1
-    name		    "%RN%_energykin_floatb_eulxyz_vp1/MATLAB Function"
-    windowPosition	    [422 539.941 189 413]
-    viewLimits		    [0 156.75 0 153.75]
-    screen		    [1 1 3600 1200 1.180555555555556]
-    treeNode		    [0 168 0 0]
-    viewObj		    167
-    toolbarMode		    LIBRARY_TOOLBAR
-    ssIdHighWaterMark	    18
-    decomposition	    CLUSTER_CHART
-    type		    EML_CHART
-    chartFileNumber	    16
-    disableImplicitCasting  1
-    eml {
-      name		      "energykin"
-    }
-    firstData		    169
-    firstTransition	    179
-    firstJunction	    178
-  }
-  state {
-    id			    168
-    labelString		    "eML_blk_kernel()"
-    position		    [18 64.5 118 66]
-    fontSize		    12
-    chart		    167
-    treeNode		    [167 0 0 0]
-    superState		    SUBCHART
-    subviewer		    167
-    ssIdNumber		    1
-    type		    FUNC_STATE
-    decomposition	    CLUSTER_STATE
-    eml {
-      isEML		      1
-      script		      "function T = energykin(qJ, qD, phi_base, xD_base,  ...\n  pkin, m, r_S, I_S)\n%#codegen\nT = %RN%_energykin_floatb_eulxyz_slag_vp1(qJ, qD, phi_base, xD_base, ...\n  pkin, m, r_S, I_S);\n\n"
-      editorLayout	      "100 M4x1[10 5 700 500]"
-    }
-  }
-  data {
-    id			    169
-    ssIdNumber		    4
-    name		    "qJ"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [167 0 170]
-  }
-  data {
-    id			    170
-    ssIdNumber		    5
-    name		    "T"
-    scope		    OUTPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_NO
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [167 169 171]
-  }
-  data {
-    id			    171
-    ssIdNumber		    6
-    name		    "qD"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [167 170 172]
-  }
-  data {
-    id			    172
-    ssIdNumber		    16
-    name		    "phi_base"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [167 171 173]
-  }
-  data {
-    id			    173
-    ssIdNumber		    17
-    name		    "xD_base"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [167 172 174]
-  }
-  data {
-    id			    174
-    ssIdNumber		    7
-    name		    "pkin"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [167 173 175]
-  }
-  data {
-    id			    175
-    ssIdNumber		    13
-    name		    "m"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [167 174 176]
-  }
-  data {
-    id			    176
-    ssIdNumber		    14
-    name		    "r_S"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [167 175 177]
-  }
-  data {
-    id			    177
-    ssIdNumber		    15
-    name		    "I_S"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [167 176 0]
-  }
-  junction {
-    id			    178
-    position		    [23.5747 49.5747 7]
-    chart		    167
-    subviewer		    167
-    ssIdNumber		    3
-    type		    CONNECTIVE_JUNCTION
-    linkNode		    [167 0 0]
-  }
-  transition {
-    id			    179
-    labelString		    "{eML_blk_kernel();}"
-    labelPosition	    [28.125 13.875 102.544 14.964]
-    fontSize		    12
-    src {
-      intersection	      [0 0 1 0 23.5747 14.625 0 0]
-    }
-    dst {
-      id		      178
-      intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
-    }
-    midPoint		    [23.5747 24.9468]
-    chart		    167
-    dataLimits		    [21.175 25.975 14.625 42.575]
-    subviewer		    167
-    drawStyle		    SMART
-    slide {
-      sticky		      BOTH_STICK
-    }
-    executionOrder	    1
-    ssIdNumber		    2
-    linkNode		    [167 0 0]
-  }
-  instance {
-    id			    180
-    machine		    1
-    name		    "%RN%_energykin_floatb_eulxyz_vp1/MATLAB Function"
-    chart		    167
-  }
-  chart {
-    id			    181
-    machine		    1
-    name		    "%RN%_gravload_floatb_eulxyz_mp/MATLAB Function"
-    windowPosition	    [422 539.941 189 413]
-    viewLimits		    [0 156.75 0 153.75]
-    screen		    [1 1 3600 1200 1.180555555555556]
-    treeNode		    [0 182 0 0]
-    viewObj		    181
-    toolbarMode		    LIBRARY_TOOLBAR
-    ssIdHighWaterMark	    16
-    decomposition	    CLUSTER_CHART
-    type		    EML_CHART
-    chartFileNumber	    17
-    disableImplicitCasting  1
-    eml {
-      name		      "gravload"
-    }
-    firstData		    183
-    firstTransition	    190
-    firstJunction	    189
-  }
-  state {
-    id			    182
-    labelString		    "eML_blk_kernel()"
-    position		    [18 64.5 118 66]
-    fontSize		    12
-    chart		    181
-    treeNode		    [181 0 0 0]
-    superState		    SUBCHART
-    subviewer		    181
-    ssIdNumber		    1
-    type		    FUNC_STATE
-    decomposition	    CLUSTER_STATE
-    eml {
-      isEML		      1
-      script		      "function taug = gravload(q, ob, g_world, pkin, MPV)\n%#codegen\n\ntauBg_reg = %RN%_gravloadB"
-      "_floatb_eulxyz_regmin_slag_vp(q, ob, g_world, pkin);\ntauJg_reg = %RN%_gravloadJ_floatb_eulxyz_regmin_slag_"
-      "vp(q, ob, g_world, pkin);    \ntaug_reg = [tauBg_reg;tauJg_reg];\ntaug = taug_reg*MPV;\n\n\n"
-      editorLayout	      "100 M4x1[10 5 700 500]"
-    }
-  }
-  data {
-    id			    183
-    ssIdNumber		    4
-    name		    "q"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [181 0 184]
-  }
-  data {
-    id			    184
-    ssIdNumber		    5
-    name		    "taug"
-    scope		    OUTPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_NO
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [181 183 185]
-  }
-  data {
-    id			    185
-    ssIdNumber		    6
-    name		    "ob"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [181 184 186]
-  }
-  data {
-    id			    186
-    ssIdNumber		    15
-    name		    "g_world"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [181 185 187]
-  }
-  data {
-    id			    187
-    ssIdNumber		    7
-    name		    "pkin"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [181 186 188]
-  }
-  data {
-    id			    188
-    ssIdNumber		    13
-    name		    "MPV"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [181 187 0]
-  }
-  junction {
-    id			    189
-    position		    [23.5747 49.5747 7]
-    chart		    181
-    subviewer		    181
-    ssIdNumber		    3
-    type		    CONNECTIVE_JUNCTION
-    linkNode		    [181 0 0]
-  }
-  transition {
-    id			    190
-    labelString		    "{eML_blk_kernel();}"
-    labelPosition	    [28.125 13.875 102.544 14.964]
-    fontSize		    12
-    src {
-      intersection	      [0 0 1 0 23.5747 14.625 0 0]
-    }
-    dst {
-      id		      189
-      intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
-    }
-    midPoint		    [23.5747 24.9468]
-    chart		    181
-    dataLimits		    [21.175 25.975 14.625 42.575]
-    subviewer		    181
-    drawStyle		    SMART
-    slide {
-      sticky		      BOTH_STICK
-    }
-    executionOrder	    1
-    ssIdNumber		    2
-    linkNode		    [181 0 0]
-  }
-  instance {
-    id			    191
-    machine		    1
-    name		    "%RN%_gravload_floatb_eulxyz_mp/MATLAB Function"
-    chart		    181
-  }
-  chart {
-    id			    192
-    machine		    1
-    name		    "%RN%_coriolisvec_floatb_eulxyz_mp/coriolisvec_fcn"
-    windowPosition	    [422 539.941 189 413]
-    viewLimits		    [0 156.75 0 153.75]
-    screen		    [1 1 3600 1200 1.180555555555556]
-    treeNode		    [0 193 0 0]
-    viewObj		    192
-    toolbarMode		    LIBRARY_TOOLBAR
-    ssIdHighWaterMark	    18
-    decomposition	    CLUSTER_CHART
-    type		    EML_CHART
-    chartFileNumber	    18
-    disableImplicitCasting  1
-    eml {
-      name		      "coriolis"
-    }
-    firstData		    194
-    firstTransition	    202
-    firstJunction	    201
-  }
-  state {
-    id			    193
-    labelString		    "eML_blk_kernel()"
-    position		    [18 64.5 118 66]
-    fontSize		    12
-    chart		    192
-    treeNode		    [192 0 0 0]
-    superState		    SUBCHART
-    subviewer		    192
-    ssIdNumber		    1
-    type		    FUNC_STATE
-    decomposition	    CLUSTER_STATE
-    eml {
-      isEML		      1
-      script		      "function tauc = coriolis(qJ, qJD, phi_base, xD_base, pkin, MPV)\n%#codegen\ntauc_reg = %RN%_"
-      "coriolisvec_floatb_eulxyz_regmin_slag_vp(qJ, qJD, ...\n  phi_base, xD_base, pkin);\n\ntauc = tauc_reg*MPV;"
-      editorLayout	      "100 M4x1[10 5 700 500]"
-    }
-  }
-  data {
-    id			    194
-    ssIdNumber		    4
-    name		    "qJ"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [192 0 195]
-  }
-  data {
-    id			    195
-    ssIdNumber		    5
-    name		    "tauc"
-    scope		    OUTPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_NO
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [192 194 196]
-  }
-  data {
-    id			    196
-    ssIdNumber		    6
-    name		    "qJD"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [192 195 197]
-  }
-  data {
-    id			    197
-    ssIdNumber		    16
-    name		    "phi_base"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [192 196 198]
-  }
-  data {
-    id			    198
-    ssIdNumber		    17
-    name		    "xD_base"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [192 197 199]
-  }
-  data {
-    id			    199
-    ssIdNumber		    7
-    name		    "pkin"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [192 198 200]
-  }
-  data {
-    id			    200
-    ssIdNumber		    13
-    name		    "MPV"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [192 199 0]
-  }
-  junction {
-    id			    201
-    position		    [23.5747 49.5747 7]
-    chart		    192
-    subviewer		    192
-    ssIdNumber		    3
-    type		    CONNECTIVE_JUNCTION
-    linkNode		    [192 0 0]
-  }
-  transition {
-    id			    202
-    labelString		    "{eML_blk_kernel();}"
-    labelPosition	    [28.125 13.875 102.544 14.964]
-    fontSize		    12
-    src {
-      intersection	      [0 0 1 0 23.5747 14.625 0 0]
-    }
-    dst {
-      id		      201
-      intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
-    }
-    midPoint		    [23.5747 24.9468]
-    chart		    192
-    dataLimits		    [21.175 25.975 14.625 42.575]
-    subviewer		    192
-    drawStyle		    SMART
-    slide {
-      sticky		      BOTH_STICK
-    }
-    executionOrder	    1
-    ssIdNumber		    2
-    linkNode		    [192 0 0]
-  }
-  instance {
-    id			    203
-    machine		    1
-    name		    "%RN%_coriolisvec_floatb_eulxyz_mp/coriolisvec_fcn"
-    chart		    192
-  }
-  chart {
-    id			    204
-    machine		    1
-    name		    "%RN%_inertia_floatb_eulxyz_mp/inertiajoint_fcn"
-    windowPosition	    [422 539.941 189 413]
-    viewLimits		    [0 156.75 0 153.75]
-    screen		    [1 1 3600 1200 1.180555555555556]
-    treeNode		    [0 205 0 0]
-    viewObj		    204
-    toolbarMode		    LIBRARY_TOOLBAR
-    ssIdHighWaterMark	    17
-    decomposition	    CLUSTER_CHART
-    type		    EML_CHART
-    chartFileNumber	    19
-    disableImplicitCasting  1
-    eml {
-      name		      "inertia"
-    }
-    firstData		    206
-    firstTransition	    212
-    firstJunction	    211
-  }
-  state {
-    id			    205
-    labelString		    "eML_blk_kernel()"
-    position		    [18 64.5 118 66]
-    fontSize		    12
-    chart		    204
-    treeNode		    [204 0 0 0]
-    superState		    SUBCHART
-    subviewer		    204
-    ssIdNumber		    1
-    type		    FUNC_STATE
-    decomposition	    CLUSTER_STATE
-    eml {
-      isEML		      1
-      script		      "function Mq = inertia(qJ, phi_base, pkin, MPV)\n%#codegen\nM_regmin = %RN%_inertia_floatb_eu"
-      "lxyz_regmin_slag_vp(qJ, phi_base, pkin);\nM_mpv_vec = M_regmin*MPV;\nMq = vec2symmat(M_mpv_vec);"
-      editorLayout	      "100 M4x1[10 5 700 500]"
-    }
-  }
-  data {
-    id			    206
-    ssIdNumber		    4
-    name		    "qJ"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [204 0 207]
-  }
-  data {
-    id			    207
-    ssIdNumber		    16
-    name		    "phi_base"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [204 206 208]
-  }
-  data {
-    id			    208
-    ssIdNumber		    5
-    name		    "Mq"
-    scope		    OUTPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_NO
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [204 207 209]
-  }
-  data {
-    id			    209
-    ssIdNumber		    7
-    name		    "pkin"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [204 208 210]
-  }
-  data {
-    id			    210
-    ssIdNumber		    13
-    name		    "MPV"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [204 209 0]
-  }
-  junction {
-    id			    211
-    position		    [23.5747 49.5747 7]
-    chart		    204
-    subviewer		    204
-    ssIdNumber		    3
-    type		    CONNECTIVE_JUNCTION
-    linkNode		    [204 0 0]
-  }
-  transition {
-    id			    212
-    labelString		    "{eML_blk_kernel();}"
-    labelPosition	    [28.125 13.875 102.544 14.964]
-    fontSize		    12
-    src {
-      intersection	      [0 0 1 0 23.5747 14.625 0 0]
-    }
-    dst {
-      id		      211
-      intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
-    }
-    midPoint		    [23.5747 24.9468]
-    chart		    204
-    dataLimits		    [21.175 25.975 14.625 42.575]
-    subviewer		    204
-    drawStyle		    SMART
-    slide {
-      sticky		      BOTH_STICK
-    }
-    executionOrder	    1
-    ssIdNumber		    2
-    linkNode		    [204 0 0]
-  }
-  instance {
-    id			    213
-    machine		    1
-    name		    "%RN%_inertia_floatb_eulxyz_mp/inertiajoint_fcn"
-    chart		    204
-  }
-  chart {
-    id			    214
-    machine		    1
-    name		    "%RN%_energykin_floatb_eulxyz_mp/MATLAB Function"
-    windowPosition	    [422 539.941 189 413]
-    viewLimits		    [0 156.75 0 153.75]
-    screen		    [1 1 3600 1200 1.180555555555556]
-    treeNode		    [0 215 0 0]
-    viewObj		    214
-    toolbarMode		    LIBRARY_TOOLBAR
-    ssIdHighWaterMark	    18
-    decomposition	    CLUSTER_CHART
-    type		    EML_CHART
-    chartFileNumber	    20
-    disableImplicitCasting  1
-    eml {
-      name		      "energykin"
-    }
-    firstData		    216
-    firstTransition	    224
-    firstJunction	    223
-  }
-  state {
-    id			    215
-    labelString		    "eML_blk_kernel()"
-    position		    [18 64.5 118 66]
-    fontSize		    12
-    chart		    214
-    treeNode		    [214 0 0 0]
-    superState		    SUBCHART
-    subviewer		    214
-    ssIdNumber		    1
-    type		    FUNC_STATE
-    decomposition	    CLUSTER_STATE
-    eml {
-      isEML		      1
-      script		      "function T = energykin(qJ, qD, phi_base, xD_base,  ...\n  pkin, MPV)\n%#codegen\nT_reg = %RN%_energykin_floatb_eulxyz_regmin_slag_vp(qJ, qD, phi_base, xD_base, ...\n  pkin);\n\nT = T_reg*MPV;"
-      editorLayout	      "100 M4x1[10 5 700 500]"
-    }
-  }
-  data {
-    id			    216
-    ssIdNumber		    4
-    name		    "qJ"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [214 0 217]
-  }
-  data {
-    id			    217
-    ssIdNumber		    5
-    name		    "T"
-    scope		    OUTPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_NO
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [214 216 218]
-  }
-  data {
-    id			    218
-    ssIdNumber		    6
-    name		    "qD"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [214 217 219]
-  }
-  data {
-    id			    219
-    ssIdNumber		    16
-    name		    "phi_base"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [214 218 220]
-  }
-  data {
-    id			    220
-    ssIdNumber		    17
-    name		    "xD_base"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [214 219 221]
-  }
-  data {
-    id			    221
-    ssIdNumber		    7
-    name		    "pkin"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [214 220 222]
-  }
-  data {
-    id			    222
-    ssIdNumber		    13
-    name		    "MPV"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [214 221 0]
-  }
-  junction {
-    id			    223
-    position		    [23.5747 49.5747 7]
-    chart		    214
-    subviewer		    214
-    ssIdNumber		    3
-    type		    CONNECTIVE_JUNCTION
-    linkNode		    [214 0 0]
-  }
-  transition {
-    id			    224
-    labelString		    "{eML_blk_kernel();}"
-    labelPosition	    [28.125 13.875 102.544 14.964]
-    fontSize		    12
-    src {
-      intersection	      [0 0 1 0 23.5747 14.625 0 0]
-    }
-    dst {
-      id		      223
-      intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
-    }
-    midPoint		    [23.5747 24.9468]
-    chart		    214
-    dataLimits		    [21.175 25.975 14.625 42.575]
-    subviewer		    214
-    drawStyle		    SMART
-    slide {
-      sticky		      BOTH_STICK
-    }
-    executionOrder	    1
-    ssIdNumber		    2
-    linkNode		    [214 0 0]
-  }
-  instance {
-    id			    225
-    machine		    1
-    name		    "%RN%_energykin_floatb_eulxyz_mp/MATLAB Function"
-    chart		    214
-  }
-  chart {
-    id			    226
-    machine		    1
-    name		    "%RN%_energypot_floatb_eulxyz_mp/MATLAB Function"
-    windowPosition	    [422 539.941 189 413]
-    viewLimits		    [0 156.75 0 153.75]
-    screen		    [1 1 3600 1200 1.180555555555556]
-    treeNode		    [0 227 0 0]
-    viewObj		    226
-    toolbarMode		    LIBRARY_TOOLBAR
-    ssIdHighWaterMark	    17
-    decomposition	    CLUSTER_CHART
-    type		    EML_CHART
-    chartFileNumber	    21
-    disableImplicitCasting  1
-    eml {
-      name		      "energypot"
-    }
-    firstData		    228
-    firstTransition	    236
-    firstJunction	    235
-  }
-  state {
-    id			    227
-    labelString		    "eML_blk_kernel()"
-    position		    [18 64.5 118 66]
-    fontSize		    12
-    chart		    226
-    treeNode		    [226 0 0 0]
-    superState		    SUBCHART
-    subviewer		    226
-    ssIdNumber		    1
-    type		    FUNC_STATE
-    decomposition	    CLUSTER_STATE
-    eml {
-      isEML		      1
-      script		      "function U = energypot(qJ, r_base, phi_base, g_world, ...\n  pkin, MPV)\n%#codegen\nU_reg = %RN%_energypot_floatb_eulxyz_regmin_slag_vp(qJ, r_base, phi_base, g_world, ...\n  pkin);\nU = U_reg*MPV;\n"
-      editorLayout	      "100 M4x1[10 5 700 500]"
-    }
-  }
-  data {
-    id			    228
-    ssIdNumber		    4
-    name		    "qJ"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [226 0 229]
-  }
-  data {
-    id			    229
-    ssIdNumber		    5
-    name		    "U"
-    scope		    OUTPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_NO
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [226 228 230]
-  }
-  data {
-    id			    230
-    ssIdNumber		    6
-    name		    "r_base"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [226 229 231]
-  }
-  data {
-    id			    231
-    ssIdNumber		    15
-    name		    "phi_base"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [226 230 232]
-  }
-  data {
-    id			    232
-    ssIdNumber		    16
-    name		    "g_world"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [226 231 233]
-  }
-  data {
-    id			    233
-    ssIdNumber		    7
-    name		    "pkin"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [226 232 234]
-  }
-  data {
-    id			    234
-    ssIdNumber		    13
-    name		    "MPV"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [226 233 0]
+    linkNode		    [230 233 0]
   }
   junction {
     id			    235
     position		    [23.5747 49.5747 7]
-    chart		    226
-    subviewer		    226
+    chart		    230
+    subviewer		    230
     ssIdNumber		    3
     type		    CONNECTIVE_JUNCTION
-    linkNode		    [226 0 0]
+    linkNode		    [230 0 0]
   }
   transition {
     id			    236
     labelString		    "{eML_blk_kernel();}"
-    labelPosition	    [28.125 13.875 102.544 14.964]
+    labelPosition	    [32.125 19.875 102.544 14.964]
     fontSize		    12
     src {
       intersection	      [0 0 1 0 23.5747 14.625 0 0]
@@ -17381,27 +17365,27 @@ Stateflow {
       intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
     }
     midPoint		    [23.5747 24.9468]
-    chart		    226
+    chart		    230
     dataLimits		    [21.175 25.975 14.625 42.575]
-    subviewer		    226
+    subviewer		    230
     drawStyle		    SMART
     slide {
       sticky		      BOTH_STICK
     }
     executionOrder	    1
     ssIdNumber		    2
-    linkNode		    [226 0 0]
+    linkNode		    [230 0 0]
   }
   instance {
     id			    237
     machine		    1
-    name		    "%RN%_energypot_floatb_eulxyz_mp/MATLAB Function"
-    chart		    226
+    name		    "%RN%_fordyn_floatb_eulxyz_mp/mFcn_Minv"
+    chart		    230
   }
   chart {
     id			    238
     machine		    1
-    name		    "%RN%_fordyn_floatb_eulxyz_mp/mFcn_Minv"
+    name		    "%RN%_fixb_get_acceleration/mFcn_Minv"
     windowPosition	    [357.331 483.407 167 391]
     viewLimits		    [0 156.75 0 153.75]
     screen		    [1 1 1280 1024 1.041050272174191]
@@ -17411,7 +17395,7 @@ Stateflow {
     ssIdHighWaterMark	    6
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
-    chartFileNumber	    22
+    chartFileNumber	    24
     disableImplicitCasting  1
     eml {
       name		      "fcn"
@@ -17434,7 +17418,15 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function q_ddot = fcn(M,tau)\n%#codegen\nq_ddot=M\\tau;"
+      script		      "function qDD = fcn(M,tau)\n%#codegen\n% Invertiere die Massenmatrix. Berücksichtige dabei, dass "
+      "bei Systemen mit\n% sigma=2 die letzten Gelenke keine massenbehafteten Körper bewegen.\n[~, sigma, ~, ~, ~, NQJ"
+      ", ~] = %RN%_structural_kinematic_parameters();\nKINCONSTR = logical(%KINCONSTR%); %#ok<LOGL>\nif KINCONSTR\n  % Syste"
+      "m mit Zwangsbedingungen: Alle q-Größen sind bereits auf\n  % Minimalkoordinaten bezogen. Eine Reduktion ist ni"
+      "cht notwendig.\n  NQJvirt = 0;\n  NQJreal = NQJ;\nelse\n  % System ohne Zwangsbedingungen. Eventuell offene Baum"
+      "struktur eines\n  % schließbaren Systems. Transformationen mit sigma=2 werden nicht\n  % genommen. Jedem sigma="
+      "2 ist ein weiteres KS zugeordnet.\n  % Bei normalen seriellen Ketten gibt es kein sigma=2.\n  NQJvirt = sum(sigm"
+      "a==2);\n  NQJreal = NQJ - NQJvirt;\nend\n% Berechne die Beschleunigung nur für reale Gelenktransformationen\nqD"
+      "D_red=M(1:NQJreal, 1:NQJreal)\\tau(1:NQJreal);\nqDD = zeros(NQJ,1);\nqDD(1:NQJreal) = qDD_red;"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -17463,7 +17455,7 @@ Stateflow {
   data {
     id			    241
     ssIdNumber		    5
-    name		    "q_ddot"
+    name		    "qDD"
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -17544,7 +17536,7 @@ Stateflow {
   instance {
     id			    245
     machine		    1
-    name		    "%RN%_fordyn_floatb_eulxyz_mp/mFcn_Minv"
+    name		    "%RN%_fixb_get_acceleration/mFcn_Minv"
     chart		    238
   }
   chart {
@@ -17696,157 +17688,8 @@ Stateflow {
     name		    "%RN%_fordyn_floatb_eulxyz_vp1/mFcn_Minv"
     chart		    246
   }
-  chart {
-    id			    254
-    machine		    1
-    name		    "%RN%_fordyn_fixb_mp/mFcn_Minv"
-    windowPosition	    [357.331 483.407 167 391]
-    viewLimits		    [0 156.75 0 153.75]
-    screen		    [1 1 1280 1024 1.041050272174191]
-    treeNode		    [0 255 0 0]
-    viewObj		    254
-    toolbarMode		    LIBRARY_TOOLBAR
-    ssIdHighWaterMark	    6
-    decomposition	    CLUSTER_CHART
-    type		    EML_CHART
-    chartFileNumber	    38
-    disableImplicitCasting  1
-    eml {
-      name		      "fcn"
-    }
-    firstData		    256
-    firstTransition	    260
-    firstJunction	    259
-  }
-  state {
-    id			    255
-    labelString		    "eML_blk_kernel()"
-    position		    [18 64.5 118 66]
-    fontSize		    12
-    chart		    254
-    treeNode		    [254 0 0 0]
-    superState		    SUBCHART
-    subviewer		    254
-    ssIdNumber		    1
-    type		    FUNC_STATE
-    decomposition	    CLUSTER_STATE
-    eml {
-      isEML		      1
-      script		      "function q_ddot = fcn(M,tau)\n%#codegen\nq_ddot=M\\tau;"
-      editorLayout	      "100 M4x1[10 5 700 500]"
-    }
-  }
-  data {
-    id			    256
-    ssIdNumber		    4
-    name		    "M"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [254 0 257]
-  }
-  data {
-    id			    257
-    ssIdNumber		    5
-    name		    "q_ddot"
-    scope		    OUTPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_NO
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [254 256 258]
-  }
-  data {
-    id			    258
-    ssIdNumber		    6
-    name		    "tau"
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [254 257 0]
-  }
-  junction {
-    id			    259
-    position		    [23.5747 49.5747 7]
-    chart		    254
-    subviewer		    254
-    ssIdNumber		    3
-    type		    CONNECTIVE_JUNCTION
-    linkNode		    [254 0 0]
-  }
-  transition {
-    id			    260
-    labelString		    "{eML_blk_kernel();}"
-    labelPosition	    [32.125 19.875 102.544 14.964]
-    fontSize		    12
-    src {
-      intersection	      [0 0 1 0 23.5747 14.625 0 0]
-    }
-    dst {
-      id		      259
-      intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
-    }
-    midPoint		    [23.5747 24.9468]
-    chart		    254
-    dataLimits		    [21.175 25.975 14.625 42.575]
-    subviewer		    254
-    drawStyle		    SMART
-    slide {
-      sticky		      BOTH_STICK
-    }
-    executionOrder	    1
-    ssIdNumber		    2
-    linkNode		    [254 0 0]
-  }
-  instance {
-    id			    261
-    machine		    1
-    name		    "%RN%_fordyn_fixb_mp/mFcn_Minv"
-    chart		    254
-  }
   target {
-    id			    262
+    id			    254
     machine		    1
     name		    "sfun"
     description		    "Default Simulink S-Function Target."
