@@ -48,7 +48,7 @@ catch err
   else
     % Es gibt keine kinematischen Zwangsbedingungen, die direkte Dynamik
     % muss also funktionieren
-    raise(err);
+    throw(err);
   end
 end
 sl = get_simulink_outputs(simOut, sl_Modellname);

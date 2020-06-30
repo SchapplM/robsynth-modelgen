@@ -287,7 +287,7 @@ for ii = 1:n
     else
       % Es gibt keine kinematischen Zwangsbedingungen, die direkte Dynamik
       % muss also funktionieren
-      raise(err);
+      throw(err);
     end
   end
   t = SolverOutput.x;
