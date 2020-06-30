@@ -1,4 +1,4 @@
-% Calculate minimal parameter regressor of Coriolis joint torque vector for
+% Calculate Coriolis joint torque vector for
 % %RN%
 % Use Code from Maple symbolic Code Generation
 % 
