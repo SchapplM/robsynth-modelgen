@@ -11,7 +11,8 @@ examplelist="
 robot_env_prothese2dof
 robot_env_scara3dof
 robot_env_scara4dof
-robot_env_imesthor"
+robot_env_imesthor
+robot_env_kuka6dof_reddp"
 for ex in $examplelist; do
   echo "Starte Beispiel $ex"
   cp robot_codegen_definitions/examples/${ex}.example robot_codegen_definitions/robot_env
