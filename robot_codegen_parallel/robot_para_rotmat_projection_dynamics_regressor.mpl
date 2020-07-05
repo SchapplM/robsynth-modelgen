@@ -45,7 +45,15 @@ read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
 read "../robot_codegen_definitions/robot_env_par":
 # Ergebnisse der Plattform-Dynamik in Regressorform laden
-read sprintf("../codeexport/%s/tmp/floatb_%s_platform_dynamic_reg_maple.m", robot_name, base_method_name):
+
+dynamicsfile := sprintf("../codeexport/%s/tmp/floatb_%s_platform_dynamic_reg_maple.m", robot_name, base_method_name):
+if FileTools[Exists](dynamicsfile) then
+  read dynamicsfile:
+else
+  printf("%s. Plattform-Dynamik (Regressor) konnte nicht geladen werden. Abbruch der Berechnung.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
+  quit: # Funktioniert in GUI nicht richtig...
+  robot_name := "": # ...Daher auch Löschung des Roboternamens.
+end if:
 # Neu-Definieren, damit Variablen im Workspace auftauchen
 paramVecP := paramVecP:
 paramVecP_M := paramVecP_M:
@@ -56,13 +64,22 @@ M_regmin := M_regmin:
 c_regmin := c_regmin:
 g_regmin := g_regmin:
 # Ergebnisse der Dynamik der Gelenkkette in Regressorform laden
-read sprintf("../codeexport/%s/tmp/invdyn_%s_%s_maple.m", leg_name, "fixb", "regressor_minpar"):
+
+dynamicsfile := sprintf("../codeexport/%s/tmp/invdyn_%s_%s_maple.m", leg_name, "fixb", "regressor_minpar"):
+if FileTools[Exists](dynamicsfile) then
+  read dynamicsfile:
+else
+  printf("%s. PKM-Dynamik konnte nicht geladen werden. Abbruch der Berechnung.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
+  quit: # Funktioniert in GUI nicht richtig...
+  robot_name := "": # ...Daher auch Löschung des Roboternamens.
+end if:
 tau_regressor_s := tau_regressor_s:
 tauMM_regressor_s := tauMM_regressor_s:
 MMjj_regressor_s := MMjj_regressor_s:
 tauC_regressor_s := tauC_regressor_s:
 taug_regressor_s := taug_regressor_s:
 read "../robot_codegen_definitions/robot_env_par":
+
 # Ergebnisse des Minimalparametervektors der Gelenkkette laden
 read sprintf("../codeexport/%s/tmp/minimal_parameter_vector_fixb_maple", leg_name):
 Paramvec2 := Paramvec2:
@@ -76,6 +93,8 @@ read("../robotics_repo_path"):
 # Lade die Funktionen aus dem "imes-robotics-matlab"-Repo
 read(sprintf("%s/transformation/maple/proc_eul%s2r", robotics_repo_path, angleConvLeg)):
 read(sprintf("%s/transformation/maple/proc_eul%sjac", robotics_repo_path, "zyx")):
+
+
 # Berechne Dynamik-Matrizen für alle Beine
 # Alle Basisgeschwindigkeiten und -winkel aus Berechnung der seriellen Kette zu null setzen.
 omegaxs_base := 0:
@@ -99,7 +118,16 @@ gammaDDz_base := 0:
 
 
 # Ergebnisse der Kinematik für parallelen Roboter laden
-read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
+
+
+kinematicsfile := sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
+if FileTools[Exists](kinematicsfile) then
+  read kinematicsfile:
+else
+  printf("%s. PKM-Kinematik konnte nicht geladen werden. Abbruch der Berechnung.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
+  quit: # Funktioniert in GUI nicht richtig...
+  robot_name := "": # ...Daher auch Löschung des Roboternamens.
+end if:
 # Variablen neu laden
 pivotMat := pivotMat:
 pivotMatMas := pivotMatMas:
@@ -111,6 +139,7 @@ JBinv_i := JBinv_i:
 JBDinv_i := JBDinv_i:
 U_i := U_i:
 UD_i := UD_i:
+
 # Dynamik-Parameter für virtuelle Segmente nach den Plattform-Koppelgelenken entfernen
 NQ := NQ - (NQJ-NQJ_parallel):
 Paramvec3:=Paramvec2: # Dynamik-Minimalparametervektor der Beinkette
@@ -219,6 +248,7 @@ for k from 1 by 1 to N_LEGS do
     end do:
   end do:
 end do:
+
 
 printf("%s. Dynamik-Matrizen bestimmt. Beginne Projektion/Addition.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
 # Berechnung, Projektion und Addition der Dynamikgleichungen

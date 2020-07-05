@@ -33,6 +33,7 @@ codeexport_invdyn := true:
 read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s": 
 read "../helper/proc_MatlabExport":
+read "../helper/proc_simplify2":
 read "../helper/proc_vec2skew":
 read "../transformation/proc_rotx": 
 read "../transformation/proc_roty": 
@@ -85,17 +86,25 @@ P_i := tmp:
 # Jacobi Matrices (JB1/U1) + Derivates
 # Berechnung der Jacobi-Matrix der inversen Kinematik: Koppelpunktgeschwindigkeiten P -> Gelenkgeschwindigkeiten
 # Abdellatif2007 S.37 unten
+
 transDOF := nops(indets(xE_s(1..3,1))):
 JB1 := (parse(sprintf("eul%s2r",angleConvLeg))(frame_A_i(1..3,1)).b_transl)(1..transDOF,1..NQJ_parallel):
-JB1inv := MatrixInverse(JB1):
+try:
+  JB1inv := MatrixInverse(JB1):
+catch:
+  printf("%s. Jacobi-Matrix JB1 ist singulär. Rang ist %d/%d. Abbruch der Berechnungen. Keine Berechnung der PKM-Dynamik möglich.\n", \
+    FormatTime("%Y-%m-%d %H:%M:%S"), Rank(JB1), RowDimension(JB1)):
+  quit: # Funktioniert in GUI nicht richtig...
+  robot_name := "": # ...Daher auch Löschung des Roboternamens.
+end try:
 for i from 1 to 3-transDOF do
   JB1inv := <JB1inv|ZeroMatrix(NQJ_parallel,1)>;
 end do:
 for i from 1 to 3-transDOF do
   JB1 := <JB1;ZeroMatrix(1,NQJ_parallel)>;
 end do:
-JB1inv := simplify(JB1inv):
-JB1 := simplify(JB1):
+JB1inv := simplify2(JB1inv):
+JB1 := simplify2(JB1):
 
 # Berechnung der Matrix Ui: EE-Geschwindigkeiten -> Koppelpunktgeschwindigkeiten P. i steht für den Index des jeweiligen Beines
 # Abdellatif2007 S.21 (2.21)
@@ -166,6 +175,8 @@ JB1Dinv := diff~(JB1inv,t):
 JB1Dinv := convert_t_s(JB1Dinv):
 JB1inv := convert_t_s(JB1inv):
 printf("[%s] Zeitableitung der inversen Koppelpunkt-Jacobi-Matrizen (bezogen auf B) der Beinketten berechnet. CPU-Zeit bis hier: %1.2fs.\n", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
+
+
 # Berechne Jacobi-Matrizen für jedes Bein
 # Dupliziere alle berechneten Matrizen. i steht für den Index des jeweiligen Beines
 

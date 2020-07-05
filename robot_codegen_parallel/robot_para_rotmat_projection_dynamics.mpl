@@ -33,6 +33,7 @@ codeexport_invdyn := true:
 codeexport_actcoord := false: # Generierung der Dynamik in Antriebskoordinaten nicht standardmäßig (hoher Rechenaufwand)
 ;
 read "../helper/proc_MatlabExport":
+read "../helper/proc_simplify2":
 read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
 # Kennung des Parametersatzes, für den die Dynamikfunktionen erstellt werden sollen. Muss im Repo und in der mpl-Datei auf 1 gelassen werden, da die folgende Zeile mit einem Skript verarbeitet wird.
@@ -41,8 +42,16 @@ codegen_dynpar := 1:
 read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
 # Ergebnisse der Plattform-Dynamik laden (aus robot_para_plattform_rotmat_dynamics.mw)
+
 read "../robot_codegen_definitions/robot_env_par":
-read sprintf("../codeexport/%s/tmp/floatb_platform_dynamic_maple.m", robot_name):
+dynamicsfile := sprintf("../codeexport/%s/tmp/floatb_platform_dynamic_maple.m", robot_name):
+if FileTools[Exists](dynamicsfile) then
+  read dynamicsfile:
+else
+  printf("%s. PKM-Dynamik konnte nicht geladen werden. Abbruch der Berechnung.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
+  quit: # Funktioniert in GUI nicht richtig...
+  robot_name := "": # ...Daher auch Löschung des Roboternamens.
+end if:
 # Neu-Definition der geladenen Variablen
 MME:=MME:
 cvecE:=cvecE:
@@ -50,17 +59,26 @@ gE:=gE:
 tauE:=tauE:
 H:=H:
 dH:=dH:
+
 # Ergebnisse der Kinematik für parallelen Roboter laden
+
 read "../robot_codegen_definitions/robot_env_par":
-read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
+kinematicsfile := sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
+if FileTools[Exists](kinematicsfile) then
+  read kinematicsfile:
+else
+  printf("%s. PKM-Kinematik konnte nicht geladen werden. Abbruch der Berechnung.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
+  quit: # Funktioniert in GUI nicht richtig...
+  robot_name := "": # ...Daher auch Löschung des Roboternamens.
+end if:
+read "../robot_codegen_definitions/robot_env_par": # Nochmal laden, um Standard-Einstellungen überschreiben zu können.
 # Neu-Definition der von dieser Datei gelesenen Variablen, damit sie im Workspace erscheinen
 pivotMat := pivotMat:
 pivotMatMas := pivotMatMas:
 Jinv := Jinv:
 JBinv_i := JBinv_i:
 U_i := U_i:
-read "../robot_codegen_definitions/robot_env_par": # Nochmal laden, um Standard-Einstellungen überschreiben zu können.
-;
+
 # Lade "robotics_repo_path"-File mit Link zum "imes-robotics-matlab"-Repo
 read("../robotics_repo_path"):
 # Lade die Funktionen aus dem "imes-robotics-matlab"-Repo
@@ -104,11 +122,20 @@ for i from NQJ_parallel+1 to NQJ do
 end do:
 # Ergebnisse G-Vektor der Beinkette  laden.
 # Die Rotation der Basis wird nur in der Jacobi-Matrix der inverse Kinematik berücksichtigt. Deshalb muss der Gravitationsvektor ebenfalls an die Rotation angepasst werden.
+
 g1 := gtmp1:
 g2 := gtmp2:
 g3 := gtmp3:
-read sprintf("../codeexport/%s/tmp/gravload_par%d_maple.m", leg_name, codegen_dynpar):
-G := simplify(Matrix(taug_s(7..NQ,1))):
+
+dynamicsfile_leg := sprintf("../codeexport/%s/tmp/gravload_par%d_maple.m", leg_name, codegen_dynpar):
+if FileTools[Exists](dynamicsfile_leg) then
+  read dynamicsfile_leg:
+else
+  printf("%s. Beinketten-Dynamik (g) konnte nicht geladen werden. Abbruch der Berechnung.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
+  quit: # Funktioniert in GUI nicht richtig...
+  robot_name := "": # ...Daher auch Löschung des Roboternamens.
+end if:
+G := simplify2(Matrix(taug_s(7..NQ,1))):
 unassign('g1','g2','g3'):
 g := <g1;g2;g3>:
 Rmat := Transpose(parse(sprintf("eul%s2r",angleConvLeg))(frame_A_i(1..3,1))):
@@ -116,19 +143,39 @@ gtmp1 := (Rmat.g)(1):
 gtmp2 := (Rmat.g)(2):
 gtmp3 := (Rmat.g)(3):
 G := G:
+
+
 # Ergebnisse C-Vektor der Beinkette laden
-read sprintf("../codeexport/%s/tmp/coriolisvec_par%d_maple.m", leg_name, codegen_dynpar):
-Cvec := simplify(Matrix(tauCC_s(7..NQ,1))):
+dynamicsfile_leg := sprintf("../codeexport/%s/tmp/coriolisvec_par%d_maple.m", leg_name, codegen_dynpar):
+if FileTools[Exists](dynamicsfile_leg) then
+  read dynamicsfile_leg:
+else
+  printf("%s. Beinketten-Dynamik (c) konnte nicht geladen werden. Abbruch der Berechnung.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
+  quit: # Funktioniert in GUI nicht richtig...
+  robot_name := "": # ...Daher auch Löschung des Roboternamens.
+end if:
+Cvec := simplify2(Matrix(tauCC_s(7..NQ,1))):
 Cvec := Cvec:
+
 # Ergebnisse M-Matrix der Beinkette laden
-read sprintf("../codeexport/%s/tmp/inertia_par%d_maple.m", leg_name, codegen_dynpar):
+
+dynamicsfile_leg := sprintf("../codeexport/%s/tmp/inertia_par%d_maple.m", leg_name, codegen_dynpar):
+if FileTools[Exists](dynamicsfile_leg) then
+  read dynamicsfile_leg:
+else
+  printf("%s. Beinketten-Dynamik (M) konnte nicht geladen werden. Abbruch der Berechnung.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
+  quit: # Funktioniert in GUI nicht richtig...
+  robot_name := "": # ...Daher auch Löschung des Roboternamens.
+end if:
 MM := simplify(MM_s(7..NQ,7..NQ)):
 MM := simplify(MM):
 MME := simplify(MME):
-gE := simplify(gE):
-# Ergebnisse der Kinematik für parallen Roboter laden
-read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
+# Ausdruck für Gravitationsterme der Plattform nochmal vereinfachen.
+gE := simplify2(gE):
+# Ergebnisse der Kinematik für parallen Roboter laden (wurde oben schon gemacht.
+#read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
 printf("%s. Alle Daten geladen. Generiere Dynamik für PKM %s mit Parametersatz %d\n", FormatTime("%Y-%m-%d %H:%M:%S"), robot_name, codegen_dynpar, base_method_name):
+
 # Berechne Dynamik-Matrizen für alle Beine
 # Dupliziere alle berechneten Matrizen. i steht für den Index des jeweiligen Beines
 

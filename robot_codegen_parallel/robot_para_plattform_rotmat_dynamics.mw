@@ -167,14 +167,8 @@ r_P_sP_P := -r_P_sP:
 s_P_P_sP := s_P_sP:</Text-field>
 </Input>
 </Group>
-<Group labelreference="L3028" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ergebnisse der Kinematik f\303\274r parallen Roboter laden</Font></Text-field>
-</Input>
-</Group>
 <Group hide-input="false" labelreference="L2967" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env_par&quot;:
-read sprintf(&quot;../codeexport/%s/tmp/kinematics_%s_platform_maple.m&quot;, robot_name, base_method_name):
-read &quot;../robot_codegen_definitions/robot_env_par&quot;:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 <Group labelreference="L3253" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -190,6 +184,10 @@ read &quot;../robot_codegen_definitions/robot_env_par&quot;:</Text-field>
 </Input>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read(sprintf(&quot;%s/transformation/maple/proc_eul%s2r&quot;, robotics_repo_path, angleConv)):
 read(sprintf(&quot;%s/transformation/maple/proc_eul%sjac&quot;, robotics_repo_path, angleConv)):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3313" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>

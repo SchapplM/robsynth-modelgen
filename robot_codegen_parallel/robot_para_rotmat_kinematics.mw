@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="2019" minor="1"/>
+<Version major="2019" minor="2"/>
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" compactdisplay="false" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" historytimestamp="false" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1200" rtablesize="[10, 10]" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" ansicolor="[]" elisiondigitsthreshold="10000" showassumed="1" ansilprint="false" trailingsemicolon="true" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" compactdisplay="false" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" historytimestamp="false" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1050" rtablesize="[10, 10]" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" ansicolor="[]" elisiondigitsthreshold="10000" showassumed="1" ansilprint="false" trailingsemicolon="true" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -142,7 +142,8 @@ codeexport_invdyn := true:</Text-field>
 <Group labelreference="L2971" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_convert_s_t&quot;:
 read &quot;../helper/proc_convert_t_s&quot;: 
-read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
+read &quot;../helper/proc_MatlabExport&quot;:
+read &quot;../helper/proc_simplify2&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L2974" drawlabel="true">
@@ -262,19 +263,30 @@ P_i := tmp:
 <Input><Text-field style="Text" layout="Normal">Berechnung der Jacobi-Matrix der inversen Kinematik: Koppelpunktgeschwindigkeiten P -&gt; Gelenkgeschwindigkeiten
 Abdellatif2007 S.37 unten</Text-field>
 </Input>
+</Group>
+<Group labelreference="L3325" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
 </Group><CodeEditor-ExecGroup view="presentation" labelreference="L3310" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion10" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">transDOF := nops(indets(xE_s(1..3,1))):
 JB1 := (parse(sprintf(&quot;eul%s2r&quot;,angleConvLeg))(frame_A_i(1..3,1)).b_transl)(1..transDOF,1..NQJ_parallel):
-JB1inv := MatrixInverse(JB1):
+try:
+  JB1inv := MatrixInverse(JB1):
+catch:
+  printf(&quot;%s. Jacobi-Matrix JB1 ist singul\303\244r. Rang ist %d/%d. Abbruch der Berechnungen. Keine Berechnung der PKM-Dynamik m\303\266glich.\134n&quot;, \134
+    FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), Rank(JB1), RowDimension(JB1)):
+  quit: # Funktioniert in GUI nicht richtig...
+  robot_name := &quot;&quot;: # ...Daher auch L\303\266schung des Roboternamens.
+end try:
 for i from 1 to 3-transDOF do
   JB1inv := &lt;JB1inv|ZeroMatrix(NQJ_parallel,1)&gt;;
 end do:
 for i from 1 to 3-transDOF do
   JB1 := &lt;JB1;ZeroMatrix(1,NQJ_parallel)&gt;;
 end do:
-JB1inv := simplify(JB1inv):
-JB1 := simplify(JB1):
+JB1inv := simplify2(JB1inv):
+JB1 := simplify2(JB1):
 </EC-CodeEditor></CodeEditor-ExecGroup>
-<Group hide-input="false" labelreference="L3239" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group labelreference="L3335" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
@@ -377,6 +389,14 @@ JB1Dinv := convert_t_s(JB1Dinv):
 JB1inv := convert_t_s(JB1inv):</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L3299" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;[%s] Zeitableitung der inversen Koppelpunkt-Jacobi-Matrizen (bezogen auf B) der Beinketten berechnet. CPU-Zeit bis hier: %1.2fs.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), time()-st):</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L3329" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
+<Group labelreference="L3334" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>

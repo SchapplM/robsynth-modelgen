@@ -40,15 +40,13 @@ read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
 r_P_sP_P := -r_P_sP:
 s_P_P_sP := s_P_sP:
-# Ergebnisse der Kinematik für parallen Roboter laden
-read "../robot_codegen_definitions/robot_env_par":
-read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
-read "../robot_codegen_definitions/robot_env_par":
+
 # Lade "robotics_repo_path"-File mit Link zum "imes-robotics-matlab"-Repo
 read("../robotics_repo_path"):
 # Lade die Funktionen aus dem "imes-robotics-matlab"-Repo
 read(sprintf("%s/transformation/maple/proc_eul%s2r", robotics_repo_path, angleConv)):
 read(sprintf("%s/transformation/maple/proc_eul%sjac", robotics_repo_path, angleConv)):
+
 # Additional Kinematics
 # Berechnung der Rotationsmatrizen
 

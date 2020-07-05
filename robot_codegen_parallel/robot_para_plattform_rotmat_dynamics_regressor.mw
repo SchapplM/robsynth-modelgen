@@ -192,10 +192,22 @@ s_P_P_sP := s_P_sP:</Text-field>
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ergebnisse der Kinematik f\303\274r parallen Roboter laden</Font></Text-field>
 </Input>
 </Group>
+<Group labelreference="L3357" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3359" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion18" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">kinematicsfile := sprintf(&quot;../codeexport/%s/tmp/kinematics_%s_platform_maple.m&quot;, robot_name, base_method_name):
+if FileTools[Exists](kinematicsfile) then
+  read kinematicsfile:
+else
+  printf(&quot;%s. PKM-Kinematik konnte nicht geladen werden. Abbruch der Berechnung.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+  quit: # Funktioniert in GUI nicht richtig...
+  robot_name := &quot;&quot;: # ...Daher auch L\303\266schung des Roboternamens.
+end if:
+P_i := P_i: # nur diese Variable wird ben\303\266tigt. Alle anderen zur \303\234bersichtlichkeit l\303\266schen. Enth\303\244lt Informationen zu den Koppelpunkten.
+unassign('pivotMat', 'pivotMatMas', 'Jinv', 'JB_i', 'JBD_i', 'JBinv_i', 'JBDinv_i', 'U_i', 'UD_i'):
+</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group hide-input="false" labelreference="L3156" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/kinematics_%s_platform_maple.m&quot;, robot_name, base_method_name):
-P_i := P_i:<Font encoding="UTF-8"> # nur diese Variable wird ben\303\266tigt. Alle anderen zur \303\234bersichtlichkeit l\303\266schen.
-</Font>unassign('pivotMat', 'pivotMatMas', 'Jinv', 'JB_i', 'JBD_i', 'JBinv_i', 'JBDinv_i', 'U_i', 'UD_i'):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 <Group labelreference="L3259" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -211,6 +223,10 @@ P_i := P_i:<Font encoding="UTF-8"> # nur diese Variable wird ben\303\266tigt. Al
 </Input>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read(sprintf(&quot;%s/transformation/maple/proc_eul%s2r&quot;, robotics_repo_path, angleConvLeg)):
 read(sprintf(&quot;%s/transformation/maple/proc_eul%sjac&quot;, robotics_repo_path, angleConvLeg)):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3360" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>
@@ -343,6 +359,7 @@ paramVecP_old := &lt;J_P_P_raute;sE;mE&gt;:
 paramVecP := &lt;J_0_P_raute;sE;mE&gt;:
 paramVecP := &lt;J_P_P_raute;sE;mE&gt;:
 paramVecP_M := Copy(paramVecP):
+# Hierdurch (u.a.?) werden die Massen am Ende der Beinkette mit den Dynamikparametern der Plattform zusammengefasst
 tmp := Matrix(10,1):
 for i to N_LEGS do
   tmpSt := M(NQJ_parallel+1,1)*Multiply(Transpose(vec2skew(P_i(1..3,i))),vec2skew(P_i(1..3,i))):

@@ -58,14 +58,24 @@ read sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
 r_P_sP_P := -r_P_sP:
 s_P_P_sP := s_P_sP:
 # Ergebnisse der Kinematik für parallen Roboter laden
-read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
-P_i := P_i: # nur diese Variable wird benötigt. Alle anderen zur Übersichtlichkeit löschen.
+
+kinematicsfile := sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
+if FileTools[Exists](kinematicsfile) then
+  read kinematicsfile:
+else
+  printf("%s. PKM-Kinematik konnte nicht geladen werden. Abbruch der Berechnung.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
+  quit: # Funktioniert in GUI nicht richtig...
+  robot_name := "": # ...Daher auch Löschung des Roboternamens.
+end if:
+P_i := P_i: # nur diese Variable wird benötigt. Alle anderen zur Übersichtlichkeit löschen. Enthält Informationen zu den Koppelpunkten.
 unassign('pivotMat', 'pivotMatMas', 'Jinv', 'JB_i', 'JBD_i', 'JBinv_i', 'JBDinv_i', 'U_i', 'UD_i'):
+
 # Lade "robotics_repo_path"-File mit Link zum "imes-robotics-matlab"-Repo
 read("../robotics_repo_path"):
 # Lade die Funktionen aus dem "imes-robotics-matlab"-Repo
 read(sprintf("%s/transformation/maple/proc_eul%s2r", robotics_repo_path, angleConvLeg)):
 read(sprintf("%s/transformation/maple/proc_eul%sjac", robotics_repo_path, angleConvLeg)):
+
 # Additional Kinematics
 # Berechnung der Rotationsmatrizen
 R_0_0_E_t := parse(sprintf("eul%s2r",angleConvLeg))(xE_t(4..6)):
@@ -156,6 +166,7 @@ paramVecP_old := <J_P_P_raute;sE;mE>:
 paramVecP := <J_0_P_raute;sE;mE>:
 paramVecP := <J_P_P_raute;sE;mE>:
 paramVecP_M := Copy(paramVecP):
+# Hierdurch (u.a.?) werden die Massen am Ende der Beinkette mit den Dynamikparametern der Plattform zusammengefasst
 tmp := Matrix(10,1):
 for i to N_LEGS do
   tmpSt := M(NQJ_parallel+1,1)*Multiply(Transpose(vec2skew(P_i(1..3,i))),vec2skew(P_i(1..3,i))):

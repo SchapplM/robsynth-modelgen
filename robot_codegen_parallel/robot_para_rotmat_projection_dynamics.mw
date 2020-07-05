@@ -140,7 +140,8 @@ codeexport_invdyn := true:
 </Input>
 </Group>
 <Group labelreference="L3202" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_MatlabExport&quot;:
+read &quot;../helper/proc_simplify2&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3177" drawlabel="true">
@@ -172,35 +173,56 @@ read sprintf(&quot;../codeexport/%s/tmp/para_definitions&quot;, robot_name):</Te
 <Input><Text-field style="Text" layout="Normal">Ergebnisse der Plattform-Dynamik laden (aus robot_para_plattform_rotmat_dynamics.mw)</Text-field>
 </Input>
 </Group>
-<Group labelreference="L3186" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env_par&quot;:
-read sprintf(&quot;../codeexport/%s/tmp/floatb_platform_dynamic_maple.m&quot;, robot_name):
+<Group labelreference="L3417" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3419" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion10" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">read &quot;../robot_codegen_definitions/robot_env_par&quot;:
+dynamicsfile := sprintf(&quot;../codeexport/%s/tmp/floatb_platform_dynamic_maple.m&quot;, robot_name):
+if FileTools[Exists](dynamicsfile) then
+  read dynamicsfile:
+else
+  printf(&quot;%s. PKM-Dynamik konnte nicht geladen werden. Abbruch der Berechnung.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+  quit: # Funktioniert in GUI nicht richtig...
+  robot_name := &quot;&quot;: # ...Daher auch L\303\266schung des Roboternamens.
+end if:
 # Neu-Definition der geladenen Variablen
 MME:=MME:
 cvecE:=cvecE:
 gE:=gE:
 tauE:=tauE:
 H:=H:
-dH:=dH:</Text-field>
+dH:=dH:
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L3421" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 <Group labelreference="L3216" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ergebnisse der Kinematik f\303\274r parallelen Roboter laden</Font></Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L3304" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env_par&quot;:
-read sprintf(&quot;../codeexport/%s/tmp/kinematics_%s_platform_maple.m&quot;, robot_name, base_method_name):
+<Group labelreference="L3412" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3414" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion9" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">read &quot;../robot_codegen_definitions/robot_env_par&quot;:
+kinematicsfile := sprintf(&quot;../codeexport/%s/tmp/kinematics_%s_platform_maple.m&quot;, robot_name, base_method_name):
+if FileTools[Exists](kinematicsfile) then
+  read kinematicsfile:
+else
+  printf(&quot;%s. PKM-Kinematik konnte nicht geladen werden. Abbruch der Berechnung.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+  quit: # Funktioniert in GUI nicht richtig...
+  robot_name := &quot;&quot;: # ...Daher auch L\303\266schung des Roboternamens.
+end if:
+read &quot;../robot_codegen_definitions/robot_env_par&quot;: # Nochmal laden, um Standard-Einstellungen \303\274berschreiben zu k\303\266nnen.
 # Neu-Definition der von dieser Datei gelesenen Variablen, damit sie im Workspace erscheinen
 pivotMat := pivotMat:
 pivotMatMas := pivotMatMas:
 Jinv := Jinv:
 JBinv_i := JBinv_i:
-U_i := U_i:</Text-field>
-</Input>
-</Group>
-<Group hide-input="false" labelreference="L3381" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">read &quot;../robot_codegen_definitions/robot_env_par&quot;: # Nochmal laden, um Standard-Einstellungen \303\274berschreiben zu k\303\266nnen.</Font></Text-field>
+U_i := U_i:
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L3416" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 <Group labelreference="L3345" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -276,53 +298,94 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Font encoding="UTF-8">Die Rotation der Basis wird nur in der Jacobi-Matrix der inverse Kinematik ber\303\274cksichtigt. Deshalb muss der Gravitationsvektor ebenfalls an die Rotation angepasst werden.</Font></Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L3313" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">g1 := gtmp1:
+<Group labelreference="L3422" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3424" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion11" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">g1 := gtmp1:
 g2 := gtmp2:
 g3 := gtmp3:
-read sprintf(&quot;../codeexport/%s/tmp/gravload_par%d_maple.m&quot;, leg_name, codegen_dynpar):
-G := simplify(Matrix(taug_s(7..NQ,1))):
+
+dynamicsfile_leg := sprintf(&quot;../codeexport/%s/tmp/gravload_par%d_maple.m&quot;, leg_name, codegen_dynpar):
+if FileTools[Exists](dynamicsfile_leg) then
+  read dynamicsfile_leg:
+else
+  printf(&quot;%s. Beinketten-Dynamik (g) konnte nicht geladen werden. Abbruch der Berechnung.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+  quit: # Funktioniert in GUI nicht richtig...
+  robot_name := &quot;&quot;: # ...Daher auch L\303\266schung des Roboternamens.
+end if:
+G := simplify2(Matrix(taug_s(7..NQ,1))):
 unassign('g1','g2','g3'):
 g := &lt;g1;g2;g3&gt;:
 Rmat := Transpose(parse(sprintf(&quot;eul%s2r&quot;,angleConvLeg))(frame_A_i(1..3,1))):
 gtmp1 := (Rmat.g)(1):
 gtmp2 := (Rmat.g)(2):
 gtmp3 := (Rmat.g)(3):
-G := G:</Text-field>
+G := G:
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group hide-input="false" labelreference="L3313" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">
+</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3153" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">Ergebnisse C-Vektor der Beinkette laden</Text-field>
 </Input>
-</Group>
-<Group hide-input="false" labelreference="L3173" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/coriolisvec_par%d_maple.m&quot;, leg_name, codegen_dynpar):
-Cvec := simplify(Matrix(tauCC_s(7..NQ,1))):
-Cvec := Cvec:</Text-field>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3428" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion12" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">dynamicsfile_leg := sprintf(&quot;../codeexport/%s/tmp/coriolisvec_par%d_maple.m&quot;, leg_name, codegen_dynpar):
+if FileTools[Exists](dynamicsfile_leg) then
+  read dynamicsfile_leg:
+else
+  printf(&quot;%s. Beinketten-Dynamik (c) konnte nicht geladen werden. Abbruch der Berechnung.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+  quit: # Funktioniert in GUI nicht richtig...
+  robot_name := &quot;&quot;: # ...Daher auch L\303\266schung des Roboternamens.
+end if:
+Cvec := simplify2(Matrix(tauCC_s(7..NQ,1))):
+Cvec := Cvec:
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L3430" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 <Group labelreference="L3163" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">Ergebnisse M-Matrix der Beinkette laden</Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L3263" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/inertia_par%d_maple.m&quot;, leg_name, codegen_dynpar):
+<Group labelreference="L3431" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3433" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion13" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">dynamicsfile_leg := sprintf(&quot;../codeexport/%s/tmp/inertia_par%d_maple.m&quot;, leg_name, codegen_dynpar):
+if FileTools[Exists](dynamicsfile_leg) then
+  read dynamicsfile_leg:
+else
+  printf(&quot;%s. Beinketten-Dynamik (M) konnte nicht geladen werden. Abbruch der Berechnung.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+  quit: # Funktioniert in GUI nicht richtig...
+  robot_name := &quot;&quot;: # ...Daher auch L\303\266schung des Roboternamens.
+end if:
 MM := simplify(MM_s(7..NQ,7..NQ)):
 MM := simplify(MM):
 MME := simplify(MME):
-gE := simplify(gE):</Text-field>
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L3435" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ausdruck f\303\274r Gravitationsterme der Plattform nochmal vereinfachen.</Font></Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L3263" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">gE := simplify2(gE):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3260" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ergebnisse der Kinematik f\303\274r parallen Roboter laden</Font></Text-field>
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ergebnisse der Kinematik f\303\274r parallen Roboter laden (wurde oben schon gemacht.</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L3259" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/kinematics_%s_platform_maple.m&quot;, robot_name, base_method_name):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">#read sprintf(&quot;../codeexport/%s/tmp/kinematics_%s_platform_maple.m&quot;, robot_name, base_method_name):</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3165" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;%s. Alle Daten geladen. Generiere Dynamik f\303\274r PKM %s mit Parametersatz %d\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), </Font>robot_name, codegen_dynpar, base_method_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3434" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>
