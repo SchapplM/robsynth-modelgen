@@ -283,22 +283,21 @@ end if:
 save q_t, q_s, qD_t, qD_s, qDD_t, qDD_s, qJ_t, qJ_s, qJD_t, qJD_s, qJDD_t, qJDD_s, g_world, X_base_t, X_base_s, V_base_t, V_base_s, VD_base_t, VD_base_s, qoffset, theta, alpha, d, a,v,b,beta, sigma,mu,M, r_i_i_Si, mr_i_i_Si, I_i_i, I_i_Si, PV2_vec, PV2_mat, robot_name, NQ,NQB,NQJ,NJ,NL, base_method_name, T_basevel, kintmp_t, kintmp_s, sprintf("../codeexport/%s/tmp/tree_floatb_twist_definitions", robot_name):
 save q_t, q_s, qD_t, qD_s, qDD_t, qDD_s, qJ_t, qJ_s, qJD_t, qJD_s, qJDD_t, qJDD_s, g_world, X_base_t, X_base_s, V_base_t, V_base_s, VD_base_t, VD_base_s, qoffset, theta, alpha, d, a,v,b,beta, sigma,mu,M, r_i_i_Si, mr_i_i_Si, I_i_i, I_i_Si, PV2_vec, PV2_mat, robot_name, NQ,NQB,NQJ,NJ,NL, base_method_name, T_basevel, kintmp_t, kintmp_s, sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
 # Einzelne DH-Parameter als Matlab-Code exportieren. Damit lässt sich in Matlab ein passender Parametersatz generieren.
+# Die folgenden Dateien müssen immer generiert werden, wenn die Bash-Skripte zur Funktionszusammensetzung fehlerfrei laufen sollen.
 # Benutze die Funktion convert_t_s, um eventuelle Substitutionsvariablen für konstante Gelenkwinkel zu verwenden, da die Matlab-Terme auch mit substituierten Ausdrücken generiert werden.
 # Zur Kennzeichnung von zeitabhängigen und konstanten Ausdrücken kann "delta1(t)", "delta1" und "delta1s" verwendet werden.
-if codegen_act then
-  MatlabExport(v, sprintf("../codeexport/%s/tmp/parameters_mdh_v_matlab.m", robot_name), 2):
-  MatlabExport(convert_t_s(a), sprintf("../codeexport/%s/tmp/parameters_mdh_a_matlab.m", robot_name), 2):
-  d_export := d *~ (1-~sigma):
-  MatlabExport(convert_t_s(d_export), sprintf("../codeexport/%s/tmp/parameters_mdh_d_matlab.m", robot_name), 2):
-  theta_export := theta *~ sigma:
-  MatlabExport(convert_t_s(theta_export), sprintf("../codeexport/%s/tmp/parameters_mdh_theta_matlab.m", robot_name), 2):
-  MatlabExport(convert_t_s(b), sprintf("../codeexport/%s/tmp/parameters_mdh_b_matlab.m", robot_name), 2):
-  MatlabExport(convert_t_s(alpha), sprintf("../codeexport/%s/tmp/parameters_mdh_alpha_matlab.m", robot_name), 2):
-  MatlabExport(convert_t_s(beta), sprintf("../codeexport/%s/tmp/parameters_mdh_beta_matlab.m", robot_name), 2):
-  MatlabExport(convert_t_s(qoffset), sprintf("../codeexport/%s/tmp/parameters_mdh_qoffset_matlab.m", robot_name), 2):
-  MatlabExport(sigma, sprintf("../codeexport/%s/tmp/parameters_mdh_sigma_matlab.m", robot_name), 2):
-  MatlabExport(mu, sprintf("../codeexport/%s/tmp/parameters_mdh_mu_matlab.m", robot_name), 2):
-end:
+MatlabExport(v, sprintf("../codeexport/%s/tmp/parameters_mdh_v_matlab.m", robot_name), 2):
+MatlabExport(convert_t_s(a), sprintf("../codeexport/%s/tmp/parameters_mdh_a_matlab.m", robot_name), 2):
+d_export := d *~ (1-~sigma):
+MatlabExport(convert_t_s(d_export), sprintf("../codeexport/%s/tmp/parameters_mdh_d_matlab.m", robot_name), 2):
+theta_export := theta *~ sigma:
+MatlabExport(convert_t_s(theta_export), sprintf("../codeexport/%s/tmp/parameters_mdh_theta_matlab.m", robot_name), 2):
+MatlabExport(convert_t_s(b), sprintf("../codeexport/%s/tmp/parameters_mdh_b_matlab.m", robot_name), 2):
+MatlabExport(convert_t_s(alpha), sprintf("../codeexport/%s/tmp/parameters_mdh_alpha_matlab.m", robot_name), 2):
+MatlabExport(convert_t_s(beta), sprintf("../codeexport/%s/tmp/parameters_mdh_beta_matlab.m", robot_name), 2):
+MatlabExport(convert_t_s(qoffset), sprintf("../codeexport/%s/tmp/parameters_mdh_qoffset_matlab.m", robot_name), 2):
+MatlabExport(sigma, sprintf("../codeexport/%s/tmp/parameters_mdh_sigma_matlab.m", robot_name), 2):
+MatlabExport(mu, sprintf("../codeexport/%s/tmp/parameters_mdh_mu_matlab.m", robot_name), 2):
 
 # Einzelne Dynamikparameter als Matlab-Code exportieren. Wenn die Parameter durch Benutzereingaben verändert wurden, lässt sich diese Information so weiter benutzen.
 # (z.B. in der Definition von Eingabeparametern in den Testskripten).
@@ -307,11 +306,9 @@ end:
 # Zusätzlich ist die Reihenfolge der Komponenten der Trägheitstensoren in Matlab und Maple unterschiedlich (daher die Indizierung).
 # Matlab: xx, yy, zz, xy, xz, yz (erst Hauptmomente, dann Deviationsmomente)
 # Maple: xx, xy, xz, yy, yz, zz (Dreiecksform)
-if codegen_act then
-  MatlabExport(M, sprintf("../codeexport/%s/tmp/parameters_dyn_mges_matlab.m", robot_name), 2):
-  MatlabExport(Transpose(r_i_i_Si), sprintf("../codeexport/%s/tmp/parameters_dyn_rSges_matlab.m", robot_name), 2):
-  MatlabExport(Transpose(I_i_Si([1,4,6,2,3,5],..)), sprintf("../codeexport/%s/tmp/parameters_dyn_Icges_matlab.m", robot_name), 2):
-  MatlabExport(Transpose(mr_i_i_Si), sprintf("../codeexport/%s/tmp/parameters_dyn_mrSges_matlab.m", robot_name), 2):
-  MatlabExport(Transpose(I_i_i([1,4,6,2,3,5],..)), sprintf("../codeexport/%s/tmp/parameters_dyn_Ifges_matlab.m", robot_name), 2):
-end if:
+MatlabExport(M, sprintf("../codeexport/%s/tmp/parameters_dyn_mges_matlab.m", robot_name), 2):
+MatlabExport(Transpose(r_i_i_Si), sprintf("../codeexport/%s/tmp/parameters_dyn_rSges_matlab.m", robot_name), 2):
+MatlabExport(Transpose(I_i_Si([1,4,6,2,3,5],..)), sprintf("../codeexport/%s/tmp/parameters_dyn_Icges_matlab.m", robot_name), 2):
+MatlabExport(Transpose(mr_i_i_Si), sprintf("../codeexport/%s/tmp/parameters_dyn_mrSges_matlab.m", robot_name), 2):
+MatlabExport(Transpose(I_i_i([1,4,6,2,3,5],..)), sprintf("../codeexport/%s/tmp/parameters_dyn_Ifges_matlab.m", robot_name), 2):
 

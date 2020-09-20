@@ -149,10 +149,10 @@ restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet
 </Input>
 </Group>
 <Group labelreference="L1926" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../workdir/<Font encoding="UTF-8">tbmode&quot;: # Datei tbmode wird von Bash-Skripten erstellt und zeigt den aktuellen Modus an
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../workdir/tbmode&quot;: # Datei tbmode wird von Bash-Skripten erstellt und zeigt den aktuellen Modus an
 if tbmode = &quot;implicit&quot; then
-  printf(&quot;Modus f\303\274r IC ist aktiv. Bestimme Kinematikparameter f\303\274r System mit impliziten ZB.\134n&quot;):
-  </Font>read &quot;../robot_codegen_definitions/robot_env_IC&quot;:
+<Font encoding="UTF-8">  printf(&quot;Modus f\303\274r IC ist aktiv. Bestimme Kinematikparameter f\303\274r System mit impliziten ZB.\134n&quot;):
+</Font>  read &quot;../robot_codegen_definitions/robot_env_IC&quot;:
 end if:</Text-field>
 </Input>
 </Group>
@@ -186,8 +186,8 @@ end if:</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L1797" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">constrfile := sprintf(&quot;../codeexport/%s/tmp/kinematic_implicit_constraints_symbols_list_maple&quot;, robot_name):
-# F\303\274r implizite Zwangsbedingungen ist &quot;robot_name&quot; das System mit IC und nicht mit OL o.\303\244.</Font>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">constrfile := sprintf(&quot;../codeexport/%s/tmp/kinematic_implicit_constraints_symbols_list_maple&quot;, robot_name):
+<Font encoding="UTF-8"># F\303\274r implizite Zwangsbedingungen ist &quot;robot_name&quot; das System mit IC und nicht mit OL o.\303\244.</Font>
 if FileTools[Exists](constrfile) then
   read constrfile:
   printf(&quot;Symbole der i<Font encoding="UTF-8">mpliziten Zwangsbedingungen aus %s gelesen.\134n&quot;, </Font>constrfile):
@@ -454,7 +454,7 @@ end do:</Text-field>
 <Group labelreference="L1920" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ersetze alle noch nicht ersetzten Kinematikparameter mit NaN. Ansonsten ist der Matlab-Code nicht lauff\303\244hig und es treten nachgelagerte Probleme auf.</Font></Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1924" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion2" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">for i from 1 to RowDimension(pkin_subs_mdh) do
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1924" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion2" expanded="true" visible="true" pixel-width="1138" pixel-height="356" code-language="text/maple" autofit="false" wrapping="true" show-border="true" code-line-numbers="true">for i from 1 to RowDimension(pkin_subs_mdh) do
   for j from 1 to RowDimension(pkt3i) do
     if has(pkin_subs_mdh(i), pkt3i(j)) then
       printf(&quot;Die Variable %s kommt noch in der Umrechnung mdh-&gt;pkin vor. Vermutlich Fehler beim substituieren. Setze NaN.\134n&quot;, String(pkt3i(j))):
@@ -470,11 +470,15 @@ end do:</Text-field>
   end do:
 end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L1908" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if codegen_act then
-<Font encoding="UTF-8">  interface(warnlevel=0): # Unterdr\303\274cke die folgende Warnung (weil MDH-Parameter als Funktionsnamen interpretiert werden. Code funktioniert trotzdem.)
-</Font>  MatlabExport(pkin_subs_mdh, sprintf(&quot;../codeexport/%s/tmp/parameter_kin_from_mdh_matlab.m&quot;, robot_name), 2):
-  interface(warnlevel=3):
-end if:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1931" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion3" expanded="true" visible="true" pixel-width="1182" pixel-height="146" code-language="text/maple" autofit="false" wrapping="true" show-border="true" code-line-numbers="true"># Folgender Term muss immer erzeugt werden (wird f\303\274r Bash-Skripte ben\303\266tigt. Sonst dort Fehler und Abbruch).
+interface(warnlevel=0): # Unterdr\303\274cke die folgende Warnung (weil MDH-Parameter als Funktionsnamen interpretiert werden. Code funktioniert trotzdem.)
+MatlabExport(pkin_subs_mdh, sprintf(&quot;../codeexport/%s/tmp/parameter_kin_from_mdh_matlab.m&quot;, robot_name), 2):
+interface(warnlevel=3):
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L1932" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>

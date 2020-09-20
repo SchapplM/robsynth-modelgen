@@ -567,23 +567,22 @@ end if:</Text-field>
 </Group>
 <Group labelreference="L1653" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Einzelne DH-Parameter als Matlab-Code exportieren. Damit l\303\244sst sich in Matlab ein passender Parametersatz generieren.
+Die folgenden Dateien m\303\274ssen immer generiert werden, wenn die Bash-Skripte zur Funktionszusammensetzung fehlerfrei laufen sollen.
 Benutze die Funktion convert_t_s, um eventuelle Substitutionsvariablen f\303\274r konstante Gelenkwinkel zu verwenden, da die Matlab-Terme auch mit substituierten Ausdr\303\274cken generiert werden.
 Zur Kennzeichnung von zeitabh\303\244ngigen und konstanten Ausdr\303\274cken kann &quot;delta1(t)&quot;, &quot;delta1&quot; und &quot;delta1s&quot; verwendet werden.</Font></Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1714" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if codegen_act then
-  MatlabExport(v, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_v_matlab.m&quot;, robot_name), 2):
-  MatlabExport(convert_t_s(a), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_a_matlab.m&quot;, robot_name), 2):
-  d_export := d *~ (1-~sigma):
-  MatlabExport(convert_t_s(d_export), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_d_matlab.m&quot;, robot_name), 2):
-  theta_export := theta *~ sigma:
-  MatlabExport(convert_t_s(theta_export), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_theta_matlab.m&quot;, robot_name), 2):
-  MatlabExport(convert_t_s(b), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_b_matlab.m&quot;, robot_name), 2):
-  MatlabExport(convert_t_s(alpha), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_alpha_matlab.m&quot;, robot_name), 2):
-  MatlabExport(convert_t_s(beta), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_beta_matlab.m&quot;, robot_name), 2):
-  MatlabExport(convert_t_s(qoffset), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_qoffset_matlab.m&quot;, robot_name), 2):
-  MatlabExport(sigma, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_sigma_matlab.m&quot;, robot_name), 2):
-  MatlabExport(mu, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_mu_matlab.m&quot;, robot_name), 2):
-end:</EC-CodeEditor></CodeEditor-ExecGroup>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1714" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion0" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">MatlabExport(v, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_v_matlab.m&quot;, robot_name), 2):
+MatlabExport(convert_t_s(a), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_a_matlab.m&quot;, robot_name), 2):
+d_export := d *~ (1-~sigma):
+MatlabExport(convert_t_s(d_export), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_d_matlab.m&quot;, robot_name), 2):
+theta_export := theta *~ sigma:
+MatlabExport(convert_t_s(theta_export), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_theta_matlab.m&quot;, robot_name), 2):
+MatlabExport(convert_t_s(b), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_b_matlab.m&quot;, robot_name), 2):
+MatlabExport(convert_t_s(alpha), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_alpha_matlab.m&quot;, robot_name), 2):
+MatlabExport(convert_t_s(beta), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_beta_matlab.m&quot;, robot_name), 2):
+MatlabExport(convert_t_s(qoffset), sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_qoffset_matlab.m&quot;, robot_name), 2):
+MatlabExport(sigma, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_sigma_matlab.m&quot;, robot_name), 2):
+MatlabExport(mu, sprintf(&quot;../codeexport/%s/tmp/parameters_mdh_mu_matlab.m&quot;, robot_name), 2):</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L1802" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
@@ -595,13 +594,11 @@ end:</EC-CodeEditor></CodeEditor-ExecGroup>
 Zus\303\244tzlich ist die Reihenfolge der Komponenten der Tr\303\244gheitstensoren in Matlab und Maple unterschiedlich (daher die Indizierung).</Font></Text-field><Text-field style="Text" layout="Normal">Matlab: xx, yy, zz, xy, xz, yz (erst Hauptmomente, dann Deviationsmomente)
 Maple: xx, xy, xz, yy, yz, zz (Dreiecksform)</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1737" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion4" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if codegen_act then
-  MatlabExport(M, sprintf(&quot;../codeexport/%s/tmp/parameters_dyn_mges_matlab.m&quot;, robot_name), 2):
-  MatlabExport(Transpose(r_i_i_Si), sprintf(&quot;../codeexport/%s/tmp/parameters_dyn_rSges_matlab.m&quot;, robot_name), 2):
-  MatlabExport(Transpose(I_i_Si([1,4,6,2,3,5],..)), sprintf(&quot;../codeexport/%s/tmp/parameters_dyn_Icges_matlab.m&quot;, robot_name), 2):
-  MatlabExport(Transpose(mr_i_i_Si), sprintf(&quot;../codeexport/%s/tmp/parameters_dyn_mrSges_matlab.m&quot;, robot_name), 2):
-  MatlabExport(Transpose(I_i_i([1,4,6,2,3,5],..)), sprintf(&quot;../codeexport/%s/tmp/parameters_dyn_Ifges_matlab.m&quot;, robot_name), 2):
-end if:</EC-CodeEditor></CodeEditor-ExecGroup>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L1737" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion4" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">MatlabExport(M, sprintf(&quot;../codeexport/%s/tmp/parameters_dyn_mges_matlab.m&quot;, robot_name), 2):
+MatlabExport(Transpose(r_i_i_Si), sprintf(&quot;../codeexport/%s/tmp/parameters_dyn_rSges_matlab.m&quot;, robot_name), 2):
+MatlabExport(Transpose(I_i_Si([1,4,6,2,3,5],..)), sprintf(&quot;../codeexport/%s/tmp/parameters_dyn_Icges_matlab.m&quot;, robot_name), 2):
+MatlabExport(Transpose(mr_i_i_Si), sprintf(&quot;../codeexport/%s/tmp/parameters_dyn_mrSges_matlab.m&quot;, robot_name), 2):
+MatlabExport(Transpose(I_i_i([1,4,6,2,3,5],..)), sprintf(&quot;../codeexport/%s/tmp/parameters_dyn_Ifges_matlab.m&quot;, robot_name), 2):</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L1738" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>

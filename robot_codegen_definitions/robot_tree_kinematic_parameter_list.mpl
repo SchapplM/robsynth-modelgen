@@ -189,11 +189,12 @@ for i from 1 to RowDimension(pkin_subs_mdh) do
 
   end do:
 end do:
-if codegen_act then
-  interface(warnlevel=0): # Unterdrücke die folgende Warnung (weil MDH-Parameter als Funktionsnamen interpretiert werden. Code funktioniert trotzdem.)
-  MatlabExport(pkin_subs_mdh, sprintf("../codeexport/%s/tmp/parameter_kin_from_mdh_matlab.m", robot_name), 2):
-  interface(warnlevel=3):
-end if:
+
+# Folgender Term muss immer erzeugt werden (wird für Bash-Skripte benötigt. Sonst dort Fehler und Abbruch).
+interface(warnlevel=0): # Unterdrücke die folgende Warnung (weil MDH-Parameter als Funktionsnamen interpretiert werden. Code funktioniert trotzdem.)
+MatlabExport(pkin_subs_mdh, sprintf("../codeexport/%s/tmp/parameter_kin_from_mdh_matlab.m", robot_name), 2):
+interface(warnlevel=3):
+
 # Ausgabe
 # MDH-Tabelle ausgeben
 interface(rtablesize=100):
