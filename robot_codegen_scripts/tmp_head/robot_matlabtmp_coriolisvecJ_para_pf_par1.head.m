@@ -1,4 +1,4 @@
-% Calculate vector of centrifugal and coriolis load on the joints for
+% Calculate vector of centrifugal and Coriolis load for parallel robot
 % %RN%
 % Use Code from Maple symbolic Code Generation
 %
