@@ -555,8 +555,8 @@ end if:</Text-field>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2"><Font encoding="UTF-8">Export des symbolischen Ausdrucks f\303\274r jede Transformationsmatrix einzeln</Font></Text-field></Title>
 <Group labelreference="L2250" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to NJ+1 do
-  if codegen_act and codegen_debug then
-    MatlabExport(convert_t_s(Trf_c(1 .. 4, 1 .. 4, i)), sprintf(&quot;../codeexport/%s/tmp/fkine_%d_floatb_%s_rotmat_matlab.m&quot;, robot_name, i, base_method_name), codegen_opt):
+  if codegen_act then
+    MatlabExport(convert_t_s(Trf_c(1 .. 4, 1 .. 4, i)), sprintf(&quot;../codeexport/%s/tmp/fkine_%d_floatb_%s_rotmat_matlab.m&quot;, robot_name, i-1, base_method_name), codegen_opt):
   end if:
 end do:</Text-field>
 </Input>

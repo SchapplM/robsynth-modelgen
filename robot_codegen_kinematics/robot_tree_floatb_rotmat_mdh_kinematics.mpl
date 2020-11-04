@@ -286,8 +286,8 @@ end if:
 
 # Export des symbolischen Ausdrucks für jede Transformationsmatrix einzeln
 for i from 1 to NJ+1 do
-  if codegen_act and codegen_debug then
-    MatlabExport(convert_t_s(Trf_c(1 .. 4, 1 .. 4, i)), sprintf("../codeexport/%s/tmp/fkine_%d_floatb_%s_rotmat_matlab.m", robot_name, i, base_method_name), codegen_opt):
+  if codegen_act then
+    MatlabExport(convert_t_s(Trf_c(1 .. 4, 1 .. 4, i)), sprintf("../codeexport/%s/tmp/fkine_%d_floatb_%s_rotmat_matlab.m", robot_name, i-1, base_method_name), codegen_opt):
   end if:
 end do:
 

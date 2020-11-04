@@ -557,6 +557,47 @@ else
   done
 fi;
 
+# Eine Datei für die Transformationsmatrix zu einem einzelnen Körper
+zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_fkine_fixb_body_rotmat_mdh_sym_varpar.m
+cat $head_pfad/robot_matlabtmp_fkine_fixb_body_rotmat.head.m > $zieldat
+printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+source robot_codegen_matlabfcn_postprocess.sh $zieldat 0
+source $repo_pfad/scripts/set_inputdim_line.sh $zieldat "link_index|uint8(0)"
+cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
+printf "assert(isa(link_index,'uint8') && all(size(link_index) == [1 1]), ..." >> $zieldat
+printf "\n\t'%%FN%%: link_index has to be [1x1] uint8');\n" >> $zieldat
+cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+# Definition der Ausgabevariable
+printf "Tc_mdh=NaN(4,4);\n" >> $zieldat
+printf "%%%% Symbolic Calculation\n" >> $zieldat
+
+# Fallunterscheidung für einzelne Körper
+for (( ib=0; ib<$robot_NL; ib++ ))
+do
+  if [ "$ib" -eq "0" ]; then
+    printf "if link_index == ${ib}\n" >> $zieldat
+  else
+    printf "elseif link_index == ${ib}\n" >> $zieldat
+  fi;
+  quelldat=$repo_pfad/codeexport/${robot_name}/tmp/fkine_${ib}_floatb_twist_rotmat_matlab.m
+  # Einfügen von Quelltext
+  if [ -f $quelldat ]; then
+    echo "%% Variable Initialization" > ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_qJ.m >> ${quelldat}.subsvar
+    cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
+    printf "rxs_base = 0;\nrys_base = 0;\nrzs_base = 0;\n" >> ${quelldat}.subsvar
+    printf "\t%% From ${quelldat##*/}\n" >> $zieldat
+    sed -e 's/^/\t% /' ${quelldat}.stats >> $zieldat
+    sed -e 's/^/\t/' $quelldat >> $zieldat
+    source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 0 ${quelldat}.subsvar
+  else
+    echo "Code in ${quelldat##*/} nicht gefunden."
+    printf "\t%% Symbolic code from ${quelldat##*/} not found\n" >> $zieldat
+    continue
+  fi;
+done
+printf "end" >> $zieldat
+
 # Funktionen für explizite kinematische Zwangsbedingungen
 quelldat=$repo_pfad/codeexport/${robot_name}/tmp/kinconstr_expl_matlab.m
 zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_kinconstr_expl_mdh_sym_varpar.m

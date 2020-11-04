@@ -87,6 +87,15 @@ for i = 1:size(Q, 1)
       error('joint_trafo stimmt nicht gegen fkine');
     end
   end
+  % Teste Funktion für einzelne Transformationsmatrizen
+  for j = 1:NJ
+    T_j_all = Tc(:,:,j);
+    T_j_single = %RN%_fkine_fixb_body_rotmat_mdh_sym_varpar(q, uint8(j-1), pkin);
+    test_T_j_single = T_j_all - T_j_single;
+    if any(abs(test_T_j_single(:)) > 1e-12)
+      error('fkine_fixb_body stimmt nicht gegen fkine_fixb');
+    end
+  end
 end
 fprintf('Tested forward kinematics against joint transformations for %d random joint angles.\n', size(Q, 1));
 
