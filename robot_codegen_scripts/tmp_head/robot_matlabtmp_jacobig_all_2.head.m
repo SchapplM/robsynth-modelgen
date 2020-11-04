@@ -9,7 +9,7 @@
 % %INPUT_QJ%
 % link_index [1x1 uint8]
 %   Index des Segmentes, auf dem der Punkt C liegt. (0=Basis).
-%   Siehe auch: bsp_3T1R_fkine_fixb_rotmat_mdh_sym_varpar.m
+%   Siehe auch: %RN%_fkine_fixb_rotmat_mdh_sym_varpar.m
 % r_i_i_C [3x1]
 %   Ortsvektor vom KörperKS-Ursprung zum gesuchten Punkt
 % %INPUT_PKIN%
