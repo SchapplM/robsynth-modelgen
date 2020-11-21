@@ -823,6 +823,16 @@ Textbausteine für Funktionsköpfe:
   robot_matlabtmp_coriolisvec_joint_floatb_par1.head.m
   ...
 ```
+Vorlagen-Funktionen, die für jeden Roboter einzeln generiert werden:
+```
+/robot_codegen_scripts/templates_num
+  robot_jacobig_mdh_num.m.template
+  robot_jacobigD_mdh_num.m.template
+  robot_jacobig_cutforce_mdh_num.m.template
+  ...
+```
+Die Generierung dieser Vorlagen-Funktionen ermöglicht eine Kompilierung und einen sehr effizienten Aufruf (z.B. auch in Simulink). Hier können noch weitere Funktionen eingefügt werden. Einige dieser Vorlagen-Funktionen werden im Robotik-Repo versioniert. Werden die Dateien aus dem dortigen Ordner `kinematics`, wie z.B. `robot_constr2.m.template`, `robot_constr2grad.m.template` und `robot_invkin_eulangresidual.m.template` in den Ordner `templates_num` kopiert oder verknüpft, werden die Funktionen ebenfalls erzeugt.
+
 # Quellen <a name="quellen"></a> 
 
 * [KhalilKle1986] Khalil, W. and Kleinfinger, J.-F.: "A new geometric notation for open and closed-loop robots" (1986) <a name="KhalilKle1986"></a> 
