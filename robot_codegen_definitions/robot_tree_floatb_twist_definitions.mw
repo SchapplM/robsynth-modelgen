@@ -325,6 +325,26 @@ end if:</Text-field>
 </Input>
 </Group>
 </Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2"><Font encoding="UTF-8">Eingabe pr\303\274fen</Font></Text-field></Title>
+<Group labelreference="L1814" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Validit\303\244t der Vorg\303\244nger-Indizes. Konvention: Vorg\303\244nger hat kleineren Index. Siehe Khalil-Publikationen (dort evtl nur implizit so verwendet).</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L1812" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">for i from 1 to NJ do
+  if v(i) &gt;= i then
+    printf(&quot;v(%d)=%d. Verletzt die Regel, dass die Vorg\303\244nger-Nummer kleiner sein muss als die aktuelle Nummer.\134n&quot;, i, v(i)):
+    quit: # Funktioniert in GUI nicht richtig...
+    robot_name := &quot;&quot;: # ...Daher auch L\303\266schung des Roboternamens.
+  end if:
+end do:</Font></Text-field>
+</Input>
+</Group>
+</Section>
+<Group labelreference="L1813" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2">Dynamics Parameters</Text-field></Title>
 <Group labelreference="L1597" drawlabel="true">
@@ -538,10 +558,6 @@ for i to NL do
     PV2_vec[10*(i-1)+j] := PV2_mat[i, j]:
   end do:
 end do:</EC-CodeEditor></CodeEditor-ExecGroup>
-<Group labelreference="L1796" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
-</Input>
-</Group>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Kinematische Zwangsbedingungen</Text-field></Title>
 <Group labelreference="L1663" drawlabel="true">

@@ -105,6 +105,16 @@ if not assigned(beta) then
   beta := Matrix(NJ,1):
   printf("Variable beta ist nicht gegeben. zusätzliche Verschiebung auf Null\n"):
 end if:
+# Eingabe prüfen
+# Validität der Vorgänger-Indizes. Konvention: Vorgänger hat kleineren Index. Siehe Khalil-Publikationen (dort evtl nur implizit so verwendet).
+for i from 1 to NJ do
+  if v(i) >= i then
+    printf("v(%d)=%d. Verletzt die Regel, dass die Vorgänger-Nummer kleiner sein muss als die aktuelle Nummer.\n", i, v(i)):
+    quit: # Funktioniert in GUI nicht richtig...
+    robot_name := "": # ...Daher auch Löschung des Roboternamens.
+  end if:
+end do:
+
 # Dynamics Parameters
 # Mass of each link
 M_generic := Matrix(NL, 1):
@@ -272,7 +282,6 @@ for i to NL do
     PV2_vec[10*(i-1)+j] := PV2_mat[i, j]:
   end do:
 end do:
-
 # Kinematische Zwangsbedingungen
 # Prüfe, ob kinematische Zwangsbedingungen in der Roboterkonfiguration genannt sind durch Prüfung der Existenz der entsprechenden Variablen.
 if type( kintmp_t, 'Matrix') = false then
