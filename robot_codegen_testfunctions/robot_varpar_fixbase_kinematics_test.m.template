@@ -35,8 +35,8 @@ if KINCONSTR
   thrfac = 10; % bei ZB sind treten mehr Rechenfehler auf (da aufwändiger)
 end
 
-if any(sigma)
-  fprintf('Einige Tests entfallen aufgrund der Existenz von Schubgelenken\n');
+if any(sigma==2)
+  fprintf('Einige Tests entfallen aufgrund der Existenz von statischen Transformationen.\n');
 end
 
 %% Verschiedene Ausgaben der Direkten Kinematik testen
@@ -271,9 +271,6 @@ for iq = 1:size(Q, 1) % Über Zufallsposen
       error('iq=%d, jb=%d: Symbolische und numerische Jacobi-Matrizen stimmen nicht', iq, jb);
     end
     
-    if any(sigma)
-      continue % Funktioniert noch nicht für Schubgelenke
-    end
     JgD_num = %RN%_jacobigD_mdh_num(q, qD, uint8(jb), r_i_i_C, pkin);
     JgD_sym = %RN%_jacobigD_sym_varpar(q, qD, uint8(jb), r_i_i_C, pkin);
     JgD_Delta = JgD_num - JgD_sym;

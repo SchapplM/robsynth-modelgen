@@ -53,7 +53,7 @@ end
 %% Kinematik berechnen
 % direkte Kinematik
 T_c_mdh = %RN%_fkine_fixb_rotmat_mdh_sym_varpar(qJ, pkin);
-v_mdh = %RN%_structural_kinematic_parameters();
+[v_mdh, sigma_mdh] = %RN%_structural_kinematic_parameters();
 T_0_i = T_c_mdh(:,:,link_index+1);
 R_0_i = T_0_i(1:3,1:3);
 r_0_i_C = R_0_i * r_i_i_C;
@@ -74,19 +74,23 @@ for tmp = 1:%NJ% % Schleife mit Dummy-Variable begrenzt maximale Anzahl an Durch
   rD_0_0_j = V_j(1:3);
   omega_j = V_j(4:6);
 
-  %  Drehachse des Gelenks, das diesen Körper bewegt ist die z-Achse dieses
-  %  Körpers (bei DH-Notation ist es der vorherige, hier MDH-Notation).
+  % Drehachse des Gelenks, das diesen Körper bewegt ist die z-Achse dieses
+  % Körpers (bei DH-Notation ist es der vorherige, hier MDH-Notation).
   ax = T_c_mdh(1:3,3,j+1);
-  jrD = cross(omega_j, ax); % Zeitableitung von ax
-
-  % Vektor vom Gelenk zum Punkt
-  r_0_j_i = -T_c_mdh(1:3,4,j+1) + T_0_i(1:3,4);
-  r_0_j_C = r_0_j_i + r_0_i_C;
-
-  % Hebelarm vom Gelenk zum Punkt
-  rD_0_j_C = -rD_0_0_j + rD_0_0_C;
-  jtD = cross(cross(omega_j, ax), r_0_j_C) + ... % Zeitableitung von ax
-    cross(ax, rD_0_j_C); % Zeitableitung von r_0_j_C
+  
+  if sigma_mdh(j) == 0 % Drehgelenk
+    % Vektor vom Gelenk zum Punkt
+    r_0_j_i = -T_c_mdh(1:3,4,j+1) + T_0_i(1:3,4);
+    r_0_j_C = r_0_j_i + r_0_i_C;
+    % Hebelarm vom Gelenk zum Punkt
+    rD_0_j_C = -rD_0_0_j + rD_0_0_C;
+    jtD = cross(cross(omega_j, ax), r_0_j_C) + ... % Zeitableitung von ax
+      cross(ax, rD_0_j_C); % Zeitableitung von r_0_j_C
+    jrD = cross(omega_j, ax); % Zeitableitung von ax
+  else % Schubgelenk
+    jtD = cross(omega_j, ax); % Zeitableitung von ax
+    jrD = zeros(3,1); % Rotations-Teil der Jacobi ist bereits Null
+  end
 
   % Spalte der Jacobi-Matrix eintragen
   JgD_C(:,j) = [jtD; jrD];
