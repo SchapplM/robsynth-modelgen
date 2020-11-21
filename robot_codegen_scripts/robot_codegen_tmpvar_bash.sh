@@ -20,10 +20,12 @@ if [ ! -f "$robot_env_pfad" ]; then
   exit 1
 fi;
 
-# Lese die Informationen aus der Eingabe-Maple-Datei
-robot_NQJ=`grep "NQJ := " $robot_env_pfad | tail -1 | sed 's/.*= \(.*\):/\1/'`
-robot_NJ=`grep "NJ := " $robot_env_pfad | tail -1 | sed 's/.*= \(.*\):/\1/'`
-robot_name=`grep "robot_name := " $robot_env_pfad | tail -1 | sed 's/.*= "\(.*\)":/\1/'`
+# Lese die Informationen aus der Eingabe-Maple-Datei. Benutze die nachverarbeitete Version
+# der Datei robot_env. Damit ist auch die Generierung der Variablen NQJ, NJ und robot_name
+# mit Maple-Code möglich.
+robot_NQJ=`grep "NQJ := " ${robot_env_pfad}2 | tail -1 | sed 's/.*= \(.*\);/\1/'`
+robot_NJ=`grep "NJ := " ${robot_env_pfad}2 | tail -1 | sed 's/.*= \(.*\);/\1/'`
+robot_name=`grep "robot_name := " ${robot_env_pfad}2 | tail -1 | sed 's/.*= "\(.*\)";/\1/'`
 
 if [ ! "$1" == "quiet" ]; then
   echo "robot_NQJ=$robot_NQJ"

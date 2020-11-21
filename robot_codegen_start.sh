@@ -127,6 +127,9 @@ fi;
 
 cd $repo_pfad/robot_codegen_scripts/
 
+### Definitionsdatei mit Maple nachverarbeiten
+$repo_pfad/scripts/run_maple_script.sh $repo_pfad/robot_codegen_definitions/robot_env_postprocess.mpl
+
 ### seriellen Roboter berechnen ###
 if [ "$CG_NOTGENSERIAL" == "0" ]; then
   # Ordner vorbereiten
