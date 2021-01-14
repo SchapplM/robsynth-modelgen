@@ -114,17 +114,17 @@ for i = %NJ%:-1:1 % Wird die Schleife mit uint8 definiert, funktioniert der gene
   % Siehe [Featherstone2008] Gl. (3.33), Example 3.2
   % S_i = [0; 0; 1; 0; 0; 0];
 
-  % [Featherstone2008] T6.2, Line 9
+  % [Featherstone2008] T6.2, Line 9-10
   % F = I_i_c*S_i;
-  if sigma(i) == 0
-    F = I_i_c(:,3); % ausnutzen, dass S_i vorgegeben ist
-  else
-    F = I_i_c(:,6); % TODO: Ergebnis noch falsch.
-  end
-  % [Featherstone2008] T6.2, Line 10
   % H(i,i) = S_i' * F; % Diagonalelement der Massenmatrix
-  H(i,i) = F(3); % ausnutzen, dass S_i vorgegeben ist
-
+  if sigma(i) == 0 % ausnutzen, dass S_i vorgegeben ist
+    F = I_i_c(:,3);
+    H(i,i) = F(3);
+  else
+    F = I_i_c(:,6);
+    H(i,i) = F(6);
+  end
+  
   j = uint8(i); % [Featherstone2008] T6.2, Line 11
   for tmp = 1:%NJ% % Dummy-Schleife für Kompilierbarkeit. Abbruchkriterium s.u.
     if lambda(j) == 0 % [Featherstone2008] T6.2, Line 12, Abbruchbedingung
@@ -154,10 +154,10 @@ for i = %NJ%:-1:1 % Wird die Schleife mit uint8 definiert, funktioniert der gene
     % [Featherstone2008] T6.2, Line 14
     j = (lambda(j)); % Kette weiter nach hinten durchgehen (bis zur Basis)
 
-    if sigma(i) == 0
+    if sigma(j) == 0
       S_j = [0; 0; 1; 0; 0; 0];% Siehe [Featherstone2008] Gl. (3.33), Example 3.2
     else
-      S_j = [0; 0; 0; 0; 0; 1]; % TODO: Ergebnis noch falsch.
+      S_j = [0; 0; 0; 0; 0; 1];
     end
     % [Featherstone2008] T6.2, Line 15
     H(i,j) = F' * S_j;

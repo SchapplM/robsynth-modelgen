@@ -34,9 +34,7 @@ if NJ ~= NQJ || any(sigma==2)
   fprintf('Tests entfallen aufgrund der Existenz virtueller Gelenk-Transformationen (nicht implementiert)\n');
   return
 end
-if any(sigma==1)
-  fprintf('Schubgelenke noch nicht implementiert. Überspringe Test des CRBA.\n');
-end
+
 if MP_EXISTS
   MPV = %RN%_convert_par2_MPV_fixb(pkin, m, mrSges, Ifges);
 end
@@ -131,11 +129,11 @@ for i = 1:n
   end
   Mq_num4 = %RN%_inertiaJ_nCRB_vp1(qJ, ...
     pkin, m, rSges, Icges);
-  if any( abs(Mq_num4(:)-Mq_sym(:)) > 1e-10) && ~any(sigma)
+  if any( abs(Mq_num4(:)-Mq_sym(:)) > 1e-10)
     error('Fehler in numerisch berechneter Massenmatrix (Methode 4): Stimmt nicht mit symbolisch berechneter überein.');
   end
-  Mq_num5 = inertia_nCRB_vp1_m(T_stack, RotAx_i, v, m, rSges, Icges);
-  if any( abs(Mq_num5(:)-Mq_sym(:)) > 1e-10) && ~any(sigma)
+  Mq_num5 = inertia_nCRB_vp1_m(T_stack, RotAx_i, v, sigma, m, rSges, Icges);
+  if any( abs(Mq_num5(:)-Mq_sym(:)) > 1e-10)
     error('Fehler in numerisch berechneter Massenmatrix (Methode 5): Stimmt nicht mit symbolisch berechneter überein.');
   end
 
