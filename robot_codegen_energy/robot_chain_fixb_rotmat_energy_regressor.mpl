@@ -149,52 +149,69 @@ for i from NJ by -1 to 2 do
     mZ[i-1,1] := mZ[i-1,1] + cos(alpha[i,1])*mZ[i,1]+d[i,1]*cos(alpha[i,1])*m[i,1]:
     m[i-1 ,1] := m[i-1 ,1] + m[i,1]:
   else: # Schubgelenk (eq. 16)
-    XX[i-1,1] := XX[i-1,1] + cos(theta[i,1])^2*XX[i,1]
-                           - 2*cos(theta[i,1])*sin(theta[i,1])*XY[i,1]+sin(theta[i,1])^2*YY[i,1]: 
-    XY[i-1,1] := XY[i-1,1] + cos(theta[i,1])*sin(theta[i,1])*cos(alpha[i,1])*XX[i,1]
-                           + (cos(theta[i,1])^2-sin(theta[i,1])^2)*cos(alpha[i,1])*XY[i,1]
-                           - cos(theta[i,1])*sin(alpha[i,1])*XZ[i,1]
-                           - cos(theta[i,1])*sin(theta[i,1])*cos(alpha[i,1])*YY[i,1]
-                           + sin(theta[i,1])*sin(alpha[i,1])*YZ[i,1]:
-    XZ[i-1,1] := XZ[i-1,1] + cos(theta[i,1])*sin(theta[i,1])*sin(alpha[i,1])*XX[i,1]
-                           + (cos(theta[i,1])^2-sin(theta[i,1])^2)*sin(alpha[i,1])*XY[i,1]
-                           + cos(theta[i,1])*cos(alpha[i,1])*XZ[i,1]
-                           - cos(theta[i,1])*sin(theta[i,1])*sin(alpha[i,1])*YY[i,1]
-                           - sin(theta[i,1])*cos(alpha[i,1])*YZ[i,1]:
-    YY[i-1,1] := YY[i-1,1] + sin(theta[i,1])^2*cos(alpha[i,1])^2*XX[i,1]
-                           + 2*cos(theta[i,1])*sin(theta[i,1])*cos(alpha[i,1])^2*XY[i,1]
-                           - 2*sin(theta[i,1])*cos(alpha[i,1])*sin(alpha[i,1])*XZ[i,1]
-                           + cos(theta[i,1])^2*cos(alpha[i,1])^2*YY[i,1]
-                           - 2*cos(theta[i,1])*cos(alpha[i,1])*sin(alpha[i,1])*YZ[i,1]
-                           + sin(alpha[i,1])^2*ZZ[i,1]:
-    YZ[i-1,1] := YZ[i-1,1] + sin(theta[i,1])^2*cos(alpha[i,1])*sin(alpha[i,1])*XX[i,1]
-                           + 2*cos(theta[i,1])*sin(theta[i,1])*cos(alpha[i,1])*sin(alpha[i,1])*XY[i,1]
-                           + sin(theta[i,1])*(cos(alpha[i,1])^2-sin(alpha[i,1])^2)*XZ[i,1]
-                           + cos(theta[i,1])^2*cos(alpha[i,1])*sin(alpha[i,1])*YY[i,1]
-                           + cos(theta[i,1])*(cos(alpha[i,1])^2-sin(alpha[i,1])^2)*YZ[i,1]
-                           - cos(alpha[i,1])*sin(alpha[i,1])*ZZ[i,1]:
-    ZZ[i-1,1] := ZZ[i-1,1] + sin(theta[i,1])^2*sin(alpha[i,1])^2*XX[i,1]
-                           + 2*cos(theta[i,1])*sin(theta[i,1])*sin(alpha[i,1])^2*XY[i,1]
-                           + 2*sin(theta[i,1])*cos(alpha[i,1])*sin(alpha[i,1])*XZ[i,1]
-                           + cos(theta[i,1])^2*sin(alpha[i,1])^2*YY[i,1]
-                           + 2*cos(theta[i,1])*cos(alpha[i,1])*sin(alpha[i,1])*YZ[i,1]
-                           + cos(alpha[i,1])^2*ZZ[i,1]:
+    # im Normalfall nicht geänderte Parameter initialisieren.
+    # Wird durch Sonderregeln weiter unten überschrieben.
+    mR_i := m[i-1 ,1]:
+    mXR_i := mX[i-1,1]:
+    mYR_i :=mY[i-1,1]:
+    mZR_i:=mZ[i-1,1]:
+    XXR_i := XX[i-1,1] + cos(theta[i,1])^2*XX[i,1]
+                       - 2*cos(theta[i,1])*sin(theta[i,1])*XY[i,1]+sin(theta[i,1])^2*YY[i,1]: 
+    XYR_i := XY[i-1,1] + cos(theta[i,1])*sin(theta[i,1])*cos(alpha[i,1])*XX[i,1]
+                       + (cos(theta[i,1])^2-sin(theta[i,1])^2)*cos(alpha[i,1])*XY[i,1]
+                       - cos(theta[i,1])*sin(alpha[i,1])*XZ[i,1]
+                       - cos(theta[i,1])*sin(theta[i,1])*cos(alpha[i,1])*YY[i,1]
+                       + sin(theta[i,1])*sin(alpha[i,1])*YZ[i,1]:
+    XZR_i := XZ[i-1,1] + cos(theta[i,1])*sin(theta[i,1])*sin(alpha[i,1])*XX[i,1]
+                       + (cos(theta[i,1])^2-sin(theta[i,1])^2)*sin(alpha[i,1])*XY[i,1]
+                       + cos(theta[i,1])*cos(alpha[i,1])*XZ[i,1]
+                       - cos(theta[i,1])*sin(theta[i,1])*sin(alpha[i,1])*YY[i,1]
+                       - sin(theta[i,1])*cos(alpha[i,1])*YZ[i,1]:
+    YYR_i := YY[i-1,1] + sin(theta[i,1])^2*cos(alpha[i,1])^2*XX[i,1]
+                       + 2*cos(theta[i,1])*sin(theta[i,1])*cos(alpha[i,1])^2*XY[i,1]
+                       - 2*sin(theta[i,1])*cos(alpha[i,1])*sin(alpha[i,1])*XZ[i,1]
+                       + cos(theta[i,1])^2*cos(alpha[i,1])^2*YY[i,1]
+                       - 2*cos(theta[i,1])*cos(alpha[i,1])*sin(alpha[i,1])*YZ[i,1]
+                       + sin(alpha[i,1])^2*ZZ[i,1]:
+    YZR_i := YZ[i-1,1] + sin(theta[i,1])^2*cos(alpha[i,1])*sin(alpha[i,1])*XX[i,1]
+                       + 2*cos(theta[i,1])*sin(theta[i,1])*cos(alpha[i,1])*sin(alpha[i,1])*XY[i,1]
+                       + sin(theta[i,1])*(cos(alpha[i,1])^2-sin(alpha[i,1])^2)*XZ[i,1]
+                       + cos(theta[i,1])^2*cos(alpha[i,1])*sin(alpha[i,1])*YY[i,1]
+                       + cos(theta[i,1])*(cos(alpha[i,1])^2-sin(alpha[i,1])^2)*YZ[i,1]
+                       - cos(alpha[i,1])*sin(alpha[i,1])*ZZ[i,1]:
+    ZZR_i := ZZ[i-1,1] + sin(theta[i,1])^2*sin(alpha[i,1])^2*XX[i,1]
+                       + 2*cos(theta[i,1])*sin(theta[i,1])*sin(alpha[i,1])^2*XY[i,1]
+                       + 2*sin(theta[i,1])*cos(alpha[i,1])*sin(alpha[i,1])*XZ[i,1]
+                       + cos(theta[i,1])^2*sin(alpha[i,1])^2*YY[i,1]
+                       + 2*cos(theta[i,1])*cos(alpha[i,1])*sin(alpha[i,1])*YZ[i,1]
+                       + cos(alpha[i,1])^2*ZZ[i,1]:
+    # Im Kap. IV.C. sind Sonderfälle nur bezogen auf Schubgelenke definiert.
+    # Diese scheinen aber noch überhaupt nicht gut zu funktionieren. Unklar, warum.
     # Sonderfall parallele Achsen (eq. 19)
-    if sin(alpha[i,1]) = 0 then
-      ZZ[i-1,1] := ZZ[i-1,1] + 2*a[i,1]*cos(theta[i,1])*mX[i,1] - 2*a[i,1]*sin(theta[i,1])*mY[i,1]:
-      # TODO: Wird ZZ hier nicht doppelt regruppiert?
-      mX[i-1,1] := mX[i-1,1] + cos(theta[i,1])*mX[i,1] - sin(theta[i,1])*mY[i,1]:
-      mY[i-1,1] := mY[i-1,1] + sin(theta[i,1])*cos(alpha[i,1])*mX[i,1] + cos(theta[i,1])*cos(alpha[i,1])*mY[i,1]:
+    if sin(alpha[i,1]) = 0 and false then # deaktiviert. TODO: Klären, ob der Sonderfall sinnvoll ist
+      ZZR_i := ZZ[i-1,1] + 2*a[i,1]*cos(theta[i,1])*mX[i,1] - 2*a[i,1]*sin(theta[i,1])*mY[i,1]:
+      mXR_i := mX[i-1,1] + cos(theta[i,1])*mX[i,1] - sin(theta[i,1])*mY[i,1]:
+      mYR_i := mY[i-1,1] + sin(theta[i,1])*cos(alpha[i,1])*mX[i,1] + cos(theta[i,1])*cos(alpha[i,1])*mY[i,1]:
     end if:
     # Sonderfall senkrechte Achsen (eq. 20)
-    if cos(alpha[i,1]) = 0 then
-      # YY[i-1,1] := YY[i-1,1] + 2*a[i,1]*cos(theta[i,1])*mX[i,1] - 2*a[i,1]*sin(theta[i,1])*mY[i,1]:
-      # TODO: Wird YY hier nicht doppelt regruppiert?
-      # mX[i-1,1] := mX[i-1,1] + cos(theta[i,1])*mX[i,1] - sin(theta[i,1])*mY[i,1]:
-      # mZ[i-1,1] := mZ[i-1,1] + sin(alpha[i,1])*sin(theta[i,1])*mX[i,1] + sin(alpha[i,1])*cos(theta[i,1])*mY[i,1]:
-      # funktioniert irgendwie noch nicht. TODO!
+    if cos(alpha[i,1]) = 0 and false then # deaktiviert.
+      YYR_i := YY[i-1,1] + 2*a[i,1]*cos(theta[i,1])*mX[i,1] - 2*a[i,1]*sin(theta[i,1])*mY[i,1]:
+      mXR_i := mX[i-1,1] + cos(theta[i,1])*mX[i,1] - sin(theta[i,1])*mY[i,1]:
+      mZR_i := mZ[i-1,1] + sin(alpha[i,1])*sin(theta[i,1])*mX[i,1] + sin(alpha[i,1])*cos(theta[i,1])*mY[i,1]:
     end if:
-  end if:
+    # Zuweisung der neuen Variable (wegen Fallunterscheidung parallel/senkrecht)
+    # Nur für Schubgelenke notwendig
+    m[i-1 ,1] := mR_i:
+    mX[i-1,1] := mXR_i:
+    mY[i-1,1] := mYR_i:
+    mZ[i-1,1] := mZR_i:
+    XX[i-1,1] := XXR_i:
+    XY[i-1,1] := XYR_i:
+    XZ[i-1,1] := XZR_i:
+    YY[i-1,1] := YYR_i:
+    YZ[i-1,1] := YZR_i:
+    ZZ[i-1,1] := ZZR_i:
+  end if: # Drehgelenk/Schubgelenk
 end do: 
 
 # Parameter ohne Einfluss "Markieren"
@@ -256,21 +273,22 @@ for i to NJ do
     Paramvec[ii, 1] := mX[i, 1]: ii:= ii+1:
     Paramvec[ii, 1] := mY[i, 1]: ii:= ii+1:
   else: # Schubgelenk (eq. 16)
-    if not sin(alpha[i,1]) = 0 then
-      # Sonderregel senkrechte Achsen
-      # [GautierKhalil1990] (eq. 19). Parameter wurden mit denen der Basisnäheren Achse zusammengelegt und werden hier nicht betrachtet.
+     if sin(alpha[i,1]) = 0 and false then # Sonderregel (eq. 19).
+       # Parameter wurden mit denen der Basisnäheren Achse zusammengelegt und werden hier nicht betrachtet.
+       # Parameter mZ fällt weg, also bleiben mX und mY übrig
+       # TODO: Unklar, was das für das Programm heißt
+    elif cos(alpha[i,1]) = 0 and false then # Sonderregel (eq. 20)
+      # Parameter mY fällt weg, also bleiben mX und mZ übrig
+      # TODO: Unklar, was das für das Programm heißt
+    else
       Paramvec[ii, 1] := mX[i, 1]: ii:= ii+1:
       Paramvec[ii, 1] := mY[i, 1]: ii:= ii+1:
+      Paramvec[ii, 1] := mZ[i, 1]: ii:= ii+1:
     end if:
-    if not cos(alpha[i,1]) = 0 then
-      # Sonderregel parallele Achsen
-      # [GautierKhalil1990] (eq. 20).
-      # funktioniert irgendwie noch nicht. TODO!
-    end if:
-    Paramvec[ii, 1] := mZ[i, 1]: ii:= ii+1:
     Paramvec[ii, 1] := m[i, 1]:  ii:= ii+1:
   end if:
 end do:
+
 # Entfernung von Nullelementen
 # Durch Entfernung der Nullelemente erfolgt 'beta_b' aus [HRL_IDR] (22)
 p := 0:
@@ -326,18 +344,20 @@ for i from 0 to NJ-1 do
     t_ges[1,i*10+ 4]:=REMOVE; # YY
     t_ges[1,i*10+ 5]:=REMOVE; # YZ
     t_ges[1,i*10+ 6]:=REMOVE; # ZZ
-    if sin(alpha[i+1,1]) = 0 then
-      # Sonderregel senkrechte Achsen
-      # [GautierKhalil1990] (eq. 19). Parameter zusammengelegt in Parametervektor. Werden daher hier entfernt.
-     u_ges[1,i*10+ 7]:=REMOVE; # mX
-     u_ges[1,i*10+ 8]:=REMOVE; # mY
-     t_ges[1,i*10+ 7]:=REMOVE; # mX
-     t_ges[1,i*10+ 8]:=REMOVE; # mY
-    end if:
-    if cos(alpha[i+1,1]) = 0 then
-      # Sonderregel parallele Achsen
-      # [GautierKhalil1990] (eq. 20). 
-    end if:
+    # Sonderregel (eq. 19-20). Parameter zusammengelegt in Parametervektor. Werden daher hier entfernt.
+    # Fälle vorerst auskommentiert (siehe oben). TODO: Das hat alles nicht funktioniert.
+    #if sin(alpha[i+1,1]) = 0 then
+    #  u_ges[1,i*10+ 7]:=REMOVE; # mX
+    #  t_ges[1,i*10+ 7]:=REMOVE; # mX
+    #  u_ges[1,i*10+ 8]:=REMOVE; # mY
+    #  t_ges[1,i*10+ 8]:=REMOVE; # mY
+    # end if:
+    # if cos(alpha[i+1,1]) = 0 then
+    #  u_ges[1,i*10+ 7]:=REMOVE; # mX
+    #  t_ges[1,i*10+ 7]:=REMOVE; # mX
+    #  u_ges[1,i*10+ 9]:=REMOVE; # mZ
+    #  t_ges[1,i*10+ 9]:=REMOVE; # mZ
+    # end if:
   end if:
 end do: 
 # Entfernungen von markierten Elementen
@@ -352,6 +372,11 @@ size_Matrix:=10*NJ-p:
 t_ges_minpar:=Matrix(1,size_Matrix):
 u_ges_minpar:=Matrix(1,size_Matrix):
 printf("Dimension der Regressormatrix: 1x%d\n", size_Matrix):
+
+if size_Matrix <> Paramvec_size then
+  printf("Achtung: Dimension der Regressormatrix passt nicht zu der des Parametervektors!\n"):
+end if:
+
 p:=0:
 for i from 1 to 10*NJ do       #Nullen Zählen     
    if t_ges[1,i]=REMOVE and u_ges[1,i]=REMOVE then       
