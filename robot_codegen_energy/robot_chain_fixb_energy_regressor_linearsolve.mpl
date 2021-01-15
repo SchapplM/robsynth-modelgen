@@ -40,6 +40,7 @@ read sprintf("../codeexport/%s/tmp/kinematic_constraints_maple_inert.m", robot_n
 kin_constraints_exist := kin_constraints_exist: # nur zum Abschätzen der Komplexität
 ;
 # Prüfe, ob die symbolische Berechnung der Parameterminimierung berechnet werden sollte
+abort_this_worksheet := false:
 # Bestimme, ob es eine Baumstruktur ist. Wenn ja, funktioniert der andere Algorithmus nicht und dieser wird genommen.
 tree:=false:
 for i from 1 to NJ do
@@ -50,16 +51,24 @@ end do:
 
 if not (assigned(user_CoM) or assigned(user_M) or assigned(user_inertia) \
   or kin_constraints_exist or tree) then
-  # es gibt keinen Sonderfall, diese Berechnung der Minimalparameter ist nicht notwendig.
-  printf("Keine analytische Berechnung der Minimalparameter notwendig\n"):
-  quit: # Funktioniert in GUI nicht richtig...
-  robot_name := "": # ...Daher auch Löschung des Roboternamens.
+  # Es gibt keinen Sonderfall, diese Berechnung der Minimalparameter ist nicht notwendig.
+  printf("Keine analytische Berechnung der Minimalparameter notwendig.\n"):
+  abort_this_worksheet := true:
 end if:
 
 if assigned(dynpar_minimization_linsolve) and not dynpar_minimization_linsolve then
-  printf("Analytische Berechnung der Minimalparameter manuell deaktiviert. Abbruch.\n"):
-  quit:
-  robot_name := "":
+  printf("Analytische Berechnung der Minimalparameter manuell deaktiviert.\n"):
+  abort_this_worksheet := true:
+end if:
+
+if assigned(dynpar_minimization_linsolve) and dynpar_minimization_linsolve then
+  printf("Analytische Berechnung der Minimalparameter durch Option dynpar_minimization_linsolve verlangt.\n"):
+  abort_this_worksheet := false:
+end if:
+
+if abort_this_worksheet then
+  quit: # Funktioniert in GUI nicht richtig...
+  robot_name := "": # ...Daher auch Löschung des Roboternamens.
 end if:
 printf("%s. Generiere Minimalparameterregressor der Energie für %s (symbolischer Ansatz)\n", \ 
   FormatTime("%Y-%m-%d %H:%M:%S"), robot_name, codegen_dynpar):

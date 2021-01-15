@@ -273,13 +273,17 @@ for i to NJ do
     Paramvec[ii, 1] := mX[i, 1]: ii:= ii+1:
     Paramvec[ii, 1] := mY[i, 1]: ii:= ii+1:
   else: # Schubgelenk (eq. 16)
-     if sin(alpha[i,1]) = 0 and false then # Sonderregel (eq. 19).
-       # Parameter wurden mit denen der Basisnäheren Achse zusammengelegt und werden hier nicht betrachtet.
-       # Parameter mZ fällt weg, also bleiben mX und mY übrig
-       # TODO: Unklar, was das für das Programm heißt
+    if sin(alpha[i,1]) = 0 and false then # Sonderregel (eq. 19).
+      # Parameter wurden mit denen der Basisnäheren Achse zusammengelegt und werden hier nicht betrachtet.
+      # Parameter mZ fällt weg, also bleiben mX und mY übrig
+      # TODO: Unklar, was das für das Programm heißt. Folgendes noch falsch.
+      Paramvec[ii, 1] := mX[i, 1]: ii:= ii+1:
+      Paramvec[ii, 1] := mY[i, 1]: ii:= ii+1:
     elif cos(alpha[i,1]) = 0 and false then # Sonderregel (eq. 20)
       # Parameter mY fällt weg, also bleiben mX und mZ übrig
-      # TODO: Unklar, was das für das Programm heißt
+      # TODO: Unklar, was das für das Programm heißt. Folgendes noch falsch.
+      Paramvec[ii, 1] := mX[i, 1]: ii:= ii+1:
+      Paramvec[ii, 1] := mZ[i, 1]: ii:= ii+1:
     else
       Paramvec[ii, 1] := mX[i, 1]: ii:= ii+1:
       Paramvec[ii, 1] := mY[i, 1]: ii:= ii+1:
@@ -346,18 +350,18 @@ for i from 0 to NJ-1 do
     t_ges[1,i*10+ 6]:=REMOVE; # ZZ
     # Sonderregel (eq. 19-20). Parameter zusammengelegt in Parametervektor. Werden daher hier entfernt.
     # Fälle vorerst auskommentiert (siehe oben). TODO: Das hat alles nicht funktioniert.
-    #if sin(alpha[i+1,1]) = 0 then
-    #  u_ges[1,i*10+ 7]:=REMOVE; # mX
-    #  t_ges[1,i*10+ 7]:=REMOVE; # mX
-    #  u_ges[1,i*10+ 8]:=REMOVE; # mY
-    #  t_ges[1,i*10+ 8]:=REMOVE; # mY
-    # end if:
-    # if cos(alpha[i+1,1]) = 0 then
-    #  u_ges[1,i*10+ 7]:=REMOVE; # mX
-    #  t_ges[1,i*10+ 7]:=REMOVE; # mX
-    #  u_ges[1,i*10+ 9]:=REMOVE; # mZ
-    #  t_ges[1,i*10+ 9]:=REMOVE; # mZ
-    # end if:
+    if sin(alpha[i+1,1]) = 0 and false then # deaktiviert!
+     u_ges[1,i*10+ 7]:=REMOVE; # mX
+     t_ges[1,i*10+ 7]:=REMOVE; # mX
+     u_ges[1,i*10+ 8]:=REMOVE; # mY
+     t_ges[1,i*10+ 8]:=REMOVE; # mY
+    end if:
+    if cos(alpha[i+1,1]) = 0 and false then # deaktiviert!
+     u_ges[1,i*10+ 7]:=REMOVE; # mX
+     t_ges[1,i*10+ 7]:=REMOVE; # mX
+     u_ges[1,i*10+ 9]:=REMOVE; # mZ
+     t_ges[1,i*10+ 9]:=REMOVE; # mZ
+    end if:
   end if:
 end do: 
 # Entfernungen von markierten Elementen

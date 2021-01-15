@@ -464,13 +464,17 @@ for i to NJ do
     Paramvec[ii, 1] := mX[i, 1]: ii:= ii+1:
     Paramvec[ii, 1] := mY[i, 1]: ii:= ii+1:
   else: # Schubgelenk (eq. 16)
-     if sin(alpha[i,1]) = 0 and false then # Sonderregel (eq. 19).
-       # Parameter wurden mit denen der Basisn\303\244heren Achse zusammengelegt und werden hier nicht betrachtet.
-       # Parameter mZ f\303\244llt weg, also bleiben mX und mY \303\274brig
-       # TODO: Unklar, was das f\303\274r das Programm hei\303\237t
+    if sin(alpha[i,1]) = 0 and false then # Sonderregel (eq. 19).
+      # Parameter wurden mit denen der Basisn\303\244heren Achse zusammengelegt und werden hier nicht betrachtet.
+      # Parameter mZ f\303\244llt weg, also bleiben mX und mY \303\274brig
+      # TODO: Unklar, was das f\303\274r das Programm hei\303\237t. Folgendes noch falsch.
+      Paramvec[ii, 1] := mX[i, 1]: ii:= ii+1:
+      Paramvec[ii, 1] := mY[i, 1]: ii:= ii+1:
     elif cos(alpha[i,1]) = 0 and false then # Sonderregel (eq. 20)
       # Parameter mY f\303\244llt weg, also bleiben mX und mZ \303\274brig
-      # TODO: Unklar, was das f\303\274r das Programm hei\303\237t
+      # TODO: Unklar, was das f\303\274r das Programm hei\303\237t. Folgendes noch falsch.
+      Paramvec[ii, 1] := mX[i, 1]: ii:= ii+1:
+      Paramvec[ii, 1] := mZ[i, 1]: ii:= ii+1:
     else
       Paramvec[ii, 1] := mX[i, 1]: ii:= ii+1:
       Paramvec[ii, 1] := mY[i, 1]: ii:= ii+1:
@@ -553,18 +557,18 @@ end if;</Text-field>
     t_ges[1,i*10+ 6]:=REMOVE; # ZZ
     # Sonderregel (eq. 19-20). Parameter zusammengelegt in Parametervektor. Werden daher hier entfernt.
     # F\303\244lle vorerst auskommentiert (siehe oben). TODO: Das hat alles nicht funktioniert.
-    #if sin(alpha[i+1,1]) = 0 then
-    #  u_ges[1,i*10+ 7]:=REMOVE; # mX
-    #  t_ges[1,i*10+ 7]:=REMOVE; # mX
-    #  u_ges[1,i*10+ 8]:=REMOVE; # mY
-    #  t_ges[1,i*10+ 8]:=REMOVE; # mY
-    # end if:
-    # if cos(alpha[i+1,1]) = 0 then
-    #  u_ges[1,i*10+ 7]:=REMOVE; # mX
-    #  t_ges[1,i*10+ 7]:=REMOVE; # mX
-    #  u_ges[1,i*10+ 9]:=REMOVE; # mZ
-    #  t_ges[1,i*10+ 9]:=REMOVE; # mZ
-    # end if:
+    if sin(alpha[i+1,1]) = 0 and false then # deaktiviert!
+     u_ges[1,i*10+ 7]:=REMOVE; # mX
+     t_ges[1,i*10+ 7]:=REMOVE; # mX
+     u_ges[1,i*10+ 8]:=REMOVE; # mY
+     t_ges[1,i*10+ 8]:=REMOVE; # mY
+    end if:
+    if cos(alpha[i+1,1]) = 0 and false then # deaktiviert!
+     u_ges[1,i*10+ 7]:=REMOVE; # mX
+     t_ges[1,i*10+ 7]:=REMOVE; # mX
+     u_ges[1,i*10+ 9]:=REMOVE; # mZ
+     t_ges[1,i*10+ 9]:=REMOVE; # mZ
+    end if:
   end if:
 end do: </EC-CodeEditor></CodeEditor-ExecGroup>
 </Section>
