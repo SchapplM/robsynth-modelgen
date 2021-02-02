@@ -24,7 +24,11 @@ read sprintf("../codeexport/%s/tmp/tree_floatb_twist_definitions", robot_name):
 robot_name_OL := robot_name: # Zusätzliche Variable zur Abgrenzung für implizite Zwangsbedingungen
 ;
 #  Schalte um zwischen impliziten ZB und normalen Systemen
-read "../workdir/tbmode": # Datei tbmode wird von Bash-Skripten erstellt und zeigt den aktuellen Modus an
+if FileTools[Exists]("../workdir/tbmode") then
+  read "../workdir/tbmode": # Datei tbmode wird von Bash-Skripten erstellt und zeigt den aktuellen Modus an
+else
+  tbmode := "serial":
+end if:
 if tbmode = "implicit" then
   printf("Modus für IC ist aktiv. Bestimme Kinematikparameter für System mit impliziten ZB.\n"):
   read "../robot_codegen_definitions/robot_env_IC":

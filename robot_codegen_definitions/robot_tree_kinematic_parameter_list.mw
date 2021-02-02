@@ -149,7 +149,11 @@ restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet
 </Input>
 </Group>
 <Group labelreference="L1926" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../workdir/tbmode&quot;: # Datei tbmode wird von Bash-Skripten erstellt und zeigt den aktuellen Modus an
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if FileTools[Exists](&quot;../workdir/tbmode&quot;) then
+  read &quot;../workdir/tbmode&quot;: # Datei tbmode wird von Bash-Skripten erstellt und zeigt den aktuellen Modus an
+else
+  tbmode := &quot;serial&quot;:
+end if:
 if tbmode = &quot;implicit&quot; then
 <Font encoding="UTF-8">  printf(&quot;Modus f\303\274r IC ist aktiv. Bestimme Kinematikparameter f\303\274r System mit impliziten ZB.\134n&quot;):
 </Font>  read &quot;../robot_codegen_definitions/robot_env_IC&quot;:
