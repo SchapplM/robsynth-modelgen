@@ -62,6 +62,26 @@ if [ "$kinematicsOnly" == 1 ]; then
   "
 fi;
 
+# Vorlagen aus Robotik-Repo kopieren (falls verfügbar)
+linkfile=$repo_pfad/robotics_repo_path
+echo $linkfile
+if [ -f $linkfile ]; then
+  robrepopath=`sed -n -e 's/^robotics_repo_path := "\(.*\)":/\1/p' $linkfile`
+  if [ -d $robrepopath ]; then
+    for f in `find "$robrepopath/kinematics" -name 'robot_*.template'`; do
+      filename="${f##*/}"
+      if [[ -L $template_pfad/$filename ]]; then
+        continue # Symbolischen Link erhalten (sonst Kopierfehler)
+      fi
+      cp $f $template_pfad/$filename
+    done
+  else
+    echo "Datei robotics_repo_path enthält kein gültiges Verzeichnis"
+  fi;
+else
+  echo "Datei robotics_repo_path existiert nicht"
+fi
+
 # Alle Vorlagen an den Roboter anpassen und kopieren
 for f in $(find $template_pfad -name "*.template")
 do

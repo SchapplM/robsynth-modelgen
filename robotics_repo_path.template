@@ -1,6 +1,9 @@
 # Diese Datei muss den vollen Pfad zum IMES-Robotik-Repo beinhalten
 # ansonsten funktionieren einige Maple-Skripte nicht.
 # Der Name der Datei muss "robotics_repo_path" sein (ohne Endung)
+# Es sollten alle Zeilen gelöscht werden (also diese Kommentare), 
+# außer der Zeile mit der Pfadzuweisung. Das Leerzeichen vor und nach
+# dem ":=" muss erhalten bleiben. Sonst funktionieren die regulären Ausdrücke nicht.
 # Unter Linux:
 robotics_repo_path := "/pfad/zum/robotik/repo":
 # Unter Windows: Zwei mal Backslash wegen Zeichen-Maskierung im String

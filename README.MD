@@ -831,7 +831,10 @@ Vorlagen-Funktionen, die für jeden Roboter einzeln generiert werden:
   robot_jacobig_cutforce_mdh_num.m.template
   ...
 ```
-Die Generierung dieser Vorlagen-Funktionen ermöglicht eine Kompilierung und einen sehr effizienten Aufruf (z.B. auch in Simulink). Hier können noch weitere Funktionen eingefügt werden. Einige dieser Vorlagen-Funktionen werden im Robotik-Repo versioniert. Werden die Dateien aus dem dortigen Ordner `kinematics`, wie z.B. `robot_constr2.m.template`, `robot_constr2grad.m.template` und `robot_invkin_eulangresidual.m.template` in den Ordner `templates_num` kopiert oder verknüpft, werden die Funktionen ebenfalls erzeugt.
+Die Generierung dieser Vorlagen-Funktionen ermöglicht eine Kompilierung und einen sehr effizienten Aufruf (z.B. auch in Simulink). 
+Hier können noch weitere Funktionen eingefügt werden. Einige dieser Vorlagen-Funktionen werden im Robotik-Repo versioniert. 
+Diese Dateien aus dem dortigen Ordner `kinematics`, wie z.B. `robot_constr2.m.template`, `robot_constr2grad.m.template` und `robot_invkin_eulangresidual.m.template` werden automatisch durch Skripte in den Ordner `templates_num` kopiert. 
+Ein manuelles Erstellen von symbolischen Links ist nicht notwendig.
 
 # Quellen <a name="quellen"></a> 
 
