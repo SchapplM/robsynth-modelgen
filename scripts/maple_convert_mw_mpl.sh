@@ -45,7 +45,7 @@ sleep 1
 rm -f $mpl_file
 
 # Graphisches Maple starten (wird zum neu abspeichern benötigt)
-cd /opt/maple2019/bin/
+cd /opt/maple2022/bin/
 ./xmaple $mw_file &
 # Warten bis geladen
 sleep 10
@@ -71,7 +71,7 @@ sleep 1
 xte 'keydown V' 
 xte 'keyup V' 'keyup Control_L'
 
-# Endung auswählen (Reihenfolge ist abhängig von Maple-Version. Hier für Maple 2019).
+# Endung auswählen (Reihenfolge ist abhängig von Maple-Version. Hier für Maple 2022).
 sleep 1
 xte 'key Tab'
 xte 'key Down'
