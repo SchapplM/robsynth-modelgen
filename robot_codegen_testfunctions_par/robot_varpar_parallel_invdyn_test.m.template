@@ -44,7 +44,7 @@ for i = 1:n
   MmatX_vp2 = %RN%_inertia_para_pf_slag_vp2(xP, q, legFrame, ...
     koppelP, pkin, m, mrSges, Ifges);
 	
-  if any( abs(MmatX_vp1 - MmatX_vp2) > 1e6*eps(1+max(abs(MmatX_vp1))) )
+  if any( abs(MmatX_vp1 - MmatX_vp2) > 1e6*eps(1+max(abs(MmatX_vp1(:)))) )
     error('inertia matrices (platform coordinates) do not match between par1/par2.');
   end
   
@@ -80,7 +80,7 @@ for i = 1:n
   
   % compare both
   Delta = tauX_vp1_terme - tauX_vp1;
-  if any(abs(Delta) > 1e6*eps(tauX_vp1_terme))
+  if any(abs(Delta) > 1e6*eps(1+max(abs(tauX_vp1_terme))))
     error('Inverse dynamic does not match with inertia, coriolis, gravload components.')
   end
   
@@ -96,7 +96,7 @@ for i = 1:n
     MmatA_vp2 = %RN%_inertia_para_qa_slag_vp2(xP, q, legFrame, ...
       koppelP, pkin, m, mrSges, Ifges);
 
-    if any( abs(MmatA_vp1 - MmatA_vp2) > 1e6*eps(1+max(abs(MmatA_vp1))) )
+    if any( abs(MmatA_vp1 - MmatA_vp2) > 1e6*eps(1+max(abs(MmatA_vp1(:)))) )
       error('inertia matrices (actuation coordinates) do not match between par1/par2.');
     end
 

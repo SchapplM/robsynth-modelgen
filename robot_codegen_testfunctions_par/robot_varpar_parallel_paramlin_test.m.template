@@ -46,7 +46,7 @@ for i = 1:n
     koppelP, pkin);
   tauX_MPV = tauX_reg*MPV;
   DeltaX = tauX_MPV - tauX_vp2;
-  if any(abs(DeltaX) > 1e6*eps(tauX_MPV))
+  if any(abs(DeltaX) > 1e6*eps(1+max(abs(tauX_MPV))))
     error('Inverse dynamics (platform coordinates) does not match with regressor form.')
   end
   
@@ -57,14 +57,14 @@ for i = 1:n
     koppelP, pkin);
   taugX_MPV = taugX_reg*MPV;
   DeltagX = taugX_MPV - taugX_vp2;
-  if any(abs(DeltagX) > 1e6*eps(taugX_MPV))
+  if any(abs(DeltagX) > 1e6*eps(1+max(abs(taugX_MPV))))
     error('Gravload (platform coordinates) does not match with regressor form.')
   end
   % Gravitationsvektor-Regressor gegen Dynamik-Regressor
   tauX_reg = %RN%_invdyn_para_pf_regmin(xP, xPD*0, xPDD*0, q, g, legFrame, ...
     koppelP, pkin);
   Diff_tau_taug = taugX_reg - tauX_reg;
-  if max(abs(Diff_tau_taug(:))) > max(1e3*eps(tauX_reg(:)))
+  if max(abs(Diff_tau_taug(:))) > 1e3*eps(1+max(abs(tauX_reg(:))))
     error('Inverse Dynamik Regressor stimmt nicht gegen Gravitation-Regressor');
   end
   
@@ -75,14 +75,14 @@ for i = 1:n
     koppelP, pkin);
   taucX_MPV = taucX_reg*MPV;
   DeltacX = taucX_MPV - taucX_vp2;
-  if any(abs(DeltacX) > 1e6*eps(taucX_MPV))
+  if any(abs(DeltacX) > 1e6*eps(1+max(abs(taucX_MPV))))
     error('Coriolis Vector (platform coordinates) does not match with regressor form.')
   end
   % Coriolisvektor-Regressor gegen Dynamik-Regressor
   tauX_reg = %RN%_invdyn_para_pf_regmin(xP, xPD, xPDD*0, q, g*0, legFrame, ...
     koppelP, pkin);
   Diff_tau_tauc = taucX_reg - tauX_reg;
-  if max(abs(Diff_tau_tauc(:))) > max(1e3*eps(tauX_reg(:)))
+  if max(abs(Diff_tau_tauc(:))) > 1e3*eps(1+max(abs(tauX_reg(:))))
     error('Inverse Dynamik Regressor stimmt nicht gegen Coriolis-Regressor');
   end
   
@@ -95,7 +95,7 @@ for i = 1:n
   MMX_MPV_vec = MMX_reg*MPV;
   MMX_MPV = reshape(MMX_MPV_vec,N_XP,N_XP)';
   DeltaMMX = MMX_MPV - MMX_vp2;
-  if any(abs(DeltaMMX(:)) > 1e6*eps(MMX_MPV(:)))
+  if any(abs(DeltaMMX(:)) > 1e6*eps(1+max(abs(MMX_MPV(:)))))
     error('Inertia Matrix (platform coordinates) does not match with regressor form.')
   end
   
@@ -108,7 +108,7 @@ for i = 1:n
       koppelP, pkin);
     tauA_MPV = tauA_reg*MPV;
     DeltaA = tauA_MPV - tauA_vp2;
-    if any(abs(DeltaA) > 1e6*eps(tauA_MPV))
+    if any(abs(DeltaA) > 1e6*eps(1+max(abs(tauA_MPV))))
       error('Inverse dynamics (actuation coordinates) does not match with regressor form.')
     end
     
@@ -119,7 +119,7 @@ for i = 1:n
       koppelP, pkin);
     taugA_MPV = taugA_reg*MPV;
     DeltagA = taugA_MPV - taugA_vp2;
-    if any(abs(DeltagA) > 1e6*eps(taugA_MPV))
+    if any(abs(DeltagA) > 1e6*eps(1+max(abs(taugA_MPV))))
       error('Gravload (actuation coordinates) does not match with regressor form.')
     end
     
@@ -130,7 +130,7 @@ for i = 1:n
       koppelP, pkin);
     taucA_MPV = taucA_reg*MPV;
     DeltacA = taucA_MPV - taucA_vp2;
-    if any(abs(DeltacA) > 1e6*eps(taucA_MPV))
+    if any(abs(DeltacA) > 1e6*eps(1+max(abs(taucA_MPV))))
       error('Coriolis Vector (actuation coordinates) does not match with regressor form.')
     end
     
@@ -142,7 +142,7 @@ for i = 1:n
     MMA_MPV_vec = MMA_reg*MPV;
     MMA_MPV = vec2mat(MMA_MPV_vec);
     DeltaMMA = MMA_MPV - MMA_vp2;
-    if any(abs(DeltaMMA(:)) > 1e6*eps(DeltaMMA(:)))
+    if any(abs(DeltaMMA(:)) > 1e6*eps(1+max(abs(DeltaMMA(:)))))
       error('Inertia Matrix (actuation coordinates) does not match with regressor form.')
     end
   else % if N_XP > 4
@@ -189,7 +189,7 @@ for i = 1:n
   tauX_func = %RN%_invdyn_para_pf_mdp(xP, xPD, xPDD, q, g, legFrame, ...
     koppelP, pkin, MPV);
   DeltaX = tauX_MPV - tauX_func;
-  if any(abs(DeltaX) > 1e6*eps(tauX_MPV))
+  if any(abs(DeltaX) > 1e6*eps(1+max(abs(tauX_MPV))))
     error('Inverse dynamics (platform coordinates) from parameter regressor does not match with pre-multiplied calculation.')
   end
   
@@ -200,7 +200,7 @@ for i = 1:n
   taugX_func = %RN%_gravload_para_pf_mdp(xP, q, g, legFrame, ...
     koppelP, pkin, MPV);
   DeltagX = taugX_MPV - taugX_func;
-  if any(abs(DeltagX) > 1e6*eps(taugX_MPV))
+  if any(abs(DeltagX) > 1e6*eps(1+max(abs(taugX_MPV))))
     error('Grav Load (platform coordinates) from parameter regressor does not match with pre-multiplied calculation.')
   end
   
@@ -211,7 +211,7 @@ for i = 1:n
   taucX_func = %RN%_coriolisvec_para_pf_mdp(xP, xPD, q, legFrame, ...
     koppelP, pkin, MPV);
   DeltacX = taucX_MPV - taucX_func;
-  if any(abs(DeltacX) > 1e6*eps(taucX_MPV))
+  if any(abs(DeltacX) > 1e6*eps(1+max(abs(taucX_MPV))))
     error('Coriolis-vector (platform coordinates) from parameter regressor does not match with pre-multiplied calculation.')
   end
   
@@ -225,7 +225,7 @@ for i = 1:n
   MMX_func = %RN%_inertia_para_pf_mdp(xP, q, legFrame, ...
     koppelP, pkin, MPV);
   DeltaMMX = MMX_MPV - MMX_func;
-  if any(abs(DeltaMMX) > 1e6*eps(MMX_MPV))
+  if any(abs(DeltaMMX) > 1e6*eps(1+max(abs(MMX_MPV(:)))))
     error('Inertia matrix (platform coordinates) from parameter regressor does not match with pre-multiplied calculation.')
   end
   
@@ -238,7 +238,7 @@ for i = 1:n
     tauA_func = %RN%_invdyn_para_qa_mdp(xP, xPD, xPDD, q, g, legFrame, ...
       koppelP, pkin, MPV);
     DeltaA = tauA_MPV - tauA_func;
-    if any(abs(DeltaA) > 1e6*eps(tauA_MPV))
+    if any(abs(DeltaA) > 1e6*eps(1+max(abs(tauA_MPV))))
       error('Inverse dynamics (actuation coordinates) from parameter regressor does not match with pre-multiplied calculation.')
     end
     
@@ -249,7 +249,7 @@ for i = 1:n
     taugA_func = %RN%_gravload_para_qa_mdp(xP, q, g, legFrame, ...
       koppelP, pkin, MPV);
     DeltagA = taugA_MPV - taugA_func;
-    if any(abs(DeltagA) > 1e6*eps(taugA_MPV))
+    if any(abs(DeltagA) > 1e6*eps(1+max(abs(taugA_MPV))))
       error('Grav Load (actuation coordinates) from parameter regressor does not match with pre-multiplied calculation.')
     end
     
@@ -260,7 +260,7 @@ for i = 1:n
     taucA_func = %RN%_coriolisvec_para_qa_mdp(xP, xPD, q, legFrame, ...
       koppelP, pkin, MPV);
     DeltacA = taucA_MPV - taucA_func;
-    if any(abs(DeltacA) > 1e6*eps(taucA_MPV))
+    if any(abs(DeltacA) > 1e6*eps(1+max(abs(taucA_MPV))))
       error('Coriolis-vector (actuation coordinates) from parameter regressor does not match with pre-multiplied calculation.')
     end
     
@@ -272,7 +272,7 @@ for i = 1:n
     MMA_func = %RN%_inertia_para_qa_mdp(xP, q, legFrame, ...
       koppelP, pkin, MPV);
     DeltaMMA = MMA_MPV - MMA_func;
-    if any(abs(DeltaA) > 1e6*eps(tauA_MPV))
+    if any(abs(DeltaA) > 1e6*eps(1+max(abs(tauA_MPV))))
       error('Inertia matrix (actuation coordinates) from parameter regressor does not match with pre-multiplied calculation.')
     end
   end
