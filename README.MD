@@ -11,7 +11,7 @@ Unterstützte Systemtypen sind:
 
 Diese Anleitung enthält eine Übersicht über die Bedienung und die Funktionsweise der Toolbox. Detailierte Informationen sollten immer der Implementierung entnommen werden.
 
-Die theoretischen Hintergründe der einzelnen Schritte können der [angegebenen Literatur](#quellen) und insbesondere den Kommentaren in den Maple-Arbeitsblättern und den Matlab-Testskripten entnommen werden.
+Die theoretischen Hintergründe der einzelnen Schritte können der [angegebenen Literatur](#quellen) und insbesondere den Kommentaren in den Maple-Arbeitsblättern und den Matlab-Testskripten entnommen werden. Eine Zusammenfassung liegt in dem Beitrag der Maple Conference 2020 [SchapplerJobOrt2021].
 
 Moritz Schappler, schappler@irt.uni-hannover.de, 2016-03  
 (C) Institut für Regelungstechnik, Universität Hannover  
@@ -854,5 +854,6 @@ Ein manuelles Erstellen von symbolischen Links ist nicht notwendig.
 * [KhalilCre1997] Khalil, Wisama and Creusot, Denis: "SYMORO : A system for the symbolic modelling of robots" (1997)
 * [KhalilVijKhoMuk2014] Khalil, W. and Vijayalingam, A. and Khomutenko, B. and Mukhanov, I. and Lemoine, P. and Ecorchard, G.: "OpenSYMORO: An open-source software package for Symbolic Modelling of Robots" (2014)
 * [AbdellatifHei2009] Abdellatif, H. and Heimann, B.: Computational efficient inverse dynamics of 6-DOF fully parallel manipulators by using the Lagrangian formalism (2009)
-* [Job2018_S759] Job, T. (Studienarbeit; Betreuer Moritz Schappler): Implementierung einer strukturunabhängigen Dynamikmodellierung für parallelkinematische Maschinen (2018)
+* [Job2018_S759] Job, T.D. (Studienarbeit; Betreuer Moritz Schappler): Implementierung einer strukturunabhängigen Dynamikmodellierung für parallelkinematische Maschinen (2018)
 * [SchapplerLilHad2019] Schappler, M. and Lilge, T. and Haddadin, S.: Kinematics and Dynamics Model via Explicit Trigonometric Elimination of Kinematic Constraints (2019)
+* [SchapplerJobOrt2021] Schappler, M. and Job, T.D. and Ortmaier, T.: A Maple Toolchain for Rigid Body Dynamics of Serial, Hybrid and Parallel Robots (2021) <a name="SchapplerJobOrt2021"></a> 
