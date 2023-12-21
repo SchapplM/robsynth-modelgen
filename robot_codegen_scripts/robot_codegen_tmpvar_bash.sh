@@ -22,10 +22,14 @@ fi;
 
 # Lese die Informationen aus der Eingabe-Maple-Datei. Benutze die nachverarbeitete Version
 # der Datei robot_env. Damit ist auch die Generierung der Variablen NQJ, NJ und robot_name
-# mit Maple-Code möglich.
-robot_NQJ=`grep "NQJ := " ${robot_env_pfad}2 | tail -1 | sed 's/.*= \(.*\);/\1/'`
-robot_NJ=`grep "NJ := " ${robot_env_pfad}2 | tail -1 | sed 's/.*= \(.*\);/\1/'`
-robot_name=`grep "robot_name := " ${robot_env_pfad}2 | tail -1 | sed 's/.*= "\(.*\)";/\1/'`
+# mit Maple-Code möglich. Für das Windows-Linux-Subsystem muss das CR-Zeichen berücksichtigt werden
+# (Maple speichert im Windows-Format; Skripte erwarten Linux-Format, daher \r im Befehl)
+robot_NQJ=`grep "NQJ := " ${robot_env_pfad}2 | tail -1 | sed 's/.*= \(.*\);[\r]*/\1/'`
+robot_NJ=`grep "NJ := " ${robot_env_pfad}2 | tail -1 | sed 's/.*= \(.*\);[\r]*/\1/'`
+robot_name=`grep "robot_name := " ${robot_env_pfad}2 | tail -1 | sed 's/.*= "\(.*\)";[\r]*/\1/'`
+# if [ ! "$1" == "quiet" ]; then # Debug. Unhandled CR leads to different output of last part
+#   echo "Read data from robot_env2: NJ is $robot_NJ, NQJ is $robot_NJ, and robot_name is $robot_name -- successful if this ends the sentence"
+# fi
 
 if [ ! "$1" == "quiet" ]; then
   echo "robot_NQJ=$robot_NQJ"
