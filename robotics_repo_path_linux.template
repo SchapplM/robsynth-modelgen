@@ -1,0 +1,7 @@
+# Diese Datei muss den vollen Pfad zum IMES-Robotik-Repo beinhalten
+# (im Format der Linux-Shell)
+# Der Name der Datei muss "robotics_repo_path_linux" sein (ohne Endung).
+# Diese Datei wird nur unter Windows benötigt, da das Linux-Subsystem
+# und die Maple-Pfadschreibweise nicht kompatibel sind.
+# Der Pfad muss in der unten stehenden Maple-Syntax gegeben werden.
+robotics_repo_path := "/mnt/c/Users/Schappler_Moritz/Documents/Repo/robotics":
