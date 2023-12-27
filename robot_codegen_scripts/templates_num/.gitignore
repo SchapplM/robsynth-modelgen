@@ -1,4 +1,1 @@
-robot_constr2.m.template
-robot_constr2grad.m.template
-robot_invkin_eulangresidual.m.template
-robot_invkin_traj.m.template
+robot_*
