@@ -42,7 +42,7 @@ Folgende Schritte müssen durchgeführt werden:
 ## Voraussetzungen <a name="voraussetzungen"></a> 
 
 * Betriebssystem: Linux oder Windows mit [Windows-Linux-Subsystem](https://docs.microsoft.com/en-us/windows/wsl/install-win10) (für .sh-Skripte in [Alternative 1](#start_alt1)). Die Ausführung der Maple-Arbeitsblätter in [Alternative 2](#start_alt2) ist aber auch unter Windows ohne Linux-Subsystem möglich.
-* Maple muss installiert sein (aktuelle Version: Maple 2018)
+* Maple muss installiert sein
 * Die allgemeine Matlab-Toolbox (Repo `imes-matlab`), die Sammlung externer Matlab-Funktionen (Repo `matlab-ext`) und die Matlab-Robotik-Toolbox (Repo `imes-robotics-matlab`) müssen im Matlab-Pfad initialisiert sein (Aufruf der entsprechenden `..._path_init.m` in den jeweiligen Repos). Damit die Pfadinitialisierung auch im Matlab-Terminalaufruf funktioniert, sollte die startup.m richtig gesetzt sein.
 * Der Pfad des Robotik-Repos muss für Maple mit der Datei robotics_repo_path gesetzt werden (analog zur Vorlage robotics_repo_path.template). Falls unter Windows mit dem Linux-Subsystem gearbeitet wird, muss zusätzlich die Datei robotics_repo_path_linux erstellt werden (siehe template-Datei)
 
@@ -83,17 +83,19 @@ Nach dem Erstellen dieser Datei werden die Dynamikfunktionen mit Maple generiert
 #### Unter Linux (z.B. Ubuntu)
 
 Der Aufruf des Start-Skriptes erfolgt in der Konsole.
-Falls nicht Maple 2017 im Standard-Pfad `/opt/maple2017/bin/maple` verwendet wird, kann der Pfad  mit `export MAPLE_BIN=/opt/maple2017/bin/maple` angegeben werden.
+Die Pfadangabe zur Maple-Programmdatei erfolgt über zwei Varianten:
+* die Datei `MAPLE_BIN.env` Hauptordner dieses Repos (enthält nur den Dateipfad)
+* die Umgebungsvariable `MAPLE_BIN` über `export MAPLE_BIN=/opt/maple2024/bin/maple`.
 
 #### Unter Windows (Windows-Linux-Subsystem)
 
-Der Start erfolgt mit der Linux-Konsole des "Windows Linux Subsystem". Es kann der Pfad zur Windows-Installation von Maple angegeben werden. Maple muss nicht im Linux-Subsystem installiert werden. 
+Der Start erfolgt mit der Linux-Konsole des "Windows Linux Subsystem" (WSL). Es wird der Pfad zur Windows-Installation von Maple angegeben, aber in der Pfad-Syntax des WSL. Maple muss nicht im Linux-Subsystem installiert werden.
 
 ```bash
-export MAPLE_BIN="/mnt/c/Program Files/Maple 2017/bin.X86_64_WINDOWS/cmaple.exe"
+export MAPLE_BIN="/mnt/c/Program Files/Maple 2024/bin.X86_64_WINDOWS/cmaple.exe"
 ```
 
-Alternativ kann auch die "Git Bash" verwendet werden, die automatisch mit installiert wird, wenn man Git unter Windows installiert. Die Pfade unterscheiden sich dann leicht (`/c/...` statt `/mnt/c/...`).
+Alternativ kann auch die "Git Bash" verwendet werden, die automatisch mit installiert wird, wenn man Git unter Windows installiert. Die Pfade unterscheiden sich dann leicht (`/c/...` statt `/mnt/c/...`). Dies wird Stand 2024 aber aufgrund schlechterer Integration in Matlab nicht mehr empfohlen.
 
 #### Vorgehensweise
 
