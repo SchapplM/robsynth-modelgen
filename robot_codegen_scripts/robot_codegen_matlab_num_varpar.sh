@@ -65,7 +65,7 @@ fi;
 # Vorlagen aus Robotik-Repo kopieren (falls verfügbar)
 # Benutze eine separate Datei zum Zeigen auf den Pfad, falls unter Windows.
 linkfiles="$repo_pfad/robotics_repo_path_linux
-$repo_pfad/robotics_repo_path"
+  $repo_pfad/robotics_repo_path"
 for linkfile in $linkfiles; do
 if [ -f $linkfile ]; then
   robrepopath=`sed -n -e 's/^robotics_repo_path := "\(.*\)":/\1/p' $linkfile`
@@ -84,7 +84,6 @@ if [ -f $linkfile ]; then
     break # Nur eine Datei nutzen. Die erste gültige reicht.
   else
     echo "Datei robotics_repo_path aus $linkfile enthält kein gültiges Verzeichnis."
-    
   fi;
 else
   echo "Datei robotics_repo_path aus $linkfile existiert nicht"
