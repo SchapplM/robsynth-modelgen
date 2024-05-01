@@ -176,15 +176,15 @@ if [ "$CG_NOTGENSERIAL" == "0" ]; then
     #Matlab-Testfunktionen starten
     if [ "$CG_KINEMATICSONLY" == "0" ]; then
       if [ ! "$CG_FIXBONLY" == "1" ]; then
-        matlab -nodesktop -nosplash -useStartupFolderPref -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything');quit;"
+        $repo_pfad/scripts/run_matlab_script.sh "$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything.m"
       else
-        matlab -nodesktop -nosplash -useStartupFolderPref -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything_fixbase');quit;"
+        $repo_pfad/scripts/run_matlab_script.sh "$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything_fixbase.m"
       fi;
     else
       if [ ! "$CG_FIXBONLY" == "1" ]; then
-        matlab -nodesktop -nosplash -useStartupFolderPref -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything_kinematics');quit;"
+        $repo_pfad/scripts/run_matlab_script.sh "$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything_kinematics.m"
       else
-        matlab -nodesktop -nosplash -useStartupFolderPref -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything_fixbase_kinematics');quit;"
+        $repo_pfad/scripts/run_matlab_script.sh "$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything_fixbase_kinematics.m"
       fi;
     fi;
     echo "Funktionsgenerierung abgeschlossen. Alle Tests erfolgreich."
@@ -224,9 +224,9 @@ if [ "$CG_IC" == "1" ]; then
   # Matlab-Testfunktionen starten
   if [ "$CG_NOTEST" != "1" ]; then
     if [ "$CG_KINEMATICSONLY" == "0" ]; then
-      matlab -nodesktop -nosplash -useStartupFolderPref -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything');quit;"
+      $repo_pfad/scripts/run_matlab_script.sh "$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything.m"
     else
-      matlab -nodesktop -nosplash -useStartupFolderPref -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything_kinematics');quit;"
+      $repo_pfad/scripts/run_matlab_script.sh "$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything_kinematics.m"
     fi;
     echo "Funktionsgenerierung abgeschlossen. Alle Tests erfolgreich."
   else
@@ -270,7 +270,7 @@ if [ "$CG_PARROB" == "1" ]; then
 
   # Matlab-Testfunktionen starten
   if [ "$CG_NOTEST" != "1" ] && [ "$CG_KINEMATICSONLY" == "0" ]; then
-    matlab -nodesktop -nosplash -useStartupFolderPref -r "run('$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything_par');quit;"
+    $repo_pfad/scripts/run_matlab_script.sh "$repo_pfad/codeexport/${robot_name}/testfcn/${robot_name}_test_everything_par.m"
     echo "Funktionsgenerierung abgeschlossen. Alle Tests erfolgreich."
   else
     echo "Funktionsgenerierung abgeschlossen. Keine Tests durchgeführt."

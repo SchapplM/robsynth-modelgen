@@ -79,7 +79,7 @@ Eine Auflistung aller Variablen ist im Abschnitt [Definitionen](#ordner_definiti
 
 Nach dem Erstellen dieser Datei werden die Dynamikfunktionen mit Maple generiert, wie im Folgenden beschrieben wird.
 
-### Alternative 1: Automatisches Generieren aller Dateien <a name="start_alt1"></a> 
+### Alternative 1: Automatisches Generieren aller Dateien (Empfohlen) <a name="start_alt1"></a> 
 
 #### Unter Linux (z.B. Ubuntu)
 
@@ -95,6 +95,9 @@ Der Start erfolgt mit der Linux-Konsole des "Windows Linux Subsystem" (WSL). Es 
 ```bash
 export MAPLE_BIN="/mnt/c/Program Files/Maple 2024/bin.X86_64_WINDOWS/cmaple.exe"
 ```
+
+Zusätzlich sollte die Datei `MAPLE_BIN.env` erstellt werden, die nur diesen Pfad enthält.  
+Damit die automatischen Tests auch im WSL gestartet werden können, muss die Datei `MATLAB_BIN.env` im Repo-Hauptverzeichnis angelegt werden. Inhalt ist der Dateipfad zur Matlab-Programmdatei in WSL-Syntax, also bspw. `/mnt/c/Program Files/MATLAB/R2023b/bin/matlab.exe`.
 
 Alternativ kann auch die "Git Bash" verwendet werden, die automatisch mit installiert wird, wenn man Git unter Windows installiert. Die Pfade unterscheiden sich dann leicht (`/c/...` statt `/mnt/c/...`). Dies wird Stand 2024 aber aufgrund schlechterer Integration in Matlab nicht mehr empfohlen.
 
