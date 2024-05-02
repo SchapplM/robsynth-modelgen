@@ -118,6 +118,8 @@ if ! [ "$CG_FLOATBONLY" == "1" ]; then
           robot_tree_floatb_rotmat_dynamics_worldframe_par2_grav.mpl
           robot_tree_floatb_rotmat_dynamics_worldframe_par2_inertia.mpl
           robot_tree_floatb_rotmat_dynamics_worldframe_par2_corvec.mpl
+          robot_tree_momentum_worldframe_par1.mpl
+          robot_tree_momentum_worldframe_par2.mpl
       "
     fi;
     

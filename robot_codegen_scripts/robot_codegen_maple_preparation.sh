@@ -105,6 +105,11 @@ cp $repo_pfad/workdir/robot_tree_floatb_rotmat_dynamics_worldframe_par12.mpl $re
 cp $repo_pfad/workdir/robot_tree_floatb_rotmat_dynamics_worldframe_par12.mpl $repo_pfad/workdir/robot_tree_floatb_rotmat_dynamics_worldframe_par2.mpl
 sed -i "s/codegen_dynpar := 1:/codegen_dynpar := 2:/g" $repo_pfad/workdir/robot_tree_floatb_rotmat_dynamics_worldframe_par2.mpl
 
+# Impuls-Skripte vorbereiten
+cp $repo_pfad/workdir/robot_tree_momentum_worldframe_par12.mpl $repo_pfad/workdir/robot_tree_momentum_worldframe_par1.mpl
+cp $repo_pfad/workdir/robot_tree_momentum_worldframe_par12.mpl $repo_pfad/workdir/robot_tree_momentum_worldframe_par2.mpl
+sed -i "s/codegen_dynpar := 1:/codegen_dynpar := 2:/g" $repo_pfad/workdir/robot_tree_momentum_worldframe_par2.mpl
+
 # Dynamik-Skripte für IC
 cp $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_par12_reg2.mpl $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_par1_grav_inertia.mpl
 cp $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_par12_reg2.mpl $repo_pfad/workdir/robot_implicit_contraints_rotmat_dynamics_worldframe_par2_grav_inertia.mpl
