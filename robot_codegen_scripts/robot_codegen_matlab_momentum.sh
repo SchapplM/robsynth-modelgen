@@ -242,6 +242,44 @@ do
     else
       echo "Code in ${quelldat##*/} nicht gefunden."
     fi
+    
+    # Function for CoM
+    quelldat=$repo_pfad/codeexport/${robot_name}/tmp/com_total_worldframe_floatb_${basemeth}_par${dynpar}_matlab.m
+    zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_com_floatb_${basemeth}_vp${dynpar}.m
+    if [ -f $quelldat ]; then
+      cat $head_pfad/robot_com_floatb_${basemeth}_vp${dynpar}.head.m > $zieldat
+      printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_qJ.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_rB.m >> $zieldat
+      if [ $basemeth == "twist" ]; then
+        :
+      else
+        cat $tmp_pfad/robot_matlabtmp_assert_phiB.m >> $zieldat
+      fi
+      cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+      cat $tmp_pfad/robot_matlabtmp_assert_m.m >> $zieldat
+      if [ $dynpar == 1 ]; then
+        cat $tmp_pfad/robot_matlabtmp_assert_rcom.m >> $zieldat
+      else
+        cat $tmp_pfad/robot_matlabtmp_assert_mrcom.m >> $zieldat
+      fi
+      printf "\n%%%% Variable Initialization" > ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_qJ.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_rB.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
+      cat $tmp_pfad/robot_matlabtmp_par_m.m >> ${quelldat}.subsvar
+      if [ $dynpar == 1 ]; then
+        cat $tmp_pfad/robot_matlabtmp_par_rcom.m >> ${quelldat}.subsvar
+      else
+        cat $tmp_pfad/robot_matlabtmp_par_mrcom.m >> ${quelldat}.subsvar
+      fi
+      printf "\n%%%% Symbolic Calculation\n%% From ${quelldat##*/}\n" >> $zieldat
+      sed -e 's/^/% /' ${quelldat}.stats >> $zieldat
+      cat $quelldat >> $zieldat
+      source robot_codegen_matlabfcn_postprocess.sh $zieldat 1 1 ${quelldat}.subsvar
+    else
+      echo "Code in ${quelldat##*/} nicht gefunden."
+    fi
   done # floatb_twist/floatb_eulxyz
 done # par${dynpar}/par2
 

@@ -88,24 +88,21 @@ for i to NL do
   end if:
   mr_W_i_Si(1 .. 3, i) := Multiply(Matrix(Trf_c(1 .. 3, 1 .. 3, i)), mr_i_i_Si(1 .. 3, i)):
   r_W_W_Si(1 .. 3, i) :=  Matrix(Trf_c(1 .. 3, 4, i)) + Matrix(r_W_i_Si(1 .. 3, i)):
-  mr_W_W_Si(1 .. 3, i) :=  Matrix(Trf_c(1 .. 3, 4, i)) + Matrix(mr_W_i_Si(1 .. 3, i)):
   printf("%s. Schwerpunktsposition in Weltkoordinaten für Körper %d aufgestellt.\n", FormatTime("%Y-%m-%d %H:%M:%S"), i-1):#0=Basis
   if use_simplify>=1 then
     tmp_t12:=time():
     tmp_l12 := length(mr_W_i_Si(1 .. 3, i)):
     tmp_l13 := length(r_W_W_Si(1 .. 3, i)):
-    tmp_l14 := length(mr_W_W_Si(1 .. 3, i)):
-    printf("%s. Vereinfache Schwerpunktskoordinaten. Länge: %d/%d/%d (r_W_W_Si/mr_W_i_Si/mr_W_W_Si).\n", \
-      FormatTime("%Y-%m-%d %H:%M:%S"), tmp_l13, tmp_l12, tmp_l14):
+    printf("%s. Vereinfache Schwerpunktskoordinaten. Länge: %d/%d (r_W_W_Si/mr_W_i_Si).\n", \
+      FormatTime("%Y-%m-%d %H:%M:%S"), tmp_l13, tmp_l12):
     mr_W_i_Si(1 .. 3, i) := simplify2(mr_W_i_Si(1 .. 3, i)):
     r_W_W_Si(1 .. 3, i) := simplify2(r_W_W_Si(1 .. 3, i)):
     mr_W_W_Si(1 .. 3, i) := simplify2(mr_W_W_Si(1 .. 3, i)):
     tmp_l22 := length(mr_W_i_Si(1 .. 3, i)):
     tmp_l23 := length(r_W_W_Si(1 .. 3, i)):
-    tmp_l24 := length(mr_W_W_Si(1 .. 3, i)):
     tmp_t22:=time():
-    printf("%s. Terme für Schwerpunktskoord. vereinfacht. Länge: %d->%d / %d->%d / %d->%d / %d->%d (r_W_i_Si / mr_W_i_Si / r_W_W_Si / mr_W_W_Si). Rechenzeit %1.1fs und %1.1fs.\n", \
-      FormatTime("%Y-%m-%d %H:%M:%S"), tmp_l11, tmp_l21, tmp_l12, tmp_l22, tmp_l13, tmp_l23, tmp_l14, tmp_l24, tmp_t21-tmp_t11, tmp_t22-tmp_t12):
+    printf("%s. Terme für Schwerpunktskoord. vereinfacht. Länge: %d->%d / %d->%d / %d->%d (r_W_i_Si / mr_W_i_Si / r_W_W_Si). Rechenzeit %1.1fs und %1.1fs.\n", \
+      FormatTime("%Y-%m-%d %H:%M:%S"), tmp_l11, tmp_l21, tmp_l12, tmp_l22, tmp_l13, tmp_l23, tmp_t21-tmp_t11, tmp_t22-tmp_t12):
   end if:
 end do:
 # Maple Export
@@ -125,7 +122,8 @@ for codegen_dynpar from 1 to 2 do
     if codegen_dynpar = 1 then
       c:=c + Matrix(r_W_W_Si(1 .. 3,i)*M(i,1)):
     else
-      c:=c + mr_W_W_Si(1 .. 3,i):
+    	 # Formel: M * r_W_W_Si = M * (r_W_W_i + r_W_i_Si)
+      c:=c + Matrix(Trf_c(1 .. 3, 4, i))*M(i,1) + Matrix(mr_W_i_Si(1 .. 3,i)):
     end if:
     M_ges:=M_ges + M[i,1]:
   end do:
