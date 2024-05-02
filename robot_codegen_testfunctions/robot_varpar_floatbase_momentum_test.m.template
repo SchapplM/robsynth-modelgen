@@ -13,6 +13,17 @@ NL = %NL%;
 KINCONSTR = logical(%KINCONSTR%); %#ok<LOGL>
 robot_name = '%RN%';
 
+if isempty(which('%RN%_momentum_lin_floatb_twist_vp1')) || ...
+   isempty(which('%RN%_momentum_ang_floatb_twist_vp1')) || ...
+   isempty(which('%RN%_inertiaB_floatb_eulxyz_slag_vp1')) || ...
+   isempty(which('%RN%_momentumD_lin_floatb_twist_vp1')) || ...
+   isempty(which('%RN%_momentumD_ang_floatb_twist_vp1'))
+  % Die Funktionen werden nur generiert, wenn der Schalter
+  % "compute_momenta" in Maple gesetzt ist.
+  fprintf('Impuls-bezogene Funktionen existieren nicht. Vermutlich nicht generiert. Keine Tests möglich.\n');
+  return
+end
+
 warning('Test für %RN%_momentum_ang_floatb_twist_vp2 auskommentiert, da Implementierung noch fehlerhaft.');
 
 %% Parameter
