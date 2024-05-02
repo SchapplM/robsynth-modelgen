@@ -50,7 +50,7 @@ end if:
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
 printf("Generiere Impuls und Drehimpuls für %s mit Basis-Darstellung %s\n", robot_name, base_method_name):
 # Kennung des Parametersatzes, für den die Dynamikfunktionen erstellt werden sollen. Muss im Repo und in der mpl-Datei auf 1 gelassen werden, da die folgende Zeile mit einem Skript verarbeitet wird.
-codegen_dynpar := 2:
+codegen_dynpar := 1:
 # Ergebnisse der Kinematik laden
 read sprintf("../codeexport/%s/tmp/kinematics_floatb_%s_rotmat_maple.m", robot_name, base_method_name):
 Trf := Trf:
@@ -122,17 +122,20 @@ end if:
 # 
 # TODO: Funktioniert noch nicht mit Parametersatz 2. Ist der Impuls eventuell gar nicht damit bestimmbar?
 # Es muss der Steiner-Anteil wieder rausgerechnet werden, damit der gleiche Ausdruck wie bei Parametersatz 1 rauskommt.
-# Andere Frage: Ist es da überhaupt richtig? Das müssten die Tests beantworten.
 if codegen_dynpar = 2 then
   for i from 1 to NL do
-    R_i:=Trf_c(1 .. 3, 1 .. 3, i):
+    R_i:=Matrix(Trf_c(1 .. 3, 1 .. 3, i)):
     I_i_i_tensor := Matrix([[I_i_i[1, i], I_i_i[2, i], I_i_i[3, i]], [I_i_i[2, i], I_i_i[4, i], I_i_i[5, i]], [I_i_i[3, i], I_i_i[5, i], I_i_i[6, i]]]):
-   # mrD_i_Si := rD_i_i(1 .. 3, i) + CrossProduct(mr_i_i_Si(1 .. 3, i), (omega_i_i, ))
-    # falsch: L_i := -2*Matrix(CrossProduct(Matrix(omega_i_i(1 .. 3, i)), Matrix(mr_i_i_Si(1 .. 3, i)))):
-    # L_i := Matrix(CrossProduct(Matrix(rD_i_i(1 .. 3, i)), Matrix(mr_i_i_Si(1 .. 3, i)))):
     L_i := Matrix(3,1):
-    L_i := L_i + Multiply(I_i_i_tensor, Matrix(omega_i_i(1 .. 3, i))):
-    L_t := L_t + Multiply(R_i, Matrix(L_i)):
+    # TODO: Hier sind ein paar Terme geraten, die aber alle keinen Erfolg brachten. 
+    # Die Vorfaktoren AAA,... können dann in den Testskripten ausprobiert werden
+    # L_i := L_i + Multiply(R_i, AAA*Matrix(CrossProduct(Matrix(mr_i_i_Si(1 .. 3, i)), Matrix(omega_i_i(1 .. 3, i))))):
+    # L_i := L_i + Multiply(R_i, BBB*Matrix(CrossProduct(Matrix(mr_i_i_Si(1 .. 3, i)), Matrix(rD_i_i(1 .. 3, i))))):
+    # L_i := L_i + Multiply(R_i, CCC*Matrix(M[i,1]* Matrix(rD_i_i(1 .. 3, i)))):
+    # L_i := L_i + DDD*Matrix(CrossProduct(Matrix( Trf_c(1 .. 3, 4, i))*M(i,1), R_i . Matrix(omega_i_i(1 .. 3, i)))):
+    # L_i := L_i + EEE*Matrix(CrossProduct(Matrix( Trf_c(1 .. 3, 4, i))*M(i,1), R_i . Matrix(rD_i_i(1 .. 3, i)))):
+    L_i := L_i + Multiply(R_i, Matrix(Multiply(I_i_i_tensor, Matrix(omega_i_i(1 .. 3, i))))):
+    L_t := L_t + Matrix(L_i):
   end do:
 end if:
 if codegen_act then
@@ -145,7 +148,6 @@ end if:
 # [KajitaEsp2008] S. 375
 LD_inert:=Matrix(3,1,<LD_x; LD_y; LD_z>): # Platzhalter, nicht ausgewertet
 ;
-
 
 # Centroidal Momentum Matrix
 # Ableitung des verallg. Impulses nach den Basis- und Gelenkwinkelgeschwindigkeiten nach [OrinGos2008]
