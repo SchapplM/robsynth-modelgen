@@ -41,7 +41,11 @@ if [ "$robot_kinconstr_exist" == "1" ] || [ "$robot_NQJ" != "$robot_NJ" ]; then
   gravload
   inertia
   invdyn_floatb_eulxyz_nnew
-  jacobi
+  robot_jacobig_cutforce_mdh_num
+  robot_jacobig_mdh_eulxyz_num
+  robot_jacobig_mdh_num
+  robot_jacobigD_mdh_eulxyz_num
+  robot_jacobigD_mdh_num
   "
 fi
 # Falls die Minimalparameterform nicht existiert, funktionieren die Trajektorien-Funktionen für Regressorform nicht
@@ -110,6 +114,7 @@ do
     fi
   done
   if [ "$donotgenerate" == "1" ]; then
+    echo "Überspringe $filename wegen Filter $blstr"
     continue
   fi
 
