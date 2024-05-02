@@ -26,8 +26,8 @@ mbin_file=$repo_dir/MATLAB_BIN.env
 
 # Prüfe, ob Matlab normal installiert ist
 # (Unter Ubuntu mit Paket matlab-support)
-if [ "$MATLAB_BIN" == "" ]; then
-  MATLAB_BIN=`which matlab`
+if [ "$MATLAB_BIN" == "" ] && [ "`command -v matlab`" != "" ]; then
+  MATLAB_BIN="matlab"
 fi
 
 # Umgebungsvariable prüfen: Pfad zu MATLAB
