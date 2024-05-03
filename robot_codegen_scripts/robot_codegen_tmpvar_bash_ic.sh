@@ -27,9 +27,10 @@ robot_name_OL=`grep "robot_name_OL := " $robot_env_pfad | tail -1 | sed 's/.*= "
 robot_name=`grep "robot_name := " $robot_env_pfad | tail -1 | sed 's/.*= "\(.*\)":/\1/'`
 
 # Variablen für Implizit definierten Hybrid-Roboter (aus exportiertem Code)
+# Berücksichtige CR-Zeichen des WSL über [\r]*
 NAJ_pfad=$repo_pfad/codeexport/$robot_name/tmp/NAJ_ic_matlab.m
 if [ -f $NAJ_pfad ]; then
-	robot_NAJ=`grep "t1 = " $NAJ_pfad | tail -1 | sed 's/.*= \(.*\);/\1/'`
+	robot_NAJ=`grep "t1 = " $NAJ_pfad | tail -1 | sed 's/.*= \(.*\);[\r]*/\1/'`
 else
 	robot_NAJ="NOTDEFINED"
 fi
