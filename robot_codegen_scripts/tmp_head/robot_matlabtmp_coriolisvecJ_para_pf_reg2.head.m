@@ -11,9 +11,11 @@
 % %INPUT_KOPPEL%
 
 % Output:
-% tau_reg [%N_XP%x(10*%NL%)]
+% tau_reg [%N_XP%x(10*(%NQJ_P%+1))]
 %   inertial parameter regressor of vector of coriolis and centrifugal joint torques
-%   in task space
+%   in task space.
+%   The columns refer to 10 parameters each for the bodies of the first 
+%   %NQJ_P% joint DoF and the platform.
 
 % %VERSIONINFO%
 

@@ -12,9 +12,11 @@
 % %INPUT_KOPPEL%
 
 % Output:
-% tau_reg [%N_XP%x(10*%NL%)]
+% tau_reg [%N_XP%x(10*(%NQJ_P%+1))]
 %   inertial parameter regressor of Gravitation load for parallel robot
 %   in task space
+%   The columns refer to 10 parameters each for the bodies of the first 
+%   %NQJ_P% joint DoF and the platform.
 
 % %VERSIONINFO%
 
