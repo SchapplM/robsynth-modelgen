@@ -1,4 +1,4 @@
-% Calculate minimal parameter regressor of inertia matrix for parallel robot
+% Calculate inertial parameter regressor of inertia matrix for parallel robot
 % %RN%
 % Use Code from Maple symbolic Code Generation
 %
@@ -10,8 +10,8 @@
 % %INPUT_KOPPEL%
 
 % Output:
-% tau_reg [(%N_XP%*%N_XP%)x%NMPVPARA%]
-%   minimal parameter regressor of inertia matrix for parallel robot
+% tau_reg [(%N_XP%*%N_XP)%x(10*%NL%)]
+%   inertial parameter regressor of inertia matrix for parallel robot
 %   in task space
 
 % %VERSIONINFO%

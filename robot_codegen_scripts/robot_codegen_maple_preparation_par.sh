@@ -42,4 +42,9 @@ cp $repo_pfad/workdir/robot_para_rotmat_projection_dynamics.mpl $repo_pfad/workd
 cp $repo_pfad/workdir/robot_para_rotmat_projection_dynamics.mpl $repo_pfad/workdir/robot_para_rotmat_projection_dynamics_par2.mpl
 sed -i "s/codegen_dynpar := 1:/codegen_dynpar := 2:/g" $repo_pfad/workdir/robot_para_rotmat_projection_dynamics_par2.mpl
 
+# Regressor-Berechnung für Minimalparameter und Parametersatz 2 vorbereiten
+cp $repo_pfad/workdir/robot_para_rotmat_projection_dynamics_regressor.mpl $repo_pfad/workdir/robot_para_rotmat_projection_dynamics_regressor_minpar.mpl
+cp $repo_pfad/workdir/robot_para_rotmat_projection_dynamics_regressor.mpl $repo_pfad/workdir/robot_para_rotmat_projection_dynamics_regressor_pv2.mpl
+sed -i "s/regressor_modus := \"regressor_minpar\":/regressor_modus := \"regressor\":/g" $repo_pfad/workdir/robot_para_rotmat_projection_dynamics_regressor_pv2.mpl
+
 echo "Maple-Skripte zur Stapelverarbeitung vorbereitet."

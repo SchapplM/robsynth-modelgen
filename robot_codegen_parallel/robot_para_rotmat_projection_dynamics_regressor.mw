@@ -1,52 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="2019" minor="2"/>
+<Version major="2024" minor="0"/>
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" compactdisplay="false" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" historytimestamp="false" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1050" rtablesize="100" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" ansicolor="[]" elisiondigitsthreshold="10000" showassumed="1" ansilprint="false" trailingsemicolon="true" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" compactdisplay="false" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" scientificx="true" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" historytimestamp="false" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1080" rtablesize="100" useclientjvm="true" format="worksheet" labelwidth="20" postplot="" typesetting="extended" ansi="false" ansicolor="[]" elisiondigitsthreshold="10000" showassumed="1" ansilprint="false" trailingsemicolon="true" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
-<Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="2D Output" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Heading 4" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="true" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Line Printed Output" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Heading 2" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="16" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Maple Output" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="2D Inert Output" background="[255,255,255]" bold="false" executable="true" family="Times New Roman" foreground="[144,144,144]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Heading 3" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="true" opaque="false" readonly="false" size="14" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Diagnostic" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[40,120,40]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Ordered List 1" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Maple Input" background="[255,255,255]" bold="true" executable="true" family="Courier New" foreground="[120,0,14]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Text Output" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Ordered List 2" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Ordered List 3" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Ordered List 4" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Ordered List 5" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Annotation Title" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Header and Footer" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="10" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="HyperlinkError" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[255,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="true" placeholder="false"/>
-<Font name="Atomic Variable" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[175,0,175]" italic="true" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="HyperlinkWarning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="true" placeholder="false"/>
-<Font name="Dictionary Hyperlink" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[147,0,15]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="true" placeholder="false"/>
-<Font name="2D Math" background="[255,255,255]" bold="false" executable="true" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Bullet Item" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Maple Plot" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Annotation Text" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="List Item" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Dash Item" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="2D Input" background="[255,255,255]" bold="false" executable="true" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Error" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[255,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Title" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Text" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Normal" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Caption Reference" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Code" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[255,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Maple Input Placeholder" background="[255,255,255]" bold="true" executable="true" family="Courier New" foreground="[200,0,200]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="true"/>
-<Font name="Equation Label" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Author" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
-<Font name="Hyperlink" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,128,128]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="true" placeholder="false"/>
-<Font name="Caption Text" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="2D Output" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Heading 4" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="true" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Line Printed Output" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Heading 2" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="16" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Maple Output" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="2D Inert Output" background="[255,255,255]" bold="false" executable="true" family="Times New Roman" foreground="[144,144,144]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Heading 3" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="true" opaque="false" readonly="false" size="14" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Diagnostic" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[40,120,40]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Ordered List 1" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Maple Input" background="[255,255,255]" bold="true" executable="true" family="Courier New" foreground="[120,0,14]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Text Output" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Ordered List 2" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Ordered List 3" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Ordered List 4" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Ordered List 5" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Annotation Title" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Header and Footer" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="10" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="HyperlinkError" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[255,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="true" strikethrough="false" placeholder="false"/>
+<Font name="Atomic Variable" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[175,0,175]" italic="true" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="HyperlinkWarning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="true" strikethrough="false" placeholder="false"/>
+<Font name="Dictionary Hyperlink" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[147,0,15]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="true" strikethrough="false" placeholder="false"/>
+<Font name="2D Math" background="[255,255,255]" bold="false" executable="true" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Bullet Item" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Maple Plot" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Annotation Text" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="List Item" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Dash Item" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="2D Input" background="[255,255,255]" bold="false" executable="true" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Error" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[255,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Title" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Text" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Normal" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Caption Reference" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Code" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[255,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Maple Input Placeholder" background="[255,255,255]" bold="true" executable="true" family="Courier New" foreground="[200,0,200]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="true"/>
+<Font name="Equation Label" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Author" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Hyperlink" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,128,128]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="true" strikethrough="false" placeholder="false"/>
+<Font name="Caption Text" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
 <Layout name="Heading 1" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="8" spacebelow="4" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
 <Layout name="Warning" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
 <Layout name="Heading 4" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
@@ -85,7 +85,7 @@
 </Styles>
 <Startup-Code startupcode=""/>
 <Task-table>
-    <Task-category name="&lt;default&gt;"/>
+	<Task-category name="&lt;default&gt;"/>
 </Task-table>
 <Task/>
 <Group labelreference="L3170" drawlabel="true">
@@ -162,8 +162,21 @@ codeexport_invdyn := true:
 read &quot;../robot_codegen_definitions/robot_env_par&quot;:</Text-field>
 </Input>
 </Group>
+<Group labelreference="L3581" drawlabel="true">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Es ist in diesem Arbeitsblatt m\303\266glich, zwei verschiedene Regressoren zu generieren und zu exportieren: Basierend auf Minimalparametern und auf vollem Parametersatz (PV2).</Font></Text-field><Text-field style="Text" layout="Normal">Der Term &quot;regressor&quot; oder &quot;regressor_minpar&quot; ist jeweils in den Dateinamen enthalten.
+Der folgende Befehl muss immer auf &quot;regressor_minpar&quot; gesetzt sein, da diese Zeile durch das Skript robot_codegen_maple_preparation.sh ausgewertet und modifiziert wird.</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3582" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">regressor_modus := &quot;regressor_minpar&quot;: </Text-field>
+</Input>
+</Group>
+<Group labelreference="L3580" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
 <Group labelreference="L3197" drawlabel="true">
-<Input><Text-field style="Text" layout="Normal">Ergebnisse der Plattform-Dynamik in Regressorform laden</Text-field>
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ergebnisse der Plattform-Dynamik in Regressorform laden (dort noch keine Minimaldarstellung m\303\266glich, da nur Plattform-Starrk\303\266rper)</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L3570" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -173,7 +186,7 @@ read &quot;../robot_codegen_definitions/robot_env_par&quot;:</Text-field>
 if FileTools[Exists](dynamicsfile) then
   read dynamicsfile:
 else
-  printf(&quot;%s. PKM-Dynamik konnte nicht geladen werden. Abbruch der Berechnung.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+  printf(&quot;%s. Plattform-Dynamik (Regressor) konnte nicht geladen werden. Abbruch der Berechnung.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
   quit: # Funktioniert in GUI nicht richtig...
   robot_name := &quot;&quot;: # ...Daher auch L\303\266schung des Roboternamens.
 end if:
@@ -194,7 +207,7 @@ g_regmin := g_regmin:
 <Group labelreference="L3574" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3576" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion30" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">dynamicsfile := sprintf(&quot;../codeexport/%s/tmp/invdyn_%s_%s_maple.m&quot;, leg_name, &quot;fixb&quot;, &quot;regressor_minpar&quot;):
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3576" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion30" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">dynamicsfile := sprintf(&quot;../codeexport/%s/tmp/invdyn_%s_%s_maple.m&quot;, leg_name, &quot;fixb&quot;, regressor_modus):
 if FileTools[Exists](dynamicsfile) then
   read dynamicsfile:
 else
@@ -218,8 +231,12 @@ read &quot;../robot_codegen_definitions/robot_env_par&quot;:
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3304" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/minimal_parameter_vector_fixb_maple&quot;, leg_name):
-Paramvec2 := Paramvec2:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if regressor_modus = &quot;regressor_minpar&quot; then
+  read sprintf(&quot;../codeexport/%s/tmp/minimal_parameter_vector_fixb_maple&quot;, leg_name):
+  Paramvec2 := Paramvec2:
+else
+  Paramvec2:=Matrix(PV2_vec[11..10*NL,1]):
+end if:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3419" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -235,7 +252,7 @@ Paramvec2 := Paramvec2:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3165" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;Generiere Parameterlineare <Font encoding="UTF-8">Form der Dynamik f\303\274r PKM %s mit Minimal-Parametersatz\134n</Font>&quot;, robot_name):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;Generiere Parameterlineare <Font encoding="UTF-8">Form der Dynamik f\303\274r PKM %s mit </Font>regressor_modus=<Font encoding="UTF-8">%s\134n</Font>&quot;, robot_name, regressor_modus):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3400" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -251,10 +268,6 @@ Paramvec2 := Paramvec2:</Text-field>
 </Input>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read(sprintf(&quot;%s/transformation/maple/proc_eul%s2r&quot;, robotics_repo_path, angleConvLeg)):
 read(sprintf(&quot;%s/transformation/maple/proc_eul%sjac&quot;, robotics_repo_path, &quot;zyx&quot;)):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L3573" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 <Group labelreference="L3577" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -289,10 +302,6 @@ alphaDDx_base := 0:
 betaDDy_base := 0:
 gammaDDz_base := 0:
 </EC-CodeEditor></CodeEditor-ExecGroup>
-<Group hide-input="false" labelreference="L3363" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
-</Input>
-</Group>
 <Group labelreference="L3470" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
@@ -300,9 +309,14 @@ gammaDDz_base := 0:
 <Group labelreference="L3372" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ergebnisse der Kinematik f\303\274r parallelen Roboter laden</Font></Text-field>
 </Input>
-</Group>
-<Group hide-input="false" labelreference="L3373" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/kinematics_%s_platform_maple.m&quot;, robot_name, base_method_name):
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3597" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion31" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">kinematicsfile := sprintf(&quot;../codeexport/%s/tmp/kinematics_%s_platform_maple.m&quot;, robot_name, base_method_name):
+if FileTools[Exists](kinematicsfile) then
+  read kinematicsfile:
+else
+  printf(&quot;%s. PKM-Kinematik konnte nicht geladen werden. Abbruch der Berechnung.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+  quit: # Funktioniert in GUI nicht richtig...
+  robot_name := &quot;&quot;: # ...Daher auch L\303\266schung des Roboternamens.
+end if:
 # Variablen neu laden
 pivotMat := pivotMat:
 pivotMatMas := pivotMatMas:
@@ -313,9 +327,8 @@ JBD_i := JBD_i:
 JBinv_i := JBinv_i:
 JBDinv_i := JBDinv_i:
 U_i := U_i:
-UD_i := UD_i:</Text-field>
-</Input>
-</Group>
+UD_i := UD_i:
+</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group hide-input="false" labelreference="L3394" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Dynamik-Parameter f\303\274r virtuelle Segmente nach den Plattform-Koppelgelenken entfernen</Font></Text-field>
 </Input>
@@ -356,7 +369,7 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Paramvec3: # Bein-Dynamik-Parametervektor nach Vereinfachungen</Text-field>
 </Input>
 </Group>
-<Group labelreference="L3487" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group hide-input="false" labelreference="L3487" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">paramVecP: # Plattform-Dynamik-Parametervektor ohne Zusammenfassungen</Text-field>
 </Input>
 </Group>
@@ -368,19 +381,23 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Alle Eintr\303\244ge des Minimalparametervektors, die jetzt Null sind, entfernen</Font></Text-field>
 </Input>
 </Group><CodeEditor-ExecGroup view="presentation" labelreference="L3478" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion15" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">ParamvecNew := Matrix(RowDimension(Paramvec3), 1): # Initialisierung mit maximaler Gr\303\266\303\237e
-k := 0:
-for j from 1 to RowDimension(Paramvec3) do
-  if not Paramvec3(j,1) = 0 then
-    k := k + 1:
-    ParamvecNew(k,1) := Paramvec3(j,1):
-  end if:
-end do:
-# Neuen Parametervektor f\303\274r die Beinsegmenten (ohne Plattform)
-ParamvecNew := ParamvecNew(1..k,1):</EC-CodeEditor></CodeEditor-ExecGroup>
+if regressor_modus = &quot;regressor_minpar&quot; then
+  k := 0:
+  for j from 1 to RowDimension(Paramvec3) do
+    if not Paramvec3(j,1) = 0 then
+      k := k + 1:
+      ParamvecNew(k,1) := Paramvec3(j,1):
+    end if:
+  end do:
+  # Neuen Parametervektor f\303\274r die Beinsegmenten (ohne Plattform)
+  ParamvecNew := ParamvecNew(1..k,1):
+else
+  ParamvecNew := Paramvec3:
+end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L3160" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Dupliziere alle berechneten Matrizen. i steht f\303\274r den Index des jeweiligen Beines</Font></Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3428" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion11" expanded="true" visible="true" pixel-width="1215" pixel-height="530" code-language="text/maple" autofit="false" wrapping="true" show-border="true" code-line-numbers="true">tauReg := tau_regressor_s(7..NQ,..):
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3428" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion11" expanded="true" visible="true" pixel-width="1140" pixel-height="422" code-language="text/maple" autofit="false" wrapping="true" show-border="true" code-line-numbers="true">tauReg := tau_regressor_s(7..NQ,..):
 #MatrixEnd := index_symmat2vec(NQJ_parallel,NQJ_parallel,NQJ_parallel):
 #MMjjReg := MMjj_regressor_s(1..MatrixEnd,..):
 tauMMReg := tauMM_regressor_s(7..NQ,..):
@@ -455,9 +472,13 @@ end do:
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
+<Group labelreference="L3598" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
 </Section>
 <Group hide-input="false" labelreference="L3206" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;%s. Dynamik-Matrizen bestimmt. Beginne Projektion/Addition.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Font></Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;%s. Dynamik-Matrizen mit regressor_modus=%s bestimmt. Beginne Projektion/Addition<Font encoding="UTF-8">.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), </Font>regressor_modus):</Text-field>
 </Input>
 </Group>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Berechnung, Projektion und Addition der Dynamikgleichungen</Text-field></Title>
@@ -523,13 +544,17 @@ Creg := pivotMat.&lt;Creg_j(1..6,1..ROWS)|c_regmin&gt;:
 greg := pivotMat.&lt;greg_j(1..6,1..ROWS)|g_regmin&gt;:
 NotNullEntries := 0:</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3387" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="1360" pixel-height="111" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">for i to RowDimension(paramMin) do
-	if not(paramMin(i,1) = 0 or Equal(Column(A,i), ZeroVector[column](RowDimension(A)))) then
-		NotNullEntries := NotNullEntries + 1:
-	end if:
-end do:</EC-CodeEditor></CodeEditor-ExecGroup>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3387" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion1" expanded="true" visible="true" pixel-width="1360" pixel-height="111" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">if regressor_modus = &quot;regressor_minpar&quot; then
+  for i to RowDimension(paramMin) do
+    if not(paramMin(i,1) = 0 or Equal(Column(A,i), ZeroVector[column](RowDimension(A)))) then
+      NotNullEntries := NotNullEntries + 1:
+     end if:
+  end do:
+else
+  NotNullEntries := RowDimension(paramMin)-(NQJ-NQJ_parallel)*10:
+end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group hide-input="false" labelreference="L3484" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">NotNullEntries:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Dimension des Regressors f\303\274r regressor_modus=%s bestimmt: %d&quot;, </Font>regressor_modus, NotNullEntries):</Text-field>
 </Input>
 </Group><CodeEditor-ExecGroup view="presentation" labelreference="L3579" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion27" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">paramMinRed := Matrix(NotNullEntries,1):
 ARed := Matrix(RowDimension(A),NotNullEntries):
@@ -537,7 +562,13 @@ MregRed := Matrix(RowDimension(A),NotNullEntries):
 CregRed := Matrix(RowDimension(A),NotNullEntries):
 gregRed := Matrix(RowDimension(A),NotNullEntries):</EC-CodeEditor></CodeEditor-ExecGroup><CodeEditor-ExecGroup view="presentation" labelreference="L3388" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion2" expanded="true" visible="true" pixel-width="862" pixel-height="264" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">j := 1:
 for i to RowDimension(paramMin) do
-	if not(paramMin(i,1) = 0 or Equal(Column(A,i), ZeroVector[column](RowDimension(A)))) then
+  shift_line := false:
+  if regressor_modus = &quot;regressor&quot; and not(paramMin(i,1) = 0) then
+    shift_line := true: # bei normalem Regressor die Zeilen auslassen, die zu den Koppelgelenk-Dynamikparametern geh\303\266ren
+  elif regressor_modus = &quot;regressor_minpar&quot; and not(paramMin(i,1) = 0 or Equal(Column(A,i), ZeroVector[column](RowDimension(A)))) then
+    shift_line := true:
+  end if:
+  if shift_line then
 		paramMinRed(j,1) := paramMin(i,1):
 		for k to RowDimension(A) do
 			ARed(k,j) := A(k,i):
@@ -546,10 +577,11 @@ for i to RowDimension(paramMin) do
 			gregRed(k,j) := greg(k,i):
 		end do:
 		j := j + 1:
-	end if:
-end do:</EC-CodeEditor></CodeEditor-ExecGroup>
+  end if:
+end do:
+printf(&quot;Dynamik-Terme reduziert. Zeilenz\303\244hler j=%d&quot;, j-1):</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group hide-input="false" labelreference="L3316" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;%s. Beginne Ersetzung der Geschwindigkeiten und Bestimmung der Plattform-Terme.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):</Font></Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;%s. Beginne Ersetzung der Geschwindigkeiten und Bestimmung der Plattform-Terme <Font encoding="UTF-8">f\303\274r</Font> regressor_modus=%s<Font encoding="UTF-8">.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), </Font>regressor_modus):</Text-field>
 </Input>
 </Group>
 </Section>
@@ -717,10 +749,10 @@ greg_qa_mdp := greg_qa.PV:
 <Group labelreference="L3553" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3555" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion22" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">save tau_x,   sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_reg_maple.m&quot;,     robot_name):
-save MMreg_x, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_MMreg_maple.m&quot;,   robot_name):
-save Creg_x,  sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_tauCreg_maple.m&quot;, robot_name):
-save greg_x,  sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_taugreg_maple.m&quot;, robot_name):
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3555" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion22" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">save tau_x,   sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_%s_maple.m&quot;,      robot_name, regressor_modus):
+save MMreg_x, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_MM_%s_maple.m&quot;,   robot_name, regressor_modus):
+save Creg_x,  sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_tauC_%s_maple.m&quot;, robot_name, regressor_modus):
+save greg_x,  sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_taug_%s_maple.m&quot;, robot_name, regressor_modus):
 </EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L3528" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
@@ -736,45 +768,40 @@ Berechnung der Basis-Belastung ist f\303\274r manche Basis-Darstellungen falsch 
 </Input>
 </Group><CodeEditor-ExecGroup view="presentation" labelreference="L3412" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion8" expanded="true" visible="true" pixel-width="500" pixel-height="344" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if codeexport_invdyn then
   printf(&quot;%s. Beginne Code-Export Inverse Dynamik (Regressor) in Plattform-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
-  MatlabExport(tau_x, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_reg_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(tau_x, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
   printf(&quot;%s. Beginne Code-Export Massenmatrix (MDP eingesetzt) in Plattform-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
-  MatlabExport(MMreg_x, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_MMreg_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(MMreg_x, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_MM_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
   printf(&quot;%s. Beginne Code-Export Coriolis-Vektor (MDP eingesetzt) in Plattform-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
-  MatlabExport(Creg_x, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_tauCreg_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(Creg_x, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_tauC_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
   printf(&quot;%s. Beginne Code-Export Gravitations-Vektor (MDP eingesetzt) in Plattform-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
-  MatlabExport(greg_x, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_taugreg_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(greg_x, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_taug_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
 end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L3409" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group><CodeEditor-ExecGroup view="presentation" labelreference="L3414" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion9" expanded="true" visible="true" pixel-width="500" pixel-height="364" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if codeexport_invdyn and RowDimension(Jinv) &lt; 5 and codeexport_actcoord then
   printf(&quot;%s. Beginne Code-Export Inverse Dynamik (Regressor) in Antriebs-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
-  MatlabExport(tau_qa, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_actcoord_reg_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(tau_qa, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_actcoord_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
   printf(&quot;%s. Beginne Code-Export Massenmatrix (Regressor) in Antriebs-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
-  MatlabExport(MMreg_qa, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_actcoord_MMreg_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(MMreg_qa, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_actcoord_MM_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
   printf(&quot;%s. Beginne Code-Export Coriolis-Vektor (Regressor) in Antriebs-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
-  MatlabExport(Creg_qa, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_actcoord_tauCreg_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(Creg_qa, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_actcoord_tauC_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
   printf(&quot;%s. Beginne Code-Export Gravitations-Vektor (Regressor) in Antriebs-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
-  MatlabExport(greg_qa, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_actcoord_taugreg_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(greg_qa, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_actcoord_taug_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
 end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L3261" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
-<Group labelreference="L3535" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal">Maple-Export</Text-field>
-</Input>
-</Group>
-<Group labelreference="L3557" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
-</Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3559" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion23" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">save paramMinRed, sprintf(&quot;../codeexport/%s/tmp/minimal_parameter_parrob_maple.m&quot;, robot_name):
-save RowParamMin, sprintf(&quot;../codeexport/%s/tmp/RowMinPar_parallel_maple.m&quot;,       robot_name):</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L3536" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+<Input><Text-field style="Text" layout="Normal">Maple- und Matlab-Export des MPV</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3416" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion10" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">MatlabExport(paramMinRed, sprintf(&quot;../codeexport/%s/tmp/minimal_parameter_parrob_matlab.m&quot;, robot_name), codegen_opt):
-MatlabExport(RowParamMin, sprintf(&quot;../codeexport/%s/tmp/RowMinPar_parallel.m&quot;, robot_name), 2);</EC-CodeEditor></CodeEditor-ExecGroup>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3416" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion10" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if regressor_modus = &quot;regressor_minpar&quot; then
+  save paramMinRed, sprintf(&quot;../codeexport/%s/tmp/minimal_parameter_parrob_maple.m&quot;, robot_name):
+  save RowParamMin, sprintf(&quot;../codeexport/%s/tmp/RowMinPar_parallel_maple.m&quot;,       robot_name):
+  MatlabExport(paramMinRed, sprintf(&quot;../codeexport/%s/tmp/minimal_parameter_parrob_matlab.m&quot;, robot_name), codegen_opt):
+  MatlabExport(RowParamMin, sprintf(&quot;../codeexport/%s/tmp/RowMinPar_parallel.m&quot;, robot_name), 2);
+end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L3540" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
@@ -790,14 +817,12 @@ MatlabExport(RowParamMin, sprintf(&quot;../codeexport/%s/tmp/RowMinPar_parallel.
 <Group labelreference="L3542" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">Maple-Export</Text-field>
 </Input>
-</Group>
-<Group labelreference="L3561" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
-</Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3563" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion24" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">save tau_x_mdp,   sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_reg_mdp_maple.m&quot;,     robot_name):
-save MMreg_x_mdp, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_MMreg_mdp_maple.m&quot;,   robot_name):
-save Creg_x_mdp,  sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_tauCreg_mdp_maple.m&quot;, robot_name):
-save greg_x_mdp,  sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_taugreg_mdp_maple.m&quot;, robot_name):</EC-CodeEditor></CodeEditor-ExecGroup>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3563" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion24" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if regressor_modus = &quot;regressor_minpar&quot; then
+  save tau_x_mdp,   sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_reg_mdp_maple.m&quot;,     robot_name):
+  save MMreg_x_mdp, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_MMreg_mdp_maple.m&quot;,   robot_name):
+  save Creg_x_mdp,  sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_tauCreg_mdp_maple.m&quot;, robot_name):
+  save greg_x_mdp,  sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_taugreg_mdp_maple.m&quot;, robot_name):
+end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L3547" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
@@ -805,7 +830,7 @@ save greg_x_mdp,  sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_taugre
 <Group labelreference="L3544" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">Matlab Export: </Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L19" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion20" expanded="true" visible="true" pixel-width="1166" pixel-height="264" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">if codeexport_invdyn then
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L19" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion20" expanded="true" visible="true" pixel-width="1166" pixel-height="264" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">if codeexport_invdyn and regressor_modus = &quot;regressor_minpar&quot; then
   printf(&quot;%s. Beginne Code-Export Inverse Dynamik (MDP eingesetzt) in Plattform-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
   MatlabExport(tau_x_mdp, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_reg_mdp_matlab.m&quot;, robot_name), codegen_opt):
   printf(&quot;%s. Beginne Code-Export Massenmatrix (MDP eingesetzt) in Plattform-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
@@ -816,7 +841,7 @@ save greg_x_mdp,  sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_taugre
   MatlabExport(greg_x_mdp, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_taugreg_mdp_matlab.m&quot;, robot_name), codegen_opt):
 end if:
 
-if codeexport_invdyn and RowDimension(Jinv) &lt; 5 and codeexport_actcoord then
+if codeexport_invdyn and RowDimension(Jinv) &lt; 5 and codeexport_actcoord and regressor_modus = &quot;regressor_minpar&quot; then
   printf(&quot;%s. Beginne Code-Export Inverse Dynamik (MDP eingesetzt) in Antriebs-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
   MatlabExport(tau_qa_mdp, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_actcoord_reg_mdp_matlab.m&quot;, robot_name), codegen_opt):
   printf(&quot;%s. Beginne Code-Export Massenmatrix (MDP eingesetzt) in Antriebs-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):

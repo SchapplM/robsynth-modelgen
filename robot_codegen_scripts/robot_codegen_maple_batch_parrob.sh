@@ -69,7 +69,8 @@ if [ "$CG_KINEMATICSONLY" == "0" ]; then
   if [ "$CG_MINIMAL" == "0" ]; then
     dateiliste_kindyn="$dateiliste_kindyn
     robot_para_plattform_rotmat_dynamics_regressor.mpl
-    robot_para_rotmat_projection_dynamics_regressor.mpl
+    robot_para_rotmat_projection_dynamics_regressor_pv2.mpl
+    robot_para_rotmat_projection_dynamics_regressor_minpar.mpl
     "
   fi;
 fi;
