@@ -4,45 +4,43 @@
 # Berechnung und Projektion der Dynamikgleichungen
 # 
 # Dateiname:
-# robot -> Berechnung fÃ¼r allgemeinen Roboter
-# para -> Berechnung fÃ¼r einen parallelen Roboter
+# robot -> Berechnung für allgemeinen Roboter
+# para -> Berechnung für einen parallelen Roboter
 # rotmat -> Kinematik wird mit Rotationsmatrizen berechnet
 # projection -> Die Dynamikgleichungen werden auf EE-Koordinaten projiziert
 # dynamics -> Berechnung der Dynamik
 # Autor
 # Tim Job (Studienarbeit bei Moritz Schappler), 2018-12
 # Moritz Schappler, moritz.schappler@imes.uni-hannover.de
-# (C) Institut fÃ¼r Mechatronische Systeme, UniversitÃ¤t Hannover
+# (C) Institut für Mechatronische Systeme, Universität Hannover
 # Sources
 # [Abdellatif2007] Modellierung, Identifikation und robuste Regelung von Robotern mit parallelkinematischen Strukturen
-# [Job2018_S759] Job, T. (Studienarbeit; Betreuer Moritz Schappler): Implementierung einer strukturunabhÃ¤ngigen Dynamikmodellierung fÃ¼r parallelkinematische Maschinen (2018)
+# [Job2018_S759] Job, T. (Studienarbeit; Betreuer Moritz Schappler): Implementierung einer strukturunabhängigen Dynamikmodellierung für parallelkinematische Maschinen (2018)
 # Initialization
-interface(warnlevel=0): # UnterdrÃ¼cke die folgende Warnung.
-restart: # Gibt eine Warnung, wenn Ã¼ber Terminal-Maple mit read gestartet wird.
+interface(warnlevel=0): # Unterdrücke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
 interface(warnlevel=3):
 with(LinearAlgebra):
 with(codegen):
 with(CodeGeneration):
-with(StringTools): # FÃ¼r Zeitausgabe
+with(StringTools): # Für Zeitausgabe
 ;
-# Einstellungen fÃ¼r Code-Export: Optimierungsgrad (2=hÃ¶chster).
+# Einstellungen für Code-Export: Optimierungsgrad (2=höchster).
 #codegen_act := true: # noch nicht implementiert
 codegen_debug := false:
 codegen_opt := 2:
-codeexport_invdyn := true:
-codeexport_actcoord := false: # Generierung der Dynamik in Antriebskoordinaten nicht standardmÃ¤ÃŸig (hoher Rechenaufwand)
+codeexport_actcoord := false: # Generierung der Dynamik in Antriebskoordinaten nicht standardmäßig (hoher Rechenaufwand)
 ;
 read "../helper/proc_MatlabExport":
 read "../helper/proc_simplify2":
 read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
-# Kennung des Parametersatzes, fÃ¼r den die Dynamikfunktionen erstellt werden sollen. Muss im Repo und in der mpl-Datei auf 1 gelassen werden, da die folgende Zeile mit einem Skript verarbeitet wird.
+# Kennung des Parametersatzes, für den die Dynamikfunktionen erstellt werden sollen. Muss im Repo und in der mpl-Datei auf 1 gelassen werden, da die folgende Zeile mit einem Skript verarbeitet wird.
 codegen_dynpar := 1:
-# Ergebnisse der zusÃ¤tzlichen Definitionen fÃ¼r parallele Roboter laden
+# Ergebnisse der zusätzlichen Definitionen für parallele Roboter laden
 read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
 # Ergebnisse der Plattform-Dynamik laden (aus robot_para_plattform_rotmat_dynamics.mw)
-
 read "../robot_codegen_definitions/robot_env_par":
 dynamicsfile := sprintf("../codeexport/%s/tmp/floatb_platform_dynamic_maple.m", robot_name):
 if FileTools[Exists](dynamicsfile) then
@@ -50,7 +48,7 @@ if FileTools[Exists](dynamicsfile) then
 else
   printf("%s. PKM-Dynamik konnte nicht geladen werden. Abbruch der Berechnung.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
   quit: # Funktioniert in GUI nicht richtig...
-  robot_name := "": # ...Daher auch LÃ¶schung des Roboternamens.
+  robot_name := "": # ...Daher auch Löschung des Roboternamens.
 end if:
 # Neu-Definition der geladenen Variablen
 MME:=MME:
@@ -60,8 +58,7 @@ tauE:=tauE:
 H:=H:
 dH:=dH:
 
-# Ergebnisse der Kinematik fÃ¼r parallelen Roboter laden
-
+# Ergebnisse der Kinematik für parallelen Roboter laden
 read "../robot_codegen_definitions/robot_env_par":
 kinematicsfile := sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
 if FileTools[Exists](kinematicsfile) then
@@ -69,9 +66,9 @@ if FileTools[Exists](kinematicsfile) then
 else
   printf("%s. PKM-Kinematik konnte nicht geladen werden. Abbruch der Berechnung.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
   quit: # Funktioniert in GUI nicht richtig...
-  robot_name := "": # ...Daher auch LÃ¶schung des Roboternamens.
+  robot_name := "": # ...Daher auch Löschung des Roboternamens.
 end if:
-read "../robot_codegen_definitions/robot_env_par": # Nochmal laden, um Standard-Einstellungen Ã¼berschreiben zu kÃ¶nnen.
+read "../robot_codegen_definitions/robot_env_par": # Nochmal laden, um Standard-Einstellungen überschreiben zu können.
 # Neu-Definition der von dieser Datei gelesenen Variablen, damit sie im Workspace erscheinen
 pivotMat := pivotMat:
 pivotMatMas := pivotMatMas:
@@ -97,7 +94,7 @@ vys_base := 0:
 vzs_base := 0:
 # Startzeit messen zur Beurteilung der Zeitdauer einzelner Schritte
 st := time():
-# Physikalische Parameter der durch Koppelgelenke bewegten KÃ¶rper zu Null setzen.
+# Physikalische Parameter der durch Koppelgelenke bewegten Körper zu Null setzen.
 NQ := NQ - (NQJ-NQJ_parallel):
 for i from NQJ_parallel+1 to NQJ do
 	XXC||i := 0:
@@ -121,8 +118,7 @@ for i from NQJ_parallel+1 to NQJ do
 	M||i := 0:
 end do:
 # Ergebnisse G-Vektor der Beinkette  laden.
-# Die Rotation der Basis wird nur in der Jacobi-Matrix der inverse Kinematik berÃ¼cksichtigt. Deshalb muss der Gravitationsvektor ebenfalls an die Rotation angepasst werden.
-
+# Die Rotation der Basis wird nur in der Jacobi-Matrix der inverse Kinematik berücksichtigt. Deshalb muss der Gravitationsvektor ebenfalls an die Rotation angepasst werden.
 g1 := gtmp1:
 g2 := gtmp2:
 g3 := gtmp3:
@@ -133,7 +129,7 @@ if FileTools[Exists](dynamicsfile_leg) then
 else
   printf("%s. Beinketten-Dynamik (g) konnte nicht geladen werden. Abbruch der Berechnung.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
   quit: # Funktioniert in GUI nicht richtig...
-  robot_name := "": # ...Daher auch LÃ¶schung des Roboternamens.
+  robot_name := "": # ...Daher auch Löschung des Roboternamens.
 end if:
 G := simplify2(Matrix(taug_s(7..NQ,1))):
 unassign('g1','g2','g3'):
@@ -144,7 +140,6 @@ gtmp2 := (Rmat.g)(2):
 gtmp3 := (Rmat.g)(3):
 G := G:
 
-
 # Ergebnisse C-Vektor der Beinkette laden
 dynamicsfile_leg := sprintf("../codeexport/%s/tmp/coriolisvec_par%d_maple.m", leg_name, codegen_dynpar):
 if FileTools[Exists](dynamicsfile_leg) then
@@ -152,33 +147,30 @@ if FileTools[Exists](dynamicsfile_leg) then
 else
   printf("%s. Beinketten-Dynamik (c) konnte nicht geladen werden. Abbruch der Berechnung.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
   quit: # Funktioniert in GUI nicht richtig...
-  robot_name := "": # ...Daher auch LÃ¶schung des Roboternamens.
+  robot_name := "": # ...Daher auch Löschung des Roboternamens.
 end if:
 Cvec := simplify2(Matrix(tauCC_s(7..NQ,1))):
 Cvec := Cvec:
 
 # Ergebnisse M-Matrix der Beinkette laden
-
 dynamicsfile_leg := sprintf("../codeexport/%s/tmp/inertia_par%d_maple.m", leg_name, codegen_dynpar):
 if FileTools[Exists](dynamicsfile_leg) then
   read dynamicsfile_leg:
 else
   printf("%s. Beinketten-Dynamik (M) konnte nicht geladen werden. Abbruch der Berechnung.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
   quit: # Funktioniert in GUI nicht richtig...
-  robot_name := "": # ...Daher auch LÃ¶schung des Roboternamens.
+  robot_name := "": # ...Daher auch Löschung des Roboternamens.
 end if:
 MM := simplify(MM_s(7..NQ,7..NQ)):
 MM := simplify(MM):
 MME := simplify(MME):
-# Ausdruck fÃ¼r Gravitationsterme der Plattform nochmal vereinfachen.
+# Ausdruck für Gravitationsterme der Plattform nochmal vereinfachen.
 gE := simplify2(gE):
-# Ergebnisse der Kinematik fÃ¼r parallen Roboter laden (wurde oben schon gemacht.
+# Ergebnisse der Kinematik für parallen Roboter laden (wurde oben schon gemacht.
 #read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
-printf("%s. Alle Daten geladen. Generiere Dynamik fÃ¼r PKM %s mit Parametersatz %d\n", FormatTime("%Y-%m-%d %H:%M:%S"), robot_name, codegen_dynpar, base_method_name):
-
-# Berechne Dynamik-Matrizen fÃ¼r alle Beine
-# Dupliziere alle berechneten Matrizen. i steht fÃ¼r den Index des jeweiligen Beines
-
+printf("%s. Alle Daten geladen. Generiere Dynamik für PKM %s mit Parametersatz %d\n", FormatTime("%Y-%m-%d %H:%M:%S"), robot_name, codegen_dynpar, base_method_name):
+# Berechne Dynamik-Matrizen für alle Beine
+# Dupliziere alle berechneten Matrizen. i steht für den Index des jeweiligen Beines
 for i to N_LEGS do
   MM||i := Copy(MM):
   Cvec||i := Copy(Cvec):
@@ -210,11 +202,10 @@ end do:
 
 
 # Berechnung, Projektion und Addition der Dynamikgleichungen
-# Berechnung der KrÃ¤fte/Momente an den Gelenken der jeweiligen Beine und Projektion auf EE-Plattform
+# Berechnung der Kräfte/Momente an den Gelenken der jeweiligen Beine und Projektion auf EE-Plattform
 # Abdellatif2007 S.38 (3.27); [Job2018_S759], S. 29
 
 for i to N_LEGS do
-
   Jtmp := Multiply(Transpose(U_i(..,..,i)),Transpose(JBinv_i(..,..,i))):
   qDtmp := Multiply(JBinv_i(..,..,i),U_i(..,..,i).H.xED_s):
   A||i := simplify(Multiply(JBinv_i(..,..,i),JBD_i(..,..,i))):
@@ -229,12 +220,11 @@ for i to N_LEGS do
   
   tau||i := Jtmp.MM||i.JBinv_i(..,..,i).(U_i(..,..,i).H.xEDD_s+U_i(..,..,i).dH.xED_s+UD_i(..,..,i).H.xED_s) + Multiply(Jtmp,(B||i+Cvec||i+G||i)):
 
-
   taus||i := MMs||i.xEDD_s + cvecs||i + gvecs||i:
 end do:
 
 # Abdellatif2007 S.40 (3.33); [Job2018_S759], (3.49)
-# Aufsummieren aller KrÃ¤fte, projiziert auf EE-Plattform
+# Aufsummieren aller Kräfte, projiziert auf EE-Plattform
 Tmp := 0:
 for i to N_LEGS do
   Tmp := Tmp + tau||i:
@@ -267,7 +257,7 @@ end do:
 gGes := Tmp - gE:
 #tauGes := MMGes.xEDD_s + cvecGes + gGes:
 # Replace Joint Velocities
-# Substituiere die Gelenkgeschwindigkeiten Ã¼ber H-, Ui- und JBi-Matrix mit EE-Geschwindikeiten
+# Substituiere die Gelenkgeschwindigkeiten über H-, Ui- und JBi-Matrix mit EE-Geschwindikeiten
 Tmp := 0:
 for i to N_LEGS do
   Tmp := Multiply(H,xED_s):
@@ -287,8 +277,8 @@ for i to 6 do
   end do:
 end do:
 # Export
-# WÃ¤hle die EintrÃ¤ge aus Dynamikgleichungen, die fÃ¼r Freiheitsgrade des Roboters relevant sind.
-# (Ã¼ber die Auswahl-Matrix "pivotMat").
+# Wähle die Einträge aus Dynamikgleichungen, die für Freiheitsgrade des Roboters relevant sind.
+# (über die Auswahl-Matrix "pivotMat").
 #Jtestinv := Matrix(6,6,symbol=Jentry):
 #Jtest := MatrixInverse(Jtestinv):
 #Jtest := simplify(Jtest):
@@ -306,7 +296,7 @@ tau_x := pivotMat.tauGes:
 MMGes_x := pivotMat.MMGes.Transpose(pivotMatMas):
 cvecGes_x := pivotMat.cvecGes:
 gGes_x := pivotMat.gGes:
-# Maple-Export (zur eventuellen spÃ¤teren Verarbeitung in Maple)
+# Maple-Export (zur eventuellen späteren Verarbeitung in Maple)
 save tau_x,     sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_par%d_maple.m",      robot_name, codegen_dynpar):
 save MMGes_x,   sprintf("../codeexport/%s/tmp/inertia_para_plfcoord_par%d_maple.m",     robot_name, codegen_dynpar):
 save cvecGes_x, sprintf("../codeexport/%s/tmp/coriolisvec_para_plfcoord_par%d_maple.m", robot_name, codegen_dynpar):
@@ -316,7 +306,7 @@ save gGes_x,    sprintf("../codeexport/%s/tmp/gravvec_para_plfcoord_par%d_maple.
 if RowDimension(Jinv) < 5 and codeexport_actcoord then
   printf("%s. Beginn der Matrix-Invertierung.  CPU-Zeit bis hier: %1.2fs.\n", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
   J:=MatrixInverse(Jinv): # TODO: Matrix-Invertierung in eigenem Skript (bei der Kinematik; dort mit Platzhalter-Matrix invertieren)
-  save J, sprintf("../codeexport/%s/tmp/jacobian_maple.m", robot_name): # TODO: Besseren Namen wÃ¤hlen und dies im Kinematik-Skript machen.
+  save J, sprintf("../codeexport/%s/tmp/jacobian_maple.m", robot_name): # TODO: Besseren Namen wählen und dies im Kinematik-Skript machen.
   printf("%s. Matrix-Invertierung beendet. CPU-Zeit bis hier: %1.2fs.\n", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
   # J:=simplify(J):
   # printf("%s. Optimierung beendet. CPU-Zeit bis hier: %1.2fs.\n", FormatTime("%Y-%m-%d %H:%M:%S"), time()-st):
@@ -324,32 +314,11 @@ if RowDimension(Jinv) < 5 and codeexport_actcoord then
   MMGes_qa   := Transpose(J) . MMGes_x:
   cvecGes_qa := Transpose(J) . cvecGes_x:
   gGes_qa    := Transpose(J) . gGes_x:
-  # Maple-Export (zur eventuellen spÃ¤teren Verarbeitung in Maple)
+  # Maple-Export (zur eventuellen späteren Verarbeitung in Maple)
   save tau_qa,     sprintf("../codeexport/%s/tmp/invdyn_para_actcoord_par%d_maple.m",      robot_name, codegen_dynpar):
   save MMGes_qa,   sprintf("../codeexport/%s/tmp/inertia_para_actcoord_par%d_maple.m",     robot_name, codegen_dynpar):
   save cvecGes_qa, sprintf("../codeexport/%s/tmp/coriolisvec_para_actcoord_par%d_maple.m", robot_name, codegen_dynpar):
   save gGes_qa,    sprintf("../codeexport/%s/tmp/gravvec_para_actcoord_par%d_maple.m",     robot_name, codegen_dynpar):
 end if:
-printf("%s. Speicherung der Dynamik-Terme in symbolischer Form beendet. Starte Code-Export in Matlab\n", FormatTime("%Y-%m-%d %H:%M:%S")):
-# Matlab Export
-if codeexport_invdyn then
-  printf("%s. Beginne Code-Export Inverse Dynamik in Plattform-Koordinaten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
-  MatlabExport(tau_x,     sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
-  printf("%s. Beginne Code-Export Massenmatrix in Plattform-Koordinaten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
-  MatlabExport(MMGes_x,   sprintf("../codeexport/%s/tmp/inertia_para_plfcoord_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
-  printf("%s. Beginne Code-Export Coriolis-Vektor in Plattform-Koordinaten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
-  MatlabExport(cvecGes_x, sprintf("../codeexport/%s/tmp/coriolisvec_para_plfcoord_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
-  printf("%s. Beginne Code-Export Gravitations-Vektor in Plattform-Koordinaten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
-  MatlabExport(gGes_x,    sprintf("../codeexport/%s/tmp/gravvec_para_plfcoord_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
-end if:
-if codeexport_invdyn and RowDimension(Jinv) < 5 and codeexport_actcoord then
-  printf("%s. Beginne Code-Export Inverse Dynamik in Antriebs-Koordinaten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
-  MatlabExport(tau_qa,     sprintf("../codeexport/%s/tmp/invdyn_para_actcoord_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
-  printf("%s. Beginne Code-Export Massenmatrix in Antriebs-Koordinaten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
-  MatlabExport(MMGes_qa,   sprintf("../codeexport/%s/tmp/inertia_para_actcoord_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
-  printf("%s. Beginne Code-Export Coriolis-Vektor in Antriebs-Koordinaten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
-  MatlabExport(cvecGes_qa, sprintf("../codeexport/%s/tmp/coriolisvec_para_actcoord_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
-  printf("%s. Beginne Code-Export Gravitations-Vektor in Antriebs-Koordinaten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
-  MatlabExport(gGes_qa,    sprintf("../codeexport/%s/tmp/gravvec_para_actcoord_par%d_matlab.m", robot_name, codegen_dynpar), codegen_opt);
-end if:
-
+printf("%s. Speicherung der Dynamik-Terme in symbolischer Form beendet.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
+# Der Matlab-Export wird in einem anderen Arbeitsblatt gemacht.

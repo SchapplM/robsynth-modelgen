@@ -59,18 +59,34 @@ if [ "$CG_KINEMATICSONLY" == "0" ]; then
     dateiliste_kindyn="$dateiliste_kindyn
     robot_para_plattform_rotmat_dynamics_par1.mpl
     robot_para_rotmat_projection_dynamics_par1.mpl
+    robot_para_rotmat_projection_dynamics_export_par1_invdyn.mpl
+    robot_para_rotmat_projection_dynamics_export_par1_corvec.mpl
+    robot_para_rotmat_projection_dynamics_export_par1_grav.mpl
+    robot_para_rotmat_projection_dynamics_export_par1_inertia.mpl
     "
   fi;
   
   dateiliste_kindyn="$dateiliste_kindyn
     robot_para_plattform_rotmat_dynamics_par2.mpl
     robot_para_rotmat_projection_dynamics_par2.mpl
+    robot_para_rotmat_projection_dynamics_export_par2_invdyn.mpl
+    robot_para_rotmat_projection_dynamics_export_par2_corvec.mpl
+    robot_para_rotmat_projection_dynamics_export_par2_grav.mpl
+    robot_para_rotmat_projection_dynamics_export_par2_inertia.mpl
     "
   if [ "$CG_MINIMAL" == "0" ]; then
     dateiliste_kindyn="$dateiliste_kindyn
     robot_para_plattform_rotmat_dynamics_regressor.mpl
     robot_para_rotmat_projection_dynamics_regressor_pv2.mpl
     robot_para_rotmat_projection_dynamics_regressor_minpar.mpl
+    robot_para_rotmat_projection_dynamics_regressor_export_pv2_invdyn.mpl
+    robot_para_rotmat_projection_dynamics_regressor_export_pv2_corvec.mpl
+    robot_para_rotmat_projection_dynamics_regressor_export_pv2_grav.mpl
+    robot_para_rotmat_projection_dynamics_regressor_export_pv2_inertia.mpl
+    robot_para_rotmat_projection_dynamics_regressor_export_minpar_invdyn.mpl
+    robot_para_rotmat_projection_dynamics_regressor_export_minpar_corvec.mpl
+    robot_para_rotmat_projection_dynamics_regressor_export_minpar_grav.mpl
+    robot_para_rotmat_projection_dynamics_regressor_export_minpar_inertia.mpl
     "
   fi;
 fi;

@@ -741,58 +741,15 @@ greg_qa_mdp := greg_qa.PV:
 </Input>
 </Group>
 </Section>
-<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Export</Text-field></Title>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Maple-Export</Text-field></Title>
 <Group labelreference="L3534" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Maple-Export (zur eventuellen sp\303\244teren Verarbeitung in Maple)</Font></Text-field>
-</Input>
-</Group>
-<Group labelreference="L3553" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Zum Export als Matlab-Funktion \303\274ber ein anderes Arbeitsblatt</Font></Text-field>
 </Input>
 </Group><CodeEditor-ExecGroup view="presentation" labelreference="L3555" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion22" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">save tau_x,   sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_%s_maple.m&quot;,      robot_name, regressor_modus):
 save MMreg_x, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_MM_%s_maple.m&quot;,   robot_name, regressor_modus):
 save Creg_x,  sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_tauC_%s_maple.m&quot;, robot_name, regressor_modus):
 save greg_x,  sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_taug_%s_maple.m&quot;, robot_name, regressor_modus):
 </EC-CodeEditor></CodeEditor-ExecGroup>
-<Group labelreference="L3528" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
-</Input>
-</Group>
-<Group labelreference="L3161" drawlabel="true">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Matlab Export: Floating base (TODO: Was hei\303\237t das? Hier ist doch kein Floating Base?)
-Berechnung der Basis-Belastung ist f\303\274r manche Basis-Darstellungen falsch (siehe oben unter Gravitationslast). (TODO: Ist das noch aktuell?)</Font></Text-field>
-</Input>
-</Group>
-<Group labelreference="L3410" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
-</Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3412" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion8" expanded="true" visible="true" pixel-width="500" pixel-height="344" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if codeexport_invdyn then
-  printf(&quot;%s. Beginne Code-Export Inverse Dynamik (Regressor) in Plattform-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
-  MatlabExport(tau_x, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
-  printf(&quot;%s. Beginne Code-Export Massenmatrix (MDP eingesetzt) in Plattform-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
-  MatlabExport(MMreg_x, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_MM_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
-  printf(&quot;%s. Beginne Code-Export Coriolis-Vektor (MDP eingesetzt) in Plattform-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
-  MatlabExport(Creg_x, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_tauC_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
-  printf(&quot;%s. Beginne Code-Export Gravitations-Vektor (MDP eingesetzt) in Plattform-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
-  MatlabExport(greg_x, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_taug_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
-end if:</EC-CodeEditor></CodeEditor-ExecGroup>
-<Group labelreference="L3409" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
-</Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3414" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion9" expanded="true" visible="true" pixel-width="500" pixel-height="364" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if codeexport_invdyn and RowDimension(Jinv) &lt; 5 and codeexport_actcoord then
-  printf(&quot;%s. Beginne Code-Export Inverse Dynamik (Regressor) in Antriebs-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
-  MatlabExport(tau_qa, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_actcoord_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
-  printf(&quot;%s. Beginne Code-Export Massenmatrix (Regressor) in Antriebs-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
-  MatlabExport(MMreg_qa, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_actcoord_MM_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
-  printf(&quot;%s. Beginne Code-Export Coriolis-Vektor (Regressor) in Antriebs-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
-  MatlabExport(Creg_qa, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_actcoord_tauC_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
-  printf(&quot;%s. Beginne Code-Export Gravitations-Vektor (Regressor) in Antriebs-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
-  MatlabExport(greg_qa, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_actcoord_taug_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
-end if:</EC-CodeEditor></CodeEditor-ExecGroup>
-<Group labelreference="L3261" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
-</Input>
-</Group>
 <Group labelreference="L3536" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">Maple- und Matlab-Export des MPV</Text-field>
 </Input>
@@ -802,54 +759,14 @@ end if:</EC-CodeEditor></CodeEditor-ExecGroup>
   MatlabExport(paramMinRed, sprintf(&quot;../codeexport/%s/tmp/minimal_parameter_parrob_matlab.m&quot;, robot_name), codegen_opt):
   MatlabExport(RowParamMin, sprintf(&quot;../codeexport/%s/tmp/RowMinPar_parallel.m&quot;, robot_name), 2);
 end if:</EC-CodeEditor></CodeEditor-ExecGroup>
-<Group labelreference="L3540" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
-</Input>
-</Group>
 <Group labelreference="L3525" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">PKM-Dynamik-Funktionen mit MPV bereits eingesetzt</Text-field>
-</Input>
-</Group>
-<Group labelreference="L3541" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
-</Input>
-</Group>
-<Group labelreference="L3542" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal">Maple-Export</Text-field>
 </Input>
 </Group><CodeEditor-ExecGroup view="presentation" labelreference="L3563" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion24" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if regressor_modus = &quot;regressor_minpar&quot; then
   save tau_x_mdp,   sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_reg_mdp_maple.m&quot;,     robot_name):
   save MMreg_x_mdp, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_MMreg_mdp_maple.m&quot;,   robot_name):
   save Creg_x_mdp,  sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_tauCreg_mdp_maple.m&quot;, robot_name):
   save greg_x_mdp,  sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_taugreg_mdp_maple.m&quot;, robot_name):
-end if:</EC-CodeEditor></CodeEditor-ExecGroup>
-<Group labelreference="L3547" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
-</Input>
-</Group>
-<Group labelreference="L3544" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal">Matlab Export: </Text-field>
-</Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L19" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion20" expanded="true" visible="true" pixel-width="1166" pixel-height="264" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">if codeexport_invdyn and regressor_modus = &quot;regressor_minpar&quot; then
-  printf(&quot;%s. Beginne Code-Export Inverse Dynamik (MDP eingesetzt) in Plattform-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
-  MatlabExport(tau_x_mdp, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_reg_mdp_matlab.m&quot;, robot_name), codegen_opt):
-  printf(&quot;%s. Beginne Code-Export Massenmatrix (MDP eingesetzt) in Plattform-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
-  MatlabExport(MMreg_x_mdp, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_MMreg_mdp_matlab.m&quot;, robot_name), codegen_opt):
-  printf(&quot;%s. Beginne Code-Export Coriolis-Vektor (MDP eingesetzt) in Plattform-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
-  MatlabExport(Creg_x_mdp, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_tauCreg_mdp_matlab.m&quot;, robot_name), codegen_opt):
-  printf(&quot;%s. Beginne Code-Export Gravitations-Vektor (MDP eingesetzt) in Plattform-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
-  MatlabExport(greg_x_mdp, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_taugreg_mdp_matlab.m&quot;, robot_name), codegen_opt):
-end if:
-
-if codeexport_invdyn and RowDimension(Jinv) &lt; 5 and codeexport_actcoord and regressor_modus = &quot;regressor_minpar&quot; then
-  printf(&quot;%s. Beginne Code-Export Inverse Dynamik (MDP eingesetzt) in Antriebs-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
-  MatlabExport(tau_qa_mdp, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_actcoord_reg_mdp_matlab.m&quot;, robot_name), codegen_opt):
-  printf(&quot;%s. Beginne Code-Export Massenmatrix (MDP eingesetzt) in Antriebs-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
-  MatlabExport(MMreg_qa_mdp, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_actcoord_MMreg_mdp_matlab.m&quot;, robot_name), codegen_opt):
-  printf(&quot;%s. Beginne Code-Export Coriolis-Vektor (MDP eingesetzt) in Antriebs-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
-  MatlabExport(Creg_qa_mdp, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_actcoord_tauCreg_mdp_matlab.m&quot;, robot_name), codegen_opt):
-  printf(&quot;%s. Beginne Code-Export Gravitations-Vektor (MDP eingesetzt) in Antriebs-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
-  MatlabExport(greg_qa_mdp, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_actcoord_taugreg_mdp_matlab.m&quot;, robot_name), codegen_opt):
 end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L3564" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>

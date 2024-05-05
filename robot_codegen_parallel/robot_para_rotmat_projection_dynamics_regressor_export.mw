@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Worksheet>
+<Version major="2024" minor="0"/>
+<Label-Scheme value="2" prefix=""/>
+<View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
+</View-Properties>
+<MapleNet-Properties prettyprint="3" warnlevel="3" compactdisplay="false" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" scientificx="true" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" historytimestamp="false" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1080" rtablesize="[10, 10]" useclientjvm="true" format="worksheet" labelwidth="20" postplot="" typesetting="extended" ansi="false" ansicolor="[]" elisiondigitsthreshold="10000" showassumed="1" ansilprint="false" trailingsemicolon="true" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<Styles>
+<Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="2D Output" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Heading 4" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="true" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Line Printed Output" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Heading 2" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="16" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Maple Output" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="2D Inert Output" background="[255,255,255]" bold="false" executable="true" family="Times New Roman" foreground="[144,144,144]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Heading 3" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="true" opaque="false" readonly="false" size="14" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Diagnostic" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[40,120,40]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Ordered List 1" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Maple Input" background="[255,255,255]" bold="true" executable="true" family="Courier New" foreground="[120,0,14]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Text Output" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Ordered List 2" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Ordered List 3" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Ordered List 4" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Ordered List 5" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Annotation Title" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Header and Footer" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="10" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="HyperlinkError" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[255,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="true" strikethrough="false" placeholder="false"/>
+<Font name="Atomic Variable" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[175,0,175]" italic="true" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="HyperlinkWarning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="true" strikethrough="false" placeholder="false"/>
+<Font name="Dictionary Hyperlink" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[147,0,15]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="true" strikethrough="false" placeholder="false"/>
+<Font name="2D Math" background="[255,255,255]" bold="false" executable="true" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Bullet Item" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Maple Plot" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Annotation Text" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="List Item" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Dash Item" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="2D Input" background="[255,255,255]" bold="false" executable="true" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Error" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[255,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Title" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Text" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Normal" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Caption Reference" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Code" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[255,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Maple Input Placeholder" background="[255,255,255]" bold="true" executable="true" family="Courier New" foreground="[200,0,200]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="true"/>
+<Font name="Equation Label" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Author" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Hyperlink" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,128,128]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="true" strikethrough="false" placeholder="false"/>
+<Font name="Caption Text" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Layout name="Heading 1" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="8" spacebelow="4" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Warning" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Heading 4" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Line Printed Output" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="any" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Heading 2" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="8" spacebelow="2" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Maple Output" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.3" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Heading 3" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Diagnostic" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="any" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Ordered List 1" alignment="left" bullet="numeric" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix=""/>
+<Layout name="Text Output" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="newline" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Ordered List 2" alignment="left" bullet="alphabetic" firstindent="0" leftmargin="36" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix=""/>
+<Layout name="Ordered List 3" alignment="left" bullet="roman" firstindent="0" leftmargin="72" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix=""/>
+<Layout name="Ordered List 4" alignment="left" bullet="ALPHABETIC" firstindent="0" leftmargin="108" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix=""/>
+<Layout name="Ordered List 5" alignment="left" bullet="ROMAN" firstindent="0" leftmargin="144" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix=""/>
+<Layout name="Annotation Title" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="12" spacebelow="12" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="HyperlinkError" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="HyperlinkWarning" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Bullet Item" alignment="left" bullet="dot" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Maple Plot" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="List Item" alignment="left" bullet="indent" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Dash Item" alignment="left" bullet="dash" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Error" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Title" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="12" spacebelow="12" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Normal" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Author" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="8" spacebelow="8" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Pencil-style name="Pencil 1" pen-color="[0,0,0]" pen-height="1.0" pen-width="1.0" pen-opacity="1.0"/>
+<Pencil-style name="Pencil 2" pen-color="[0,0,255]" pen-height="1.0" pen-width="1.0" pen-opacity="1.0"/>
+<Pencil-style name="Pencil 3" pen-color="[0,0,0]" pen-height="3.0" pen-width="3.0" pen-opacity="1.0"/>
+<Pencil-style name="Pencil 4" pen-color="[0,0,255]" pen-height="3.0" pen-width="3.0" pen-opacity="1.0"/>
+<Pencil-style name="Pencil 5" pen-color="[255,0,0]" pen-height="5.0" pen-width="5.0" pen-opacity="1.0"/>
+<Highlighter-style name="Highlighter 5" pen-color="[255,255,0]" pen-height="48.0" pen-width="48.0" pen-opacity="0.8"/>
+<Highlighter-style name="Highlighter 3" pen-color="[51,255,0]" pen-height="24.0" pen-width="24.0" pen-opacity="0.8"/>
+<Highlighter-style name="Highlighter 4" pen-color="[0,255,255]" pen-height="32.0" pen-width="32.0" pen-opacity="0.8"/>
+<Highlighter-style name="Highlighter 1" pen-color="[255,153,255]" pen-height="12.0" pen-width="8.0" pen-opacity="0.8"/>
+<Highlighter-style name="Highlighter 2" pen-color="[255,204,0]" pen-height="14.0" pen-width="14.0" pen-opacity="0.8"/>
+</Styles>
+<Startup-Code startupcode=""/>
+<Task-table>
+	<Task-category name="&lt;default&gt;"/>
+</Task-table>
+<Task/>
+<Group labelreference="L3170" drawlabel="true">
+<Input><Text-field style="Title" layout="Title">Berechnung und Projektion der Dynamikgleichungen in Regressorform - Export</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3146" drawlabel="true">
+<Input><Text-field style="Heading 2" layout="Heading 2">Einleitung</Text-field><Text-field style="Normal" layout="Normal">Berechnung und Projektion der Dynamikgleichungen in Regressorform
+<Font encoding="UTF-8">Hier wird nur der Matlab-Export durchgef\303\274hrt, getrennt von der eigentlichen Berechnung im gleichnamigen Arbeitsblatt ohne &quot;_export&quot;</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L3151" drawlabel="true">
+<Input><Text-field style="Heading 2" layout="Heading 2">Autor<Font style="Normal">
+Moritz Schappler, moritz.schappler@imes.uni-hannover.de
+<Font encoding="UTF-8">(C) Institut f\303\274r Mechatronische Systeme, Universit\303\244t Hannover</Font></Font></Text-field>
+</Input>
+</Group>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Initialization</Text-field></Title>
+<Group labelreference="L3398" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">interface(warnlevel=0): # Unterdr\303\274cke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet wird.
+</Font>interface(warnlevel=3):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3208" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">interface(rtablesize=100):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3168" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(LinearAlgebra):
+with(codegen):
+with(CodeGeneration):
+<Font encoding="UTF-8">with(StringTools): # F\303\274r Zeitausgabe</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L3205" drawlabel="true">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Einstellungen f\303\274r Code-Export: Optimierungsgrad (2=h\303\266chster) und Aktivierung jedes Terms.</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L3191" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">#codegen_act := true: # noch nicht implementiert
+codegen_opt := 2:
+<Font encoding="UTF-8">codeexport_actcoord := false: # Generierung der Dynamik in Antriebskoordinaten nicht standardm\303\244\303\237ig (hoher Rechenaufwand)
+</Font>codeexport_grav := true: 
+codeexport_corvec := true:
+codeexport_inertia := true:
+codeexport_invdyn := true:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3418" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_MatlabExport&quot;: </Text-field>
+</Input>
+</Group>
+<Group labelreference="L3480" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Roboter-Definitionen laden</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3177" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env_par&quot;:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3138" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_definitions&quot;, leg_name):
+read &quot;../robot_codegen_definitions/robot_env_par&quot;:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3581" drawlabel="true">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Es ist in diesem Arbeitsblatt m\303\266glich, zwei verschiedene Regressoren zu generieren und zu exportieren: Basierend auf Minimalparametern und auf vollem Parametersatz (PV2).</Font></Text-field><Text-field style="Text" layout="Normal">Der Term &quot;regressor&quot; oder &quot;regressor_minpar&quot; ist jeweils in den Dateinamen enthalten.
+Der folgende Befehl muss immer auf &quot;regressor_minpar&quot; gesetzt sein, da diese Zeile durch das Skript robot_codegen_maple_preparation.sh ausgewertet und modifiziert wird.</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3582" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">regressor_modus := &quot;regressor_minpar&quot;: </Text-field>
+</Input>
+</Group>
+<Group labelreference="L3599" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Ausgabe der zu exportierenden Terme</Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3620" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion27" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">DynString := &quot;Term:&quot;:
+if codeexport_grav then
+  DynString := sprintf(&quot;%s g&quot;,DynString):
+end if:
+if codeexport_corvec then
+  DynString := sprintf(&quot;%s c&quot;,DynString):
+end if:
+if codeexport_inertia then
+  DynString := sprintf(&quot;%s M&quot;,DynString):
+end if:
+if codeexport_invdyn then
+  DynString := sprintf(&quot;%s tau&quot;,DynString):
+end if:
+printf(&quot;%s. Generiere Dynamik-Regressorform (%s) f\303\274r %s mit %s\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), DynString, robot_name, regressor_modus):
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L3621" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
+</Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1"><Font encoding="UTF-8">Kinematik laden (zur Einsch\303\244tzung der Komplexit\303\244t)</Font></Text-field></Title>
+<Group labelreference="L3603" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ergebnisse der Kinematik f\303\274r parallelen Roboter laden</Font></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3604" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion10" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">read &quot;../robot_codegen_definitions/robot_env_par&quot;:
+kinematicsfile := sprintf(&quot;../codeexport/%s/tmp/kinematics_%s_platform_maple.m&quot;, robot_name, base_method_name):
+if FileTools[Exists](kinematicsfile) then
+  read kinematicsfile:
+else
+  printf(&quot;%s. PKM-Kinematik konnte nicht geladen werden. Abbruch der Berechnung.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+  quit: # Funktioniert in GUI nicht richtig...
+  robot_name := &quot;&quot;: # ...Daher auch L\303\266schung des Roboternamens.
+end if:
+read &quot;../robot_codegen_definitions/robot_env_par&quot;: # Nochmal laden, um Standard-Einstellungen \303\274berschreiben zu k\303\266nnen.
+# Neu-Definition der von dieser Datei gelesenen Variablen, damit sie im Workspace erscheinen
+Jinv := Jinv:</EC-CodeEditor></CodeEditor-ExecGroup>
+</Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1"><Font encoding="UTF-8">Import der Maple-Ausdr\303\274cke</Font></Text-field></Title>
+<Group labelreference="L3601" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Werden zuvor in gleichnamigem Arbeitsblatt gespeichert</Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3612" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion25" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if codeexport_grav then
+  read sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_%s_maple.m&quot;,      robot_name, regressor_modus):
+  tau_x := tau_x:
+  if regressor_modus = &quot;regressor_minpar&quot; then
+    read sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_reg_mdp_maple.m&quot;,     robot_name):
+    tau_x_mdp := tau_x_mdp:
+  end if:
+end if:
+if codeexport_inertia then
+  read sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_MM_%s_maple.m&quot;,   robot_name, regressor_modus):
+  MMreg_x := MMreg_x:
+  if regressor_modus = &quot;regressor_minpar&quot; then
+    read sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_MMreg_mdp_maple.m&quot;,   robot_name):
+    MMreg_x_mdp := MMreg_x_mdp:
+  end if:
+end if:
+if codeexport_corvec then
+  read sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_tauC_%s_maple.m&quot;, robot_name, regressor_modus):
+  Creg_x := Creg_x:
+  if regressor_modus = &quot;regressor_minpar&quot; then
+    read sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_tauCreg_mdp_maple.m&quot;, robot_name):
+    Creg_x_mdp := Creg_x_mdp:
+  end if:
+end if:
+if codeexport_grav then
+  read sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_taug_%s_maple.m&quot;, robot_name, regressor_modus):
+  greg_x := greg_x:
+  if regressor_modus = &quot;regressor_minpar&quot; then
+    read sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_taugreg_mdp_maple.m&quot;, robot_name):
+    greg_x_mdp := greg_x_mdp:
+  end if:
+end if: 
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L3613" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
+</Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1"><Font encoding="UTF-8">Export der Matlab-Ausdr\303\274cke</Font></Text-field></Title>
+<Group labelreference="L3410" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">In Plattform-Koordinaten</Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3412" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion8" expanded="true" visible="true" pixel-width="500" pixel-height="344" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if codeexport_invdyn then
+  printf(&quot;%s. Beginne Code-Export Inverse Dynamik (Regressor) in Plattform-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+  MatlabExport(tau_x, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
+end if:
+if codeexport_inertia then
+  printf(&quot;%s. Beginne Code-Export Massenmatrix (Regressor) in Plattform-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+  MatlabExport(MMreg_x, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_MM_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
+end if:
+if codeexport_corvec then
+  printf(&quot;%s. Beginne Code-Export Coriolis-Vektor (Regressor) in Plattform-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+  MatlabExport(Creg_x, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_tauC_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
+end if:
+if codeexport_grav then
+  printf(&quot;%s. Beginne Code-Export Gravitations-Vektor (Regressor) in Plattform-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+  MatlabExport(greg_x, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_taug_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
+end if:</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L3409" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">In Antriebskoordinaten</Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3414" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion9" expanded="true" visible="true" pixel-width="500" pixel-height="364" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if RowDimension(Jinv) &lt; 5 and codeexport_actcoord then
+  if codeexport_invdyn then
+    printf(&quot;%s. Beginne Code-Export Inverse Dynamik (Regressor) in Antriebs-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+    MatlabExport(tau_qa, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_actcoord_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
+  end if:
+  if codeexport_inertia then
+    printf(&quot;%s. Beginne Code-Export Massenmatrix (Regressor) in Antriebs-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+    MatlabExport(MMreg_qa, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_actcoord_MM_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
+  end if:
+  if codeexport_corvec then
+    printf(&quot;%s. Beginne Code-Export Coriolis-Vektor (Regressor) in Antriebs-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+    MatlabExport(Creg_qa, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_actcoord_tauC_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
+  end if:
+  if codeexport_grav then
+    printf(&quot;%s. Beginne Code-Export Gravitations-Vektor (Regressor) in Antriebs-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+    MatlabExport(greg_qa, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_actcoord_taug_%s_matlab.m&quot;, robot_name, regressor_modus), codegen_opt):
+  end if:
+end if:</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L3261" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Plattform-Koordinaten, MPV eingesetzt</Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3616" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion26" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if regressor_modus = &quot;regressor_minpar&quot; then
+  if codeexport_invdyn then
+    printf(&quot;%s. Beginne Code-Export Inverse Dynamik (MDP eingesetzt) in Plattform-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+    MatlabExport(tau_x_mdp, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_reg_mdp_matlab.m&quot;, robot_name), codegen_opt):
+  end if:
+  if codeexport_inertia then
+    printf(&quot;%s. Beginne Code-Export Massenmatrix (MDP eingesetzt) in Plattform-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+    MatlabExport(MMreg_x_mdp, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_MMreg_mdp_matlab.m&quot;, robot_name), codegen_opt):
+  end if:
+  if codeexport_corvec then
+    printf(&quot;%s. Beginne Code-Export Coriolis-Vektor (MDP eingesetzt) in Plattform-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+    MatlabExport(Creg_x_mdp, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_tauCreg_mdp_matlab.m&quot;, robot_name), codegen_opt):
+  end if:
+  if codeexport_grav then
+    printf(&quot;%s. Beginne Code-Export Gravitations-Vektor (MDP eingesetzt) in Plattform-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+    MatlabExport(greg_x_mdp, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_taugreg_mdp_matlab.m&quot;, robot_name), codegen_opt):
+  end if:
+end if:</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L3544" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Antriebskoordinaten, MPV eingesetzt</Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L19" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion20" expanded="true" visible="true" pixel-width="1166" pixel-height="264" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">if RowDimension(Jinv) &lt; 5 and codeexport_actcoord and regressor_modus = &quot;regressor_minpar&quot; then
+  if codeexport_invdyn then
+    printf(&quot;%s. Beginne Code-Export Inverse Dynamik (MDP eingesetzt) in Antriebs-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+    MatlabExport(tau_qa_mdp, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_actcoord_reg_mdp_matlab.m&quot;, robot_name), codegen_opt):
+  end if:
+  if codeexport_inertia then
+    printf(&quot;%s. Beginne Code-Export Massenmatrix (MDP eingesetzt) in Antriebs-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+    MatlabExport(MMreg_qa_mdp, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_actcoord_MMreg_mdp_matlab.m&quot;, robot_name), codegen_opt):
+  end if:
+  if codeexport_corvec then
+    printf(&quot;%s. Beginne Code-Export Coriolis-Vektor (MDP eingesetzt) in Antriebs-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+    MatlabExport(Creg_qa_mdp, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_actcoord_tauCreg_mdp_matlab.m&quot;, robot_name), codegen_opt):
+  end if:
+  if codeexport_grav then
+    printf(&quot;%s. Beginne Code-Export Gravitations-Vektor (MDP eingesetzt) in Antriebs-Koordinaten.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;)):
+    MatlabExport(greg_qa_mdp, sprintf(&quot;../codeexport/%s/tmp/invdyn_para_actcoord_taugreg_mdp_matlab.m&quot;, robot_name), codegen_opt):
+  end if:
+end if:</EC-CodeEditor>
+<Input><Text-field prompt="&gt; " style="Maple Input" spaceabove="0" linebreak="space" rightmargin="0" linespacing="0.0" initial="0" firstindent="0" leftmargin="0" bulletsuffix="" alignment="left" bullet="none" spacebelow="0" pagebreak-before="false"></Text-field>
+</Input></CodeEditor-ExecGroup>
+</Section>
+</Worksheet>
