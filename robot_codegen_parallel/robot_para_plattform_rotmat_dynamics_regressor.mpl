@@ -4,23 +4,23 @@
 # Berechnung der inversen Dynamik der Roboter-Plattform in Regressorform
 # 
 # Dateiname:
-# robot -> Berechnung fÃ¼r allgemeinen Roboter
-# para -> Berechnung fÃ¼r eine parallelen Roboter
+# robot -> Berechnung für allgemeinen Roboter
+# para -> Berechnung für eine parallelen Roboter
 # rotmat -> Kinematik wird mit Rotationsmatrizen berechnet
 # dynamics -> Berechnung der Dynamik
 # regressor -> Regressorform (parameterlinear)
 # Autor
 # Tim Job (Studienarbeit bei Moritz Schappler), 2018-12
 # Moritz Schappler, moritz.schappler@imes.uni-hannover.de
-# (C) Institut fÃ¼r Mechatronische Systeme, UniversitÃ¤t Hannover
+# (C) Institut für Mechatronische Systeme, Universität Hannover
 # Sources
 # [GautierKhalil1990] Direct Calculation of Minimum Set of Inertial Parameters of Serial Robots
 # [KhalilDombre2002] Modeling, Identification and Control of Robots
 # [Ortmaier2014] Vorlesungsskript Robotik I
 # [Abdel2007] Modellierung, Identifikation und robuste Regelung von Robotern mit parallelkinematischen Strukturen
 # Initialization
-interface(warnlevel=0): # UnterdrÃ¼cke die folgende Warnung.
-restart: # Gibt eine Warnung, wenn Ã¼ber Terminal-Maple mit read gestartet wird.
+interface(warnlevel=0): # Unterdrücke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
 interface(warnlevel=3):
 with(LinearAlgebra):
 #with(ArrayTools):
@@ -28,7 +28,7 @@ with(codegen):
 with(CodeGeneration):
 with(StringTools):
 with(VectorCalculus):
-# Einstellungen fÃ¼r Code-Export: Optimierungsgrad (2=hÃ¶chster) und Aktivierung jedes Terms.
+# Einstellungen für Code-Export: Optimierungsgrad (2=höchster) und Aktivierung jedes Terms.
 codegen_opt := 2:
 codeexport_invdyn := false:
 codeexport_grav := false: 
@@ -53,11 +53,11 @@ read "../transformation/proc_trafo_mdh":
 read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
 read "../robot_codegen_definitions/robot_env_par":
-# Definitionen fÃ¼r parallelen Roboter laden
+# Definitionen für parallelen Roboter laden
 read sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
 r_P_sP_P := -r_P_sP:
 s_P_P_sP := s_P_sP:
-# Ergebnisse der Kinematik fÃ¼r parallen Roboter laden
+# Ergebnisse der Kinematik für parallen Roboter laden
 
 kinematicsfile := sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
 if FileTools[Exists](kinematicsfile) then
@@ -65,9 +65,9 @@ if FileTools[Exists](kinematicsfile) then
 else
   printf("%s. PKM-Kinematik konnte nicht geladen werden. Abbruch der Berechnung.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
   quit: # Funktioniert in GUI nicht richtig...
-  robot_name := "": # ...Daher auch LÃ¶schung des Roboternamens.
+  robot_name := "": # ...Daher auch Löschung des Roboternamens.
 end if:
-P_i := P_i: # nur diese Variable wird benÃ¶tigt. Alle anderen zur Ãœbersichtlichkeit lÃ¶schen. EnthÃ¤lt Informationen zu den Koppelpunkten.
+P_i := P_i: # nur diese Variable wird benötigt. Alle anderen zur Übersichtlichkeit löschen. Enthält Informationen zu den Koppelpunkten.
 unassign('pivotMat', 'pivotMatMas', 'Jinv', 'JB_i', 'JBD_i', 'JBinv_i', 'JBDinv_i', 'U_i', 'UD_i'):
 
 # Lade "robotics_repo_path"-File mit Link zum "imes-robotics-matlab"-Repo
@@ -114,7 +114,7 @@ dRPYjac_E_t := diff~(RPYjac_E_t,t):
 dRPYjac_0_t := diff~(RPYjac_0_t,t):
 dRPYjac_E_s := Copy(dRPYjac_E_t):
 dRPYjac_0_s := Copy(dRPYjac_0_t):
-# Substituiere die zeitabhÃ¤ngigen Koordinaten in der H-Matrix mit zeitunabhÃ¤ngigen Koordinaten 
+# Substituiere die zeitabhängigen Koordinaten in der H-Matrix mit zeitunabhängigen Koordinaten 
 for i to 3 do
   for j to 3 do
     for k from 4 to 6 do
@@ -136,7 +136,7 @@ JT_T := Transpose(JT):
 
 wD_E_0_E_s := dRPYjac_E_s.xED_s(4..6,1)+RPYjac_E_s.xEDD_s(4..6,1):
 wD_0_0_E_s := dRPYjac_0_s.xED_s(4..6,1)+RPYjac_0_s.xEDD_s(4..6,1):
-# Trigonometrische AusdrÃ¼cke zusammenfassen.
+# Trigonometrische Ausdrücke zusammenfassen.
 w_E_0_E_s := combine2(w_E_0_E_s):
 wD_E_0_E_s := combine2(wD_E_0_E_s):
 
@@ -174,13 +174,13 @@ for i to N_LEGS do
   tmp := <tmpSt_raute,M(NQJ_parallel+1,1)*P_i(1..3,i),M(NQJ_parallel+1,1)>:
   paramVecP_M := paramVecP_M + tmp:
 end do:
-# Trigonometrische AusdrÃ¼cke zusammenfassen.
+# Trigonometrische Ausdrücke zusammenfassen.
 wD_E_0_E_s_stern := combine2(wD_E_0_E_s_stern):
 
 A_E := <JT_T|JR_T>.<ZeroMatrix(3,6),vec2skew(wD_E_0_E_s)+Multiply(vec2skew(w_E_0_E_s),vec2skew(w_E_0_E_s)),a_E;
         wD_E_0_E_s_stern + Multiply(vec2skew(w_E_0_E_s),w_E_0_E_s_stern),-vec2skew(a_E),ZeroMatrix(3,1)>:
-# Term-Vereinfachungen vornehmen: Im planaren Fall kommt sinÂ²+cosÂ² vor.
-# Im rÃ¤umlichen Fall ist die Vereinfachung nachteilig. Dann wird der Term so gelassen.
+# Term-Vereinfachungen vornehmen: Im planaren Fall kommt sin²+cos² vor.
+# Im räumlichen Fall ist die Vereinfachung nachteilig. Dann wird der Term so gelassen.
 A_E := combine2(A_E):
 
 # Mass Matrix
@@ -202,7 +202,7 @@ for i to 6 do # Zeilenindex der Massenmatrix
     end do:
   end do:
 end do:
-# Term-Vereinfachungen vornehmen: Im planaren Fall kommt sinÂ²+cosÂ² vor:
+# Term-Vereinfachungen vornehmen: Im planaren Fall kommt sin²+cos² vor:
 MM_regmin := combine2(MM_regmin):
 
 # Coriolis Vector

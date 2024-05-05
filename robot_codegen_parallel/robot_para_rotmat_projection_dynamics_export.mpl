@@ -25,6 +25,8 @@ codeexport_corvec := true:
 codeexport_inertia := true:
 codeexport_invdyn := true:
 read "../helper/proc_MatlabExport":
+read "../robot_codegen_definitions/robot_env_par":
+read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
 # Kennung des Parametersatzes, für den die Dynamikfunktionen erstellt werden sollen. Muss im Repo und in der mpl-Datei auf 1 gelassen werden, da die folgende Zeile mit einem Skript verarbeitet wird.
 codegen_dynpar := 1:
 # Ergebnisse der zusätzlichen Definitionen für parallele Roboter laden
@@ -45,6 +47,7 @@ if codeexport_invdyn then
   DynString := sprintf("%s tau",DynString):
 end if:
 printf("%s. Generiere Dynamik-Terme (%s) für %s mit dynpar %d\n", FormatTime("%Y-%m-%d %H:%M:%S"), DynString, robot_name, codegen_dynpar):
+
 # Kinematik laden (zur Einschätzung der Komplexität)
 # Ergebnisse der Kinematik für parallelen Roboter laden
 read "../robot_codegen_definitions/robot_env_par":

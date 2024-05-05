@@ -5,7 +5,7 @@
 # Hier wird nur der Matlab-Export durchgeführt, getrennt von der eigentlichen Berechnung im gleichnamigen Arbeitsblatt ohne "_export"
 # Autor
 # Moritz Schappler, moritz.schappler@imes.uni-hannover.de
-# (C) Institut für Mechatronische Systeme, Universität Hannover
+# (C) Institut für Mechatronische Systeme, Leibniz Universität Hannover
 # Initialization
 interface(warnlevel=0): # Unterdrücke die folgende Warnung.
 restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
@@ -65,7 +65,7 @@ read "../robot_codegen_definitions/robot_env_par": # Nochmal laden, um Standard-
 Jinv := Jinv:
 # Import der Maple-Ausdrücke
 # Werden zuvor in gleichnamigem Arbeitsblatt gespeichert
-if codeexport_grav then
+if codeexport_invdyn then
   read sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_%s_maple.m",      robot_name, regressor_modus):
   tau_x := tau_x:
   if regressor_modus = "regressor_minpar" then
@@ -173,4 +173,5 @@ if RowDimension(Jinv) < 5 and codeexport_actcoord and regressor_modus = "regress
     MatlabExport(greg_qa_mdp, sprintf("../codeexport/%s/tmp/invdyn_para_actcoord_taugreg_mdp_matlab.m", robot_name), codegen_opt):
   end if:
 end if:
+
 

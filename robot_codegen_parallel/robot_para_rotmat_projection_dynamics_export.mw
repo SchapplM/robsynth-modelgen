@@ -136,6 +136,14 @@ codeexport_invdyn := true:</Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
 </Input>
 </Group>
+<Group labelreference="L3470" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../robot_codegen_definitions/robot_env_par&quot;:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3469" drawlabel="true">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_definitions&quot;, leg_name):</Text-field>
+</Input>
+</Group>
 <Group labelreference="L3156" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Kennung des Parametersatzes, f\303\274r den die Dynamikfunktionen erstellt werden sollen. Muss im Repo und in der mpl-Datei auf 1 gelassen werden, da die folgende Zeile mit einem Skript verarbeitet wird.</Font></Text-field>
 </Input>
