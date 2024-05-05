@@ -39,7 +39,8 @@ codegen_opt := 2:
 codeexport_invdyn := true:
 codeexport_actcoord := false: # Generierung der Dynamik in Antriebskoordinaten nicht standardmäßig (hoher Rechenaufwand)
 ;
-read "../helper/proc_MatlabExport": 
+read "../helper/proc_MatlabExport":
+read "../helper/proc_simplify2":
 # Roboter-Definitionen laden
 read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
@@ -48,7 +49,12 @@ read "../robot_codegen_definitions/robot_env_par":
 # Der Term "regressor" oder "regressor_minpar" ist jeweils in den Dateinamen enthalten.
 # Der folgende Befehl muss immer auf "regressor_minpar" gesetzt sein, da diese Zeile durch das Skript robot_codegen_maple_preparation.sh ausgewertet und modifiziert wird.
 regressor_modus := "regressor_minpar": 
-
+# Term-Vereinfachungen konfigurieren
+if not assigned(simplify_options) or simplify_options(10)=-1 then # Standard-Einstellungen:
+  use_simplify := 1: # standardmäßig simplify-Befehle anwenden
+else # Benutzer-Einstellungen:
+  use_simplify := simplify_options(10): # zehnter Eintrag ist für Dynamik-Regressor
+end if:
 # Ergebnisse der Plattform-Dynamik in Regressorform laden (dort noch keine Minimaldarstellung möglich, da nur Plattform-Starrkörper)
 
 dynamicsfile := sprintf("../codeexport/%s/tmp/floatb_%s_platform_dynamic_reg_maple.m", robot_name, base_method_name):
@@ -102,6 +108,7 @@ read("../robotics_repo_path"):
 # Lade die Funktionen aus dem "imes-robotics-matlab"-Repo
 read(sprintf("%s/transformation/maple/proc_eul%s2r", robotics_repo_path, angleConvLeg)):
 read(sprintf("%s/transformation/maple/proc_eul%sjac", robotics_repo_path, "zyx")):
+
 
 # Berechne Dynamik-Matrizen für alle Beine
 # Alle Basisgeschwindigkeiten und -winkel aus Berechnung der seriellen Kette zu null setzen.
@@ -221,6 +228,7 @@ for i to NQJ_parallel do
   end do:
 end do:
 
+
 for i to N_LEGS do
   tau_regressor_s||i := Copy(tauReg):
   tauMM_regressor_s||i := Copy(tauMMReg):
@@ -235,28 +243,27 @@ for k from 1 by 1 to N_LEGS do
   for i to NQJ_parallel do
     for j to COLUMNreg do
       for p from NQJ_parallel+1 to NQJ do
-        tau_regressor_s||k(i,j) := subs({qJDD||p||s=0,qJD||p||s=0,qJ||p||s=0},tau_regressor_s||k(i,j)):
+        tau_regressor_s||k(i,j)   := subs({qJDD||p||s=0,qJD||p||s=0,qJ||p||s=0},tau_regressor_s||k(i,j)):
         tauMM_regressor_s||k(i,j) := subs({qJDD||p||s=0,qJD||p||s=0,qJ||p||s=0},tauMM_regressor_s||k(i,j)):
-        tauC_regressor_s||k(i,j) := subs({qJDD||p||s=0,qJD||p||s=0,qJ||p||s=0},tauC_regressor_s||k(i,j)):
-        taug_regressor_s||k(i,j) := subs({qJDD||p||s=0,qJD||p||s=0,qJ||p||s=0},taug_regressor_s||k(i,j)):
+        tauC_regressor_s||k(i,j)  := subs({qJDD||p||s=0,qJD||p||s=0,qJ||p||s=0},tauC_regressor_s||k(i,j)):
+        taug_regressor_s||k(i,j)  := subs({qJDD||p||s=0,qJD||p||s=0,qJ||p||s=0},taug_regressor_s||k(i,j)):
       end do:
       for l to 3 do
-        tau_regressor_s||k(i,j) := subs({frame_A_i(l,1)=frame_A_i(l,k)},tau_regressor_s||k(i,j)):
+        tau_regressor_s||k(i,j)   := subs({frame_A_i(l,1)=frame_A_i(l,k)},tau_regressor_s||k(i,j)):
         tauMM_regressor_s||k(i,j) := subs({frame_A_i(l,1)=frame_A_i(l,k)},tauMM_regressor_s||k(i,j)):
-        tauC_regressor_s||k(i,j) := subs({frame_A_i(l,1)=frame_A_i(l,k)},tauC_regressor_s||k(i,j)):
-        taug_regressor_s||k(i,j) := subs({frame_A_i(l,1)=frame_A_i(l,k)},taug_regressor_s||k(i,j)):
+        tauC_regressor_s||k(i,j)  := subs({frame_A_i(l,1)=frame_A_i(l,k)},tauC_regressor_s||k(i,j)):
+        taug_regressor_s||k(i,j)  := subs({frame_A_i(l,1)=frame_A_i(l,k)},taug_regressor_s||k(i,j)):
       end do:
       for m to NQJ_parallel do
         n := (m + (k-1)*NQJ_parallel):
-        tau_regressor_s||k(i,j) := subs({qJDD||m||s=qJDD||n||s,qJD||m||s=qJD||n||s,qJ||m||s=qJ||n||s},tau_regressor_s||k(i,j)):
+        tau_regressor_s||k(i,j)   := subs({qJDD||m||s=qJDD||n||s,qJD||m||s=qJD||n||s,qJ||m||s=qJ||n||s},tau_regressor_s||k(i,j)):
         tauMM_regressor_s||k(i,j) := subs({qJDD||m||s=qJDD||n||s,qJD||m||s=qJD||n||s,qJ||m||s=qJ||n||s},tauMM_regressor_s||k(i,j)):
-        tauC_regressor_s||k(i,j) := subs({qJDD||m||s=qJDD||n||s,qJD||m||s=qJD||n||s,qJ||m||s=qJ||n||s},tauC_regressor_s||k(i,j)):
-        taug_regressor_s||k(i,j) := subs({qJDD||m||s=qJDD||n||s,qJD||m||s=qJD||n||s,qJ||m||s=qJ||n||s},taug_regressor_s||k(i,j)):
+        tauC_regressor_s||k(i,j)  := subs({qJDD||m||s=qJDD||n||s,qJD||m||s=qJD||n||s,qJ||m||s=qJ||n||s},tauC_regressor_s||k(i,j)):
+        taug_regressor_s||k(i,j)  := subs({qJDD||m||s=qJDD||n||s,qJD||m||s=qJD||n||s,qJ||m||s=qJ||n||s},taug_regressor_s||k(i,j)):
       end do:
     end do:
   end do:
 end do:
-
 
 printf("%s. Dynamik-Matrizen mit regressor_modus=%s bestimmt. Beginne Projektion/Addition.\n", FormatTime("%Y-%m-%d %H:%M:%S"), regressor_modus):
 # Berechnung, Projektion und Addition der Dynamikgleichungen
@@ -265,10 +272,22 @@ A_E := A_E:
 U_i := U_i:
 JBinv_i := JBinv_i:
 for i to N_LEGS do
-   A_||i:= simplify(Transpose(U_i(..,..,i)).Transpose(JBinv_i(..,..,i))).simplify(tau_regressor_s||i):
-   Mreg_||i:= simplify(Transpose(U_i(..,..,i)).Transpose(JBinv_i(..,..,i))).simplify(tauMM_regressor_s||i):
-   Creg_||i:= simplify(Transpose(U_i(..,..,i)).Transpose(JBinv_i(..,..,i))).simplify(tauC_regressor_s||i):
-   greg_||i:= simplify(Transpose(U_i(..,..,i)).Transpose(JBinv_i(..,..,i))).simplify(taug_regressor_s||i):
+   PreMat :=  Transpose(U_i(..,..,i)).Transpose(JBinv_i(..,..,i)):
+   if use_simplify>=1 then
+      tmp_t1:=time():
+      tmp_l1 := length(PreMat):
+      printf("%s. Beginne Vereinfachung: Projektionsmatrix Beinkette %d. Länge: %d.\n", \
+        FormatTime("%Y-%m-%d %H:%M:%S"), i, tmp_l1):
+      PreMat := simplify2(PreMat):
+      tmp_t2:=time():
+      tmp_l2 := length(PreMat):
+      printf("%s. Projektionsmatrix Beinkette %d vereinfacht. Länge: %d->%d. Rechenzeit %1.1fs.\n", \
+        FormatTime("%Y-%m-%d %H:%M:%S"), i, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+   end if:
+   A_||i   := PreMat . tau_regressor_s||i:
+   Mreg_||i:= PreMat . tauMM_regressor_s||i:
+   Creg_||i:= PreMat . tauC_regressor_s||i:
+   greg_||i:= PreMat . taug_regressor_s||i:
 end do:
 # Aufsummieren aller Kräfte, projiziert auf EE-Plattform
 Tmp := 0:
@@ -306,7 +325,7 @@ if regressor_modus = "regressor_minpar" then
 else
   NotNullEntries := RowDimension(paramMin)-(NQJ-NQJ_parallel)*10:
 end if:
-printf("Dimension des Regressors für regressor_modus=%s bestimmt: %d", regressor_modus, NotNullEntries):
+printf("%s. Dimension des Regressors für regressor_modus=%s bestimmt: %d\n", FormatTime("%Y-%m-%d %H:%M:%S"), regressor_modus, NotNullEntries):
 paramMinRed := Matrix(NotNullEntries,1):
 ARed := Matrix(RowDimension(A),NotNullEntries):
 MregRed := Matrix(RowDimension(A),NotNullEntries):
@@ -331,7 +350,7 @@ for i to RowDimension(paramMin) do
 		j := j + 1:
   end if:
 end do:
-printf("Dynamik-Terme reduziert. Zeilenzähler j=%d", j-1):
+printf("Dynamik-Terme reduziert. Zeilenzähler j=%d\n", j-1):
 printf("%s. Beginne Ersetzung der Geschwindigkeiten und Bestimmung der Plattform-Terme für regressor_modus=%s.\n", FormatTime("%Y-%m-%d %H:%M:%S"), regressor_modus):
 # Replace Joint Velocities
 # Substituiere die Gelenkgeschwindigkeiten über H-, Ui- und JBi-Matrix mit EE-Geschwindikeiten
@@ -341,9 +360,31 @@ Tmp2 := 0:
 for i to N_LEGS do
   Tmp := Multiply(H,xED_s):
   Tmp := Multiply(U_i(..,..,i),Tmp):
-  z||i := simplify(Multiply(JBinv_i(..,..,i),Tmp)):
+  z||i := Multiply(JBinv_i(..,..,i),Tmp):
+  if use_simplify>=1 then
+    tmp_t1:=time():
+    tmp_l1 := length(z||i):
+    printf("%s. Beginne Vereinfachung: Projektionsmatrix z Beinkette %d. Länge: %d.\n", \
+      FormatTime("%Y-%m-%d %H:%M:%S"), i, tmp_l1):
+    z||i := simplify2(z||i):
+    tmp_t2:=time():
+    tmp_l2 := length(z||i):
+    printf("%s. Projektionsmatrix z Beinkette %d vereinfacht. Länge: %d->%d. Rechenzeit %1.1fs.\n", \
+      FormatTime("%Y-%m-%d %H:%M:%S"), i, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+  end if:
   Tmp2 := JBinv_i(..,..,i).(Multiply(U_i(..,..,i),H).xEDD_s+Multiply(U_i(..,..,i),dH).xED_s+Multiply(UD_i(..,..,i),H).xED_s):
-  A||i := simplify(Multiply(JBinv_i(..,..,i),JBD_i(..,..,i))):
+  A||i := Multiply(JBinv_i(..,..,i),JBD_i(..,..,i)):
+  if use_simplify>=1 then
+    tmp_t1:=time():
+    tmp_l1 := length(A||i):
+    printf("%s. Beginne Vereinfachung: Projektionsmatrix A Beinkette %d. Länge: %d.\n", \
+      FormatTime("%Y-%m-%d %H:%M:%S"), i, tmp_l1):
+    z||i := simplify2(A||i):
+    tmp_t2:=time():
+    tmp_l2 := length(A||i):
+    printf("%s. Projektionsmatrix A Beinkette %d vereinfacht. Länge: %d->%d. Rechenzeit %1.1fs.\n", \
+      FormatTime("%Y-%m-%d %H:%M:%S"), i, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+  end if:
   B||i := Multiply(A||i,Matrix(qJD_i_s(..,i))):
   C||i := Tmp2 - B||i:
 end do:
@@ -393,10 +434,10 @@ end if:
 xEDD_s_dummy := Matrix(NX,1):
 zaehler := 1:
 for i to 6 do
-	if not(xEDD_s(i) = 0) then
-		xEDD_s_dummy(zaehler) := xEDD_s(i):
-		zaehler := zaehler + 1:
-	end if:
+  if not(xEDD_s(i) = 0) then
+    xEDD_s_dummy(zaehler) := xEDD_s(i):
+    zaehler := zaehler + 1:
+  end if:
 end do:
 # Erzeugung der Massenmatrizen
 MMregRed := Matrix(NX*NX, RowDimension(paramMinRed)):
@@ -421,21 +462,25 @@ Creg_x := CregRed:
 greg_x := gregRed:
 # PKM-Dynamik-Funktionen mit MPV bereits eingesetzt
 # Erzeuge MPV-Vektor
-nMDP := RowDimension(paramMinRed):
-PV := Matrix(nMDP,1):
-for i from 1 to nMDP do
-  PV(i,1) := parse(sprintf("MDP%d%", i)):
-end do:
+if regressor_modus = "regressor_minpar" then
+  nMDP := RowDimension(paramMinRed):
+  PV := Matrix(nMDP,1):
+  for i from 1 to nMDP do
+    PV(i,1) := parse(sprintf("MDP%d%", i)):
+  end do:
+end if:
 
-tau_x_mdp := tau_x.PV:
-MMreg_x_mdp := MMreg_x.PV:
-Creg_x_mdp := Creg_x.PV:
-greg_x_mdp := greg_x.PV:
+if regressor_modus = "regressor_minpar" then
+  tau_x_mdp := tau_x.PV:
+  MMreg_x_mdp := MMreg_x.PV:
+  Creg_x_mdp := Creg_x.PV:
+  greg_x_mdp := greg_x.PV:
 
-tau_qa_mdp := tau_qa.PV:
-MMreg_qa_mdp := MMreg_qa.PV:
-Creg_qa_mdp := Creg_qa.PV:
-greg_qa_mdp := greg_qa.PV:
+  tau_qa_mdp := tau_qa.PV:
+  MMreg_qa_mdp := MMreg_qa.PV:
+  Creg_qa_mdp := Creg_qa.PV:
+  greg_qa_mdp := greg_qa.PV:
+end if:
 
 # Maple-Export
 # Zum Export als Matlab-Funktion über ein anderes Arbeitsblatt

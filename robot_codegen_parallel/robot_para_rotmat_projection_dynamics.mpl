@@ -37,6 +37,12 @@ read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
 # Kennung des Parametersatzes, für den die Dynamikfunktionen erstellt werden sollen. Muss im Repo und in der mpl-Datei auf 1 gelassen werden, da die folgende Zeile mit einem Skript verarbeitet wird.
 codegen_dynpar := 1:
+# Term-Vereinfachungen konfigurieren
+if not assigned(simplify_options) or simplify_options(9)=-1 then # Standard-Einstellungen:
+  use_simplify := 1: # standardmäßig simplify-Befehle anwenden
+else # Benutzer-Einstellungen:
+  use_simplify := simplify_options(9): # neunter Eintrag ist für Dynamik-Regressor
+end if:
 # Ergebnisse der zusätzlichen Definitionen für parallele Roboter laden
 read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
@@ -57,6 +63,27 @@ gE:=gE:
 tauE:=tauE:
 H:=H:
 dH:=dH:
+if use_simplify >= 1 then
+  tmp_t1:=time():
+  tmp_l1 := length(MME):
+  printf("%s. Beginne Vereinfachung: Plattform-Massenmatrix. Länge: %d.\n", \
+    FormatTime("%Y-%m-%d %H:%M:%S"), tmp_l1):
+  MME := simplify2(MME):
+  tmp_t2:=time():
+  tmp_l2 := length(MME):
+  printf("%s. Plattform-Massenmatrix vereinfacht. Länge: %d->%d. Rechenzeit %1.1fs.\n", \
+    FormatTime("%Y-%m-%d %H:%M:%S"), tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+    
+  tmp_t1:=time():
+  tmp_l1 := length(gE):
+  printf("%s. Beginne Vereinfachung: Plattform-Gravitationsterm. Länge: %d.\n", \
+    FormatTime("%Y-%m-%d %H:%M:%S"), tmp_l1):
+  gE := simplify2(gE):
+  tmp_t2:=time():
+  tmp_l2 := length(gE):
+  printf("%s. Plattform-Gravitationsterm vereinfacht. Länge: %d->%d. Rechenzeit %1.1fs.\n", \
+    FormatTime("%Y-%m-%d %H:%M:%S"), tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+end if:
 
 # Ergebnisse der Kinematik für parallelen Roboter laden
 read "../robot_codegen_definitions/robot_env_par":
@@ -132,6 +159,17 @@ else
   robot_name := "": # ...Daher auch Löschung des Roboternamens.
 end if:
 G := simplify2(Matrix(taug_s(7..NQ,1))):
+if use_simplify >= 1 then
+  tmp_t1:=time():
+  tmp_l1 := length(G):
+  printf("%s. Beginne Vereinfachung: Beinketten-Gravitationsterme. Länge: %d.\n", \
+    FormatTime("%Y-%m-%d %H:%M:%S"), tmp_l1):
+  G := simplify2(G):
+  tmp_t2:=time():
+  tmp_l2 := length(G):
+  printf("%s. Beinketten-Gravitationsterme vereinfacht. Länge: %d->%d. Rechenzeit %1.1fs.\n", \
+    FormatTime("%Y-%m-%d %H:%M:%S"), tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+end if:
 unassign('g1','g2','g3'):
 g := <g1;g2;g3>:
 Rmat := Transpose(parse(sprintf("eul%s2r",angleConvLeg))(frame_A_i(1..3,1))):
@@ -150,7 +188,17 @@ else
   robot_name := "": # ...Daher auch Löschung des Roboternamens.
 end if:
 Cvec := simplify2(Matrix(tauCC_s(7..NQ,1))):
-Cvec := Cvec:
+if use_simplify >= 1 then
+  tmp_t1:=time():
+  tmp_l1 := length(Cvec):
+  printf("%s. Beginne Vereinfachung: Beinketten-Coriolisterme. Länge: %d.\n", \
+    FormatTime("%Y-%m-%d %H:%M:%S"), tmp_l1):
+  Cvec := simplify2(Cvec):
+  tmp_t2:=time():
+  tmp_l2 := length(Cvec):
+  printf("%s. Beinketten-Coriolisterme vereinfacht. Länge: %d->%d. Rechenzeit %1.1fs.\n", \
+    FormatTime("%Y-%m-%d %H:%M:%S"), tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+end if:
 
 # Ergebnisse M-Matrix der Beinkette laden
 dynamicsfile_leg := sprintf("../codeexport/%s/tmp/inertia_par%d_maple.m", leg_name, codegen_dynpar):
@@ -161,14 +209,20 @@ else
   quit: # Funktioniert in GUI nicht richtig...
   robot_name := "": # ...Daher auch Löschung des Roboternamens.
 end if:
-MM := simplify(MM_s(7..NQ,7..NQ)):
-MM := simplify(MM):
-MME := simplify(MME):
-# Ausdruck für Gravitationsterme der Plattform nochmal vereinfachen.
-gE := simplify2(gE):
-# Ergebnisse der Kinematik für parallen Roboter laden (wurde oben schon gemacht.
-#read sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
+MM := MM_s(7..NQ,7..NQ):
+if use_simplify >= 1 then
+  tmp_t1:=time():
+  tmp_l1 := length(MM):
+  printf("%s. Beginne Vereinfachung: Beinketten-Massenmatrix. Länge: %d.\n", \
+    FormatTime("%Y-%m-%d %H:%M:%S"), tmp_l1):
+  MM := simplify2(MM):
+  tmp_t2:=time():
+  tmp_l2 := length(MM):
+  printf("%s. Beinketten-Massenmatrix vereinfacht. Länge: %d->%d. Rechenzeit %1.1fs.\n", \
+    FormatTime("%Y-%m-%d %H:%M:%S"), tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+end if:
 printf("%s. Alle Daten geladen. Generiere Dynamik für PKM %s mit Parametersatz %d\n", FormatTime("%Y-%m-%d %H:%M:%S"), robot_name, codegen_dynpar, base_method_name):
+
 # Berechne Dynamik-Matrizen für alle Beine
 # Dupliziere alle berechneten Matrizen. i steht für den Index des jeweiligen Beines
 for i to N_LEGS do
@@ -208,7 +262,18 @@ end do:
 for i to N_LEGS do
   Jtmp := Multiply(Transpose(U_i(..,..,i)),Transpose(JBinv_i(..,..,i))):
   qDtmp := Multiply(JBinv_i(..,..,i),U_i(..,..,i).H.xED_s):
-  A||i := simplify(Multiply(JBinv_i(..,..,i),JBD_i(..,..,i))):
+  A||i := Multiply(JBinv_i(..,..,i),JBD_i(..,..,i)):
+  if use_simplify >= 1 then
+    tmp_t1:=time():
+    tmp_l1 := length(A||i):
+    printf("%s. Beginne Vereinfachung: Beinketten-Projektionsmatrix A%d. Länge: %d.\n", \
+      FormatTime("%Y-%m-%d %H:%M:%S"), i, tmp_l1):
+    A||i := simplify2(A||i):
+    tmp_t2:=time():
+    tmp_l2 := length(A||i):
+    printf("%s. Beinketten-Projektionsmatrix A%d vereinfacht. Länge: %d->%d. Rechenzeit %1.1fs.\n", \
+      FormatTime("%Y-%m-%d %H:%M:%S"), i, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+  end if:
   B||i := Multiply(-MM||i,Multiply(A||i,qDtmp)):
 
   # [Job2018_S759], Term in der Summe in Gl. (3.50)
@@ -267,9 +332,9 @@ end do:
 for i to 6 do
   for j to N_LEGS do
     for l to NQJ_parallel do
-      tauGes(i,1) := subs({qJD_i_s(l,j)=z||j(l)},tauGes(i,1)):
+      tauGes(i,1)  := subs({qJD_i_s(l,j)=z||j(l)},tauGes(i,1)):
       cvecGes(i,1) := subs({qJD_i_s(l,j)=z||j(l)},cvecGes(i,1)):
-      gGes(i,1) := subs({qJD_i_s(l,j)=z||j(l)},gGes(i,1)):
+      gGes(i,1)    := subs({qJD_i_s(l,j)=z||j(l)},gGes(i,1)):
       for k to 6 do
         MMGes(i,k) := subs({qJD_i_s(l,j)=z||j(l)},MMGes(i,k)):
       end do:
@@ -292,11 +357,11 @@ end do:
 #  end do:
 #end do:
 # Dynamik-Terme in Plattform-Koordinaten
-tau_x := pivotMat.tauGes:
-MMGes_x := pivotMat.MMGes.Transpose(pivotMatMas):
+tau_x     := pivotMat.tauGes:
+MMGes_x   := pivotMat.MMGes.Transpose(pivotMatMas):
 cvecGes_x := pivotMat.cvecGes:
-gGes_x := pivotMat.gGes:
-# Maple-Export (zur eventuellen späteren Verarbeitung in Maple)
+gGes_x    := pivotMat.gGes:
+# Maple-Export (zum späteren Code-Export)
 save tau_x,     sprintf("../codeexport/%s/tmp/invdyn_para_plfcoord_par%d_maple.m",      robot_name, codegen_dynpar):
 save MMGes_x,   sprintf("../codeexport/%s/tmp/inertia_para_plfcoord_par%d_maple.m",     robot_name, codegen_dynpar):
 save cvecGes_x, sprintf("../codeexport/%s/tmp/coriolisvec_para_plfcoord_par%d_maple.m", robot_name, codegen_dynpar):

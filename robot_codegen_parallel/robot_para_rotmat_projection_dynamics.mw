@@ -159,6 +159,14 @@ read &quot;../helper/proc_simplify2&quot;:</Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_dynpar := 1:</Text-field>
 </Input>
 </Group>
+<Group labelreference="L3436" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Term-Vereinfachungen konfigurieren</Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3439" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion14" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if not assigned(simplify_options) or simplify_options(9)=-1 then # Standard-Einstellungen:
+  use_simplify := 1: # standardm\303\244\303\237ig simplify-Befehle anwenden
+else # Benutzer-Einstellungen:
+  use_simplify := simplify_options(9): # neunter Eintrag ist f\303\274r Dynamik-Regressor
+end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L3309" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ergebnisse der zus\303\244tzlichen Definitionen f\303\274r parallele Roboter laden</Font></Text-field>
 </Input>
@@ -187,7 +195,27 @@ gE:=gE:
 tauE:=tauE:
 H:=H:
 dH:=dH:
-</EC-CodeEditor></CodeEditor-ExecGroup>
+if use_simplify &gt;= 1 then
+  tmp_t1:=time():
+  tmp_l1 := length(MME):
+  printf(&quot;%s. Beginne Vereinfachung: Plattform-Massenmatrix. L\303\244nge: %d.\134n&quot;, \134
+    FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), tmp_l1):
+  MME := simplify2(MME):
+  tmp_t2:=time():
+  tmp_l2 := length(MME):
+  printf(&quot;%s. Plattform-Massenmatrix vereinfacht. L\303\244nge: %d-&gt;%d. Rechenzeit %1.1fs.\134n&quot;, \134
+    FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+    
+  tmp_t1:=time():
+  tmp_l1 := length(gE):
+  printf(&quot;%s. Beginne Vereinfachung: Plattform-Gravitationsterm. L\303\244nge: %d.\134n&quot;, \134
+    FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), tmp_l1):
+  gE := simplify2(gE):
+  tmp_t2:=time():
+  tmp_l2 := length(gE):
+  printf(&quot;%s. Plattform-Gravitationsterm vereinfacht. L\303\244nge: %d-&gt;%d. Rechenzeit %1.1fs.\134n&quot;, \134
+    FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L3421" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
@@ -301,6 +329,17 @@ else
   robot_name := &quot;&quot;: # ...Daher auch L\303\266schung des Roboternamens.
 end if:
 G := simplify2(Matrix(taug_s(7..NQ,1))):
+if use_simplify &gt;= 1 then
+  tmp_t1:=time():
+  tmp_l1 := length(G):
+  printf(&quot;%s. Beginne Vereinfachung: Beinketten-Gravitationsterme. L\303\244nge: %d.\134n&quot;, \134
+    FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), tmp_l1):
+  G := simplify2(G):
+  tmp_t2:=time():
+  tmp_l2 := length(G):
+  printf(&quot;%s. Beinketten-Gravitationsterme vereinfacht. L\303\244nge: %d-&gt;%d. Rechenzeit %1.1fs.\134n&quot;, \134
+    FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+end if:
 unassign('g1','g2','g3'):
 g := &lt;g1;g2;g3&gt;:
 Rmat := Transpose(parse(sprintf(&quot;eul%s2r&quot;,angleConvLeg))(frame_A_i(1..3,1))):
@@ -325,7 +364,17 @@ else
   robot_name := &quot;&quot;: # ...Daher auch L\303\266schung des Roboternamens.
 end if:
 Cvec := simplify2(Matrix(tauCC_s(7..NQ,1))):
-Cvec := Cvec:
+if use_simplify &gt;= 1 then
+  tmp_t1:=time():
+  tmp_l1 := length(Cvec):
+  printf(&quot;%s. Beginne Vereinfachung: Beinketten-Coriolisterme. L\303\244nge: %d.\134n&quot;, \134
+    FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), tmp_l1):
+  Cvec := simplify2(Cvec):
+  tmp_t2:=time():
+  tmp_l2 := length(Cvec):
+  printf(&quot;%s. Beinketten-Coriolisterme vereinfacht. L\303\244nge: %d-&gt;%d. Rechenzeit %1.1fs.\134n&quot;, \134
+    FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+end if:
 </EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L3430" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
@@ -342,28 +391,25 @@ else
   quit: # Funktioniert in GUI nicht richtig...
   robot_name := &quot;&quot;: # ...Daher auch L\303\266schung des Roboternamens.
 end if:
-MM := simplify(MM_s(7..NQ,7..NQ)):
-MM := simplify(MM):
-MME := simplify(MME):
+MM := MM_s(7..NQ,7..NQ):
+if use_simplify &gt;= 1 then
+  tmp_t1:=time():
+  tmp_l1 := length(MM):
+  printf(&quot;%s. Beginne Vereinfachung: Beinketten-Massenmatrix. L\303\244nge: %d.\134n&quot;, \134
+    FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), tmp_l1):
+  MM := simplify2(MM):
+  tmp_t2:=time():
+  tmp_l2 := length(MM):
+  printf(&quot;%s. Beinketten-Massenmatrix vereinfacht. L\303\244nge: %d-&gt;%d. Rechenzeit %1.1fs.\134n&quot;, \134
+    FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+end if:
 </EC-CodeEditor></CodeEditor-ExecGroup>
-<Group labelreference="L3435" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ausdruck f\303\274r Gravitationsterme der Plattform nochmal vereinfachen.</Font></Text-field>
-</Input>
-</Group>
-<Group hide-input="false" labelreference="L3263" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">gE := simplify2(gE):</Text-field>
-</Input>
-</Group>
-<Group labelreference="L3260" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ergebnisse der Kinematik f\303\274r parallen Roboter laden (wurde oben schon gemacht.</Font></Text-field>
-</Input>
-</Group>
-<Group labelreference="L3259" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">#read sprintf(&quot;../codeexport/%s/tmp/kinematics_%s_platform_maple.m&quot;, robot_name, base_method_name):</Text-field>
-</Input>
-</Group>
 <Group hide-input="false" labelreference="L3165" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;%s. Alle Daten geladen. Generiere Dynamik f\303\274r PKM %s mit Parametersatz %d\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), </Font>robot_name, codegen_dynpar, base_method_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3440" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 </Section>
@@ -428,7 +474,18 @@ end do:
 </Group><CodeEditor-ExecGroup view="presentation" labelreference="L3380" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion3" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">for i to N_LEGS do
   Jtmp := Multiply(Transpose(U_i(..,..,i)),Transpose(JBinv_i(..,..,i))):
   qDtmp := Multiply(JBinv_i(..,..,i),U_i(..,..,i).H.xED_s):
-  A||i := simplify(Multiply(JBinv_i(..,..,i),JBD_i(..,..,i))):
+  A||i := Multiply(JBinv_i(..,..,i),JBD_i(..,..,i)):
+  if use_simplify &gt;= 1 then
+    tmp_t1:=time():
+    tmp_l1 := length(A||i):
+    printf(&quot;%s. Beginne Vereinfachung: Beinketten-Projektionsmatrix A%d. L\303\244nge: %d.\134n&quot;, \134
+      FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), i, tmp_l1):
+    A||i := simplify2(A||i):
+    tmp_t2:=time():
+    tmp_l2 := length(A||i):
+    printf(&quot;%s. Beinketten-Projektionsmatrix A%d vereinfacht. L\303\244nge: %d-&gt;%d. Rechenzeit %1.1fs.\134n&quot;, \134
+      FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), i, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+  end if:
   B||i := Multiply(-MM||i,Multiply(A||i,qDtmp)):
 
   # [Job2018_S759], Term in der Summe in Gl. (3.50)
@@ -567,9 +624,9 @@ end do:
 </Group><CodeEditor-ExecGroup view="presentation" labelreference="L3388" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion5" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">for i to 6 do
   for j to N_LEGS do
     for l to NQJ_parallel do
-      tauGes(i,1) := subs({qJD_i_s(l,j)=z||j(l)},tauGes(i,1)):
+      tauGes(i,1)  := subs({qJD_i_s(l,j)=z||j(l)},tauGes(i,1)):
       cvecGes(i,1) := subs({qJD_i_s(l,j)=z||j(l)},cvecGes(i,1)):
-      gGes(i,1) := subs({qJD_i_s(l,j)=z||j(l)},gGes(i,1)):
+      gGes(i,1)    := subs({qJD_i_s(l,j)=z||j(l)},gGes(i,1)):
       for k to 6 do
         MMGes(i,k) := subs({qJD_i_s(l,j)=z||j(l)},MMGes(i,k)):
       end do:
@@ -605,11 +662,11 @@ end do:
 <Group labelreference="L3367" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">Dynamik-Terme in Plattform-Koordinaten</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3384" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion4" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">tau_x := pivotMat.tauGes:
-MMGes_x := pivotMat.MMGes.Transpose(pivotMatMas):
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3384" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion4" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">tau_x     := pivotMat.tauGes:
+MMGes_x   := pivotMat.MMGes.Transpose(pivotMatMas):
 cvecGes_x := pivotMat.cvecGes:
-gGes_x := pivotMat.gGes:
-# Maple-Export (zur eventuellen sp\303\244teren Verarbeitung in Maple)
+gGes_x    := pivotMat.gGes:
+# Maple-Export (zum sp\303\244teren Code-Export)
 save tau_x,     sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_par%d_maple.m&quot;,      robot_name, codegen_dynpar):
 save MMGes_x,   sprintf(&quot;../codeexport/%s/tmp/inertia_para_plfcoord_par%d_maple.m&quot;,     robot_name, codegen_dynpar):
 save cvecGes_x, sprintf(&quot;../codeexport/%s/tmp/coriolisvec_para_plfcoord_par%d_maple.m&quot;, robot_name, codegen_dynpar):

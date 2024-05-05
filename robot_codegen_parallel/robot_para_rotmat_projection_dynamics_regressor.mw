@@ -146,7 +146,8 @@ codeexport_invdyn := true:
 </Input>
 </Group>
 <Group labelreference="L3418" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_MatlabExport&quot;: </Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_MatlabExport&quot;:
+read &quot;../helper/proc_simplify2&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3480" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -172,9 +173,13 @@ Der folgende Befehl muss immer auf &quot;regressor_minpar&quot; gesetzt sein, da
 </Input>
 </Group>
 <Group labelreference="L3580" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+<Input><Text-field style="Text" layout="Normal">Term-Vereinfachungen konfigurieren</Text-field>
 </Input>
-</Group>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3612" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion32" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if not assigned(simplify_options) or simplify_options(10)=-1 then # Standard-Einstellungen:
+  use_simplify := 1: # standardm\303\244\303\237ig simplify-Befehle anwenden
+else # Benutzer-Einstellungen:
+  use_simplify := simplify_options(10): # zehnter Eintrag ist f\303\274r Dynamik-Regressor
+end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L3197" drawlabel="true">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ergebnisse der Plattform-Dynamik in Regressorform laden (dort noch keine Minimaldarstellung m\303\266glich, da nur Plattform-Starrk\303\266rper)</Font></Text-field>
 </Input>
@@ -271,6 +276,10 @@ read(sprintf(&quot;%s/transformation/maple/proc_eul%sjac&quot;, robotics_repo_pa
 </Input>
 </Group>
 <Group labelreference="L3577" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
+<Group labelreference="L3613" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
@@ -397,7 +406,7 @@ end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L3160" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Dupliziere alle berechneten Matrizen. i steht f\303\274r den Index des jeweiligen Beines</Font></Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3428" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion11" expanded="true" visible="true" pixel-width="1140" pixel-height="422" code-language="text/maple" autofit="false" wrapping="true" show-border="true" code-line-numbers="true">tauReg := tau_regressor_s(7..NQ,..):
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3428" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion11" expanded="true" visible="true" pixel-width="1232" pixel-height="523" code-language="text/maple" autofit="false" wrapping="true" show-border="true" code-line-numbers="true">tauReg := tau_regressor_s(7..NQ,..):
 #MatrixEnd := index_symmat2vec(NQJ_parallel,NQJ_parallel,NQJ_parallel):
 #MMjjReg := MMjj_regressor_s(1..MatrixEnd,..):
 tauMMReg := tauMM_regressor_s(7..NQ,..):
@@ -423,7 +432,9 @@ for i to NQJ_parallel do
       taugReg(i,k) := subs({tmp(j)=gtmp(j)},taugReg(i,k)):
     end do:
   end do:
-end do:</EC-CodeEditor></CodeEditor-ExecGroup>
+end do:</EC-CodeEditor>
+<Input><Text-field prompt="&gt; " style="Maple Input" spaceabove="0" linebreak="space" rightmargin="0" linespacing="0.0" initial="0" firstindent="0" leftmargin="0" bulletsuffix="" alignment="left" bullet="none" spacebelow="0" pagebreak-before="false"></Text-field>
+</Input></CodeEditor-ExecGroup>
 <Group hide-input="false" labelreference="L3326" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
@@ -446,32 +457,28 @@ COLUMNreg := ColumnDimension(tau_regressor_s):</EC-CodeEditor></CodeEditor-ExecG
   for i to NQJ_parallel do
     for j to COLUMNreg do
       for p from NQJ_parallel+1 to NQJ do
-        tau_regressor_s||k(i,j) := subs({qJDD||p||s=0,qJD||p||s=0,qJ||p||s=0},tau_regressor_s||k(i,j)):
+        tau_regressor_s||k(i,j)   := subs({qJDD||p||s=0,qJD||p||s=0,qJ||p||s=0},tau_regressor_s||k(i,j)):
         tauMM_regressor_s||k(i,j) := subs({qJDD||p||s=0,qJD||p||s=0,qJ||p||s=0},tauMM_regressor_s||k(i,j)):
-        tauC_regressor_s||k(i,j) := subs({qJDD||p||s=0,qJD||p||s=0,qJ||p||s=0},tauC_regressor_s||k(i,j)):
-        taug_regressor_s||k(i,j) := subs({qJDD||p||s=0,qJD||p||s=0,qJ||p||s=0},taug_regressor_s||k(i,j)):
+        tauC_regressor_s||k(i,j)  := subs({qJDD||p||s=0,qJD||p||s=0,qJ||p||s=0},tauC_regressor_s||k(i,j)):
+        taug_regressor_s||k(i,j)  := subs({qJDD||p||s=0,qJD||p||s=0,qJ||p||s=0},taug_regressor_s||k(i,j)):
       end do:
       for l to 3 do
-        tau_regressor_s||k(i,j) := subs({frame_A_i(l,1)=frame_A_i(l,k)},tau_regressor_s||k(i,j)):
+        tau_regressor_s||k(i,j)   := subs({frame_A_i(l,1)=frame_A_i(l,k)},tau_regressor_s||k(i,j)):
         tauMM_regressor_s||k(i,j) := subs({frame_A_i(l,1)=frame_A_i(l,k)},tauMM_regressor_s||k(i,j)):
-        tauC_regressor_s||k(i,j) := subs({frame_A_i(l,1)=frame_A_i(l,k)},tauC_regressor_s||k(i,j)):
-        taug_regressor_s||k(i,j) := subs({frame_A_i(l,1)=frame_A_i(l,k)},taug_regressor_s||k(i,j)):
+        tauC_regressor_s||k(i,j)  := subs({frame_A_i(l,1)=frame_A_i(l,k)},tauC_regressor_s||k(i,j)):
+        taug_regressor_s||k(i,j)  := subs({frame_A_i(l,1)=frame_A_i(l,k)},taug_regressor_s||k(i,j)):
       end do:
       for m to NQJ_parallel do
         n := (m + (k-1)*NQJ_parallel):
-        tau_regressor_s||k(i,j) := subs({qJDD||m||s=qJDD||n||s,qJD||m||s=qJD||n||s,qJ||m||s=qJ||n||s},tau_regressor_s||k(i,j)):
+        tau_regressor_s||k(i,j)   := subs({qJDD||m||s=qJDD||n||s,qJD||m||s=qJD||n||s,qJ||m||s=qJ||n||s},tau_regressor_s||k(i,j)):
         tauMM_regressor_s||k(i,j) := subs({qJDD||m||s=qJDD||n||s,qJD||m||s=qJD||n||s,qJ||m||s=qJ||n||s},tauMM_regressor_s||k(i,j)):
-        tauC_regressor_s||k(i,j) := subs({qJDD||m||s=qJDD||n||s,qJD||m||s=qJD||n||s,qJ||m||s=qJ||n||s},tauC_regressor_s||k(i,j)):
-        taug_regressor_s||k(i,j) := subs({qJDD||m||s=qJDD||n||s,qJD||m||s=qJD||n||s,qJ||m||s=qJ||n||s},taug_regressor_s||k(i,j)):
+        tauC_regressor_s||k(i,j)  := subs({qJDD||m||s=qJDD||n||s,qJD||m||s=qJD||n||s,qJ||m||s=qJ||n||s},tauC_regressor_s||k(i,j)):
+        taug_regressor_s||k(i,j)  := subs({qJDD||m||s=qJDD||n||s,qJD||m||s=qJD||n||s,qJ||m||s=qJ||n||s},taug_regressor_s||k(i,j)):
       end do:
     end do:
   end do:
 end do:
 </EC-CodeEditor></CodeEditor-ExecGroup>
-<Group labelreference="L3568" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
-</Input>
-</Group>
 <Group labelreference="L3598" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
@@ -489,10 +496,22 @@ end do:
 U_i := U_i:
 JBinv_i := JBinv_i:
 for i to N_LEGS do
-   A_||i:= simplify(Transpose(U_i(..,..,i)).Transpose(JBinv_i(..,..,i))).simplify(tau_regressor_s||i):
-   Mreg_||i:= simplify(Transpose(U_i(..,..,i)).Transpose(JBinv_i(..,..,i))).simplify(tauMM_regressor_s||i):
-   Creg_||i:= simplify(Transpose(U_i(..,..,i)).Transpose(JBinv_i(..,..,i))).simplify(tauC_regressor_s||i):
-   greg_||i:= simplify(Transpose(U_i(..,..,i)).Transpose(JBinv_i(..,..,i))).simplify(taug_regressor_s||i):
+   PreMat :=  Transpose(U_i(..,..,i)).Transpose(JBinv_i(..,..,i)):
+   if use_simplify&gt;=1 then
+      tmp_t1:=time():
+      tmp_l1 := length(PreMat):
+      printf(&quot;%s. Beginne Vereinfachung: Projektionsmatrix Beinkette %d. L\303\244nge: %d.\134n&quot;, \134
+        FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), i, tmp_l1):
+      PreMat := simplify2(PreMat):
+      tmp_t2:=time():
+      tmp_l2 := length(PreMat):
+      printf(&quot;%s. Projektionsmatrix Beinkette %d vereinfacht. L\303\244nge: %d-&gt;%d. Rechenzeit %1.1fs.\134n&quot;, \134
+        FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), i, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+   end if:
+   A_||i   := PreMat . tau_regressor_s||i:
+   Mreg_||i:= PreMat . tauMM_regressor_s||i:
+   Creg_||i:= PreMat . tauC_regressor_s||i:
+   greg_||i:= PreMat . taug_regressor_s||i:
 end do:
 </EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L3145" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -554,7 +573,7 @@ else
   NotNullEntries := RowDimension(paramMin)-(NQJ-NQJ_parallel)*10:
 end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group hide-input="false" labelreference="L3484" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;Dimension des Regressors f\303\274r regressor_modus=%s bestimmt: %d&quot;, </Font>regressor_modus, NotNullEntries):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;%s. Dimension des Regressors f\303\274r regressor_modus=%s bestimmt: %d\134n&quot;</Font>, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), regressor_modus, NotNullEntries):</Text-field>
 </Input>
 </Group><CodeEditor-ExecGroup view="presentation" labelreference="L3579" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion27" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">paramMinRed := Matrix(NotNullEntries,1):
 ARed := Matrix(RowDimension(A),NotNullEntries):
@@ -579,7 +598,7 @@ for i to RowDimension(paramMin) do
 		j := j + 1:
   end if:
 end do:
-printf(&quot;Dynamik-Terme reduziert. Zeilenz\303\244hler j=%d&quot;, j-1):</EC-CodeEditor></CodeEditor-ExecGroup>
+printf(&quot;Dynamik-Terme reduziert. Zeilenz\303\244hler j=%d\134n&quot;, j-1):</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group hide-input="false" labelreference="L3316" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">printf(&quot;%s. Beginne Ersetzung der Geschwindigkeiten und Bestimmung der Plattform-Terme <Font encoding="UTF-8">f\303\274r</Font> regressor_modus=%s<Font encoding="UTF-8">.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), </Font>regressor_modus):</Text-field>
 </Input>
@@ -601,9 +620,31 @@ Tmp2 := 0:</Text-field>
 </Group><CodeEditor-ExecGroup view="presentation" labelreference="L3435" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion13" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">for i to N_LEGS do
   Tmp := Multiply(H,xED_s):
   Tmp := Multiply(U_i(..,..,i),Tmp):
-  z||i := simplify(Multiply(JBinv_i(..,..,i),Tmp)):
+  z||i := Multiply(JBinv_i(..,..,i),Tmp):
+  if use_simplify&gt;=1 then
+    tmp_t1:=time():
+    tmp_l1 := length(z||i):
+    printf(&quot;%s. Beginne Vereinfachung: Projektionsmatrix z Beinkette %d. L\303\244nge: %d.\134n&quot;, \134
+      FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), i, tmp_l1):
+    z||i := simplify2(z||i):
+    tmp_t2:=time():
+    tmp_l2 := length(z||i):
+    printf(&quot;%s. Projektionsmatrix z Beinkette %d vereinfacht. L\303\244nge: %d-&gt;%d. Rechenzeit %1.1fs.\134n&quot;, \134
+      FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), i, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+  end if:
   Tmp2 := JBinv_i(..,..,i).(Multiply(U_i(..,..,i),H).xEDD_s+Multiply(U_i(..,..,i),dH).xED_s+Multiply(UD_i(..,..,i),H).xED_s):
-  A||i := simplify(Multiply(JBinv_i(..,..,i),JBD_i(..,..,i))):
+  A||i := Multiply(JBinv_i(..,..,i),JBD_i(..,..,i)):
+  if use_simplify&gt;=1 then
+    tmp_t1:=time():
+    tmp_l1 := length(A||i):
+    printf(&quot;%s. Beginne Vereinfachung: Projektionsmatrix A Beinkette %d. L\303\244nge: %d.\134n&quot;, \134
+      FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), i, tmp_l1):
+    z||i := simplify2(A||i):
+    tmp_t2:=time():
+    tmp_l2 := length(A||i):
+    printf(&quot;%s. Projektionsmatrix A Beinkette %d vereinfacht. L\303\244nge: %d-&gt;%d. Rechenzeit %1.1fs.\134n&quot;, \134
+      FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), i, tmp_l1, tmp_l2, tmp_t2-tmp_t1):
+  end if:
   B||i := Multiply(A||i,Matrix(qJD_i_s(..,i))):
   C||i := Tmp2 - B||i:
 end do:</EC-CodeEditor></CodeEditor-ExecGroup>
@@ -674,10 +715,10 @@ end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 </Group><CodeEditor-ExecGroup view="presentation" labelreference="L13" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion17" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">xEDD_s_dummy := Matrix(NX,1):
 zaehler := 1:
 for i to 6 do
-	if not(xEDD_s(i) = 0) then
-		xEDD_s_dummy(zaehler) := xEDD_s(i):
-		zaehler := zaehler + 1:
-	end if:
+  if not(xEDD_s(i) = 0) then
+    xEDD_s_dummy(zaehler) := xEDD_s(i):
+    zaehler := zaehler + 1:
+  end if:
 end do:
 </EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L3508" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -715,27 +756,27 @@ greg_x := gregRed:</Text-field>
 <Group labelreference="L3518" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">Erzeuge MPV-Vektor</Text-field>
 </Input>
-</Group>
-<Group labelreference="L3522" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">nMDP := RowDimension(paramMinRed):</Text-field>
-</Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L14" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion19" expanded="true" visible="true" pixel-width="538" pixel-height="100" code-language="text/maple" autofit="false" wrapping="false" show-border="true" code-line-numbers="true">PV := Matrix(nMDP,1):
-for i from 1 to nMDP do
-  PV(i,1) := parse(sprintf(&quot;MDP%d%&quot;, i)):
-end do:</EC-CodeEditor></CodeEditor-ExecGroup>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L14" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion19" expanded="true" visible="true" pixel-width="800" pixel-height="158" code-language="text/maple" autofit="false" wrapping="false" show-border="true" code-line-numbers="true">if regressor_modus = &quot;regressor_minpar&quot; then
+  nMDP := RowDimension(paramMinRed):
+  PV := Matrix(nMDP,1):
+  for i from 1 to nMDP do
+    PV(i,1) := parse(sprintf(&quot;MDP%d%&quot;, i)):
+  end do:
+end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L3549" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3551" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion21" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">tau_x_mdp := tau_x.PV:
-MMreg_x_mdp := MMreg_x.PV:
-Creg_x_mdp := Creg_x.PV:
-greg_x_mdp := greg_x.PV:
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3551" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion21" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if regressor_modus = &quot;regressor_minpar&quot; then
+  tau_x_mdp := tau_x.PV:
+  MMreg_x_mdp := MMreg_x.PV:
+  Creg_x_mdp := Creg_x.PV:
+  greg_x_mdp := greg_x.PV:
 
-tau_qa_mdp := tau_qa.PV:
-MMreg_qa_mdp := MMreg_qa.PV:
-Creg_qa_mdp := Creg_qa.PV:
-greg_qa_mdp := greg_qa.PV:
-</EC-CodeEditor></CodeEditor-ExecGroup>
+  tau_qa_mdp := tau_qa.PV:
+  MMreg_qa_mdp := MMreg_qa.PV:
+  Creg_qa_mdp := Creg_qa.PV:
+  greg_qa_mdp := greg_qa.PV:
+end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L3552" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
