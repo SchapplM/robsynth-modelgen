@@ -48,6 +48,45 @@ else
   echo "Code in ${quelldat##*/} nicht gefunden."
 fi
 
+
+
+# Belegungsmatrix des Minimalparametervektors mit den Inertialparametern (Fixed Base)
+quelldat1=$repo_pfad/codeexport/${robot_name}/tmp/PV2_MPV_transformation_linear_fixb_matlab.m
+quelldat2=$repo_pfad/codeexport/${robot_name}/tmp/PV2_MPV_transformation_linear_dependant_fixb_matlab.m
+quelldat3=$repo_pfad/codeexport/${robot_name}/tmp/PV2_permutation_linear_independant_fixb_matlab.m
+quelldat4=$repo_pfad/codeexport/${robot_name}/tmp/PV2_permutation_linear_dependant_fixb_matlab.m
+zieldat=$repo_pfad/codeexport/${robot_name}/matlabfcn/${robot_name}_PV2_MPV_transformations_fixb.m
+if [ -f $quelldat1 ] && [ -f $quelldat2 ] && [ -f $quelldat3 ] && [ -f $quelldat4 ]; then
+  # Benutze die schon bestehende Kopfzeilendatei. Es ändert sich nur eine Variable bei PKM
+  cat $head_pfad/robot_matlabtmp_PV2_MPV_transformations_fixb.head.m | sed "s/NMPVFIXB/NMPVPARA/g" > $zieldat
+  printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
+  source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 0
+  source $repo_pfad/scripts/set_inputdim_line_par.sh $zieldat
+  cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
+  echo "%% Variable Initialization" > ${quelldat}.subsvar
+  cat $tmp_pfad/robot_matlabtmp_par_KP.m >> ${quelldat}.subsvar
+  echo "%% Symbolic Expressions" >> $zieldat
+  printf "%% From ${quelldat1##*/}\n" >> $zieldat
+  cat $quelldat1 >> $zieldat
+  varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $quelldat1`
+  echo "K = $varname_tmp;" >> $zieldat
+  printf "%% From ${quelldat2##*/}\n" >> $zieldat
+  cat $quelldat2 >> $zieldat
+  varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $quelldat2`
+  echo "K_d = $varname_tmp;" >> $zieldat
+  printf "%% From ${quelldat3##*/}\n" >> $zieldat
+  cat $quelldat3 >> $zieldat
+  varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $quelldat3`
+  echo "P_b = $varname_tmp;" >> $zieldat
+  printf "%% From ${quelldat4##*/}\n" >> $zieldat
+  cat $quelldat4 >> $zieldat
+  varname_tmp=`$repo_pfad/scripts/get_last_variable_name.sh $quelldat4`
+  echo "P_d = $varname_tmp;" >> $zieldat
+  source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 0 0 ${quelldat}.subsvar
+else
+  echo "Code in ${quelldat1##*/} oder anderer nicht gefunden."
+fi
+
 # Generiere zwei verschiedene Regressorformen:
 # Minimalparameterregressor (rm=1) und Inertialparameterregressor (rm=2)
 for (( rm=1; rm<=2; rm++ ))
