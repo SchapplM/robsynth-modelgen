@@ -113,7 +113,7 @@ if [ "$CG_KINEMATICSONLY" == "0" ]; then
       $repo_pfad/scripts/run_maple_script.sh $mpldat_full &
     fi
   done
-  wait
+  # wait # Auf den Code-Export braucht nicht gewartet werden
   if [ "$CG_MINIMAL" == "0" ]; then
     dateiliste_reg="
       robot_para_plattform_rotmat_dynamics_regressor.mpl
@@ -144,5 +144,6 @@ if [ "$CG_KINEMATICSONLY" == "0" ]; then
     done
     wait
   fi;
+  wait # Warten auf eventuell nicht beendeten Code-Export der Dynamik
 fi;
 
