@@ -494,6 +494,9 @@ if regressor_modus = "regressor_minpar" then
   save RowParamMin, sprintf("../codeexport/%s/tmp/RowMinPar_parallel_maple.m",       robot_name):
   MatlabExport(paramMinRed, sprintf("../codeexport/%s/tmp/minimal_parameter_parrob_matlab.m", robot_name), codegen_opt):
   MatlabExport(RowParamMin, sprintf("../codeexport/%s/tmp/RowMinPar_parallel.m", robot_name), 2);
+else
+  paramRed := paramMinRed; # Umbenennung, damit es beim erneuten Laden als Inertialparameter-Variable erkennbar ist
+  save paramRed, sprintf("../codeexport/%s/tmp/inertial_parameter_parrob_maple.m", robot_name):
 end if:
 # PKM-Dynamik-Funktionen mit MPV bereits eingesetzt
 if regressor_modus = "regressor_minpar" then
