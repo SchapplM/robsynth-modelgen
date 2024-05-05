@@ -92,6 +92,7 @@ for rms in ${regmodeswitches}; do
 done
 
 # Analyse des Minimalparameter-Regressors. Dafür Arbeitsblatt auf PKM umstellen
-sed -i "s/use_parallel_robot := false:/use_parallel_robot := true:/g" $repo_pfad/workdir/robot_tree_base_parameter_transformations.mpl
+cp $repo_pfad/robot_codegen_definitions/robot_tree_base_parameter_transformations.mpl $repo_pfad/workdir/robot_para_base_parameter_transformations.mpl
+sed -i "s/use_parallel_robot := false:/use_parallel_robot := true:/g" $repo_pfad/workdir/robot_para_base_parameter_transformations.mpl
 
 echo "Maple-Skripte zur Stapelverarbeitung vorbereitet."

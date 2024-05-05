@@ -153,12 +153,12 @@ else # PKM
   read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_definitions&quot;, leg_name):
   read &quot;../robot_codegen_definitions/robot_env_par&quot;:
 end if:</EC-CodeEditor></CodeEditor-ExecGroup>
-<Group labelreference="L1775" drawlabel="true">
-<Input><Text-field style="Text" layout="Normal">Ergebnisse der Minimalparametergruppierung laden</Text-field>
+<Group labelreference="L3189" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;%s. Bestimme Dynamikparameter-Transformationen f\303\274r %s.\134n&quot;, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), robot_name):</Font></Text-field>
 </Input>
 </Group>
-<Group hide-input="false" labelreference="L1848" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">robot_name;</Text-field>
+<Group labelreference="L1775" drawlabel="true">
+<Input><Text-field style="Text" layout="Normal">Ergebnisse der Minimalparametergruppierung laden</Text-field>
 </Input>
 </Group><CodeEditor-ExecGroup view="presentation" labelreference="L1851" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion5" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if not use_parallel_robot then # Serielle/Hybride Roboter
   if base_method_name=&quot;twist&quot; then

@@ -125,7 +125,7 @@ if [ "$CG_KINEMATICSONLY" == "0" ]; then
       $repo_pfad/scripts/run_maple_script.sh $mpldat_full
     done
     dateiliste_regexport="
-      robot_tree_base_parameter_transformations.mpl
+      robot_para_base_parameter_transformations.mpl
       robot_para_rotmat_projection_dynamics_regressor_export_pv2_invdyn.mpl
       robot_para_rotmat_projection_dynamics_regressor_export_pv2_corvec.mpl
       robot_para_rotmat_projection_dynamics_regressor_export_pv2_grav.mpl

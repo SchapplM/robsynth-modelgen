@@ -37,8 +37,8 @@ else # PKM
   read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
   read "../robot_codegen_definitions/robot_env_par":
 end if:
+printf("%s. Bestimme Dynamikparameter-Transformationen für %s.\n", FormatTime("%Y-%m-%d %H:%M:%S"), robot_name):
 # Ergebnisse der Minimalparametergruppierung laden
-robot_name;
 if not use_parallel_robot then # Serielle/Hybride Roboter
   if base_method_name="twist" then
     paramfile := sprintf("../codeexport/%s/tmp/minimal_parameter_vector_fixb_maple", robot_name):
