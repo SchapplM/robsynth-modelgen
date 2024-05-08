@@ -16,8 +16,7 @@
 
 % Output:
 % tauA [%N_XP%x1]
-%   minimal parameter regressor of inverse dynamics force vector
-%   in actuation coordinates
+%   inverse dynamics force vector in actuation coordinates
 
 % %VERSIONINFO%
 

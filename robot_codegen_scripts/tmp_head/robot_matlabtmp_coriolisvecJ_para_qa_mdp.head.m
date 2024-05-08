@@ -13,8 +13,7 @@
 
 % Output:
 % taucA [%N_XP%x1]
-%   minimal parameter regressor of vector of coriolis and centrifugal joint torques
-%   in actuation coordinates
+%   Vector of Coriolis and centrifugal joint torques in actuation coordinates
 
 % %VERSIONINFO%
 

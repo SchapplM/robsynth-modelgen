@@ -14,8 +14,7 @@
 
 % Output:
 % taugX [%N_XP%x1]
-%   minimal parameter regressor of Gravitation load for parallel robot
-%   in task space
+%   Gravitation load for parallel robot in task space
 
 % %VERSIONINFO%
 

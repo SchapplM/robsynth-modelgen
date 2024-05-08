@@ -14,8 +14,7 @@
 
 % Output:
 % taugA [%N_XP%x1]
-%   minimal parameter regressor of Gravitation load for parallel robot
-%   in actuation coordinates
+%   Gravitation load for parallel robot in actuation coordinates
 
 % %VERSIONINFO%
 

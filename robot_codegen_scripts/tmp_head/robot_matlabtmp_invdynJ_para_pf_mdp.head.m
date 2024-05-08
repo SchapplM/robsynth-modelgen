@@ -16,8 +16,7 @@
 
 % Output:
 % tauX [%N_XP%x1]
-%   minimal parameter regressor of inverse dynamics force vector
-%   in task space
+%   inverse dynamics force vector in task space
 
 % %VERSIONINFO%
 

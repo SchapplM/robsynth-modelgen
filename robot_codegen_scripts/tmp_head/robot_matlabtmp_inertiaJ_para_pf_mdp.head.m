@@ -12,8 +12,7 @@
 
 % Output:
 % MMX [%N_XP%x%N_XP%]
-%   minimal parameter regressor of inertia matrix for parallel robot
-%   in task space
+%   Inertia matrix for parallel robot in task space
 
 % %VERSIONINFO%
 

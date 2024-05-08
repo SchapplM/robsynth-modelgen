@@ -12,8 +12,7 @@
 
 % Output:
 % MMA [%N_XP%x%N_XP%]
-%   minimal parameter regressor of inertia matrix for parallel robot
-%   in actuation coordinates
+%   inertia matrix for parallel robot in actuation coordinates
 
 % %VERSIONINFO%
 

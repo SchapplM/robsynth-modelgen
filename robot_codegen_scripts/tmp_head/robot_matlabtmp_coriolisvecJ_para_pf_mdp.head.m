@@ -13,8 +13,7 @@
 
 % Output:
 % taucX [%N_XP%x1]
-%   minimal parameter regressor of vector of coriolis and centrifugal joint torques
-%   in task space
+%   vector of Coriolis and centrifugal joint torques in task space
 
 % %VERSIONINFO%
 
