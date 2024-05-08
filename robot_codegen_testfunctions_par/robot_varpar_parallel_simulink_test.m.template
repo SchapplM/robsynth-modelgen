@@ -1,0 +1,12 @@
+% Test function for simulink models for parallel robot
+% %RN%
+
+% %VERSIONINFO%
+
+% Moritz Schappler, moritz.schappler@imes.uni-hannover.de, 2024-05
+% (C) Institut für Mechatronische Systeme, Leibniz Universität Hannover
+
+clc
+clear
+
+%RN%_simulink_kinematics_block_test_start
