@@ -15,6 +15,7 @@ function TSS = %RN%_varpar_testfunctions_parameter_par()
 
 %% General Definitions
 NQJ = %NQJ_P%; % Number of leg coordinates
+NQJ_P = %NQJ_P%; % Number of coordinates that influence the coupling-joint positions
 N_LEGS = %N_LEGS%; % number of legs
 N_XP = %N_XP%; % number of platform DOF
 robot_name = '%RN%'; % prefix in all function names and simulink models and blocks
@@ -43,8 +44,8 @@ n = 100;
 %REPLACE_QDEF%
 Q = [];
 for i = 1:N_LEGS
-	tmp = repmat(q_min',n,1) + rand(n,NQJ).*repmat(q_max'-q_min',n,1);
-	Q = [Q,tmp];
+  tmp = repmat(q_min',n,1) + rand(n,NQJ).*repmat(q_max'-q_min',n,1);
+  Q = [Q,tmp];
 end
 XP = repmat(xP_min',n,1) + rand(n,N_XP).*repmat(xP_max'-xP_min',n,1);
 XPD = (0.5-rand(n, N_XP))*pi;

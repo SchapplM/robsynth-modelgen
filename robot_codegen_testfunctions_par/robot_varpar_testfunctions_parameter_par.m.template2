@@ -3,6 +3,7 @@ TSS = struct('type', 'Test Settings Structure');
 % Allgemeine Definitionen
 TSS.G = G;
 TSS.NQJ = NQJ;
+TSS.NQJ_P = NQJ_P;
 TSS.N_LEGS = N_LEGS;
 TSS.N_XP = N_XP;
 % Kinematikparameter

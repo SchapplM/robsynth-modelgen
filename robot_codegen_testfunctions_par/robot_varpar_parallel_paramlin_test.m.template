@@ -56,11 +56,7 @@ end
 Q_GES = length(Q(1,:));
 Q_N = Q_GES/NQJ;
 for i = 1:n
-  q = [];
-  for j = 1:Q_N
-    q = [q;Q(1,(j-1)*NQJ+1:j*NQJ)]; %#ok<AGROW>
-  end
-  q = q';
+  q = reshape(Q(i,:), NQJ_P, N_LEGS);
   xP = XP(i,:)';
   xPD = XPD(i,:)';
   xPDD = XPDD(i,:)';
