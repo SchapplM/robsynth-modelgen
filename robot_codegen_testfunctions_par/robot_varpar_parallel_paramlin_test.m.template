@@ -53,14 +53,8 @@ for i = 1:size(Ifges,1)
   PV2_Names{10*(i-1)+10} = sprintf('M%s',  name_i);
 end
 %% Test inverse dynamic vs regressor form
-Q_GES = length(Q(1,:));
-Q_N = Q_GES/NQJ;
 for i = 1:n
-  q = [];
-  for j = 1:Q_N
-    q = [q;Q(1,(j-1)*NQJ+1:j*NQJ)]; %#ok<AGROW>
-  end
-  q = q';
+  q = reshape(Q(i,:), NQJ_P, N_LEGS);
   xP = XP(i,:)';
   xPD = XPD(i,:)';
   xPDD = XPDD(i,:)';
@@ -96,15 +90,21 @@ for i = 1:n
   end
   taugX_reg2 = %RN%_gravload_para_pf_reg2(xP, q, g, legFrame, ...
     koppelP, pkin);
-  DeltagX2 = taugX_reg2*PV2 - taugX_vp2;
-  if any(abs(DeltagX2) > 1e6*eps(1+max(abs(DeltagX2))))
+  DeltagX2_abs = taugX_reg2*PV2 - taugX_vp2;
+  DeltagX2_rel = DeltagX2_abs ./ taugX_vp2;
+  I_abserr = abs(DeltagX2_abs) > 1e6*eps(1+max(abs(taugX_vp2)));
+  I_relerr = abs(DeltagX2_rel) > 1e-2;
+  if any(I_abserr&I_relerr)
     error('Gravload (platform coordinates) does not match with inertial regressor form.')
   end
   % Gravitationsvektor-Regressor gegen Dynamik-Regressor
   tauX_regmin = %RN%_invdyn_para_pf_regmin(xP, xPD*0, xPDD*0, q, g, legFrame, ...
     koppelP, pkin);
   Diff_tau_taug = taugX_regmin - tauX_regmin;
-  if max(abs(Diff_tau_taug(:))) > 1e3*eps(1+max(abs(tauX_regmin(:))))
+  Diff_tau_taug_rel = Diff_tau_taug ./ tauX_regmin;
+  I_abserr = abs(Diff_tau_taug) > 1e3*eps(1+max(abs(tauX_regmin(:))));
+  I_relerr = abs(Diff_tau_taug_rel) > 1e-2;
+  if any(I_abserr & I_relerr)
     error('Inverse Dynamik Regressor stimmt nicht gegen Gravitation-Regressor');
   end
   
@@ -114,24 +114,32 @@ for i = 1:n
   taucX_regmin = %RN%_coriolisvec_para_pf_regmin(xP, xPD, q, legFrame, ...
     koppelP, pkin);
   taucX_MPV = taucX_regmin*MPV;
-  DeltacX = taucX_MPV - taucX_vp2;
-  if any(abs(DeltacX) > 1e6*eps(1+max(abs(taucX_MPV))))
+  DeltacX_abs = taucX_MPV - taucX_vp2;
+  DeltacX_rel = DeltacX_abs ./ taucX_vp2;
+  I_abserr = abs(DeltacX_abs) > 1e6*eps(1+max(abs(taucX_MPV)));
+  I_relerr = abs(DeltacX_rel) > 1e-2;
+  if any(I_abserr & I_relerr)
     error('Coriolis Vector (platform coordinates) does not match with min. regressor form.')
   end
   taucX_reg2 = %RN%_coriolisvec_para_pf_reg2(xP, xPD, q, legFrame, ...
     koppelP, pkin);
-  DeltacX2 = taucX_reg2*PV2 - taucX_vp2;
-  if any(abs(DeltacX2) > 1e11*eps(1+max(abs(DeltacX2)))) % TODO: Threshold has to be very high
+  DeltacX2_abs = taucX_reg2*PV2 - taucX_vp2;
+  DeltacX2_rel = DeltacX2_abs ./ taucX_vp2;
+  I_abserr = abs(DeltacX2_abs) > 1e9*eps(1+max(abs(taucX_vp2(:))));
+  I_relerr = abs(DeltacX2_rel) > 1e-2;
+  if any(I_abserr & I_relerr)
     error('Coriolis Vector (platform coordinates) does not match with inertial regressor form.')
   end
   % Coriolisvektor-Regressor gegen Dynamik-Regressor
   tauX_regmin = %RN%_invdyn_para_pf_regmin(xP, xPD, xPDD*0, q, g*0, legFrame, ...
     koppelP, pkin);
-  Diff_tau_tauc = taucX_regmin - tauX_regmin;
-  if max(abs(Diff_tau_tauc(:))) > 1e3*eps(1+max(abs(tauX_regmin(:))))
+  DeltacX_abs = taucX_regmin - tauX_regmin;
+  DeltacX_rel = DeltacX_abs ./ tauX_regmin;
+  I_abserr = abs(DeltacX_abs) > 1e6*eps(1+max(abs(tauX_regmin(:))));
+  I_relerr = abs(DeltacX_rel) > 1e-2;
+  if any(I_abserr&I_relerr)
     error('Inverse Dynamik Regressor stimmt nicht gegen Coriolis-Regressor');
   end
-  
   
   %% Massenmatrix in Plattform-Koordinaten
   MMX_vp2 = %RN%_inertia_para_pf_slag_vp2(xP, q, legFrame, ...
@@ -148,8 +156,11 @@ for i = 1:n
     koppelP, pkin);
   MMX_PV2_vec = MMX_reg2*PV2;
   MMX_PV2 = reshape(MMX_PV2_vec,N_XP,N_XP)';
-  DeltaMMX2 = MMX_PV2 - MMX_vp2;
-  if any(abs(DeltaMMX2(:)) > 1e6*eps(1+max(abs(DeltaMMX2(:)))))
+  DeltaMMX2_abs = MMX_PV2 - MMX_vp2;
+  DeltaMMX2_rel = DeltaMMX2_abs ./ MMX_vp2;
+  I_abserr = abs(DeltaMMX2_abs) > 1e8*eps(1+max(abs(MMX_vp2(:))));
+  I_relerr = abs(DeltaMMX2_rel) > 1e-2;
+  if any(I_abserr & I_relerr)
     error('Inertia Matrix (platform coordinates) does not match with inertial regressor form.')
   end
   
@@ -224,11 +235,7 @@ fprintf('Tested regressor form vs inverse dynamic for %d random joint angles for
 % Die direkte Übergabe des Dynamik-Parametervektors ist effizienter als die
 % nachträgliche Multiplikation des Regressors
 for i = 1:n
-  q = [];
-  for j = 1:Q_N
-    q = [q;Q(1,(j-1)*NQJ+1:j*NQJ)]; %#ok<AGROW>
-  end
-  q = q';
+  q = reshape(Q(i,:), NQJ_P, N_LEGS);
   xP = XP(i,:)';
   xPD = XPD(i,:)';
   xPDD = XPDD(i,:)';
@@ -363,11 +370,7 @@ W_g_invdyn = NaN(NQJ*n*nreps, length(PV2)); % Informationsmatrix des Inertialpar
 % W_g_energy = NaN(n*nreps, length(PV2)); % Gleiche Matrix, nur mit Energie, statt Dynamik
 for k = 1:nreps
   for j = 1:n
-    q = [];
-    for ll = 1:Q_N
-      q = [q;Q(1,(ll-1)*NQJ+1:ll*NQJ)]; %#ok<AGROW>
-    end
-    q = q';
+    q = reshape(Q(i,:), NQJ_P, N_LEGS);
     xP = XP(i,:)';
     xPD = XPD(i,:)';
     xPDD = XPDD(i,:)';

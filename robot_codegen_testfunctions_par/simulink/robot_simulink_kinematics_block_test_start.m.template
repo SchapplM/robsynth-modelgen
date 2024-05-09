@@ -1,0 +1,81 @@
+% Start kinematics block test model for %RN%
+% Test auf Kompilierbarkeit der Kinematik-Blöcke in der Bibliothek
+
+% Moritz Schappler, moritz.schappler@imes.uni-hannover.de, 2024-05
+% (C) Institut für Mechatronische Systeme, Leibniz Universität Hannover
+
+clear
+clc
+close all
+
+%% Parameter
+TSS = %RN%_varpar_testfunctions_parameter_par();
+for f = fields(TSS)'
+  eval(sprintf('%s=TSS.%s;',f{1},f{1}));
+end
+
+%% Modellparameter
+Ts = 5e-2; % Abtastzeit der Eingabedaten
+t = (0:Ts:(n-1)*Ts)'; % Zeit-Stützstellen für Eingabedaten
+
+simin_qJ = struct('time', t, ...
+    'signals', struct('values', Q, 'dimensions', size(Q,2)), ...
+    'name', 'q');
+
+simin_xP = struct('time', t, ...
+    'signals', struct('values', XP, 'dimensions', size(XP,2)), ...
+    'name', 'xP');
+
+% Workspace-Variable löschen, Modell darf nicht davon abhängen
+clear N_XP NQJ N_LEGS XP
+sl_Modellname = '%RN%_simulink_kinematics_block_test';
+% Variablen neu setzen (für Skript unten)
+N_XP = TSS.N_XP;
+NQJ = TSS.NQJ;
+N_LEGS = TSS.N_LEGS;
+XP = TSS.XP;
+%% Start Simulation
+t1 = tic;
+old_dir = pwd();
+cd(fileparts(which(sl_Modellname))); % Damit slprj-Ordner im Modell-Ordner liegt
+simOut = sim(sl_Modellname, 'StopTime', '5', ...
+  'SimulationMode', 'normal');
+sl = get_simulink_outputs(simOut, sl_Modellname);
+fprintf('Simulink-Modell berechnet. Rechenzeit: %1.1fs\n', toc(t1));
+cd(old_dir);
+
+%% Ergebnisse auswerten
+COND_ALL = NaN(n,1);
+Q_GES = length(Q(1,:));
+Q_N = Q_GES/NQJ;
+for i = 1:length(t)
+  q = reshape(Q(i,:), NQJ_P, N_LEGS);
+  xP = XP(i,:)';
+  
+  % Ergebnisse aus Simulink-Daten extrahieren
+  [~,i_sl] = min(abs(sl.t-t(i))); % Finde Index der Simulink Ergebnisse
+  Jinv_sl = sl.Jinv(:,:,i_sl);
+
+  % Probe:
+  assert(all(abs(sl.xP(i_sl,:)'-xP)<1e-12), 'Daten X aus Simulink inkonsistent');
+  assert(all(abs(sl.q(i_sl,:)-Q(i,:))<1e-12), 'Daten Q aus Simulink inkonsistent');
+  
+  % Vergleiche Simulink-Ergebnisse mit Matlab-Skript-Ergebnissen
+  Jinv = %RN%_Jinv(xP, q, pkin, koppelP, legFrame);
+
+  COND_ALL(i) = cond(Jinv);
+
+  test2 = Jinv-Jinv_sl;
+  if any(abs(test2(:)) > 1e-6)
+    errtxt = sprintf(['Jacobi-Matrix stimmt nicht zwischen Simulink ' ...
+      'und Matlab. cond(J)=%1.1e.'], COND_ALL(i));
+    if COND_ALL(i) < 1e3
+      error([errtxt, ' Muss aber mit kleiner Konditionszahl funktionieren.']);
+    else
+      warning([errtxt, ' Liegt evtl. an großer Konditionszahl.']);
+    end
+  end
+
+end
+fprintf('Kinematik-Ergebnisse aus Simulink-Blöcken validiert\n');
+bdclose(sl_Modellname);

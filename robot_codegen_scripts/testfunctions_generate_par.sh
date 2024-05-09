@@ -18,7 +18,7 @@ source $repo_pfad/robot_codegen_definitions/robot_env_par.sh
 
 testfcn_pfad=$repo_pfad/codeexport/$robot_name/testfcn
 
-for f in $(find $repo_pfad/robot_codegen_testfunctions_par -name "*.template")
+for f in $(find $repo_pfad/robot_codegen_testfunctions_par $repo_pfad/robot_codegen_testfunctions_par/simulink -maxdepth 1 -name "*.template")
 do
   tmpdat_full=$f
   filename="${tmpdat_full##*/}"                      # Strip longest match of */ from start
@@ -30,7 +30,7 @@ do
   filename_new="${tmp/.template/}" # Endung .template entfernen
   
   # Neues Verzeichnis generieren: Jetzt im Ordner codeexport/%RN%/testfcn
-  dir2=$testfcn_pfad
+  dir2=`echo "$dir1" | sed "s/robot_codegen_testfunctions_par/codeexport\/$robot_name\/testfcn/g"`
 
   # Datei kopieren
   mkdir -p "$dir2"
@@ -39,6 +39,10 @@ do
   # Platzhalter in Datei ersetzen
   source robot_codegen_matlabfcn_postprocess_par.sh $dir2/$filename_new 0
 done
+
+# Simulink-Umgebung in einen eigenen Ordner in der Hauptebene kopieren
+rm -rf $testfcn_pfad/../simulink/* # Zielordner für Simulink-Dateien
+mv $testfcn_pfad/simulink $testfcn_pfad/../
 
 # Parameter-Generierungsskript anpassen
 zieldat=$testfcn_pfad/${robot_name}_varpar_testfunctions_parameter_par.m
