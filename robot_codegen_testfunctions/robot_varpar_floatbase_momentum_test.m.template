@@ -1,0 +1,455 @@
+% Test functions with momentum calculations
+% 
+% Quellen:
+
+% %VERSIONINFO%
+
+clc
+clear
+
+NQJ = %NQJ%;
+NJ = %NJ%;
+NL = %NL%;
+KINCONSTR = logical(%KINCONSTR%); %#ok<LOGL>
+robot_name = '%RN%';
+
+if isempty(which('%RN%_momentum_lin_floatb_twist_vp1')) || ...
+   isempty(which('%RN%_momentum_ang_floatb_twist_vp1')) || ...
+   isempty(which('%RN%_inertiaB_floatb_eulxyz_slag_vp1')) || ...
+   isempty(which('%RN%_momentumD_lin_floatb_twist_vp1')) || ...
+   isempty(which('%RN%_momentumD_ang_floatb_twist_vp1'))
+  % Die Funktionen werden nur generiert, wenn der Schalter
+  % "compute_momenta" in Maple gesetzt ist.
+  fprintf('Impuls-bezogene Funktionen existieren nicht. Vermutlich nicht generiert. Keine Tests möglich.\n');
+  return
+end
+
+warning('Test für %RN%_momentum_ang_floatb_twist_vp2 auskommentiert, da Implementierung noch fehlerhaft.');
+
+%% Parameter
+TSS = %RN%_varpar_testfunctions_parameter();
+for f = fields(TSS)'
+  eval(sprintf('%s=TSS.%s;',f{1},f{1}));
+end
+n = TSS.n;
+
+bm_names = {'fixb', 'twist', 'eulangrpy'};
+
+%% Alle Funktionen aufrufen
+
+qJ = zeros(NQJ,1);
+qJD = zeros(NQJ,1);
+qJDD = zeros(NQJ,1);
+r_base = zeros(3,1);
+phi_base = zeros(3,1);
+xD_base = zeros(6,1);
+xDD_base = zeros(6,1);
+vB = zeros(6,1);
+aB = zeros(6,1);
+g0_pelvis = zeros(1,3);
+
+% %RN%_momentum_ang_floatb_eulangrpy_vp1(qJ, qJD, r_base, phi_base, xD_base, ...
+%   pkin, m, rSges, Icges);
+%RN%_momentum_ang_floatb_twist_vp1(qJ, qJD, r_base, vB, ...
+  pkin, m, rSges, Icges);
+% %RN%_momentum_lin_floatb_eulangrpy_vp1(qJ, qJD, phi_base, xD_base, ...
+%   pkin, m, rSges);
+%RN%_momentum_lin_floatb_twist_vp1(qJ, qJD, vB, ...
+  pkin, m, rSges);
+
+% %RN%_momentumD_ang_floatb_eulangrpy_vp1(qJ, qJD, qJDD, r_base, phi_base, xD_base, xDD_base, ...
+%   pkin, m, rSges, Icges);
+%RN%_momentumD_ang_floatb_twist_vp1(qJ, qJD, qJDD, r_base, vB, aB, ...
+  pkin, m, rSges, Icges);
+% %RN%_momentumD_lin_floatb_eulangrpy_vp1(qJ, qJD, qJDD, phi_base, xD_base, xDD_base, ...
+%   pkin, m, rSges);
+%RN%_momentumD_lin_floatb_twist_vp1(qJ, qJD, qJDD, vB, aB, ...
+  pkin, m, rSges);
+
+%RN%_centr_momentum_matrix_floatb_twist_vp1(qJ, r_base, ...
+  pkin, m, rSges, Icges);
+% %RN%_centr_momentum_matrix_floatb_eulangrpy_vp1(qJ, r_base, phi_base, ...
+%   pkin, m, rSges, Icges);
+
+%RN%_centr_momentum_matrixD_floatb_twist_vp1(qJ, qJD, r_base, vB, ...
+  pkin, m, rSges, Icges);
+% %RN%_centr_momentum_matrixD_floatb_eulangrpy_vp1(qJ, qJD, r_base, phi_base, xD_base, ...
+%   pkin, m, rSges, Icges);
+
+%% Zufallswerte für Eingaben
+% Gelenkwinkel
+QJ = TSS.Q;
+QJD = TSS.QD;
+QJDD = TSS.Q;
+
+% Basis
+RB = TSS.RB;
+RB(1:NQJ*2,:) = 0;
+
+RBD = TSS.VB(:,1:3);
+RBDD = TSS.AB(:,1:3);
+
+% Zufällige Zeitableitung der Orientierungsdarstellung und ihrer
+% Ableitungen
+OB = TSS.OB;
+OBD = TSS.OBD;
+OBDD = TSS.OBDD;
+
+
+%% Komplexität der Eingaben schrittweise erhöhen
+% Vereinfachung der ersten zu testenden Konfigurationen:
+% Zuerst Geschwindigkeit nur in einem Gelenk mit und ohne Basis-Geschw.
+QJ(1:NQJ*2,:) = 0;
+QJD(1:NQJ,:) = eye(NQJ);
+QJD(NQJ+1:NQJ*2,:) = eye(NQJ);
+QJD(1,:) = 0;
+
+OB(1:NQJ*2,:) = 0;
+OBD(1:NQJ*2,:) = 0;
+OBDD(1:NQJ*2,:) = 0;
+
+RBD(1:NQJ*1,:) = 0;
+RBDD(1:NQJ*2,:) = 0;
+
+%% Restliche Eingaben berechnen
+% Winkelgeschwindigkeit und Beschleunigung aus der Orientierungsdarstellung
+% berechnen
+VB = NaN(n,6);
+AB = NaN(n,6);
+VB(:,1:3) = RBD;
+AB(:,1:3) = RBDD;
+for i = 1:n
+  % Darstellung umwandeln.
+  % TODO: Mit Transformationsmatrizen
+  VB(i, 4:6) = eulxyzD2omega(OB(i,:)', OBD(i,:)');
+  AB(i, 4:6) = eulxyzDD2omegaD(OB(i,:)', OBD(i,:)', OBDD(i,:)');
+  
+  % Probe:
+  T_basevel = eulxyzjac(OB(i,1:3)');
+  obd_test = T_basevel \ VB(i, 4:6)';
+  
+  if any(abs(obd_test-OBD(i,:)') > 1e-10)
+    error('Orientierung und Basisgeschwindigkeit stimmen nicht überein');
+  end
+end
+
+%% Teste Impuls gegen Impuls-Zeitableitung
+
+for bm = 2%1:3 % fixb/twist/eulangrpy
+  for i = 1:n
+    % Zustand Zeitpunkt t1
+    qJ1 = QJ(i,:)';
+    qJD1 = QJD(i,:)';
+    qJDD1 = QJDD(i,:)';
+    rB1 = RB(i,:)';
+    vB1 = VB(i,:)';
+    aB1 = AB(i,:)';
+    oB1 = OB(i,:)';
+    xBD1 = [vB1(1:3); OBD(i,:)'];
+    xBDD1 = [aB1(1:3); OBDD(i,:)'];
+    R_W_B_1 = rpy2r(oB1(1),oB1(2),oB1(3));
+
+    % Diskretisiere den Zustand zu Zeitpunkt t2 (Annahme: Konstante
+    % Beschleunigung)
+    dt = 1e-10;
+    qJDD2 = qJDD1;
+    qJD2 = qJD1 + qJDD1*dt;
+    qJ2 = qJ1 + qJD1*dt + 1/2*qJDD1*dt^2;
+
+    aB2 = aB1;
+    vB2 = vB1 + aB1*dt;
+    rB2 = rB1 + vB1(1:3)*dt + 1/2*aB1(1:3)*dt^2; 
+    
+    xBDD2 = xBDD1;
+    xBD2 = xBD1 + xBDD1*dt;
+    oB2 = r2eulxyz( R_W_B_1 + dt*skew(vB1(4:6))*R_W_B_1 );
+
+    % Berechne Übereinstimmung von vp1/vp2
+    P1_vp1 = %RN%_momentum_lin_floatb_twist_vp1(qJ1, qJD1, vB1, ...
+      pkin, m, rSges);
+    P1_vp2 = %RN%_momentum_lin_floatb_twist_vp2(qJ1, qJD1, vB1, ...
+      pkin, m, mrSges);
+    test_P = P1_vp1 - P1_vp2;
+    assert(all(abs(test_P) < 1e-9), 'Abweichung bei momentum_lin vp1 vs vp2');
+    L1_vp1 = %RN%_momentum_ang_floatb_twist_vp1(qJ1, qJD1, rB1, vB1, ...
+      pkin, m, rSges, Icges);
+    % TODO: Folgendes funktioniert noch nicht.
+    % L1_vp2 = %RN%_momentum_ang_floatb_twist_vp2(qJ1, qJD1, rB1, vB1, ...
+    %   pkin, m, mrSges, Ifges);
+    % test_L = L1_vp1 - L1_vp2; % TODO: Das ist noch falsch.
+    % assert(all(abs(test_L) < 1e-9), 'Abweichung bei momentum_ang vp1 vs vp2');
+
+    % Berechne den Impuls zu beiden Zeitpunkten
+    P1 = %RN%_momentum_lin_floatb_twist_vp1(qJ1, qJD1, vB1, ...
+      pkin, m, rSges);
+    L1 = %RN%_momentum_ang_floatb_twist_vp1(qJ1, qJD1, rB1, vB1, ...
+      pkin, m, rSges, Icges);
+    P2 = %RN%_momentum_lin_floatb_twist_vp1(qJ2, qJD2, vB2, ...
+      pkin, m, rSges);
+    L2 = %RN%_momentum_ang_floatb_twist_vp1(qJ2, qJD2, rB2, vB2, ...
+      pkin, m, rSges, Icges);
+
+    % Berechne die Impulszeitableitung zum Zeitpunkt 2
+    if bm == 1 % fixb
+      PD2 = %RN%_momentumD_lin_floatb_sym_lag_varpar(qJ2', qJD2', qJDD2', vB2', aB2', ...
+        pkin, rSges, m);
+      LD2 = %RN%_momentumD_ang_floatb_sym_lag_varpar(qJ2', qJD2', qJDD2', rB2', vB2', aB2', ...
+        pkin, rSges, m, Icges);
+     elseif bm == 2
+      PD2 = %RN%_momentumD_lin_floatb_twist_vp1(qJ2, qJD2, qJDD2, vB2, aB2, ...
+        pkin, m, rSges);
+      LD2 = %RN%_momentumD_ang_floatb_twist_vp1(qJ2, qJD2, qJDD2, rB2, vB2, aB2, ...
+        pkin, m, rSges, Icges);
+    else
+      PD2 = %RN%_momentumD_lin_floatb_eulangrpy_vp1(qJ2, qJD2, qJDD2, oB2, xBD2, xBDD2, ...
+        pkin, m, rSges);
+      LD2 = %RN%_momentumD_ang_floatb_eulangrpy_vp1(qJ2, qJD2, qJDD2, rB2, oB2, xBD2, xBDD2, ...
+        pkin, m, rSges, Icges);
+    end
+
+    % Vergleich die Ergebnisse (Differenzenquotient)
+    PD_diff = (P2-P1)/dt;
+    if any( abs((PD_diff - PD2)/max(abs(PD2))) > 1e-3)
+      error('i=%d. Impulszeitableitung symbolisch gegen numerisch stimmt nicht. Methode %s', ...
+        i, bm_names{bm});
+    end
+    LD_diff = (L2-L1)/dt;
+    if any( abs((LD_diff - LD2)/max(abs(LD2))) > 1e-3)
+      error('i=%d. Drehimpulszeitableitung symbolisch gegen numerisch stimmt nicht. Methode %s', ...
+        i, bm_names{bm});
+    end
+  end
+  fprintf('Impuls gegen Impulszeitableitung für Methode %s getestet (%d Kombinationen)\n', bm_names{bm}, n);
+end
+
+%% Teste centroidal momentum matrix
+for bm = 2%1:3 % fixb/twist/eulangrpy
+  for i = 1:n
+    % Gelenkwinkel
+    qJ = QJ(i,:)';
+    qJD = QJD(i,:)';
+    % Basis-Position
+    r_base = RB(i,:)';
+    % Basis-Geschwindigkeit
+    vB = VB(i,:)';
+    
+    % Basis-Orientierung und -ableitung
+    phi_base = OB(i,:)';
+    xD_base = [vB(1:3); OBD(i,:)'];
+
+    % Berechnung mit vollständiger Funktion
+    if bm == 1 % fixb
+      P = %RN%_momentum_lin_floatb_sym_lag_varpar(qJ', qJD', vB', ...
+        pkin, rSges, m, Icges);
+      L = %RN%_momentum_ang_floatb_sym_lag_varpar(qJ', qJD', r_base', vB', ...
+        pkin, rSges, m, Icges);
+    elseif bm == 2 % twist
+      P = %RN%_momentum_lin_floatb_twist_vp1(qJ, qJD, vB, ...
+        pkin, m, rSges);
+      L = %RN%_momentum_ang_floatb_twist_vp1(qJ, qJD, r_base, vB, ...
+        pkin, m, rSges, Icges);
+    else % eulangrpy
+      P = %RN%_momentum_lin_floatb_eulangrpy_vp1(qJ, qJD, phi_base, xD_base, ...
+        pkin, m, rSges);
+      L = %RN%_momentum_ang_floatb_eulangrpy_vp1(qJ, qJD, r_base, phi_base, xD_base, ...
+        pkin, m, rSges, Icges);
+    end
+    PL_1 = [P;L];
+
+    % Berechne mit centroidal momentum matrix
+    if bm == 1 % fixb
+      K = %RN%_centroidal_momentum_matrix_sym_lag_varpar(qJ', r_base', ...
+        pkin, rSges, m, Icges);
+      PL_2 = K*[vB; qJD];  
+    elseif bm == 2 % twist
+      K = %RN%_centr_momentum_matrix_floatb_twist_vp1(qJ, r_base, ...
+        pkin, m, rSges, Icges);
+      PL_2 = K*[vB; qJD];        
+    else % eulangrpy
+      K = %RN%_centr_momentum_matrix_floatb_eulangrpy_vp1(qJ, r_base, phi_base, ...
+        pkin, m, rSges, Icges);     
+      PL_2 = K*[xD_base; qJD];  
+    end
+
+    % Vergleich
+    Delta = PL_1-PL_2;
+    if any(abs(Delta) > 1e-9) % entstehender Fehler vergleichsweise hoch
+      error('i=%d. Momentum from CMM does not match with directly calculated. %1.5e. Base Method %s', ...
+        i, max(abs(Delta)), bm_names{bm});
+    end
+  end
+  fprintf('Impuls gegen Centroidal Momentum Matrix für %d Zufallswerte getestet. Methode %s.\n', ...
+    n, bm_names{bm});
+end
+
+%% Teste Zeitableitung des Impulses gegen centroidal momentum matrix
+% TODO: Test gegen inverse Dynamik vervollständigen.
+for bm = [] % 2%1:1%:2 % twist/eulangrpy
+  for i = 1:n
+    % Gelenkwinkel
+    qJ = QJ(i,:)';
+    qJD = QJD(i,:)';
+    qJDD = QJDD(i,:)';
+    % Basis-Position
+    r_base = RB(i,:)';
+    % Basis-Geschwindigkeit
+    vB = VB(i,:)';
+    aB = AB(i,:)';
+
+    % Basis-Orientierung und -ableitung
+    phi_base = OB(i,:)';
+    xD_base = [vB(1:3); OBD(i,:)'];
+    xDD_base = [aB(1:3); OBDD(i,:)'];
+    
+    % Berechnung mit vollständiger Funktion  
+    if bm == 1 % fixb
+      PD = %RN%_momentumD_lin_floatb_sym_lag_varpar(qJ', qJD', qJDD', vB', aB', ...
+        pkin, rSges, m);
+      LD = %RN%_momentumD_ang_floatb_sym_lag_varpar(qJ', qJD', qJDD', r_base', vB', aB', ...
+        pkin, rSges, m, Icges);
+     elseif bm == 2
+      PD = %RN%_momentumD_lin_floatb_twist_vp1(qJ, qJD, qJDD, vB, aB, ...
+        pkin, m, rSges);
+      LD = %RN%_momentumD_ang_floatb_twist_vp1(qJ, qJD, qJDD, r_base, vB, aB, ...
+        pkin, m, rSges, Icges);
+    else
+      PD = %RN%_momentumD_lin_floatb_eulangrpy_vp1(qJ, qJD, qJDD, phi_base, xD_base, xDD_base, ...
+        pkin, m, rSges);
+      LD = %RN%_momentumD_ang_floatb_eulangrpy_vp1(qJ, qJD, qJDD, r_base, phi_base, xD_base, xDD_base, ...
+        pkin, m, rSges, Icges);
+    end
+    PLD_1 = [PD;LD];
+
+    % Berechne mit centroidal momentum matrix
+    if bm == 1 % fixb
+      K = %RN%_centroidal_momentum_matrix_sym_lag_varpar(qJ', r_base', ...
+        pkin, rSges, m, Icges);
+      KD = %RN%_centroidal_momentum_matrix_diff_sym_lag_varpar(qJ', qJD', r_base', vB', ...
+        pkin, rSges, m, Icges);
+      PLD_2 = KD*[vB; qJD] + K*[aB; qJDD];
+    elseif bm == 2
+      K = %RN%_centr_momentum_matrix_floatb_twist_vp1(qJ, r_base, ...
+        pkin, m, rSges, Icges);
+      KD = %RN%_centr_momentum_matrixD_floatb_twist_vp1(qJ, qJD, r_base, vB, ...
+        pkin, m, rSges, Icges);
+      PLD_2 = KD*[vB; qJD] + K*[aB; qJDD];
+    else
+      K = %RN%_centr_momentum_matrix_floatb_eulangrpy_vp1(qJ, r_base, phi_base, ...
+        pkin, m, rSges, Icges);
+      KD = %RN%_centr_momentum_matrixD_floatb_eulangrpy_vp1(qJ, qJD, r_base, phi_base, xD_base, ...
+        pkin, m, rSges, Icges);
+      PLD_2 = KD*[xD_base; qJD] + K*[xDD_base; qJDD];
+    end
+    % Vergleich
+    Delta = PLD_1-PLD_2;
+    if any(abs(Delta) > 1e-9) % entstehender Fehler vergleichsweise hoch
+      error('i=%d. Momentum Time derivative from CMM does not match with directly calculated. %1.5e. Base Method %s', ...
+        i, max(abs(Delta)), bm_names{bm});
+    end   
+  end
+fprintf('Impulszeitableitung gegen Centroidal Momentum Matrix für %d Zufallswerte getestet. Methode %s.\n', ...
+  n, bm_names{bm});
+end
+
+
+%% Teste CoM-Funktion
+for i = 1:TSS.n
+  for k = 1:2 % Parameter-Tests für einfache Plausibilitätsprüfung
+    m_k = m;
+    mrSges_k = mrSges;
+    if k == 1 % nur die Basis hat eine Masse
+      m_k(2:end) = 0;
+      mrSges_k(2:end,:) = 0;
+    end
+    qJ = QJ(i,:)';
+    r_base = RB(i,:)';
+    CoM_par1 = %RN%_com_floatb_twist_vp1(qJ, r_base, pkin, m_k, rSges);
+    if k == 1 % Schwerpunkt des Roboters muss exakt der der Basis sein
+      assert(all(abs(CoM_par1-r_base-rSges(1,:)')<1e-10), 'Plausibilitätsfehler beim Schwerpunkt (Par.1)');
+    end
+    CoM_par2 = %RN%_com_floatb_twist_vp2(qJ, r_base, pkin, m_k, mrSges_k);
+    if k == 1
+      assert(all(abs(CoM_par2-r_base-mrSges_k(1,:)'/m_k(1))<1e-10), 'Plausibilitätsfehler beim Schwerpunkt (Par.2)');
+    end
+    test_1vs2 = CoM_par1 - CoM_par2;
+    assert(all(abs(test_1vs2) < 1e-10), 'Berechnung CoM Par 1 vs 2 falsch');
+    % Berechnung mit direkter Kinematik
+    T_c_0mdh = %RN%_fkine_fixb_rotmat_mdh_sym_varpar(qJ, pkin);
+    CoM_fkin = zeros(3,1);
+    for j = 1:size(T_c_0mdh,3)
+      CoM_fkin = CoM_fkin + T_c_0mdh(1:3,1:3,j) * mrSges_k(j,:)' + T_c_0mdh(1:3,4,j)*m_k(j);
+    end
+    CoM_fkin = CoM_fkin / sum(m_k);
+    test_vs_fkin = CoM_par1-r_base - CoM_fkin;
+    assert(all(abs(test_vs_fkin) < 1e-10), 'Berechnung CoM aus dir. Kin. falsch');
+  end
+end
+fprintf('CoM-Funktionen für %d Zufallswerte getestet.\n', n);
+
+
+%% Teste Impuls- und Drallsatz gegen Dynamik-Funktionen
+% Gebe externe Kraft auf die Struktur (beliebige Stelle), berechne
+% die resultierende Beschleunigung und gleiche die Impulsänderung damit ab
+for i = 1:TSS.n
+  qJ = QJ(i,:)';
+  qJD = zeros(NQJ,1); % Beim Test muss die Geschwindigkeit Null sein
+  phi_base = zeros(3,1); % TODO: Für allgemeinen Fall noch ungleich Null zu testen: OB(i,:)';
+  r_base = RB(i,:)';
+  T_basevel = eulxyzjac(phi_base);
+  for iL_fext = 1:TSS.NL
+    f_W_ext = 0.5-rand(3,1);
+    r_i_Cext = zeros(3,1);
+    Jg_C = %RN%_jacobig_mdh_eulxyz_sym(phi_base, qJ, uint8(iL_fext-1), r_i_Cext, pkin);
+    tau_Fe = Jg_C'*[f_W_ext; zeros(3,1)];
+    % Moment der Kraft prüfen
+    T_c_0mdh = %RN%_fkine_fixb_rotmat_mdh_sym_varpar(qJ, pkin);
+    T_W_0 = rt2tr(eulxyz2r(phi_base), r_base);
+    T_0_iLext = T_c_0mdh(:,:,iL_fext);
+    r_0_Cext = eye(3,4) * T_0_iLext * [r_i_Cext;1];
+    r_W_W_Cext = eye(3,4)*T_W_0 * [r_0_Cext;1];
+    m_test = cross(r_0_Cext, f_W_ext);
+    m_jac = (T_basevel') \ tau_Fe(4:6);
+    assert(all(abs( m_test-m_jac) < 1e-10), 'Moment der externen Kraft stimmt nicht');
+
+    % Berechne Beschleunigung aufgrund externer Kraft
+    % Floating-Base-Massenmatrix zusammensetzen
+    Mbb = %RN%_inertiaB_floatb_eulxyz_slag_vp1(qJ, phi_base, pkin, m, rSges, Icges);
+    Mbj = %RN%_inertiaJB_floatb_eulxyz_slag_vp1(qJ, phi_base, pkin, m, rSges, Icges);
+    Mjj = %RN%_inertiaJ_slag_vp1(qJ, pkin, m, rSges, Icges);
+    M_floatb = [Mbb, Mbj'; Mbj, Mjj];
+    % Beschleunigungsmoment berechnen. G- und C-Terme nur als Platzhalter.
+    % Müssen Null sein, damit das reine Moment aufgrund der externen Kraft
+    % benutzt wird
+    cq = %RN%_coriolisvecJ_fixb_slag_vp1(qJ, qJD, ...
+          pkin, m, rSges, Icges);
+    gq = %RN%_gravloadJ_floatb_twist_slag_vp1(qJ, zeros(3,1), ...
+          pkin, m, rSges);
+    tau_a = -[zeros(6,1);gq] -[zeros(6,1);cq] + tau_Fe; % Beschleunigungsmoment
+    % Beschleunigung auf System aus Basis und Gelenken berechnen
+    qDD_floatb = M_floatb \ tau_a;
+    xDD_base = qDD_floatb(1:end); % Basis-Beschleunigung (Euler-Winkel)
+    A_base = [xDD_base(1:3); T_basevel*xDD_base(4:6)]; % Basis-Beschleunigung (Annahme: v=0)
+    qJDD = qDD_floatb(7:end); % Gelenk-Beschleunigung
+    % Berechne Beschleunigung des Kraftangriffspunkts
+    xDD_C = Jg_C*qDD_floatb;
+    % Prüfe Plausibilität durch Winkel zwischen Kraft und Beschleunigung
+    fa_angle = acos(f_W_ext(1:3)'/norm(f_W_ext(1:3)) * xDD_C(1:3)/norm(xDD_C(1:3)));
+    assert(fa_angle<pi/2, 'Richtung der Beschleunigung ist unplausibel (anders als Kraft)');
+    % Berechne Impuls- und Drehimpuls-Ableitung
+    PD = %RN%_momentumD_lin_floatb_twist_vp1(qJ, qJD, qJDD, zeros(6,1), A_base, ...
+      pkin, m, rSges);
+    LD = %RN%_momentumD_ang_floatb_twist_vp1(qJ, qJD, qJDD, r_base, zeros(6,1), A_base, ...
+      pkin, m, rSges, Icges);
+    % Prüfe ob Impuls-Zeitableitung mit der externen Kraft übereinstimmt
+    % (Impuls- und Drallsatz)
+    PD_test = tau_Fe(1:3);
+    assert(all( abs(PD - PD_test)<1e-10 ), ...
+      'Impulsänderung stimmt nicht mit externer Kraft überein');
+    % Drehimpuls ist bezogen auf Welt-KS: Änderung ist identisch mit
+    % Momentenbilanz um dessen Ursprung
+    LD_test = cross(r_base+r_0_Cext, f_W_ext); % Hiernach ist es das Moment um den Welt-KS-Ursprung
+    assert(all( abs(LD - LD_test)<1e-10 ), ...
+      'Drehimpulsänderung stimmt nicht mit externer Kraft überein');
+  end
+end
+fprintf('Impuls- und Drallsatz getestet (%d Kombinationen)\n', n);

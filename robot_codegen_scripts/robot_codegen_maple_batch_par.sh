@@ -162,6 +162,8 @@ do
           robot_tree_floatb_rotmat_dynamics_worldframe_par2_cormat.mpl
           robot_tree_floatb_rotmat_dynamics_worldframe_par2_invdyn.mpl
           robot_tree_floatb_rotmat_dynamics_worldframe_par2_inertiaD.mpl
+          robot_tree_momentum_worldframe_par1.mpl
+          robot_tree_momentum_worldframe_par2.mpl
       "
     fi;
   
