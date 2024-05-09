@@ -356,7 +356,6 @@ printf("%s. Beginne Ersetzung der Geschwindigkeiten und Bestimmung der Plattform
 # Substituiere die Gelenkgeschwindigkeiten über H-, Ui- und JBi-Matrix mit EE-Geschwindikeiten
 Tmp := 0:
 Tmp2 := 0:
-
 for i to N_LEGS do
   Tmp := Multiply(H,xED_s):
   Tmp := Multiply(U_i(..,..,i),Tmp):
@@ -379,7 +378,7 @@ for i to N_LEGS do
     tmp_l1 := length(A||i):
     printf("%s. Beginne Vereinfachung: Projektionsmatrix A Beinkette %d. Länge: %d.\n", \
       FormatTime("%Y-%m-%d %H:%M:%S"), i, tmp_l1):
-    z||i := simplify2(A||i):
+    A||i := simplify2(A||i):
     tmp_t2:=time():
     tmp_l2 := length(A||i):
     printf("%s. Projektionsmatrix A Beinkette %d vereinfacht. Länge: %d->%d. Rechenzeit %1.1fs.\n", \
@@ -388,7 +387,18 @@ for i to N_LEGS do
   B||i := Multiply(A||i,Matrix(qJD_i_s(..,i))):
   C||i := Tmp2 - B||i:
 end do:
-
+# Prüfe ob Ersetzung plausibel ist
+for i to N_LEGS do
+  for j to RowDimension(z||i) do
+    for k to ColumnDimension(z||i) do
+    	 from l to RowDimension(qJD_i_s) do
+        if diff(z||i(j,k), qJD_i_s(l,i)) <> 0 then
+          printf("Fehler bei Substitution der Geschwindigkeiten: z%d(%d,%d) enthält %s\n", i, j, k, qJD_i_s(l,i)):
+        end if:
+      end do:
+    end do:
+  end do:
+end do:
 RowParamMin := RowDimension(paramMinRed):
 MtoC := copy(MregRed):
 for i to NX do
@@ -417,6 +427,21 @@ for i to NX do
   end do:
 end do:
 CregRed := CregRed+MtoC:
+# Prüfe Ergebnis auf Plausibilität
+for i to NX do
+  for k to RowParamMin do
+    for j to N_LEGS do
+      for l to NQJ_parallel do
+        if diff(ARed(i,k), qJD_i_s(l,j)) <> 0 then
+          printf("Fehler bei Substitution der Geschwindigkeiten: Regressor (%d,%d) enthält %s\n", i, k, qJD_i_s(l,j)):
+        end if:
+        if diff(ARed(i,k), qJDD_i_s(l,j)) <> 0 then
+          printf("Fehler bei Substitution der Geschwindigkeiten: Regressor (%d,%d) enthält %s\n", i, k, qJDD_i_s(l,j)):
+        end if:
+      end do:
+    end do:
+  end do:
+end do:
 tauGes := ARed:#.paramMinRed:
 # Dynamik-Regressor in Plattform-Koordinaten (oben berechnet)
 tau_x := tauGes:
@@ -460,6 +485,8 @@ tau_x := ARed:
 MMreg_x := MMregRed:
 Creg_x := CregRed:
 greg_x := gregRed:
+
+
 # PKM-Dynamik-Funktionen mit MPV bereits eingesetzt
 # Erzeuge MPV-Vektor
 if regressor_modus = "regressor_minpar" then
