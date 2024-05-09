@@ -36,10 +36,13 @@ N_LEGS = TSS.N_LEGS;
 XP = TSS.XP;
 %% Start Simulation
 t1 = tic;
+old_dir = pwd();
+cd(fileparts(which(sl_Modellname))); % Damit slprj-Ordner im Modell-Ordner liegt
 simOut = sim(sl_Modellname, 'StopTime', '5', ...
   'SimulationMode', 'normal');
 sl = get_simulink_outputs(simOut, sl_Modellname);
 fprintf('Simulink-Modell berechnet. Rechenzeit: %1.1fs\n', toc(t1));
+cd(old_dir);
 
 %% Ergebnisse auswerten
 COND_ALL = NaN(n,1);
@@ -75,3 +78,4 @@ for i = 1:length(t)
 
 end
 fprintf('Kinematik-Ergebnisse aus Simulink-Blöcken validiert\n');
+bdclose(sl_Modellname);

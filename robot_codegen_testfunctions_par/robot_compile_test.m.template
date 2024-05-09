@@ -1,4 +1,7 @@
-% Compile all Functions as mex to check if asserts are correct
+% Compile all Functions for %RN% as mex to check if asserts are correct
+
+
+% %VERSIONINFO%
 
 % Moritz Schappler, schappler@irt.uni-hannover.de, 2015-01
 % (C) Institut für Regelungstechnik, Universität Hannover
@@ -6,9 +9,206 @@
 clear
 clc
 
-%% Init
+
+%% Kompilieren aller Funktionen
 %RN%_testfunctions_path_init % erzeugt matlabfcn_path.m
 
 mex_all_matlabfcn_in_dir(matlabfcn_path, 1);
 
 fprintf('Alle m-Funktionen als mex kompiliert!\n');
+
+%% Parameter
+TSS = %RN%_varpar_testfunctions_parameter_par();
+for f = fields(TSS)'
+  eval(sprintf('%s=TSS.%s;',f{1},f{1}));
+end
+% Minimalparametervektor
+MPV = %RN%_minimal_parameter_para(pkin, m, mrSges, Ifges, koppelP);
+
+%% Funktionsaufruf und Teste kompilierte gegen nicht kompilierte Dateien
+for i = 1:n
+  q = reshape(Q(i,:), NQJ_P, N_LEGS);
+  xP = XP(i,:)';
+  xPD = XPD(i,:)';
+  xPDD = XPDD(i,:)';
+  g = G(i,:)';
+  
+  Jinv = %RN%_Jinv(xP, q, pkin, koppelP, legFrame);
+  Jinv_mex = %RN%_Jinv_mex(xP, q, pkin, koppelP, legFrame);
+  test_Jinv_abs = Jinv - Jinv_mex;
+  assert(all(abs(test_Jinv_abs(:))<1e-10), 'Fehler bei Mex-Funktion für Jinv');
+  % InvDyn-Funktionen
+  tauX_vp1 = %RN%_invdyn_para_pf_slag_vp1(xP, xPD, xPDD, q, g, legFrame, ...
+    koppelP, pkin, m, rSges, Icges);
+  tauX_vp2 = %RN%_invdyn_para_pf_slag_vp2(xP, xPD, xPDD, q, g, legFrame, ...
+    koppelP, pkin, m, mrSges, Ifges);
+  tauX_regmin = %RN%_invdyn_para_pf_regmin(xP, xPD, xPDD, q, g, legFrame, ...
+    koppelP, pkin);
+  tauX_reg2 = %RN%_invdyn_para_pf_reg2(xP, xPD, xPDD, q, g, legFrame, ...
+    koppelP, pkin);
+  tauX_func = %RN%_invdyn_para_pf_mdp(xP, xPD, xPDD, q, g, legFrame, ...
+    koppelP, pkin, MPV);
+  % InvDyn-Mex
+  tauX_vp1_mex = %RN%_invdyn_para_pf_slag_vp1_mex(xP, xPD, xPDD, q, g, legFrame, ...
+    koppelP, pkin, m, rSges, Icges);
+  tauX_vp2_mex = %RN%_invdyn_para_pf_slag_vp2_mex(xP, xPD, xPDD, q, g, legFrame, ...
+    koppelP, pkin, m, mrSges, Ifges);
+  tauX_regmin_mex = %RN%_invdyn_para_pf_regmin_mex(xP, xPD, xPDD, q, g, legFrame, ...
+    koppelP, pkin);
+  tauX_reg2_mex = %RN%_invdyn_para_pf_reg2_mex(xP, xPD, xPDD, q, g, legFrame, ...
+    koppelP, pkin);
+  tauX_func_mex = %RN%_invdyn_para_pf_mdp_mex(xP, xPD, xPDD, q, g, legFrame, ...
+    koppelP, pkin, MPV);
+  % InvDyn-Test
+  test_tauX_vp1_abs = tauX_vp1 - tauX_vp1_mex;
+  I_abserr = abs(test_tauX_vp1_abs) > 1e8*eps(1+max(tauX_vp1_mex));
+  I_relerr = test_tauX_vp1_abs ./ tauX_vp1_mex > 1e-2;
+  assert(all(~(I_abserr&I_relerr)), 'Fehler bei Mex-Funktion für tauX_vp1');
+  test_tauX_vp2_abs = tauX_vp2 - tauX_vp2_mex;
+  I_abserr = abs(test_tauX_vp2_abs) > 1e8*eps(1+max(tauX_vp2_mex));
+  I_relerr = test_tauX_vp2_abs ./ tauX_vp2_mex > 1e-2;
+  assert(all(~(I_abserr&I_relerr)), 'Fehler bei Mex-Funktion für tauX_vp2');
+  test_tauX_regmin_abs = tauX_regmin - tauX_regmin_mex;
+  I_abserr = abs(test_tauX_regmin_abs) > 1e8*eps(1+max(tauX_regmin_mex));
+  I_relerr = test_tauX_regmin_abs ./ tauX_regmin_mex > 1e-2;
+  assert(all(~(I_abserr(:)&I_relerr(:))), 'Fehler bei Mex-Funktion für tauX_regmin');
+  test_tauX_reg2_abs = tauX_reg2 - tauX_reg2_mex;
+  I_abserr = abs(test_tauX_reg2_abs) > 1e8*eps(1+max(tauX_reg2_mex));
+  I_relerr = test_tauX_reg2_abs ./ tauX_reg2_mex > 1e-2;
+  assert(all(~(I_abserr(:)&I_relerr(:))), 'Fehler bei Mex-Funktion für tauX_reg2');
+  test_tauX_func_abs = tauX_func - tauX_func_mex;
+  I_abserr = abs(test_tauX_func_abs) > 1e8*eps(1+max(tauX_func_mex));
+  I_relerr = test_tauX_func_abs ./ tauX_func_mex > 1e-2;
+  assert(all(~(I_abserr&I_relerr)), 'Fehler bei Mex-Funktion für tauX_func');
+  % gravload-Funktionen
+  taugX_vp1 = %RN%_gravload_para_pf_slag_vp1(xP, q, g, legFrame, ...
+    koppelP, pkin, m, rSges);
+  taugX_vp2 = %RN%_gravload_para_pf_slag_vp2(xP, q, g, legFrame, ...
+    koppelP, pkin, m, mrSges);
+  taugX_regmin = %RN%_gravload_para_pf_regmin(xP, q, g, legFrame, ...
+    koppelP, pkin);
+  taugX_reg2 = %RN%_gravload_para_pf_reg2(xP, q, g, legFrame, ...
+    koppelP, pkin);
+  taugX_func = %RN%_gravload_para_pf_mdp(xP, q, g, legFrame, ...
+    koppelP, pkin, MPV);
+  % gravload-Mex
+  taugX_vp1_mex = %RN%_gravload_para_pf_slag_vp1_mex(xP, q, g, legFrame, ...
+    koppelP, pkin, m, rSges);
+  taugX_vp2_mex = %RN%_gravload_para_pf_slag_vp2_mex(xP, q, g, legFrame, ...
+    koppelP, pkin, m, mrSges);
+  taugX_regmin_mex = %RN%_gravload_para_pf_regmin_mex(xP, q, g, legFrame, ...
+    koppelP, pkin);
+  taugX_reg2_mex = %RN%_gravload_para_pf_reg2_mex(xP, q, g, legFrame, ...
+    koppelP, pkin);
+  taugX_func_mex = %RN%_gravload_para_pf_mdp_mex(xP, q, g, legFrame, ...
+    koppelP, pkin, MPV);
+  % gravload-Test
+  test_taugX_vp1_abs = taugX_vp1 - taugX_vp1_mex;
+  I_abserr = abs(test_taugX_vp1_abs) > 1e8*eps(1+max(taugX_vp1_mex));
+  I_relerr = test_taugX_vp1_abs ./ taugX_vp1_mex > 1e-2;
+  assert(all(~(I_abserr&I_relerr)), 'Fehler bei Mex-Funktion für taugX_vp1');
+  test_taugX_vp2_abs = taugX_vp2 - taugX_vp2_mex;
+  I_abserr = abs(test_taugX_vp2_abs) > 1e8*eps(1+max(taugX_vp2_mex));
+  I_relerr = test_taugX_vp2_abs ./ taugX_vp2_mex > 1e-2;
+  assert(all(~(I_abserr&I_relerr)), 'Fehler bei Mex-Funktion für taugX_vp2');
+  test_taugX_regmin_abs = taugX_regmin - taugX_regmin_mex;
+  I_abserr = abs(test_taugX_regmin_abs) > 1e8*eps(1+max(taugX_regmin_mex));
+  I_relerr = test_taugX_regmin_abs ./ taugX_regmin_mex > 1e-2;
+  assert(all(~(I_abserr(:)&I_relerr(:))), 'Fehler bei Mex-Funktion für taugX_regmin');
+  test_taugX_reg2_abs = taugX_reg2 - taugX_reg2_mex;
+  I_abserr = abs(test_taugX_reg2_abs) > 1e8*eps(1+max(taugX_reg2_mex));
+  I_relerr = test_taugX_reg2_abs ./ taugX_reg2_mex > 1e-2;
+  assert(all(~(I_abserr(:)&I_relerr(:))), 'Fehler bei Mex-Funktion für taugX_reg2');
+  test_taugX_func_abs = taugX_func - taugX_func_mex;
+  I_abserr = abs(test_taugX_func_abs) > 1e8*eps(1+max(taugX_func_mex));
+  I_relerr = test_taugX_func_abs ./ taugX_func_mex > 1e-2;
+  assert(all(~(I_abserr&I_relerr)), 'Fehler bei Mex-Funktion für taugX_func');
+  % Coriolis-Funktionen
+  taucX_vp1 = %RN%_coriolisvec_para_pf_slag_vp1(xP, xPD, q, legFrame, ...
+    koppelP, pkin, m, rSges, Icges);
+  taucX_vp2 = %RN%_coriolisvec_para_pf_slag_vp2(xP, xPD, q, legFrame, ...
+    koppelP, pkin, m, mrSges, Ifges);
+  taucX_regmin = %RN%_coriolisvec_para_pf_regmin(xP, xPD, q, legFrame, ...
+    koppelP, pkin);
+  taucX_reg2 = %RN%_coriolisvec_para_pf_reg2(xP, xPD, q, legFrame, ...
+    koppelP, pkin);
+  taucX_func = %RN%_coriolisvec_para_pf_mdp(xP, xPD, q, legFrame, ...
+    koppelP, pkin, MPV);
+  % Coriolis-Mex
+  taucX_vp1_mex = %RN%_coriolisvec_para_pf_slag_vp1_mex(xP, xPD, q, legFrame, ...
+    koppelP, pkin, m, rSges, Icges);
+  taucX_vp2_mex = %RN%_coriolisvec_para_pf_slag_vp2_mex(xP, xPD, q, legFrame, ...
+    koppelP, pkin, m, mrSges, Ifges);
+  taucX_regmin_mex = %RN%_coriolisvec_para_pf_regmin_mex(xP, xPD, q, legFrame, ...
+    koppelP, pkin);
+  taucX_reg2_mex = %RN%_coriolisvec_para_pf_reg2_mex(xP, xPD, q, legFrame, ...
+    koppelP, pkin);
+  taucX_func_mex = %RN%_coriolisvec_para_pf_mdp_mex(xP, xPD, q, legFrame, ...
+    koppelP, pkin, MPV);
+  % Coriolis-Test
+  test_taucX_vp1_abs = taucX_vp1 - taucX_vp1_mex;
+  I_abserr = abs(test_taucX_vp1_abs) > 1e8*eps(1+max(taucX_vp1_mex));
+  I_relerr = test_taucX_vp1_abs ./ taucX_vp1_mex > 1e-2;
+  assert(all(~(I_abserr&I_relerr)), 'Fehler bei Mex-Funktion für taucX_vp1');
+  test_taucX_vp2_abs = taucX_vp2 - taucX_vp2_mex;
+  I_abserr = abs(test_taucX_vp2_abs) > 1e8*eps(1+max(taucX_vp2_mex));
+  I_relerr = test_taucX_vp2_abs ./ taucX_vp2_mex > 1e-2;
+  assert(all(~(I_abserr&I_relerr)), 'Fehler bei Mex-Funktion für taucX_vp2');
+  test_taucX_regmin_abs = taucX_regmin - taucX_regmin_mex;
+  I_abserr = abs(test_taucX_regmin_abs) > 1e8*eps(1+max(taucX_regmin_mex));
+  I_relerr = test_taucX_regmin_abs ./ taucX_regmin_mex > 1e-2;
+  assert(all(~(I_abserr(:)&I_relerr(:))), 'Fehler bei Mex-Funktion für taucX_regmin');
+  test_taucX_reg2_abs = taucX_reg2 - taucX_reg2_mex;
+  I_abserr = abs(test_taucX_reg2_abs) > 1e8*eps(1+max(taucX_reg2_mex));
+  I_relerr = test_taucX_reg2_abs ./ taucX_reg2_mex > 1e-2;
+  assert(all(~(I_abserr(:)&I_relerr(:))), 'Fehler bei Mex-Funktion für taucX_reg2');
+  test_taucX_func_abs = taucX_func - taucX_func_mex;
+  I_abserr = abs(test_taucX_func_abs) > 1e8*eps(1+max(taucX_func_mex));
+  I_relerr = test_taucX_func_abs ./ taucX_func_mex > 1e-2;
+  assert(all(~(I_abserr&I_relerr)), 'Fehler bei Mex-Funktion für taucX_func');
+
+  % Massenmatrix-Funktionen
+  MMX_vp1 = %RN%_inertia_para_pf_slag_vp1(xP, q, legFrame, ...
+    koppelP, pkin, m, rSges, Icges);
+  MMX_vp2 = %RN%_inertia_para_pf_slag_vp2(xP, q, legFrame, ...
+    koppelP, pkin, m, mrSges, Ifges);
+  MMX_regmin = %RN%_inertia_para_pf_regmin(xP, q, legFrame, ...
+    koppelP, pkin);
+  MMX_reg2 = %RN%_inertia_para_pf_reg2(xP, q, legFrame, ...
+    koppelP, pkin);
+  MMX_func = %RN%_inertia_para_pf_mdp(xP, q, legFrame, ...
+    koppelP, pkin, MPV);
+  % Massenmatrix-Mex
+  MMX_vp1_mex = %RN%_inertia_para_pf_slag_vp1_mex(xP, q, legFrame, ...
+    koppelP, pkin, m, rSges, Icges);
+  MMX_vp2_mex = %RN%_inertia_para_pf_slag_vp2_mex(xP, q, legFrame, ...
+    koppelP, pkin, m, mrSges, Ifges);
+  MMX_regmin_mex = %RN%_inertia_para_pf_regmin_mex(xP, q, legFrame, ...
+    koppelP, pkin);
+  MMX_reg2_mex = %RN%_inertia_para_pf_reg2_mex(xP, q, legFrame, ...
+    koppelP, pkin);
+  MMX_func_mex = %RN%_inertia_para_pf_mdp_mex(xP, q, legFrame, ...
+    koppelP, pkin, MPV);
+  % Massenmatrix-Test
+  test_MMX_vp1_abs = MMX_vp1 - MMX_vp1_mex;
+  I_abserr = abs(test_MMX_vp1_abs) > 1e8*eps(1+max(MMX_vp1_mex(:)));
+  I_relerr = test_MMX_vp1_abs ./ MMX_vp1_mex > 1e-2;
+  assert(all(~(I_abserr(:)&I_relerr(:))), 'Fehler bei Mex-Funktion für MMX_vp1');
+  test_MMX_vp2_abs = MMX_vp2 - MMX_vp2_mex;
+  I_abserr = abs(test_MMX_vp2_abs) > 1e8*eps(1+max(MMX_vp2_mex(:)));
+  I_relerr = test_MMX_vp2_abs ./ MMX_vp2_mex > 1e-2;
+  assert(all(~(I_abserr(:)&I_relerr(:))), 'Fehler bei Mex-Funktion für MMX_vp2');
+  test_MMX_regmin_abs = MMX_regmin - MMX_regmin_mex;
+  I_abserr = abs(test_MMX_regmin_abs) > 1e8*eps(1+max(MMX_regmin_mex(:)));
+  I_relerr = test_MMX_regmin_abs ./ MMX_regmin_mex > 1e-2;
+  assert(all(~(I_abserr(:)&I_relerr(:))), 'Fehler bei Mex-Funktion für MMX_regmin');
+  test_MMX_reg2_abs = MMX_reg2 - MMX_reg2_mex;
+  I_abserr = abs(test_MMX_reg2_abs) > 1e8*eps(1+max(MMX_reg2_mex(:)));
+  I_relerr = test_MMX_reg2_abs ./ MMX_reg2_mex > 1e-2;
+  assert(all(~(I_abserr(:)&I_relerr(:))), 'Fehler bei Mex-Funktion für MMX_reg2');
+  test_MMX_func_abs = MMX_func - MMX_func_mex;
+  I_abserr = abs(test_MMX_func_abs) > 1e8*eps(1+max(MMX_func_mex(:)));
+  I_relerr = test_MMX_func_abs ./ MMX_func_mex > 1e-2;
+  assert(all(~(I_abserr(:)&I_relerr(:))), 'Fehler bei Mex-Funktion für MMX_func');
+end
+fprintf('Alle Funktionen gegen Mex-Kompilate getestet\n');
