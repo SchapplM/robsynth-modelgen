@@ -4,8 +4,8 @@
 # Untersuchung von Eigenschaften der Regressorform und des Minimalparametervektors
 # 
 # Dateiname:
-# robot -> Berechnung fÃ¼r allgemeinen Roboter
-# tree -> Berechnung fÃ¼r eine allgemeine Baumstruktur (aber bisher nur fÃ¼r serielle Strukturen getestet)
+# robot -> Berechnung für allgemeinen Roboter
+# tree -> Berechnung für eine allgemeine Baumstruktur (aber bisher nur für serielle Strukturen getestet)
 # base_parameter_transformations -> Umwandlung der Minimalparameterform in andere Darstellungen
 # Authors
 # Moritz Schappler, schappler@irt.uni-hannover.de, 2016-04
@@ -14,8 +14,8 @@
 # Quellen
 # [SousaCor2014] Sousa, C. D. and Cortesao, R.: Physical feasibility of robot base inertial parameter identification: A linear matrix inequality approach (2014)
 # Initialisierung
-interface(warnlevel=0): # UnterdrÃ¼cke die folgende Warnung.
-restart: # Gibt eine Warnung, wenn Ã¼ber Terminal-Maple mit read gestartet wird.
+interface(warnlevel=0): # Unterdrücke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
 interface(warnlevel=3):
 with(LinearAlgebra):
 with(ArrayTools):
@@ -27,37 +27,59 @@ codegen_act := true:
 read "../helper/proc_convert_s_t":
 read "../helper/proc_convert_t_s": 
 read "../helper/proc_MatlabExport":
-read "../robot_codegen_definitions/robot_env":
-read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
-# Ergebnisse der Minimalparametergruppierung laden
-
-if base_method_name="twist" then
-  paramfile := sprintf("../codeexport/%s/tmp/minimal_parameter_vector_fixb_maple", robot_name):
-  expstring:="fixb":
-  PV2:=Matrix(PV2_vec[11..10*NL,1]):
-elif base_method_name="eulxyz" then 
-  paramfile := sprintf("../codeexport/%s/tmp/minimal_parameter_vector_floatb_eulxyz_maple", robot_name):
-  expstring:="floatb_eulxyz":
-  PV2:=PV2_vec:
-else
-  printf("Nicht behandelte Basis-Methode: %s\n", base_method_name):
-fi:
-if FileTools[Exists](paramfile) then
-  read paramfile:
-else
-  printf("%s. Minimalparametervektor wurde nicht berechnet. Abbruch der Untersuchung der Parameter-AbhÃ¤ngigkeiten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
-  quit: # Funktioniert in GUI nicht richtig...
-  robot_name := "": # ...Daher auch LÃ¶schung des Roboternamens.
+# Initialisierung der Definitionen.
+use_parallel_robot := false: # Wird über ein Bash-Skript automatisch auf true gesetzt bei PKM-Code-Generierung
+if not use_parallel_robot then # Seriell
+  read "../robot_codegen_definitions/robot_env":
+  read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", robot_name):
+else # PKM
+  read "../robot_codegen_definitions/robot_env_par":
+  read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
+  read "../robot_codegen_definitions/robot_env_par":
 end if:
-MPV := Paramvec2:
-
-printf("Generiere Minimalparameter-Transformationen fÃ¼r %s (%s)\n", robot_name, expstring):
-
+printf("%s. Bestimme Dynamikparameter-Transformationen für %s.\n", FormatTime("%Y-%m-%d %H:%M:%S"), robot_name):
+# Ergebnisse der Minimalparametergruppierung laden
+if not use_parallel_robot then # Serielle/Hybride Roboter
+  if base_method_name="twist" then
+    paramfile := sprintf("../codeexport/%s/tmp/minimal_parameter_vector_fixb_maple", robot_name):
+    expstring:="fixb":
+    PV2:=Matrix(PV2_vec[11..10*NL,1]):
+  elif base_method_name="eulxyz" then 
+    paramfile := sprintf("../codeexport/%s/tmp/minimal_parameter_vector_floatb_eulxyz_maple", robot_name):
+    expstring:="floatb_eulxyz":
+    PV2:=PV2_vec:
+  else
+    printf("Nicht behandelte Basis-Methode: %s\n", base_method_name):
+  fi:
+  if FileTools[Exists](paramfile) then
+    read paramfile:
+  else
+    printf("%s. Minimalparametervektor wurde nicht berechnet. Abbruch der Untersuchung der Parameter-Abhängigkeiten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
+    quit: # Funktioniert in GUI nicht richtig...
+    robot_name := "": # ...Daher auch Löschung des Roboternamens.
+  end if:
+  MPV := Paramvec2:
+else # PKM	
+  paramfile := sprintf("../codeexport/%s/tmp/minimal_parameter_parrob_maple.m", robot_name):
+  paramfile2 := sprintf("../codeexport/%s/tmp/inertial_parameter_parrob_maple.m", robot_name):
+  if FileTools[Exists](paramfile) and FileTools[Exists](paramfile2) then
+    read paramfile:
+    read paramfile2:
+  else
+    printf("%s. Minimalparametervektor wurde nicht berechnet. Abbruch der Untersuchung der Parameter-Abhängigkeiten.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
+    quit: # Funktioniert in GUI nicht richtig...
+    robot_name := "": # ...Daher auch Löschung des Roboternamens.
+  end if:
+  MPV := paramMinRed: # aus minimal_parameter_parrob_maple.m
+  PV2 := paramRed: # inertial_parameter_parrob_maple.m
+  expstring := "fixb":
+end if:
+printf("Generiere Minimalparameter-Transformationen für %s (%s)\n", robot_name, expstring):
 # Minimalparametervektor als Matrixdarstellung
 # Siehe [SousaCor2014] equ. (38)
 # Beispielrechnung:
 # U=dU/dPV2*PV2=dU/dMPV*MPV # Parameterlineare Form
-# MPV=dMPV/dPV2 * PV2 # Minimalparametervektor MPV hÃ¤ngt nur linear von den normalen Parametern im Parametervektor PV2 ab
+# MPV=dMPV/dPV2 * PV2 # Minimalparametervektor MPV hängt nur linear von den normalen Parametern im Parametervektor PV2 ab
 # dU/dMPV = dU/dPV2 * dMPV/dPV1
 # Benutze Fixed-Base Parameter: Ignoriere Parameter der Basis
 Paramvec_size := RowDimension(MPV):
@@ -74,24 +96,24 @@ end:
 save K, sprintf("../codeexport/%s/tmp/PV2_MPV_transformation_linear_dependant_%s_maple", robot_name, expstring):
 # Aufteilung der Matrixdarstellung in einzelne Teilmatrizen
 # Generate the Matrices required in [SousaCor2014] equ. (33)
-# Wenn ein Inertialparameter zu einer linear unabhÃ¤ngigen Spalte der Regressormatrizen gehÃ¶rt, 
-# steht er in K als 1, alle anderen SpalteneintrÃ¤ge dieser Zeile sind Null und der Inertialparameter steht auch in keiner anderen Zeile.
-# Falls er zu einer linear abhÃ¤ngigen Spalte der Regressormatrix gehÃ¶rt, steht er in mehreren Spalten von K oder nur in einer Spalte aber dort nicht alleine.
-# Die Permutationsmatrizen P_b, P_d wÃ¤hlen die jeweiligen Parameter aus dem Gesamt-Inertialparametervektor aus 
+# Wenn ein Inertialparameter zu einer linear unabhängigen Spalte der Regressormatrizen gehört, 
+# steht er in K als 1, alle anderen Spalteneinträge dieser Zeile sind Null und der Inertialparameter steht auch in keiner anderen Zeile.
+# Falls er zu einer linear abhängigen Spalte der Regressormatrix gehört, steht er in mehreren Spalten von K oder nur in einer Spalte aber dort nicht alleine.
+# Die Permutationsmatrizen P_b, P_d wählen die jeweiligen Parameter aus dem Gesamt-Inertialparametervektor aus 
 n_b := RowDimension(K):
 n_d := ColumnDimension(K)-RowDimension(K): 
 n := n_b+n_d: # [SousaCor2014] equ. (31)
 ;
-P_b := Matrix(n, n_b): # fÃ¼r [SousaCor2014] equ. (33) 
-P_d := Matrix(n, n_d): # fÃ¼r [SousaCor2014] equ. (33)
+P_b := Matrix(n, n_b): # für [SousaCor2014] equ. (33) 
+P_d := Matrix(n, n_d): # für [SousaCor2014] equ. (33)
 ;
 
 for i from 1 to n_b do:
-  # gehe alle Zeilen durch und prÃ¼fe, ob der MPV nur aus einem Inertialparameter-Eintrag besteht   
+  # gehe alle Zeilen durch und prüfe, ob der MPV nur aus einem Inertialparameter-Eintrag besteht   
   # falls er nicht aus einem Inertialparameter-Eintrag besteht, kommt der Basis-Eintrag nur in dieser Zeile vor.   
-  # falls der MPV-Eintrag aus mehreren Inertialparameter-EintrÃ¤gen besteht, die nur hier vorkommen, wird der kleinere genommen (der weiter unten steht)
+  # falls der MPV-Eintrag aus mehreren Inertialparameter-Einträgen besteht, die nur hier vorkommen, wird der kleinere genommen (der weiter unten steht)
 
-  # gehe alle Spalten durch und prÃ¼fe, wenn dieser Eintrag 1 ist, ob er noch in einer anderen Zeile vorkommt.
+  # gehe alle Spalten durch und prüfe, wenn dieser Eintrag 1 ist, ob er noch in einer anderen Zeile vorkommt.
   linunabh_gefunden :=false: # Merker, ob ein Basis-Inertialparameter gefunden wurde.
   for j from 1 to n do: # alle Spalten durchgehen
     if K(i,j)=1 then
@@ -99,7 +121,7 @@ for i from 1 to n_b do:
       # gehe alle anderen Zeilen durch
       Index_j_lin_unabh := true: # Merker, dass aktueller Index Basis-Inertialparameter ist.
       for i2 from 1 to n_b do:
-        if i = i2 then # die selbe Zeile die gegengeprÃ¼ft wird ausschlieÃŸen
+        if i = i2 then # die selbe Zeile die gegengeprüft wird ausschließen
           next
         end if:
         if not (K(i2,j) = 0) then
@@ -110,9 +132,9 @@ for i from 1 to n_b do:
         end if:
       end do:
       if Index_j_lin_unabh then
-        # linear unabhÃ¤ngigen Parameter speichern
+        # linear unabhängigen Parameter speichern
         P_b(j,i):=1:
-        # printf("FÃ¼r MPV-Zeile %d ist %d (%s) der Basisparameter\n", i, j, convert(PV2(j,1), string)):
+        # printf("Für MPV-Zeile %d ist %d (%s) der Basisparameter\n", i, j, convert(PV2(j,1), string)):
         linunabh_gefunden:=true:
       end if:  
     end if:
@@ -120,22 +142,21 @@ for i from 1 to n_b do:
       # Nicht weiter nach einem Basisparameter suchen, da bereits einer gefunden wurde.
       break:
     end if
-  end do: # j-Schleife Ã¼ber Inertialparameter
+  end do: # j-Schleife über Inertialparameter
   if not linunabh_gefunden then
     # printf("Keinen Basis-Inertialparameter in MPV Zeile %d gefunden.\n", i):
   end if:
 end do:
 
-# Alle linear abhÃ¤ngigen Parameter (der Rest) in andere Permutationsmatrix P_d packen
-
+# Alle linear abhängigen Parameter (der Rest) in andere Permutationsmatrix P_d packen
 i_d := 0:
 for j from 1 to n do:
-  # PrÃ¼fe ob der betrachtete Parameter in der Permutationsmatrix fÃ¼r linear unabhÃ¤ngige vorkommt
-  # Summe Ã¼ber die Zeilen von P_b: PrÃ¼fe, ob linear unabhÃ¤ngig
+  # Prüfe ob der betrachtete Parameter in der Permutationsmatrix für linear unabhängige vorkommt
+  # Summe über die Zeilen von P_b: Prüfe, ob linear unabhängig
   linunabh := false:
   for i_b from 1 to ColumnDimension(P_b) do:
     if P_b(j, i_b) = 1 then:
-      linunabh := true: # kommt in P_b vor: Linear unabhÃ¤ngig!
+      linunabh := true: # kommt in P_b vor: Linear unabhängig!
       break:      
     end if:    
   end do:
@@ -145,16 +166,16 @@ for j from 1 to n do:
     P_d(j, i_d) := 1 
   end if
 end do:
-# Transformationsmatrix K_d fÃ¼llen. Setze K_d nur aus den Spalten von K fÃ¼r die linear abhÃ¤ngigen Inertialparameter zusammen
-# K_d: Matrix zur Aufteilung des Minimalparametervektors in linear abhÃ¤ngige und unabhÃ¤ngige Inertialparameter
+# Transformationsmatrix K_d füllen. Setze K_d nur aus den Spalten von K für die linear abhängigen Inertialparameter zusammen
+# K_d: Matrix zur Aufteilung des Minimalparametervektors in linear abhängige und unabhängige Inertialparameter
 K_d:=Matrix(n_b, n_d):
 j_Kd := 0:
 for j from 1 to n do:
-  # PrÃ¼fe, ob der Inertialparameter j linear abhÃ¤ngig ist.
+  # Prüfe, ob der Inertialparameter j linear abhängig ist.
   linabh := false:
   for j_d from 1 to ColumnDimension(P_d) do:
     # j: Index des untersuchten Inertialparameters
-    # j_d: Index der untersuchten Spalte von P_d. Ein Eintrag hier bedeutet, dass der Inertialparameter abhÃ¤ngig ist.
+    # j_d: Index der untersuchten Spalte von P_d. Ein Eintrag hier bedeutet, dass der Inertialparameter abhängig ist.
     if P_d(j, j_d) = 1 then:
       linabh := true:
       break:      
@@ -166,10 +187,10 @@ for j from 1 to n do:
     K_d(..,j_Kd) := K(..,j):
   end if:
 end do:
-printf("Inertialparametervektor hat %d linear abhÃ¤ngige und %d linear unabhÃ¤ngige EintrÃ¤ge\n", n_d, n_b):
-delta_b := Transpose(P_b) . PV2: # Zur ÃœberprÃ¼fung
+printf("Inertialparametervektor hat %d linear abhängige und %d linear unabhängige Einträge\n", n_d, n_b):
+delta_b := Transpose(P_b) . PV2: # Zur Überprüfung
 ;
-delta_d := Transpose(P_d) . PV2: # Zur ÃœberprÃ¼fung
+delta_d := Transpose(P_d) . PV2: # Zur Überprüfung
 ;
 if codegen_act then
   MatlabExport(K_d, sprintf("../codeexport/%s/tmp/PV2_MPV_transformation_linear_dependant_%s_matlab.m", robot_name, expstring), 2):

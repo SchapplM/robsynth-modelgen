@@ -34,12 +34,65 @@ if [ "$CG_MINIMAL" == "1" ]; then
 fi
 
 # Parallele Dynamik-Skripte für Parametersätze 1 und 2 vorbereiten
+# ... für die Plattform
 cp $repo_pfad/workdir/robot_para_plattform_rotmat_dynamics.mpl $repo_pfad/workdir/robot_para_plattform_rotmat_dynamics_par1.mpl
 cp $repo_pfad/workdir/robot_para_plattform_rotmat_dynamics.mpl $repo_pfad/workdir/robot_para_plattform_rotmat_dynamics_par2.mpl
 sed -i "s/codegen_dynpar := 1:/codegen_dynpar := 2:/g" $repo_pfad/workdir/robot_para_plattform_rotmat_dynamics_par2.mpl
-
+# ... für die Gesamt-Dynamik
 cp $repo_pfad/workdir/robot_para_rotmat_projection_dynamics.mpl $repo_pfad/workdir/robot_para_rotmat_projection_dynamics_par1.mpl
 cp $repo_pfad/workdir/robot_para_rotmat_projection_dynamics.mpl $repo_pfad/workdir/robot_para_rotmat_projection_dynamics_par2.mpl
 sed -i "s/codegen_dynpar := 1:/codegen_dynpar := 2:/g" $repo_pfad/workdir/robot_para_rotmat_projection_dynamics_par2.mpl
+# ... Export-Arbeitsblatt
+cp $repo_pfad/workdir/robot_para_rotmat_projection_dynamics_export.mpl $repo_pfad/workdir/robot_para_rotmat_projection_dynamics_export_par1.mpl
+cp $repo_pfad/workdir/robot_para_rotmat_projection_dynamics_export.mpl $repo_pfad/workdir/robot_para_rotmat_projection_dynamics_export_par2.mpl
+sed -i "s/codegen_dynpar := 1:/codegen_dynpar := 2:/g" $repo_pfad/workdir/robot_para_rotmat_projection_dynamics_export_par2.mpl
+
+# Erstelle einzelne Arbeitsblätter für jeden Teil der inversen Dynamik
+codeexportswitches=( corvec grav inertia invdyn )
+for (( dynpar=1; dynpar<=2; dynpar++ ))
+do
+  for ces in "${codeexportswitches[@]}"
+  do
+    mpldat=$repo_pfad/workdir/robot_para_rotmat_projection_dynamics_export_par${dynpar}_${ces}.mpl
+    cp $repo_pfad/workdir/robot_para_rotmat_projection_dynamics_export_par${dynpar}.mpl $mpldat
+    # deaktiviere jede Code-Exportierung
+    for ces2 in "${codeexportswitches[@]}"
+    do
+      sed -i "s/codeexport_${ces2} := true:/codeexport_${ces2} := false:/g" $mpldat
+    done
+    # Aktivierung der gewünschten Code-Exportierung
+    sed -i "s/codeexport_${ces} := false:/codeexport_${ces} := true:/g" $mpldat
+  done
+done
+
+# Regressor-Berechnung für Minimalparameter und Parametersatz 2 vorbereiten
+cp $repo_pfad/workdir/robot_para_rotmat_projection_dynamics_regressor.mpl $repo_pfad/workdir/robot_para_rotmat_projection_dynamics_regressor_minpar.mpl
+cp $repo_pfad/workdir/robot_para_rotmat_projection_dynamics_regressor.mpl $repo_pfad/workdir/robot_para_rotmat_projection_dynamics_regressor_pv2.mpl
+sed -i "s/regressor_modus := \"regressor_minpar\":/regressor_modus := \"regressor\":/g" $repo_pfad/workdir/robot_para_rotmat_projection_dynamics_regressor_pv2.mpl
+cp $repo_pfad/workdir/robot_para_rotmat_projection_dynamics_regressor_export.mpl $repo_pfad/workdir/robot_para_rotmat_projection_dynamics_regressor_export_minpar.mpl
+cp $repo_pfad/workdir/robot_para_rotmat_projection_dynamics_regressor_export.mpl $repo_pfad/workdir/robot_para_rotmat_projection_dynamics_regressor_export_pv2.mpl
+sed -i "s/regressor_modus := \"regressor_minpar\":/regressor_modus := \"regressor\":/g" $repo_pfad/workdir/robot_para_rotmat_projection_dynamics_regressor_export_pv2.mpl
+
+# Erstelle einzelne Export-Arbeitsblätter für jeden Teil der inversen Dynamik (Regressorform)
+codeexportswitches=( corvec grav inertia invdyn )
+regmodeswitches="minpar pv2"
+for rms in ${regmodeswitches}; do
+  for ces in "${codeexportswitches[@]}"
+  do
+    mpldat=$repo_pfad/workdir/robot_para_rotmat_projection_dynamics_regressor_export_${rms}_${ces}.mpl
+    cp $repo_pfad/workdir/robot_para_rotmat_projection_dynamics_regressor_export_${rms}.mpl $mpldat
+    # deaktiviere jede Code-Exportierung
+    for ces2 in "${codeexportswitches[@]}"
+    do
+      sed -i "s/codeexport_${ces2} := true:/codeexport_${ces2} := false:/g" $mpldat
+    done
+    # Aktivierung der gewünschten Code-Exportierung
+    sed -i "s/codeexport_${ces} := false:/codeexport_${ces} := true:/g" $mpldat
+  done
+done
+
+# Analyse des Minimalparameter-Regressors. Dafür Arbeitsblatt auf PKM umstellen
+cp $repo_pfad/robot_codegen_definitions/robot_tree_base_parameter_transformations.mpl $repo_pfad/workdir/robot_para_base_parameter_transformations.mpl
+sed -i "s/use_parallel_robot := false:/use_parallel_robot := true:/g" $repo_pfad/workdir/robot_para_base_parameter_transformations.mpl
 
 echo "Maple-Skripte zur Stapelverarbeitung vorbereitet."

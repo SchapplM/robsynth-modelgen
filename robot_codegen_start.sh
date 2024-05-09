@@ -124,6 +124,11 @@ fi;
 if [ "$CG_KINEMATICSONLY" == "1" ]; then
   CG_BASE_ARGUMENT="$CG_BASE_ARGUMENT --kinematics_only"
 fi;
+if [ "$CG_PARALLEL" == "1" ]; then
+  CG_PARALLEL_ARGUMENT="--parallel"
+else
+  CG_PARALLEL_ARGUMENT=""
+fi;
 
 cd $repo_pfad/robot_codegen_scripts/
 
@@ -258,7 +263,7 @@ if [ "$CG_PARROB" == "1" ]; then
   source $repo_pfad/robot_codegen_scripts/robot_codegen_maple_preparation_par.sh
 
   # Maple-Skripte starten
-  source $repo_pfad/robot_codegen_scripts/robot_codegen_maple_batch_parrob.sh $CG_BASE_ARGUMENT
+  source $repo_pfad/robot_codegen_scripts/robot_codegen_maple_batch_parrob.sh $CG_BASE_ARGUMENT $CG_PARALLEL_ARGUMENT
 
   # Matlab-Funktionen generieren
   cd $repo_pfad/robot_codegen_scripts/

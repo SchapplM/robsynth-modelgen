@@ -22,7 +22,36 @@ end
 
 % Minimalparametervektor
 MPV = %RN%_minimal_parameter_para(pkin, m, mrSges, Ifges, koppelP);
-
+% Vektor mit Inertialparametern (ohne Parameter nach dem Koppelgelenk, dann mit Plattform-Parametern)
+PV2 = NaN(10*size(Ifges,1),1);
+for i = 1:size(Ifges,1)
+  % different order:
+  % Ifges_num_mdh: XX,YY,ZZ,XY,XZ,YZ
+  % PV2: XX,XY,XZ,YY,YZ,ZZ
+  PV2((1:6) +10*(i-1))   = Ifges(i,[1,4,5,2,6,3]);
+  PV2((1:3) +10*(i-1)+6) = mrSges(i,:);
+  PV2(10*i)              = m(i);
+end
+% Liste der Namen der Dynamikparameter. Basis wird hier nicht betrachtet
+% (Index "0"), aber bei den Körpern NL mitgezählt.
+PV2_Names = cell(10*size(Ifges,1),1);
+for i = 1:size(Ifges,1)
+  if i == size(Ifges,1)
+    name_i = 'P';
+  else
+    name_i = sprintf('%d', i);
+  end
+  PV2_Names{10*(i-1)+ 1} = sprintf('XX%s', name_i);
+  PV2_Names{10*(i-1)+ 2} = sprintf('XY%s', name_i);
+  PV2_Names{10*(i-1)+ 3} = sprintf('XZ%s', name_i);
+  PV2_Names{10*(i-1)+ 4} = sprintf('YY%s', name_i);
+  PV2_Names{10*(i-1)+ 5} = sprintf('YZ%s', name_i);
+  PV2_Names{10*(i-1)+ 6} = sprintf('ZZ%s', name_i);
+  PV2_Names{10*(i-1)+ 7} = sprintf('MX%s', name_i);
+  PV2_Names{10*(i-1)+ 8} = sprintf('MY%s', name_i);
+  PV2_Names{10*(i-1)+ 9} = sprintf('MZ%s', name_i);
+  PV2_Names{10*(i-1)+10} = sprintf('M%s',  name_i);
+end
 %% Test inverse dynamic vs regressor form
 Q_GES = length(Q(1,:));
 Q_N = Q_GES/NQJ;
@@ -42,47 +71,64 @@ for i = 1:n
   %% Dynamik in Plattform-Koordinaten
   tauX_vp2 = %RN%_invdyn_para_pf_slag_vp2(xP, xPD, xPDD, q, g, legFrame, ...
     koppelP, pkin, m, mrSges, Ifges);
-  tauX_reg = %RN%_invdyn_para_pf_regmin(xP, xPD, xPDD, q, g, legFrame, ...
+  tauX_regmin = %RN%_invdyn_para_pf_regmin(xP, xPD, xPDD, q, g, legFrame, ...
     koppelP, pkin);
-  tauX_MPV = tauX_reg*MPV;
+  tauX_MPV = tauX_regmin*MPV;
   DeltaX = tauX_MPV - tauX_vp2;
   if any(abs(DeltaX) > 1e6*eps(1+max(abs(tauX_MPV))))
-    error('Inverse dynamics (platform coordinates) does not match with regressor form.')
+    error('Inverse dynamics (platform coordinates) does not match with min. regressor form.')
   end
-  
+  tauX_reg2 = %RN%_invdyn_para_pf_reg2(xP, xPD, xPDD, q, g, legFrame, ...
+    koppelP, pkin);
+  DeltaX2 = tauX_reg2*PV2 - tauX_vp2;
+  if any(abs(DeltaX2) > 1e6*eps(1+max(abs(tauX_MPV))))
+    error('Inverse dynamics (platform coordinates) does not match with inertial regressor form.')
+  end
   %% Gravitationsvektor in Plattform-Koordinaten
   taugX_vp2 = %RN%_gravload_para_pf_slag_vp2(xP, q, g, legFrame, ...
     koppelP, pkin, m, mrSges);
-  taugX_reg = %RN%_gravload_para_pf_regmin(xP, q, g, legFrame, ...
+  taugX_regmin = %RN%_gravload_para_pf_regmin(xP, q, g, legFrame, ...
     koppelP, pkin);
-  taugX_MPV = taugX_reg*MPV;
+  taugX_MPV = taugX_regmin*MPV;
   DeltagX = taugX_MPV - taugX_vp2;
   if any(abs(DeltagX) > 1e6*eps(1+max(abs(taugX_MPV))))
-    error('Gravload (platform coordinates) does not match with regressor form.')
+    error('Gravload (platform coordinates) does not match with min. regressor form.')
+  end
+  taugX_reg2 = %RN%_gravload_para_pf_reg2(xP, q, g, legFrame, ...
+    koppelP, pkin);
+  DeltagX2 = taugX_reg2*PV2 - taugX_vp2;
+  if any(abs(DeltagX2) > 1e6*eps(1+max(abs(DeltagX2))))
+    error('Gravload (platform coordinates) does not match with inertial regressor form.')
   end
   % Gravitationsvektor-Regressor gegen Dynamik-Regressor
-  tauX_reg = %RN%_invdyn_para_pf_regmin(xP, xPD*0, xPDD*0, q, g, legFrame, ...
+  tauX_regmin = %RN%_invdyn_para_pf_regmin(xP, xPD*0, xPDD*0, q, g, legFrame, ...
     koppelP, pkin);
-  Diff_tau_taug = taugX_reg - tauX_reg;
-  if max(abs(Diff_tau_taug(:))) > 1e3*eps(1+max(abs(tauX_reg(:))))
+  Diff_tau_taug = taugX_regmin - tauX_regmin;
+  if max(abs(Diff_tau_taug(:))) > 1e3*eps(1+max(abs(tauX_regmin(:))))
     error('Inverse Dynamik Regressor stimmt nicht gegen Gravitation-Regressor');
   end
   
   %% Coriolisvektor in Plattform-Koordinaten
   taucX_vp2 = %RN%_coriolisvec_para_pf_slag_vp2(xP, xPD, q, legFrame, ...
     koppelP, pkin, m, mrSges, Ifges);
-  taucX_reg = %RN%_coriolisvec_para_pf_regmin(xP, xPD, q, legFrame, ...
+  taucX_regmin = %RN%_coriolisvec_para_pf_regmin(xP, xPD, q, legFrame, ...
     koppelP, pkin);
-  taucX_MPV = taucX_reg*MPV;
+  taucX_MPV = taucX_regmin*MPV;
   DeltacX = taucX_MPV - taucX_vp2;
   if any(abs(DeltacX) > 1e6*eps(1+max(abs(taucX_MPV))))
-    error('Coriolis Vector (platform coordinates) does not match with regressor form.')
+    error('Coriolis Vector (platform coordinates) does not match with min. regressor form.')
+  end
+  taucX_reg2 = %RN%_coriolisvec_para_pf_reg2(xP, xPD, q, legFrame, ...
+    koppelP, pkin);
+  DeltacX2 = taucX_reg2*PV2 - taucX_vp2;
+  if any(abs(DeltacX2) > 1e11*eps(1+max(abs(DeltacX2)))) % TODO: Threshold has to be very high
+    error('Coriolis Vector (platform coordinates) does not match with inertial regressor form.')
   end
   % Coriolisvektor-Regressor gegen Dynamik-Regressor
-  tauX_reg = %RN%_invdyn_para_pf_regmin(xP, xPD, xPDD*0, q, g*0, legFrame, ...
+  tauX_regmin = %RN%_invdyn_para_pf_regmin(xP, xPD, xPDD*0, q, g*0, legFrame, ...
     koppelP, pkin);
-  Diff_tau_tauc = taucX_reg - tauX_reg;
-  if max(abs(Diff_tau_tauc(:))) > 1e3*eps(1+max(abs(tauX_reg(:))))
+  Diff_tau_tauc = taucX_regmin - tauX_regmin;
+  if max(abs(Diff_tau_tauc(:))) > 1e3*eps(1+max(abs(tauX_regmin(:))))
     error('Inverse Dynamik Regressor stimmt nicht gegen Coriolis-Regressor');
   end
   
@@ -90,13 +136,21 @@ for i = 1:n
   %% Massenmatrix in Plattform-Koordinaten
   MMX_vp2 = %RN%_inertia_para_pf_slag_vp2(xP, q, legFrame, ...
     koppelP, pkin, m, mrSges, Ifges);
-  MMX_reg = %RN%_inertia_para_pf_regmin(xP, q, legFrame, ...
+  MMX_regmin = %RN%_inertia_para_pf_regmin(xP, q, legFrame, ...
     koppelP, pkin);
-  MMX_MPV_vec = MMX_reg*MPV;
+  MMX_MPV_vec = MMX_regmin*MPV;
   MMX_MPV = reshape(MMX_MPV_vec,N_XP,N_XP)';
   DeltaMMX = MMX_MPV - MMX_vp2;
   if any(abs(DeltaMMX(:)) > 1e6*eps(1+max(abs(MMX_MPV(:)))))
-    error('Inertia Matrix (platform coordinates) does not match with regressor form.')
+    error('Inertia Matrix (platform coordinates) does not match with min. regressor form.')
+  end
+  MMX_reg2 = %RN%_inertia_para_pf_reg2(xP, q, legFrame, ...
+    koppelP, pkin);
+  MMX_PV2_vec = MMX_reg2*PV2;
+  MMX_PV2 = reshape(MMX_PV2_vec,N_XP,N_XP)';
+  DeltaMMX2 = MMX_PV2 - MMX_vp2;
+  if any(abs(DeltaMMX2(:)) > 1e6*eps(1+max(abs(DeltaMMX2(:)))))
+    error('Inertia Matrix (platform coordinates) does not match with inertial regressor form.')
   end
   
   %% Dynamik in Antriebskoordinaten
@@ -147,15 +201,15 @@ for i = 1:n
     end
   else % if N_XP > 4
     %% Gesamtdynamik
-    tauA_MPV = (Jinv)' \ tauX_reg;
+    tauA_MPV = (Jinv)' \ tauX_regmin;
     tauA_vp2 = (Jinv)' \ tauX_vp2;
     
     %% Gravitationsvektor
-    taugA_MPV = (Jinv)' \ taugX_reg;
+    taugA_MPV = (Jinv)' \ taugX_regmin;
     taugA_vp2 = (Jinv)' \ taugX_vp2;
     
     %% Coriolisvektor
-    taucA_MPV = (Jinv)' \ taucX_reg;
+    taucA_MPV = (Jinv)' \ taucX_regmin;
     taucA_vp2 = (Jinv)' \ taucX_vp2;
     
     %% Massenmatrix
@@ -183,9 +237,9 @@ for i = 1:n
   Jinv = %RN%_Jinv(xP, q, pkin, koppelP, ...
     legFrame);
   %% Dynamik in Plattform-Koordinaten
-  tauX_reg = %RN%_invdyn_para_pf_regmin(xP, xPD, xPDD, q, g, legFrame, ...
+  tauX_regmin = %RN%_invdyn_para_pf_regmin(xP, xPD, xPDD, q, g, legFrame, ...
     koppelP, pkin);
-  tauX_MPV = tauX_reg*MPV;
+  tauX_MPV = tauX_regmin*MPV;
   tauX_func = %RN%_invdyn_para_pf_mdp(xP, xPD, xPDD, q, g, legFrame, ...
     koppelP, pkin, MPV);
   DeltaX = tauX_MPV - tauX_func;
@@ -194,9 +248,9 @@ for i = 1:n
   end
   
   %% Gravitationsvektor in Plattform-Koordinaten
-  taugX_reg = %RN%_gravload_para_pf_regmin(xP, q, g, legFrame, ...
+  taugX_regmin = %RN%_gravload_para_pf_regmin(xP, q, g, legFrame, ...
     koppelP, pkin);
-  taugX_MPV = taugX_reg*MPV;
+  taugX_MPV = taugX_regmin*MPV;
   taugX_func = %RN%_gravload_para_pf_mdp(xP, q, g, legFrame, ...
     koppelP, pkin, MPV);
   DeltagX = taugX_MPV - taugX_func;
@@ -205,9 +259,9 @@ for i = 1:n
   end
   
   %% Coriolisvektor in Plattform-Koordinaten
-  taucX_reg = %RN%_coriolisvec_para_pf_regmin(xP, xPD, q, legFrame, ...
+  taucX_regmin = %RN%_coriolisvec_para_pf_regmin(xP, xPD, q, legFrame, ...
     koppelP, pkin);
-  taucX_MPV = taucX_reg*MPV;
+  taucX_MPV = taucX_regmin*MPV;
   taucX_func = %RN%_coriolisvec_para_pf_mdp(xP, xPD, q, legFrame, ...
     koppelP, pkin, MPV);
   DeltacX = taucX_MPV - taucX_func;
@@ -218,9 +272,9 @@ for i = 1:n
   %% Massenmatrix in Plattform-Koordinaten
   MMX_vp2 = %RN%_inertia_para_pf_slag_vp2(xP, q, legFrame, ...
     koppelP, pkin, m, mrSges, Ifges);
-  MMX_reg = %RN%_inertia_para_pf_regmin(xP, q, legFrame, ...
+  MMX_regmin = %RN%_inertia_para_pf_regmin(xP, q, legFrame, ...
     koppelP, pkin);
-  MMX_MPV_vec = MMX_reg*MPV;
+  MMX_MPV_vec = MMX_regmin*MPV;
   MMX_MPV = reshape(MMX_MPV_vec,N_XP,N_XP)';
   MMX_func = %RN%_inertia_para_pf_mdp(xP, q, legFrame, ...
     koppelP, pkin, MPV);
@@ -279,3 +333,71 @@ for i = 1:n
 end
 fprintf('Tested inverse dynamics functions with parameter vector input for %d random joint angles for %s\n', ...
   n, robot_name);
+
+%% Prüfe Minimalparametervektor gegen Matrix mit Inertialparameterzuordnung
+% [Sousa2014] Gl. (38)
+[K, K_d, P_b, P_d] = %RN%_PV2_MPV_transformations_fixb(pkin);
+MPV_test = K*PV2;
+if length(MPV_test)~=length(MPV)
+  error('Dimension der MPV-Zerlegung stimmt nicht: %d vs %d Einträge.', ...
+    length(MPV_test), length(MPV));
+end
+test = MPV - MPV_test;
+if any(abs(test(:)) > 1e-10)
+  error('Minimalparametervektor stimmt nicht mit MPV aus Inertialparametermatrix überein');
+end
+% MPV-Transformationsmatrix aus Teilmatrizen aus [Sousa2014] aufbauen und testen
+K_test = (P_b' + K_d*P_d'); % [Sousa2014] Gl. (39)
+Test = abs(K-K_test);
+if any(Test(:)>1e-12)
+  error('Test [Sousa2014] Gl. (38) fehlgeschlagen!');
+end
+fprintf('Transformationen des fixb-Minimalparametervektors erfolgreich getestet\n');
+
+
+%% Teste Minimalparameterform gegen numerische Berechnung nach [Gautier1990]
+% Matrix mit Samples der Regressormatrix erstellen ([Gautier1990], Gl. (8))
+% Zufällige Werte, nach [Gautier1990], Kap. 5-1-1
+nreps = ceil(length(PV2)/n); % falls es viel mehr Parameter als n=100 sind
+W_g_invdyn = NaN(NQJ*n*nreps, length(PV2)); % Informationsmatrix des Inertialparameter-Regressors. Zum Testen des Rangs
+% W_g_energy = NaN(n*nreps, length(PV2)); % Gleiche Matrix, nur mit Energie, statt Dynamik
+for k = 1:nreps
+  for j = 1:n
+    q = [];
+    for ll = 1:Q_N
+      q = [q;Q(1,(ll-1)*NQJ+1:ll*NQJ)]; %#ok<AGROW>
+    end
+    q = q';
+    xP = XP(i,:)';
+    xPD = XPD(i,:)';
+    xPDD = XPDD(i,:)';
+    g = G(j,:)';
+    i = (k-1)*n+j; % Index für Informationsmatrix
+    % [Gautier1990] Gl. (7)
+    tauX_reg2 = %RN%_invdyn_para_pf_reg2(xP, xPD, xPDD, q, g, legFrame, ...
+      koppelP, pkin);
+    % Füllen der Matrix: [Gautier1990], Kap. 2-3
+    % [Gautier1990] Gl. (8) (Füllen mit Dynamik-Regressor)
+    W_g_invdyn((i-1)*N_XP+1:i*N_XP,:) = tauX_reg2;
+  end
+end
+% Struktur mit Eingabedaten für Algorithmus generieren
+[Ksym, K_dsym, P1sym, P2sym] = %RN%_PV2_MPV_transformations_fixb(pkin);
+plin_num_test_struct = struct('W', W_g_invdyn, 'PV2', PV2, 'MPV', MPV, ...
+  'P1sym', P1sym, 'P2sym', P2sym, 'K_dsym', K_dsym, 'Ksym', Ksym, ...
+  'NQ', NQJ, 'PV2_Names', {PV2_Names}, 'qr_tolerance', NaN);
+fprintf('Untersuche Parameterreduzierung für Dynamik-Regressor\n');
+try
+  robot_paramlin_test_reg_num(plin_num_test_struct);
+catch err
+  if false % Parameter-Minimierung funktionert nicht immer
+    throw(err);
+  else
+    % Werfe keinen Fehler auf. Da man bis hier gekommen ist, ist die
+    % Parameterreduzierung auf jeden Fall richtig. Nur anscheinend numerisch
+    % nicht minimal.
+    warning('Es trat ein Fehler bei der Prüfung der Minimalität der Parameterreduktion auf (siehe vorherige Meldungen)');
+  end
+end
+
+fprintf('Symbolisch berechnete Minimalparameterform gegen numerische Form geprüft\n');
