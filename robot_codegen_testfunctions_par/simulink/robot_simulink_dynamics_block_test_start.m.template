@@ -1,0 +1,120 @@
+% Start dynamics block test model for %RN%
+% Test auf Kompilierbarkeit der Dynamik-Blöcke in der Bibliothek
+
+% Moritz Schappler, moritz.schappler@imes.uni-hannover.de, 2024-05
+% (C) Institut für Mechatronische Systeme, Leibniz Universität Hannover
+
+clear
+clc
+close all
+
+%% Parameter
+TSS = %RN%_varpar_testfunctions_parameter_par();
+for f = fields(TSS)'
+  eval(sprintf('%s=TSS.%s;',f{1},f{1}));
+end
+% Minimalparametervektor
+MPV = %RN%_minimal_parameter_para(pkin, m, mrSges, Ifges, koppelP);
+%% Modellparameter
+Ts = 5e-2; % Abtastzeit der Eingabedaten
+t = (0:Ts:(n-1)*Ts)'; % Zeit-Stützstellen für Eingabedaten
+
+simin_qJ = struct('time', t, ...
+    'signals', struct('values', Q, 'dimensions', size(Q,2)), ...
+    'name', 'q');
+simin_xP = struct('time', t, ...
+    'signals', struct('values', XP, 'dimensions', size(XP,2)), ...
+    'name', 'xP');
+simin_xPD = struct('time', t, ...
+    'signals', struct('values', XPD, 'dimensions', size(XPD,2)), ...
+    'name', 'xPD');
+simin_xPDD = struct('time', t, ...
+    'signals', struct('values', XPDD, 'dimensions', size(XPDD,2)), ...
+    'name', 'xPDD');
+simin_g = struct('time', t, ...
+    'signals', struct('values', G, 'dimensions', size(G,2)), ...
+    'name', 'g_base');
+% Workspace-Variable löschen, Modell darf nicht davon abhängen
+clear N_XP NQJ N_LEGS XP
+sl_Modellname = '%RN%_simulink_dynamics_block_test';
+% Variablen neu setzen (für Skript unten)
+N_XP = TSS.N_XP;
+NQJ = TSS.NQJ;
+N_LEGS = TSS.N_LEGS;
+XP = TSS.XP;
+%% Start Simulation
+t1 = tic;
+old_dir = pwd();
+cd(fileparts(which(sl_Modellname))); % Damit slprj-Ordner im Modell-Ordner liegt
+simOut = sim(sl_Modellname, 'StopTime', '5', ...
+  'SimulationMode', 'normal');
+sl = get_simulink_outputs(simOut, sl_Modellname);
+fprintf('Simulink-Modell berechnet. Rechenzeit: %1.1fs\n', toc(t1));
+cd(old_dir);
+
+%% Ergebnisse auswerten
+COND_ALL = NaN(n,1);
+Q_GES = length(Q(1,:));
+Q_N = Q_GES/NQJ;
+for i = 1:length(t)
+  q = reshape(Q(i,:), NQJ_P, N_LEGS);
+  xP = XP(i,:)';
+  xPD = XPD(i,:)';
+  xPDD = XPDD(i,:)';
+  g = G(i,:)';
+  
+  % Ergebnisse aus Simulink-Daten extrahieren
+  [~,i_sl] = min(abs(sl.t-t(i))); % Finde Index der Simulink Ergebnisse
+  Jinv_sl = sl.Jinv(:,:,i_sl);
+  Fx_sl = sl.Fx(i_sl,:)';
+  Fc_sl = sl.Fc(i_sl,:)';
+  Fg_sl = sl.Fg(i_sl,:)';
+  MMx_sl = sl.Mx(:,:,i_sl);
+  % Probe:
+  assert(all(abs(sl.xP(i_sl,:)'-xP)<1e-12), 'Daten X aus Simulink inkonsistent');
+  assert(all(abs(sl.q(i_sl,:)-Q(i,:))<1e-12), 'Daten Q aus Simulink inkonsistent');
+  % Vergleiche Simulink-Ergebnisse mit Matlab-Skript-Ergebnissen
+  Fx_func = %RN%_invdyn_para_pf_mdp(xP, xPD, xPDD, q, g, legFrame, ...
+    koppelP, pkin, MPV);
+  Fg_func = %RN%_gravload_para_pf_mdp(xP, q, g, legFrame, ...
+    koppelP, pkin, MPV);
+  Fc_func = %RN%_coriolisvec_para_pf_mdp(xP, xPD, q, legFrame, ...
+    koppelP, pkin, MPV);
+  MMX_func = %RN%_inertia_para_pf_mdp(xP, q, legFrame, ...
+    koppelP, pkin, MPV);
+  % Jacobi-Matrix nochmal testen. Notwendig wegen Bestimmung der Konditionszahl
+  Jinv = %RN%_Jinv(xP, q, pkin, koppelP, legFrame);
+  COND_ALL(i) = cond(Jinv);
+  test2 = Jinv-Jinv_sl;
+  if any(abs(test2(:)) > 1e-6)
+    errtxt = sprintf(['Jacobi-Matrix stimmt nicht zwischen Simulink ' ...
+      'und Matlab. cond(J)=%1.1e.'], COND_ALL(i));
+    if COND_ALL(i) < 1e3
+      error([errtxt, ' Muss aber mit kleiner Konditionszahl funktionieren.']);
+    else
+      warning([errtxt, ' Liegt evtl. an großer Konditionszahl.']);
+    end
+    continue
+  end
+  DeltagX = Fg_sl - Fg_func;
+  if any(abs(DeltagX) > 1e10*eps(1+max(abs(Fg_func))))
+    error('Grav Load (platform coordinates) from Simulink does not match function call')
+  end
+  DeltacX = Fc_sl - Fc_func;
+  if any(abs(DeltacX) > 1e10*eps(1+max(abs(Fc_func))))
+    error('Coriolis forces (platform coordinates) from Simulink does not match function call')
+  end
+  DeltaFx = Fx_sl - Fx_func;
+  if any(abs(DeltaFx) > 1e10*eps(1+max(abs(Fx_func))))
+    error('Inverse dynamics (platform coordinates) from Simulink does not match function call')
+  end
+  DeltaMM_abs = MMx_sl - MMX_func;
+  DeltaMM_rel = DeltaMM_abs./MMX_func;
+  I_abserr = abs(DeltaMM_abs) > 1e10*eps(1+max(abs(DeltaMM_abs))); % Toleranz min. 1e-4
+  I_relerr = abs(DeltaMM_rel) > 1e-2; % 1% Fehler erlauben
+  if any(I_abserr(:) & I_relerr(:))
+    error('Mass matrix (platform coordinates) from Simulink does not match function call')
+  end
+end
+fprintf('Dynamik-Ergebnisse aus Simulink-Blöcken validiert\n');
+bdclose(sl_Modellname);
