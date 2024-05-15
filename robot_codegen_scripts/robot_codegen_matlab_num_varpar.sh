@@ -72,7 +72,7 @@ linkfiles="$repo_pfad/robotics_repo_path_linux
   $repo_pfad/robotics_repo_path"
 for linkfile in $linkfiles; do
 if [ -f $linkfile ]; then
-  robrepopath=`sed -n -e 's/^robotics_repo_path := "\(.*\)":/\1/p' $linkfile`
+  robrepopath=`sed -n -e 's/^robotics_repo_path := "\(.*\)":[\r]*/\1/p' $linkfile`
   if [ "$robrepopath" == "" ]; then
     echo "Ausdruck "robotics_repo_path= \"/pfad/zum/repo\":" in $linkfile nicht gefunden"
     continue
