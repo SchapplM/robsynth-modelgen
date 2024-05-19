@@ -559,7 +559,7 @@ Ergebnisdateien sollten nicht händisch bearbeitet werden, damit die Änderungen
 
 Der Ordner examples enthält Beispiele für die Datei robot_env.
 ```
-/codegen_definitions
+/robot_codegen_definitions
   examples/
   robot_env
   robot_tree_base_parameter_transformations.mw
@@ -790,6 +790,7 @@ Normale Form:
   robot_para_rotmat_kinematics.mw
   robot_para_plattform_rotmat_dynamics.mw
   robot_para_rotmat_projection_dynamics.mw
+  robot_para_rotmat_projection_dynamics_export.mw
 ```
 
 Regressorform:
@@ -800,7 +801,12 @@ Regressorform:
   robot_para_rotmat_kinematics.mw
   robot_para_plattform_rotmat_dynamics_regressor.mw
   robot_para_rotmat_projection_dynamics_regressor.mw
+  robot_para_rotmat_projection_dynamics_regressor_export.mw
 ```
+
+Besondere Eingaben für die Parallelroboter-Definitionsdatei `robot_codegen_definitions/robot_env_par`:  
+* Analog (und zusätzlich) zu den Optionen `user_M`, `user_CoM` und `user_inertia` [(s.o.)](#ordner_definitionen) können auch (optional) vereinfachte Massen- und Trägheitsparameter für die mobile Plattform der PKM vorgegeben werden. Dadurch werden Dynamikfunktionen vereinfacht und die Anzahl der Parameter reduziert. Die Eingabe muss mit den folgenden Variablenbezeichnungen erfolgen: `user_M_plf := MP:`, `user_CoM_plf := <SXP;SYP;SZP>:` und `user_inertia_plf := <XXCP;XYCP;XZCP;YYCP;YZCP;ZZCP>:`. Einzelne Terme können dabei zu Null gesetzt werden.
+* `codeexport_invdyn`, `codeexport_corvec`, `codeexport_grav`, `codeexport_inertia`: Diese Optionen können lediglich auf false gesetzt werden, um eine (eventuell zu zeitaufwändige) Generierung der entsprechenden Dynamik-Terme zu verhindern. Ansonsten werden alle Terme standardmäßig generiert. Ein Setzen auf `true` ist nicht sinnvoll, da dann die Terme doppelt berechnet werden. 
 
 ### Zusätzliche Dateien
 

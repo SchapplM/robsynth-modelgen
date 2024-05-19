@@ -153,6 +153,7 @@ read &quot;../helper/proc_MatlabExport&quot;:</Text-field>
 <Group labelreference="L1708" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_index_symmat2vector&quot;:
 read &quot;../helper/proc_symmat2vector&quot;:
+read &quot;../helper/proc_vector2symmat&quot;:
 read &quot;../helper/proc_skew2vec&quot;:
 read &quot;../helper/proc_vec2skew&quot;:
 read &quot;../helper/proc_combine2&quot;:</Text-field>
@@ -184,8 +185,24 @@ read &quot;../robot_codegen_definitions/robot_env_par&quot;:</Text-field>
 </Group>
 <Group hide-input="false" labelreference="L3077" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/para_definitions&quot;, robot_name):
-r_P_sP_P := -r_P_sP:
-s_P_P_sP := s_P_sP:</Text-field>
+r_P_sP_P := -r_P_P_SP: # linke Seite: Variablen-Notation aus SA Job
+s_P_P_sP := mr_P_P_SP:
+M_plf := M_plf:
+I_P_SP := I_P_SP:
+I_P_P := I_P_P:</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L3362" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">3x3-Tr\303\244gheitstensoren aus den gestapelten Vektoren aus der Definitionsdatei bestimmen.
+Ab hier Notation des 3x3-Tr\303\244gheitstensors mit &quot;J&quot; statt &quot;I&quot;, aus Studienarbeit von Tim-David Job.</Font></Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L3364" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">J_SP := vec2symmat(I_P_SP([1, 2, 4, 3, 5, 6], 1), 3): # Reihenfolge in I_P_SP und vec2symmat unterschiedlich definiert</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L3363" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">J_P_P := vec2symmat(I_P_P([1, 2, 4, 3, 5, 6], 1), 3):</Text-field>
 </Input>
 </Group>
 <Group labelreference="L3028" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -239,7 +256,7 @@ R_0_0_E_s := parse(sprintf(&quot;eul%s2r&quot;,angleConvLeg))(xE_s(4..6)):
 RPYjac_0_t := parse(sprintf(&quot;eul%sjac&quot;,angleConvLeg))(xE_t(4..6)):
 RPYjac_0_s := parse(sprintf(&quot;eul%sjac&quot;,angleConvLeg))(xE_s(4..6)):
 r_0_sP_P := R_0_0_E_s.r_P_sP_P:
-J_P_P := J_P_P:
+# Rotiere Tr\303\244gheitstensor
 J_0_P := R_0_0_E_s.J_P_P.Transpose(R_0_0_E_s):
 J_0_P_raute := Matrix(6,1,[J_0_P(1,1),J_0_P(1,2),J_0_P(1,3),J_0_P(2,2),J_0_P(2,3),J_0_P(3,3)]):
 J_P_P_raute := Matrix(6,1,[J_P_P(1,1),J_P_P(1,2),J_P_P(1,3),J_P_P(2,2),J_P_P(2,3),J_P_P(3,3)]):
@@ -354,10 +371,10 @@ w_E_0_E_s_stern := Matrix(3,6,[w_E_0_E_s(1),w_E_0_E_s(2),w_E_0_E_s(3),0,0,0,\134
 wD_E_0_E_s_stern := Matrix(3,6,[wD_E_0_E_s(1),wD_E_0_E_s(2),wD_E_0_E_s(3),0,0,0,\134
                                 0,wD_E_0_E_s(1),0,wD_E_0_E_s(2),wD_E_0_E_s(3),0,\134
                                 0,0,wD_E_0_E_s(1),0,wD_E_0_E_s(2),wD_E_0_E_s(3)]):
-paramVecP_old := &lt;J_0_P_raute;sE;mE&gt;:
-paramVecP_old := &lt;J_P_P_raute;sE;mE&gt;:
-paramVecP := &lt;J_0_P_raute;sE;mE&gt;:
-paramVecP := &lt;J_P_P_raute;sE;mE&gt;:
+paramVecP_old := &lt;J_0_P_raute;sE;M_plf&gt;:
+paramVecP_old := &lt;J_P_P_raute;sE;M_plf&gt;:
+paramVecP := &lt;J_0_P_raute;sE;M_plf&gt;:
+paramVecP := &lt;J_P_P_raute;sE;M_plf&gt;:
 paramVecP_M := Copy(paramVecP):
 # Hierdurch (u.a.?) werden die Massen am Ende der Beinkette mit den Dynamikparametern der Plattform zusammengefasst
 tmp := Matrix(10,1):
@@ -369,7 +386,7 @@ for i to N_LEGS do
 end do:
 # Trigonometrische Ausdr\303\274cke zusammenfassen.
 wD_E_0_E_s_stern := combine2(wD_E_0_E_s_stern):</EC-CodeEditor></CodeEditor-ExecGroup>
-<Group labelreference="L3344" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group hide-input="false" labelreference="L3344" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group><CodeEditor-ExecGroup view="presentation" hide-input="false" labelreference="L3346" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion17" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">A_E := &lt;JT_T|JR_T&gt;.&lt;ZeroMatrix(3,6),vec2skew(wD_E_0_E_s)+Multiply(vec2skew(w_E_0_E_s),vec2skew(w_E_0_E_s)),a_E;
@@ -433,6 +450,26 @@ MM_regmin := combine2(MM_regmin):
 </Input>
 </Group>
 </Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Regressor-Terme vereinfachen, wenn Parameter Null gesetzt sind</Text-field></Title>
+<Group labelreference="L3370" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">\303\234ber Benutzereingaben werden Dynamik-Parameter der Plattform zu Null gesetzt</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L3371" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3373" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion19" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">paramVecP_generic := Matrix(&lt;XXP, XYP, XZP, YYP, YZP, ZZP, MXP, XYP, MZP, MP&gt;):
+for i from 1 to 10 do
+  if paramVecP[i,1] = 0 then
+    printf(&quot;Parameter %s ist Null. Setze Regressorspalte %d auf Null.\134n&quot;, convert(paramVecP_generic[i,1],string), i):
+    M_regmin(1..6,i) := 0:
+    MM_regmin(1..6,i) := 0:
+    c_regmin(1..6,i) := 0:
+    g_regmin(1..6,i) := 0:
+    A_E(1..6,i) := 0:
+  end if:
+end do:</EC-CodeEditor></CodeEditor-ExecGroup>
+</Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Code Export</Text-field></Title>
 <Group labelreference="L2972" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input>
@@ -449,10 +486,6 @@ MM_regmin := combine2(MM_regmin):
   MatlabExport(g_regmin, sprintf(&quot;../codeexport/%s/tmp/invdyn_floatb_%s_gplatform_matlab.m&quot;, robot_name, base_method_name), codegen_opt):
 end if:
 </EC-CodeEditor></CodeEditor-ExecGroup>
-<Group labelreference="L2929" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
-</Input>
-</Group>
 <Group labelreference="L3019" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">Maple-Export</Text-field>
 </Input>
@@ -461,7 +494,7 @@ end if:
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save paramVecP, paramVecP_M, A_E, M_regmin, c_regmin, g_regmin, H, dH, sprintf(&quot;../codeexport/%s/tmp/floatb_%s_platform_dynamic_reg_maple.m&quot;, robot_name, base_method_name):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L3261" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group labelreference="L3375" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>

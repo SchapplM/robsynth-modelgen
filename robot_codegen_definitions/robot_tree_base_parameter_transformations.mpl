@@ -17,6 +17,7 @@
 interface(warnlevel=0): # Unterdrücke die folgende Warnung.
 restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
 interface(warnlevel=3):
+interface(rtablesize=100):
 with(LinearAlgebra):
 with(ArrayTools):
 with(codegen):
@@ -85,7 +86,10 @@ printf("Generiere Minimalparameter-Transformationen für %s (%s)\n", robot_name, 
 Paramvec_size := RowDimension(MPV):
 K := Matrix(Paramvec_size, RowDimension(PV2)):
 for i to Paramvec_size do 
-  for j from 1 to RowDimension(PV2) do 
+  for j from 1 to RowDimension(PV2) do
+    if PV2[j,1] = 0 then
+      next:
+    end if:
     K[i,j] := diff(MPV[i, 1], PV2[j,1]):
   end do:
 end do:

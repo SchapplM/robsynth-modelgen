@@ -118,6 +118,10 @@ restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(LinearAlgebra):</Text-field>
 </Input>
 </Group>
+<Group labelreference="L3385" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">with(ArrayTools): # F\303\274r HasNonZero</Font></Text-field>
+</Input>
+</Group>
 <Group labelreference="L3311" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">with(StringTools): # F\303\274r Zeitausgabe</Font></Text-field>
 </Input>
@@ -128,6 +132,10 @@ restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet
 </Group>
 <Group labelreference="L1681" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_convert_t_s&quot;:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3392" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_vector2symmat&quot;:</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1595" drawlabel="true">
@@ -146,20 +154,16 @@ restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;../codeexport/%s/tmp/tree_floatb_definitions&quot;, leg_name):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L3266" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Link-Index, f\303\274r den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber f\303\274r beliebige Segmente aufgestellt werden. (0=Basis)</Font></Text-field>
-</Input>
-</Group>
-<Group labelreference="L3267" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">LIJAC:=NL-1:</Text-field>
-</Input>
-</Group>
 <Group labelreference="L3260" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">Ergebnisse der analytischen Jacobi-Matrix (Translatorisch)</Text-field>
 </Input>
 </Group>
+<Group labelreference="L3398" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Link-Index, f\303\274r den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber f\303\274r beliebige Segmente aufgestellt werden. (0=Basis)</Font></Text-field>
+</Input>
+</Group>
 <Group labelreference="L3306" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">LIJAC:=NL-1:</Text-field>
 </Input>
 </Group><CodeEditor-ExecGroup view="presentation" labelreference="L3308" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion10" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">px, py, pz := 0, 0, 0:
 alphaxs_base, betays_base, gammazs_base := 0, 0, 0: 
@@ -188,13 +192,7 @@ end if:</Text-field>
 <Group labelreference="L3250" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">Parameter definieren, wenn nicht vorher schon geschehen</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3305" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion9" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if not assigned(J_SP) then
-   J_SP := Matrix(3,3,[XX,XY,XZ,XY,YY,YZ,XZ,YZ,ZZ]):
-end if:
-if not assigned(J_P_P) then
-   J_P_P := Matrix(3,3,[XXFP,XYFP,XZFP,XYFP,YYFP,YZFP,XZFP,YZFP,ZZFP]):
-end if:
-if not assigned(xE_s) then
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3305" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion9" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">if not assigned(xE_s) then
    xE_s:=&lt;x_all[1];x_all[2];x_all[3];x_all[4];x_all[5];x_all[6]&gt;:
 end if:
 
@@ -265,11 +263,9 @@ for i to N_LEGS do
 end do:
 </EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L3276" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal">Plattformschwerpunkt</Text-field>
+<Input><Text-field style="Text" layout="Normal">Winkelkonventionen</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3297" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion7" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">r_P_sP := Vector(3,symbol=r_sP):
-s_P_sP := Vector(3,symbol=s_sP):
-angleConvLeg := leg_frame(7):
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3297" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion7" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">angleConvLeg := leg_frame(7):
 angleConv := xE_s(7):
 </EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L3233" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -318,13 +314,191 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 </Input>
 </Group>
 </Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1"><Font size="16">Dynamik-Parameter</Font></Text-field></Title>
+<Group labelreference="L3320" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Einzelne Dynamikparameter als Matlab-Code exportieren. Wenn die Parameter (der Beinkette) durch Benutzereingaben (oder aus PKM-Datenbank) ver\303\244ndert wurden, l\303\244sst sich diese Information so weiter benutzen.
+</Font>(z.B. in der Definition von Eingabeparametern in den Testskripten). Siehe gleichlautender Abschnitt in robot_tree_floatb_twist_definitions.mw.
+</Text-field><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">In den Maple-Variablen ist die Spalte der Index der K\303\266rper und die Zeilen sind die Indizes f\303\274r die xyz-Komponenten (einfacherer Aufruf der Variablen).</Font></Text-field><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">In Matlab ist es umgekehrt (f\303\274hrt zu konsistenterem Code in Matlab): Die Zeilen entsprechen dem K\303\266rper-Index. Daher hier Transponierung.
+Zus\303\244tzlich ist die Reihenfolge der Komponenten der Tr\303\244gheitstensoren in Matlab und Maple unterschiedlich (daher die Indizierung).</Font></Text-field><Text-field style="Text" layout="Normal">Matlab: xx, yy, zz, xy, xz, yz (erst Hauptmomente, dann Deviationsmomente)
+Maple: xx, xy, xz, yy, yz, zz (Dreiecksform)</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3324" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Masse</Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" hide-input="false" labelreference="L3326" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion11" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">mP_generic := parse(&quot;MP&quot;):
+M_plf := copy(mP_generic):
+if assigned(user_M_plf) then
+  if not type(user_M_plf, 'scalar') then
+    printf(&quot;Input user_M_plf is not Scalar. Error.\134n&quot;):
+  end if:
+  # Mass parameter given by user.
+    if user_M_plf&lt;&gt;mP_generic and user_M_plf&lt;&gt;0 then # check input
+      printf(&quot;User input for platform mass should be either \134&quot;%s\134&quot; or zero. Not \134&quot;%s\134&quot;. Continue anyway. \134n&quot;, mP_generic, user_M_plf):
+    end if:
+    M_plf := user_M_plf:
+  printf(&quot;Plattform-Masseparameter von Benutzer gesetzt. Eingabe f\303\274r M_plf:\134n&quot;):
+  print(M_plf);
+end if:</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L3329" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Schwerpunkt</Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" hide-input="false" labelreference="L3331" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion12" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">r_P_P_SP := Matrix(3,1):
+r_P_P_SP_generic := Matrix(&lt;parse(&quot;SXP&quot;), parse(&quot;SYP&quot;), parse(&quot;SZP&quot;)&gt;):
+
+if not assigned(user_CoM_plf) then
+  r_P_P_SP := r_P_P_SP_generic:
+else
+  if RowDimension(user_CoM_plf) &lt;&gt; 3 or ColumnDimension(user_CoM_plf) &lt;&gt; 1 then
+    printf(&quot;Input user_CoM_plf is not of size 3x1. Error.\134n&quot;):
+  end if:
+    for j from 1 to 3 do
+      if user_CoM_plf[j,1]&lt;&gt;r_P_P_SP_generic[j,1] and user_CoM_plf[j,1]&lt;&gt;0 then # check input
+        printf(&quot;User input for platform CoM %d should be either \134&quot;%s\134&quot; or zero. Not \134&quot;%s\134&quot;. Continue anyway. \134n&quot;, j, r_P_P_SP_generic[j,1], convert(user_CoM_plf[j,1],string)):
+      end if:
+    end do:
+    r_P_P_SP[1..3,1]:=user_CoM_plf[1..3,1]:
+  printf(&quot;Plattform-Schwerpunktsparameter von Benutzer gesetzt. Eingabe f\303\274r r_P_P_SP:\134n&quot;):
+  print(r_P_P_SP):
+end if:</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L3337" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Tr\303\244gheitstensor</Font></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" hide-input="false" labelreference="L3340" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion13" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">I_P_SP := Matrix(6, 1):
+I_P_SP_generic := Matrix(6,1,[XXCP,XYCP,XZCP,YYCP,YZCP,ZZCP]):
+if not assigned(user_inertia_plf) then
+  if M_plf &lt;&gt; 0 then # Zero Mass can be set by the user. Then the inertia stays zero
+    I_P_SP := I_P_SP_generic:
+  end if:
+else
+  if RowDimension(user_inertia_plf) &lt;&gt; 6 or ColumnDimension(user_inertia_plf) &lt;&gt; 1 then
+    printf(&quot;Input user_inertia_plf is not of size 6x1. Error.\134n&quot;):
+  end if:
+    for j from 1 to 6 do
+      if user_inertia_plf[j,1]&lt;&gt;I_P_SP_generic[j,1] and user_inertia_plf[j,1]&lt;&gt;0 then # check input
+        printf(&quot;User input for platform inertia %d should be either \134&quot;%s\134&quot; or zero. Not \134&quot;%s\134&quot;. Continue anyway. \134n&quot;, j, convert(I_P_SP_generic[j,1],string), convert(user_inertia_plf[j,1],string)):
+      end if:
+    end do:
+    if M_plf = 0 and HasNonZero(user_inertia_plf) then
+    	 printf(&quot;Platform mass is zero, but inertia is non-zero. Not plausible, but continue anyway.\134n&quot;):
+    end if:
+    I_P_SP[1..6,1]:=user_inertia_plf[1..6,1]:
+  printf(&quot;Plattform-Tr\303\244gheitsparameter von Benutzer gesetzt. Eingabe f\303\274r I_P_SP:\134n&quot;):
+  print(I_P_SP):
+end if:</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L3342" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">First Moment (mass and center of mass)</Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3346" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion14" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">mr_P_P_SP := Matrix(3, 1):
+mr_P_P_SP_generic := Matrix(3, 1):
+xyzstrings := [&quot;X&quot;, &quot;Y&quot;, &quot;Z&quot;]:
+for j from 1 to 3 do # loop over x-, y-, z-coordinates of the CoM
+  mr_P_P_SP_generic[j,1]:= parse(sprintf(&quot;M%sP&quot;, xyzstrings[j])):
+end do:
+if M_plf &lt;&gt; 0 then: # Zero Mass can be set by the user. Then the first moment stays zero
+  for j from 1 to 3 do # loop over x-, y-, z-coordinates of the CoM
+    if r_P_P_SP[j,1] = parse(sprintf(&quot;S%sP&quot;, xyzstrings[j])) then
+    	 # default value for CoM is set (not overwritten by user input).
+    	 # Set default value for first moment
+      mr_P_P_SP[j,1]:= parse(sprintf(&quot;M%sP&quot;, xyzstrings[j])):
+    else
+      # CoM is written by the user. Put this assumption also in the first moment to reduce dynamics parameters
+    	 mr_P_P_SP[j,1] := M_plf*r_P_P_SP[j,1]:
+    end if:
+  end do:
+end if:</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L3343" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Inertia (about the origin of body frame, in link frame)</Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" hide-input="false" labelreference="L3350" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion15" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">I_P_P_calc := Matrix(6, 1):
+# Tr\303\244gheitstensor (3x3) um den K\303\266rperschwerpunkt in K\303\266rper-KS
+I_P_SP_Tensor := vec2symmat(I_P_SP([1, 2, 4, 3, 5, 6], 1), 3): # Reihenfolge in I_P_SP und vec2symmat unterschiedlich definiert
+# Steinerschen Satz anwenden
+I_P_P_Tensor := I_P_SP_Tensor + M[i,1]*Transpose(vec2skew(r_P_P_SP[1..3,1])) . vec2skew(r_P_P_SP[1..3,1]):
+# Wieder als Matrix abspeichern
+I_P_P_calc := &lt;I_P_P_Tensor[1,1]; I_P_P_Tensor[1,2]; I_P_P_Tensor[1,3]; I_P_P_Tensor[2,2]; I_P_P_Tensor[2,3]; I_P_P_Tensor[3,3]&gt;:
+
+</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L3353" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Allgemeine Form des Tr\303\244gheitstensors (Eintr\303\244ge sind unabh\303\244ngige Parameter)</Font></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3355" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion16" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">I_P_P_generic := Matrix(6, 1):
+I_P_P_generic[1,1]:=parse(sprintf(&quot;XXP&quot;)):
+I_P_P_generic[2,1]:=parse(sprintf(&quot;XYP&quot;)):
+I_P_P_generic[3,1]:=parse(sprintf(&quot;XZP&quot;)):
+I_P_P_generic[4,1]:=parse(sprintf(&quot;YYP&quot;)):
+I_P_P_generic[5,1]:=parse(sprintf(&quot;YZP&quot;)):
+I_P_P_generic[6,1]:=parse(sprintf(&quot;ZZP&quot;)):</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L3357" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Pr\303\274fe, welche Eintr\303\244ge des Tr\303\244gheitstensors noch Schwerpunkts-Parameter enthalten. Diese m\303\274ssen wieder auf die Standard-Werte mit unabh\303\244ngigen Parametern gesetzt werden</Font></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3360" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion17" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">I_P_P := Matrix(6, 1):
+compstrings := [&quot;XX&quot;, &quot;XY&quot;, &quot;XZ&quot;, &quot;YY&quot;, &quot;YZ&quot;, &quot;ZZ&quot;]:
+if M_plf &lt;&gt; 0 then # Zero Mass can be set by the user. Then the inertia stays zero
+  for j from 1 to 6 do # Alle Komponenten des Tensors
+    # Nicht Null. Setze erstmal allgemeinen Eintrag:
+    I_P_P[j,1] := I_P_P_generic[j,1]:
+    # Pr\303\274fe, ob Schwerpunktsparameter vorkommt (durch Verschiebungssatz s.o.)
+    IhasCoM := false:
+    for k from 1 to 3 do
+      if has(I_P_P_calc[j,1], r_P_P_SP_generic[k,1]) then
+    	   IhasCoM := true: # Der Eintrag enth\303\244lt die Schwerpunktskoordinaten. Nicht zul\303\244ssig f\303\274r weitere Rechnung.
+    	   break:
+      end if:
+    end do:
+    if has(I_P_P_calc[j,1], I_P_SP_generic[j,1]) then
+    	 IhasCoM := true: # Es steht der Schwerpunktsbezogene Tr\303\244gheitsterm drin. Weitere Rechnung damit nicht m\303\266glich.
+    end if:
+    if IhasCoM = true then
+      next: # Es kommt ein Schwerpunktsparameter vor. Belasse Parameter auf allgemeinem Wert.
+    end if:
+    I_P_P[j,1] := I_P_P_calc[j,1]:
+  end do:
+end if:</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L3399" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Die Dynamikparameter werden nur bis zum K\303\266rper vor dem Koppelgelenk sp\303\244ter in den Funktionen ben\303\266tigt. K\303\266nnen noch durch Benutzereingabe zu Null gesetzt werden</Font></Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L3322" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">M_PKM := &lt;M(2..NQJ_parallel+1,1), M_plf&gt;:</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L3364" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">rC_PKM := &lt;r_i_i_Si(1..3,2..NQJ_parallel+1)|r_P_P_SP&gt;:</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L3327" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">mrC_PKM := &lt;mr_i_i_Si(1..3,2..NQJ_parallel+1)|mr_P_P_SP&gt;:</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L3332" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">IC_PKM := &lt;I_i_Si(1..6,2..NQJ_parallel+1)|I_P_SP&gt;:</Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L3363" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">IF_PKM := &lt;I_i_i(1..6,2..NQJ_parallel+1)|I_P_P&gt;:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3402" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Export f\303\274r Testskript, damit zu Null gesetzt Parameter dort auch zu Null gesetzt werden</Font></Text-field>
+</Input>
+</Group>
+<Group labelreference="L3403" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(M_PKM, sprintf(&quot;../codeexport/%s/tmp/parameters_dyn_mges_pkm_matlab.m&quot;, robot_name), 2):
+MatlabExport(Transpose(rC_PKM), sprintf(&quot;../codeexport/%s/tmp/parameters_dyn_rSges_pkm_matlab.m&quot;, robot_name), 2):
+MatlabExport(Transpose(IC_PKM([1,4,6,2,3,5],..)), sprintf(&quot;../codeexport/%s/tmp/parameters_dyn_Icges_pkm_matlab.m&quot;, robot_name), 2):
+MatlabExport(Transpose(mr_i_i_Si), sprintf(&quot;../codeexport/%s/tmp/parameters_dyn_mrSges_pkm_matlab.m&quot;, robot_name), 2):
+MatlabExport(Transpose(I_i_i([1,4,6,2,3,5],..)), sprintf(&quot;../codeexport/%s/tmp/parameters_dyn_Ifges_pkm_matlab.m&quot;, robot_name), 2):</Text-field>
+</Input>
+</Group>
+</Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Export</Text-field></Title>
 <Group labelreference="L1714" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">Maple-Export</Text-field>
 </Input>
 </Group>
 <Group labelreference="L1598" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save g_world, J_P_P, s_P_sP, NX, NQJ_parallel, angleConvLeg, angleConv, r_P_sP, frame_A_i, qJ_i_s, qJD_i_s, qJDD_i_s, xE_t, xED_t, xEDD_t, xE_s, xED_s, xEDD_s, J_SP, sprintf(&quot;../codeexport/%s/tmp/para_definitions&quot;, robot_name):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save g_world, I_P_P, mr_P_P_SP, NX, NQJ_parallel, angleConvLeg, angleConv, r_P_P_SP, frame_A_i, qJ_i_s, qJD_i_s, qJDD_i_s, xE_t, xED_t, xEDD_t, xE_s, xED_s, xEDD_s, I_P_SP, M_plf, sprintf(&quot;../codeexport/%s/tmp/para_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L1732" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -332,7 +506,7 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 MatlabExport(varScript, sprintf(&quot;../codeexport/%s/tmp/var_parallel.m&quot;, robot_name), 1);</Text-field>
 </Input>
 </Group>
-<Group labelreference="L1735" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group labelreference="L3336" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>

@@ -4,43 +4,52 @@
 # Berechnung der inversen Dynamik der Roboter-Plattform
 # 
 # Dateiname:
-# robot -> Berechnung fÃ¼r allgemeinen Roboter
-# para -> Berechnung fÃ¼r eine parallelen Roboter
+# robot -> Berechnung für allgemeinen Roboter
+# para -> Berechnung für eine parallelen Roboter
 # plattform -> Bezogen auf Plattform der PKM
 # rotmat -> Kinematik wird mit Rotationsmatrizen berechnet
 # dynamics -> Berechnung der Dynamik
 # Autor
 # Tim Job (Studienarbeit bei Moritz Schappler), 2018-12
 # Moritz Schappler, moritz.schappler@imes.uni-hannover.de
-# (C) Institut fÃ¼r Mechatronische Systeme, UniversitÃ¤t Hannover
+# (C) Institut für Mechatronische Systeme, Universität Hannover
 # Sources
 # [Abdellatif2007] Modellierung, Identifikation und robuste Regelung von Robotern mit parallelkinematischen Strukturen
 # Initialization
-interface(warnlevel=0): # UnterdrÃ¼cke die folgende Warnung.
-restart: # Gibt eine Warnung, wenn Ã¼ber Terminal-Maple mit read gestartet wird.
+interface(warnlevel=0): # Unterdrücke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
 interface(warnlevel=3):
 with(LinearAlgebra):
 with(codegen):
 with(CodeGeneration):
 with(StringTools):
 with(VectorCalculus):
-# Einstellungen fÃ¼r Code-Export: Optimierungsgrad (2=hÃ¶chster) und Aktivierung jedes Terms.
+# Dynamik-Parametersatz (1=baryzentrisch, 2=inertial). Muss im Repo auf 1 bleiben, da der Wert per Bash-Skript geändert wird.
 codegen_dynpar := 1:
+# Einstellungen für Code-Export: Optimierungsgrad (2=höchster) und Aktivierung jedes Terms.
 codegen_opt := 2:
 codeexport_invdyn := false:
-codeexport_grav := false: 
+codeexport_grav := false:
 codeexport_corvec := false:
 codeexport_inertia := false:
 read "../helper/proc_MatlabExport":
 read "../helper/proc_vec2skew":
+read "../helper/proc_vector2symmat":
 read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
-# Definitionen fÃ¼r parallelen Roboter laden
+# Definitionen für parallelen Roboter laden
 read "../robot_codegen_definitions/robot_env_par":
 read sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
-r_P_sP_P := -r_P_sP:
-s_P_P_sP := s_P_sP:
-
+r_P_sP_P := -r_P_P_SP: # linke Seite: Variablen-Notation aus SA Job
+s_P_P_sP := mr_P_P_SP:
+M_plf := M_plf:
+I_P_SP := I_P_SP:
+I_P_P := I_P_P:
+# 3x3-Trägheitstensoren aus den gestapelten Vektoren aus der Definitionsdatei bestimmen.
+# Ab hier Notation des 3x3-Trägheitstensors mit "J" statt "I", aus Studienarbeit von Tim-David Job.
+J_SP := vec2symmat(I_P_SP([1, 2, 4, 3, 5, 6], 1), 3): # Reihenfolge in I_P_SP und vec2symmat unterschiedlich definiert
+;
+J_P_P := vec2symmat(I_P_P([1, 2, 4, 3, 5, 6], 1), 3):
 # Lade "robotics_repo_path"-File mit Link zum "imes-robotics-matlab"-Repo
 read("../robotics_repo_path"):
 # Lade die Funktionen aus dem "imes-robotics-matlab"-Repo
@@ -56,7 +65,7 @@ RPYjac_0_t := parse(sprintf("eul%sjac",angleConv))(xE_t(4..6)):
 RPYjac_0_s := parse(sprintf("eul%sjac",angleConv))(xE_s(4..6)):
 r_0_sP_P := R_0_0_E_s.r_P_sP_P:
 if codegen_dynpar = 1 then
-  J_P_P := J_SP + mE*Multiply(Transpose(vec2skew(r_P_sP_P)),vec2skew(r_P_sP_P)):
+  J_P_P := J_SP + M_plf*Multiply(Transpose(vec2skew(r_P_sP_P)),vec2skew(r_P_sP_P)):
 else
   J_P_P := J_P_P:
 end if:
@@ -86,7 +95,7 @@ dRPYjac_E_t := diff~(RPYjac_E_t,t):
 dRPYjac_0_t := diff~(RPYjac_0_t,t):
 dRPYjac_E_s := Copy(dRPYjac_E_t):
 dRPYjac_0_s := Copy(dRPYjac_0_t):
-# Substituiere die zeitabhÃ¤ngigen Koordinaten in der H-Matrix mit zeitunabhÃ¤ngigen Koordinaten 
+# Substituiere die zeitabhängigen Koordinaten in der H-Matrix mit zeitunabhängigen Koordinaten 
 for i to 3 do
   for j to 3 do
     for k from 4 to 6 do
@@ -112,9 +121,9 @@ dH := <ZeroMatrix(3),ZeroMatrix(3);
 # Abdellatif2007 S.34 (3.20)
 xAll := <x;y;z;an;bn;cn>:
 if codegen_dynpar = 1 then
-  gE_z := xE_s(1..3,1) - r_0_sP_P:
+  gE_z := Matrix(xE_s(1..3,1)) - r_0_sP_P:
 else
-  gE_z := mE*xE_s(1..3,1) + s_0_P_sP:
+  gE_z := M_plf*Matrix(xE_s(1..3,1)) + s_0_P_sP:
 end if:
 for j to 3 do
   for i from 1 to 6 do
@@ -129,7 +138,7 @@ for j to 6 do
      dgEdz(i) := diff(gE_z(i),xAll(j)):
   end do:
   if codegen_dynpar = 1 then
-    dgEdz_final(j) := mE*Transpose(g_world(..,1)).dgEdz(..,1):
+    dgEdz_final(j) := M_plf*Transpose(g_world(..,1)).dgEdz(..,1):
   else 
     dgEdz_final(j) := Transpose(g_world(..,1)).dgEdz(..,1):
   end if:
@@ -146,14 +155,14 @@ if codeexport_grav then
 end if:
 
 # Mass-Matrix ME of the platform
-# Berechnung Massenmatrix fÃ¼r die EE-Plattform und die Winkelgeschwindigkeit
+# Berechnung Massenmatrix für die EE-Plattform und die Winkelgeschwindigkeit
 # Abdellatif2007 S.39 (3.30)
 
 if codegen_dynpar = 1 then
-  ME := simplify(<mE*Matrix(3,shape=identity),mE*vec2skew(r_0_sP_P);
-         mE*Transpose(vec2skew(r_0_sP_P)),J_0_P>):
+  ME := simplify(<M_plf*Matrix(3,shape=identity),M_plf*vec2skew(r_0_sP_P);
+         M_plf*Transpose(vec2skew(r_0_sP_P)),J_0_P>):
 else 
-  ME := simplify(<mE*Matrix(3,shape=identity),vec2skew(-s_0_P_sP);
+  ME := simplify(<M_plf*Matrix(3,shape=identity),vec2skew(-s_0_P_sP);
          Transpose(vec2skew(-s_0_P_sP)),J_0_P>):
 end if:
 
@@ -166,7 +175,7 @@ end if:
 # Abdellatif2007 S.39 (3.31)
 
 if codegen_dynpar = 1 then
-  cE := simplify(<ZeroMatrix(3,3),mE*vec2skew(rD_0_sP_P);
+  cE := simplify(<ZeroMatrix(3,3),M_plf*vec2skew(rD_0_sP_P);
          ZeroMatrix(3,3),Multiply(vec2skew(w_0_0_E_s),J_0_P)>):
 else
   cE := simplify(<ZeroMatrix(3,3),vec2skew(-sD_0_P_sP);
@@ -174,7 +183,7 @@ else
 end if:
 
 if codeexport_corvec then
-  # Der Term ist nicht der Coriolis-Vektor, sondern eine Matrix, die dazu fÃ¼hrt. Daher kein Export.
+  # Der Term ist nicht der Coriolis-Vektor, sondern eine Matrix, die dazu führt. Daher kein Export.
   # MatlabExport(cE, sprintf("../codeexport/%s/tmp/coriolisvec_platform_eul%s_matlab.m", robot_name, angleConv), codegen_opt):
 end if:
 
@@ -191,5 +200,4 @@ save MME, cvecE , gE, tauE, H, dH, sprintf("../codeexport/%s/tmp/floatb_platform
 if codeexport_invdyn then
   MatlabExport(tauE, sprintf("../codeexport/%s/tmp/invdyn_platform_eul%s_matlab.m", robot_name, angleConv), codegen_opt):
 end if:
-# 
 

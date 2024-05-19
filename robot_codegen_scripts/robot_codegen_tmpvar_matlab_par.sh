@@ -82,7 +82,7 @@ do
 	echo "M${j} = m(${j});" >> $tmp_pfad/robot_matlabtmp_par_m_parallel.m
 done
 j=$((parallel_NQJ_leg+1))
-echo "mE = m(${j});" >> $tmp_pfad/robot_matlabtmp_par_m_parallel.m
+echo "MP = m(${j});" >> $tmp_pfad/robot_matlabtmp_par_m_parallel.m
 
 echo "" > $tmp_pfad/robot_matlabtmp_par_rcom_parallel.m
 for (( i=0; i<$parallel_NQJ_leg; i++ ))
@@ -93,9 +93,9 @@ do
 	echo "SZ${j} = rSges(${j},3);" >> $tmp_pfad/robot_matlabtmp_par_rcom_parallel.m
 done
 j=$((parallel_NQJ_leg+1))
-echo "r_sP(1) = rSges(${j},1);" >> $tmp_pfad/robot_matlabtmp_par_rcom_parallel.m
-echo "r_sP(2) = rSges(${j},2);" >> $tmp_pfad/robot_matlabtmp_par_rcom_parallel.m
-echo "r_sP(3) = rSges(${j},3);" >> $tmp_pfad/robot_matlabtmp_par_rcom_parallel.m
+echo "SXP = rSges(${j},1);" >> $tmp_pfad/robot_matlabtmp_par_rcom_parallel.m
+echo "SYP = rSges(${j},2);" >> $tmp_pfad/robot_matlabtmp_par_rcom_parallel.m
+echo "SZP = rSges(${j},3);" >> $tmp_pfad/robot_matlabtmp_par_rcom_parallel.m
 
 echo "" > $tmp_pfad/robot_matlabtmp_par_mrcom_parallel.m
 for (( i=0; i<$parallel_NQJ_leg; i++ ))
@@ -106,9 +106,9 @@ do
 	echo "MZ${j} = mrSges(${j},3);" >> $tmp_pfad/robot_matlabtmp_par_mrcom_parallel.m
 done
 j=$((parallel_NQJ_leg+1))
-echo "s_sP(1) = mrSges(${j},1);" >> $tmp_pfad/robot_matlabtmp_par_mrcom_parallel.m
-echo "s_sP(2) = mrSges(${j},2);" >> $tmp_pfad/robot_matlabtmp_par_mrcom_parallel.m
-echo "s_sP(3) = mrSges(${j},3);" >> $tmp_pfad/robot_matlabtmp_par_mrcom_parallel.m
+echo "MXP = mrSges(${j},1);" >> $tmp_pfad/robot_matlabtmp_par_mrcom_parallel.m
+echo "MYP = mrSges(${j},2);" >> $tmp_pfad/robot_matlabtmp_par_mrcom_parallel.m
+echo "MZP = mrSges(${j},3);" >> $tmp_pfad/robot_matlabtmp_par_mrcom_parallel.m
 
 echo "" > $tmp_pfad/robot_matlabtmp_par_Ic_parallel.m
 for (( i=0; i<$parallel_NQJ_leg; i++ ))
@@ -122,13 +122,13 @@ do
 	echo "ZZC${j} = Icges(${j},3);" >> $tmp_pfad/robot_matlabtmp_par_Ic_parallel.m
 done
 j=$((parallel_NQJ_leg+1))
-echo "XX = Icges(${j},1);" >> $tmp_pfad/robot_matlabtmp_par_Ic_parallel.m
-echo "XY = Icges(${j},4);" >> $tmp_pfad/robot_matlabtmp_par_Ic_parallel.m
-echo "XZ = Icges(${j},5);" >> $tmp_pfad/robot_matlabtmp_par_Ic_parallel.m
-echo "YY = Icges(${j},2);" >> $tmp_pfad/robot_matlabtmp_par_Ic_parallel.m
-echo "YZ = Icges(${j},6);" >> $tmp_pfad/robot_matlabtmp_par_Ic_parallel.m
-echo "ZZ = Icges(${j},3);" >> $tmp_pfad/robot_matlabtmp_par_Ic_parallel.m
-	
+echo "XXCP = Icges(${j},1);" >> $tmp_pfad/robot_matlabtmp_par_Ic_parallel.m
+echo "XYCP = Icges(${j},4);" >> $tmp_pfad/robot_matlabtmp_par_Ic_parallel.m
+echo "XZCP = Icges(${j},5);" >> $tmp_pfad/robot_matlabtmp_par_Ic_parallel.m
+echo "YYCP = Icges(${j},2);" >> $tmp_pfad/robot_matlabtmp_par_Ic_parallel.m
+echo "YZCP = Icges(${j},6);" >> $tmp_pfad/robot_matlabtmp_par_Ic_parallel.m
+echo "ZZCP = Icges(${j},3);" >> $tmp_pfad/robot_matlabtmp_par_Ic_parallel.m
+
 echo "" > $tmp_pfad/robot_matlabtmp_par_If_parallel.m
 for (( i=0; i<$parallel_NQJ_leg; i++ ))
 do
@@ -141,12 +141,12 @@ do
 	echo "ZZ${j} = Ifges(${j},3);" >> $tmp_pfad/robot_matlabtmp_par_If_parallel.m
 done
 j=$((parallel_NQJ_leg+1))
-echo "XXFP = Ifges(${j},1);" >> $tmp_pfad/robot_matlabtmp_par_If_parallel.m
-echo "XYFP = Ifges(${j},4);" >> $tmp_pfad/robot_matlabtmp_par_If_parallel.m
-echo "XZFP = Ifges(${j},5);" >> $tmp_pfad/robot_matlabtmp_par_If_parallel.m
-echo "YYFP = Ifges(${j},2);" >> $tmp_pfad/robot_matlabtmp_par_If_parallel.m
-echo "YZFP = Ifges(${j},6);" >> $tmp_pfad/robot_matlabtmp_par_If_parallel.m
-echo "ZZFP = Ifges(${j},3);" >> $tmp_pfad/robot_matlabtmp_par_If_parallel.m
+echo "XXP = Ifges(${j},1);" >> $tmp_pfad/robot_matlabtmp_par_If_parallel.m
+echo "XYP = Ifges(${j},4);" >> $tmp_pfad/robot_matlabtmp_par_If_parallel.m
+echo "XZP = Ifges(${j},5);" >> $tmp_pfad/robot_matlabtmp_par_If_parallel.m
+echo "YYP = Ifges(${j},2);" >> $tmp_pfad/robot_matlabtmp_par_If_parallel.m
+echo "YZP = Ifges(${j},6);" >> $tmp_pfad/robot_matlabtmp_par_If_parallel.m
+echo "ZZP = Ifges(${j},3);" >> $tmp_pfad/robot_matlabtmp_par_If_parallel.m
 
 # Alle Dynamikparameter als Vektor (Minimale Form, Fixed Base)
 echo "" > $tmp_pfad/robot_matlabtmp_par_MDPFIXB_parallel.m

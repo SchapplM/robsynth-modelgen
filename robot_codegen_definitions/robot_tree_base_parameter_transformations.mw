@@ -125,6 +125,10 @@ restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet
 </Font>interface(warnlevel=3):</Text-field>
 </Input>
 </Group>
+<Group labelreference="L3193" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">interface(rtablesize=100):</Text-field>
+</Input>
+</Group>
 <Group labelreference="L1771" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(LinearAlgebra):
 with(ArrayTools):
@@ -226,7 +230,10 @@ U=dU/dPV2*PV2=dU/dMPV*MPV # Parameterlineare Form
 </Group>
 <Group labelreference="L1804" drawlabel="true">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i to Paramvec_size do 
-  for j from 1 to RowDimension(PV2) do 
+  for j from 1 to RowDimension(PV2) do
+    if PV2[j,1] = 0 then
+      next:
+    end if:
     K[i,j] := diff(MPV[i, 1], PV2[j,1]):
   end do:
 end do:</Text-field>

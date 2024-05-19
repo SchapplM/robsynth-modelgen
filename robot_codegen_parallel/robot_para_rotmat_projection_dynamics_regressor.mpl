@@ -333,24 +333,31 @@ CregRed := Matrix(RowDimension(A),NotNullEntries):
 gregRed := Matrix(RowDimension(A),NotNullEntries):
 j := 1:
 for i to RowDimension(paramMin) do
-  shift_line := false:
-  if regressor_modus = "regressor" and not(paramMin(i,1) = 0) then
-    shift_line := true: # bei normalem Regressor die Zeilen auslassen, die zu den Koppelgelenk-Dynamikparametern gehören
+  use_line := false: # bei true: Zeile übernehmen
+  if regressor_modus = "regressor" and (i <= 10*NQJ_parallel or i >10*(NL-1)) then
+    # bei normalem Regressor nur die Zeilen auslassen, die zu den Koppelgelenk-Dynamikparametern (Variable NQJ_parallel) gehören. 
+    # Zeilen zu Plattform-Parametern (letzte 10) müssen an gleicher Stelle bleiben
+    use_line := true:
   elif regressor_modus = "regressor_minpar" and not(paramMin(i,1) = 0 or Equal(Column(A,i), ZeroVector[column](RowDimension(A)))) then
-    shift_line := true:
+    # bei Minimalparameter-Regressor alle Zeilen auslassen, in denen der Parameter zu Null markiert ist, oder wo die Matrix-Spalte Null ist
+    use_line := true:
   end if:
-  if shift_line then
-		paramMinRed(j,1) := paramMin(i,1):
-		for k to RowDimension(A) do
-			ARed(k,j) := A(k,i):
-			MregRed(k,j) := Mreg(k,i):
-			CregRed(k,j) := Creg(k,i):
-			gregRed(k,j) := greg(k,i):
-		end do:
-		j := j + 1:
+  if use_line then
+    paramMinRed(j,1) := paramMin(i,1):
+    for k to RowDimension(A) do
+      ARed(k,j) := A(k,i):
+      MregRed(k,j) := Mreg(k,i):
+      CregRed(k,j) := Creg(k,i):
+      gregRed(k,j) := greg(k,i):
+    end do:
+    j := j + 1:
   end if:
 end do:
 printf("Dynamik-Terme reduziert. Zeilenzähler j=%d\n", j-1):
+if regressor_modus = "regressor_minpar" then
+  printf("Minimalparameter-Vektor:\n"):
+  print(paramMinRed):
+end if:
 printf("%s. Beginne Ersetzung der Geschwindigkeiten und Bestimmung der Plattform-Terme für regressor_modus=%s.\n", FormatTime("%Y-%m-%d %H:%M:%S"), regressor_modus):
 # Replace Joint Velocities
 # Substituiere die Gelenkgeschwindigkeiten über H-, Ui- und JBi-Matrix mit EE-Geschwindikeiten
@@ -522,7 +529,7 @@ if regressor_modus = "regressor_minpar" then
   MatlabExport(paramMinRed, sprintf("../codeexport/%s/tmp/minimal_parameter_parrob_matlab.m", robot_name), codegen_opt):
   MatlabExport(RowParamMin, sprintf("../codeexport/%s/tmp/RowMinPar_parallel.m", robot_name), 2);
 else
-  paramRed := paramMinRed; # Umbenennung, damit es beim erneuten Laden als Inertialparameter-Variable erkennbar ist
+  paramRed := Matrix(<Paramvec2[1..NQJ_parallel*10,1], paramVecP>); # Umbenennung, damit es beim erneuten Laden als Inertialparameter-Variable erkennbar ist
   save paramRed, sprintf("../codeexport/%s/tmp/inertial_parameter_parrob_maple.m", robot_name):
 end if:
 # PKM-Dynamik-Funktionen mit MPV bereits eingesetzt

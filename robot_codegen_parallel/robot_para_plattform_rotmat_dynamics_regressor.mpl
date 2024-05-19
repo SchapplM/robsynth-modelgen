@@ -39,6 +39,7 @@ read "../helper/proc_convert_t_s":
 read "../helper/proc_MatlabExport":
 read "../helper/proc_index_symmat2vector":
 read "../helper/proc_symmat2vector":
+read "../helper/proc_vector2symmat":
 read "../helper/proc_skew2vec":
 read "../helper/proc_vec2skew":
 read "../helper/proc_combine2":
@@ -55,8 +56,16 @@ read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
 read "../robot_codegen_definitions/robot_env_par":
 # Definitionen für parallelen Roboter laden
 read sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
-r_P_sP_P := -r_P_sP:
-s_P_P_sP := s_P_sP:
+r_P_sP_P := -r_P_P_SP: # linke Seite: Variablen-Notation aus SA Job
+s_P_P_sP := mr_P_P_SP:
+M_plf := M_plf:
+I_P_SP := I_P_SP:
+I_P_P := I_P_P:
+# 3x3-Trägheitstensoren aus den gestapelten Vektoren aus der Definitionsdatei bestimmen.
+# Ab hier Notation des 3x3-Trägheitstensors mit "J" statt "I", aus Studienarbeit von Tim-David Job.
+J_SP := vec2symmat(I_P_SP([1, 2, 4, 3, 5, 6], 1), 3): # Reihenfolge in I_P_SP und vec2symmat unterschiedlich definiert
+;
+J_P_P := vec2symmat(I_P_P([1, 2, 4, 3, 5, 6], 1), 3):
 # Ergebnisse der Kinematik für parallen Roboter laden
 
 kinematicsfile := sprintf("../codeexport/%s/tmp/kinematics_%s_platform_maple.m", robot_name, base_method_name):
@@ -83,7 +92,7 @@ R_0_0_E_s := parse(sprintf("eul%s2r",angleConvLeg))(xE_s(4..6)):
 RPYjac_0_t := parse(sprintf("eul%sjac",angleConvLeg))(xE_t(4..6)):
 RPYjac_0_s := parse(sprintf("eul%sjac",angleConvLeg))(xE_s(4..6)):
 r_0_sP_P := R_0_0_E_s.r_P_sP_P:
-J_P_P := J_P_P:
+# Rotiere Trägheitstensor
 J_0_P := R_0_0_E_s.J_P_P.Transpose(R_0_0_E_s):
 J_0_P_raute := Matrix(6,1,[J_0_P(1,1),J_0_P(1,2),J_0_P(1,3),J_0_P(2,2),J_0_P(2,3),J_0_P(3,3)]):
 J_P_P_raute := Matrix(6,1,[J_P_P(1,1),J_P_P(1,2),J_P_P(1,3),J_P_P(2,2),J_P_P(2,3),J_P_P(3,3)]):
@@ -161,10 +170,10 @@ w_E_0_E_s_stern := Matrix(3,6,[w_E_0_E_s(1),w_E_0_E_s(2),w_E_0_E_s(3),0,0,0,\
 wD_E_0_E_s_stern := Matrix(3,6,[wD_E_0_E_s(1),wD_E_0_E_s(2),wD_E_0_E_s(3),0,0,0,\
                                 0,wD_E_0_E_s(1),0,wD_E_0_E_s(2),wD_E_0_E_s(3),0,\
                                 0,0,wD_E_0_E_s(1),0,wD_E_0_E_s(2),wD_E_0_E_s(3)]):
-paramVecP_old := <J_0_P_raute;sE;mE>:
-paramVecP_old := <J_P_P_raute;sE;mE>:
-paramVecP := <J_0_P_raute;sE;mE>:
-paramVecP := <J_P_P_raute;sE;mE>:
+paramVecP_old := <J_0_P_raute;sE;M_plf>:
+paramVecP_old := <J_P_P_raute;sE;M_plf>:
+paramVecP := <J_0_P_raute;sE;M_plf>:
+paramVecP := <J_P_P_raute;sE;M_plf>:
 paramVecP_M := Copy(paramVecP):
 # Hierdurch (u.a.?) werden die Massen am Ende der Beinkette mit den Dynamikparametern der Plattform zusammengefasst
 tmp := Matrix(10,1):
@@ -215,6 +224,20 @@ c_regmin := <JT_T|JR_T>.<ZeroMatrix(3,6),Multiply(vec2skew(w_E_0_E_s),vec2skew(w
 g_regmin := <JT_T|JR_T>.<ZeroMatrix(3,6),ZeroMatrix(3,3),-Transpose(R_0_0_E_s).g_world;
              ZeroMatrix(3,6),-vec2skew(-Transpose(R_0_0_E_s).g_world),ZeroMatrix(3,1)>:
 
+# Regressor-Terme vereinfachen, wenn Parameter Null gesetzt sind
+# Über Benutzereingaben werden Dynamik-Parameter der Plattform zu Null gesetzt
+
+paramVecP_generic := Matrix(<XXP, XYP, XZP, YYP, YZP, ZZP, MXP, XYP, MZP, MP>):
+for i from 1 to 10 do
+  if paramVecP[i,1] = 0 then
+    printf("Parameter %s ist Null. Setze Regressorspalte %d auf Null.\n", convert(paramVecP_generic[i,1],string), i):
+    M_regmin(1..6,i) := 0:
+    MM_regmin(1..6,i) := 0:
+    c_regmin(1..6,i) := 0:
+    g_regmin(1..6,i) := 0:
+    A_E(1..6,i) := 0:
+  end if:
+end do:
 # Code Export
 # Matlab
 if codeexport_invdyn then
@@ -224,7 +247,6 @@ if codeexport_invdyn then
   MatlabExport(c_regmin, sprintf("../codeexport/%s/tmp/invdyn_floatb_%s_cplatform_matlab.m", robot_name, base_method_name), codegen_opt):
   MatlabExport(g_regmin, sprintf("../codeexport/%s/tmp/invdyn_floatb_%s_gplatform_matlab.m", robot_name, base_method_name), codegen_opt):
 end if:
-
 # Maple-Export
 save paramVecP, paramVecP_M, A_E, M_regmin, c_regmin, g_regmin, H, dH, sprintf("../codeexport/%s/tmp/floatb_%s_platform_dynamic_reg_maple.m", robot_name, base_method_name):
 

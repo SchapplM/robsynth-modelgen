@@ -82,3 +82,4 @@ fi;
 # Schreibe Ausgangsvariable (lese Teil aus Vorlage)
 quelldat=$repo_pfad/robot_codegen_testfunctions_par/robot_varpar_testfunctions_parameter_par.m.template2
 cat $quelldat >> $zieldat
+source robot_codegen_matlabfcn_postprocess_par.sh $zieldat 0

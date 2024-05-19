@@ -1,0 +1,20 @@
+% Return reduced dynamics parameters of the parallel robot
+% %RN%
+%
+% The dynamics parameters can be modified by user input
+% into the Maple code generation.
+%
+% Input: Full arrays of dynamics parameters
+% %INPUT_PKIN%
+% %INPUT_M_P%
+% %INPUT_R_P%
+% %INPUT_IC_P%
+%
+% Output: Modified dynamics parameters, consistent with dynamics
+% m,rSges,Icges
+% (same meaning as input)
+
+% %VERSIONINFO%
+
+function [m,rSges,Icges] = %FN%(pkin,m,rSges,Icges)
+
