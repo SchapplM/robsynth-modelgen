@@ -40,16 +40,15 @@ if [ "$MATLAB_BIN" == "" ]; then
   fi
 fi
 
-if [ ! -f "$MATLAB_BIN" ]; then
-  echo "MATLAB-Programmdatei aus Umgebungsvariable MATLAB_BIN existiert nicht: $MATLAB_BIN"
-  exit 1
+if [ "$MATLAB_BIN" != "matlab" ]; then
+  if [ ! -f "$MATLAB_BIN" ]; then
+    echo "MATLAB-Programmdatei aus Umgebungsvariable MATLAB_BIN existiert nicht: $MATLAB_BIN"
+    exit 1
+  fi
 fi
-
-MATLAB_path=${MATLAB_BIN%/*}   # Verzeichnis
-MATLAB_exc="${MATLAB_BIN##*/}" # Dateiname
 
 # MATLAB starten mit den Skript als Argument (mit niedrigerer Prozessor-Prio.).
 pwd_alt=$(pwd)
 echo "Run \"$m_file\" using $MATLAB_BIN"
-nice -n 10 "$MATLAB_path/$MATLAB_exc" -nodesktop -nosplash -useStartupFolderPref -r "run('$m_filepath');quit;"
+nice -n 10 "$MATLAB_BIN" -nodesktop -nosplash -useStartupFolderPref -r "run('$m_filepath');quit;"
 cd $pwd_alt
