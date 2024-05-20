@@ -97,6 +97,17 @@ sed -i "s/%N_XP%/$parallel_NX/g" $mfcndat
 nges=$((parallel_NQJ_leg + 1))
 sed -i "s/%NGES%/$nges/g" $mfcndat
 sed -i "s/%NMPVPARA%/$robot_NMPVPARA/g" $mfcndat
+# Platzhalter-Ausdrücke für Vorlagen-Dateien aus der Robotik-Toolbox
+sed -i "s/%NJ_PKM%/$parallel_NJ/g" $mfcndat
+sed -i "s/%NL_PKM%/$parallel_NL/g" $mfcndat
+sed -i "s/%I_EE%/logical([${parallel_I_EE}])/g" $mfcndat
+sed -i "s/%Leg_NQJ%/[${parallel_Leg_NQJ}]/g" $mfcndat
+sed -i "s/%Leg_NL%/[${parallel_Leg_NL}]/g" $mfcndat
+sed -i "s/%I1J_LEG%/[${parallel_I1J_LEG}]/g" $mfcndat
+sed -i "s/%I2J_LEG%/[${parallel_I2J_LEG}]/g" $mfcndat
+sed -i "s/%LEGNAME%/${robot_leg_name}/g" $mfcndat
+Leg_I_EElink="uint8([${parallel_Leg_NQJ}])"
+sed -i "s/%Leg_I_EElink%/${Leg_I_EElink}/g" $mfcndat
 
 # TODO: Dieser Teil ist doppelt zwischen seriell und parallel. Eventuell nur an einer Stelle halten.
 if [ "$replacelastassignment" != "0" ]; then # vergleiche strings, da das Argument auch leer sein könnte

@@ -282,4 +282,28 @@ MatlabExport(Transpose(I_i_i([1,4,6,2,3,5],..)), sprintf("../codeexport/%s/tmp/p
 save g_world, I_P_P, mr_P_P_SP, NX, NQJ_parallel, angleConvLeg, angleConv, r_P_P_SP, frame_A_i, qJ_i_s, qJD_i_s, qJDD_i_s, xE_t, xED_t, xEDD_t, xE_s, xED_s, xEDD_s, I_P_SP, M_plf, sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
 varScript := <NX;NQJ_parallel;legAngles>:
 MatlabExport(varScript, sprintf("../codeexport/%s/tmp/var_parallel.m", robot_name), 1);
+# Erzeuge weitere Variablen, die für die Erzeugung von Template-Funktionen aus der Matlab-Robotik-Toolbox benötigt werden
+I_EE := Matrix(1,6): # Zähler für aktive Endeffektor-Koordinaten
+for k from 1 to 6 do
+  if xE_t(k,1) <> 0 then
+    I_EE(1,k) := 1:
+  end if:
+end do:
+I1J_LEG := Matrix(1,N_LEGS): # Anfangs-Index der Gelenkkoordinaten der Beinketten in allen Koordinaten
+I2J_LEG := copy(I1J_LEG): # End-Indizes
+Leg_NQJ := copy(I1J_LEG): # Anzahl der Gelenk-Koordinaten der Beinketten (inklusive Koppelgelenke)
+Leg_NL := copy(I1J_LEG): # Anzahl der Starrkörper der Beinketten (inkl. Basis)
+for k from 1 to N_LEGS do
+  if k = 1 then
+    I1J_LEG(1) := 1:
+  else
+    I1J_LEG(k) := I2J_LEG(k-1) + 1:
+  end if:
+  I2J_LEG(k) := I1J_LEG(k) + NJ - 1:
+  Leg_NQJ(k) := I2J_LEG(k)-I1J_LEG(k)+1:
+  Leg_NL(k) := Leg_NQJ(k) + 1;
+end do:
+NJ_PKM := I2J_LEG(N_LEGS):
+NL_PKM := 1+NJ_PKM+1: # zusätzlich ein Körper für Basis und für Plattform
+save I_EE, I1J_LEG, I2J_LEG, Leg_NQJ, Leg_NL, NJ_PKM, NL_PKM, sprintf("../codeexport/%s/tmp/para_definitions_for_templatefcns", robot_name):
 

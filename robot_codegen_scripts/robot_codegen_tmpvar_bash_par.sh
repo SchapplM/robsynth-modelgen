@@ -41,6 +41,7 @@ fi
 # Extrahiere den G-Vektor aus der Definitionsdatei (zur Vorgabe eines reduzierten g-Vektors)
 robot_def_pfad=$repo_pfad/codeexport/$robot_name/tmp/para_definitions
 if [ -f $robot_def_pfad ]; then
+  # Suche nach dem Muster für "[[g1],[g2],[g3]]". Die fünf sed-Treffer sind: g1, Komma, g2, Komma, g3
   robot_gVec=`grep "g_world := Matrix(3, 1, " $robot_def_pfad | tail -1 | sed 's/.*\[\[\([a-z,0-9]*\)\]\(,\)\[\([a-z,0-9]*\)\]\(,\)\[\([a-z,0-9]*\).*;[\r]*/\1\2\3,\5/'`
   robot_gVec="$(sed s/[a-z][0-9]/1/g <<<$robot_gVec)"
 else
@@ -48,6 +49,22 @@ else
 fi
 robot_system_q=$(( parallel_NQJ_leg * parallel_NLEGS ))
 
+# Weitere Ausdrücke für die Code-Generierung mit Template-Dateien
+robot_def2_pfad=$repo_pfad/codeexport/$robot_name/tmp/para_definitions_for_templatefcns
+parallel_I_EE=`grep "I_EE := Matrix(1, 6, " $robot_def2_pfad | tail -1 | \
+               sed 's/.*\[\[\([01\,]*\)\]\]).*/\1/'`
+parallel_I1J_LEG=`grep "I1J_LEG := Matrix(1, $parallel_NLEGS, " $robot_def2_pfad | tail -1 | \
+               sed 's/.*\[\[\([0-9\,]*\)\]\]).*/\1/'`
+parallel_I2J_LEG=`grep "I2J_LEG := Matrix(1, $parallel_NLEGS, " $robot_def2_pfad | tail -1 | \
+               sed 's/.*\[\[\([0-9\,]*\)\]\]).*/\1/'`
+parallel_Leg_NQJ=`grep "Leg_NQJ := Matrix(1, $parallel_NLEGS, " $robot_def2_pfad | tail -1 | \
+               sed 's/.*\[\[\([0-9\,]*\)\]\]).*/\1/'`
+parallel_Leg_NL=`grep "Leg_NL := Matrix(1, $parallel_NLEGS, " $robot_def2_pfad | tail -1 | \
+               sed 's/.*\[\[\([0-9\,]*\)\]\]).*/\1/'`
+parallel_NJ=`grep "NJ_PKM := " $robot_def2_pfad | tail -1 | \
+               sed 's/NJ_PKM := \([0-9]*\);[\r]*/\1/'`
+parallel_NL=`grep "NL_PKM := " $robot_def2_pfad | tail -1 | \
+               sed 's/NL_PKM := \([0-9]*\);[\r]*/\1/'`
 echo "parallel_NX=$parallel_NX" > $robot_env_pfad.sh
 echo "parallel_NQJ_leg=$parallel_NQJ_leg" >> $robot_env_pfad.sh
 echo "parallel_angles_leg=$parallel_angles_leg" >> $robot_env_pfad.sh
@@ -56,6 +73,13 @@ echo "parallel_NLEGS=$parallel_NLEGS" >> $robot_env_pfad.sh
 echo "robot_name=\"$robot_name\"" >> $robot_env_pfad.sh
 echo "robot_leg_name=\"$robot_leg_name\"" >> $robot_env_pfad.sh
 echo "robot_gVec=$robot_gVec" >> $robot_env_pfad.sh
+echo "parallel_I_EE=$parallel_I_EE" >> $robot_env_pfad.sh
+echo "parallel_I1J_LEG=$parallel_I1J_LEG" >> $robot_env_pfad.sh
+echo "parallel_I2J_LEG=$parallel_I2J_LEG" >> $robot_env_pfad.sh
+echo "parallel_Leg_NQJ=$parallel_Leg_NQJ" >> $robot_env_pfad.sh
+echo "parallel_Leg_NL=$parallel_Leg_NL" >> $robot_env_pfad.sh
+echo "parallel_NJ=$parallel_NJ" >> $robot_env_pfad.sh
+echo "parallel_NL=$parallel_NL" >> $robot_env_pfad.sh
 
 if [ -d "$repo_pfad/codeexport/${robot_name}/" ]; then
 	cp $repo_pfad/robot_codegen_definitions/robot_env_par $repo_pfad/codeexport/${robot_name}/tmp/

@@ -507,6 +507,35 @@ MatlabExport(varScript, sprintf(&quot;../codeexport/%s/tmp/var_parallel.m&quot;,
 </Input>
 </Group>
 <Group labelreference="L3336" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Erzeuge weitere Variablen, die f\303\274r die Erzeugung von Template-Funktionen aus der Matlab-Robotik-Toolbox ben\303\266tigt werden</Font></Text-field>
+</Input>
+</Group><CodeEditor-ExecGroup view="presentation" hide-input="false" labelreference="L3418" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion18" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">I_EE := Matrix(1,6): # Z\303\244hler f\303\274r aktive Endeffektor-Koordinaten
+for k from 1 to 6 do
+  if xE_t(k,1) &lt;&gt; 0 then
+    I_EE(1,k) := 1:
+  end if:
+end do:
+I1J_LEG := Matrix(1,N_LEGS): # Anfangs-Index der Gelenkkoordinaten der Beinketten in allen Koordinaten
+I2J_LEG := copy(I1J_LEG): # End-Indizes
+Leg_NQJ := copy(I1J_LEG): # Anzahl der Gelenk-Koordinaten der Beinketten (inklusive Koppelgelenke)
+Leg_NL := copy(I1J_LEG): # Anzahl der Starrk\303\266rper der Beinketten (inkl. Basis)
+for k from 1 to N_LEGS do
+  if k = 1 then
+    I1J_LEG(1) := 1:
+  else
+    I1J_LEG(k) := I2J_LEG(k-1) + 1:
+  end if:
+  I2J_LEG(k) := I1J_LEG(k) + NJ - 1:
+  Leg_NQJ(k) := I2J_LEG(k)-I1J_LEG(k)+1:
+  Leg_NL(k) := Leg_NQJ(k) + 1;
+end do:
+NJ_PKM := I2J_LEG(N_LEGS):
+NL_PKM := 1+NJ_PKM+1: # zus\303\244tzlich ein K\303\266rper f\303\274r Basis und f\303\274r Plattform</EC-CodeEditor></CodeEditor-ExecGroup>
+<Group labelreference="L3406" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save I_EE, I1J_LEG, I2J_LEG, Leg_NQJ, Leg_NL, NJ_PKM, NL_PKM, sprintf(&quot;../codeexport/%s/tmp/para_definitions_for_templatefcns&quot;, robot_name):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3419" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>

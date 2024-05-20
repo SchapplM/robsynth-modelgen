@@ -1,7 +1,11 @@
 #!/bin/bash -e
 # Passe die Vorlagen für numerische Funktionen an den parallelen Roboter an.
+# Diese Funktionen sind durch assert-Befehle und hart kodierte
+# Zahlen an den Roboter angepasst und dadurch kompilierbar.
 #
 # Dieses Skript im Ordner ausführen, in dem es im Repo liegt
+#
+# Siehe auch: robot_codegen_matlab_num_varpar.sh (davon abgeleitet)
 
 # Moritz Schappler, moritz.schappler@imes.uni-hannover.de, 2019-01
 # (C) Institut für Mechatronische Systeme, Universität Hannover
@@ -18,6 +22,43 @@ source $repo_pfad/robot_codegen_definitions/robot_env_par.sh
 
 fcn_pfad=$repo_pfad/codeexport/$robot_name/matlabfcn
 test_pfad=$repo_pfad/codeexport/$robot_name/testfcn
+
+# Vorlagen aus Robotik-Repo kopieren (falls verfügbar)
+# Benutze eine separate Datei zum Zeigen auf den Pfad, falls unter Windows.
+linkfiles="$repo_pfad/robotics_repo_path_linux
+  $repo_pfad/robotics_repo_path"
+for linkfile in $linkfiles; do
+if [ -f $linkfile ]; then
+  robrepopath=`sed -n -e 's/^robotics_repo_path := "\(.*\)":/\1/p' $linkfile`
+  if [ "$robrepopath" == "" ]; then
+    echo "Ausdruck "robotics_repo_path= \"/pfad/zum/repo\":" in $linkfile nicht gefunden"
+    continue
+  fi
+  if [ -d $robrepopath ]; then
+    for f in `find "$robrepopath/kinematics" -name 'pkm_*.template'`; do
+      filename="${f##*/}"
+      filename=`echo "$filename" | sed s/pkm/robot/`
+      if [[ -L $template_pfad/$filename ]]; then
+        continue # Symbolischen Link erhalten (sonst Kopierfehler)
+      fi
+      cp $f $template_pfad/$filename
+      # Nachbearbeitung der Vorlagen-Funktionen. Die Ersetzungsausdrücke
+      # unterscheiden sich zwischen diesem Repo und dem Robotik-Repo.
+      sed -i "s/%NLEG%/%N_LEGS%/g" $template_pfad/$filename
+      sed -i "s/%NJ%/%NJ_PKM%/g" $template_pfad/$filename
+      sed -i "s/%NL%/%NL_PKM%/g" $template_pfad/$filename
+      sed -i "s/%PN%/%RN%/g" $template_pfad/$filename
+      sed -i "s/%SN%/%LEGNAME%/g" $template_pfad/$filename
+    done
+    break # Nur eine Datei nutzen. Die erste gültige reicht.
+  else
+    echo "Datei robotics_repo_path aus $linkfile enthält kein gültiges Verzeichnis."
+  fi;
+else
+  echo "Datei robotics_repo_path aus $linkfile existiert nicht"
+fi
+done
+
 
 # Alle Vorlagen an den Roboter anpassen und kopieren
 for f in $(find $template_pfad -name "*.template")
