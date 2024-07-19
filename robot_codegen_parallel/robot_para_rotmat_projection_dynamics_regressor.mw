@@ -553,12 +553,7 @@ greg_j := Tmpg:
 </Input>
 </Group>
 <Group labelreference="L3654" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if regressor_modus = &quot;regressor_minpar&quot; then
-  paramMin := &lt;ParamvecNew;paramVecP&gt;: # TODO: Hier stand vorher <Font encoding="UTF-8">paramVecP_M. Damit war die Regressorform aber nicht f\303\274r alle Systeme konsistent. Jetzt ist die parameterlineare Form aber nicht mehr so stark zusammengefasst, wie sie es sein k\303\266nnte.
-</Font>else
-<Font encoding="UTF-8">  # Benutze den generischen Parametervektor (ohne durch Benutzer modifizierte Eintr\303\244ge).
-</Font>  paramMin := &lt;ParamvecNew; PV2_Plf_vec&gt;: # paramVecP oder <Font encoding="UTF-8">PV2_Plf_vec ist hier wahrscheinlich egal. F\303\274r Export ganz unten wird das neu gemacht.</Font>
-end if:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">paramMin := &lt;ParamvecNew;paramVecP&gt;: # TODO: Hier stand vorher <Font encoding="UTF-8">paramVecP_M. Damit war die Regressorform aber nicht f\303\274r alle Systeme konsistent. Jetzt ist die parameterlineare Form aber nicht mehr so stark zusammengefasst, wie sie es sein k\303\266nnte.</Font></Text-field>
 </Input>
 </Group>
 <Group labelreference="L3439" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -605,18 +600,26 @@ for i to RowDimension(paramMin) do
     use_line := true:
   end if:
   # Pr\303\274fe Sonderfall, dass durch eingegebene Symmetrien Parameter mehrfach vorkommen. Die Regressormatrix ist trotzdem unabh\303\244ngig
-  if regressor_modus = &quot;regressor_minpar&quot; and use_line then
+  if use_line then
     for ii from 1 to j do # gehe alle belegte Dimensionen von paramMinRed durch
-      if paramMin(i,1) = paramMinRed(ii,1) then
+      if paramMin(i,1) = paramMinRed(ii,1) and paramMin(i,1) &lt;&gt; 0 then
         # Parameter steht mehrfach im MPV. Ziehe beide Zeilen zusammen und entferne die Zeile im Parametervektor
-        printf(&quot;Parameter %s steht mehrfach in MPV. Fasse Spalten zusammen.\134n&quot;, convert(paramMin(i,1), string)):
+        printf(&quot;Parameter %s steht mehrfach in MPV. Fasse Spalten %d und %d zusammen, setze Spalte %d zu Null.\134n&quot;, \134
+          convert(paramMin(i,1), string), i, ii, i):
         for k to RowDimension(A) do # Gehe alle Zeilen durch und addiere jeweils die Spalte i auf die Spalte ii.
-          ARed(k,ii) := ARed(k,ii) + A(k,i):
-          MregRed(k,ii) := MregRed(k,ii) + Mreg(k,ii):
-          CregRed(k,ii) := CregRed(k,ii) + Creg(k,ii):
-          gregRed(k,ii) := gregRed(k,ii) + greg(k,ii):
+          ARed(k,ii)    := ARed(k,ii)    + A(k,i):
+          MregRed(k,ii) := MregRed(k,ii) + Mreg(k,i):
+          CregRed(k,ii) := CregRed(k,ii) + Creg(k,i):
+          gregRed(k,ii) := gregRed(k,ii) + greg(k,i):
+          # Die Spalte des doppelten Parameters i muss gel\303\266scht werden, damit nachfolgende Berechnungen zur Regressorform wieder passen.
+          A(k,i)    := 0:
+          Mreg(k,i) := 0:
+          Creg(k,i) := 0:
+          greg(k,i) := 0:
         end do:
-        use_line := false: # Die Spalte ist bereits eingef\303\274gt worden (zu der zum ersten Vorkommnis des Parameters)
+        if regressor_modus = &quot;regressor_minpar&quot; then # bei Inertialparameter-Regressor wird die (jetzt-) Null-Spalte der Matrix eingetragen
+          use_line := false: # Die Spalte ist bereits eingef\303\274gt worden (zu der zum ersten Vorkommnis des Parameters)
+        end if:
         break:
       end if:
     end do:

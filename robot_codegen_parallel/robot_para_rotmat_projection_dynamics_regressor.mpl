@@ -310,12 +310,8 @@ greg_j := Tmpg:
 ROWS := RowDimension(ParamvecNew):
 # 
 # Neuer Parametervektor für Beine und Plattform
-if regressor_modus = "regressor_minpar" then
-  paramMin := <ParamvecNew;paramVecP>: # TODO: Hier stand vorher paramVecP_M. Damit war die Regressorform aber nicht für alle Systeme konsistent. Jetzt ist die parameterlineare Form aber nicht mehr so stark zusammengefasst, wie sie es sein könnte.
-else
-  # Benutze den generischen Parametervektor (ohne durch Benutzer modifizierte Einträge).
-  paramMin := <ParamvecNew; PV2_Plf_vec>: # paramVecP oder PV2_Plf_vec ist hier wahrscheinlich egal. Für Export ganz unten wird das neu gemacht.
-end if:
+paramMin := <ParamvecNew;paramVecP>: # TODO: Hier stand vorher paramVecP_M. Damit war die Regressorform aber nicht für alle Systeme konsistent. Jetzt ist die parameterlineare Form aber nicht mehr so stark zusammengefasst, wie sie es sein könnte.
+;
 
 # Regressormatrix zusammenstellen
 A := pivotMat.<A_j(1..6,1..ROWS)|A_E>:
@@ -350,18 +346,26 @@ for i to RowDimension(paramMin) do
     use_line := true:
   end if:
   # Prüfe Sonderfall, dass durch eingegebene Symmetrien Parameter mehrfach vorkommen. Die Regressormatrix ist trotzdem unabhängig
-  if regressor_modus = "regressor_minpar" and use_line then
+  if use_line then
     for ii from 1 to j do # gehe alle belegte Dimensionen von paramMinRed durch
-      if paramMin(i,1) = paramMinRed(ii,1) then
+      if paramMin(i,1) = paramMinRed(ii,1) and paramMin(i,1) <> 0 then
         # Parameter steht mehrfach im MPV. Ziehe beide Zeilen zusammen und entferne die Zeile im Parametervektor
-        printf("Parameter %s steht mehrfach in MPV. Fasse Spalten zusammen.\n", convert(paramMin(i,1), string)):
+        printf("Parameter %s steht mehrfach in MPV. Fasse Spalten %d und %d zusammen, setze Spalte %d zu Null.\n", \
+          convert(paramMin(i,1), string), i, ii, i):
         for k to RowDimension(A) do # Gehe alle Zeilen durch und addiere jeweils die Spalte i auf die Spalte ii.
-          ARed(k,ii) := ARed(k,ii) + A(k,i):
-          MregRed(k,ii) := MregRed(k,ii) + Mreg(k,ii):
-          CregRed(k,ii) := CregRed(k,ii) + Creg(k,ii):
-          gregRed(k,ii) := gregRed(k,ii) + greg(k,ii):
+          ARed(k,ii)    := ARed(k,ii)    + A(k,i):
+          MregRed(k,ii) := MregRed(k,ii) + Mreg(k,i):
+          CregRed(k,ii) := CregRed(k,ii) + Creg(k,i):
+          gregRed(k,ii) := gregRed(k,ii) + greg(k,i):
+          # Die Spalte des doppelten Parameters i muss gelöscht werden, damit nachfolgende Berechnungen zur Regressorform wieder passen.
+          A(k,i)    := 0:
+          Mreg(k,i) := 0:
+          Creg(k,i) := 0:
+          greg(k,i) := 0:
         end do:
-        use_line := false: # Die Spalte ist bereits eingefügt worden (zu der zum ersten Vorkommnis des Parameters)
+        if regressor_modus = "regressor_minpar" then # bei Inertialparameter-Regressor wird die (jetzt-) Null-Spalte der Matrix eingetragen
+          use_line := false: # Die Spalte ist bereits eingefügt worden (zu der zum ersten Vorkommnis des Parameters)
+        end if:
         break:
       end if:
     end do:
