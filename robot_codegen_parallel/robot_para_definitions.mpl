@@ -1,35 +1,35 @@
 
 # Definitions for Parallel Robot Dynamics Code Generation
 # Einleitung
-# Erstelle Definitionen fÃ¼r die Maple-Skripte zur Berechnung von Kinematik und Dynamik des parallelen Roboters
+# Erstelle Definitionen für die Maple-Skripte zur Berechnung von Kinematik und Dynamik des parallelen Roboters
 # 
 # Dateiname:
-# robot -> Berechnung fÃ¼r allgemeinen Roboter
-# para -> Berechnung fÃ¼r eine parallelen Roboter
+# robot -> Berechnung für allgemeinen Roboter
+# para -> Berechnung für eine parallelen Roboter
 # definitions -> Definitionen
 # Autor
 # Tim Job (Studienarbeit bei Moritz Schappler), 2018-12
 # Moritz Schappler, moritz.schappler@imes.uni-hannover.de
-# (C) Institut fÃ¼r Mechatronische Systeme, UniversitÃ¤t Hannover
+# (C) Institut für Mechatronische Systeme, Universität Hannover
 # Init
-interface(warnlevel=0): # UnterdrÃ¼cke die folgende Warnung.
-restart: # Gibt eine Warnung, wenn Ã¼ber Terminal-Maple mit read gestartet wird.
+interface(warnlevel=0): # Unterdrücke die folgende Warnung.
+restart: # Gibt eine Warnung, wenn über Terminal-Maple mit read gestartet wird.
 interface(warnlevel=3):
 with(LinearAlgebra):
-with(ArrayTools): # FÃ¼r HasNonZero
+with(ArrayTools): # Für HasNonZero
 ;
-with(StringTools): # FÃ¼r Zeitausgabe
+with(StringTools): # Für Zeitausgabe
 ;
 read "../helper/proc_MatlabExport":
 read "../helper/proc_convert_t_s":
 read "../helper/proc_vec2skew":
 read "../helper/proc_vector2symmat":
-# Lese Umgebungsvariable fÃ¼r Codegenerierung.
+# Lese Umgebungsvariable für Codegenerierung.
 read "../robot_codegen_definitions/robot_env_par":
-printf("Generiere Parameter fÃ¼r %s\n",robot_name):
+printf("Generiere Parameter für %s\n",robot_name):
 read sprintf("../codeexport/%s/tmp/tree_floatb_definitions", leg_name):
 # Ergebnisse der analytischen Jacobi-Matrix (Translatorisch)
-# Link-Index, fÃ¼r den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber fÃ¼r beliebige Segmente aufgestellt werden. (0=Basis)
+# Link-Index, für den die Jacobi-Matrix aufgestellt wird. Hier wird angenommen, dass der Endeffektor das letzte Segment (=Link) ist. Die Jacobi-Matrix kann hier aber für beliebige Segmente aufgestellt werden. (0=Basis)
 LIJAC:=NL-1:
 px, py, pz := 0, 0, 0:
 alphaxs_base, betays_base, gammazs_base := 0, 0, 0: 
@@ -39,10 +39,10 @@ if FileTools[Exists](legjacobifile) then
 else
   printf("%s. Beinketten-Jacobi-Matrix konnte nicht geladen werden. Abbruch der Berechnung.\n", FormatTime("%Y-%m-%d %H:%M:%S")):
   quit: # Funktioniert in GUI nicht richtig...
-  robot_name := "": # ...Daher auch LÃ¶schung des Roboternamens.
+  robot_name := "": # ...Daher auch Löschung des Roboternamens.
 end if:
 b_transl := b_transl: # Variable neu definieren, damit sie sichtbar ist.
-# Lese Umgebungsvariable fÃ¼r Codegenerierung (falls nicht oben abgebrochen wurde).
+# Lese Umgebungsvariable für Codegenerierung (falls nicht oben abgebrochen wurde).
 if robot_name <> "" then
   read "../robot_codegen_definitions/robot_env_par":
 end if:
@@ -59,7 +59,7 @@ if not assigned(g_world) then
 end if:
 
 # Parallel Robotics Definitions
-# Erstelle fÃ¼r Gelenkkoordinaten, -geschwindigkeiten und -beschleunigungen fÃ¼r jedes Bein
+# Erstelle für Gelenkkoordinaten, -geschwindigkeiten und -beschleunigungen für jedes Bein
 J := simplify(b_transl):
 vars := indets(J):
 counter := 0:
@@ -108,12 +108,12 @@ end do:
 # Winkelkonventionen
 angleConvLeg := leg_frame(7):
 angleConv := xE_s(7):
-# Erstelle EE-Koordinaten: xE_t, xED_t, xEDD_t -> Variablen mit ZeitabhÃ¤ngigkeit
-#                                          xE_s, xED_s, xEDD_s -> Variablen ohne ZeitabhÃ¤ngigkeit
+# Erstelle EE-Koordinaten: xE_t, xED_t, xEDD_t -> Variablen mit Zeitabhängigkeit
+#                                          xE_s, xED_s, xEDD_s -> Variablen ohne Zeitabhängigkeit
 xE_t:=<xE(t);yE(t);zE(t);PsiE(t);ThetaE(t);PhiE(t)>:
 xED_t:=diff~(xE_t,t):
 xEDD_t:=diff~(xED_t,t):
-# ZÃ¤hle Freiheitsgrade des Roboters und setze nicht benÃ¶tigte zu null.
+# Zähle Freiheitsgrade des Roboters und setze nicht benötigte zu null.
 xE_s := Matrix(xE_s(1..6,1)):
 xED_s := copy(xE_s):
 xEDD_s := copy(xE_s):
@@ -142,12 +142,12 @@ for i from 4 to 6 do
 end do:
 legAngles := counter:
 # Dynamik-Parameter
-# Einzelne Dynamikparameter als Matlab-Code exportieren. Wenn die Parameter (der Beinkette) durch Benutzereingaben (oder aus PKM-Datenbank) verÃ¤ndert wurden, lÃ¤sst sich diese Information so weiter benutzen.
+# Einzelne Dynamikparameter als Matlab-Code exportieren. Wenn die Parameter (der Beinkette) durch Benutzereingaben (oder aus PKM-Datenbank) verändert wurden, lässt sich diese Information so weiter benutzen.
 # (z.B. in der Definition von Eingabeparametern in den Testskripten). Siehe gleichlautender Abschnitt in robot_tree_floatb_twist_definitions.mw.
 
-# In den Maple-Variablen ist die Spalte der Index der KÃ¶rper und die Zeilen sind die Indizes fÃ¼r die xyz-Komponenten (einfacherer Aufruf der Variablen).
-# In Matlab ist es umgekehrt (fÃ¼hrt zu konsistenterem Code in Matlab): Die Zeilen entsprechen dem KÃ¶rper-Index. Daher hier Transponierung.
-# ZusÃ¤tzlich ist die Reihenfolge der Komponenten der TrÃ¤gheitstensoren in Matlab und Maple unterschiedlich (daher die Indizierung).
+# In den Maple-Variablen ist die Spalte der Index der Körper und die Zeilen sind die Indizes für die xyz-Komponenten (einfacherer Aufruf der Variablen).
+# In Matlab ist es umgekehrt (führt zu konsistenterem Code in Matlab): Die Zeilen entsprechen dem Körper-Index. Daher hier Transponierung.
+# Zusätzlich ist die Reihenfolge der Komponenten der Trägheitstensoren in Matlab und Maple unterschiedlich (daher die Indizierung).
 # Matlab: xx, yy, zz, xy, xz, yz (erst Hauptmomente, dann Deviationsmomente)
 # Maple: xx, xy, xz, yy, yz, zz (Dreiecksform)
 # Masse
@@ -162,7 +162,7 @@ if assigned(user_M_plf) then
     printf("User input for platform mass should be either \"%s\" or zero. Not \"%s\". Continue anyway. \n", mP_generic, user_M_plf):
   end if:
   M_plf := user_M_plf:
-  printf("Plattform-Masseparameter von Benutzer gesetzt. Eingabe fÃ¼r M_plf:\n"):
+  printf("Plattform-Masseparameter von Benutzer gesetzt. Eingabe für M_plf:\n"):
   print(M_plf);
 end if:
 # Schwerpunkt
@@ -181,10 +181,10 @@ else
     end if:
   end do:
   r_P_P_SP[1..3,1]:=user_CoM_plf[1..3,1]:
-  printf("Plattform-Schwerpunktsparameter von Benutzer gesetzt. Eingabe fÃ¼r r_P_P_SP:\n"):
+  printf("Plattform-Schwerpunktsparameter von Benutzer gesetzt. Eingabe für r_P_P_SP:\n"):
   print(Transpose(r_P_P_SP)):
 end if:
-# TrÃ¤gheitstensor
+# Trägheitstensor
 I_P_SP := Matrix(6, 1):
 I_P_SP_generic := Matrix(6,1,[XXCP,XYCP,XZCP,YYCP,YZCP,ZZCP]):
 if not assigned(user_inertia_plf) then
@@ -211,7 +211,7 @@ else
     printf("Platform mass is zero, but inertia is non-zero. Not plausible, but continue anyway.\n"):
   end if:
   I_P_SP[1..6,1]:=user_inertia_plf[1..6,1]:
-  printf("Plattform-TrÃ¤gheitsparameter von Benutzer gesetzt. Eingabe fÃ¼r I_P_SP:\n"):
+  printf("Plattform-Trägheitsparameter von Benutzer gesetzt. Eingabe für I_P_SP:\n"):
   print(Transpose(I_P_SP)):
 end if:
 # First Moment (mass and center of mass)
@@ -234,18 +234,18 @@ if M_plf <> 0 then: # Zero Mass can be set by the user. Then the first moment st
   end do:
 end if:
 if assigned(user_CoM_plf) or assigned(user_M_plf) then
-  printf("Plattform-Schwerpunktsparameter (oder Masse) von Benutzer gesetzt. Werte fÃ¼r mr_P_P_SP:\n"):
+  printf("Plattform-Schwerpunktsparameter (oder Masse) von Benutzer gesetzt. Werte für mr_P_P_SP:\n"):
   print(Transpose(mr_P_P_SP)):
 end if:
 # Inertia (about the origin of body frame, in link frame)
 I_P_P_calc := Matrix(6, 1):
-# TrÃ¤gheitstensor (3x3) um den KÃ¶rperschwerpunkt in KÃ¶rper-KS
+# Trägheitstensor (3x3) um den Körperschwerpunkt in Körper-KS
 I_P_SP_Tensor := vec2symmat(I_P_SP([1, 2, 4, 3, 5, 6], 1), 3): # Reihenfolge in I_P_SP und vec2symmat unterschiedlich definiert
 # Steinerschen Satz anwenden
 I_P_P_Tensor := I_P_SP_Tensor + M_plf*Transpose(vec2skew(r_P_P_SP[1..3,1])) . vec2skew(r_P_P_SP[1..3,1]):
 # Wieder als Matrix abspeichern
 I_P_P_calc := <I_P_P_Tensor[1,1]; I_P_P_Tensor[1,2]; I_P_P_Tensor[1,3]; I_P_P_Tensor[2,2]; I_P_P_Tensor[2,3]; I_P_P_Tensor[3,3]>:
-# Allgemeine Form des TrÃ¤gheitstensors (EintrÃ¤ge sind unabhÃ¤ngige Parameter)
+# Allgemeine Form des Trägheitstensors (Einträge sind unabhängige Parameter)
 I_P_P_generic := Matrix(6, 1):
 I_P_P_generic[1,1]:=parse(sprintf("XXP")):
 I_P_P_generic[2,1]:=parse(sprintf("XYP")):
@@ -253,25 +253,25 @@ I_P_P_generic[3,1]:=parse(sprintf("XZP")):
 I_P_P_generic[4,1]:=parse(sprintf("YYP")):
 I_P_P_generic[5,1]:=parse(sprintf("YZP")):
 I_P_P_generic[6,1]:=parse(sprintf("ZZP")):
-# PrÃ¼fe, welche EintrÃ¤ge des TrÃ¤gheitstensors noch Schwerpunkts-Parameter enthalten. Diese mÃ¼ssen wieder auf die Standard-Werte mit unabhÃ¤ngigen Parametern gesetzt werden
+# Prüfe, welche Einträge des Trägheitstensors noch Schwerpunkts-Parameter enthalten. Diese müssen wieder auf die Standard-Werte mit unabhängigen Parametern gesetzt werden
 I_P_P := Matrix(6, 1):
 compstrings := ["XX", "XY", "XZ", "YY", "YZ", "ZZ"]:
 if M_plf <> 0 then # Zero Mass can be set by the user. Then the inertia stays zero
   for j from 1 to 6 do # Alle Komponenten des Tensors
     # Nicht Null. Setze erstmal allgemeinen Eintrag:
     I_P_P[j,1] := I_P_P_generic[j,1]:
-    # PrÃ¼fe, ob Schwerpunktsparameter vorkommt (durch Verschiebungssatz s.o.)
+    # Prüfe, ob Schwerpunktsparameter vorkommt (durch Verschiebungssatz s.o.)
     IhasCoM := false:
     for k from 1 to 3 do
       if has(I_P_P_calc[j,1], r_P_P_SP_generic[k,1]) then
-        IhasCoM := true: # Der Eintrag enthÃ¤lt die Schwerpunktskoordinaten. Nicht zulÃ¤ssig fÃ¼r weitere Rechnung.
+        IhasCoM := true: # Der Eintrag enthält die Schwerpunktskoordinaten. Nicht zulässig für weitere Rechnung.
         break:
       end if:
     end do:
     if has(I_P_P_calc[j,1], I_P_SP_generic[j,1]) then
-      IhasCoM := true: # Es steht der Schwerpunktsbezogene TrÃ¤gheitsterm drin. Weitere Rechnung damit nicht mÃ¶glich.
+      IhasCoM := true: # Es steht der Schwerpunktsbezogene Trägheitsterm drin. Weitere Rechnung damit nicht möglich.
     end if:
-    # PrÃ¼fe, ob der Eintrag identisch zu einem vorherigen Eintrag ist. Das kommt vor, wenn aus SymmetriegrÃ¼nden TrÃ¤gheitstensoren gleich sind
+    # Prüfe, ob der Eintrag identisch zu einem vorherigen Eintrag ist. Das kommt vor, wenn aus Symmetriegründen Trägheitstensoren gleich sind
     Iisidentical := false:
     for k from 1 to j-1 do
       if I_P_P_calc[j,1] = I_P_P_calc[k,1] and I_P_P_calc[j,1] <> 0 then
@@ -289,30 +289,33 @@ if M_plf <> 0 then # Zero Mass can be set by the user. Then the inertia stays ze
   end do:
 end if:
 if assigned(user_inertia_plf) then
-  printf("TrÃ¤gheitsparameter von Benutzer gesetzt. Werte fÃ¼r I_P_P_calc:\n"):
+  printf("Trägheitsparameter von Benutzer gesetzt. Werte für I_P_P_calc:\n"):
   print(Transpose(I_P_P_calc));
-  printf("TrÃ¤gheitsparameter von Benutzer gesetzt. Werte fÃ¼r I_P_P:\n"):
+  printf("Trägheitsparameter von Benutzer gesetzt. Werte für I_P_P:\n"):
   print(Transpose(I_P_P));
 end if:
-# Die Dynamikparameter werden nur bis zum KÃ¶rper vor dem Koppelgelenk spÃ¤ter in den Funktionen benÃ¶tigt. KÃ¶nnen noch durch Benutzereingabe zu Null gesetzt werden
+# Die Dynamikparameter werden nur bis zum Körper vor dem Koppelgelenk später in den Funktionen benötigt. Können noch durch Benutzereingabe zu Null gesetzt werden
 M_PKM := <M(2..NQJ_parallel+1,1), M_plf>:
 rC_PKM := <r_i_i_Si(1..3,2..NQJ_parallel+1)|r_P_P_SP>:
 mrC_PKM := <mr_i_i_Si(1..3,2..NQJ_parallel+1)|mr_P_P_SP>:
 IC_PKM := <I_i_Si(1..6,2..NQJ_parallel+1)|I_P_SP>:
 IF_PKM := <I_i_i(1..6,2..NQJ_parallel+1)|I_P_P>:
-# Export fÃ¼r Testskript, damit zu Null gesetzt Parameter dort auch zu Null gesetzt werden
+# Export für Testskript, damit zu Null gesetzt Parameter dort auch zu Null gesetzt werden
 MatlabExport(M_PKM, sprintf("../codeexport/%s/tmp/parameters_dyn_mges_pkm_matlab.m", robot_name), 2):
 MatlabExport(Transpose(rC_PKM), sprintf("../codeexport/%s/tmp/parameters_dyn_rSges_pkm_matlab.m", robot_name), 2):
 MatlabExport(Transpose(IC_PKM([1,4,6,2,3,5],..)), sprintf("../codeexport/%s/tmp/parameters_dyn_Icges_pkm_matlab.m", robot_name), 2):
 MatlabExport(Transpose(mr_i_i_Si), sprintf("../codeexport/%s/tmp/parameters_dyn_mrSges_pkm_matlab.m", robot_name), 2):
 MatlabExport(Transpose(I_i_i([1,4,6,2,3,5],..)), sprintf("../codeexport/%s/tmp/parameters_dyn_Ifges_pkm_matlab.m", robot_name), 2):
+# Parametervektor zur Ableitung danach. Muss ähnlich wie bei seriellen Ketten die allgemeinen Werte und nicht die nutzerangepassten Werte enthalten
+PV2_Plf_vec := Matrix(<I_P_P_generic; mr_P_P_SP_generic; mP_generic>):
+
 # Export
 # Maple-Export
-save g_world, I_P_P, mr_P_P_SP, NX, NQJ_parallel, angleConvLeg, angleConv, r_P_P_SP, frame_A_i, qJ_i_s, qJD_i_s, qJDD_i_s, xE_t, xED_t, xEDD_t, xE_s, xED_s, xEDD_s, I_P_SP, M_plf, sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
+save g_world, I_P_P, mr_P_P_SP, NX, NQJ_parallel, angleConvLeg, angleConv, r_P_P_SP, frame_A_i, qJ_i_s, qJD_i_s, qJDD_i_s, xE_t, xED_t, xEDD_t, xE_s, xED_s, xEDD_s, I_P_SP, M_plf, PV2_Plf_vec, sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
 varScript := <NX;NQJ_parallel;legAngles>:
 MatlabExport(varScript, sprintf("../codeexport/%s/tmp/var_parallel.m", robot_name), 1);
-# Erzeuge weitere Variablen, die fÃ¼r die Erzeugung von Template-Funktionen aus der Matlab-Robotik-Toolbox benÃ¶tigt werden
-I_EE := Matrix(1,6): # ZÃ¤hler fÃ¼r aktive Endeffektor-Koordinaten
+# Erzeuge weitere Variablen, die für die Erzeugung von Template-Funktionen aus der Matlab-Robotik-Toolbox benötigt werden
+I_EE := Matrix(1,6): # Zähler für aktive Endeffektor-Koordinaten
 for k from 1 to 6 do
   if xE_t(k,1) <> 0 then
     I_EE(1,k) := 1:
@@ -321,7 +324,7 @@ end do:
 I1J_LEG := Matrix(1,N_LEGS): # Anfangs-Index der Gelenkkoordinaten der Beinketten in allen Koordinaten
 I2J_LEG := copy(I1J_LEG): # End-Indizes
 Leg_NQJ := copy(I1J_LEG): # Anzahl der Gelenk-Koordinaten der Beinketten (inklusive Koppelgelenke)
-Leg_NL := copy(I1J_LEG): # Anzahl der StarrkÃ¶rper der Beinketten (inkl. Basis)
+Leg_NL := copy(I1J_LEG): # Anzahl der Starrkörper der Beinketten (inkl. Basis)
 for k from 1 to N_LEGS do
   if k = 1 then
     I1J_LEG(1) := 1:
@@ -333,6 +336,6 @@ for k from 1 to N_LEGS do
   Leg_NL(k) := Leg_NQJ(k) + 1;
 end do:
 NJ_PKM := I2J_LEG(N_LEGS):
-NL_PKM := 1+NJ_PKM+1: # zusÃ¤tzlich ein KÃ¶rper fÃ¼r Basis und fÃ¼r Plattform
+NL_PKM := 1+NJ_PKM+1: # zusätzlich ein Körper für Basis und für Plattform
 save I_EE, I1J_LEG, I2J_LEG, Leg_NQJ, Leg_NL, NJ_PKM, NL_PKM, sprintf("../codeexport/%s/tmp/para_definitions_for_templatefcns", robot_name):
 

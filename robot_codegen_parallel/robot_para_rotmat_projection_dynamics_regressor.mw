@@ -4,7 +4,7 @@
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="false" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" compactdisplay="false" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" scientificx="true" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" historytimestamp="false" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1080" rtablesize="[10, 10]" useclientjvm="true" format="worksheet" labelwidth="20" postplot="" typesetting="extended" ansi="false" ansicolor="[]" elisiondigitsthreshold="10000" showassumed="1" ansilprint="false" trailingsemicolon="true" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" compactdisplay="false" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" scientificx="true" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" historytimestamp="false" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1080" rtablesize="100" useclientjvm="true" format="worksheet" labelwidth="20" postplot="" typesetting="extended" ansi="false" ansicolor="[]" elisiondigitsthreshold="10000" showassumed="1" ansilprint="false" trailingsemicolon="true" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
@@ -275,10 +275,6 @@ end if:</Text-field>
 read(sprintf(&quot;%s/transformation/maple/proc_eul%sjac&quot;, robotics_repo_path, &quot;zyx&quot;)):</Text-field>
 </Input>
 </Group>
-<Group labelreference="L3577" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
-</Input>
-</Group>
 <Group labelreference="L3613" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
@@ -349,6 +345,10 @@ UD_i := UD_i:
 <Group hide-input="false" labelreference="L3441" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Paramvec3:=Paramvec2: # Dynamik-Minimalparametervektor der Beinkette</Text-field>
 </Input>
+</Group>
+<Group labelreference="L3652" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
 </Group><CodeEditor-ExecGroup view="presentation" labelreference="L3465" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion14" expanded="true" visible="true" pixel-width="500" pixel-height="424" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">for i from NQJ_parallel+1 to NQJ do
   Paramvec3 := subs({XXC||i = 0}, Paramvec3):
   Paramvec3 := subs({XYC||i = 0}, Paramvec3):
@@ -376,6 +376,10 @@ end do:</EC-CodeEditor></CodeEditor-ExecGroup>
 </Group>
 <Group hide-input="false" labelreference="L3482" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Paramvec3: # Bein-Dynamik-Parametervektor nach Vereinfachungen</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3660" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">PV2_Plf_vec: # Plattform-Dynamik-Parametervektor, ohne Zusammenfassung und ohne Vereinfachung durch Benutzereingabe; aus para_definitions.</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L3487" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -548,8 +552,17 @@ greg_j := Tmpg:
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Neuer Parametervektor f\303\274r Beine und Plattform</Font></Text-field>
 </Input>
 </Group>
+<Group labelreference="L3654" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if regressor_modus = &quot;regressor_minpar&quot; then
+  paramMin := &lt;ParamvecNew;paramVecP&gt;: # TODO: Hier stand vorher <Font encoding="UTF-8">paramVecP_M. Damit war die Regressorform aber nicht f\303\274r alle Systeme konsistent. Jetzt ist die parameterlineare Form aber nicht mehr so stark zusammengefasst, wie sie es sein k\303\266nnte.
+</Font>else
+<Font encoding="UTF-8">  # Benutze den generischen Parametervektor (ohne durch Benutzer modifizierte Eintr\303\244ge).
+</Font>  paramMin := &lt;ParamvecNew; PV2_Plf_vec&gt;: # paramVecP oder <Font encoding="UTF-8">PV2_Plf_vec ist hier wahrscheinlich egal. F\303\274r Export ganz unten wird das neu gemacht.</Font>
+end if:</Text-field>
+</Input>
+</Group>
 <Group labelreference="L3439" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">paramMin := &lt;ParamvecNew;paramVecP&gt;: # TODO: Hier stand vorher <Font encoding="UTF-8">paramVecP_M. Damit war die Regressorform aber nicht f\303\274r alle Systeme konsistent. Jetzt ist die parameterlineare Form aber nicht mehr so stark zusammengefasst, wie sie es sein k\303\266nnte.</Font></Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group>
 <Group labelreference="L3440" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -575,11 +588,12 @@ end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group hide-input="false" labelreference="L3484" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">printf(&quot;%s. Dimension des Regressors f\303\274r regressor_modus=%s bestimmt: %d\134n&quot;</Font>, FormatTime(&quot;%Y-%m-%d %H:%M:%S&quot;), regressor_modus, NotNullEntries):</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3579" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion27" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">paramMinRed := Matrix(NotNullEntries,1):
+</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3388" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion2" expanded="true" visible="true" pixel-width="862" pixel-height="264" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">paramMinRed := Matrix(NotNullEntries,1):
 ARed := Matrix(RowDimension(A),NotNullEntries):
 MregRed := Matrix(RowDimension(A),NotNullEntries):
 CregRed := Matrix(RowDimension(A),NotNullEntries):
-gregRed := Matrix(RowDimension(A),NotNullEntries):</EC-CodeEditor></CodeEditor-ExecGroup><CodeEditor-ExecGroup view="presentation" labelreference="L3388" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion2" expanded="true" visible="true" pixel-width="862" pixel-height="264" code-language="text/maple" autofit="true" wrapping="false" show-border="true" code-line-numbers="true">j := 1:
+gregRed := Matrix(RowDimension(A),NotNullEntries):
+j := 1:
 for i to RowDimension(paramMin) do
   use_line := false: # bei true: Zeile \303\274bernehmen
   if regressor_modus = &quot;regressor&quot; and (i &lt;= 10*NQJ_parallel or i &gt;10*(NL-1)) then
@@ -589,6 +603,23 @@ for i to RowDimension(paramMin) do
   elif regressor_modus = &quot;regressor_minpar&quot; and not(paramMin(i,1) = 0 or Equal(Column(A,i), ZeroVector[column](RowDimension(A)))) then
     # bei Minimalparameter-Regressor alle Zeilen auslassen, in denen der Parameter zu Null markiert ist, oder wo die Matrix-Spalte Null ist
     use_line := true:
+  end if:
+  # Pr\303\274fe Sonderfall, dass durch eingegebene Symmetrien Parameter mehrfach vorkommen. Die Regressormatrix ist trotzdem unabh\303\244ngig
+  if regressor_modus = &quot;regressor_minpar&quot; and use_line then
+    for ii from 1 to j do # gehe alle belegte Dimensionen von paramMinRed durch
+      if paramMin(i,1) = paramMinRed(ii,1) then
+        # Parameter steht mehrfach im MPV. Ziehe beide Zeilen zusammen und entferne die Zeile im Parametervektor
+        printf(&quot;Parameter %s steht mehrfach in MPV. Fasse Spalten zusammen.\134n&quot;, convert(paramMin(i,1), string)):
+        for k to RowDimension(A) do # Gehe alle Zeilen durch und addiere jeweils die Spalte i auf die Spalte ii.
+          ARed(k,ii) := ARed(k,ii) + A(k,i):
+          MregRed(k,ii) := MregRed(k,ii) + Mreg(k,ii):
+          CregRed(k,ii) := CregRed(k,ii) + Creg(k,ii):
+          gregRed(k,ii) := gregRed(k,ii) + greg(k,ii):
+        end do:
+        use_line := false: # Die Spalte ist bereits eingef\303\274gt worden (zu der zum ersten Vorkommnis des Parameters)
+        break:
+      end if:
+    end do:
   end if:
   if use_line then
     paramMinRed(j,1) := paramMin(i,1):
@@ -601,7 +632,13 @@ for i to RowDimension(paramMin) do
     j := j + 1:
   end if:
 end do:
-printf(&quot;Dynamik-Terme reduziert. Zeilenz\303\244hler j=%d\134n&quot;, j-1):</EC-CodeEditor></CodeEditor-ExecGroup>
+printf(&quot;Dynamik-Terme reduziert. Zeilenz\303\244hler j=%d\134n&quot;, j-1):
+# Falls es doppelte Parameter (durch Symmetrien der Plattform) gibt, stehen am Ende des Parametervektors noch Nullen. Entferne diese.
+paramMinRed := Matrix(paramMinRed(1..(j-1),1)):
+ARed := ARed(.., 1..(j-1)):
+MregRed := MregRed(.., 1..(j-1)):
+CregRed := CregRed(.., 1..(j-1)):
+gregRed := gregRed(.., 1..(j-1)):</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group hide-input="false" labelreference="L3630" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if regressor_modus = &quot;regressor_minpar&quot; then
 <Font encoding="UTF-8">  printf(&quot;Minimalparameter-Vektor:\134n&quot;):
@@ -841,7 +878,7 @@ save greg_x,  sprintf(&quot;../codeexport/%s/tmp/invdyn_para_plfcoord_taug_%s_ma
   MatlabExport(paramMinRed, sprintf(&quot;../codeexport/%s/tmp/minimal_parameter_parrob_matlab.m&quot;, robot_name), codegen_opt):
   MatlabExport(RowParamMin, sprintf(&quot;../codeexport/%s/tmp/RowMinPar_parallel.m&quot;, robot_name), 2);
 else
-  paramRed := Matrix(&lt;Paramvec2[1..NQJ_parallel*10,1], paramVecP&gt;); # Umbenennung, damit es beim erneuten Laden als Inertialparameter-Variable erkennbar ist
+  paramRed := Matrix(&lt;Paramvec2[1..NQJ_parallel*10,1], PV2_Plf_vec&gt;): # Umbenennung, damit es beim erneuten Laden als Inertialparameter-Variable erkennbar ist
   save paramRed, sprintf(&quot;../codeexport/%s/tmp/inertial_parameter_parrob_maple.m&quot;, robot_name):
 end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L3525" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
