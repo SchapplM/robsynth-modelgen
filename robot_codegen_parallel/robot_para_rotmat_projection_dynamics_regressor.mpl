@@ -109,7 +109,6 @@ read("../robotics_repo_path"):
 read(sprintf("%s/transformation/maple/proc_eul%s2r", robotics_repo_path, angleConvLeg)):
 read(sprintf("%s/transformation/maple/proc_eul%sjac", robotics_repo_path, "zyx")):
 
-
 # Berechne Dynamik-Matrizen für alle Beine
 # Alle Basisgeschwindigkeiten und -winkel aus Berechnung der seriellen Kette zu null setzen.
 omegaxs_base := 0:
@@ -155,6 +154,7 @@ UD_i := UD_i:
 NQ := NQ - (NQJ-NQJ_parallel):
 Paramvec3:=Paramvec2: # Dynamik-Minimalparametervektor der Beinkette
 ;
+
 for i from NQJ_parallel+1 to NQJ do
   Paramvec3 := subs({XXC||i = 0}, Paramvec3):
   Paramvec3 := subs({XYC||i = 0}, Paramvec3):
@@ -179,6 +179,8 @@ end do:
 Paramvec2: # Bein-Dynamik-Parametervektor vor Vereinfachungen
 ;
 Paramvec3: # Bein-Dynamik-Parametervektor nach Vereinfachungen
+;
+PV2_Plf_vec: # Plattform-Dynamik-Parametervektor, ohne Zusammenfassung und ohne Vereinfachung durch Benutzereingabe; aus para_definitions.
 ;
 paramVecP: # Plattform-Dynamik-Parametervektor ohne Zusammenfassungen
 ;
@@ -310,6 +312,7 @@ ROWS := RowDimension(ParamvecNew):
 # Neuer Parametervektor für Beine und Plattform
 paramMin := <ParamvecNew;paramVecP>: # TODO: Hier stand vorher paramVecP_M. Damit war die Regressorform aber nicht für alle Systeme konsistent. Jetzt ist die parameterlineare Form aber nicht mehr so stark zusammengefasst, wie sie es sein könnte.
 ;
+
 # Regressormatrix zusammenstellen
 A := pivotMat.<A_j(1..6,1..ROWS)|A_E>:
 Mreg := pivotMat.<Mreg_j(1..6,1..ROWS)|M_regmin>:
@@ -342,6 +345,31 @@ for i to RowDimension(paramMin) do
     # bei Minimalparameter-Regressor alle Zeilen auslassen, in denen der Parameter zu Null markiert ist, oder wo die Matrix-Spalte Null ist
     use_line := true:
   end if:
+  # Prüfe Sonderfall, dass durch eingegebene Symmetrien Parameter mehrfach vorkommen. Die Regressormatrix ist trotzdem unabhängig
+  if use_line then
+    for ii from 1 to j do # gehe alle belegte Dimensionen von paramMinRed durch
+      if paramMin(i,1) = paramMinRed(ii,1) and paramMin(i,1) <> 0 then
+        # Parameter steht mehrfach im MPV. Ziehe beide Zeilen zusammen und entferne die Zeile im Parametervektor
+        printf("Parameter %s steht mehrfach in MPV. Fasse Spalten %d und %d zusammen, setze Spalte %d zu Null.\n", \
+          convert(paramMin(i,1), string), i, ii, i):
+        for k to RowDimension(A) do # Gehe alle Zeilen durch und addiere jeweils die Spalte i auf die Spalte ii.
+          ARed(k,ii)    := ARed(k,ii)    + A(k,i):
+          MregRed(k,ii) := MregRed(k,ii) + Mreg(k,i):
+          CregRed(k,ii) := CregRed(k,ii) + Creg(k,i):
+          gregRed(k,ii) := gregRed(k,ii) + greg(k,i):
+          # Die Spalte des doppelten Parameters i muss gelöscht werden, damit nachfolgende Berechnungen zur Regressorform wieder passen.
+          A(k,i)    := 0:
+          Mreg(k,i) := 0:
+          Creg(k,i) := 0:
+          greg(k,i) := 0:
+        end do:
+        if regressor_modus = "regressor_minpar" then # bei Inertialparameter-Regressor wird die (jetzt-) Null-Spalte der Matrix eingetragen
+          use_line := false: # Die Spalte ist bereits eingefügt worden (zu der zum ersten Vorkommnis des Parameters)
+        end if:
+        break:
+      end if:
+    end do:
+  end if:
   if use_line then
     paramMinRed(j,1) := paramMin(i,1):
     for k to RowDimension(A) do
@@ -354,6 +382,12 @@ for i to RowDimension(paramMin) do
   end if:
 end do:
 printf("Dynamik-Terme reduziert. Zeilenzähler j=%d\n", j-1):
+# Falls es doppelte Parameter (durch Symmetrien der Plattform) gibt, stehen am Ende des Parametervektors noch Nullen. Entferne diese.
+paramMinRed := Matrix(paramMinRed(1..(j-1),1)):
+ARed := ARed(.., 1..(j-1)):
+MregRed := MregRed(.., 1..(j-1)):
+CregRed := CregRed(.., 1..(j-1)):
+gregRed := gregRed(.., 1..(j-1)):
 if regressor_modus = "regressor_minpar" then
   printf("Minimalparameter-Vektor:\n"):
   print(paramMinRed):
@@ -529,7 +563,7 @@ if regressor_modus = "regressor_minpar" then
   MatlabExport(paramMinRed, sprintf("../codeexport/%s/tmp/minimal_parameter_parrob_matlab.m", robot_name), codegen_opt):
   MatlabExport(RowParamMin, sprintf("../codeexport/%s/tmp/RowMinPar_parallel.m", robot_name), 2);
 else
-  paramRed := Matrix(<Paramvec2[1..NQJ_parallel*10,1], paramVecP>); # Umbenennung, damit es beim erneuten Laden als Inertialparameter-Variable erkennbar ist
+  paramRed := Matrix(<Paramvec2[1..NQJ_parallel*10,1], PV2_Plf_vec>): # Umbenennung, damit es beim erneuten Laden als Inertialparameter-Variable erkennbar ist
   save paramRed, sprintf("../codeexport/%s/tmp/inertial_parameter_parrob_maple.m", robot_name):
 end if:
 # PKM-Dynamik-Funktionen mit MPV bereits eingesetzt

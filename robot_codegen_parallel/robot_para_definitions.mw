@@ -134,6 +134,10 @@ restart: # Gibt eine Warnung, wenn \303\274ber Terminal-Maple mit read gestartet
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_convert_t_s&quot;:</Text-field>
 </Input>
 </Group>
+<Group labelreference="L3433" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_vec2skew&quot;:</Text-field>
+</Input>
+</Group>
 <Group labelreference="L3392" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;../helper/proc_vector2symmat&quot;:</Text-field>
 </Input>
@@ -333,10 +337,10 @@ if assigned(user_M_plf) then
     printf(&quot;Input user_M_plf is not Scalar. Error.\134n&quot;):
   end if:
   # Mass parameter given by user.
-    if user_M_plf&lt;&gt;mP_generic and user_M_plf&lt;&gt;0 then # check input
-      printf(&quot;User input for platform mass should be either \134&quot;%s\134&quot; or zero. Not \134&quot;%s\134&quot;. Continue anyway. \134n&quot;, mP_generic, user_M_plf):
-    end if:
-    M_plf := user_M_plf:
+  if user_M_plf&lt;&gt;mP_generic and user_M_plf&lt;&gt;0 then # check input
+    printf(&quot;User input for platform mass should be either \134&quot;%s\134&quot; or zero. Not \134&quot;%s\134&quot;. Continue anyway. \134n&quot;, mP_generic, user_M_plf):
+  end if:
+  M_plf := user_M_plf:
   printf(&quot;Plattform-Masseparameter von Benutzer gesetzt. Eingabe f\303\274r M_plf:\134n&quot;):
   print(M_plf);
 end if:</EC-CodeEditor></CodeEditor-ExecGroup>
@@ -352,14 +356,14 @@ else
   if RowDimension(user_CoM_plf) &lt;&gt; 3 or ColumnDimension(user_CoM_plf) &lt;&gt; 1 then
     printf(&quot;Input user_CoM_plf is not of size 3x1. Error.\134n&quot;):
   end if:
-    for j from 1 to 3 do
-      if user_CoM_plf[j,1]&lt;&gt;r_P_P_SP_generic[j,1] and user_CoM_plf[j,1]&lt;&gt;0 then # check input
-        printf(&quot;User input for platform CoM %d should be either \134&quot;%s\134&quot; or zero. Not \134&quot;%s\134&quot;. Continue anyway. \134n&quot;, j, r_P_P_SP_generic[j,1], convert(user_CoM_plf[j,1],string)):
-      end if:
-    end do:
-    r_P_P_SP[1..3,1]:=user_CoM_plf[1..3,1]:
+  for j from 1 to 3 do
+    if user_CoM_plf[j,1]&lt;&gt;r_P_P_SP_generic[j,1] and user_CoM_plf[j,1]&lt;&gt;0 then # check input
+      printf(&quot;User input for platform CoM %d should be either \134&quot;%s\134&quot; or zero. Not \134&quot;%s\134&quot;. Continue anyway. \134n&quot;, j, r_P_P_SP_generic[j,1], convert(user_CoM_plf[j,1],string)):
+    end if:
+  end do:
+  r_P_P_SP[1..3,1]:=user_CoM_plf[1..3,1]:
   printf(&quot;Plattform-Schwerpunktsparameter von Benutzer gesetzt. Eingabe f\303\274r r_P_P_SP:\134n&quot;):
-  print(r_P_P_SP):
+  print(Transpose(r_P_P_SP)):
 end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L3337" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Tr\303\244gheitstensor</Font></Text-field>
@@ -374,22 +378,29 @@ else
   if RowDimension(user_inertia_plf) &lt;&gt; 6 or ColumnDimension(user_inertia_plf) &lt;&gt; 1 then
     printf(&quot;Input user_inertia_plf is not of size 6x1. Error.\134n&quot;):
   end if:
-    for j from 1 to 6 do
-      if user_inertia_plf[j,1]&lt;&gt;I_P_SP_generic[j,1] and user_inertia_plf[j,1]&lt;&gt;0 then # check input
-        printf(&quot;User input for platform inertia %d should be either \134&quot;%s\134&quot; or zero. Not \134&quot;%s\134&quot;. Continue anyway. \134n&quot;, j, convert(I_P_SP_generic[j,1],string), convert(user_inertia_plf[j,1],string)):
+  for j from 1 to 6 do
+    value_j_valid := false:
+    for k from 1 to 6 do
+      if user_inertia_plf[j,1]=I_P_SP_generic[k,1] or user_inertia_plf[j,1]=0 then # check input
+        value_j_valid := true:
+        break:
       end if:
     end do:
-    if M_plf = 0 and HasNonZero(user_inertia_plf) then
-    	 printf(&quot;Platform mass is zero, but inertia is non-zero. Not plausible, but continue anyway.\134n&quot;):
+    if not value_j_valid then
+      printf(&quot;User input for platform inertia %d should be either \134&quot;%s\134&quot; or zero. Not \134&quot;%s\134&quot;. Continue anyway. \134n&quot;, j, convert(I_P_SP_generic[j,1],string), convert(user_inertia_plf[j,1],string)):
     end if:
-    I_P_SP[1..6,1]:=user_inertia_plf[1..6,1]:
+  end do:
+  if M_plf = 0 and HasNonZero(user_inertia_plf) then
+    printf(&quot;Platform mass is zero, but inertia is non-zero. Not plausible, but continue anyway.\134n&quot;):
+  end if:
+  I_P_SP[1..6,1]:=user_inertia_plf[1..6,1]:
   printf(&quot;Plattform-Tr\303\244gheitsparameter von Benutzer gesetzt. Eingabe f\303\274r I_P_SP:\134n&quot;):
-  print(I_P_SP):
+  print(Transpose(I_P_SP)):
 end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L3342" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">First Moment (mass and center of mass)</Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3346" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion14" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">mr_P_P_SP := Matrix(3, 1):
+</Group><CodeEditor-ExecGroup view="presentation" hide-input="false" labelreference="L3346" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion14" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">mr_P_P_SP := Matrix(3, 1):
 mr_P_P_SP_generic := Matrix(3, 1):
 xyzstrings := [&quot;X&quot;, &quot;Y&quot;, &quot;Z&quot;]:
 for j from 1 to 3 do # loop over x-, y-, z-coordinates of the CoM
@@ -398,14 +409,18 @@ end do:
 if M_plf &lt;&gt; 0 then: # Zero Mass can be set by the user. Then the first moment stays zero
   for j from 1 to 3 do # loop over x-, y-, z-coordinates of the CoM
     if r_P_P_SP[j,1] = parse(sprintf(&quot;S%sP&quot;, xyzstrings[j])) then
-    	 # default value for CoM is set (not overwritten by user input).
-    	 # Set default value for first moment
+      # default value for CoM is set (not overwritten by user input).
+      # Set default value for first moment
       mr_P_P_SP[j,1]:= parse(sprintf(&quot;M%sP&quot;, xyzstrings[j])):
     else
       # CoM is written by the user. Put this assumption also in the first moment to reduce dynamics parameters
-    	 mr_P_P_SP[j,1] := M_plf*r_P_P_SP[j,1]:
+      mr_P_P_SP[j,1] := M_plf*r_P_P_SP[j,1]:
     end if:
   end do:
+end if:
+if assigned(user_CoM_plf) or assigned(user_M_plf) then
+  printf(&quot;Plattform-Schwerpunktsparameter (oder Masse) von Benutzer gesetzt. Werte f\303\274r mr_P_P_SP:\134n&quot;):
+  print(Transpose(mr_P_P_SP)):
 end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L3343" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal">Inertia (about the origin of body frame, in link frame)</Text-field>
@@ -414,7 +429,7 @@ end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 # Tr\303\244gheitstensor (3x3) um den K\303\266rperschwerpunkt in K\303\266rper-KS
 I_P_SP_Tensor := vec2symmat(I_P_SP([1, 2, 4, 3, 5, 6], 1), 3): # Reihenfolge in I_P_SP und vec2symmat unterschiedlich definiert
 # Steinerschen Satz anwenden
-I_P_P_Tensor := I_P_SP_Tensor + M[i,1]*Transpose(vec2skew(r_P_P_SP[1..3,1])) . vec2skew(r_P_P_SP[1..3,1]):
+I_P_P_Tensor := I_P_SP_Tensor + M_plf*Transpose(vec2skew(r_P_P_SP[1..3,1])) . vec2skew(r_P_P_SP[1..3,1]):
 # Wieder als Matrix abspeichern
 I_P_P_calc := &lt;I_P_P_Tensor[1,1]; I_P_P_Tensor[1,2]; I_P_P_Tensor[1,3]; I_P_P_Tensor[2,2]; I_P_P_Tensor[2,3]; I_P_P_Tensor[3,3]&gt;:
 
@@ -432,7 +447,7 @@ I_P_P_generic[6,1]:=parse(sprintf(&quot;ZZP&quot;)):</EC-CodeEditor></CodeEditor
 <Group labelreference="L3357" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Pr\303\274fe, welche Eintr\303\244ge des Tr\303\244gheitstensors noch Schwerpunkts-Parameter enthalten. Diese m\303\274ssen wieder auf die Standard-Werte mit unabh\303\244ngigen Parametern gesetzt werden</Font></Text-field>
 </Input>
-</Group><CodeEditor-ExecGroup view="presentation" labelreference="L3360" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion17" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">I_P_P := Matrix(6, 1):
+</Group><CodeEditor-ExecGroup view="presentation" hide-input="false" labelreference="L3360" drawlabel="true" applyint="true" applyrational="true" display="code"><EC-CodeEditor id="CodeEditRegion17" expanded="true" visible="true" pixel-width="500" pixel-height="200" code-language="text/maple" autofit="true" wrapping="true" show-border="true" code-line-numbers="true">I_P_P := Matrix(6, 1):
 compstrings := [&quot;XX&quot;, &quot;XY&quot;, &quot;XZ&quot;, &quot;YY&quot;, &quot;YZ&quot;, &quot;ZZ&quot;]:
 if M_plf &lt;&gt; 0 then # Zero Mass can be set by the user. Then the inertia stays zero
   for j from 1 to 6 do # Alle Komponenten des Tensors
@@ -442,18 +457,35 @@ if M_plf &lt;&gt; 0 then # Zero Mass can be set by the user. Then the inertia st
     IhasCoM := false:
     for k from 1 to 3 do
       if has(I_P_P_calc[j,1], r_P_P_SP_generic[k,1]) then
-    	   IhasCoM := true: # Der Eintrag enth\303\244lt die Schwerpunktskoordinaten. Nicht zul\303\244ssig f\303\274r weitere Rechnung.
-    	   break:
+        IhasCoM := true: # Der Eintrag enth\303\244lt die Schwerpunktskoordinaten. Nicht zul\303\244ssig f\303\274r weitere Rechnung.
+        break:
       end if:
     end do:
     if has(I_P_P_calc[j,1], I_P_SP_generic[j,1]) then
-    	 IhasCoM := true: # Es steht der Schwerpunktsbezogene Tr\303\244gheitsterm drin. Weitere Rechnung damit nicht m\303\266glich.
+      IhasCoM := true: # Es steht der Schwerpunktsbezogene Tr\303\244gheitsterm drin. Weitere Rechnung damit nicht m\303\266glich.
     end if:
-    if IhasCoM = true then
+    # Pr\303\274fe, ob der Eintrag identisch zu einem vorherigen Eintrag ist. Das kommt vor, wenn aus Symmetriegr\303\274nden Tr\303\244gheitstensoren gleich sind
+    Iisidentical := false:
+    for k from 1 to j-1 do
+      if I_P_P_calc[j,1] = I_P_P_calc[k,1] and I_P_P_calc[j,1] &lt;&gt; 0 then
+        I_P_P[j,1] := I_P_P[k,1]:
+        # printf(&quot;identical: I_P_P_calc %d and %d: %s\134n&quot;, j, k, convert(I_P_P_calc[j,1],string)):
+        Iisidentical := true:
+        break:
+      end if:
+    end do:
+    if IhasCoM = true or Iisidentical then
       next: # Es kommt ein Schwerpunktsparameter vor. Belasse Parameter auf allgemeinem Wert.
     end if:
+    # printf(&quot;%d: has CoM %s\134n&quot;, j, IhasCoM);
     I_P_P[j,1] := I_P_P_calc[j,1]:
   end do:
+end if:
+if assigned(user_inertia_plf) then
+  printf(&quot;Tr\303\244gheitsparameter von Benutzer gesetzt. Werte f\303\274r I_P_P_calc:\134n&quot;):
+  print(Transpose(I_P_P_calc));
+  printf(&quot;Tr\303\244gheitsparameter von Benutzer gesetzt. Werte f\303\274r I_P_P:\134n&quot;):
+  print(Transpose(I_P_P));
 end if:</EC-CodeEditor></CodeEditor-ExecGroup>
 <Group labelreference="L3399" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Die Dynamikparameter werden nur bis zum K\303\266rper vor dem Koppelgelenk sp\303\244ter in den Funktionen ben\303\266tigt. K\303\266nnen noch durch Benutzereingabe zu Null gesetzt werden</Font></Text-field>
@@ -491,6 +523,18 @@ MatlabExport(Transpose(mr_i_i_Si), sprintf(&quot;../codeexport/%s/tmp/parameters
 MatlabExport(Transpose(I_i_i([1,4,6,2,3,5],..)), sprintf(&quot;../codeexport/%s/tmp/parameters_dyn_Ifges_pkm_matlab.m&quot;, robot_name), 2):</Text-field>
 </Input>
 </Group>
+<Group labelreference="L3436" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Parametervektor zur Ableitung danach. Muss \303\244hnlich wie bei seriellen Ketten die allgemeinen Werte und nicht die nutzerangepassten Werte enthalten</Font></Text-field>
+</Input>
+</Group>
+<Group hide-input="false" labelreference="L3438" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">PV2_Plf_vec := Matrix(&lt;I_P_P_generic; mr_P_P_SP_generic; mP_generic&gt;):</Text-field>
+</Input>
+</Group>
+<Group labelreference="L3437" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Export</Text-field></Title>
 <Group labelreference="L1714" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -498,7 +542,7 @@ MatlabExport(Transpose(I_i_i([1,4,6,2,3,5],..)), sprintf(&quot;../codeexport/%s/
 </Input>
 </Group>
 <Group labelreference="L1598" drawlabel="true">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save g_world, I_P_P, mr_P_P_SP, NX, NQJ_parallel, angleConvLeg, angleConv, r_P_P_SP, frame_A_i, qJ_i_s, qJD_i_s, qJDD_i_s, xE_t, xED_t, xEDD_t, xE_s, xED_s, xEDD_s, I_P_SP, M_plf, sprintf(&quot;../codeexport/%s/tmp/para_definitions&quot;, robot_name):</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save g_world, I_P_P, mr_P_P_SP, NX, NQJ_parallel, angleConvLeg, angleConv, r_P_P_SP, frame_A_i, qJ_i_s, qJD_i_s, qJDD_i_s, xE_t, xED_t, xEDD_t, xE_s, xED_s, xEDD_s, I_P_SP, M_plf, PV2_Plf_vec, sprintf(&quot;../codeexport/%s/tmp/para_definitions&quot;, robot_name):</Text-field>
 </Input>
 </Group>
 <Group hide-input="false" labelreference="L1732" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">

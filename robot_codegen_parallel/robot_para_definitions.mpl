@@ -22,6 +22,7 @@ with(StringTools): # Für Zeitausgabe
 ;
 read "../helper/proc_MatlabExport":
 read "../helper/proc_convert_t_s":
+read "../helper/proc_vec2skew":
 read "../helper/proc_vector2symmat":
 # Lese Umgebungsvariable für Codegenerierung.
 read "../robot_codegen_definitions/robot_env_par":
@@ -157,10 +158,10 @@ if assigned(user_M_plf) then
     printf("Input user_M_plf is not Scalar. Error.\n"):
   end if:
   # Mass parameter given by user.
-    if user_M_plf<>mP_generic and user_M_plf<>0 then # check input
-      printf("User input for platform mass should be either \"%s\" or zero. Not \"%s\". Continue anyway. \n", mP_generic, user_M_plf):
-    end if:
-    M_plf := user_M_plf:
+  if user_M_plf<>mP_generic and user_M_plf<>0 then # check input
+    printf("User input for platform mass should be either \"%s\" or zero. Not \"%s\". Continue anyway. \n", mP_generic, user_M_plf):
+  end if:
+  M_plf := user_M_plf:
   printf("Plattform-Masseparameter von Benutzer gesetzt. Eingabe für M_plf:\n"):
   print(M_plf);
 end if:
@@ -174,14 +175,14 @@ else
   if RowDimension(user_CoM_plf) <> 3 or ColumnDimension(user_CoM_plf) <> 1 then
     printf("Input user_CoM_plf is not of size 3x1. Error.\n"):
   end if:
-    for j from 1 to 3 do
-      if user_CoM_plf[j,1]<>r_P_P_SP_generic[j,1] and user_CoM_plf[j,1]<>0 then # check input
-        printf("User input for platform CoM %d should be either \"%s\" or zero. Not \"%s\". Continue anyway. \n", j, r_P_P_SP_generic[j,1], convert(user_CoM_plf[j,1],string)):
-      end if:
-    end do:
-    r_P_P_SP[1..3,1]:=user_CoM_plf[1..3,1]:
+  for j from 1 to 3 do
+    if user_CoM_plf[j,1]<>r_P_P_SP_generic[j,1] and user_CoM_plf[j,1]<>0 then # check input
+      printf("User input for platform CoM %d should be either \"%s\" or zero. Not \"%s\". Continue anyway. \n", j, r_P_P_SP_generic[j,1], convert(user_CoM_plf[j,1],string)):
+    end if:
+  end do:
+  r_P_P_SP[1..3,1]:=user_CoM_plf[1..3,1]:
   printf("Plattform-Schwerpunktsparameter von Benutzer gesetzt. Eingabe für r_P_P_SP:\n"):
-  print(r_P_P_SP):
+  print(Transpose(r_P_P_SP)):
 end if:
 # Trägheitstensor
 I_P_SP := Matrix(6, 1):
@@ -194,17 +195,24 @@ else
   if RowDimension(user_inertia_plf) <> 6 or ColumnDimension(user_inertia_plf) <> 1 then
     printf("Input user_inertia_plf is not of size 6x1. Error.\n"):
   end if:
-    for j from 1 to 6 do
-      if user_inertia_plf[j,1]<>I_P_SP_generic[j,1] and user_inertia_plf[j,1]<>0 then # check input
-        printf("User input for platform inertia %d should be either \"%s\" or zero. Not \"%s\". Continue anyway. \n", j, convert(I_P_SP_generic[j,1],string), convert(user_inertia_plf[j,1],string)):
+  for j from 1 to 6 do
+    value_j_valid := false:
+    for k from 1 to 6 do
+      if user_inertia_plf[j,1]=I_P_SP_generic[k,1] or user_inertia_plf[j,1]=0 then # check input
+        value_j_valid := true:
+        break:
       end if:
     end do:
-    if M_plf = 0 and HasNonZero(user_inertia_plf) then
-    	 printf("Platform mass is zero, but inertia is non-zero. Not plausible, but continue anyway.\n"):
+    if not value_j_valid then
+      printf("User input for platform inertia %d should be either \"%s\" or zero. Not \"%s\". Continue anyway. \n", j, convert(I_P_SP_generic[j,1],string), convert(user_inertia_plf[j,1],string)):
     end if:
-    I_P_SP[1..6,1]:=user_inertia_plf[1..6,1]:
+  end do:
+  if M_plf = 0 and HasNonZero(user_inertia_plf) then
+    printf("Platform mass is zero, but inertia is non-zero. Not plausible, but continue anyway.\n"):
+  end if:
+  I_P_SP[1..6,1]:=user_inertia_plf[1..6,1]:
   printf("Plattform-Trägheitsparameter von Benutzer gesetzt. Eingabe für I_P_SP:\n"):
-  print(I_P_SP):
+  print(Transpose(I_P_SP)):
 end if:
 # First Moment (mass and center of mass)
 mr_P_P_SP := Matrix(3, 1):
@@ -216,21 +224,25 @@ end do:
 if M_plf <> 0 then: # Zero Mass can be set by the user. Then the first moment stays zero
   for j from 1 to 3 do # loop over x-, y-, z-coordinates of the CoM
     if r_P_P_SP[j,1] = parse(sprintf("S%sP", xyzstrings[j])) then
-    	 # default value for CoM is set (not overwritten by user input).
-    	 # Set default value for first moment
+      # default value for CoM is set (not overwritten by user input).
+      # Set default value for first moment
       mr_P_P_SP[j,1]:= parse(sprintf("M%sP", xyzstrings[j])):
     else
       # CoM is written by the user. Put this assumption also in the first moment to reduce dynamics parameters
-    	 mr_P_P_SP[j,1] := M_plf*r_P_P_SP[j,1]:
+      mr_P_P_SP[j,1] := M_plf*r_P_P_SP[j,1]:
     end if:
   end do:
+end if:
+if assigned(user_CoM_plf) or assigned(user_M_plf) then
+  printf("Plattform-Schwerpunktsparameter (oder Masse) von Benutzer gesetzt. Werte für mr_P_P_SP:\n"):
+  print(Transpose(mr_P_P_SP)):
 end if:
 # Inertia (about the origin of body frame, in link frame)
 I_P_P_calc := Matrix(6, 1):
 # Trägheitstensor (3x3) um den Körperschwerpunkt in Körper-KS
 I_P_SP_Tensor := vec2symmat(I_P_SP([1, 2, 4, 3, 5, 6], 1), 3): # Reihenfolge in I_P_SP und vec2symmat unterschiedlich definiert
 # Steinerschen Satz anwenden
-I_P_P_Tensor := I_P_SP_Tensor + M[i,1]*Transpose(vec2skew(r_P_P_SP[1..3,1])) . vec2skew(r_P_P_SP[1..3,1]):
+I_P_P_Tensor := I_P_SP_Tensor + M_plf*Transpose(vec2skew(r_P_P_SP[1..3,1])) . vec2skew(r_P_P_SP[1..3,1]):
 # Wieder als Matrix abspeichern
 I_P_P_calc := <I_P_P_Tensor[1,1]; I_P_P_Tensor[1,2]; I_P_P_Tensor[1,3]; I_P_P_Tensor[2,2]; I_P_P_Tensor[2,3]; I_P_P_Tensor[3,3]>:
 # Allgemeine Form des Trägheitstensors (Einträge sind unabhängige Parameter)
@@ -252,18 +264,35 @@ if M_plf <> 0 then # Zero Mass can be set by the user. Then the inertia stays ze
     IhasCoM := false:
     for k from 1 to 3 do
       if has(I_P_P_calc[j,1], r_P_P_SP_generic[k,1]) then
-    	   IhasCoM := true: # Der Eintrag enthält die Schwerpunktskoordinaten. Nicht zulässig für weitere Rechnung.
-    	   break:
+        IhasCoM := true: # Der Eintrag enthält die Schwerpunktskoordinaten. Nicht zulässig für weitere Rechnung.
+        break:
       end if:
     end do:
     if has(I_P_P_calc[j,1], I_P_SP_generic[j,1]) then
-    	 IhasCoM := true: # Es steht der Schwerpunktsbezogene Trägheitsterm drin. Weitere Rechnung damit nicht möglich.
+      IhasCoM := true: # Es steht der Schwerpunktsbezogene Trägheitsterm drin. Weitere Rechnung damit nicht möglich.
     end if:
-    if IhasCoM = true then
+    # Prüfe, ob der Eintrag identisch zu einem vorherigen Eintrag ist. Das kommt vor, wenn aus Symmetriegründen Trägheitstensoren gleich sind
+    Iisidentical := false:
+    for k from 1 to j-1 do
+      if I_P_P_calc[j,1] = I_P_P_calc[k,1] and I_P_P_calc[j,1] <> 0 then
+        I_P_P[j,1] := I_P_P[k,1]:
+        # printf("identical: I_P_P_calc %d and %d: %s\n", j, k, convert(I_P_P_calc[j,1],string)):
+        Iisidentical := true:
+        break:
+      end if:
+    end do:
+    if IhasCoM = true or Iisidentical then
       next: # Es kommt ein Schwerpunktsparameter vor. Belasse Parameter auf allgemeinem Wert.
     end if:
+    # printf("%d: has CoM %s\n", j, IhasCoM);
     I_P_P[j,1] := I_P_P_calc[j,1]:
   end do:
+end if:
+if assigned(user_inertia_plf) then
+  printf("Trägheitsparameter von Benutzer gesetzt. Werte für I_P_P_calc:\n"):
+  print(Transpose(I_P_P_calc));
+  printf("Trägheitsparameter von Benutzer gesetzt. Werte für I_P_P:\n"):
+  print(Transpose(I_P_P));
 end if:
 # Die Dynamikparameter werden nur bis zum Körper vor dem Koppelgelenk später in den Funktionen benötigt. Können noch durch Benutzereingabe zu Null gesetzt werden
 M_PKM := <M(2..NQJ_parallel+1,1), M_plf>:
@@ -277,9 +306,12 @@ MatlabExport(Transpose(rC_PKM), sprintf("../codeexport/%s/tmp/parameters_dyn_rSg
 MatlabExport(Transpose(IC_PKM([1,4,6,2,3,5],..)), sprintf("../codeexport/%s/tmp/parameters_dyn_Icges_pkm_matlab.m", robot_name), 2):
 MatlabExport(Transpose(mr_i_i_Si), sprintf("../codeexport/%s/tmp/parameters_dyn_mrSges_pkm_matlab.m", robot_name), 2):
 MatlabExport(Transpose(I_i_i([1,4,6,2,3,5],..)), sprintf("../codeexport/%s/tmp/parameters_dyn_Ifges_pkm_matlab.m", robot_name), 2):
+# Parametervektor zur Ableitung danach. Muss ähnlich wie bei seriellen Ketten die allgemeinen Werte und nicht die nutzerangepassten Werte enthalten
+PV2_Plf_vec := Matrix(<I_P_P_generic; mr_P_P_SP_generic; mP_generic>):
+
 # Export
 # Maple-Export
-save g_world, I_P_P, mr_P_P_SP, NX, NQJ_parallel, angleConvLeg, angleConv, r_P_P_SP, frame_A_i, qJ_i_s, qJD_i_s, qJDD_i_s, xE_t, xED_t, xEDD_t, xE_s, xED_s, xEDD_s, I_P_SP, M_plf, sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
+save g_world, I_P_P, mr_P_P_SP, NX, NQJ_parallel, angleConvLeg, angleConv, r_P_P_SP, frame_A_i, qJ_i_s, qJD_i_s, qJDD_i_s, xE_t, xED_t, xEDD_t, xE_s, xED_s, xEDD_s, I_P_SP, M_plf, PV2_Plf_vec, sprintf("../codeexport/%s/tmp/para_definitions", robot_name):
 varScript := <NX;NQJ_parallel;legAngles>:
 MatlabExport(varScript, sprintf("../codeexport/%s/tmp/var_parallel.m", robot_name), 1);
 # Erzeuge weitere Variablen, die für die Erzeugung von Template-Funktionen aus der Matlab-Robotik-Toolbox benötigt werden
