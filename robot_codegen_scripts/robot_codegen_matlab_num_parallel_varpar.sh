@@ -84,7 +84,7 @@ done
 zieldat=$fcn_pfad/${robot_name}_dynamics_parameters_modification.m # Die Dateikopf-Vorlage wird automatisch hier angelegt
 zieldat2=$test_pfad/${robot_name}_dynamics_parameters_modification.m # Die Datei soll am Ende hier liegen
 printf "%%%% Coder Information\n%%#codegen\n" >> $zieldat
-source $repo_pfad/scripts/set_inputdim_line.sh $zieldat
+source $repo_pfad/scripts/set_inputdim_line_par.sh $zieldat
 cat $tmp_pfad/robot_matlabtmp_assert_KP.m >> $zieldat
 cat $tmp_pfad/robot_matlabtmp_assert_m_parallel.m >> $zieldat
 cat $tmp_pfad/robot_matlabtmp_assert_rcom_parallel.m >> $zieldat
